@@ -136,10 +136,14 @@ public final class NenClient {
         graphics.fill(x, y, x + 2, y + h, refusal == null ? 0xFF55FF77 : 0xFFFF5555);
 
         int index = Math.floorMod(data.selected(), kit.techniques().size()) + 1;
-        Component title = Component.translatable(technique.translationKey());
-        graphics.drawString(mc.font, title, x + 6, y + 4, 0xFFFFD27F, true);
         Component counter = Component.literal(index + "/" + kit.techniques().size());
-        graphics.drawString(mc.font, counter, x + w - 4 - mc.font.width(counter), y + 4, 0xFF9A9A9A, true);
+        int counterWidth = mc.font.width(counter);
+        graphics.drawString(mc.font, counter, x + w - 4 - counterWidth, y + 4, 0xFF9A9A9A, true);
+        // Nom tronqué avec « … » s'il déborde sur le compteur
+        String name = Component.translatable(technique.translationKey()).getString();
+        int maxName = w - 6 - counterWidth - 10;
+        if (mc.font.width(name) > maxName) name = mc.font.plainSubstrByWidth(name, maxName - mc.font.width("…")) + "…";
+        graphics.drawString(mc.font, name, x + 6, y + 4, 0xFFFFD27F, true);
 
         graphics.drawString(mc.font, Component.translatable("hud.hxh.technique_cost", technique.auraCost()),
                 x + 6, y + 14, 0xFFBFE6FF, true);
