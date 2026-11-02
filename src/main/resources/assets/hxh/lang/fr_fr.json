@@ -34,7 +34,7 @@
   "nen_mode.hxh.ten": "Ten",
   "nen_mode.hxh.zetsu": "Zetsu",
   "nen_mode.hxh.ren": "Ren",
-  "hud.hxh.aura": "Aura %s/%s — %s",
+  "hud.hxh.aura": "%s/%s · %s",
   "command.hxh.show.aura": "  Aura : %s/%s (%s)",
   "message.hxh.nen_locked": "Tu ne maîtrises pas encore le Nen.",
   "message.hxh.no_aura": "Plus assez d'aura !",

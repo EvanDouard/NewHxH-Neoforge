@@ -96,7 +96,7 @@ public final class NenClient {
         HunterData data = mc.player.getData(ModAttachments.HUNTER);
         if (!data.nenUnlocked()) return;
 
-        int width = 100;
+        int width = 80;
         int x = 8;
         int y = graphics.guiHeight() - 14;
         float ratio = data.auraMax() > 0 ? data.aura() / data.auraMax() : 0;
