@@ -1,6 +1,7 @@
 package com.evandouard.hxh.network;
 
 import com.evandouard.hxh.HxHMod;
+import com.evandouard.hxh.hatsu.Hatsu;
 import com.evandouard.hxh.nen.NenAwakening;
 import com.evandouard.hxh.nen.NenHealing;
 import io.netty.buffer.ByteBuf;
@@ -13,7 +14,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
  * Client → serveur : intention d'action liée au Nen (touche pressée ou relâchée).
  */
 public record NenActionPayload(Action action, boolean pressed) implements CustomPacketPayload {
-    public enum Action { HEAL, MEDITATE, OPEN_PORES }
+    public enum Action { HEAL, MEDITATE, OPEN_PORES, CAST, NEXT_TECHNIQUE }
 
     public static final Type<NenActionPayload> TYPE = new Type<>(HxHMod.id("nen_action"));
 
@@ -34,6 +35,8 @@ public record NenActionPayload(Action action, boolean pressed) implements Custom
                 case HEAL -> NenHealing.request(context.player(), payload.pressed());
                 case MEDITATE -> { if (payload.pressed()) NenAwakening.toggleMeditation(context.player()); }
                 case OPEN_PORES -> { if (payload.pressed()) NenAwakening.requestOpenPores(context.player()); }
+                case CAST -> { if (payload.pressed()) Hatsu.requestCast(context.player()); }
+                case NEXT_TECHNIQUE -> { if (payload.pressed()) Hatsu.cycle(context.player()); }
             }
         });
     }

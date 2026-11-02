@@ -138,4 +138,37 @@ key key.hxh.meditate
 wait 160
 expect Après une longue méditation
 shot 15_eveil_par_meditation
+
+# --- J3 : choix du Hatsu, encart de technique, lancer / suivante ---
+cmd hunter nen reveal
+wait 10
+key key.hxh.hatsu_menu
+wait 20
+shot 16_choix_du_hatsu
+click Illumi
+wait 10
+shot 17_confirmation_definitive
+click Oui
+wait 20
+expect Tu as choisi le Hatsu de Illumi
+clearchat
+cmd hunter
+wait 10
+expect Hatsu : Illumi Zoldyck
+cmd kill @e[type=minecraft:villager]
+cmd difficulty easy
+cmd summon minecraft:husk ~ ~ ~4 {NoAI:1b,PersistenceRequired:1b}
+look 0 12
+wait 30
+shot 18_encart_technique_prete
+clearchat
+key key.hxh.cast
+wait 10
+shot 19_aiguille_en_recharge
+cmd execute as @e[type=minecraft:husk] if data entity @s active_effects run say touche
+wait 10
+expect touche
+key key.hxh.next_technique
+wait 10
+shot 20_technique_suivante
 quit

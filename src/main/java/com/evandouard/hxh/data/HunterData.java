@@ -6,6 +6,7 @@ import net.neoforged.neoforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -22,6 +23,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private static final String AURA = "aura";
     private static final String HEAL = "heal";
     private static final String MEDITATION = "meditation";
+    private static final String HATSU = "hatsu";
 
     /** Couleur d'aura par défaut : bleu clair. */
     public static final int DEFAULT_AURA_COLOR = 0x7FC8FF;
@@ -51,6 +53,11 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     // Méditation (une des voies pour éveiller le Nen)
     private boolean meditating = false;
     private int meditationTicks = 0;
+
+    // Hatsu : personnage choisi (définitif), technique sélectionnée, recharges (tick de jeu où elle redevient prête)
+    private String kit = "";
+    private int selected = 0;
+    private final Map<String, Long> readyAt = new HashMap<>();
 
     private final Set<String> dirty = new HashSet<>();
 
@@ -255,6 +262,42 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         if (old / 20 != meditationTicks / 20) dirty.add(MEDITATION);
     }
 
+    // ---------- Hatsu ----------
+
+    public String kit() {
+        return kit;
+    }
+
+    public boolean hasKit() {
+        return !kit.isEmpty();
+    }
+
+    public void setKit(String kitId) {
+        kit = kitId == null ? "" : kitId;
+        selected = 0;
+        readyAt.clear();
+        dirty.add(HATSU);
+    }
+
+    public int selected() {
+        return selected;
+    }
+
+    public void setSelected(int index) {
+        selected = Math.max(0, index);
+        dirty.add(HATSU);
+    }
+
+    /** Tick de jeu à partir duquel la technique est de nouveau prête (0 = prête). */
+    public long readyAt(String techniqueId) {
+        return readyAt.getOrDefault(techniqueId, 0L);
+    }
+
+    public void setReadyAt(String techniqueId, long gameTime) {
+        readyAt.put(techniqueId, gameTime);
+        dirty.add(HATSU);
+    }
+
     // ---------- Sérialisation ----------
 
     private static String statKey(Stat stat) {
@@ -289,6 +332,16 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             out.put(HEAL, h);
             return;
         }
+        if (key.equals(HATSU)) {
+            CompoundTag h = new CompoundTag();
+            h.putString("kit", kit);
+            h.putInt("selected", selected);
+            CompoundTag cd = new CompoundTag();
+            readyAt.forEach(cd::putLong);
+            h.put("readyAt", cd);
+            out.put(HATSU, h);
+            return;
+        }
         if (key.equals(MEDITATION)) {
             CompoundTag m = new CompoundTag();
             m.putBoolean("active", meditating);
@@ -315,6 +368,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         writeKey(AURA, out);
         writeKey(HEAL, out);
         writeKey(MEDITATION, out);
+        writeKey(HATSU, out);
         return out;
     }
 
@@ -337,6 +391,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         dirty.add(AURA);
         dirty.add(HEAL);
         dirty.add(MEDITATION);
+        dirty.add(HATSU);
     }
 
     /** Remet tout à zéro (stats et Nen). */
@@ -375,6 +430,14 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             healLevel = Math.max(0, Math.min(HEAL_MAX_LEVEL, h.getInt("level")));
             healXp = Math.max(0, h.getInt("xp"));
             healing = h.getBoolean("active");
+        }
+        if (in.contains(HATSU)) {
+            CompoundTag h = in.getCompound(HATSU);
+            kit = h.getString("kit");
+            selected = Math.max(0, h.getInt("selected"));
+            readyAt.clear();
+            CompoundTag cd = h.getCompound("readyAt");
+            for (String id : cd.getAllKeys()) readyAt.put(id, cd.getLong(id));
         }
         if (in.contains(MEDITATION)) {
             CompoundTag m = in.getCompound(MEDITATION);

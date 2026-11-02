@@ -3,6 +3,10 @@ package com.evandouard.hxh.command;
 import com.evandouard.hxh.data.HunterData;
 import com.evandouard.hxh.data.NenType;
 import com.evandouard.hxh.data.Stat;
+import com.evandouard.hxh.hatsu.Hatsu;
+import com.evandouard.hxh.hatsu.HatsuKit;
+import com.evandouard.hxh.hatsu.HatsuKits;
+import com.evandouard.hxh.hatsu.Technique;
 import com.evandouard.hxh.nen.NenModes;
 import com.evandouard.hxh.stats.HunterStats;
 import com.mojang.brigadier.CommandDispatcher;
@@ -35,6 +39,8 @@ import java.util.function.Consumer;
 public final class HunterCommand {
     private static final DynamicCommandExceptionType UNKNOWN_STAT = new DynamicCommandExceptionType(
             id -> Component.translatable("command.hxh.unknown_stat", id));
+    private static final DynamicCommandExceptionType UNKNOWN_KIT = new DynamicCommandExceptionType(
+            id -> Component.translatable("message.hxh.hatsu_unknown_id", id));
     private static final DynamicCommandExceptionType BAD_COLOR = new DynamicCommandExceptionType(
             hex -> Component.translatable("command.hxh.bad_color", hex));
     private static final DynamicCommandExceptionType UNKNOWN_NEN = new DynamicCommandExceptionType(
@@ -51,6 +57,7 @@ public final class HunterCommand {
                                 .executes(ctx -> show(ctx.getSource(), EntityArgument.getEntity(ctx, "target")))))
                 .then(statCommand())
                 .then(nenCommand())
+                .then(hatsuCommand())
                 .then(Commands.literal("reset").requires(s -> s.hasPermission(2))
                         .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()), e -> resetAll(e)))
                         .then(Commands.argument("targets", EntityArgument.entities())
@@ -123,6 +130,35 @@ public final class HunterCommand {
                                     return apply(ctx, List.of(ctx.getSource().getEntityOrException()),
                                             e -> HunterStats.get(e).setAuraColor(rgb));
                                 })));
+    }
+
+    /** Administration du Hatsu : forcer un personnage (y compris sur un mob), effacer, faire lancer. */
+    private static LiteralArgumentBuilder<CommandSourceStack> hatsuCommand() {
+        return Commands.literal("hatsu").requires(s -> s.hasPermission(2))
+                .then(Commands.literal("set")
+                        .then(Commands.argument("kit", StringArgumentType.word())
+                                .suggests((ctx, b) -> SharedSuggestionProvider.suggest(
+                                        HatsuKits.all().stream().map(HatsuKit::id), b))
+                                .executes(ctx -> setKit(ctx, List.of(ctx.getSource().getEntityOrException())))
+                                .then(Commands.argument("targets", EntityArgument.entities())
+                                        .executes(ctx -> setKit(ctx, EntityArgument.getEntities(ctx, "targets"))))))
+                .then(targeted("clear", e -> HunterStats.get(e).setKit("")))
+                .then(targeted("cast", e -> Hatsu.requestCast(e)))
+                .then(targeted("next", e -> Hatsu.cycle(e)));
+    }
+
+    private static int setKit(CommandContext<CommandSourceStack> ctx, Collection<? extends Entity> targets)
+            throws CommandSyntaxException {
+        String id = StringArgumentType.getString(ctx, "kit");
+        HatsuKit kit = HatsuKits.get(id);
+        if (kit == null) throw UNKNOWN_KIT.create(id);
+        return apply(ctx, targets, e -> {
+            HunterData d = HunterStats.get(e);
+            d.setNenType(kit.type());
+            if (!d.nenUnlocked()) NenModes.unlock(e);
+            d.setNenRevealed(true);
+            d.setKit(kit.id());
+        });
     }
 
     /** Sous-commande appliquée à soi-même ou à des cibles : {@code <nom> [cibles]}. */
@@ -206,6 +242,12 @@ public final class HunterCommand {
         if (data.nenUnlocked()) {
             lines.add(Component.translatable("command.hxh.show.aura", (int) data.aura(), data.auraMax(),
                     Component.translatable(data.mode().translationKey())));
+        }
+        HatsuKit kit = Hatsu.kitOf(data);
+        if (kit != null) {
+            Technique current = Hatsu.selectedTechnique(data);
+            lines.add(Component.translatable("command.hxh.show.hatsu", Component.translatable(kit.translationKey()),
+                    current == null ? Component.literal("-") : Component.translatable(current.translationKey())));
         }
         if (data.healUnlocked()) {
             lines.add(Component.translatable("command.hxh.show.heal", data.healLevel(),

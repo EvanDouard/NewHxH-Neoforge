@@ -44,6 +44,7 @@ import java.util.List;
  *     <li>{@code log <texte>} : écrit dans le rapport</li>
  *     <li>{@code key <nom de la touche>} : simule un appui (ex. key.hxh.ten)</li>
  *     <li>{@code hold <touche>} / {@code release <touche>} : maintient / relâche une touche</li>
+ *     <li>{@code click <texte>} : clique sur le bouton de l'écran ouvert dont le libellé contient ce texte</li>
  *     <li>{@code useblock <dx> <dy> <dz>} : clic droit sur le bloc à cette position relative au joueur</li>
  *     <li>{@code camera <first|back|front>} : vue à la 1re personne, de dos ou de face</li>
  *     <li>{@code clearchat} : vide le chat (et la mémoire des messages reçus)</li>
@@ -187,6 +188,24 @@ public final class CiAutopilot {
                         }
                     }
                     log("ECHEC : touche inconnue '" + arg + "'");
+                    return false;
+                }
+                case "click" -> {
+                    if (mc.screen != null) {
+                        for (var child : mc.screen.children()) {
+                            if (child instanceof net.minecraft.client.gui.components.AbstractButton button
+                                    && button.getMessage().getString().contains(arg)) {
+                                if (!button.active) {
+                                    log("ECHEC : bouton '" + arg + "' désactivé");
+                                    return false;
+                                }
+                                button.onPress();
+                                log("clic sur '" + button.getMessage().getString() + "'");
+                                return true;
+                            }
+                        }
+                    }
+                    log("ECHEC : aucun bouton '" + arg + "' à l'écran");
                     return false;
                 }
                 case "useblock" -> {

@@ -4,6 +4,9 @@ import com.evandouard.hxh.HxHMod;
 import com.evandouard.hxh.data.HunterData;
 import com.evandouard.hxh.data.ModAttachments;
 import com.evandouard.hxh.data.NenMode;
+import com.evandouard.hxh.hatsu.Hatsu;
+import com.evandouard.hxh.hatsu.HatsuKit;
+import com.evandouard.hxh.hatsu.Technique;
 import com.evandouard.hxh.network.NenActionPayload;
 import com.evandouard.hxh.network.ToggleNenModePayload;
 import com.evandouard.hxh.registry.ModBlocks;
@@ -36,6 +39,10 @@ public final class NenClient {
     public static final KeyMapping MEDITATE = new KeyMapping("key.hxh.meditate", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_M, CATEGORY);
     public static final KeyMapping OPEN_PORES = new KeyMapping("key.hxh.open_pores", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, CATEGORY);
 
+    public static final KeyMapping HATSU_MENU = new KeyMapping("key.hxh.hatsu_menu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, CATEGORY);
+    public static final KeyMapping CAST = new KeyMapping("key.hxh.cast", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, CATEGORY);
+    public static final KeyMapping NEXT_TECHNIQUE = new KeyMapping("key.hxh.next_technique", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, CATEGORY);
+
     private static boolean healKeyWasDown = false;
 
     private static final int WATER_COLOR = 0xFF3F76E4;
@@ -57,10 +64,14 @@ public final class NenClient {
         event.register(HEAL);
         event.register(MEDITATE);
         event.register(OPEN_PORES);
+        event.register(HATSU_MENU);
+        event.register(CAST);
+        event.register(NEXT_TECHNIQUE);
     }
 
     private static void onRegisterLayers(RegisterGuiLayersEvent event) {
         event.registerAbove(VanillaGuiLayers.HOTBAR, HxHMod.id("aura_bar"), NenClient::renderAuraBar);
+        event.registerAbove(VanillaGuiLayers.HOTBAR, HxHMod.id("technique_box"), NenClient::renderTechniqueBox);
     }
 
     private static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
@@ -76,12 +87,73 @@ public final class NenClient {
         while (REN.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.REN.id()));
         while (MEDITATE.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.MEDITATE, true));
         while (OPEN_PORES.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.OPEN_PORES, true));
+        while (CAST.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, true));
+        while (NEXT_TECHNIQUE.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.NEXT_TECHNIQUE, true));
+        while (HATSU_MENU.consumeClick()) openHatsuMenu(mc);
         // Soin : touche maintenue, on n'envoie que les changements d'état
         boolean healDown = HEAL.isDown();
         if (healDown != healKeyWasDown) {
             healKeyWasDown = healDown;
             PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.HEAL, healDown));
         }
+    }
+
+    /** Ouvre le choix du Hatsu, ou explique pourquoi ce n'est pas (ou plus) possible. */
+    private static void openHatsuMenu(Minecraft mc) {
+        HunterData data = mc.player.getData(ModAttachments.HUNTER);
+        HatsuKit kit = Hatsu.kitOf(data);
+        if (kit != null) {
+            mc.player.displayClientMessage(Component.translatable("message.hxh.hatsu_current",
+                    Component.translatable(kit.translationKey())), true);
+        } else if (!data.nenUnlocked()) {
+            mc.player.displayClientMessage(Component.translatable("message.hxh.nen_locked"), true);
+        } else if (!data.nenRevealed()) {
+            mc.player.displayClientMessage(Component.translatable("message.hxh.hatsu_need_divination"), true);
+        } else {
+            mc.setScreen(new HatsuSelectionScreen());
+        }
+    }
+
+    /** Encart en bas à droite : technique sélectionnée, coût et état. */
+    private static void renderTechniqueBox(GuiGraphics graphics, DeltaTracker delta) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || mc.options.hideGui) return;
+        HunterData data = mc.player.getData(ModAttachments.HUNTER);
+        HatsuKit kit = Hatsu.kitOf(data);
+        Technique technique = Hatsu.selectedTechnique(data);
+        if (kit == null || technique == null) return;
+
+        int w = 130;
+        int h = 34;
+        int x = graphics.guiWidth() - w - 6;
+        int y = graphics.guiHeight() - h - 6;
+        // Petite fenêtre : si l'encart chevauche la barre d'objets, on le remonte au-dessus de la faim
+        if (x < graphics.guiWidth() / 2 + 95) y = graphics.guiHeight() - h - 52;
+        long now = mc.level.getGameTime();
+        String refusal = Hatsu.castRefusal(data, technique, now);
+
+        graphics.fill(x, y, x + w, y + h, 0xB0000000);
+        graphics.fill(x, y, x + 2, y + h, refusal == null ? 0xFF55FF77 : 0xFFFF5555);
+
+        int index = Math.floorMod(data.selected(), kit.techniques().size()) + 1;
+        Component title = Component.translatable(technique.translationKey());
+        graphics.drawString(mc.font, title, x + 6, y + 4, 0xFFFFD27F, true);
+        Component counter = Component.literal(index + "/" + kit.techniques().size());
+        graphics.drawString(mc.font, counter, x + w - 4 - mc.font.width(counter), y + 4, 0xFF9A9A9A, true);
+
+        graphics.drawString(mc.font, Component.translatable("hud.hxh.technique_cost", technique.auraCost()),
+                x + 6, y + 14, 0xFFBFE6FF, true);
+
+        Component state;
+        if (refusal == null) {
+            state = Component.translatable("hud.hxh.technique_ready");
+        } else if (refusal.equals("message.hxh.hatsu_cooldown")) {
+            float seconds = (data.readyAt(technique.id()) - now) / 20f;
+            state = Component.translatable("hud.hxh.technique_cooldown", String.format(java.util.Locale.ROOT, "%.1f", seconds));
+        } else {
+            state = Component.translatable(refusal);
+        }
+        graphics.drawString(mc.font, state, x + 6, y + 24, refusal == null ? 0xFF7CFF8A : 0xFFFF7A7A, true);
     }
 
     private static void renderAuraBar(GuiGraphics graphics, DeltaTracker delta) {
