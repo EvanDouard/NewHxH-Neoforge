@@ -15,6 +15,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
@@ -45,7 +46,7 @@ public final class NenClient {
         modBus.addListener(NenClient::onRegisterKeys);
         modBus.addListener(NenClient::onRegisterLayers);
         modBus.addListener(NenClient::onRegisterBlockColors);
-        modBus.addListener(AuraLayer::addToRenderers);
+        modBus.addListener(EntityRenderersEvent.AddLayers.class, AuraLayer::addToRenderers);
         NeoForge.EVENT_BUS.addListener(NenClient::onClientTick);
     }
 
