@@ -13,6 +13,7 @@ import net.neoforged.fml.common.Mod;
 @Mod(value = HxHMod.MODID, dist = Dist.CLIENT)
 public final class HxHClient {
     public HxHClient(IEventBus modEventBus, ModContainer container) {
+        NenClient.register(modEventBus);
         CiAutopilot.initIfRequested();
     }
 }

@@ -15,7 +15,10 @@ public final class ModCreativeTabs {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.hxh"))
                     .icon(() -> ModItems.HUNTER_CARD.get().getDefaultInstance())
-                    .displayItems((params, output) -> output.accept(ModItems.HUNTER_CARD.get()))
+                    .displayItems((params, output) -> {
+                        output.accept(ModItems.HUNTER_CARD.get());
+                        output.accept(ModItems.WATER_DIVINATION.get());
+                    })
                     .build());
 
     private ModCreativeTabs() {}

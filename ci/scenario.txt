@@ -34,4 +34,50 @@ expect Vitalité : 100
 expect Force : 30
 expect 40
 shot 03_vitalite_100_force_30
+
+# --- J2 : aura, Ten / Zetsu / Ren, divination ---
+clearchat
+cmd hunter nen type manipulator
+cmd hunter nen unlock
+wait 20
+clearchat
+cmd hunter
+wait 10
+expect Nen : ???
+key key.hxh.ten
+wait 40
+clearchat
+cmd hunter
+wait 10
+expect (Ten)
+camera back
+wait 40
+shot 04_ten_aura_et_jauge
+camera first
+key key.hxh.ren
+wait 60
+clearchat
+cmd hunter
+wait 10
+expect (Ren)
+camera back
+wait 20
+shot 05_ren_aura_rouge
+camera first
+key key.hxh.ren
+wait 20
+cmd setblock ~2 ~ ~ hxh:water_divination
+look -90 40
+wait 30
+shot 06_verre_de_divination
+clearchat
+useblock 2 0 0
+wait 30
+expect La feuille se met à tourner
+expect Ton type de Nen : Manipulation
+shot 07_divination_manipulation
+clearchat
+cmd hunter
+wait 10
+expectnot Nen : ???
 quit

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" L ", "GWG", " G "],
+  "key": {
+    "L": { "tag": "minecraft:leaves" },
+    "W": { "item": "minecraft:water_bucket" },
+    "G": { "item": "minecraft:glass" }
+  },
+  "result": { "id": "hxh:water_divination", "count": 1 }
+}

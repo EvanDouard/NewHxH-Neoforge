@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "hxh:block/water_divination" },
+    "facing=east":  { "model": "hxh:block/water_divination", "y": 90 },
+    "facing=south": { "model": "hxh:block/water_divination", "y": 180 },
+    "facing=west":  { "model": "hxh:block/water_divination", "y": 270 }
+  }
+}

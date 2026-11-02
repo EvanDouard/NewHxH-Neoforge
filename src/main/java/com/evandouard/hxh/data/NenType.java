@@ -23,6 +23,17 @@ public enum NenType {
         return null;
     }
 
+    /**
+     * Efficacité d'une technique de catégorie {@code other} pour un utilisateur de ce type,
+     * selon la distance sur l'hexagone : 100 %, 80 % (voisins), 60 %, 40 % (opposé).
+     */
+    public float affinity(NenType other) {
+        int n = values().length;
+        int d = Math.abs(ordinal() - other.ordinal());
+        int distance = Math.min(d, n - d);
+        return 1.0f - 0.2f * distance;
+    }
+
     /** Tirage aléatoire : les Spécialistes sont rares (5 %), les autres types se partagent le reste. */
     public static NenType random(RandomSource random) {
         if (random.nextFloat() < 0.05f) return SPECIALIST;

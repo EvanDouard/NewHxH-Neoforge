@@ -19,6 +19,7 @@ import java.util.Set;
  */
 public final class HunterData implements INBTSerializable<CompoundTag> {
     private static final String NEN = "nen";
+    private static final String AURA = "aura";
 
     private final Map<Stat, Integer> levels = new EnumMap<>(Stat.class);
     private final Map<Stat, Integer> xp = new EnumMap<>(Stat.class);
@@ -27,6 +28,12 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private boolean nenRevealed = false;
     @Nullable
     private NenType nenType = null;
+
+    private float aura = 0;
+    private int auraMax = 100;
+    private NenMode mode = NenMode.NONE;
+    /** Dernière valeur entière d'aura envoyée : on ne resynchronise que si elle change. */
+    private int lastWrittenAura = -1;
 
     private final Set<String> dirty = new HashSet<>();
 
@@ -112,6 +119,38 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         dirty.add(NEN);
     }
 
+    // ---------- Aura ----------
+
+    public float aura() {
+        return aura;
+    }
+
+    public int auraMax() {
+        return auraMax;
+    }
+
+    public NenMode mode() {
+        return mode;
+    }
+
+    public void setAura(float value) {
+        aura = Math.max(0, Math.min(auraMax, value));
+        if ((int) aura != lastWrittenAura) dirty.add(AURA);
+    }
+
+    public void setAuraMax(int max) {
+        if (max == auraMax) return;
+        auraMax = Math.max(1, max);
+        aura = Math.min(aura, auraMax);
+        dirty.add(AURA);
+    }
+
+    public void setMode(NenMode newMode) {
+        if (newMode == mode) return;
+        mode = newMode;
+        dirty.add(AURA);
+    }
+
     // ---------- Sérialisation ----------
 
     private static String statKey(Stat stat) {
@@ -125,6 +164,15 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             nen.putBoolean("revealed", nenRevealed);
             if (nenType != null) nen.putString("type", nenType.id());
             out.put(NEN, nen);
+            return;
+        }
+        if (key.equals(AURA)) {
+            CompoundTag a = new CompoundTag();
+            a.putFloat("value", aura);
+            a.putInt("max", auraMax);
+            a.putString("mode", mode.id());
+            out.put(AURA, a);
+            lastWrittenAura = (int) aura;
             return;
         }
         for (Stat s : Stat.values()) {
@@ -143,6 +191,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         CompoundTag out = new CompoundTag();
         for (Stat s : Stat.values()) writeKey(statKey(s), out);
         writeKey(NEN, out);
+        writeKey(AURA, out);
         return out;
     }
 
@@ -162,12 +211,12 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     public void markAllDirty() {
         for (Stat s : Stat.values()) dirty.add(statKey(s));
         dirty.add(NEN);
+        dirty.add(AURA);
     }
 
     /** Remet tout à zéro (stats et Nen). */
     public void reset() {
         read(new HunterData().writeAll());
-        nenType = null;
         markAllDirty();
     }
 
@@ -186,6 +235,13 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             nenUnlocked = nen.getBoolean("unlocked");
             nenRevealed = nen.getBoolean("revealed");
             nenType = nen.contains("type") ? NenType.byId(nen.getString("type")) : null;
+        }
+        if (in.contains(AURA)) {
+            CompoundTag a = in.getCompound(AURA);
+            auraMax = Math.max(1, a.getInt("max"));
+            aura = Math.max(0, Math.min(auraMax, a.getFloat("value")));
+            NenMode m = NenMode.byId(a.getString("mode"));
+            mode = m == null ? NenMode.NONE : m;
         }
     }
 

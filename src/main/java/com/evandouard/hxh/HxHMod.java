@@ -3,6 +3,7 @@ package com.evandouard.hxh;
 import com.evandouard.hxh.command.HunterCommand;
 import com.evandouard.hxh.data.ModAttachments;
 import com.evandouard.hxh.network.HxHNetwork;
+import com.evandouard.hxh.registry.ModBlocks;
 import com.evandouard.hxh.registry.ModCreativeTabs;
 import com.evandouard.hxh.registry.ModItems;
 import com.evandouard.hxh.stats.HunterEvents;
@@ -24,6 +25,7 @@ public final class HxHMod {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public HxHMod(IEventBus modEventBus, ModContainer modContainer) {
+        ModBlocks.BLOCKS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         ModCreativeTabs.TABS.register(modEventBus);
         ModAttachments.TYPES.register(modEventBus);

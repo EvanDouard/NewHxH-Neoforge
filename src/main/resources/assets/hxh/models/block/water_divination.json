@@ -1,0 +1,32 @@
+{
+  "render_type": "minecraft:translucent",
+  "ambientocclusion": false,
+  "textures": {
+    "glass": "minecraft:block/glass",
+    "water": "minecraft:block/water_still",
+    "leaf": "minecraft:block/azalea_leaves",
+    "particle": "minecraft:block/glass"
+  },
+  "elements": [
+    { "from": [5, 0, 5], "to": [11, 1, 11],
+      "faces": { "down": {"texture": "#glass"}, "up": {"texture": "#glass"}, "north": {"texture": "#glass"},
+                 "south": {"texture": "#glass"}, "west": {"texture": "#glass"}, "east": {"texture": "#glass"} } },
+    { "from": [5, 1, 5], "to": [11, 7, 6],
+      "faces": { "north": {"texture": "#glass"}, "south": {"texture": "#glass"}, "up": {"texture": "#glass"},
+                 "west": {"texture": "#glass"}, "east": {"texture": "#glass"} } },
+    { "from": [5, 1, 10], "to": [11, 7, 11],
+      "faces": { "north": {"texture": "#glass"}, "south": {"texture": "#glass"}, "up": {"texture": "#glass"},
+                 "west": {"texture": "#glass"}, "east": {"texture": "#glass"} } },
+    { "from": [5, 1, 6], "to": [6, 7, 10],
+      "faces": { "west": {"texture": "#glass"}, "east": {"texture": "#glass"}, "up": {"texture": "#glass"} } },
+    { "from": [10, 1, 6], "to": [11, 7, 10],
+      "faces": { "west": {"texture": "#glass"}, "east": {"texture": "#glass"}, "up": {"texture": "#glass"} } },
+    { "from": [6, 1, 6], "to": [10, 6, 10],
+      "faces": { "up": {"texture": "#water", "tintindex": 0}, "north": {"texture": "#water", "tintindex": 0},
+                 "south": {"texture": "#water", "tintindex": 0}, "west": {"texture": "#water", "tintindex": 0},
+                 "east": {"texture": "#water", "tintindex": 0} } },
+    { "from": [6.5, 6.05, 7], "to": [9.5, 6.1, 9],
+      "rotation": { "angle": 22.5, "axis": "y", "origin": [8, 6, 8] },
+      "faces": { "up": {"uv": [4, 4, 12, 10], "texture": "#leaf"}, "down": {"uv": [4, 4, 12, 10], "texture": "#leaf"} } }
+  ]
+}

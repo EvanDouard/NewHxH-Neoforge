@@ -3,6 +3,7 @@ package com.evandouard.hxh.command;
 import com.evandouard.hxh.data.HunterData;
 import com.evandouard.hxh.data.NenType;
 import com.evandouard.hxh.data.Stat;
+import com.evandouard.hxh.nen.NenModes;
 import com.evandouard.hxh.stats.HunterStats;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -87,7 +88,7 @@ public final class HunterCommand {
                                         .executes(ctx -> setNenType(ctx, EntityArgument.getEntities(ctx, "targets"))))))
                 .then(Commands.literal("unlock")
                         .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()),
-                                e -> HunterStats.get(e).setNenUnlocked(true))))
+                                e -> NenModes.unlock(e))))
                 .then(Commands.literal("reveal")
                         .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()),
                                 e -> HunterStats.get(e).setNenRevealed(true))));
@@ -162,6 +163,10 @@ public final class HunterCommand {
             lines.add(Component.translatable("command.hxh.show.nen", nenType));
         } else {
             lines.add(Component.translatable("command.hxh.show.nen", "???"));
+        }
+        if (data.nenUnlocked()) {
+            lines.add(Component.translatable("command.hxh.show.aura", (int) data.aura(), data.auraMax(),
+                    Component.translatable(data.mode().translationKey())));
         }
         if (source.hasPermission(2)) {
             lines.add(Component.translatable("command.hxh.show.nen_admin", nenType).withStyle(ChatFormatting.DARK_GRAY));

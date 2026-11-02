@@ -1,10 +1,17 @@
 package com.evandouard.hxh.client.ci;
 
 import com.evandouard.hxh.HxHMod;
+import net.minecraft.client.CameraType;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.client.gui.screens.PauseScreen;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameType;
@@ -35,6 +42,9 @@ import java.util.List;
  *     <li>{@code look <yaw> <pitch>} : oriente la caméra</li>
  *     <li>{@code shot <nom>} : capture d'écran dans screenshots/&lt;nom&gt;.png</li>
  *     <li>{@code log <texte>} : écrit dans le rapport</li>
+ *     <li>{@code key <nom de la touche>} : simule un appui (ex. key.hxh.ten)</li>
+ *     <li>{@code useblock <dx> <dy> <dz>} : clic droit sur le bloc à cette position relative au joueur</li>
+ *     <li>{@code camera <first|back|front>} : vue à la 1re personne, de dos ou de face</li>
  *     <li>{@code clearchat} : vide le chat (et la mémoire des messages reçus)</li>
  *     <li>{@code expect <texte>} : échec si aucun message reçu depuis le dernier clearchat ne contient ce texte</li>
  *     <li>{@code expectnot <texte>} : échec si un message reçu contient ce texte</li>
@@ -155,6 +165,35 @@ public final class CiAutopilot {
                 case "log" -> {
                     log(arg);
                     return false;
+                }
+                case "key" -> {
+                    for (KeyMapping mapping : mc.options.keyMappings) {
+                        if (mapping.getName().equals(arg)) {
+                            KeyMapping.click(mapping.getKey());
+                            log("touche " + arg);
+                            return true;
+                        }
+                    }
+                    log("ECHEC : touche inconnue '" + arg + "'");
+                    return false;
+                }
+                case "useblock" -> {
+                    String[] d = arg.split("\\s+");
+                    BlockPos target = mc.player.blockPosition().offset(
+                            Integer.parseInt(d[0]), Integer.parseInt(d[1]), Integer.parseInt(d[2]));
+                    BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(target), Direction.UP, target, false);
+                    mc.gameMode.useItemOn(mc.player, InteractionHand.MAIN_HAND, hit);
+                    log("clic droit sur " + target.toShortString() + " ("
+                            + mc.level.getBlockState(target).getBlock().getName().getString() + ")");
+                    return true;
+                }
+                case "camera" -> {
+                    mc.options.setCameraType(switch (arg) {
+                        case "back" -> CameraType.THIRD_PERSON_BACK;
+                        case "front" -> CameraType.THIRD_PERSON_FRONT;
+                        default -> CameraType.FIRST_PERSON;
+                    });
+                    return true;
                 }
                 case "clearchat" -> {
                     mc.gui.getChat().clearMessages(false);

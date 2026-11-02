@@ -6,6 +6,7 @@ import com.evandouard.hxh.data.ModAttachments;
 import com.evandouard.hxh.data.NenType;
 import com.evandouard.hxh.data.Stat;
 import com.evandouard.hxh.network.HxHNetwork;
+import com.evandouard.hxh.nen.NenModes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,6 +17,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 /**
@@ -33,6 +35,8 @@ public final class HunterEvents {
         gameBus.addListener(HunterEvents::onIncomingDamage);
         gameBus.addListener(HunterEvents::onDamageDealt);
         gameBus.addListener(HunterEvents::onHeal);
+        gameBus.addListener(HunterEvents::onStartTracking);
+        gameBus.addListener(HunterEvents::onEntityTick);
     }
 
     /** Réapplique les effets des stats à chaque arrivée dans un monde (connexion, réapparition, dimension). */
@@ -67,14 +71,39 @@ public final class HunterEvents {
         if (player.tickCount % 20 == 0 && player.isSprinting() && player.onGround()) {
             HunterStats.addXp(player, Stat.SPEED, 1);
         }
+        NenModes.tick(player);
         HxHNetwork.syncDirty(player);
     }
 
-    /** Endurance : réduit les dégâts reçus. */
+    /** Les mobs avec des données Hunter gèrent aussi leur aura. */
+    private static void onEntityTick(EntityTickEvent.Post event) {
+        if (event.getEntity() instanceof LivingEntity living && !(living instanceof Player)
+                && !living.level().isClientSide() && living.hasData(ModAttachments.HUNTER)) {
+            NenModes.tick(living);
+            HxHNetwork.syncDirty(living);
+        }
+    }
+
+    /** Un joueur commence à voir une entité : on lui envoie ses données (pour afficher son aura). */
+    private static void onStartTracking(PlayerEvent.StartTracking event) {
+        if (event.getEntity() instanceof ServerPlayer viewer && event.getTarget() instanceof LivingEntity target) {
+            HxHNetwork.syncTo(viewer, target);
+        }
+    }
+
+    /** Endurance et mode de la victime, Ren de l'attaquant au corps à corps. */
     private static void onIncomingDamage(LivingIncomingDamageEvent event) {
         LivingEntity victim = event.getEntity();
-        if (victim.level().isClientSide() || !victim.hasData(ModAttachments.HUNTER)) return;
-        event.setAmount(event.getAmount() * HunterStats.damageTakenFactor(victim));
+        if (victim.level().isClientSide()) return;
+        float factor = 1f;
+        if (victim.hasData(ModAttachments.HUNTER)) {
+            factor *= HunterStats.damageTakenFactor(victim) * NenModes.incomingFactor(victim);
+        }
+        Entity attacker = event.getSource().getEntity();
+        if (attacker instanceof LivingEntity livingAttacker && attacker == event.getSource().getDirectEntity()) {
+            factor *= NenModes.outgoingFactor(livingAttacker);
+        }
+        if (factor != 1f) event.setAmount(event.getAmount() * factor);
     }
 
     /** Force (attaquant au corps à corps) et Endurance (victime) gagnent de l'XP. Joueurs seulement. */

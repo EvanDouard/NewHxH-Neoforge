@@ -14,6 +14,7 @@ public final class HxHNetwork {
     public static void register(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar("1");
         registrar.playToClient(SyncHunterPayload.TYPE, SyncHunterPayload.STREAM_CODEC, SyncHunterPayload::handle);
+        registrar.playToServer(ToggleNenModePayload.TYPE, ToggleNenModePayload.STREAM_CODEC, ToggleNenModePayload::handle);
     }
 
     /** Envoie toutes les données Hunter d'un joueur à lui-même. */
@@ -21,6 +22,13 @@ public final class HxHNetwork {
         HunterData data = player.getData(ModAttachments.HUNTER);
         data.writeDirtyAndClear(); // ce qui était en attente part dans l'envoi complet
         PacketDistributor.sendToPlayer(player, new SyncHunterPayload(player.getId(), data.writeAll()));
+    }
+
+    /** Envoie toutes les données Hunter d'une entité à un joueur qui commence à la voir. */
+    public static void syncTo(ServerPlayer viewer, LivingEntity entity) {
+        if (!entity.hasData(ModAttachments.HUNTER)) return;
+        PacketDistributor.sendToPlayer(viewer,
+                new SyncHunterPayload(entity.getId(), entity.getData(ModAttachments.HUNTER).writeAll()));
     }
 
     /** Envoie seulement les champs modifiés, au joueur et à ceux qui le voient. */
