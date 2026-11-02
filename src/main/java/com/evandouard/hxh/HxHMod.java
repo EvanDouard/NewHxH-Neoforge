@@ -1,12 +1,18 @@
 package com.evandouard.hxh;
 
+import com.evandouard.hxh.command.HunterCommand;
+import com.evandouard.hxh.data.ModAttachments;
+import com.evandouard.hxh.network.HxHNetwork;
 import com.evandouard.hxh.registry.ModCreativeTabs;
 import com.evandouard.hxh.registry.ModItems;
+import com.evandouard.hxh.stats.HunterEvents;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 
 /**
@@ -20,6 +26,13 @@ public final class HxHMod {
     public HxHMod(IEventBus modEventBus, ModContainer modContainer) {
         ModItems.ITEMS.register(modEventBus);
         ModCreativeTabs.TABS.register(modEventBus);
+        ModAttachments.TYPES.register(modEventBus);
+        modEventBus.addListener(HxHNetwork::register);
+        modContainer.registerConfig(ModConfig.Type.SERVER, HxHConfig.SPEC);
+        HxHGameRules.init();
+
+        HunterEvents.register(NeoForge.EVENT_BUS);
+        NeoForge.EVENT_BUS.addListener(HunterCommand::register);
         LOGGER.info("[HxH] Mod chargé");
     }
 

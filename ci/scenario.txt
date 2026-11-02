@@ -1,5 +1,5 @@
 # Scénario joué par le client en CI (voir CiAutopilot pour les instructions).
-# Chaque capture est publiée sur la branche ci-results.
+# Chaque capture est publiée sur la branche ci-results. Le jeu est en français.
 wait 100
 cmd time set noon
 cmd gamerule doDaylightCycle false
@@ -7,5 +7,31 @@ cmd give @s hxh:hunter_card
 look 30 20
 wait 60
 shot 01_carte_hunter_en_main
-log OK : monde chargé et carte Hunter donnée
+
+# --- J1 : données Hunter et stats ---
+cmd gamemode survival
+clearchat
+cmd hunter
+wait 20
+expect niveau 0
+expect Force : 0
+expect Nen : non débloqué
+# randomNenType est vrai par défaut : un type doit avoir été tiré à la connexion
+expectnot type de Nen : aucun
+shot 02_hunter_depart
+
+clearchat
+cmd hunter stat vitality set 100
+cmd hunter stat strength set 30
+cmd effect give @s minecraft:instant_health 1 5
+wait 40
+clearchat
+cmd hunter
+cmd attribute @s minecraft:generic.max_health get
+cmd attribute @s minecraft:generic.attack_damage get
+wait 20
+expect Vitalité : 100
+expect Force : 30
+expect 40
+shot 03_vitalite_100_force_30
 quit

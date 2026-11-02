@@ -12,6 +12,7 @@ import net.minecraft.world.level.LevelSettings;
 import net.minecraft.world.level.WorldDataConfiguration;
 import net.minecraft.world.level.levelgen.WorldOptions;
 import net.minecraft.world.level.levelgen.presets.WorldPresets;
+import net.neoforged.neoforge.client.event.ClientChatReceivedEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
@@ -20,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +35,9 @@ import java.util.List;
  *     <li>{@code look <yaw> <pitch>} : oriente la caméra</li>
  *     <li>{@code shot <nom>} : capture d'écran dans screenshots/&lt;nom&gt;.png</li>
  *     <li>{@code log <texte>} : écrit dans le rapport</li>
+ *     <li>{@code clearchat} : vide le chat (et la mémoire des messages reçus)</li>
+ *     <li>{@code expect <texte>} : échec si aucun message reçu depuis le dernier clearchat ne contient ce texte</li>
+ *     <li>{@code expectnot <texte>} : échec si un message reçu contient ce texte</li>
  *     <li>{@code quit} : quitte le jeu</li>
  * </ul>
  * Le déroulé est écrit dans {@code ci-report.txt} à la racine du dossier de jeu.
@@ -41,6 +46,7 @@ public final class CiAutopilot {
     private static final long TIMEOUT_MS = 10 * 60 * 1000L;
 
     private final List<String> lines;
+    private final List<String> received = new ArrayList<>();
     private final Path report;
     private final long startMs = System.currentTimeMillis();
     private int index = 0;
@@ -68,6 +74,8 @@ public final class CiAutopilot {
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             pilot.log("Scénario chargé : " + lines.size() + " lignes");
             NeoForge.EVENT_BUS.addListener(ClientTickEvent.Post.class, pilot::onTick);
+            NeoForge.EVENT_BUS.addListener(ClientChatReceivedEvent.class,
+                    e -> pilot.received.add(e.getMessage().getString()));
         } catch (IOException e) {
             HxHMod.LOGGER.error("[HxH CI] Impossible de lire le scénario {}", scenario, e);
         }
@@ -146,6 +154,22 @@ public final class CiAutopilot {
                 }
                 case "log" -> {
                     log(arg);
+                    return false;
+                }
+                case "clearchat" -> {
+                    mc.gui.getChat().clearMessages(false);
+                    received.clear();
+                    return true;
+                }
+                case "expect" -> {
+                    boolean found = received.stream().anyMatch(m -> m.contains(arg));
+                    log((found ? "OK : message trouvé '" : "ECHEC : message absent '") + arg + "'");
+                    if (!found) log("  messages reçus : " + received);
+                    return false;
+                }
+                case "expectnot" -> {
+                    boolean found = received.stream().anyMatch(m -> m.contains(arg));
+                    log((found ? "ECHEC : message interdit trouvé '" : "OK : message bien absent '") + arg + "'");
                     return false;
                 }
                 case "quit" -> {
