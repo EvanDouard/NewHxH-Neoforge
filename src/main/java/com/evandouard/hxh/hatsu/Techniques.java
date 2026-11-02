@@ -114,11 +114,22 @@ public final class Techniques {
         at.level().playSound(null, at.getX(), at.getY(), at.getZ(), sound, SoundSource.PLAYERS, 0.8f, 1f);
     }
 
+    /** Effet (particules + son) à un point donné : utilisé quand la technique rate. */
+    static void fxAt(LivingEntity caster, Vec3 at, ParticleOptions particle, SoundEvent sound, int count) {
+        if (caster.level() instanceof ServerLevel server) {
+            server.sendParticles(particle, at.x, at.y, at.z, count, 0.3, 0.3, 0.3, 0.05);
+        }
+        caster.level().playSound(null, at.x, at.y, at.z, sound, SoundSource.PLAYERS, 0.8f, 1f);
+    }
+
     /** Traînée de particules du lanceur à la cible (techniques à distance). */
     static void trail(LivingEntity from, LivingEntity to, ParticleOptions particle) {
+        trailTo(from, to.getBoundingBox().getCenter(), particle);
+    }
+
+    static void trailTo(LivingEntity from, Vec3 b, ParticleOptions particle) {
         if (!(from.level() instanceof ServerLevel server)) return;
         Vec3 a = from.getEyePosition();
-        Vec3 b = to.getBoundingBox().getCenter();
         int steps = (int) Math.max(2, a.distanceTo(b) * 3);
         for (int i = 0; i <= steps; i++) {
             Vec3 p = a.lerp(b, i / (double) steps);
@@ -180,9 +191,20 @@ public final class Techniques {
         }
 
         @Override
+        public double aiRange() {
+            return range;
+        }
+
+        @Override
         public boolean perform(LivingEntity caster, float power) {
             LivingEntity target = Targeting.inFront(caster, range, minDot);
-            if (target == null) return false;
+            if (target == null) {
+                // Raté : la technique part quand même vers le point visé (plus tard : dégâts aux blocs à l'impact)
+                Vec3 end = caster.getEyePosition().add(caster.getLookAngle().scale(range));
+                if (range > 5) trailTo(caster, end, particle);
+                fxAt(caster, end, particle, sound, 20);
+                return false;
+            }
             if (range > 5) trail(caster, target, particle);
             target.invulnerableTime = 0;
             target.hurt(damageFrom(caster), damage * power);
@@ -214,6 +236,11 @@ public final class Techniques {
         public net.minecraft.network.chat.Component conditions() {
             return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.area",
                     String.format(java.util.Locale.ROOT, "%.0f", radius));
+        }
+
+        @Override
+        public double aiRange() {
+            return radius;
         }
 
         @Override
@@ -263,6 +290,11 @@ public final class Techniques {
             this.amount = amount;
             this.particle = particle;
             this.sound = sound;
+        }
+
+        @Override
+        public boolean isHeal() {
+            return true;
         }
 
         @Override

@@ -8,6 +8,7 @@ import com.evandouard.hxh.data.Stat;
 import com.evandouard.hxh.network.HxHNetwork;
 import com.evandouard.hxh.hatsu.Hatsu;
 import com.evandouard.hxh.nen.NenAwakening;
+import com.evandouard.hxh.nen.NenMobAI;
 import com.evandouard.hxh.nen.NenHealing;
 import com.evandouard.hxh.nen.NenModes;
 import net.minecraft.server.level.ServerPlayer;
@@ -48,6 +49,11 @@ public final class HunterEvents {
         if (event.getEntity() instanceof LivingEntity living
                 && (living instanceof Player || living.hasData(ModAttachments.HUNTER))) {
             HunterStats.applyAttributes(living);
+            // Un mob à Nen rechargé du disque retrouve son comportement de combat
+            if (living instanceof net.minecraft.world.entity.Mob mob && HunterStats.get(mob).nenUnlocked()) {
+                mob.setPersistenceRequired();
+                NenMobAI.ensureGoals(mob);
+            }
         }
     }
 
@@ -85,6 +91,7 @@ public final class HunterEvents {
     private static void onEntityTick(EntityTickEvent.Post event) {
         if (event.getEntity() instanceof LivingEntity living && !(living instanceof Player)
                 && !living.level().isClientSide() && living.hasData(ModAttachments.HUNTER)) {
+            if (living instanceof net.minecraft.world.entity.Mob mob) NenMobAI.tick(mob);
             NenModes.tick(living);
             NenHealing.tick(living);
             NenAwakening.tickMeditation(living);
@@ -127,8 +134,11 @@ public final class HunterEvents {
         if (damage <= 0 || event.getEntity().level().isClientSide()) return;
         Entity attacker = event.getSource().getEntity();
         boolean melee = attacker != null && attacker == event.getSource().getDirectEntity();
-        if (melee && attacker instanceof Player player) {
-            HunterStats.addXp(player, Stat.STRENGTH, damage);
+        if (melee && attacker instanceof LivingEntity livingAttacker && trains(livingAttacker)) {
+            HunterStats.addXp(livingAttacker, Stat.STRENGTH, damage);
+        }
+        if (!(event.getEntity() instanceof Player) && trains(event.getEntity())) {
+            HunterStats.addXp(event.getEntity(), Stat.ENDURANCE, damage); // les mobs à Nen progressent aussi
         }
         if (event.getEntity() instanceof Player victim) {
             HunterStats.addXp(victim, Stat.ENDURANCE, damage);
@@ -141,8 +151,14 @@ public final class HunterEvents {
 
     /** Vitalité : gagne de l'XP en se soignant. */
     private static void onHeal(LivingHealEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player && event.getAmount() > 0) {
-            HunterStats.addXp(player, Stat.VITALITY, event.getAmount());
+        LivingEntity e = event.getEntity();
+        if (!e.level().isClientSide() && event.getAmount() > 0 && trains(e)) {
+            HunterStats.addXp(e, Stat.VITALITY, event.getAmount());
         }
+    }
+
+    /** Qui gagne de l'XP de stats par l'usage : les joueurs et les mobs qui ont le Nen. */
+    private static boolean trains(LivingEntity e) {
+        return e instanceof Player || (e.hasData(ModAttachments.HUNTER) && HunterStats.get(e).nenUnlocked());
     }
 }

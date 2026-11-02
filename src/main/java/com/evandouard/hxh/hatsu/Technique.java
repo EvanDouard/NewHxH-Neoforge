@@ -52,6 +52,16 @@ public abstract class Technique {
         return true;
     }
 
+    /** Distance à laquelle un mob tente cette technique (infini = sur soi, utilisable partout). */
+    public double aiRange() {
+        return Double.MAX_VALUE;
+    }
+
+    /** Technique de soin : un mob ne la lance que s'il est blessé. */
+    public boolean isHeal() {
+        return false;
+    }
+
     /** Conditions d'utilisation affichées dans l'écran des techniques (portée, cible…). */
     public Component conditions() {
         return Component.translatable("technique.hxh.cond.self");

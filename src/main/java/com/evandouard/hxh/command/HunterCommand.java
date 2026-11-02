@@ -138,7 +138,8 @@ public final class HunterCommand {
                 .then(Commands.literal("set")
                         .then(Commands.argument("kit", StringArgumentType.word())
                                 .suggests((ctx, b) -> SharedSuggestionProvider.suggest(
-                                        HatsuKits.all().stream().map(HatsuKit::id), b))
+                                        java.util.stream.Stream.concat(java.util.stream.Stream.of("none"),
+                                                HatsuKits.all().stream().map(HatsuKit::id)), b))
                                 .executes(ctx -> setKit(ctx, List.of(ctx.getSource().getEntityOrException())))
                                 .then(Commands.argument("targets", EntityArgument.entities())
                                         .executes(ctx -> setKit(ctx, EntityArgument.getEntities(ctx, "targets"))))))
@@ -150,6 +151,10 @@ public final class HunterCommand {
     private static int setKit(CommandContext<CommandSourceStack> ctx, Collection<? extends Entity> targets)
             throws CommandSyntaxException {
         String id = StringArgumentType.getString(ctx, "kit");
+        if (id.equals("none")) {
+            // Retour à l'état d'avant le choix (le Nen et le type restent)
+            return apply(ctx, targets, e -> HunterStats.get(e).setKit(""));
+        }
         HatsuKit kit = HatsuKits.get(id);
         if (kit == null) throw UNKNOWN_KIT.create(id);
         return apply(ctx, targets, e -> {

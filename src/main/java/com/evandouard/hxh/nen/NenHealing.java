@@ -36,7 +36,8 @@ public final class NenHealing {
             return null;
         }
         if (!data.nenUnlocked()) return "message.hxh.nen_locked";
-        if (!data.healUnlocked()) return "message.hxh.heal_locked";
+        // Les mobs à Nen savent tous se soigner ; un joueur doit l'avoir débloqué
+        if (!data.healUnlocked() && entity instanceof Player) return "message.hxh.heal_locked";
         if (data.mode() == NenMode.ZETSU) return "message.hxh.heal_zetsu";
         data.setHealing(true);
         return null;
@@ -54,7 +55,7 @@ public final class NenHealing {
         if (!entity.hasData(ModAttachments.HUNTER)) return;
         HunterData data = HunterStats.get(entity);
         if (!data.healing()) return;
-        if (!data.nenUnlocked() || !data.healUnlocked() || data.mode() == NenMode.ZETSU) {
+        if (!data.nenUnlocked() || (!data.healUnlocked() && entity instanceof Player) || data.mode() == NenMode.ZETSU) {
             data.setHealing(false);
             return;
         }

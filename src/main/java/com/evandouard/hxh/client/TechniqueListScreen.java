@@ -104,7 +104,6 @@ public class TechniqueListScreen extends Screen {
             }
             add(Component.translatable("screen.hxh.techniques.conditions", t.conditions()).withStyle(ChatFormatting.GRAY), 8, false);
         }
-        add(Component.translatable("screen.hxh.techniques.miss_rule").withStyle(ChatFormatting.DARK_GRAY), 0, true);
     }
 
     private int contentHeight() {

@@ -192,4 +192,31 @@ shot 20_technique_suivante
 key key.hxh.hatsu_menu
 wait 10
 shot 21_ma_fiche_illumi
+key key.hxh.hatsu_menu
+
+# --- Raté visible : technique lancée dans le vide ---
+look 180 0
+wait 30
+clearchat
+key key.hxh.next_technique
+wait 5
+key key.hxh.cast
+wait 2
+shot 22_aiguille_ratee_dans_le_vide
+expectnot Raté
+
+# --- Mob à Nen : un husk avec le Hatsu de Gon se bat avec ses techniques ---
+cmd kill @e[type=minecraft:husk]
+cmd gamemode creative
+cmd summon minecraft:husk ~ ~ ~6 {PersistenceRequired:0b}
+cmd summon minecraft:villager ~ ~ ~9 {NoAI:1b}
+wait 5
+cmd hunter hatsu set gon @e[type=minecraft:husk,limit=1]
+look 0 15
+wait 120
+clearchat
+cmd hunter show @e[type=minecraft:husk,limit=1]
+wait 10
+expect Hatsu : Gon Freecss
+shot 23_husk_gon
 quit

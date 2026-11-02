@@ -27,6 +27,7 @@ public final class NenModes {
     public static void unlock(LivingEntity entity) {
         HunterData data = HunterStats.get(entity);
         data.setNenUnlocked(true);
+        if (entity instanceof net.minecraft.world.entity.Mob mob) NenMobAI.onAwakened(mob);
         data.setAuraMax(computeAuraMax(data));
         data.setAura(data.auraMax());
         data.setMode(NenMode.NONE);

@@ -126,7 +126,8 @@ public final class Hatsu {
 
     public static void requestCast(LivingEntity entity) {
         String refusal = cast(entity);
-        if (refusal != null && entity instanceof Player player) {
+        // Un raté n'affiche rien : on voit la technique partir dans le vide
+        if (refusal != null && !"message.hxh.hatsu_missed".equals(refusal) && entity instanceof Player player) {
             player.displayClientMessage(Component.translatable(refusal), true);
         }
     }
