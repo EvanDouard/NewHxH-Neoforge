@@ -196,12 +196,11 @@ closescreen
 
 # --- Raté visible : technique lancée dans le vide ---
 look 180 0
-wait 30
-clearchat
 key key.hxh.next_technique
-wait 5
+wait 120
+clearchat
 key key.hxh.cast
-wait 2
+wait 1
 shot 22_aiguille_ratee_dans_le_vide
 expectnot Raté
 
