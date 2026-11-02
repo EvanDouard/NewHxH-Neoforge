@@ -191,13 +191,15 @@ public final class CiAutopilot {
                     return false;
                 }
                 case "click" -> {
+                    // Premier bouton ACTIF dont le libellé contient le texte
+                    boolean foundDisabled = false;
                     if (mc.screen != null) {
                         for (var child : mc.screen.children()) {
                             if (child instanceof net.minecraft.client.gui.components.AbstractButton button
                                     && button.getMessage().getString().contains(arg)) {
                                 if (!button.active) {
-                                    log("ECHEC : bouton '" + arg + "' désactivé");
-                                    return false;
+                                    foundDisabled = true;
+                                    continue;
                                 }
                                 button.onPress();
                                 log("clic sur '" + button.getMessage().getString() + "'");
@@ -205,7 +207,7 @@ public final class CiAutopilot {
                             }
                         }
                     }
-                    log("ECHEC : aucun bouton '" + arg + "' à l'écran");
+                    log("ECHEC : aucun bouton actif '" + arg + "' à l'écran" + (foundDisabled ? " (seulement désactivés)" : ""));
                     return false;
                 }
                 case "useblock" -> {

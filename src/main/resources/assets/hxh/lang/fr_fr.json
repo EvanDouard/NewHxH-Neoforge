@@ -76,7 +76,7 @@
   "key.hxh.cast": "Lancer la technique",
   "key.hxh.next_technique": "Technique suivante",
   "screen.hxh.hatsu.title": "Choisis ton Hatsu",
-  "screen.hxh.hatsu.your_type": "Ton type de Nen : %s — ce choix est définitif",
+  "screen.hxh.hatsu.your_type": "Ton type de Nen : %s — choix définitif (Échap pour fermer)",
   "screen.hxh.hatsu.choose": "Choisir %s",
   "screen.hxh.hatsu.reserved": "Réservé au type %s",
   "screen.hxh.hatsu.technique": "%s (%s)",
@@ -115,5 +115,6 @@
   "technique.hxh.illumi_needle": "Aiguille",
   "technique.hxh.illumi_transform": "Aiguille de métamorphose",
   "technique.hxh.pitou_terpsichora": "Terpsichora",
-  "technique.hxh.pitou_doctor_blythe": "Doctor Blythe"
+  "technique.hxh.pitou_doctor_blythe": "Doctor Blythe",
+  "screen.hxh.hatsu.choose_short": "Choisir"
 }

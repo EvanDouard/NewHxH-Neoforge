@@ -145,7 +145,7 @@ wait 10
 key key.hxh.hatsu_menu
 wait 20
 shot 16_choix_du_hatsu
-click Illumi
+click Choisir
 wait 10
 shot 17_confirmation_definitive
 click Oui

@@ -15,7 +15,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -27,8 +26,9 @@ import java.util.List;
  * Seuls ceux du type de Nen du joueur peuvent être choisis, et le choix est définitif.
  */
 public class HatsuSelectionScreen extends Screen {
-    private static final int ROW_HEIGHT = 34;
-    private static final int BUTTON_WIDTH = 110;
+    private static final int ROW_HEIGHT = 33;
+    private static final int TOP = 34;
+    private static final int BUTTON_WIDTH = 64;
 
     public HatsuSelectionScreen() {
         super(Component.translatable("screen.hxh.hatsu.title"));
@@ -41,14 +41,15 @@ public class HatsuSelectionScreen extends Screen {
     @Override
     protected void init() {
         List<HatsuKit> kits = HatsuKits.all();
-        int top = 40;
+        int top = TOP;
         int right = width - 20;
         for (int i = 0; i < kits.size(); i++) {
             HatsuKit kit = kits.get(i);
             String refusal = Hatsu.chooseRefusal(data(), kit);
             Component name = Component.translatable(kit.translationKey());
-            Button button = Button.builder(Component.translatable("screen.hxh.hatsu.choose", name), b -> confirm(kit))
+            Button button = Button.builder(Component.translatable("screen.hxh.hatsu.choose_short"), b -> confirm(kit))
                     .bounds(right - BUTTON_WIDTH, top + i * ROW_HEIGHT + 6, BUTTON_WIDTH, 20)
+                    .tooltip(Tooltip.create(Component.translatable("screen.hxh.hatsu.choose", name)))
                     .build();
             button.active = refusal == null;
             if (refusal != null) {
@@ -59,8 +60,6 @@ public class HatsuSelectionScreen extends Screen {
             }
             addRenderableWidget(button);
         }
-        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, b -> onClose())
-                .bounds(width / 2 - 50, height - 28, 100, 20).build());
     }
 
     private void confirm(HatsuKit kit) {
@@ -86,11 +85,12 @@ public class HatsuSelectionScreen extends Screen {
                 ? Component.translatable("nen.hxh.none")
                 : Component.translatable(data.nenType().translationKey());
         graphics.drawCenteredString(font, Component.translatable("screen.hxh.hatsu.your_type", typeLine)
-                .withStyle(ChatFormatting.GRAY), width / 2, 24, 0xFFFFFF);
+                .withStyle(ChatFormatting.GRAY), width / 2, 22, 0xFFFFFF);
 
         List<HatsuKit> kits = HatsuKits.all();
-        int top = 40;
+        int top = TOP;
         int left = 20;
+        int textWidth = width - 20 - BUTTON_WIDTH - 8 - left;
         for (int i = 0; i < kits.size(); i++) {
             HatsuKit kit = kits.get(i);
             int y = top + i * ROW_HEIGHT;
@@ -111,7 +111,8 @@ public class HatsuSelectionScreen extends Screen {
                 techniques.append(Component.translatable("screen.hxh.hatsu.technique",
                         Component.translatable(technique.translationKey()), technique.auraCost()));
             }
-            graphics.drawString(font, techniques.withStyle(ChatFormatting.GRAY), left, y + 17, 0xFFFFFF);
+            // Les techniques passent à la ligne pour ne jamais passer sous le bouton
+            graphics.drawWordWrap(font, techniques.withStyle(ChatFormatting.GRAY), left, y + 14, textWidth, 0xFFFFFF);
         }
     }
 

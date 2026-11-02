@@ -76,7 +76,7 @@
   "key.hxh.cast": "Cast technique",
   "key.hxh.next_technique": "Next technique",
   "screen.hxh.hatsu.title": "Choose your Hatsu",
-  "screen.hxh.hatsu.your_type": "Your Nen type: %s — this choice is permanent",
+  "screen.hxh.hatsu.your_type": "Your Nen type: %s — permanent choice (Esc to close)",
   "screen.hxh.hatsu.choose": "Choose %s",
   "screen.hxh.hatsu.reserved": "Reserved for %s",
   "screen.hxh.hatsu.technique": "%s (%s)",
@@ -115,5 +115,6 @@
   "technique.hxh.illumi_needle": "Needle",
   "technique.hxh.illumi_transform": "Transformation Needle",
   "technique.hxh.pitou_terpsichora": "Terpsichora",
-  "technique.hxh.pitou_doctor_blythe": "Doctor Blythe"
+  "technique.hxh.pitou_doctor_blythe": "Doctor Blythe",
+  "screen.hxh.hatsu.choose_short": "Choose"
 }
