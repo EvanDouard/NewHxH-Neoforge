@@ -20,6 +20,12 @@ import java.util.Set;
 public final class HunterData implements INBTSerializable<CompoundTag> {
     private static final String NEN = "nen";
     private static final String AURA = "aura";
+    private static final String HEAL = "heal";
+    private static final String MEDITATION = "meditation";
+
+    /** Couleur d'aura par défaut : bleu clair. */
+    public static final int DEFAULT_AURA_COLOR = 0x7FC8FF;
+    public static final int HEAL_MAX_LEVEL = 100;
 
     private final Map<Stat, Integer> levels = new EnumMap<>(Stat.class);
     private final Map<Stat, Integer> xp = new EnumMap<>(Stat.class);
@@ -34,6 +40,17 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private NenMode mode = NenMode.NONE;
     /** Dernière valeur entière d'aura envoyée : on ne resynchronise que si elle change. */
     private int lastWrittenAura = -1;
+    private int auraColor = DEFAULT_AURA_COLOR;
+
+    // Soin par le Nen (maîtrise à part, XP élevée)
+    private boolean healUnlocked = false;
+    private int healLevel = 0;
+    private int healXp = 0;
+    private boolean healing = false;
+
+    // Méditation (une des voies pour éveiller le Nen)
+    private boolean meditating = false;
+    private int meditationTicks = 0;
 
     private final Set<String> dirty = new HashSet<>();
 
@@ -151,6 +168,93 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         dirty.add(AURA);
     }
 
+    public int auraColor() {
+        return auraColor;
+    }
+
+    public void setAuraColor(int rgb) {
+        auraColor = rgb & 0xFFFFFF;
+        dirty.add(AURA);
+    }
+
+    // ---------- Soin par le Nen ----------
+
+    public boolean healUnlocked() {
+        return healUnlocked;
+    }
+
+    public int healLevel() {
+        return healLevel;
+    }
+
+    public int healXp() {
+        return healXp;
+    }
+
+    public boolean healing() {
+        return healing;
+    }
+
+    public void setHealUnlocked(boolean unlocked) {
+        healUnlocked = unlocked;
+        dirty.add(HEAL);
+    }
+
+    public void setHealLevel(int level) {
+        healLevel = Math.max(0, Math.min(HEAL_MAX_LEVEL, level));
+        healXp = 0;
+        dirty.add(HEAL);
+    }
+
+    public void setHealing(boolean value) {
+        if (value == healing) return;
+        healing = value;
+        dirty.add(HEAL);
+    }
+
+    /** XP de soin : volontairement bien plus exigeante que les stats. */
+    public static int healXpToNext(int level) {
+        return 3 * Stat.xpToNext(level) + 20;
+    }
+
+    /** @return le nombre de niveaux de soin gagnés */
+    public int addHealXp(int amount) {
+        if (amount <= 0 || healLevel >= HEAL_MAX_LEVEL) return 0;
+        int current = healXp + amount;
+        int gained = 0;
+        while (healLevel < HEAL_MAX_LEVEL && current >= healXpToNext(healLevel)) {
+            current -= healXpToNext(healLevel);
+            healLevel++;
+            gained++;
+        }
+        healXp = healLevel >= HEAL_MAX_LEVEL ? 0 : current;
+        dirty.add(HEAL);
+        return gained;
+    }
+
+    // ---------- Méditation ----------
+
+    public boolean meditating() {
+        return meditating;
+    }
+
+    public int meditationTicks() {
+        return meditationTicks;
+    }
+
+    public void setMeditating(boolean value) {
+        if (value == meditating) return;
+        meditating = value;
+        dirty.add(MEDITATION);
+    }
+
+    public void setMeditationTicks(int ticks) {
+        int old = meditationTicks;
+        meditationTicks = Math.max(0, ticks);
+        // On ne synchronise qu'une fois par seconde de progression
+        if (old / 20 != meditationTicks / 20) dirty.add(MEDITATION);
+    }
+
     // ---------- Sérialisation ----------
 
     private static String statKey(Stat stat) {
@@ -171,8 +275,25 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             a.putFloat("value", aura);
             a.putInt("max", auraMax);
             a.putString("mode", mode.id());
+            a.putInt("color", auraColor);
             out.put(AURA, a);
             lastWrittenAura = (int) aura;
+            return;
+        }
+        if (key.equals(HEAL)) {
+            CompoundTag h = new CompoundTag();
+            h.putBoolean("unlocked", healUnlocked);
+            h.putInt("level", healLevel);
+            h.putInt("xp", healXp);
+            h.putBoolean("active", healing);
+            out.put(HEAL, h);
+            return;
+        }
+        if (key.equals(MEDITATION)) {
+            CompoundTag m = new CompoundTag();
+            m.putBoolean("active", meditating);
+            m.putInt("ticks", meditationTicks);
+            out.put(MEDITATION, m);
             return;
         }
         for (Stat s : Stat.values()) {
@@ -192,6 +313,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         for (Stat s : Stat.values()) writeKey(statKey(s), out);
         writeKey(NEN, out);
         writeKey(AURA, out);
+        writeKey(HEAL, out);
+        writeKey(MEDITATION, out);
         return out;
     }
 
@@ -212,6 +335,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         for (Stat s : Stat.values()) dirty.add(statKey(s));
         dirty.add(NEN);
         dirty.add(AURA);
+        dirty.add(HEAL);
+        dirty.add(MEDITATION);
     }
 
     /** Remet tout à zéro (stats et Nen). */
@@ -242,6 +367,19 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             aura = Math.max(0, Math.min(auraMax, a.getFloat("value")));
             NenMode m = NenMode.byId(a.getString("mode"));
             mode = m == null ? NenMode.NONE : m;
+            auraColor = a.contains("color") ? a.getInt("color") : DEFAULT_AURA_COLOR;
+        }
+        if (in.contains(HEAL)) {
+            CompoundTag h = in.getCompound(HEAL);
+            healUnlocked = h.getBoolean("unlocked");
+            healLevel = Math.max(0, Math.min(HEAL_MAX_LEVEL, h.getInt("level")));
+            healXp = Math.max(0, h.getInt("xp"));
+            healing = h.getBoolean("active");
+        }
+        if (in.contains(MEDITATION)) {
+            CompoundTag m = in.getCompound(MEDITATION);
+            meditating = m.getBoolean("active");
+            meditationTicks = Math.max(0, m.getInt("ticks"));
         }
     }
 
@@ -253,6 +391,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     @Override
     public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
         read(nbt);
+        healing = false;
+        meditating = false;
         dirty.clear();
     }
 }

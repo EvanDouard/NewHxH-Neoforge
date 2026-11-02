@@ -49,6 +49,7 @@ public final class NenModes {
         HunterData data = HunterStats.get(entity);
         NenMode target = data.mode() == mode ? NenMode.NONE : mode;
         String refusal = trySetMode(entity, target);
+        if (refusal == null && target == NenMode.ZETSU) data.setHealing(false); // pas de soin sans aura
         if (entity instanceof Player player) {
             player.displayClientMessage(refusal != null
                     ? Component.translatable(refusal)
@@ -64,6 +65,7 @@ public final class NenModes {
 
         data.setAuraMax(computeAuraMax(data));
         float regen = (float) (HxHConfig.AURA_REGEN_PER_SECOND.get() / 20.0);
+        if (data.meditating()) regen *= 2; // la méditation recharge l'aura plus vite
 
         switch (data.mode()) {
             case NONE, TEN -> data.setAura(data.aura() + regen);

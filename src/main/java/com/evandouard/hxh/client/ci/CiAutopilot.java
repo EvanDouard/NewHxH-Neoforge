@@ -43,6 +43,7 @@ import java.util.List;
  *     <li>{@code shot <nom>} : capture d'écran dans screenshots/&lt;nom&gt;.png</li>
  *     <li>{@code log <texte>} : écrit dans le rapport</li>
  *     <li>{@code key <nom de la touche>} : simule un appui (ex. key.hxh.ten)</li>
+ *     <li>{@code hold <touche>} / {@code release <touche>} : maintient / relâche une touche</li>
  *     <li>{@code useblock <dx> <dy> <dz>} : clic droit sur le bloc à cette position relative au joueur</li>
  *     <li>{@code camera <first|back|front>} : vue à la 1re personne, de dos ou de face</li>
  *     <li>{@code clearchat} : vide le chat (et la mémoire des messages reçus)</li>
@@ -171,6 +172,17 @@ public final class CiAutopilot {
                         if (mapping.getName().equals(arg)) {
                             KeyMapping.click(mapping.getKey());
                             log("touche " + arg);
+                            return true;
+                        }
+                    }
+                    log("ECHEC : touche inconnue '" + arg + "'");
+                    return false;
+                }
+                case "hold", "release" -> {
+                    for (KeyMapping mapping : mc.options.keyMappings) {
+                        if (mapping.getName().equals(arg)) {
+                            KeyMapping.set(mapping.getKey(), op.equals("hold"));
+                            log(op + " " + arg);
                             return true;
                         }
                     }

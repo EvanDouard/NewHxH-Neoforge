@@ -4,6 +4,7 @@ import com.evandouard.hxh.HxHMod;
 import com.evandouard.hxh.data.HunterData;
 import com.evandouard.hxh.data.ModAttachments;
 import com.evandouard.hxh.data.NenMode;
+import com.evandouard.hxh.network.NenActionPayload;
 import com.evandouard.hxh.network.ToggleNenModePayload;
 import com.evandouard.hxh.registry.ModBlocks;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -11,9 +12,7 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
@@ -22,7 +21,6 @@ import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
-import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
 /**
@@ -33,6 +31,11 @@ public final class NenClient {
     public static final KeyMapping TEN = new KeyMapping("key.hxh.ten", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V, CATEGORY);
     public static final KeyMapping ZETSU = new KeyMapping("key.hxh.zetsu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, CATEGORY);
     public static final KeyMapping REN = new KeyMapping("key.hxh.ren", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_R, CATEGORY);
+    public static final KeyMapping HEAL = new KeyMapping("key.hxh.heal", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, CATEGORY);
+    public static final KeyMapping MEDITATE = new KeyMapping("key.hxh.meditate", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_M, CATEGORY);
+    public static final KeyMapping OPEN_PORES = new KeyMapping("key.hxh.open_pores", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, CATEGORY);
+
+    private static boolean healKeyWasDown = false;
 
     private static final int WATER_COLOR = 0xFF3F76E4;
 
@@ -42,6 +45,7 @@ public final class NenClient {
         modBus.addListener(NenClient::onRegisterKeys);
         modBus.addListener(NenClient::onRegisterLayers);
         modBus.addListener(NenClient::onRegisterBlockColors);
+        modBus.addListener(AuraLayer::addToRenderers);
         NeoForge.EVENT_BUS.addListener(NenClient::onClientTick);
     }
 
@@ -49,6 +53,9 @@ public final class NenClient {
         event.register(TEN);
         event.register(ZETSU);
         event.register(REN);
+        event.register(HEAL);
+        event.register(MEDITATE);
+        event.register(OPEN_PORES);
     }
 
     private static void onRegisterLayers(RegisterGuiLayersEvent event) {
@@ -66,27 +73,13 @@ public final class NenClient {
         while (TEN.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.TEN.id()));
         while (ZETSU.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.ZETSU.id()));
         while (REN.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.REN.id()));
-        spawnAuraParticles(mc);
-    }
-
-    /** L'aura (Ten, Ren) n'est visible que si on maîtrise soi-même le Nen. */
-    private static void spawnAuraParticles(Minecraft mc) {
-        if (mc.isPaused() || !mc.player.getData(ModAttachments.HUNTER).nenUnlocked()) return;
-        for (Player p : mc.level.players()) {
-            if (!p.hasData(ModAttachments.HUNTER)) continue;
-            NenMode mode = p.getData(ModAttachments.HUNTER).mode();
-            if (mode != NenMode.TEN && mode != NenMode.REN) continue;
-            boolean ren = mode == NenMode.REN;
-            int count = ren ? 4 : 1;
-            DustParticleOptions dust = ren
-                    ? new DustParticleOptions(new Vector3f(1f, 0.25f, 0.2f), 1.1f)
-                    : new DustParticleOptions(new Vector3f(0.75f, 0.9f, 1f), 0.8f);
-            for (int i = 0; i < count; i++) {
-                double x = p.getX() + (p.getRandom().nextDouble() - 0.5) * p.getBbWidth() * 1.6;
-                double y = p.getY() + p.getRandom().nextDouble() * p.getBbHeight();
-                double z = p.getZ() + (p.getRandom().nextDouble() - 0.5) * p.getBbWidth() * 1.6;
-                mc.level.addParticle(dust, x, y, z, 0, 0.02, 0);
-            }
+        while (MEDITATE.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.MEDITATE, true));
+        while (OPEN_PORES.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.OPEN_PORES, true));
+        // Soin : touche maintenue, on n'envoie que les changements d'état
+        boolean healDown = HEAL.isDown();
+        if (healDown != healKeyWasDown) {
+            healKeyWasDown = healDown;
+            PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.HEAL, healDown));
         }
     }
 
@@ -94,7 +87,13 @@ public final class NenClient {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.options.hideGui) return;
         HunterData data = mc.player.getData(ModAttachments.HUNTER);
-        if (!data.nenUnlocked()) return;
+        if (!data.nenUnlocked()) {
+            if (data.meditating()) {
+                Component text = Component.translatable("hud.hxh.meditating", data.meditationTicks() / 20);
+                graphics.drawString(mc.font, text, 8, graphics.guiHeight() - 24, 0xFFE8E0C8, true);
+            }
+            return;
+        }
 
         int width = 80;
         int x = 8;
@@ -109,8 +108,12 @@ public final class NenClient {
         graphics.fill(x - 1, y - 1, x + width + 1, y + 6, 0xC0000000);
         graphics.fill(x, y, x + (int) (width * ratio), y + 5, color);
 
-        Component label = Component.translatable("hud.hxh.aura", (int) data.aura(), data.auraMax(),
-                Component.translatable(data.mode().translationKey()));
+        Component state = data.healing()
+                ? Component.translatable("hud.hxh.healing")
+                : data.meditating()
+                ? Component.translatable("hud.hxh.meditation")
+                : Component.translatable(data.mode().translationKey());
+        Component label = Component.translatable("hud.hxh.aura", (int) data.aura(), data.auraMax(), state);
         graphics.drawString(mc.font, label, x, y - 10, 0xFFFFFFFF, true);
     }
 }

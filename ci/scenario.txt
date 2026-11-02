@@ -80,4 +80,62 @@ clearchat
 cmd hunter
 wait 10
 expectnot Nen : ???
+
+# --- Aura visible façon enchantement (vue de face) ---
+camera front
+look 0 0
+wait 30
+shot 08_aura_neutre
+key key.hxh.ten
+wait 30
+shot 09_aura_ten
+key key.hxh.ren
+wait 30
+shot 10_aura_ren
+key key.hxh.zetsu
+wait 30
+shot 11_zetsu_sans_aura
+key key.hxh.zetsu
+cmd hunter nen color FF8A3D
+wait 30
+shot 12_aura_orange
+camera first
+
+# --- Soin par le Nen ---
+cmd hunter nen heal unlock
+cmd damage @s 20
+wait 20
+hold key.hxh.heal
+wait 60
+camera front
+wait 10
+shot 13_soin_aura_verte
+release key.hxh.heal
+camera first
+clearchat
+cmd hunter
+wait 10
+expect Soin par le Nen : niveau
+
+# --- Éveil 1 : un maître ouvre les pores du villageois en face ---
+cmd summon minecraft:villager ~ ~ ~3 {NoAI:1b}
+look 0 10
+wait 20
+clearchat
+key key.hxh.open_pores
+wait 20
+cmd hunter show @e[type=minecraft:villager,limit=1,sort=nearest]
+wait 10
+expect Aura :
+shot 14_maitre_ouvre_les_pores
+
+# --- Éveil 2 : méditation (progression avancée par commande pour le test) ---
+cmd hunter nen lock
+cmd hunter nen meditation 1195
+wait 10
+clearchat
+key key.hxh.meditate
+wait 160
+expect Après une longue méditation
+shot 15_eveil_par_meditation
 quit

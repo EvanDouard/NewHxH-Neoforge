@@ -64,6 +64,46 @@ public final class HxHConfig {
             .comment("Durée de l'épuisement (lenteur + faiblesse) quand l'aura tombe à zéro en Ren, en ticks")
             .defineInRange("aura.exhaustionTicks", 200, 0, 12000);
 
+    public static final ModConfigSpec.DoubleValue HEAL_BASE_PER_SECOND = BUILDER
+            .comment("Soin par le Nen : PV rendus par seconde au niveau 0")
+            .defineInRange("heal.basePerSecond", 1.0, 0.0, 100.0);
+
+    public static final ModConfigSpec.DoubleValue HEAL_PER_LEVEL = BUILDER
+            .comment("Soin par le Nen : PV/s ajoutés par niveau de maîtrise")
+            .defineInRange("heal.perLevel", 0.09, 0.0, 10.0);
+
+    public static final ModConfigSpec.DoubleValue HEAL_BASE_COST = BUILDER
+            .comment("Soin par le Nen : aura consommée par PV rendu au niveau 0")
+            .defineInRange("heal.baseCost", 5.0, 0.0, 1000.0);
+
+    public static final ModConfigSpec.DoubleValue HEAL_COST_REDUCTION_PER_LEVEL = BUILDER
+            .comment("Soin par le Nen : réduction du coût par PV par niveau de maîtrise")
+            .defineInRange("heal.costReductionPerLevel", 0.04, 0.0, 10.0);
+
+    public static final ModConfigSpec.DoubleValue HEAL_MIN_COST = BUILDER
+            .comment("Soin par le Nen : coût minimal par PV, quel que soit le niveau")
+            .defineInRange("heal.minCost", 1.0, 0.0, 1000.0);
+
+    public static final ModConfigSpec.IntValue MEDITATION_SECONDS_TO_AWAKEN = BUILDER
+            .comment("Éveil par la méditation : secondes de méditation cumulées nécessaires")
+            .defineInRange("awakening.meditationSeconds", 1200, 1, 1_000_000);
+
+    public static final ModConfigSpec.DoubleValue ACCIDENTAL_AWAKENING_CHANCE = BUILDER
+            .comment("Éveil par accident : chance qu'un coup d'un utilisateur de Nen ouvre les pores de la victime")
+            .defineInRange("awakening.accidentalChance", 0.03, 0.0, 1.0);
+
+    public static final ModConfigSpec.IntValue OPEN_PORES_AURA_COST = BUILDER
+            .comment("Ouverture des pores par un maître : aura consommée par le maître")
+            .defineInRange("awakening.openPoresCost", 30, 0, 100000);
+
+    public static final ModConfigSpec.IntValue OPEN_PORES_COOLDOWN_TICKS = BUILDER
+            .comment("Ouverture des pores par un maître : temps de recharge en ticks")
+            .defineInRange("awakening.openPoresCooldown", 200, 0, 72000);
+
+    public static final ModConfigSpec.DoubleValue OPEN_PORES_RANGE = BUILDER
+            .comment("Ouverture des pores par un maître : portée en blocs")
+            .defineInRange("awakening.openPoresRange", 4.0, 1.0, 32.0);
+
     public static final ModConfigSpec SPEC = BUILDER.build();
 
     private HxHConfig() {}

@@ -6,6 +6,8 @@ import com.evandouard.hxh.data.ModAttachments;
 import com.evandouard.hxh.data.NenType;
 import com.evandouard.hxh.data.Stat;
 import com.evandouard.hxh.network.HxHNetwork;
+import com.evandouard.hxh.nen.NenAwakening;
+import com.evandouard.hxh.nen.NenHealing;
 import com.evandouard.hxh.nen.NenModes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -72,6 +74,8 @@ public final class HunterEvents {
             HunterStats.addXp(player, Stat.SPEED, 1);
         }
         NenModes.tick(player);
+        NenHealing.tick(player);
+        NenAwakening.tickMeditation(player);
         HxHNetwork.syncDirty(player);
     }
 
@@ -80,6 +84,8 @@ public final class HunterEvents {
         if (event.getEntity() instanceof LivingEntity living && !(living instanceof Player)
                 && !living.level().isClientSide() && living.hasData(ModAttachments.HUNTER)) {
             NenModes.tick(living);
+            NenHealing.tick(living);
+            NenAwakening.tickMeditation(living);
             HxHNetwork.syncDirty(living);
         }
     }
@@ -117,6 +123,10 @@ public final class HunterEvents {
         }
         if (event.getEntity() instanceof Player victim) {
             HunterStats.addXp(victim, Stat.ENDURANCE, damage);
+            // Frappé par un utilisateur de Nen : ses pores peuvent s'ouvrir par accident
+            if (attacker instanceof LivingEntity livingAttacker) {
+                NenAwakening.tryAccidentalAwakening(livingAttacker, victim, victim.getRandom());
+            }
         }
     }
 

@@ -35,6 +35,8 @@ import java.util.function.Consumer;
 public final class HunterCommand {
     private static final DynamicCommandExceptionType UNKNOWN_STAT = new DynamicCommandExceptionType(
             id -> Component.translatable("command.hxh.unknown_stat", id));
+    private static final DynamicCommandExceptionType BAD_COLOR = new DynamicCommandExceptionType(
+            hex -> Component.translatable("command.hxh.bad_color", hex));
     private static final DynamicCommandExceptionType UNKNOWN_NEN = new DynamicCommandExceptionType(
             id -> Component.translatable("command.hxh.unknown_nen", id));
 
@@ -86,12 +88,49 @@ public final class HunterCommand {
                                 .executes(ctx -> setNenType(ctx, List.of(ctx.getSource().getEntityOrException())))
                                 .then(Commands.argument("targets", EntityArgument.entities())
                                         .executes(ctx -> setNenType(ctx, EntityArgument.getEntities(ctx, "targets"))))))
-                .then(Commands.literal("unlock")
-                        .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()),
-                                e -> NenModes.unlock(e))))
-                .then(Commands.literal("reveal")
-                        .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()),
-                                e -> HunterStats.get(e).setNenRevealed(true))));
+                .then(targeted("unlock", NenModes::unlock))
+                .then(targeted("lock", e -> {
+                    HunterData d = HunterStats.get(e);
+                    d.setNenUnlocked(false);
+                    d.setNenRevealed(false);
+                    d.setMode(com.evandouard.hxh.data.NenMode.NONE);
+                    d.setHealing(false);
+                    d.setMeditationTicks(0);
+                }))
+                .then(targeted("reveal", e -> HunterStats.get(e).setNenRevealed(true)))
+                .then(Commands.literal("meditation")
+                        .then(Commands.argument("seconds", IntegerArgumentType.integer(0))
+                                .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()),
+                                        e -> HunterStats.get(e).setMeditationTicks(
+                                                IntegerArgumentType.getInteger(ctx, "seconds") * 20)))))
+                .then(Commands.literal("heal")
+                        .then(targeted("unlock", e -> HunterStats.get(e).setHealUnlocked(true)))
+                        .then(Commands.literal("level")
+                                .then(Commands.argument("level", IntegerArgumentType.integer(0, HunterData.HEAL_MAX_LEVEL))
+                                        .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()),
+                                                e -> HunterStats.get(e).setHealLevel(
+                                                        IntegerArgumentType.getInteger(ctx, "level")))))))
+                .then(Commands.literal("color")
+                        .then(Commands.argument("hex", StringArgumentType.word())
+                                .executes(ctx -> {
+                                    String hex = StringArgumentType.getString(ctx, "hex").replace("#", "");
+                                    int rgb;
+                                    try {
+                                        rgb = Integer.parseInt(hex, 16);
+                                    } catch (NumberFormatException e) {
+                                        throw BAD_COLOR.create(hex);
+                                    }
+                                    return apply(ctx, List.of(ctx.getSource().getEntityOrException()),
+                                            e -> HunterStats.get(e).setAuraColor(rgb));
+                                })));
+    }
+
+    /** Sous-commande appliquée à soi-même ou à des cibles : {@code <nom> [cibles]}. */
+    private static LiteralArgumentBuilder<CommandSourceStack> targeted(String name, Consumer<LivingEntity> action) {
+        return Commands.literal(name)
+                .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()), action))
+                .then(Commands.argument("targets", EntityArgument.entities())
+                        .executes(ctx -> apply(ctx, EntityArgument.getEntities(ctx, "targets"), action)));
     }
 
     private static Stat statArg(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
@@ -167,6 +206,15 @@ public final class HunterCommand {
         if (data.nenUnlocked()) {
             lines.add(Component.translatable("command.hxh.show.aura", (int) data.aura(), data.auraMax(),
                     Component.translatable(data.mode().translationKey())));
+        }
+        if (data.healUnlocked()) {
+            lines.add(Component.translatable("command.hxh.show.heal", data.healLevel(),
+                    data.healLevel() >= HunterData.HEAL_MAX_LEVEL
+                            ? Component.translatable("command.hxh.show.max")
+                            : Component.translatable("command.hxh.show.xp", data.healXp(), HunterData.healXpToNext(data.healLevel()))));
+        }
+        if (!data.nenUnlocked() && data.meditationTicks() > 0) {
+            lines.add(Component.translatable("command.hxh.show.meditation", data.meditationTicks() / 20));
         }
         if (source.hasPermission(2)) {
             lines.add(Component.translatable("command.hxh.show.nen_admin", nenType).withStyle(ChatFormatting.DARK_GRAY));
