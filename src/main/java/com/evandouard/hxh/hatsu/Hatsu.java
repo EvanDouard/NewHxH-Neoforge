@@ -38,6 +38,7 @@ public final class Hatsu {
         if (!data.nenUnlocked()) return "message.hxh.nen_locked";
         if (!data.nenRevealed() || data.nenType() == null) return "message.hxh.hatsu_need_divination";
         if (data.hasKit()) return "message.hxh.hatsu_already_chosen";
+        if (!kit.implemented()) return "message.hxh.hatsu_not_available";
         if (kit.type() != data.nenType()) return "message.hxh.hatsu_wrong_type";
         return null;
     }
@@ -52,6 +53,31 @@ public final class Hatsu {
         if (refusal != null) return refusal;
         data.setKit(kit.id());
         return null;
+    }
+
+    // ---------- Passifs ----------
+
+    /** Passifs actifs : ceux du personnage choisi qui sont jouables (rien en Zetsu : l'aura est coupée). */
+    public static java.util.List<Passive> activePassives(LivingEntity entity) {
+        if (!entity.hasData(com.evandouard.hxh.data.ModAttachments.HUNTER)) return java.util.List.of();
+        HunterData data = HunterStats.get(entity);
+        HatsuKit kit = kitOf(data);
+        if (kit == null || !data.nenUnlocked() || data.mode() == NenMode.ZETSU) return java.util.List.of();
+        return kit.passives().stream().filter(Passive::implemented).toList();
+    }
+
+    public static void tickPassives(LivingEntity entity) {
+        for (Passive p : activePassives(entity)) p.tick(entity);
+    }
+
+    public static float modifyIncoming(LivingEntity victim, net.minecraft.world.damagesource.DamageSource source, float amount) {
+        for (Passive p : activePassives(victim)) amount = p.modifyIncoming(victim, source, amount);
+        return amount;
+    }
+
+    public static float modifyOutgoingMelee(LivingEntity attacker, LivingEntity target, float amount) {
+        for (Passive p : activePassives(attacker)) amount = p.modifyOutgoingMelee(attacker, target, amount);
+        return amount;
     }
 
     /** Passe à la technique suivante (boucle), sans délai. */
@@ -91,10 +117,11 @@ public final class Hatsu {
         long now = entity.level().getGameTime();
         String refusal = castRefusal(data, technique, now);
         if (refusal != null) return refusal;
-        if (!technique.perform(entity, power(data, technique))) return "message.hxh.hatsu_no_target";
+        // Raté ou pas, l'aura et la recharge partent : lancer dans le vide a un prix
+        boolean hit = technique.perform(entity, power(data, technique));
         data.setAura(data.aura() - technique.auraCost());
         data.setReadyAt(technique.id(), now + technique.cooldownTicks());
-        return null;
+        return hit ? null : "message.hxh.hatsu_missed";
     }
 
     public static void requestCast(LivingEntity entity) {

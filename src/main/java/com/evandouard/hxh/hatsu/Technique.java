@@ -1,6 +1,7 @@
 package com.evandouard.hxh.hatsu;
 
 import com.evandouard.hxh.data.NenType;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 
 /**
@@ -46,9 +47,19 @@ public abstract class Technique {
         return "technique.hxh." + id + ".desc";
     }
 
+    /** false pour une technique encore à l'état d'idée (décrite, pas jouable). */
+    public boolean implemented() {
+        return true;
+    }
+
+    /** Conditions d'utilisation affichées dans l'écran des techniques (portée, cible…). */
+    public Component conditions() {
+        return Component.translatable("technique.hxh.cond.self");
+    }
+
     /**
      * Effet de la technique, côté serveur.
-     * @return false si elle n'a pas pu s'appliquer (pas de cible) : rien n'est alors consommé
+     * @return false si elle a raté (pas de cible) : l'aura et la recharge sont quand même consommées
      */
     public abstract boolean perform(LivingEntity caster, float power);
 }

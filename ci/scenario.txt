@@ -145,6 +145,24 @@ wait 10
 key key.hxh.hatsu_menu
 wait 20
 shot 16_choix_du_hatsu
+click Voir
+wait 10
+shot 16b_fiche_gon
+click Retour
+wait 5
+click >
+wait 5
+shot 16c_page_2_idees
+click Voir
+wait 10
+shot 16d_fiche_idee
+click Retour
+wait 5
+click <
+wait 5
+click Tous
+wait 5
+shot 16e_filtre_mon_type
 click Choisir
 wait 10
 shot 17_confirmation_definitive
@@ -171,4 +189,7 @@ expect touche
 key key.hxh.next_technique
 wait 10
 shot 20_technique_suivante
+key key.hxh.hatsu_menu
+wait 10
+shot 21_ma_fiche_illumi
 quit

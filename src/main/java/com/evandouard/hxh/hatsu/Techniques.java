@@ -126,6 +126,33 @@ public final class Techniques {
         }
     }
 
+    /** Technique décrite mais pas encore jouable (personnages en réflexion). */
+    public static final class Idea extends Technique {
+        public Idea(String id, NenType category) {
+            super(id, category, 0, 0);
+        }
+
+        @Override
+        public boolean implemented() {
+            return false;
+        }
+
+        @Override
+        public net.minecraft.network.chat.Component conditions() {
+            return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.idea");
+        }
+
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            return false;
+        }
+    }
+
+    /** Enregistre une technique-idée (appelé par HatsuKits pour les personnages à venir). */
+    static Technique idea(String id, NenType category) {
+        return register(new Idea(id, category));
+    }
+
     /** Frappe une cible devant soi (au corps à corps ou à distance). */
     static final class Strike extends Technique {
         private final double range, minDot;
@@ -144,6 +171,12 @@ public final class Techniques {
             this.effects = effects;
             this.particle = particle;
             this.sound = sound;
+        }
+
+        @Override
+        public net.minecraft.network.chat.Component conditions() {
+            return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.target",
+                    String.format(java.util.Locale.ROOT, "%.1f", range));
         }
 
         @Override
@@ -175,6 +208,12 @@ public final class Techniques {
             this.knockback = knockback;
             this.particle = particle;
             this.sound = sound;
+        }
+
+        @Override
+        public net.minecraft.network.chat.Component conditions() {
+            return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.area",
+                    String.format(java.util.Locale.ROOT, "%.0f", radius));
         }
 
         @Override

@@ -103,8 +103,7 @@ public final class NenClient {
         HunterData data = mc.player.getData(ModAttachments.HUNTER);
         HatsuKit kit = Hatsu.kitOf(data);
         if (kit != null) {
-            mc.player.displayClientMessage(Component.translatable("message.hxh.hatsu_current",
-                    Component.translatable(kit.translationKey())), true);
+            mc.setScreen(new TechniqueListScreen(kit, null)); // déjà choisi : on consulte sa fiche
         } else if (!data.nenUnlocked()) {
             mc.player.displayClientMessage(Component.translatable("message.hxh.nen_locked"), true);
         } else if (!data.nenRevealed()) {

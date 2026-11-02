@@ -6,6 +6,7 @@ import com.evandouard.hxh.data.ModAttachments;
 import com.evandouard.hxh.data.NenType;
 import com.evandouard.hxh.data.Stat;
 import com.evandouard.hxh.network.HxHNetwork;
+import com.evandouard.hxh.hatsu.Hatsu;
 import com.evandouard.hxh.nen.NenAwakening;
 import com.evandouard.hxh.nen.NenHealing;
 import com.evandouard.hxh.nen.NenModes;
@@ -76,6 +77,7 @@ public final class HunterEvents {
         NenModes.tick(player);
         NenHealing.tick(player);
         NenAwakening.tickMeditation(player);
+        Hatsu.tickPassives(player);
         HxHNetwork.syncDirty(player);
     }
 
@@ -86,6 +88,7 @@ public final class HunterEvents {
             NenModes.tick(living);
             NenHealing.tick(living);
             NenAwakening.tickMeditation(living);
+            Hatsu.tickPassives(living);
             HxHNetwork.syncDirty(living);
         }
     }
@@ -109,7 +112,13 @@ public final class HunterEvents {
         if (attacker instanceof LivingEntity livingAttacker && attacker == event.getSource().getDirectEntity()) {
             factor *= NenModes.outgoingFactor(livingAttacker);
         }
-        if (factor != 1f) event.setAmount(event.getAmount() * factor);
+        float amount = event.getAmount() * factor;
+        // Passifs du personnage : de la victime (immunités…) puis de l'attaquant au corps à corps
+        amount = Hatsu.modifyIncoming(victim, event.getSource(), amount);
+        if (attacker instanceof LivingEntity livingAttacker && attacker == event.getSource().getDirectEntity()) {
+            amount = Hatsu.modifyOutgoingMelee(livingAttacker, victim, amount);
+        }
+        if (amount != event.getAmount()) event.setAmount(amount);
     }
 
     /** Force (attaquant au corps à corps) et Endurance (victime) gagnent de l'XP. Joueurs seulement. */
