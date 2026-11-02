@@ -86,7 +86,7 @@ public class HatsuSelectionScreen extends Screen {
         addRenderableWidget(Button.builder(Component.translatable(onlyMyType
                                 ? "screen.hxh.hatsu.filter_mine" : "screen.hxh.hatsu.filter_all"),
                         b -> { onlyMyType = !onlyMyType; page = 0; rebuildWidgets(); })
-                .bounds(16, bottom, 90, 20).build());
+                .bounds(16, bottom, 110, 20).build());
     }
 
     private static Component reason(HatsuKit kit, String refusal) {

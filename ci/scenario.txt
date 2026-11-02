@@ -160,7 +160,7 @@ click Retour
 wait 5
 click <
 wait 5
-click Tous
+click Filtre
 wait 5
 shot 16e_filtre_mon_type
 click Choisir
