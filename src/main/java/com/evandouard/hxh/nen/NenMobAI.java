@@ -185,7 +185,12 @@ public final class NenMobAI {
 
         @Override
         public void stop() {
-            if (neutral) mob.getNavigation().stop();
+            if (neutral) {
+                mob.getNavigation().stop();
+                // Neutre : une fois l'agresseur mort ou disparu, il oublie la querelle
+                LivingEntity t = mob.getTarget();
+                if (t == null || !t.isAlive()) mob.setTarget(null);
+            }
         }
 
         @Override

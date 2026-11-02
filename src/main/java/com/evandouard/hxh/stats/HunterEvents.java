@@ -137,6 +137,13 @@ public final class HunterEvents {
         if (melee && attacker instanceof LivingEntity livingAttacker && trains(livingAttacker)) {
             HunterStats.addXp(livingAttacker, Stat.STRENGTH, damage);
         }
+        // Un mob passif qui a le Nen devient neutre : il riposte contre son agresseur
+        if (event.getEntity() instanceof net.minecraft.world.entity.Mob victimMob
+                && !(victimMob instanceof net.minecraft.world.entity.monster.Enemy)
+                && attacker instanceof LivingEntity livingAggressor && livingAggressor != victimMob
+                && trains(victimMob)) {
+            victimMob.setTarget(livingAggressor);
+        }
         if (!(event.getEntity() instanceof Player) && trains(event.getEntity())) {
             HunterStats.addXp(event.getEntity(), Stat.ENDURANCE, damage); // les mobs à Nen progressent aussi
         }
