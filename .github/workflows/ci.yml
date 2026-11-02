@@ -1,0 +1,101 @@
+name: CI
+
+# À chaque push sur main : compile, lance les tests en jeu (GameTests), lance un vrai
+# client sous écran virtuel qui joue ci/scenario.txt et prend des captures.
+# Tous les résultats (logs, captures, rapport) sont publiés sur la branche ci-results.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test-play:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Préparer le dossier de résultats
+        run: mkdir -p ci-out
+
+      - name: Compilation
+        id: build
+        run: ./gradlew build --stacktrace 2>&1 | tee ci-out/build.log
+
+      - name: Tests en jeu (GameTests)
+        id: gametest
+        if: steps.build.outcome == 'success'
+        run: ./gradlew runGameTestServer --stacktrace 2>&1 | tee ci-out/gametest.log
+
+      - name: Installer l'écran virtuel et le rendu logiciel
+        if: always() && steps.build.outcome == 'success'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq xvfb libgl1-mesa-dri mesa-utils > /dev/null
+
+      - name: Client automatique (scénario + captures)
+        id: client
+        if: always() && steps.build.outcome == 'success'
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: |
+          mkdir -p run-ci
+          printf '%s\n' 'onboardAccessibility:false' 'pauseOnLostFocus:false' 'renderDistance:6' \
+            'tutorialStep:none' 'joinedFirstServer:true' 'skipMultiplayerWarning:true' \
+            'soundCategory_master:0.0' 'lang:fr_fr' > run-ci/options.txt
+          xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runCiClient --stacktrace 2>&1 | tee ci-out/client.log
+          # Le scénario doit avoir écrit sa ligne de fin, sans échec
+          grep -q "Fin du scénario" run-ci/ci-report.txt
+          ! grep -q "ECHEC" run-ci/ci-report.txt
+
+      - name: Rassembler les résultats
+        if: always()
+        run: |
+          cp -r run-ci/screenshots ci-out/ 2>/dev/null || true
+          cp run-ci/ci-report.txt ci-out/ 2>/dev/null || true
+          cp run-ci/logs/latest.log ci-out/client-latest.log 2>/dev/null || true
+          cp run/logs/latest.log ci-out/gametest-latest.log 2>/dev/null || true
+          mkdir -p ci-out/crash-reports
+          cp run/crash-reports/* run-ci/crash-reports/* ci-out/crash-reports/ 2>/dev/null || true
+          {
+            echo "# Résultats CI"
+            echo
+            echo "- Commit : ${GITHUB_SHA}"
+            echo "- Run : ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            echo "- Compilation : ${{ steps.build.outcome }}"
+            echo "- GameTests : ${{ steps.gametest.outcome }}"
+            echo "- Client : ${{ steps.client.outcome }}"
+          } > ci-out/SUMMARY.md
+          cat ci-out/SUMMARY.md >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ci-results
+          path: ci-out
+
+      - name: Publier sur la branche ci-results
+        if: always()
+        run: |
+          cd ci-out
+          git init -q
+          git checkout -q -b ci-results
+          git add -A
+          git -c user.name="hxh-ci" -c user.email="hxh-ci@users.noreply.github.com" \
+            commit -qm "CI ${GITHUB_SHA::7} (run ${GITHUB_RUN_ID})"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" ci-results

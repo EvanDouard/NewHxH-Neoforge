@@ -1,0 +1,11 @@
+# Scénario joué par le client en CI (voir CiAutopilot pour les instructions).
+# Chaque capture est publiée sur la branche ci-results.
+wait 100
+cmd time set noon
+cmd gamerule doDaylightCycle false
+cmd give @s hxh:hunter_card
+look 30 20
+wait 60
+shot 01_carte_hunter_en_main
+log OK : monde chargé et carte Hunter donnée
+quit
