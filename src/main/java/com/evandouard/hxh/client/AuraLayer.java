@@ -36,7 +36,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
  */
 public class AuraLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
     private static final ResourceLocation SWIRL =
-            ResourceLocation.withDefaultNamespace("textures/entity/creeper/creeper_armor.png");
+            ResourceLocation.fromNamespaceAndPath("hxh", "textures/entity/aura_swirl.png");
     /** Centre approximatif du corps dans l'espace du modèle (axe Y vers le bas, pieds à 1,5). */
     private static final float BODY_CENTER_Y = 0.75f;
 
@@ -56,9 +56,9 @@ public class AuraLayer<T extends LivingEntity, M extends EntityModel<T>> extends
         float intensity;
         float scale;
         switch (data.mode()) {
-            case TEN -> { intensity = 0.65f; scale = 1.04f; }
-            case REN -> { intensity = 0.85f + 0.15f * pulse; scale = 1.12f + 0.03f * pulse; }
-            default -> { intensity = 0.4f; scale = 1.06f; }
+            case TEN -> { intensity = 0.8f; scale = 1.04f; }
+            case REN -> { intensity = 0.9f + 0.1f * pulse; scale = 1.12f + 0.03f * pulse; }
+            default -> { intensity = 0.6f; scale = 1.06f; }
         }
 
         int rgb = data.healing() ? 0x7CFF8A : data.auraColor();
