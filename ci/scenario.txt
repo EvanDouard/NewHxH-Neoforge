@@ -192,7 +192,7 @@ shot 20_technique_suivante
 key key.hxh.hatsu_menu
 wait 10
 shot 21_ma_fiche_illumi
-key key.hxh.hatsu_menu
+closescreen
 
 # --- Raté visible : technique lancée dans le vide ---
 look 180 0

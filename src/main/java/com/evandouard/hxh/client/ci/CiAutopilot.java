@@ -47,6 +47,7 @@ import java.util.List;
  *     <li>{@code click <texte>} : clique sur le bouton de l'écran ouvert dont le libellé contient ce texte</li>
  *     <li>{@code useblock <dx> <dy> <dz>} : clic droit sur le bloc à cette position relative au joueur</li>
  *     <li>{@code camera <first|back|front>} : vue à la 1re personne, de dos ou de face</li>
+ *     <li>{@code closescreen} : ferme l'écran ouvert</li>
  *     <li>{@code clearchat} : vide le chat (et la mémoire des messages reçus)</li>
  *     <li>{@code expect <texte>} : échec si aucun message reçu depuis le dernier clearchat ne contient ce texte</li>
  *     <li>{@code expectnot <texte>} : échec si un message reçu contient ce texte</li>
@@ -226,6 +227,10 @@ public final class CiAutopilot {
                         case "front" -> CameraType.THIRD_PERSON_FRONT;
                         default -> CameraType.FIRST_PERSON;
                     });
+                    return true;
+                }
+                case "closescreen" -> {
+                    mc.setScreen(null);
                     return true;
                 }
                 case "clearchat" -> {
