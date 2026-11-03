@@ -174,10 +174,10 @@ public final class QuestManager {
         Quest q = activeQuest(d);
         Quest.Step step = currentStep(d);
         if (q == null || step == null) {
-            PacketDistributor.sendToPlayer(player, new QuestStatusPayload("", "", 0, 0));
+            com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload("", "", 0, 0));
             return;
         }
         int progress = step.type().equals("follow") ? d.progress / 20 : d.progress;
-        PacketDistributor.sendToPlayer(player, new QuestStatusPayload(q.titleKey(), q.stepKey(step), progress, step.goal()));
+        com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.titleKey(), q.stepKey(step), progress, step.goal()));
     }
 }

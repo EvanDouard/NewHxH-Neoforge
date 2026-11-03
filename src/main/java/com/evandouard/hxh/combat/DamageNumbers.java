@@ -15,7 +15,7 @@ public final class DamageNumbers {
 
     public static void send(LivingEntity entity, float amount, boolean heal) {
         if (entity.level().isClientSide() || amount < 0.05f) return;
-        PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, new DamageNumberPayload(entity.getId(), amount, heal));
+        com.evandouard.hxh.network.HxHNetwork.sendToTrackingAndSelf(entity, new DamageNumberPayload(entity.getId(), amount, heal));
     }
 
     /** « -10 », « -2.5 », « +1 » : entier au-dessus de 10, sinon une décimale (sans « .0 »). */

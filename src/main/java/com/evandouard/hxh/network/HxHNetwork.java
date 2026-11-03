@@ -22,18 +22,37 @@ public final class HxHNetwork {
         registrar.playToServer(ToggleNenModePayload.TYPE, ToggleNenModePayload.STREAM_CODEC, ToggleNenModePayload::handle);
     }
 
+    /**
+     * Envoi sûr à un joueur : ignoré si sa connexion ne connaît pas nos paquets
+     * (joueurs factices des tests ou d'autres mods).
+     */
+    public static void sendTo(ServerPlayer player, net.minecraft.network.protocol.common.custom.CustomPacketPayload payload) {
+        if (player.connection != null && player.connection.hasChannel(payload.type())) {
+            PacketDistributor.sendToPlayer(player, payload);
+        }
+    }
+
+    /** Envoi sûr à tous les joueurs qui voient l'entité, et à elle-même si c'est un joueur. */
+    public static void sendToTrackingAndSelf(net.minecraft.world.entity.Entity entity,
+                                             net.minecraft.network.protocol.common.custom.CustomPacketPayload payload) {
+        if (!(entity.level() instanceof net.minecraft.server.level.ServerLevel level)) return;
+        java.util.Set<ServerPlayer> targets = new java.util.HashSet<>(
+                level.getChunkSource().chunkMap.getPlayers(entity.chunkPosition(), false));
+        if (entity instanceof ServerPlayer self) targets.add(self);
+        for (ServerPlayer p : targets) sendTo(p, payload);
+    }
+
     /** Envoie toutes les données Hunter d'un joueur à lui-même. */
     public static void syncFull(ServerPlayer player) {
         HunterData data = player.getData(ModAttachments.HUNTER);
         data.writeDirtyAndClear(); // ce qui était en attente part dans l'envoi complet
-        PacketDistributor.sendToPlayer(player, new SyncHunterPayload(player.getId(), data.writeAll()));
+        sendTo(player, new SyncHunterPayload(player.getId(), data.writeAll()));
     }
 
     /** Envoie toutes les données Hunter d'une entité à un joueur qui commence à la voir. */
     public static void syncTo(ServerPlayer viewer, LivingEntity entity) {
         if (!entity.hasData(ModAttachments.HUNTER)) return;
-        PacketDistributor.sendToPlayer(viewer,
-                new SyncHunterPayload(entity.getId(), entity.getData(ModAttachments.HUNTER).writeAll()));
+        sendTo(viewer, new SyncHunterPayload(entity.getId(), entity.getData(ModAttachments.HUNTER).writeAll()));
     }
 
     /** Envoie seulement les champs modifiés, au joueur et à ceux qui le voient. */
@@ -41,7 +60,6 @@ public final class HxHNetwork {
         if (!entity.hasData(ModAttachments.HUNTER)) return;
         HunterData data = entity.getData(ModAttachments.HUNTER);
         if (!data.isDirty()) return;
-        PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity,
-                new SyncHunterPayload(entity.getId(), data.writeDirtyAndClear()));
+        sendToTrackingAndSelf(entity, new SyncHunterPayload(entity.getId(), data.writeDirtyAndClear()));
     }
 }
