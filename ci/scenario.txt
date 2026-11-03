@@ -360,4 +360,76 @@ talkto netero
 wait 20
 expect Tu es maintenant un Hunter
 shot 35_licence_de_hunter
+
+# --- J7 : Tour Céleste ---
+cmd effect clear @s
+cmd hunter quest reset
+cmd hunter nen lock
+cmd difficulty easy
+cmd setblock ~2 ~ ~ hxh:heavens_arena_gate
+look -90 15
+wait 10
+shot 36_portail_de_la_tour
+clearchat
+useblock 2 0 0
+wait 80
+expect Bienvenue à la Tour Céleste
+shot 37_hall_de_la_tour_celeste
+cmd tp @s 0.5 64 -4.5 180 10
+wait 20
+clearchat
+talkto receptionist
+wait 20
+expect Inscription validée
+expect Nouvelle quête : La Tour Céleste
+shot 38_guichet_et_quete
+cmd tp @s 8.5 64 0.5 -90 0
+wait 20
+shot 39_ascenseur
+clearchat
+useblock 2 0 0
+wait 30
+expect Étage 1 : ton adversaire
+shot 40_arene_compte_a_rebours
+wait 60
+camera back
+wait 10
+shot 41_combat_etage_1
+camera first
+cmd kill @e[type=hxh:arena_fighter]
+wait 30
+expect Victoire par K.-O.
+expect Tu montes au
+shot 42_victoire_retour_au_hall
+cmd tp @s 0.5 64 -4.5 180 10
+wait 10
+clearchat
+talkto receptionist
+wait 10
+expect +500 Jenny
+cmd hunter arena floor 200
+cmd tp @s 8.5 64 0.5 -90 0
+wait 10
+clearchat
+useblock 2 0 0
+wait 10
+expect Reviens quand tu l'auras éveillé
+shot 43_refus_sans_nen
+cmd hunter nen unlock
+clearchat
+useblock 2 0 0
+wait 100
+expect ton adversaire maîtrise le Nen
+camera back
+wait 10
+shot 44_combat_maitre_du_nen
+camera first
+cmd hunter arena info
+wait 5
+clearchat
+cmd hunter arena leave
+wait 60
+expect Tu quittes la Tour Céleste
+shot 45_retour_dans_le_monde
+cmd difficulty peaceful
 quit

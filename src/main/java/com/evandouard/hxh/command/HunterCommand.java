@@ -60,6 +60,7 @@ public final class HunterCommand {
                 .then(hatsuCommand())
                 .then(Commands.literal("exam").requires(src -> src.hasPermission(2))
                         .then(Commands.literal("setup").executes(ctx -> examSetup(ctx.getSource()))))
+                .then(arenaCommand())
                 .then(Commands.literal("quest").requires(src -> src.hasPermission(2))
                         .then(Commands.literal("reset").executes(ctx -> {
                             net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
@@ -236,6 +237,46 @@ public final class HunterCommand {
             HunterStats.get(e).addXp(stat, amount);
             HunterStats.applyAttributes(e);
         });
+    }
+
+    /** /hunter arena : bilan pour tous ; entrer, sortir, combattre et régler l'étage pour les admins (tests). */
+    private static LiteralArgumentBuilder<CommandSourceStack> arenaCommand() {
+        return Commands.literal("arena")
+                .executes(ctx -> arenaInfo(ctx.getSource()))
+                .then(Commands.literal("info").executes(ctx -> arenaInfo(ctx.getSource())))
+                .then(Commands.literal("enter").requires(s -> s.hasPermission(2)).executes(ctx ->
+                        com.evandouard.hxh.arena.ArenaManager.enter(ctx.getSource().getPlayerOrException()) ? 1 : 0))
+                .then(Commands.literal("leave").requires(s -> s.hasPermission(2)).executes(ctx -> {
+                    com.evandouard.hxh.arena.ArenaManager.leave(ctx.getSource().getPlayerOrException());
+                    return 1;
+                }))
+                .then(Commands.literal("fight").requires(s -> s.hasPermission(2)).executes(ctx -> {
+                    net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
+                    String refusal = com.evandouard.hxh.arena.ArenaManager.startFight(p);
+                    if (refusal != null) {
+                        ctx.getSource().sendFailure(Component.translatable(refusal));
+                        return 0;
+                    }
+                    return 1;
+                }))
+                .then(Commands.literal("floor").requires(s -> s.hasPermission(2))
+                        .then(Commands.argument("floor", IntegerArgumentType.integer(1, com.evandouard.hxh.arena.ArenaRules.TOP_FLOOR))
+                                .executes(ctx -> {
+                                    net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
+                                    int floor = IntegerArgumentType.getInteger(ctx, "floor");
+                                    com.evandouard.hxh.quest.QuestData d = com.evandouard.hxh.quest.QuestManager.data(p);
+                                    d.setArenaFloor(floor);
+                                    d.setArenaRegistered(true);
+                                    ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.arena_floor", floor), false);
+                                    return 1;
+                                })));
+    }
+
+    private static int arenaInfo(CommandSourceStack source) throws CommandSyntaxException {
+        com.evandouard.hxh.quest.QuestData d = com.evandouard.hxh.quest.QuestManager.data(source.getPlayerOrException());
+        source.sendSuccess(() -> Component.translatable("command.hxh.arena_info",
+                d.arenaFloor(), d.arenaWins(), d.arenaLosses(), d.jenny()).withStyle(ChatFormatting.GOLD), false);
+        return 1;
     }
 
     /** Fait apparaître autour du joueur le site d'examen provisoire (en attendant les structures). */

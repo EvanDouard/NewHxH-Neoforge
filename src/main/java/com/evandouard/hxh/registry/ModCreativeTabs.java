@@ -19,6 +19,7 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.HUNTER_CARD.get());
                         output.accept(ModItems.WATER_DIVINATION.get());
                         output.accept(ModItems.EXAM_BADGE.get());
+                        output.accept(ModItems.HEAVENS_ARENA_GATE.get());
                     })
                     .build());
 

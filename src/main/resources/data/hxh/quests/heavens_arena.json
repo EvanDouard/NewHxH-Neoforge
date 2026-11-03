@@ -1,0 +1,13 @@
+{
+  "steps": [
+    { "id": "welcome", "type": "talk", "npc": "receptionist" },
+    { "id": "first_win", "type": "arena_win", "count": 1 },
+    { "id": "first_prize", "type": "talk", "npc": "receptionist", "reward_jenny": 500 },
+    { "id": "floor_50", "type": "arena_floor", "count": 50 },
+    { "id": "floor_50_prize", "type": "talk", "npc": "receptionist", "reward_jenny": 2000 },
+    { "id": "floor_100", "type": "arena_floor", "count": 100 },
+    { "id": "private_room", "type": "talk", "npc": "receptionist", "reward_jenny": 5000 },
+    { "id": "floor_200", "type": "arena_floor", "count": 200 },
+    { "id": "nen_warning", "type": "talk", "npc": "receptionist" }
+  ]
+}

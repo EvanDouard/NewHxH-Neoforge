@@ -64,7 +64,10 @@ public final class NenClient {
         modBus.addListener(NenClient::onRegisterBlockColors);
         modBus.addListener(EntityRenderersEvent.AddLayers.class, AuraLayer::addToRenderers);
         modBus.addListener(EntityRenderersEvent.RegisterRenderers.class,
-                e -> e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NPC.get(), NpcRenderer::new));
+                e -> {
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NPC.get(), NpcRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.ARENA_FIGHTER.get(), ArenaFighterRenderer::new);
+                });
         NeoForge.EVENT_BUS.addListener(NenClient::onClientTick);
     }
 

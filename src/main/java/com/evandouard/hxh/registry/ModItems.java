@@ -20,5 +20,8 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> WATER_DIVINATION =
             ITEMS.registerSimpleBlockItem("water_divination", ModBlocks.WATER_DIVINATION);
 
+    public static final DeferredItem<BlockItem> HEAVENS_ARENA_GATE =
+            ITEMS.registerSimpleBlockItem("heavens_arena_gate", ModBlocks.HEAVENS_ARENA_GATE);
+
     private ModItems() {}
 }

@@ -69,6 +69,17 @@ public final class QuestManager {
                 && !d.completed.contains(QuestRegistry.HUNTER_EXAM.toString())) {
             start(player, QuestRegistry.HUNTER_EXAM);
         }
+        // L'hôtesse de la Tour Céleste inscrit aux combats et donne ses petites quêtes
+        if (npc.npcId().equals("receptionist")) {
+            if (!d.arenaRegistered) {
+                d.arenaRegistered = true;
+                player.sendSystemMessage(Component.translatable("message.hxh.arena_registered", d.arenaFloor)
+                        .withStyle(ChatFormatting.GREEN));
+            }
+            if (d.active.isEmpty() && !d.completed.contains(QuestRegistry.HEAVENS_ARENA.toString())) {
+                start(player, QuestRegistry.HEAVENS_ARENA);
+            }
+        }
         Quest q = activeQuest(d);
         Quest.Step step = currentStep(d);
         if (q != null && step != null && step.type().equals("talk") && step.npc().equals(npc.npcId())) {
@@ -91,11 +102,39 @@ public final class QuestManager {
         else sync(player);
     }
 
-    /** Chaque tick : étape « suivre un PNJ ». */
+    /** Résultat d'un combat de la Tour Céleste (étapes « gagner N combats »). */
+    public static void onArenaResult(ServerPlayer player, boolean win) {
+        QuestData d = data(player);
+        Quest.Step step = currentStep(d);
+        if (step == null) return;
+        if (step.type().equals("arena_win") && win) {
+            d.progress++;
+            if (d.progress >= step.count()) advance(player);
+            else sync(player);
+        } else if (step.type().equals("arena_floor")) {
+            checkFloor(player);
+        }
+    }
+
+    /** Étape « atteindre l'étage N » : validée dès que l'étage est atteint. */
+    private static void checkFloor(ServerPlayer player) {
+        QuestData d = data(player);
+        Quest.Step step = currentStep(d);
+        if (step == null || !step.type().equals("arena_floor")) return;
+        if (d.arenaFloor >= step.count()) advance(player);
+        else sync(player);
+    }
+
+    /** Chaque tick : étape « suivre un PNJ » (et vérification de l'étage atteint, chaque seconde). */
     public static void tick(ServerPlayer player) {
         QuestData d = data(player);
         Quest.Step step = currentStep(d);
-        if (step == null || !step.type().equals("follow")) return;
+        if (step == null) return;
+        if (step.type().equals("arena_floor") && player.tickCount % 20 == 0 && d.arenaFloor >= step.count()) {
+            advance(player);
+            return;
+        }
+        if (!step.type().equals("follow")) return;
         NpcEntity npc = findNpc(player, step.npc(), 64);
         if (npc == null) return;
 
@@ -162,6 +201,11 @@ public final class QuestManager {
                 if (!player.getInventory().add(stack)) player.drop(stack, false);
             }
         }
+        if (step.rewardJenny() > 0) {
+            d.jenny += step.rewardJenny();
+            player.sendSystemMessage(Component.translatable("message.hxh.jenny_gained", step.rewardJenny(), d.jenny)
+                    .withStyle(ChatFormatting.YELLOW));
+        }
         if (step.rewardHunter()) {
             d.hunter = true;
             player.sendSystemMessage(Component.translatable("message.hxh.became_hunter").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
@@ -177,7 +221,11 @@ public final class QuestManager {
             com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload("", "", 0, 0));
             return;
         }
-        int progress = step.type().equals("follow") ? d.progress / 20 : d.progress;
+        int progress = switch (step.type()) {
+            case "follow" -> d.progress / 20;
+            case "arena_floor" -> Math.min(d.arenaFloor, step.count());
+            default -> d.progress;
+        };
         com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.titleKey(), q.stepKey(step), progress, step.goal()));
     }
 }
