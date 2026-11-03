@@ -15,5 +15,9 @@ public final class ModAttachments {
     public static final Supplier<AttachmentType<HunterData>> HUNTER = TYPES.register("hunter",
             () -> AttachmentType.serializable(HunterData::new).copyOnDeath().build());
 
+    /** Progression des quêtes (et licence de Hunter). Conservée à la mort. */
+    public static final Supplier<AttachmentType<com.evandouard.hxh.quest.QuestData>> QUESTS = TYPES.register("quests",
+            () -> AttachmentType.serializable(com.evandouard.hxh.quest.QuestData::new).copyOnDeath().build());
+
     private ModAttachments() {}
 }

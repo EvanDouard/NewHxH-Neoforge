@@ -324,4 +324,40 @@ camera front
 wait 15
 shot 32_chiffres_de_soin_verts
 camera first
+
+# --- J6 : Examen Hunter v1 ---
+cmd effect clear @s
+cmd hunter quest reset
+cmd hunter exam setup
+look 90 5
+wait 40
+shot 33_site_d_examen
+clearchat
+goto navigator
+talkto navigator
+wait 20
+expect Nouvelle quête : Examen Hunter
+shot 34_navigateur_et_suivi_de_quete
+goto beans
+talkto beans
+wait 10
+expect plaque de candidat
+goto satotz
+talkto satotz
+wait 10
+expect Satotz
+cmd hunter quest skip
+goto buhara
+talkto buhara
+wait 5
+cmd hunter quest skip
+wait 5
+talkto buhara
+wait 5
+goto netero
+clearchat
+talkto netero
+wait 20
+expect Tu es maintenant un Hunter
+shot 35_licence_de_hunter
 quit

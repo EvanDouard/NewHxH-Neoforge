@@ -1,0 +1,50 @@
+{
+  "steps": [
+    {
+      "id": "navigator",
+      "type": "talk",
+      "npc": "navigator"
+    },
+    {
+      "id": "register",
+      "type": "talk",
+      "npc": "beans",
+      "reward_item": "hxh:exam_badge"
+    },
+    {
+      "id": "satotz",
+      "type": "talk",
+      "npc": "satotz"
+    },
+    {
+      "id": "marathon",
+      "type": "follow",
+      "npc": "satotz",
+      "seconds": 60,
+      "max_distance": 16
+    },
+    {
+      "id": "buhara",
+      "type": "talk",
+      "npc": "buhara"
+    },
+    {
+      "id": "hunt",
+      "type": "kill",
+      "entity": "minecraft:pig",
+      "count": 2
+    },
+    {
+      "id": "buhara_done",
+      "type": "talk",
+      "npc": "buhara"
+    },
+    {
+      "id": "netero",
+      "type": "talk",
+      "npc": "netero",
+      "reward_item": "hxh:hunter_card",
+      "reward_hunter": true
+    }
+  ]
+}

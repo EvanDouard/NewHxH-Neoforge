@@ -63,6 +63,8 @@ public final class NenClient {
         modBus.addListener(NenClient::onRegisterLayers);
         modBus.addListener(NenClient::onRegisterBlockColors);
         modBus.addListener(EntityRenderersEvent.AddLayers.class, AuraLayer::addToRenderers);
+        modBus.addListener(EntityRenderersEvent.RegisterRenderers.class,
+                e -> e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NPC.get(), NpcRenderer::new));
         NeoForge.EVENT_BUS.addListener(NenClient::onClientTick);
     }
 
@@ -88,6 +90,7 @@ public final class NenClient {
         event.registerAbove(VanillaGuiLayers.HOTBAR, HxHMod.id("aura_bar"), NenClient::renderAuraBar);
         event.registerAbove(VanillaGuiLayers.HOTBAR, HxHMod.id("technique_box"), NenClient::renderTechniqueBox);
         event.registerAbove(VanillaGuiLayers.CROSSHAIR, HxHMod.id("strike_bar"), NenClient::renderStrikeBar);
+        event.registerAbove(VanillaGuiLayers.HOTBAR, HxHMod.id("quest_tracker"), NenClient::renderQuestTracker);
     }
 
     private static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
@@ -139,6 +142,22 @@ public final class NenClient {
         } else {
             mc.setScreen(new HatsuSelectionScreen());
         }
+    }
+
+    /** Suivi de la quête en cours, en haut à gauche. */
+    private static void renderQuestTracker(GuiGraphics graphics, DeltaTracker delta) {
+        Minecraft mc = Minecraft.getInstance();
+        com.evandouard.hxh.network.QuestStatusPayload q = com.evandouard.hxh.network.QuestStatusPayload.latest;
+        if (mc.options.hideGui || q.titleKey().isEmpty() || mc.screen != null) return;
+        Component title = Component.translatable(q.titleKey());
+        Component step = q.goal() > 0
+                ? Component.translatable("hud.hxh.quest_progress", Component.translatable(q.stepKey()), q.progress(), q.goal())
+                : Component.translatable(q.stepKey());
+        int w = Math.max(mc.font.width(title), mc.font.width(step)) + 10;
+        graphics.fill(4, 4, 4 + w, 30, 0x90000000);
+        graphics.fill(4, 4, 6, 30, 0xFFFFD27F);
+        graphics.drawString(mc.font, title, 10, 8, 0xFFFFD27F, true);
+        graphics.drawString(mc.font, step, 10, 19, 0xFFFFFFFF, true);
     }
 
     /** Barre de la frappe chargée, sous le viseur : rouge = ratée, vert = parfaite. */

@@ -47,6 +47,8 @@ import java.util.List;
  *     <li>{@code click <texte>} : clique sur le bouton de l'écran ouvert dont le libellé contient ce texte</li>
  *     <li>{@code useblock <dx> <dy> <dz>} : clic droit sur le bloc à cette position relative au joueur</li>
  *     <li>{@code camera <first|back|front>} : vue à la 1re personne, de dos ou de face</li>
+ *     <li>{@code goto <pnj>} : se téléporte devant le PNJ le plus proche ayant cet identifiant</li>
+ *     <li>{@code talkto <pnj>} : clic droit sur ce PNJ</li>
  *     <li>{@code closescreen} : ferme l'écran ouvert</li>
  *     <li>{@code clearchat} : vide le chat (et la mémoire des messages reçus)</li>
  *     <li>{@code expect <texte>} : échec si aucun message reçu depuis le dernier clearchat ne contient ce texte</li>
@@ -227,6 +229,28 @@ public final class CiAutopilot {
                         case "front" -> CameraType.THIRD_PERSON_FRONT;
                         default -> CameraType.FIRST_PERSON;
                     });
+                    return true;
+                }
+                case "goto", "talkto" -> {
+                    com.evandouard.hxh.npc.NpcEntity npc = null;
+                    for (var e : mc.level.entitiesForRendering()) {
+                        if (e instanceof com.evandouard.hxh.npc.NpcEntity n && n.npcId().equals(arg)
+                                && (npc == null || n.distanceTo(mc.player) < npc.distanceTo(mc.player))) npc = n;
+                    }
+                    if (npc == null) {
+                        log("ECHEC : PNJ '" + arg + "' introuvable");
+                        return false;
+                    }
+                    if (op.equals("goto")) {
+                        mc.player.connection.sendCommand(String.format(java.util.Locale.ROOT, "tp @s %.2f %.2f %.2f",
+                                npc.getX() - 1.5, npc.getY(), npc.getZ()));
+                        mc.player.setYRot(-90f);
+                        mc.player.setXRot(10f);
+                        waitTicks = 10;
+                    } else {
+                        mc.gameMode.interact(mc.player, npc, InteractionHand.MAIN_HAND);
+                        log("parle à " + arg);
+                    }
                     return true;
                 }
                 case "closescreen" -> {

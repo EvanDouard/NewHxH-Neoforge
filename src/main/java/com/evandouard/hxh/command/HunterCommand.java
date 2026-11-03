@@ -58,6 +58,20 @@ public final class HunterCommand {
                 .then(statCommand())
                 .then(nenCommand())
                 .then(hatsuCommand())
+                .then(Commands.literal("exam").requires(src -> src.hasPermission(2))
+                        .then(Commands.literal("setup").executes(ctx -> examSetup(ctx.getSource()))))
+                .then(Commands.literal("quest").requires(src -> src.hasPermission(2))
+                        .then(Commands.literal("reset").executes(ctx -> {
+                            net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
+                            com.evandouard.hxh.quest.QuestManager.data(p).reset();
+                            com.evandouard.hxh.quest.QuestManager.sync(p);
+                            ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.quest_reset"), false);
+                            return 1;
+                        }))
+                        .then(Commands.literal("skip").executes(ctx -> {
+                            com.evandouard.hxh.quest.QuestManager.advance(ctx.getSource().getPlayerOrException());
+                            return 1;
+                        })))
                 .then(Commands.literal("reset").requires(s -> s.hasPermission(2))
                         .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()), e -> resetAll(e)))
                         .then(Commands.argument("targets", EntityArgument.entities())
@@ -224,6 +238,31 @@ public final class HunterCommand {
         });
     }
 
+    /** Fait apparaître autour du joueur le site d'examen provisoire (en attendant les structures). */
+    private static int examSetup(CommandSourceStack source) throws CommandSyntaxException {
+        net.minecraft.server.level.ServerPlayer player = source.getPlayerOrException();
+        net.minecraft.server.level.ServerLevel level = player.serverLevel();
+        String[] npcs = {"navigator", "beans", "satotz", "buhara", "netero"};
+        int[][] offsets = {{3, 0}, {6, 2}, {9, 0}, {6, -4}, {-4, 0}};
+        for (int i = 0; i < npcs.length; i++) {
+            com.evandouard.hxh.npc.NpcEntity npc = com.evandouard.hxh.registry.ModEntities.NPC.get().create(level);
+            if (npc == null) continue;
+            net.minecraft.core.BlockPos pos = player.blockPosition().offset(offsets[i][0], 0, offsets[i][1]);
+            npc.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
+            npc.setNpcId(npcs[i]);
+            npc.setHome(pos);
+            level.addFreshEntity(npc);
+        }
+        for (int i = 0; i < 3; i++) {
+            net.minecraft.world.entity.animal.Pig pig = net.minecraft.world.entity.EntityType.PIG.create(level);
+            if (pig == null) continue;
+            pig.moveTo(player.getX() + 10 + i, player.getY(), player.getZ() - 8, 0, 0);
+            level.addFreshEntity(pig);
+        }
+        source.sendSuccess(() -> Component.translatable("command.hxh.exam_setup"), false);
+        return 1;
+    }
+
     private static int setMode(CommandContext<CommandSourceStack> ctx, Collection<? extends Entity> targets)
             throws CommandSyntaxException {
         String id = StringArgumentType.getString(ctx, "mode");
@@ -312,6 +351,10 @@ public final class HunterCommand {
         }
         if (!data.nenUnlocked() && data.meditationTicks() > 0) {
             lines.add(Component.translatable("command.hxh.show.meditation", data.meditationTicks() / 20));
+        }
+        if (living instanceof net.minecraft.server.level.ServerPlayer sp) {
+            lines.add(Component.translatable("command.hxh.show.hunter", Component.translatable(
+                    com.evandouard.hxh.quest.QuestManager.data(sp).isHunter() ? "command.hxh.yes" : "command.hxh.no")));
         }
         if (source.hasPermission(2)) {
             lines.add(Component.translatable("command.hxh.show.nen_admin", nenType).withStyle(ChatFormatting.DARK_GRAY));

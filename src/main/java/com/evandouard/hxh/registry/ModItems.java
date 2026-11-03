@@ -13,6 +13,10 @@ public final class ModItems {
     public static final DeferredItem<Item> HUNTER_CARD =
             ITEMS.registerSimpleItem("hunter_card", new Item.Properties().stacksTo(1));
 
+    /** Plaque numérotée reçue à l'inscription de l'Examen Hunter. */
+    public static final DeferredItem<Item> EXAM_BADGE =
+            ITEMS.registerSimpleItem("exam_badge", new Item.Properties().stacksTo(1));
+
     public static final DeferredItem<BlockItem> WATER_DIVINATION =
             ITEMS.registerSimpleBlockItem("water_divination", ModBlocks.WATER_DIVINATION);
 

@@ -14,6 +14,7 @@ public final class HxHNetwork {
     public static void register(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar("1");
         registrar.playToClient(SyncHunterPayload.TYPE, SyncHunterPayload.STREAM_CODEC, SyncHunterPayload::handle);
+        registrar.playToClient(QuestStatusPayload.TYPE, QuestStatusPayload.STREAM_CODEC, QuestStatusPayload::handle);
         registrar.playToClient(DamageNumberPayload.TYPE, DamageNumberPayload.STREAM_CODEC, DamageNumberPayload::handle);
         registrar.playToServer(SetRyuPayload.TYPE, SetRyuPayload.STREAM_CODEC, SetRyuPayload::handle);
         registrar.playToServer(ChooseKitPayload.TYPE, ChooseKitPayload.STREAM_CODEC, ChooseKitPayload::handle);
