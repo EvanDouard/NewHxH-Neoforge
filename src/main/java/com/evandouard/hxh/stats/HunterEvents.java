@@ -29,6 +29,11 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
  * Événements de jeu liés aux stats : gain d'XP par l'usage, effets, synchro.
  */
 public final class HunterEvents {
+    /** Dégâts contre lesquels le Nen et l'Endurance ne protègent pas (data/hxh/tags/damage_type/bypasses_nen.json). */
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.damagesource.DamageType> BYPASSES_NEN =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE,
+                    com.evandouard.hxh.HxHMod.id("bypasses_nen"));
+
     private HunterEvents() {}
 
     public static void register(IEventBus gameBus) {
@@ -87,6 +92,7 @@ public final class HunterEvents {
         NenHealing.tick(player);
         NenAwakening.tickMeditation(player);
         com.evandouard.hxh.nen.NenSenses.tick(player);
+        com.evandouard.hxh.combat.Combat.tickFear(player);
         Hatsu.tickPassives(player);
         HxHNetwork.syncDirty(player);
     }
@@ -117,8 +123,9 @@ public final class HunterEvents {
      * <ol>
      *     <li>bonus de l'attaquant au corps à corps (Ren, Ken, Ko — le Ko est dépensé) ;</li>
      *     <li>passifs du personnage (immunités de la victime, bonus de l'attaquant) ;</li>
-     *     <li>réduction plate : Endurance + résistance de Nen de la posture, seulement contre une attaque
-     *         (quelqu'un l'a causée) et jamais contre les dégâts « absolus » (/kill, vide).</li>
+     *     <li>réduction plate : Endurance + résistance de Nen de la posture, contre presque tout (coups,
+     *         projectiles, explosions, chute, feu…) sauf les dégâts « internes » listés dans le tag
+     *         {@code hxh:bypasses_nen} (noyade, faim, poison, /kill…), complétable par datapack.</li>
      * </ol>
      */
     private static void onIncomingDamage(LivingIncomingDamageEvent event) {
@@ -128,6 +135,7 @@ public final class HunterEvents {
         boolean melee = attacker instanceof LivingEntity && attacker == event.getSource().getDirectEntity();
         float amount = event.getAmount();
         if (melee) {
+            amount *= com.evandouard.hxh.combat.Combat.onMeleeHit((LivingEntity) attacker, victim);
             amount *= NenDefense.outgoingFactor((LivingEntity) attacker, true);
             amount *= com.evandouard.hxh.nen.NenSenses.shuDamageFactor((LivingEntity) attacker);
         }
@@ -135,7 +143,7 @@ public final class HunterEvents {
         amount = Hatsu.modifyIncoming(victim, event.getSource(), amount);
         if (melee) amount = Hatsu.modifyOutgoingMelee((LivingEntity) attacker, victim, amount);
 
-        if (attacker != null && !event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+        if (!event.getSource().is(BYPASSES_NEN) && !event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             amount = Math.max(0f, amount - NenDefense.totalResistance(victim));
         }
         if (amount != event.getAmount()) event.setAmount(amount);

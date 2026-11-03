@@ -88,11 +88,16 @@ public final class HunterStatsTests {
         helper.assertTrue(lostNormal > 0, "Le zombie témoin aurait dû prendre des dégâts");
         helper.assertTrue(lostTough < lostNormal - flat * 0.5,
                 "Endurance 100 : environ " + flat + " PV de moins attendus (" + lostTough + " contre " + lostNormal + ")");
-        // Les dégâts sans attaquant (chute, feu…) ne sont pas réduits par l'Endurance
+        // Les dégâts « internes » (noyade…) ne sont jamais réduits
         float before = tough.getHealth();
         tough.invulnerableTime = 0;
-        tough.hurt(helper.getLevel().damageSources().generic(), 2f);
-        helper.assertTrue(tough.getHealth() < before, "La réduction plate ne s'applique qu'aux attaques");
+        tough.hurt(helper.getLevel().damageSources().drown(), 2f);
+        helper.assertTrue(tough.getHealth() < before, "La noyade passe à travers l'Endurance et le Nen");
+        // La chute, elle, est réduite (comme un coup)
+        float beforeFall = tough.getHealth();
+        tough.invulnerableTime = 0;
+        tough.hurt(helper.getLevel().damageSources().fall(), 2f);
+        helper.assertTrue(tough.getHealth() == beforeFall, "Endurance 100 : une petite chute ne fait rien");
         helper.succeed();
     }
 

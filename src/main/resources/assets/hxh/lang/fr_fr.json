@@ -446,5 +446,13 @@
   "screen.hxh.ryu.title": "Ryu : répartition de l'aura",
   "screen.hxh.ryu.help": "Plus d'aura dans l'attaque = plus de dégâts, moins de protection",
   "screen.hxh.ryu.slider": "Attaque %s %% · Défense %s %%",
-  "message.hxh.sense_concealed": "Impossible pendant l'In ou le Zetsu"
+  "message.hxh.sense_concealed": "Impossible pendant l'In ou le Zetsu",
+  "key.hxh.strike": "Frappe (appui : coup de pied, maintien : frappe chargée)",
+  "effect.hxh.fear": "Peur",
+  "message.hxh.combo": "Combo x%s",
+  "message.hxh.combo_finisher": "Coup final !",
+  "message.hxh.kick_cooldown": "Coup de pied pas encore prêt",
+  "message.hxh.strike_failed": "Frappe ratée !",
+  "message.hxh.strike_good": "Frappe chargée !",
+  "message.hxh.strike_perfect": "Frappe parfaite !"
 }

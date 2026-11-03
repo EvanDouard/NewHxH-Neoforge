@@ -14,7 +14,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
  * Client → serveur : intention d'action liée au Nen (touche pressée ou relâchée).
  */
 public record NenActionPayload(Action action, boolean pressed) implements CustomPacketPayload {
-    public enum Action { HEAL, MEDITATE, OPEN_PORES, CAST, NEXT_TECHNIQUE, KO, GYO, EN }
+    public enum Action { HEAL, MEDITATE, OPEN_PORES, CAST, NEXT_TECHNIQUE, KO, GYO, EN, STRIKE }
 
     public static final Type<NenActionPayload> TYPE = new Type<>(HxHMod.id("nen_action"));
 
@@ -37,6 +37,10 @@ public record NenActionPayload(Action action, boolean pressed) implements Custom
                 case OPEN_PORES -> { if (payload.pressed()) NenAwakening.requestOpenPores(context.player()); }
                 case CAST -> { if (payload.pressed()) Hatsu.requestCast(context.player()); }
                 case NEXT_TECHNIQUE -> { if (payload.pressed()) Hatsu.cycle(context.player()); }
+                case STRIKE -> {
+                    if (payload.pressed()) com.evandouard.hxh.combat.Combat.startStrike(context.player());
+                    else com.evandouard.hxh.combat.Combat.releaseStrike(context.player());
+                }
                 case GYO -> { if (payload.pressed()) com.evandouard.hxh.nen.NenSenses.toggleGyo(context.player()); }
                 case EN -> { if (payload.pressed()) com.evandouard.hxh.nen.NenSenses.toggleEn(context.player()); }
                 case KO -> { if (payload.pressed()) com.evandouard.hxh.nen.NenDefense.requestKo(context.player()); }

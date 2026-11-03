@@ -285,4 +285,35 @@ key key.hxh.ryu
 wait 10
 shot 27_ecran_ryu
 closescreen
+
+# --- J4 : combat ---
+cmd kill @e[type=!minecraft:player]
+cmd summon minecraft:husk ~ ~ ~2 {NoAI:1b}
+look 0 10
+wait 20
+clearchat
+hold key.hxh.strike
+wait 9
+shot 28_barre_de_frappe
+wait 6
+release key.hxh.strike
+wait 5
+shot 29_frappe_chargee
+wait 20
+hold key.hxh.strike
+wait 1
+release key.hxh.strike
+wait 10
+shot 30_coup_de_pied
+cmd kill @e[type=!minecraft:player]
+cmd summon minecraft:husk ~ ~ ~5 {NoAI:1b}
+wait 5
+cmd hunter nen unlock @e[type=minecraft:husk]
+cmd hunter nen level 80 @e[type=minecraft:husk]
+cmd hunter stat strength set 80 @e[type=minecraft:husk]
+cmd hunter stat endurance set 80 @e[type=minecraft:husk]
+cmd hunter stat vitality set 80 @e[type=minecraft:husk]
+cmd hunter nen mode ren @e[type=minecraft:husk]
+wait 50
+shot 31_peur_face_a_une_aura_ecrasante
 quit

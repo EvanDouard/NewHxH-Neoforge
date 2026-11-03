@@ -44,11 +44,15 @@ public final class NenClient {
     public static final KeyMapping GYO = new KeyMapping("key.hxh.gyo", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, CATEGORY);
     public static final KeyMapping EN = new KeyMapping("key.hxh.en", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Y, CATEGORY);
     public static final KeyMapping RYU = new KeyMapping("key.hxh.ryu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_U, CATEGORY);
+    public static final KeyMapping STRIKE = new KeyMapping("key.hxh.strike", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_ALT, CATEGORY);
     public static final KeyMapping HATSU_MENU = new KeyMapping("key.hxh.hatsu_menu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, CATEGORY);
     public static final KeyMapping CAST = new KeyMapping("key.hxh.cast", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, CATEGORY);
     public static final KeyMapping NEXT_TECHNIQUE = new KeyMapping("key.hxh.next_technique", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, CATEGORY);
 
     private static boolean healKeyWasDown = false;
+    private static boolean strikeWasDown = false;
+    /** Tick de jeu où la touche Frappe a été enfoncée (pour dessiner la barre), -1 si relâchée. */
+    private static long strikeStart = -1;
 
     private static final int WATER_COLOR = 0xFF3F76E4;
 
@@ -74,6 +78,7 @@ public final class NenClient {
         event.register(GYO);
         event.register(EN);
         event.register(RYU);
+        event.register(STRIKE);
         event.register(HATSU_MENU);
         event.register(CAST);
         event.register(NEXT_TECHNIQUE);
@@ -82,6 +87,7 @@ public final class NenClient {
     private static void onRegisterLayers(RegisterGuiLayersEvent event) {
         event.registerAbove(VanillaGuiLayers.HOTBAR, HxHMod.id("aura_bar"), NenClient::renderAuraBar);
         event.registerAbove(VanillaGuiLayers.HOTBAR, HxHMod.id("technique_box"), NenClient::renderTechniqueBox);
+        event.registerAbove(VanillaGuiLayers.CROSSHAIR, HxHMod.id("strike_bar"), NenClient::renderStrikeBar);
     }
 
     private static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
@@ -106,6 +112,12 @@ public final class NenClient {
         while (NEXT_TECHNIQUE.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.NEXT_TECHNIQUE, true));
         while (HATSU_MENU.consumeClick()) openHatsuMenu(mc);
         SensesClient.tick(mc);
+        boolean strikeDown = STRIKE.isDown();
+        if (strikeDown != strikeWasDown) {
+            strikeWasDown = strikeDown;
+            strikeStart = strikeDown ? mc.level.getGameTime() : -1;
+            PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.STRIKE, strikeDown));
+        }
         // Soin : touche maintenue, on n'envoie que les changements d'état
         boolean healDown = HEAL.isDown();
         if (healDown != healKeyWasDown) {
@@ -127,6 +139,28 @@ public final class NenClient {
         } else {
             mc.setScreen(new HatsuSelectionScreen());
         }
+    }
+
+    /** Barre de la frappe chargée, sous le viseur : rouge = ratée, vert = parfaite. */
+    private static void renderStrikeBar(GuiGraphics graphics, DeltaTracker delta) {
+        Minecraft mc = Minecraft.getInstance();
+        if (strikeStart < 0 || mc.level == null || mc.options.hideGui) return;
+        long held = mc.level.getGameTime() - strikeStart;
+        if (held < com.evandouard.hxh.combat.Combat.CHARGE_MIN_TICKS) return;
+        float value = com.evandouard.hxh.combat.Combat.chargeValue(held);
+        int w = 60;
+        int h = 5;
+        int x = graphics.guiWidth() / 2 - w / 2;
+        int y = graphics.guiHeight() / 2 + 12;
+        int fail = (int) (w * com.evandouard.hxh.combat.Combat.CHARGE_FAIL_BELOW);
+        int perfect = (int) (w * com.evandouard.hxh.combat.Combat.CHARGE_PERFECT_FROM);
+        graphics.fill(x - 1, y - 1, x + w + 1, y + h + 1, 0xC0000000);
+        graphics.fill(x, y, x + fail, y + h, 0x60FF3030);
+        graphics.fill(x + perfect, y, x + w, y + h, 0x6030FF30);
+        int fill = (int) (w * value);
+        int color = value < com.evandouard.hxh.combat.Combat.CHARGE_FAIL_BELOW ? 0xFFFF5555
+                : value >= com.evandouard.hxh.combat.Combat.CHARGE_PERFECT_FROM ? 0xFF55FF55 : 0xFFFFD27F;
+        graphics.fill(x, y + 1, x + fill, y + h - 1, color);
     }
 
     /** Encart en bas à droite : technique sélectionnée, coût et état. */

@@ -446,5 +446,13 @@
   "screen.hxh.ryu.title": "Ryu: aura distribution",
   "screen.hxh.ryu.help": "More aura in attack = more damage, less protection",
   "screen.hxh.ryu.slider": "Attack %s %% · Defense %s %%",
-  "message.hxh.sense_concealed": "Impossible during In or Zetsu"
+  "message.hxh.sense_concealed": "Impossible during In or Zetsu",
+  "key.hxh.strike": "Strike (tap: kick, hold: charged strike)",
+  "effect.hxh.fear": "Fear",
+  "message.hxh.combo": "Combo x%s",
+  "message.hxh.combo_finisher": "Finisher!",
+  "message.hxh.kick_cooldown": "Kick not ready yet",
+  "message.hxh.strike_failed": "Strike failed!",
+  "message.hxh.strike_good": "Charged strike!",
+  "message.hxh.strike_perfect": "Perfect strike!"
 }

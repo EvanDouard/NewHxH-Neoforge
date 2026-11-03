@@ -105,6 +105,13 @@ public final class HunterCommand {
                     d.setMeditationTicks(0);
                 }))
                 .then(targeted("reveal", e -> HunterStats.get(e).setNenRevealed(true)))
+                .then(Commands.literal("mode")
+                        .then(Commands.argument("mode", StringArgumentType.word())
+                                .suggests((ctx, b) -> SharedSuggestionProvider.suggest(
+                                        Arrays.stream(com.evandouard.hxh.data.NenMode.values()).map(com.evandouard.hxh.data.NenMode::id), b))
+                                .executes(ctx -> setMode(ctx, List.of(ctx.getSource().getEntityOrException())))
+                                .then(Commands.argument("targets", EntityArgument.entities())
+                                        .executes(ctx -> setMode(ctx, EntityArgument.getEntities(ctx, "targets"))))))
                 .then(Commands.literal("level")
                         .then(Commands.argument("level", IntegerArgumentType.integer(0, com.evandouard.hxh.data.Mastery.MAX_LEVEL))
                                 .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()),
@@ -215,6 +222,14 @@ public final class HunterCommand {
             HunterStats.get(e).addXp(stat, amount);
             HunterStats.applyAttributes(e);
         });
+    }
+
+    private static int setMode(CommandContext<CommandSourceStack> ctx, Collection<? extends Entity> targets)
+            throws CommandSyntaxException {
+        String id = StringArgumentType.getString(ctx, "mode");
+        com.evandouard.hxh.data.NenMode mode = com.evandouard.hxh.data.NenMode.byId(id);
+        if (mode == null) throw UNKNOWN_NEN.create(id);
+        return apply(ctx, targets, e -> NenModes.trySetMode(e, mode));
     }
 
     private static int setNenType(CommandContext<CommandSourceStack> ctx, Collection<? extends Entity> targets)

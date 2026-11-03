@@ -1,0 +1,90 @@
+package com.evandouard.hxh.gametest;
+
+import com.evandouard.hxh.HxHMod;
+import com.evandouard.hxh.combat.Combat;
+import com.evandouard.hxh.data.HunterData;
+import com.evandouard.hxh.data.NenMode;
+import com.evandouard.hxh.data.Stat;
+import com.evandouard.hxh.effect.ModEffects;
+import com.evandouard.hxh.nen.NenModes;
+import com.evandouard.hxh.stats.HunterStats;
+import net.minecraft.core.BlockPos;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.Zombie;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+
+/**
+ * Combat : combos, coup de pied, frappe chargée, peur.
+ */
+@GameTestHolder(HxHMod.MODID)
+@PrefixGameTestTemplate(false)
+public final class CombatTests {
+
+    private static Zombie husk(GameTestHelper helper, int x) {
+        Zombie z = helper.spawnWithNoFreeWill(EntityType.HUSK, new BlockPos(x, 1, 1));
+        z.setNoGravity(true);
+        z.setYRot(-90f);
+        z.setYHeadRot(-90f);
+        z.setXRot(0f);
+        return z;
+    }
+
+    @GameTest(template = "empty")
+    public static void comboBuildsUpAndFinishes(GameTestHelper helper) {
+        Zombie a = husk(helper, 0);
+        Zombie v = husk(helper, 2);
+        float[] f = new float[Combat.COMBO_MAX];
+        for (int i = 0; i < Combat.COMBO_MAX; i++) f[i] = Combat.onMeleeHit(a, v);
+        helper.assertTrue(f[0] == 1f && f[1] > f[0] && f[4] > f[3], "Le combo doit monter : " + java.util.Arrays.toString(f));
+        helper.assertTrue(Combat.comboCount(a) == 0, "Après le coup final, le combo repart de zéro");
+        Combat.onMeleeHit(a, v);
+        Zombie other = husk(helper, 1);
+        helper.assertTrue(Combat.onMeleeHit(a, other) == 1f, "Changer de cible remet le combo à 1");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void kickPushesAndHasCooldown(GameTestHelper helper) {
+        Zombie a = husk(helper, 0);
+        Zombie v = husk(helper, 2);
+        float before = v.getHealth();
+        helper.assertTrue(Combat.kick(a) == null, "Le coup de pied aurait dû partir");
+        helper.assertTrue(v.getHealth() < before, "Le coup de pied blesse");
+        helper.assertTrue(v.getDeltaMovement().x > 0.1, "Le coup de pied repousse vers l'arrière : " + v.getDeltaMovement());
+        helper.assertTrue("message.hxh.kick_cooldown".equals(Combat.kick(a)), "Petite recharge entre deux coups de pied");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void chargedStrikeRewardsTiming(GameTestHelper helper) {
+        helper.assertTrue(Combat.chargeValue(0) == 0f && Combat.chargeValue(Combat.CHARGE_PERIOD_TICKS / 2) == 1f
+                && Combat.chargeValue(Combat.CHARGE_PERIOD_TICKS) == 0f, "La barre monte puis redescend");
+        Zombie a = husk(helper, 0);
+        husk(helper, 2);
+        helper.assertTrue(Combat.chargedStrike(a, 0.1f) == 0f, "Trop bas : frappe ratée");
+        helper.assertTrue(a.hasEffect(MobEffects.MOVEMENT_SLOWDOWN), "Frappe ratée : on trébuche");
+        float good = Combat.chargedStrike(a, 0.5f);
+        float perfect = Combat.chargedStrike(a, 1.0f);
+        helper.assertTrue(good > 0 && perfect > good * 1.4f, "Plus la barre est haute, plus ça frappe : " + good + " / " + perfect);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void overwhelmingAuraCausesFear(GameTestHelper helper) {
+        Zombie weak = husk(helper, 0);
+        Zombie strong = husk(helper, 2);
+        NenModes.unlock(strong);
+        HunterData d = HunterStats.get(strong);
+        for (Stat s : Stat.values()) d.setLevel(s, 60);
+        d.setNenLevel(60);
+        helper.assertTrue(!Combat.applyFearIfThreatened(weak), "Aura au repos : pas de peur");
+        NenModes.trySetMode(strong, NenMode.REN);
+        helper.assertTrue(Combat.applyFearIfThreatened(weak), "Aura déployée bien plus puissante : peur");
+        helper.assertTrue(weak.hasEffect(ModEffects.FEAR), "Effet Peur attendu");
+        helper.succeed();
+    }
+}
