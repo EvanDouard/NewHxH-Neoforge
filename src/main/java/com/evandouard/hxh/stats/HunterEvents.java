@@ -153,6 +153,7 @@ public final class HunterEvents {
     private static void onDamageDealt(LivingDamageEvent.Post event) {
         float damage = event.getNewDamage();
         if (damage <= 0 || event.getEntity().level().isClientSide()) return;
+        com.evandouard.hxh.combat.DamageNumbers.send(event.getEntity(), damage, false);
         Entity attacker = event.getSource().getEntity();
         boolean melee = attacker != null && attacker == event.getSource().getDirectEntity();
         if (melee && attacker instanceof LivingEntity livingAttacker && trains(livingAttacker)) {
@@ -196,6 +197,9 @@ public final class HunterEvents {
     /** Vitalité : gagne de l'XP en se soignant. */
     private static void onHeal(LivingHealEvent event) {
         LivingEntity e = event.getEntity();
+        // Seulement le soin réel (pas au-delà de la vie max)
+        float real = Math.min(event.getAmount(), e.getMaxHealth() - e.getHealth());
+        if (!e.level().isClientSide() && real > 0) com.evandouard.hxh.combat.DamageNumbers.send(e, real, true);
         if (!e.level().isClientSide() && event.getAmount() > 0 && trains(e)) {
             HunterStats.addXp(e, Stat.VITALITY, event.getAmount());
         }

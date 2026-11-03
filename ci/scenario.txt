@@ -297,8 +297,8 @@ wait 9
 shot 28_barre_de_frappe
 wait 6
 release key.hxh.strike
-wait 5
-shot 29_frappe_chargee
+wait 8
+shot 29_frappe_chargee_et_chiffre_rouge
 wait 20
 hold key.hxh.strike
 wait 1
@@ -316,4 +316,12 @@ cmd hunter stat vitality set 80 @e[type=minecraft:husk]
 cmd hunter nen mode ren @e[type=minecraft:husk]
 wait 50
 shot 31_peur_face_a_une_aura_ecrasante
+cmd kill @e[type=!minecraft:player]
+cmd effect clear @s
+cmd damage @s 8
+cmd effect give @s minecraft:regeneration 3 3
+camera front
+wait 15
+shot 32_chiffres_de_soin_verts
+camera first
 quit

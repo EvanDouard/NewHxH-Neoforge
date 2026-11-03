@@ -74,6 +74,14 @@ public final class CombatTests {
     }
 
     @GameTest(template = "empty")
+    public static void damageNumbersFormat(GameTestHelper helper) {
+        helper.assertTrue(com.evandouard.hxh.combat.DamageNumbers.format(10.4f, false).equals("-10"), "-10 attendu");
+        helper.assertTrue(com.evandouard.hxh.combat.DamageNumbers.format(2.5f, false).equals("-2.5"), "-2.5 attendu");
+        helper.assertTrue(com.evandouard.hxh.combat.DamageNumbers.format(1.0f, true).equals("+1"), "+1 attendu");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void overwhelmingAuraCausesFear(GameTestHelper helper) {
         Zombie weak = husk(helper, 0);
         Zombie strong = husk(helper, 2);

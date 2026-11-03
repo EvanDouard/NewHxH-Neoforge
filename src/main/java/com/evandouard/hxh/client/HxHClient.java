@@ -15,6 +15,7 @@ public final class HxHClient {
     public HxHClient(IEventBus modEventBus, ModContainer container) {
         NenClient.register(modEventBus);
         LevelTagRenderer.register();
+        DamageNumberRenderer.register();
         CiAutopilot.initIfRequested();
     }
 }
