@@ -80,7 +80,7 @@ public final class HatsuTests {
     @GameTest(template = "empty")
     public static void missStillCosts(GameTestHelper helper) {
         Zombie leorio = husk(helper, 1);
-        leorio.setYRot(90f); // regarde vers -X : personne
+        leorio.setXRot(-90f); // regarde le ciel : personne (les tests voisins tournent en même temps)
         HunterData d = hunter(leorio, NenType.EMITTER, "leorio");
         float aura = d.aura();
         helper.assertTrue("message.hxh.hatsu_missed".equals(Hatsu.cast(leorio)), "Sans cible : raté");
