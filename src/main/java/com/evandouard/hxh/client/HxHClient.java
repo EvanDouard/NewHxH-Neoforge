@@ -14,6 +14,7 @@ import net.neoforged.fml.common.Mod;
 public final class HxHClient {
     public HxHClient(IEventBus modEventBus, ModContainer container) {
         NenClient.register(modEventBus);
+        LevelTagRenderer.register();
         CiAutopilot.initIfRequested();
     }
 }

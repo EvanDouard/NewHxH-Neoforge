@@ -60,11 +60,27 @@ public final class NenMobTests {
         NenModes.unlock(z);
         helper.assertTrue(z.isPersistenceRequired(), "Un mob à Nen ne doit plus disparaître");
         HunterData d = HunterStats.get(z);
+        for (com.evandouard.hxh.data.Stat s : com.evandouard.hxh.data.Stat.values()) {
+            d.setLevel(s, com.evandouard.hxh.HxHConfig.MOB_HEAL_MIN_LEVEL.get()); // assez fort pour savoir se soigner
+        }
+        HunterStats.applyAttributes(z);
         float aura = d.aura();
         z.setHealth(4f);
         helper.runAfterDelay(60, () -> {
             helper.assertTrue(z.getHealth() > 4f, "Le mob aurait dû se soigner avec le Nen");
             helper.assertTrue(d.aura() < aura, "Le soin aurait dû consommer de l'aura");
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void weakNenMobDoesNotHeal(GameTestHelper helper) {
+        Zombie z = helper.spawnWithNoFreeWill(EntityType.HUSK, new BlockPos(1, 1, 1));
+        z.setNoGravity(true);
+        NenModes.unlock(z); // monde neuf : niveau 0
+        z.setHealth(4f);
+        helper.runAfterDelay(60, () -> {
+            helper.assertTrue(z.getHealth() <= 4f, "Un mob à Nen de bas niveau ne doit pas se soigner");
             helper.succeed();
         });
     }

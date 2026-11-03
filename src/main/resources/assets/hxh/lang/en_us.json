@@ -411,5 +411,6 @@
   "screen.hxh.techniques.miss_rule": "A missed technique still costs its aura and starts its cooldown.",
   "screen.hxh.techniques.scroll": "Mouse wheel: scroll",
   "message.hxh.hatsu_missed": "Missed!",
-  "message.hxh.hatsu_not_available": "This character is not playable yet."
+  "message.hxh.hatsu_not_available": "This character is not playable yet.",
+  "hud.hxh.level_tag": "Lv. %s"
 }

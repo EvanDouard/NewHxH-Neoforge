@@ -84,6 +84,10 @@ public final class HxHConfig {
             .comment("Soin par le Nen : coût minimal par PV, quel que soit le niveau")
             .defineInRange("heal.minCost", 1.0, 0.0, 1000.0);
 
+    public static final ModConfigSpec.IntValue MOB_HEAL_MIN_LEVEL = BUILDER
+            .comment("Niveau Hunter (moyenne des stats) à partir duquel un mob à Nen sait se soigner avec le Nen")
+            .defineInRange("heal.mobMinLevel", 20, 0, 100);
+
     public static final ModConfigSpec.IntValue MEDITATION_SECONDS_TO_AWAKEN = BUILDER
             .comment("Éveil par la méditation : secondes de méditation cumulées nécessaires")
             .defineInRange("awakening.meditationSeconds", 1200, 1, 1_000_000);

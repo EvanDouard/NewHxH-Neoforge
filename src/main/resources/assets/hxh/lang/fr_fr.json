@@ -411,5 +411,6 @@
   "screen.hxh.techniques.miss_rule": "Une technique ratée coûte quand même son aura et lance sa recharge.",
   "screen.hxh.techniques.scroll": "Molette : défiler",
   "message.hxh.hatsu_missed": "Raté !",
-  "message.hxh.hatsu_not_available": "Ce personnage n'est pas encore jouable."
+  "message.hxh.hatsu_not_available": "Ce personnage n'est pas encore jouable.",
+  "hud.hxh.level_tag": "Niv. %s"
 }

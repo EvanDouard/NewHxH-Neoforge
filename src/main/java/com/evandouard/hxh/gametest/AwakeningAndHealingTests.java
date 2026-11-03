@@ -57,8 +57,10 @@ public final class AwakeningAndHealingTests {
         Zombie z = zombie(helper);
         helper.assertTrue(NenHealing.setHealing(z, true) != null, "Sans Nen : refus");
         NenModes.unlock(z);
-        // Un mob à Nen sait se soigner sans déblocage (un joueur, lui, doit l'avoir débloqué)
-        helper.assertTrue(NenHealing.setHealing(z, true) == null, "Mob à Nen : soin accepté sans déblocage");
+        // Mob de bas niveau : pas de soin ; à partir du niveau requis, il sait se soigner seul
+        helper.assertTrue(NenHealing.setHealing(z, true) != null, "Mob niveau 0 : soin refusé");
+        for (Stat s : Stat.values()) HunterStats.get(z).setLevel(s, HxHConfig.MOB_HEAL_MIN_LEVEL.get());
+        helper.assertTrue(NenHealing.setHealing(z, true) == null, "Mob au niveau requis : soin accepté");
         NenHealing.setHealing(z, false);
         NenModes.trySetMode(z, NenMode.ZETSU);
         helper.assertTrue(NenHealing.setHealing(z, true) != null, "En Zetsu : refus");

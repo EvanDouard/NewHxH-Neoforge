@@ -218,4 +218,17 @@ cmd hunter show @e[type=minecraft:husk,limit=1]
 wait 10
 expect Hatsu : Gon Freecss
 shot 23_husk_gon
+
+# --- Niveau affiché au-dessus des mobs à Nen ---
+cmd kill @e[type=!minecraft:player]
+cmd summon minecraft:husk ~-2 ~ ~5 {NoAI:1b}
+cmd summon minecraft:husk ~2 ~ ~5 {NoAI:1b}
+cmd hunter nen unlock @e[type=minecraft:husk,limit=1,sort=nearest]
+cmd hunter stat strength set 60 @e[type=minecraft:husk,limit=1,sort=furthest]
+cmd hunter stat vitality set 60 @e[type=minecraft:husk,limit=1,sort=furthest]
+cmd hunter stat endurance set 60 @e[type=minecraft:husk,limit=1,sort=furthest]
+cmd hunter nen unlock @e[type=minecraft:husk,limit=1,sort=furthest]
+look 0 5
+wait 40
+shot 24_niveau_au_dessus_des_mobs
 quit
