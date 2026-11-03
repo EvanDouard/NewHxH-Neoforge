@@ -521,7 +521,7 @@
   "message.hxh.arena_welcome": "Bienvenue à la Tour Céleste, l'arène des combattants du monde entier !",
   "message.hxh.arena_goodbye": "Tu quittes la Tour Céleste.",
   "message.hxh.arena_missing": "La Tour Céleste est introuvable (dimension manquante).",
-  "message.hxh.arena_registered": "Inscription validée : tu combattras au %se étage.",
+  "message.hxh.arena_registered": "Inscription validée : tu combattras à l'étage %s.",
   "message.hxh.arena_not_inside": "L'ascenseur ne fonctionne que dans la Tour Céleste.",
   "message.hxh.arena_not_registered": "Inscris-toi d'abord au guichet, auprès de l'hôtesse.",
   "message.hxh.arena_already_fighting": "Tu es déjà en plein combat !",

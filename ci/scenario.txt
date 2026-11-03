@@ -366,8 +366,9 @@ cmd effect clear @s
 cmd hunter quest reset
 cmd hunter nen lock
 cmd difficulty easy
+cmd tp @e[type=hxh:npc,distance=..8] ~12 ~ ~12
 cmd setblock ~2 ~ ~ hxh:heavens_arena_gate
-look -90 15
+look -90 25
 wait 10
 shot 36_portail_de_la_tour
 clearchat
