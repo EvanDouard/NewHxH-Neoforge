@@ -14,6 +14,8 @@ public enum NenMode {
     ZETSU,
     /** Ren : aura amplifiée, dégâts augmentés, consomme l'aura. */
     REN,
+    /** In : aura dissimulée aux autres (seul le Gyo la révèle). Première étape avant le Zetsu complet. */
+    IN,
     /** Ken : Ten et Ren combinés, grosse défense, consommation continue plus forte que le Ren. */
     KEN;
 

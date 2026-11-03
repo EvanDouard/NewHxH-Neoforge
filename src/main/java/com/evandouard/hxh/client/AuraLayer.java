@@ -51,6 +51,8 @@ public class AuraLayer<T extends LivingEntity, M extends EntityModel<T>> extends
         if (entity.isInvisible() || !entity.hasData(ModAttachments.HUNTER)) return;
         HunterData data = entity.getData(ModAttachments.HUNTER);
         if (!data.nenUnlocked() || data.mode() == NenMode.ZETSU) return;
+        // In : l'aura est dissimulée, seul le Gyo du joueur qui regarde la révèle
+        if (data.mode() == NenMode.IN && !SensesClient.localGyo()) return;
 
         float pulse = Mth.sin(ageInTicks * 0.25f) * 0.5f + 0.5f;
         float intensity;

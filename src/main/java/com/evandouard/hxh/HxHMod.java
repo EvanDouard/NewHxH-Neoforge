@@ -29,6 +29,7 @@ public final class HxHMod {
         ModItems.ITEMS.register(modEventBus);
         ModCreativeTabs.TABS.register(modEventBus);
         ModAttachments.TYPES.register(modEventBus);
+        com.evandouard.hxh.effect.ModEffects.EFFECTS.register(modEventBus);
         modEventBus.addListener(HxHNetwork::register);
         modContainer.registerConfig(ModConfig.Type.SERVER, HxHConfig.SPEC);
         HxHGameRules.init();

@@ -228,9 +228,11 @@ cmd hunter stat strength set 60 @e[type=minecraft:husk,limit=1,sort=furthest]
 cmd hunter stat vitality set 60 @e[type=minecraft:husk,limit=1,sort=furthest]
 cmd hunter stat endurance set 60 @e[type=minecraft:husk,limit=1,sort=furthest]
 cmd hunter nen unlock @e[type=minecraft:husk,limit=1,sort=furthest]
+key key.hxh.gyo
 look 0 5
 wait 40
-shot 24_niveau_au_dessus_des_mobs
+shot 24_niveau_au_dessus_des_mobs_avec_gyo
+key key.hxh.gyo
 
 # --- Nen avancé : Ken, Ko, niveau de Nen et résistance ---
 cmd gamemode survival
@@ -248,4 +250,39 @@ camera back
 wait 10
 shot 25_ken_et_ko
 camera first
+key key.hxh.ken
+
+# --- Nen avancé 2 : In puis Zetsu, En, Ryu ---
+wait 20
+clearchat
+key key.hxh.zetsu
+wait 10
+cmd hunter
+wait 10
+expect (In)
+key key.hxh.zetsu
+cmd hunter nen mastery in 10
+wait 5
+key key.hxh.zetsu
+wait 5
+key key.hxh.zetsu
+wait 10
+clearchat
+cmd hunter
+wait 10
+expect (Zetsu)
+key key.hxh.zetsu
+cmd hunter nen mastery en 40
+wait 10
+key key.hxh.en
+wait 30
+camera back
+wait 10
+shot 26_sphere_d_en
+camera first
+key key.hxh.en
+key key.hxh.ryu
+wait 10
+shot 27_ecran_ryu
+closescreen
 quit

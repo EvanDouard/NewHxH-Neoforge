@@ -45,12 +45,29 @@ public final class NenModes {
         return null;
     }
 
+    /** Le Zetsu complet se débloque en travaillant l'In. */
+    public static boolean zetsuUnlocked(HunterData data) {
+        return data.masteryLevel(com.evandouard.hxh.data.Mastery.IN) >= HxHConfig.ZETSU_UNLOCK_IN_LEVEL.get();
+    }
+
     /** Touche pressée : même mode = retour au neutre, sinon on essaie le nouveau mode. */
     public static void toggle(LivingEntity entity, NenMode mode) {
         HunterData data = HunterStats.get(entity);
         NenMode target = data.mode() == mode ? NenMode.NONE : mode;
+        // Touche de dissimulation : Neutre → In → Zetsu (si débloqué) → Neutre
+        if (mode == NenMode.ZETSU || mode == NenMode.IN) {
+            target = switch (data.mode()) {
+                case IN -> zetsuUnlocked(data) ? NenMode.ZETSU : NenMode.NONE;
+                case ZETSU -> NenMode.NONE;
+                default -> NenMode.IN;
+            };
+        }
         String refusal = trySetMode(entity, target);
-        if (refusal == null && target == NenMode.ZETSU) data.setHealing(false); // pas de soin sans aura
+        if (refusal == null && (target == NenMode.ZETSU || target == NenMode.IN)) {
+            if (target == NenMode.ZETSU) data.setHealing(false); // pas de soin sans aura
+            data.setGyo(false); // dissimulé : Gyo et En coupés
+            data.setEn(false);
+        }
         if (entity instanceof Player player) {
             player.displayClientMessage(refusal != null
                     ? Component.translatable(refusal)
@@ -69,7 +86,7 @@ public final class NenModes {
         if (data.meditating()) regen *= 2; // la méditation recharge l'aura plus vite
 
         switch (data.mode()) {
-            case NONE, TEN -> data.setAura(data.aura() + regen);
+            case NONE, TEN, IN -> data.setAura(data.aura() + regen);
             case ZETSU -> data.setAura(data.aura() + regen * (float) (HxHConfig.ZETSU_REGEN_MULTIPLIER.get()
                     + data.masteryLevel(com.evandouard.hxh.data.Mastery.ZETSU) * 0.02));
             case REN -> {
@@ -89,6 +106,7 @@ public final class NenModes {
             switch (data.mode()) {
                 case TEN -> NenProgress.train(entity, com.evandouard.hxh.data.Mastery.TEN, 1);
                 case ZETSU -> NenProgress.train(entity, com.evandouard.hxh.data.Mastery.ZETSU, 1);
+                case IN -> NenProgress.train(entity, com.evandouard.hxh.data.Mastery.IN, 1);
                 case REN -> {
                     NenProgress.train(entity, com.evandouard.hxh.data.Mastery.REN, 2);
                     HunterStats.addXp(entity, Stat.WILLPOWER, 1);

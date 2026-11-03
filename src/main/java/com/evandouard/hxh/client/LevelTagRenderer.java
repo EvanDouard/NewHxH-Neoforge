@@ -15,7 +15,7 @@ import org.joml.Matrix4f;
 /**
  * Affiche « Niv. X » au-dessus des entités qui ont des données Hunter (mobs à Nen, autres joueurs).
  * Le niveau est la moyenne des stats ; la couleur dit si l'entité est plus faible ou plus forte que toi.
- * Plus tard : visible seulement avec le Gyo.
+ * Visible seulement quand le joueur a le Gyo actif.
  */
 public final class LevelTagRenderer {
     private static final double MAX_DISTANCE = 32;
@@ -39,6 +39,7 @@ public final class LevelTagRenderer {
         Minecraft mc = Minecraft.getInstance();
         LivingEntity entity = event.getEntity();
         if (mc.player == null || entity == mc.player || entity.isInvisible() || mc.options.hideGui) return;
+        if (!SensesClient.localGyo()) return; // le niveau d'un adversaire se lit avec le Gyo
         if (!entity.hasData(ModAttachments.HUNTER)) return;
         HunterData data = entity.getData(ModAttachments.HUNTER);
         if (!(entity instanceof Player) && !data.nenUnlocked() && data.hunterLevel() == 0) return;

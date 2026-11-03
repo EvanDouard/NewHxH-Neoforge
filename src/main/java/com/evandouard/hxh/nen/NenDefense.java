@@ -46,12 +46,13 @@ public final class NenDefense {
         if (!entity.hasData(ModAttachments.HUNTER)) return 0f;
         HunterData data = HunterStats.get(entity);
         if (!data.nenUnlocked() || koActive(entity)) return 0f; // Ko : tout est dans le poing
-        return switch (data.mode()) {
+        float base = switch (data.mode()) {
             case ZETSU -> 0f;
-            case NONE -> tenResistance(data) * 0.5f;
+            case NONE, IN -> tenResistance(data) * 0.5f;
             case TEN, REN -> tenResistance(data);
             case KEN -> kenResistance(data);
         };
+        return base * ryuDefenseFactor(data);
     }
 
     /** Résistance totale, en PV retirés à chaque attaque reçue. */
@@ -73,6 +74,7 @@ public final class NenDefense {
             case KEN -> (float) (1 + renBonus * 0.5);
             default -> 1f;
         };
+        factor *= ryuAttackFactor(data);
         if (koActive(attacker)) {
             factor *= (float) (HxHConfig.KO_DAMAGE_MULTIPLIER.get() + data.masteryLevel(Mastery.KO) * 0.02);
             if (consumeKo) {
@@ -81,6 +83,23 @@ public final class NenDefense {
             }
         }
         return factor;
+    }
+
+    // ---------- Ryu : répartition attaque / défense ----------
+
+    /** Amplitude du Ryu : plus il est maîtrisé, plus la répartition a d'effet (±30 % à ±70 %). */
+    private static double ryuSwing(HunterData data) {
+        return (data.ryuAttack() - 50) / 100.0 * (0.6 + data.masteryLevel(Mastery.RYU) * 0.008);
+    }
+
+    /** Multiplicateur des dégâts au corps à corps selon la part d'aura mise dans l'attaque. */
+    public static float ryuAttackFactor(HunterData data) {
+        return (float) (1 + ryuSwing(data));
+    }
+
+    /** Multiplicateur de la résistance de Nen : ce qui va dans l'attaque manque à la défense. */
+    public static float ryuDefenseFactor(HunterData data) {
+        return (float) Math.max(0, 1 - ryuSwing(data));
     }
 
     public static int koCost(HunterData data) {

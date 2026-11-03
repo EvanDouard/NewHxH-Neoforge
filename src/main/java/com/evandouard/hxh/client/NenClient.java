@@ -41,6 +41,9 @@ public final class NenClient {
 
     public static final KeyMapping KEN = new KeyMapping("key.hxh.ken", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_N, CATEGORY);
     public static final KeyMapping KO = new KeyMapping("key.hxh.ko", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, CATEGORY);
+    public static final KeyMapping GYO = new KeyMapping("key.hxh.gyo", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, CATEGORY);
+    public static final KeyMapping EN = new KeyMapping("key.hxh.en", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Y, CATEGORY);
+    public static final KeyMapping RYU = new KeyMapping("key.hxh.ryu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_U, CATEGORY);
     public static final KeyMapping HATSU_MENU = new KeyMapping("key.hxh.hatsu_menu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, CATEGORY);
     public static final KeyMapping CAST = new KeyMapping("key.hxh.cast", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, CATEGORY);
     public static final KeyMapping NEXT_TECHNIQUE = new KeyMapping("key.hxh.next_technique", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, CATEGORY);
@@ -68,6 +71,9 @@ public final class NenClient {
         event.register(OPEN_PORES);
         event.register(KEN);
         event.register(KO);
+        event.register(GYO);
+        event.register(EN);
+        event.register(RYU);
         event.register(HATSU_MENU);
         event.register(CAST);
         event.register(NEXT_TECHNIQUE);
@@ -91,11 +97,15 @@ public final class NenClient {
         while (REN.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.REN.id()));
         while (KEN.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.KEN.id()));
         while (KO.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.KO, true));
+        while (GYO.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.GYO, true));
+        while (EN.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.EN, true));
+        while (RYU.consumeClick()) mc.setScreen(new RyuScreen());
         while (MEDITATE.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.MEDITATE, true));
         while (OPEN_PORES.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.OPEN_PORES, true));
         while (CAST.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, true));
         while (NEXT_TECHNIQUE.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.NEXT_TECHNIQUE, true));
         while (HATSU_MENU.consumeClick()) openHatsuMenu(mc);
+        SensesClient.tick(mc);
         // Soin : touche maintenue, on n'envoie que les changements d'état
         boolean healDown = HEAL.isDown();
         if (healDown != healKeyWasDown) {
@@ -188,6 +198,7 @@ public final class NenClient {
             case ZETSU -> 0xFF6E6E6E;
             case REN -> 0xFFFF4A3A;
             case KEN -> 0xFFFFC23A;
+            case IN -> 0xFF9A8FB0;
             case NONE -> 0xFFE8E0C8;
         };
         graphics.fill(x - 1, y - 1, x + width + 1, y + 6, 0xC0000000);

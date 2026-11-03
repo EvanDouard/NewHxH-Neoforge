@@ -42,6 +42,8 @@ public final class HunterEvents {
         gameBus.addListener(HunterEvents::onHeal);
         gameBus.addListener(HunterEvents::onStartTracking);
         gameBus.addListener(HunterEvents::onEntityTick);
+        gameBus.addListener(HunterEvents::onBreakSpeed);
+        gameBus.addListener(HunterEvents::onBlockBreak);
     }
 
     /** Réapplique les effets des stats à chaque arrivée dans un monde (connexion, réapparition, dimension). */
@@ -84,6 +86,7 @@ public final class HunterEvents {
         NenModes.tick(player);
         NenHealing.tick(player);
         NenAwakening.tickMeditation(player);
+        com.evandouard.hxh.nen.NenSenses.tick(player);
         Hatsu.tickPassives(player);
         HxHNetwork.syncDirty(player);
     }
@@ -96,6 +99,7 @@ public final class HunterEvents {
             NenModes.tick(living);
             NenHealing.tick(living);
             NenAwakening.tickMeditation(living);
+            com.evandouard.hxh.nen.NenSenses.tick(living);
             Hatsu.tickPassives(living);
             HxHNetwork.syncDirty(living);
         }
@@ -123,7 +127,10 @@ public final class HunterEvents {
         Entity attacker = event.getSource().getEntity();
         boolean melee = attacker instanceof LivingEntity && attacker == event.getSource().getDirectEntity();
         float amount = event.getAmount();
-        if (melee) amount *= NenDefense.outgoingFactor((LivingEntity) attacker, true);
+        if (melee) {
+            amount *= NenDefense.outgoingFactor((LivingEntity) attacker, true);
+            amount *= com.evandouard.hxh.nen.NenSenses.shuDamageFactor((LivingEntity) attacker);
+        }
 
         amount = Hatsu.modifyIncoming(victim, event.getSource(), amount);
         if (melee) amount = Hatsu.modifyOutgoingMelee((LivingEntity) attacker, victim, amount);
@@ -142,6 +149,11 @@ public final class HunterEvents {
         boolean melee = attacker != null && attacker == event.getSource().getDirectEntity();
         if (melee && attacker instanceof LivingEntity livingAttacker && trains(livingAttacker)) {
             HunterStats.addXp(livingAttacker, Stat.STRENGTH, damage);
+            com.evandouard.hxh.nen.NenSenses.shuProtectTool(livingAttacker);
+            // Ryu : se battre avec une répartition non équilibrée entraîne la maîtrise
+            if (HunterStats.get(livingAttacker).ryuAttack() != 50) {
+                com.evandouard.hxh.nen.NenProgress.train(livingAttacker, com.evandouard.hxh.data.Mastery.RYU, 1);
+            }
         }
         // Un mob passif qui a le Nen devient neutre : il riposte contre son agresseur
         if (event.getEntity() instanceof net.minecraft.world.entity.Mob victimMob
@@ -160,6 +172,17 @@ public final class HunterEvents {
                 NenAwakening.tryAccidentalAwakening(livingAttacker, victim, victim.getRandom());
             }
         }
+    }
+
+    /** Shu : on mine plus vite avec un outil quand l'aura est active. */
+    private static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+        float factor = com.evandouard.hxh.nen.NenSenses.shuMiningFactor(event.getEntity());
+        if (factor != 1f) event.setNewSpeed(event.getNewSpeed() * factor);
+    }
+
+    /** Shu : l'outil s'use moins et la maîtrise progresse. */
+    private static void onBlockBreak(net.neoforged.neoforge.event.level.BlockEvent.BreakEvent event) {
+        if (!event.getLevel().isClientSide()) com.evandouard.hxh.nen.NenSenses.shuProtectTool(event.getPlayer());
     }
 
     /** Vitalité : gagne de l'XP en se soignant. */

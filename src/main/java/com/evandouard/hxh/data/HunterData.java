@@ -62,6 +62,11 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private final Map<Mastery, Integer> masteryXp = new EnumMap<>(Mastery.class);
     /** Ko : la prochaine attaque est chargée (et le corps est découvert) jusqu'à ce tick de jeu. */
     private long koUntil = 0;
+    /** Gyo et En : interrupteurs indépendants de la posture (coupés par le Zetsu et l'In). */
+    private boolean gyo = false;
+    private boolean en = false;
+    /** Ryu : part de l'aura mise dans l'attaque, en % (le reste protège le corps). */
+    private int ryuAttack = 50;
 
     // Hatsu : personnage choisi (définitif), technique sélectionnée, recharges (tick de jeu où elle redevient prête)
     private String kit = "";
@@ -349,6 +354,35 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         return gained;
     }
 
+    public boolean gyo() {
+        return gyo;
+    }
+
+    public boolean en() {
+        return en;
+    }
+
+    public void setGyo(boolean value) {
+        if (value == gyo) return;
+        gyo = value;
+        dirty.add(AURA);
+    }
+
+    public void setEn(boolean value) {
+        if (value == en) return;
+        en = value;
+        dirty.add(AURA);
+    }
+
+    public int ryuAttack() {
+        return ryuAttack;
+    }
+
+    public void setRyuAttack(int percent) {
+        ryuAttack = Math.max(0, Math.min(100, percent));
+        dirty.add(PROGRESS);
+    }
+
     public long koUntil() {
         return koUntil;
     }
@@ -416,6 +450,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             a.putString("mode", mode.id());
             a.putInt("color", auraColor);
             a.putLong("koUntil", koUntil);
+            a.putBoolean("gyo", gyo);
+            a.putBoolean("en", en);
             out.put(AURA, a);
             lastWrittenAura = (int) aura;
             return;
@@ -441,6 +477,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
                 ms.put(m.id(), t);
             }
             p.put("masteries", ms);
+            p.putInt("ryuAttack", ryuAttack);
             out.put(PROGRESS, p);
             return;
         }
@@ -538,6 +575,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             mode = m == null ? NenMode.NONE : m;
             auraColor = a.contains("color") ? a.getInt("color") : DEFAULT_AURA_COLOR;
             koUntil = a.getLong("koUntil");
+            gyo = a.getBoolean("gyo");
+            en = a.getBoolean("en");
         }
         if (in.contains(HEAL)) {
             CompoundTag h = in.getCompound(HEAL);
@@ -550,6 +589,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             CompoundTag p = in.getCompound(PROGRESS);
             nenLevel = Math.max(0, Math.min(Mastery.MAX_LEVEL, p.getInt("nenLevel")));
             nenXp = Math.max(0, p.getInt("nenXp"));
+            ryuAttack = p.contains("ryuAttack") ? Math.max(0, Math.min(100, p.getInt("ryuAttack"))) : 50;
             CompoundTag ms = p.getCompound("masteries");
             for (Mastery m : Mastery.values()) {
                 CompoundTag t = ms.getCompound(m.id());

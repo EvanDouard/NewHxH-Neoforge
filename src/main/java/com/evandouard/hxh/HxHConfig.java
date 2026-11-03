@@ -128,6 +128,18 @@ public final class HxHConfig {
             .comment("Ouverture des pores par un maître : portée en blocs")
             .defineInRange("awakening.openPoresRange", 4.0, 1.0, 32.0);
 
+    public static final ModConfigSpec.IntValue ZETSU_UNLOCK_IN_LEVEL = BUILDER
+            .comment("Niveau de maîtrise de l'In à atteindre pour débloquer le Zetsu complet")
+            .defineInRange("senses.zetsuUnlockInLevel", 10, 0, 100);
+
+    public static final ModConfigSpec.DoubleValue GYO_DRAIN_PER_SECOND = BUILDER
+            .comment("Aura consommée par seconde quand le Gyo est actif")
+            .defineInRange("senses.gyoDrainPerSecond", 1.0, 0.0, 1000.0);
+
+    public static final ModConfigSpec.DoubleValue EN_DRAIN_PER_SECOND = BUILDER
+            .comment("Aura consommée par seconde quand l'En est actif")
+            .defineInRange("senses.enDrainPerSecond", 2.0, 0.0, 1000.0);
+
     public static final ModConfigSpec SPEC = BUILDER.build();
 
     private HxHConfig() {}
