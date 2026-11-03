@@ -65,12 +65,6 @@ public final class HunterStats {
         if (entity.getHealth() > entity.getMaxHealth()) entity.setHealth(entity.getMaxHealth());
     }
 
-    /** Multiplicateur appliqué aux dégâts subis selon l'Endurance (1.0 = aucune réduction). */
-    public static float damageTakenFactor(LivingEntity entity) {
-        double reduction = get(entity).level(Stat.ENDURANCE) * HxHConfig.ENDURANCE_REDUCTION_PER_LEVEL.get();
-        return (float) (1.0 - Math.min(0.9, reduction));
-    }
-
     private static void setModifier(LivingEntity entity, Holder<Attribute> attribute, ResourceLocation id,
                                     double amount, AttributeModifier.Operation op) {
         AttributeInstance instance = entity.getAttribute(attribute);

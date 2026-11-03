@@ -105,6 +105,25 @@ public final class HunterCommand {
                     d.setMeditationTicks(0);
                 }))
                 .then(targeted("reveal", e -> HunterStats.get(e).setNenRevealed(true)))
+                .then(Commands.literal("level")
+                        .then(Commands.argument("level", IntegerArgumentType.integer(0, com.evandouard.hxh.data.Mastery.MAX_LEVEL))
+                                .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()),
+                                        e -> HunterStats.get(e).setNenLevel(IntegerArgumentType.getInteger(ctx, "level"))))
+                                .then(Commands.argument("targets", EntityArgument.entities())
+                                        .executes(ctx -> apply(ctx, EntityArgument.getEntities(ctx, "targets"),
+                                                e -> HunterStats.get(e).setNenLevel(IntegerArgumentType.getInteger(ctx, "level")))))))
+                .then(Commands.literal("mastery")
+                        .then(Commands.argument("mastery", StringArgumentType.word())
+                                .suggests((ctx, b) -> SharedSuggestionProvider.suggest(
+                                        Arrays.stream(com.evandouard.hxh.data.Mastery.values()).map(com.evandouard.hxh.data.Mastery::id), b))
+                                .then(Commands.argument("level", IntegerArgumentType.integer(0, com.evandouard.hxh.data.Mastery.MAX_LEVEL))
+                                        .executes(ctx -> {
+                                            com.evandouard.hxh.data.Mastery m = com.evandouard.hxh.data.Mastery.byId(
+                                                    StringArgumentType.getString(ctx, "mastery"));
+                                            if (m == null) throw UNKNOWN_STAT.create(StringArgumentType.getString(ctx, "mastery"));
+                                            return apply(ctx, List.of(ctx.getSource().getEntityOrException()),
+                                                    e -> HunterStats.get(e).setMasteryLevel(m, IntegerArgumentType.getInteger(ctx, "level")));
+                                        }))))
                 .then(Commands.literal("meditation")
                         .then(Commands.argument("seconds", IntegerArgumentType.integer(0))
                                 .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()),
@@ -245,6 +264,22 @@ public final class HunterCommand {
             lines.add(Component.translatable("command.hxh.show.nen", "???"));
         }
         if (data.nenUnlocked()) {
+            lines.add(Component.translatable("command.hxh.show.nen_level", data.nenLevel(),
+                    data.nenLevel() >= com.evandouard.hxh.data.Mastery.MAX_LEVEL
+                            ? Component.translatable("command.hxh.show.max")
+                            : Component.translatable("command.hxh.show.xp", data.nenXp(),
+                            com.evandouard.hxh.data.Mastery.nenXpToNext(data.nenLevel()))));
+            MutableComponent masteries = Component.translatable("command.hxh.show.masteries");
+            boolean first = true;
+            for (com.evandouard.hxh.data.Mastery m : com.evandouard.hxh.data.Mastery.values()) {
+                masteries.append(Component.literal(first ? " " : " · "))
+                        .append(Component.translatable(m.translationKey()))
+                        .append(Component.literal(" " + data.masteryLevel(m)));
+                first = false;
+            }
+            lines.add(masteries.withStyle(ChatFormatting.GRAY));
+            lines.add(Component.translatable("command.hxh.show.resistance",
+                    String.format(java.util.Locale.ROOT, "%.1f", com.evandouard.hxh.nen.NenDefense.totalResistance(living))));
             lines.add(Component.translatable("command.hxh.show.aura", (int) data.aura(), data.auraMax(),
                     Component.translatable(data.mode().translationKey())));
         }

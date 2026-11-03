@@ -8,6 +8,7 @@ import com.evandouard.hxh.data.Stat;
 import com.evandouard.hxh.network.HxHNetwork;
 import com.evandouard.hxh.hatsu.Hatsu;
 import com.evandouard.hxh.nen.NenAwakening;
+import com.evandouard.hxh.nen.NenDefense;
 import com.evandouard.hxh.nen.NenMobAI;
 import com.evandouard.hxh.nen.NenHealing;
 import com.evandouard.hxh.nen.NenModes;
@@ -107,23 +108,28 @@ public final class HunterEvents {
         }
     }
 
-    /** Endurance et mode de la victime, Ren de l'attaquant au corps à corps. */
+    /**
+     * Calcul des dégâts d'une attaque :
+     * <ol>
+     *     <li>bonus de l'attaquant au corps à corps (Ren, Ken, Ko — le Ko est dépensé) ;</li>
+     *     <li>passifs du personnage (immunités de la victime, bonus de l'attaquant) ;</li>
+     *     <li>réduction plate : Endurance + résistance de Nen de la posture, seulement contre une attaque
+     *         (quelqu'un l'a causée) et jamais contre les dégâts « absolus » (/kill, vide).</li>
+     * </ol>
+     */
     private static void onIncomingDamage(LivingIncomingDamageEvent event) {
         LivingEntity victim = event.getEntity();
         if (victim.level().isClientSide()) return;
-        float factor = 1f;
-        if (victim.hasData(ModAttachments.HUNTER)) {
-            factor *= HunterStats.damageTakenFactor(victim) * NenModes.incomingFactor(victim);
-        }
         Entity attacker = event.getSource().getEntity();
-        if (attacker instanceof LivingEntity livingAttacker && attacker == event.getSource().getDirectEntity()) {
-            factor *= NenModes.outgoingFactor(livingAttacker);
-        }
-        float amount = event.getAmount() * factor;
-        // Passifs du personnage : de la victime (immunités…) puis de l'attaquant au corps à corps
+        boolean melee = attacker instanceof LivingEntity && attacker == event.getSource().getDirectEntity();
+        float amount = event.getAmount();
+        if (melee) amount *= NenDefense.outgoingFactor((LivingEntity) attacker, true);
+
         amount = Hatsu.modifyIncoming(victim, event.getSource(), amount);
-        if (attacker instanceof LivingEntity livingAttacker && attacker == event.getSource().getDirectEntity()) {
-            amount = Hatsu.modifyOutgoingMelee(livingAttacker, victim, amount);
+        if (melee) amount = Hatsu.modifyOutgoingMelee((LivingEntity) attacker, victim, amount);
+
+        if (attacker != null && !event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            amount = Math.max(0f, amount - NenDefense.totalResistance(victim));
         }
         if (amount != event.getAmount()) event.setAmount(amount);
     }

@@ -73,19 +73,26 @@ public final class HunterStatsTests {
 
     @GameTest(template = "empty")
     public static void enduranceReducesDamage(GameTestHelper helper) {
-        // On compare à un zombie témoin pour ne pas dépendre de son armure naturelle.
+        // Réduction plate contre une attaque : on compare à un zombie témoin (même armure naturelle)
+        Zombie attacker = zombie(helper);
         Zombie tough = zombie(helper);
         Zombie normal = zombie(helper);
         HunterStats.setLevel(tough, Stat.ENDURANCE, 100);
         float toughBefore = tough.getHealth();
         float normalBefore = normal.getHealth();
-        tough.hurt(helper.getLevel().damageSources().generic(), 10f);
-        normal.hurt(helper.getLevel().damageSources().generic(), 10f);
+        tough.hurt(helper.getLevel().damageSources().mobAttack(attacker), 10f);
+        normal.hurt(helper.getLevel().damageSources().mobAttack(attacker), 10f);
         double lostTough = toughBefore - tough.getHealth();
         double lostNormal = normalBefore - normal.getHealth();
+        double flat = 100 * HxHConfig.ENDURANCE_FLAT_PER_LEVEL.get();
         helper.assertTrue(lostNormal > 0, "Le zombie témoin aurait dû prendre des dégâts");
-        double expectedFactor = 1 - Math.min(0.9, 100 * HxHConfig.ENDURANCE_REDUCTION_PER_LEVEL.get());
-        assertNear(helper, expectedFactor, lostTough / lostNormal, "Facteur de dégâts avec Endurance 100");
+        helper.assertTrue(lostTough < lostNormal - flat * 0.5,
+                "Endurance 100 : environ " + flat + " PV de moins attendus (" + lostTough + " contre " + lostNormal + ")");
+        // Les dégâts sans attaquant (chute, feu…) ne sont pas réduits par l'Endurance
+        float before = tough.getHealth();
+        tough.invulnerableTime = 0;
+        tough.hurt(helper.getLevel().damageSources().generic(), 2f);
+        helper.assertTrue(tough.getHealth() < before, "La réduction plate ne s'applique qu'aux attaques");
         helper.succeed();
     }
 

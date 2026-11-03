@@ -103,6 +103,7 @@ public final class Hatsu {
     public static String castRefusal(HunterData data, Technique technique, long gameTime) {
         if (!data.nenUnlocked()) return "message.hxh.nen_locked";
         if (data.mode() == NenMode.ZETSU) return "message.hxh.hatsu_zetsu";
+        if (data.nenLevel() < technique.minNenLevel()) return "message.hxh.hatsu_nen_level";
         if (gameTime < data.readyAt(technique.id())) return "message.hxh.hatsu_cooldown";
         if (data.aura() < technique.auraCost()) return "message.hxh.no_aura";
         return null;
@@ -121,6 +122,7 @@ public final class Hatsu {
         boolean hit = technique.perform(entity, power(data, technique));
         data.setAura(data.aura() - technique.auraCost());
         data.setReadyAt(technique.id(), now + technique.cooldownTicks());
+        com.evandouard.hxh.nen.NenProgress.addNenXp(entity, Math.max(1, technique.auraCost() / 5));
         return hit ? null : "message.hxh.hatsu_missed";
     }
 

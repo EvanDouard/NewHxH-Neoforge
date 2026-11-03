@@ -41,6 +41,7 @@ public final class HatsuTests {
         d.setNenType(type);
         NenModes.unlock(z);
         d.setNenRevealed(true);
+        d.setNenLevel(100); // toutes les techniques débloquées
         if (kit != null) d.setKit(kit);
         return d;
     }

@@ -13,7 +13,9 @@ public enum NenMode {
     /** Zetsu : aura coupée, régénération rapide, mais très vulnérable. */
     ZETSU,
     /** Ren : aura amplifiée, dégâts augmentés, consomme l'aura. */
-    REN;
+    REN,
+    /** Ken : Ten et Ren combinés, grosse défense, consommation continue plus forte que le Ren. */
+    KEN;
 
     public String id() {
         return name().toLowerCase(Locale.ROOT);

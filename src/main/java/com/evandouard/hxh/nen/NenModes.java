@@ -40,7 +40,7 @@ public final class NenModes {
     public static String trySetMode(LivingEntity entity, NenMode mode) {
         HunterData data = HunterStats.get(entity);
         if (!data.nenUnlocked()) return "message.hxh.nen_locked";
-        if (mode == NenMode.REN && data.aura() < 1) return "message.hxh.no_aura";
+        if ((mode == NenMode.REN || mode == NenMode.KEN) && data.aura() < 1) return "message.hxh.no_aura";
         data.setMode(mode);
         return null;
     }
@@ -70,16 +70,36 @@ public final class NenModes {
 
         switch (data.mode()) {
             case NONE, TEN -> data.setAura(data.aura() + regen);
-            case ZETSU -> data.setAura(data.aura() + regen * HxHConfig.ZETSU_REGEN_MULTIPLIER.get().floatValue());
+            case ZETSU -> data.setAura(data.aura() + regen * (float) (HxHConfig.ZETSU_REGEN_MULTIPLIER.get()
+                    + data.masteryLevel(com.evandouard.hxh.data.Mastery.ZETSU) * 0.02));
             case REN -> {
                 data.setAura(data.aura() - (float) (HxHConfig.REN_DRAIN_PER_SECOND.get() / 20.0));
                 if (data.aura() <= 0) exhaust(entity, data);
             }
+            case KEN -> {
+                double drain = Math.max(1.5, HxHConfig.KEN_DRAIN_PER_SECOND.get()
+                        - data.masteryLevel(com.evandouard.hxh.data.Mastery.KEN) * 0.02);
+                data.setAura(data.aura() - (float) (drain / 20.0));
+                if (data.aura() <= 0) exhaust(entity, data);
+            }
         }
 
-        // Volonté : s'entraîne en maintenant l'aura (Ren : 1 XP/s, Ten : 1 XP / 5 s)
-        if (data.mode() == NenMode.REN && entity.tickCount % 20 == 0) HunterStats.addXp(entity, Stat.WILLPOWER, 1);
-        if (data.mode() == NenMode.TEN && entity.tickCount % 100 == 0) HunterStats.addXp(entity, Stat.WILLPOWER, 1);
+        // Entraînement : chaque seconde passée dans une posture fait progresser sa maîtrise et le Nen
+        if (entity.tickCount % 20 == 0) {
+            switch (data.mode()) {
+                case TEN -> NenProgress.train(entity, com.evandouard.hxh.data.Mastery.TEN, 1);
+                case ZETSU -> NenProgress.train(entity, com.evandouard.hxh.data.Mastery.ZETSU, 1);
+                case REN -> {
+                    NenProgress.train(entity, com.evandouard.hxh.data.Mastery.REN, 2);
+                    HunterStats.addXp(entity, Stat.WILLPOWER, 1);
+                }
+                case KEN -> {
+                    NenProgress.train(entity, com.evandouard.hxh.data.Mastery.KEN, 2);
+                    HunterStats.addXp(entity, Stat.WILLPOWER, 1);
+                }
+                default -> { }
+            }
+        }
     }
 
     private static void exhaust(LivingEntity entity, HunterData data) {
@@ -92,23 +112,5 @@ public final class NenModes {
         if (entity instanceof Player player) {
             player.displayClientMessage(Component.translatable("message.hxh.exhausted"), true);
         }
-    }
-
-    /** Multiplicateur des dégâts subis selon le mode. */
-    public static float incomingFactor(LivingEntity entity) {
-        if (!entity.hasData(ModAttachments.HUNTER)) return 1f;
-        return switch (HunterStats.get(entity).mode()) {
-            case TEN -> (float) (1.0 - HxHConfig.TEN_DAMAGE_REDUCTION.get());
-            case ZETSU -> (float) (1.0 + HxHConfig.ZETSU_DAMAGE_TAKEN_BONUS.get());
-            default -> 1f;
-        };
-    }
-
-    /** Multiplicateur des dégâts infligés au corps à corps selon le mode. */
-    public static float outgoingFactor(LivingEntity entity) {
-        if (!entity.hasData(ModAttachments.HUNTER)) return 1f;
-        return HunterStats.get(entity).mode() == NenMode.REN
-                ? (float) (1.0 + HxHConfig.REN_DAMAGE_BONUS.get())
-                : 1f;
     }
 }

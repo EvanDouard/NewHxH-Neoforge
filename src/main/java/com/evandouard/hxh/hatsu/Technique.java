@@ -15,6 +15,7 @@ public abstract class Technique {
     private final NenType category;
     private final int auraCost;
     private final int cooldownTicks;
+    private int minNenLevel = 0;
 
     protected Technique(String id, NenType category, int auraCost, int cooldownTicks) {
         this.id = id;
@@ -37,6 +38,16 @@ public abstract class Technique {
 
     public int cooldownTicks() {
         return cooldownTicks;
+    }
+
+    /** Niveau de Nen minimum pour pouvoir lancer cette technique. */
+    public int minNenLevel() {
+        return minNenLevel;
+    }
+
+    public Technique requiresNenLevel(int level) {
+        this.minNenLevel = level;
+        return this;
     }
 
     public String translationKey() {

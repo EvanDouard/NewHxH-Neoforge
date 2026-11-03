@@ -85,6 +85,7 @@ public final class NenHealing {
 
         // Maîtrise : XP chaque seconde de soin effectif, un peu plus vite à haut niveau
         if (entity.tickCount % 20 == 0) {
+            NenProgress.addNenXp(entity, 1);
             int gained = data.addHealXp(2 + level / 10);
             if (gained > 0 && entity instanceof Player player) {
                 player.displayClientMessage(Component.translatable("message.hxh.heal_level_up", data.healLevel()), true);

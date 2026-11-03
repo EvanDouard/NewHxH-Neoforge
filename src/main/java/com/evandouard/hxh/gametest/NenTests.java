@@ -6,6 +6,7 @@ import com.evandouard.hxh.block.WaterDivinationBlock;
 import com.evandouard.hxh.data.HunterData;
 import com.evandouard.hxh.data.NenMode;
 import com.evandouard.hxh.data.NenType;
+import com.evandouard.hxh.nen.NenDefense;
 import com.evandouard.hxh.nen.NenModes;
 import com.evandouard.hxh.registry.ModBlocks;
 import com.evandouard.hxh.stats.HunterStats;
@@ -106,23 +107,29 @@ public final class NenTests {
     @GameTest(template = "empty")
     public static void modesChangeDamage(GameTestHelper helper) {
         Zombie z = nenZombie(helper);
-        helper.assertTrue(NenModes.incomingFactor(z) == 1f && NenModes.outgoingFactor(z) == 1f, "Neutre : aucun effet");
+        float neutral = NenDefense.nenResistance(z);
         NenModes.trySetMode(z, NenMode.TEN);
-        helper.assertTrue(NenModes.incomingFactor(z) < 1f, "Ten : moins de dégâts subis");
+        float ten = NenDefense.nenResistance(z);
+        NenModes.trySetMode(z, NenMode.KEN);
+        float ken = NenDefense.nenResistance(z);
+        helper.assertTrue(NenDefense.outgoingFactor(z, false) > 1f, "Ken : un peu plus de dégâts infligés");
         NenModes.trySetMode(z, NenMode.ZETSU);
-        helper.assertTrue(NenModes.incomingFactor(z) > 1f, "Zetsu : plus de dégâts subis");
+        float zetsu = NenDefense.nenResistance(z);
+        helper.assertTrue(zetsu == 0f && neutral < ten && ten < ken,
+                "Résistances attendues Zetsu 0 < Neutre < Ten < Ken : " + zetsu + " / " + neutral + " / " + ten + " / " + ken);
         NenModes.trySetMode(z, NenMode.REN);
-        helper.assertTrue(NenModes.outgoingFactor(z) > 1f, "Ren : plus de dégâts infligés");
+        helper.assertTrue(NenDefense.outgoingFactor(z, false) > 1f, "Ren : plus de dégâts infligés");
 
-        // Vérification en vrai : un zombie en Zetsu perd plus de vie qu'un zombie neutre
-        Zombie neutral = nenZombie(helper);
+        // En vrai : un zombie en Zetsu perd plus de vie qu'un zombie neutre face à la même attaque
+        Zombie attacker = nenZombie(helper);
+        Zombie calm = nenZombie(helper);
         Zombie weak = nenZombie(helper);
         NenModes.trySetMode(weak, NenMode.ZETSU);
-        float n0 = neutral.getHealth();
+        float c0 = calm.getHealth();
         float w0 = weak.getHealth();
-        neutral.hurt(helper.getLevel().damageSources().generic(), 4f);
-        weak.hurt(helper.getLevel().damageSources().generic(), 4f);
-        helper.assertTrue(w0 - weak.getHealth() > n0 - neutral.getHealth(), "Le Zetsu doit rendre vulnérable");
+        calm.hurt(helper.getLevel().damageSources().mobAttack(attacker), 4f);
+        weak.hurt(helper.getLevel().damageSources().mobAttack(attacker), 4f);
+        helper.assertTrue(w0 - weak.getHealth() > c0 - calm.getHealth(), "Le Zetsu doit rendre vulnérable");
         helper.succeed();
     }
 

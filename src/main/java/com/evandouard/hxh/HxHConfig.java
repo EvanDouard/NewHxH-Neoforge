@@ -20,9 +20,9 @@ public final class HxHConfig {
             .comment("Vitesse de déplacement ajoutée par niveau de Vitesse (0.004 = +0,4 %)")
             .defineInRange("stats.speedPercentPerLevel", 0.004, 0.0, 0.1);
 
-    public static final ModConfigSpec.DoubleValue ENDURANCE_REDUCTION_PER_LEVEL = BUILDER
-            .comment("Réduction des dégâts subis par niveau d'Endurance (0.003 = 0,3 %)")
-            .defineInRange("stats.enduranceReductionPerLevel", 0.003, 0.0, 0.01);
+    public static final ModConfigSpec.DoubleValue ENDURANCE_FLAT_PER_LEVEL = BUILDER
+            .comment("Résistance plate aux attaques par niveau d'Endurance, en PV (0.05 = 5 PV au niveau 100)")
+            .defineInRange("stats.enduranceFlatPerLevel", 0.05, 0.0, 10.0);
 
     public static final ModConfigSpec.DoubleValue VITALITY_HEALTH_PER_LEVEL = BUILDER
             .comment("Points de vie max ajoutés par niveau de Vitalité (2.0 = un cœur)")
@@ -52,13 +52,33 @@ public final class HxHConfig {
             .comment("Bonus de dégâts infligés en Ren (0.3 = +30 %)")
             .defineInRange("aura.renDamageBonus", 0.3, 0.0, 10.0);
 
-    public static final ModConfigSpec.DoubleValue TEN_DAMAGE_REDUCTION = BUILDER
-            .comment("Réduction des dégâts subis en Ten (0.15 = -15 %)")
-            .defineInRange("aura.tenDamageReduction", 0.15, 0.0, 0.9);
+    public static final ModConfigSpec.DoubleValue TEN_RESISTANCE_BASE = BUILDER
+            .comment("Résistance de Nen en Ten au niveau de maîtrise 0, en PV retirés à chaque attaque")
+            .defineInRange("defense.tenBase", 1.0, 0.0, 100.0);
 
-    public static final ModConfigSpec.DoubleValue ZETSU_DAMAGE_TAKEN_BONUS = BUILDER
-            .comment("Dégâts subis en plus en Zetsu (0.5 = +50 %)")
-            .defineInRange("aura.zetsuDamageTakenBonus", 0.5, 0.0, 10.0);
+    public static final ModConfigSpec.DoubleValue TEN_RESISTANCE_PER_LEVEL = BUILDER
+            .comment("Résistance de Nen en Ten ajoutée par niveau de maîtrise du Ten")
+            .defineInRange("defense.tenPerLevel", 0.03, 0.0, 10.0);
+
+    public static final ModConfigSpec.DoubleValue KEN_RESISTANCE_BASE = BUILDER
+            .comment("Résistance de Nen en Ken au niveau de maîtrise 0")
+            .defineInRange("defense.kenBase", 3.0, 0.0, 100.0);
+
+    public static final ModConfigSpec.DoubleValue KEN_RESISTANCE_PER_LEVEL = BUILDER
+            .comment("Résistance de Nen en Ken ajoutée par niveau de maîtrise du Ken")
+            .defineInRange("defense.kenPerLevel", 0.07, 0.0, 10.0);
+
+    public static final ModConfigSpec.DoubleValue KEN_DRAIN_PER_SECOND = BUILDER
+            .comment("Aura consommée par seconde en Ken au niveau de maîtrise 0")
+            .defineInRange("defense.kenDrainPerSecond", 4.0, 0.0, 1000.0);
+
+    public static final ModConfigSpec.IntValue KO_AURA_COST = BUILDER
+            .comment("Aura consommée d'un coup par le Ko au niveau de maîtrise 0")
+            .defineInRange("defense.koCost", 30, 0, 100000);
+
+    public static final ModConfigSpec.DoubleValue KO_DAMAGE_MULTIPLIER = BUILDER
+            .comment("Multiplicateur de la prochaine attaque au corps à corps sous Ko, au niveau de maîtrise 0")
+            .defineInRange("defense.koMultiplier", 2.0, 1.0, 100.0);
 
     public static final ModConfigSpec.IntValue EXHAUSTION_TICKS = BUILDER
             .comment("Durée de l'épuisement (lenteur + faiblesse) quand l'aura tombe à zéro en Ren, en ticks")

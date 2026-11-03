@@ -42,6 +42,8 @@ public final class NenMobAI {
     /** Niveau max d'une stat de mob : toujours sous le max d'un joueur (100). */
     public static final int MOB_MAX_LEVEL = 90;
     private static final Set<Mob> EQUIPPED = Collections.newSetFromMap(new WeakHashMap<>());
+    /** Mobs passés en Ten automatiquement pour un combat (on ne touche pas à un Ten réglé à la main). */
+    private static final Set<Mob> AUTO_TEN = Collections.newSetFromMap(new WeakHashMap<>());
 
     private NenMobAI() {}
 
@@ -80,6 +82,12 @@ public final class NenMobAI {
         for (Stat s : Stat.values()) if (data.level(s) != 0) return; // déjà réglé à la main
         double hours = mob.level().getGameTime() / 72000.0;
         for (Stat s : Stat.values()) data.setLevel(s, rollLevel(hours, mob.getRandom()));
+        // Niveau de Nen et maîtrises suivent la même logique (maîtrises un peu en dessous du Nen)
+        int nen = rollLevel(hours, mob.getRandom());
+        data.setNenLevel(nen);
+        for (com.evandouard.hxh.data.Mastery m : com.evandouard.hxh.data.Mastery.values()) {
+            data.setMasteryLevel(m, (int) Math.round(nen * (0.5 + 0.4 * mob.getRandom().nextDouble())));
+        }
         HunterStats.applyAttributes(mob);
         mob.setHealth(mob.getMaxHealth());
     }
@@ -92,8 +100,8 @@ public final class NenMobAI {
         if (!data.nenUnlocked()) return;
         LivingEntity target = mob.getTarget();
         boolean fighting = target != null && target.isAlive();
-        if (fighting && data.mode() == NenMode.NONE) NenModes.trySetMode(mob, NenMode.TEN);
-        if (!fighting && data.mode() == NenMode.TEN) NenModes.trySetMode(mob, NenMode.NONE);
+        if (fighting && data.mode() == NenMode.NONE && NenModes.trySetMode(mob, NenMode.TEN) == null) AUTO_TEN.add(mob);
+        if (!fighting && data.mode() == NenMode.TEN && AUTO_TEN.remove(mob)) NenModes.trySetMode(mob, NenMode.NONE);
 
         float ratio = mob.getHealth() / mob.getMaxHealth();
         if (!data.healing() && ratio < 0.5f && data.aura() > 20) NenHealing.setHealing(mob, true);

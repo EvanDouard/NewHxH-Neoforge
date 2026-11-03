@@ -24,6 +24,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private static final String HEAL = "heal";
     private static final String MEDITATION = "meditation";
     private static final String HATSU = "hatsu";
+    private static final String PROGRESS = "progress";
 
     /** Couleur d'aura par défaut : bleu clair. */
     public static final int DEFAULT_AURA_COLOR = 0x7FC8FF;
@@ -54,6 +55,14 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private boolean meditating = false;
     private int meditationTicks = 0;
 
+    // Niveau de Nen et maîtrises des techniques de base
+    private int nenLevel = 0;
+    private int nenXp = 0;
+    private final Map<Mastery, Integer> masteryLevels = new EnumMap<>(Mastery.class);
+    private final Map<Mastery, Integer> masteryXp = new EnumMap<>(Mastery.class);
+    /** Ko : la prochaine attaque est chargée (et le corps est découvert) jusqu'à ce tick de jeu. */
+    private long koUntil = 0;
+
     // Hatsu : personnage choisi (définitif), technique sélectionnée, recharges (tick de jeu où elle redevient prête)
     private String kit = "";
     private int selected = 0;
@@ -65,6 +74,10 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         for (Stat s : Stat.values()) {
             levels.put(s, 0);
             xp.put(s, 0);
+        }
+        for (Mastery m : Mastery.values()) {
+            masteryLevels.put(m, 0);
+            masteryXp.put(m, 0);
         }
     }
 
@@ -262,6 +275,89 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         if (old / 20 != meditationTicks / 20) dirty.add(MEDITATION);
     }
 
+    // ---------- Niveau de Nen et maîtrises ----------
+
+    public int nenLevel() {
+        return nenLevel;
+    }
+
+    public int nenXp() {
+        return nenXp;
+    }
+
+    public void setNenLevel(int level) {
+        nenLevel = Math.max(0, Math.min(Mastery.MAX_LEVEL, level));
+        nenXp = 0;
+        dirty.add(PROGRESS);
+    }
+
+    /** @return le nombre de niveaux de Nen gagnés */
+    public int addNenXp(int amount) {
+        if (amount <= 0 || nenLevel >= Mastery.MAX_LEVEL) return 0;
+        int current = nenXp + amount;
+        int gained = 0;
+        while (nenLevel < Mastery.MAX_LEVEL && current >= Mastery.nenXpToNext(nenLevel)) {
+            current -= Mastery.nenXpToNext(nenLevel);
+            nenLevel++;
+            gained++;
+        }
+        nenXp = nenLevel >= Mastery.MAX_LEVEL ? 0 : current;
+        dirty.add(PROGRESS);
+        return gained;
+    }
+
+    public int masteryLevel(Mastery m) {
+        return masteryLevels.get(m);
+    }
+
+    public int masteryXp(Mastery m) {
+        return masteryXp.get(m);
+    }
+
+    /** Plafond de verre : une maîtrise ne dépasse pas le niveau de Nen (minimum {@link Mastery#MIN_CAP}). */
+    public int masteryCap() {
+        return Math.max(Mastery.MIN_CAP, nenLevel);
+    }
+
+    public void setMasteryLevel(Mastery m, int level) {
+        masteryLevels.put(m, Math.max(0, Math.min(Mastery.MAX_LEVEL, level)));
+        masteryXp.put(m, 0);
+        dirty.add(PROGRESS);
+    }
+
+    /**
+     * Ajoute de l'XP à une maîtrise, ralentie en approchant du plafond et nulle une fois dessus.
+     * @return le nombre de niveaux gagnés
+     */
+    public int addMasteryXp(Mastery m, int amount) {
+        int level = masteryLevels.get(m);
+        int cap = masteryCap();
+        if (amount <= 0 || level >= cap) return 0;
+        // Plus on est proche du plafond, moins l'entraînement rapporte (de 100 % à 20 %)
+        double factor = Math.max(0.2, Math.min(1.0, (cap - level) / 10.0));
+        int current = masteryXp.get(m) + Math.max(1, (int) Math.round(amount * factor));
+        int gained = 0;
+        while (level < cap && current >= Mastery.xpToNext(level)) {
+            current -= Mastery.xpToNext(level);
+            level++;
+            gained++;
+        }
+        if (level >= cap) current = 0;
+        masteryLevels.put(m, level);
+        masteryXp.put(m, current);
+        dirty.add(PROGRESS);
+        return gained;
+    }
+
+    public long koUntil() {
+        return koUntil;
+    }
+
+    public void setKoUntil(long gameTime) {
+        koUntil = gameTime;
+        dirty.add(AURA);
+    }
+
     // ---------- Hatsu ----------
 
     public String kit() {
@@ -319,6 +415,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             a.putInt("max", auraMax);
             a.putString("mode", mode.id());
             a.putInt("color", auraColor);
+            a.putLong("koUntil", koUntil);
             out.put(AURA, a);
             lastWrittenAura = (int) aura;
             return;
@@ -330,6 +427,21 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             h.putInt("xp", healXp);
             h.putBoolean("active", healing);
             out.put(HEAL, h);
+            return;
+        }
+        if (key.equals(PROGRESS)) {
+            CompoundTag p = new CompoundTag();
+            p.putInt("nenLevel", nenLevel);
+            p.putInt("nenXp", nenXp);
+            CompoundTag ms = new CompoundTag();
+            for (Mastery m : Mastery.values()) {
+                CompoundTag t = new CompoundTag();
+                t.putInt("level", masteryLevels.get(m));
+                t.putInt("xp", masteryXp.get(m));
+                ms.put(m.id(), t);
+            }
+            p.put("masteries", ms);
+            out.put(PROGRESS, p);
             return;
         }
         if (key.equals(HATSU)) {
@@ -369,6 +481,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         writeKey(HEAL, out);
         writeKey(MEDITATION, out);
         writeKey(HATSU, out);
+        writeKey(PROGRESS, out);
         return out;
     }
 
@@ -392,6 +505,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         dirty.add(HEAL);
         dirty.add(MEDITATION);
         dirty.add(HATSU);
+        dirty.add(PROGRESS);
     }
 
     /** Remet tout à zéro (stats et Nen). */
@@ -423,6 +537,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             NenMode m = NenMode.byId(a.getString("mode"));
             mode = m == null ? NenMode.NONE : m;
             auraColor = a.contains("color") ? a.getInt("color") : DEFAULT_AURA_COLOR;
+            koUntil = a.getLong("koUntil");
         }
         if (in.contains(HEAL)) {
             CompoundTag h = in.getCompound(HEAL);
@@ -430,6 +545,17 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             healLevel = Math.max(0, Math.min(HEAL_MAX_LEVEL, h.getInt("level")));
             healXp = Math.max(0, h.getInt("xp"));
             healing = h.getBoolean("active");
+        }
+        if (in.contains(PROGRESS)) {
+            CompoundTag p = in.getCompound(PROGRESS);
+            nenLevel = Math.max(0, Math.min(Mastery.MAX_LEVEL, p.getInt("nenLevel")));
+            nenXp = Math.max(0, p.getInt("nenXp"));
+            CompoundTag ms = p.getCompound("masteries");
+            for (Mastery m : Mastery.values()) {
+                CompoundTag t = ms.getCompound(m.id());
+                masteryLevels.put(m, Math.max(0, Math.min(Mastery.MAX_LEVEL, t.getInt("level"))));
+                masteryXp.put(m, Math.max(0, t.getInt("xp")));
+            }
         }
         if (in.contains(HATSU)) {
             CompoundTag h = in.getCompound(HATSU);

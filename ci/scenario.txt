@@ -231,4 +231,21 @@ cmd hunter nen unlock @e[type=minecraft:husk,limit=1,sort=furthest]
 look 0 5
 wait 40
 shot 24_niveau_au_dessus_des_mobs
+
+# --- Nen avancé : Ken, Ko, niveau de Nen et résistance ---
+cmd gamemode survival
+clearchat
+key key.hxh.ken
+wait 30
+cmd hunter
+wait 10
+expect (Ken)
+expect Niveau de Nen
+expect Résistance actuelle
+key key.hxh.ko
+wait 5
+camera back
+wait 10
+shot 25_ken_et_ko
+camera first
 quit

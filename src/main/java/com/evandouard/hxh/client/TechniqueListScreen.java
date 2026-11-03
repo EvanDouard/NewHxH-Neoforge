@@ -98,6 +98,10 @@ public class TechniqueListScreen extends Screen {
                         Math.round(viewerType.affinity(t.category()) * 100)));
             }
             add(category.withStyle(ChatFormatting.GRAY), 8, false);
+            if (t.minNenLevel() > 0) {
+                add(Component.translatable("screen.hxh.techniques.min_level", t.minNenLevel())
+                        .withStyle(data.nenLevel() >= t.minNenLevel() ? ChatFormatting.GRAY : ChatFormatting.RED), 8, false);
+            }
             if (t.implemented()) {
                 add(Component.translatable("screen.hxh.techniques.stats", t.auraCost(),
                         String.format(Locale.ROOT, "%.1f", t.cooldownTicks() / 20f)).withStyle(ChatFormatting.GRAY), 8, false);

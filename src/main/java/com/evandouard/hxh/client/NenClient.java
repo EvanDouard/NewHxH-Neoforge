@@ -39,6 +39,8 @@ public final class NenClient {
     public static final KeyMapping MEDITATE = new KeyMapping("key.hxh.meditate", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_M, CATEGORY);
     public static final KeyMapping OPEN_PORES = new KeyMapping("key.hxh.open_pores", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, CATEGORY);
 
+    public static final KeyMapping KEN = new KeyMapping("key.hxh.ken", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_N, CATEGORY);
+    public static final KeyMapping KO = new KeyMapping("key.hxh.ko", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, CATEGORY);
     public static final KeyMapping HATSU_MENU = new KeyMapping("key.hxh.hatsu_menu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, CATEGORY);
     public static final KeyMapping CAST = new KeyMapping("key.hxh.cast", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, CATEGORY);
     public static final KeyMapping NEXT_TECHNIQUE = new KeyMapping("key.hxh.next_technique", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, CATEGORY);
@@ -64,6 +66,8 @@ public final class NenClient {
         event.register(HEAL);
         event.register(MEDITATE);
         event.register(OPEN_PORES);
+        event.register(KEN);
+        event.register(KO);
         event.register(HATSU_MENU);
         event.register(CAST);
         event.register(NEXT_TECHNIQUE);
@@ -85,6 +89,8 @@ public final class NenClient {
         while (TEN.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.TEN.id()));
         while (ZETSU.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.ZETSU.id()));
         while (REN.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.REN.id()));
+        while (KEN.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.KEN.id()));
+        while (KO.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.KO, true));
         while (MEDITATE.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.MEDITATE, true));
         while (OPEN_PORES.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.OPEN_PORES, true));
         while (CAST.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, true));
@@ -150,6 +156,8 @@ public final class NenClient {
         Component state;
         if (refusal == null) {
             state = Component.translatable("hud.hxh.technique_ready");
+        } else if (refusal.equals("message.hxh.hatsu_nen_level")) {
+            state = Component.translatable("hud.hxh.technique_nen_level", technique.minNenLevel());
         } else if (refusal.equals("message.hxh.hatsu_cooldown")) {
             float seconds = (data.readyAt(technique.id()) - now) / 20f;
             state = Component.translatable("hud.hxh.technique_cooldown", String.format(java.util.Locale.ROOT, "%.1f", seconds));
@@ -179,6 +187,7 @@ public final class NenClient {
             case TEN -> 0xFFBFE6FF;
             case ZETSU -> 0xFF6E6E6E;
             case REN -> 0xFFFF4A3A;
+            case KEN -> 0xFFFFC23A;
             case NONE -> 0xFFE8E0C8;
         };
         graphics.fill(x - 1, y - 1, x + width + 1, y + 6, 0xC0000000);
@@ -189,7 +198,9 @@ public final class NenClient {
                 : data.meditating()
                 ? Component.translatable("hud.hxh.meditation")
                 : Component.translatable(data.mode().translationKey());
-        Component label = Component.translatable("hud.hxh.aura", (int) data.aura(), data.auraMax(), state);
+        boolean ko = data.koUntil() > mc.level.getGameTime();
+        Component label = Component.translatable("hud.hxh.aura_full", data.nenLevel(), (int) data.aura(), data.auraMax(),
+                ko ? Component.translatable("hud.hxh.ko") : state);
         graphics.drawString(mc.font, label, x, y - 10, 0xFFFFFFFF, true);
     }
 }

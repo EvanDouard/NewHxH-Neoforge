@@ -49,9 +49,9 @@ public final class Techniques {
     public static final Technique GON_ROCK = register(new Strike("gon_rock", NenType.ENHANCER, 40, 160,
             3.5, 0.85, 9f, 1.6f, List.of(), ParticleTypes.EXPLOSION, SoundEvents.GENERIC_EXPLODE.value()));
     public static final Technique GON_SCISSORS = register(new Strike("gon_scissors", NenType.TRANSMUTER, 25, 100,
-            5, 0.85, 6f, 0.4f, List.of(), ParticleTypes.SWEEP_ATTACK, SoundEvents.PLAYER_ATTACK_SWEEP));
+            5, 0.85, 6f, 0.4f, List.of(), ParticleTypes.SWEEP_ATTACK, SoundEvents.PLAYER_ATTACK_SWEEP)).requiresNenLevel(5);
     public static final Technique GON_PAPER = register(new Strike("gon_paper", NenType.EMITTER, 30, 120,
-            16, 0.97, 5f, 0.8f, List.of(), ParticleTypes.END_ROD, SoundEvents.FIREWORK_ROCKET_BLAST));
+            16, 0.97, 5f, 0.8f, List.of(), ParticleTypes.END_ROD, SoundEvents.FIREWORK_ROCKET_BLAST)).requiresNenLevel(10);
 
     // ---------- Killua : électricité ----------
     public static final Technique KILLUA_THUNDERBOLT = register(new Strike("killua_thunderbolt", NenType.TRANSMUTER, 30, 120,
@@ -59,12 +59,12 @@ public final class Techniques {
             ParticleTypes.ELECTRIC_SPARK, SoundEvents.LIGHTNING_BOLT_IMPACT));
     public static final Technique KILLUA_GODSPEED = register(new SelfBuff("killua_godspeed", NenType.TRANSMUTER, 50, 600,
             List.of(new Effect(MobEffects.MOVEMENT_SPEED, 200, 2), new Effect(MobEffects.DIG_SPEED, 200, 1)),
-            ParticleTypes.ELECTRIC_SPARK, SoundEvents.LIGHTNING_BOLT_THUNDER));
+            ParticleTypes.ELECTRIC_SPARK, SoundEvents.LIGHTNING_BOLT_THUNDER)).requiresNenLevel(10);
 
     // ---------- Kurapika : chaînes ----------
     public static final Technique KURAPIKA_CHAIN_JAIL = register(new Strike("kurapika_chain_jail", NenType.CONJURER, 45, 400,
             8, 0.95, 1f, 0f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 100, 6), new Effect(MobEffects.WEAKNESS, 100, 1)),
-            ParticleTypes.CRIT, SoundEvents.CHAIN_PLACE));
+            ParticleTypes.CRIT, SoundEvents.CHAIN_PLACE)).requiresNenLevel(5);
     public static final Technique KURAPIKA_HOLY_CHAIN = register(new SelfHeal("kurapika_holy_chain", NenType.CONJURER, 35, 300,
             8f, ParticleTypes.HAPPY_VILLAGER, SoundEvents.CHAIN_PLACE));
 
@@ -72,7 +72,7 @@ public final class Techniques {
     public static final Technique LEORIO_REMOTE_PUNCH = register(new Strike("leorio_remote_punch", NenType.EMITTER, 30, 120,
             12, 0.97, 7f, 1.0f, List.of(), ParticleTypes.CLOUD, SoundEvents.PLAYER_ATTACK_KNOCKBACK));
     public static final Technique LEORIO_SHOCKWAVE = register(new Blast("leorio_shockwave", NenType.EMITTER, 40, 200,
-            4, 4f, 1.2f, ParticleTypes.EXPLOSION, SoundEvents.GENERIC_EXPLODE.value()));
+            4, 4f, 1.2f, ParticleTypes.EXPLOSION, SoundEvents.GENERIC_EXPLODE.value())).requiresNenLevel(5);
 
     // ---------- Illumi : aiguilles ----------
     public static final Technique ILLUMI_NEEDLE = register(new Strike("illumi_needle", NenType.MANIPULATOR, 25, 100,
@@ -80,13 +80,13 @@ public final class Techniques {
             ParticleTypes.CRIT, SoundEvents.ARROW_HIT));
     public static final Technique ILLUMI_TRANSFORM = register(new SelfBuff("illumi_transform", NenType.MANIPULATOR, 50, 600,
             List.of(new Effect(MobEffects.DAMAGE_RESISTANCE, 300, 0), new Effect(MobEffects.DAMAGE_BOOST, 300, 0)),
-            ParticleTypes.SMOKE, SoundEvents.ZOMBIE_VILLAGER_CURE));
+            ParticleTypes.SMOKE, SoundEvents.ZOMBIE_VILLAGER_CURE)).requiresNenLevel(10);
 
     // ---------- Neferpitou : spécialiste ----------
     public static final Technique PITOU_TERPSICHORA = register(new SelfBuff("pitou_terpsichora", NenType.SPECIALIST, 60, 600,
             List.of(new Effect(MobEffects.DAMAGE_BOOST, 200, 1), new Effect(MobEffects.MOVEMENT_SPEED, 200, 1),
                     new Effect(MobEffects.JUMP, 200, 1)),
-            ParticleTypes.SOUL_FIRE_FLAME, SoundEvents.WARDEN_ROAR));
+            ParticleTypes.SOUL_FIRE_FLAME, SoundEvents.WARDEN_ROAR)).requiresNenLevel(10);
     public static final Technique PITOU_DOCTOR_BLYTHE = register(new SelfHeal("pitou_doctor_blythe", NenType.SPECIALIST, 50, 400,
             12f, ParticleTypes.HEART, SoundEvents.AMETHYST_BLOCK_CHIME));
 

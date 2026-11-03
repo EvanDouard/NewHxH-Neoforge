@@ -133,8 +133,9 @@ public final class NenAwakening {
                         data.meditationTicks() * 100 / needed), true);
             }
         } else if (entity.tickCount % 200 == 0) {
-            // Déjà éveillé : la méditation entraîne la Volonté
+            // Déjà éveillé : la méditation entraîne la Volonté et le Nen
             HunterStats.addXp(entity, Stat.WILLPOWER, 1);
+            NenProgress.addNenXp(entity, 1);
         }
     }
 

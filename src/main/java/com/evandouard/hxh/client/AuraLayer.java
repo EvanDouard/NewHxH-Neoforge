@@ -58,6 +58,7 @@ public class AuraLayer<T extends LivingEntity, M extends EntityModel<T>> extends
         switch (data.mode()) {
             case TEN -> { intensity = 0.8f; scale = 1.04f; }
             case REN -> { intensity = 0.9f + 0.1f * pulse; scale = 1.12f + 0.03f * pulse; }
+            case KEN -> { intensity = 1.0f; scale = 1.09f; }
             default -> { intensity = 0.6f; scale = 1.06f; }
         }
 
