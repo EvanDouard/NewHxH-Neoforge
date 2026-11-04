@@ -33,6 +33,7 @@ public final class HxHMod {
         com.evandouard.hxh.registry.ModEntities.ENTITIES.register(modEventBus);
         modEventBus.addListener(com.evandouard.hxh.registry.ModEntities::onAttributes);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.quest.QuestRegistry::register);
+        NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.arena.ArenaThemes::register);
         com.evandouard.hxh.quest.QuestEvents.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.arena.ArenaManager.register(NeoForge.EVENT_BUS);
         modEventBus.addListener(HxHNetwork::register);

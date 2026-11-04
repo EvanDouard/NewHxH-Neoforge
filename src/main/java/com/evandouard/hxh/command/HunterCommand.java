@@ -259,6 +259,17 @@ public final class HunterCommand {
                     }
                     return 1;
                 }))
+                .then(Commands.literal("goto").requires(s -> s.hasPermission(2))
+                        .then(Commands.argument("floor", IntegerArgumentType.integer(0, com.evandouard.hxh.arena.ArenaRules.TOP_FLOOR))
+                                .executes(ctx -> {
+                                    String refusal = com.evandouard.hxh.arena.ArenaManager.goToFloor(
+                                            ctx.getSource().getPlayerOrException(), IntegerArgumentType.getInteger(ctx, "floor"));
+                                    if (refusal != null) {
+                                        ctx.getSource().sendFailure(Component.translatable(refusal));
+                                        return 0;
+                                    }
+                                    return 1;
+                                })))
                 .then(Commands.literal("floor").requires(s -> s.hasPermission(2))
                         .then(Commands.argument("floor", IntegerArgumentType.integer(1, com.evandouard.hxh.arena.ArenaRules.TOP_FLOOR))
                                 .executes(ctx -> {

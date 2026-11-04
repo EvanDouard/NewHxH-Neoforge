@@ -50,7 +50,8 @@ public final class ArenaManager {
     private static final int COUNTDOWN_TICKS = 60;
 
     /** Un combat en cours (joueur → combat). */
-    private record Fight(UUID player, UUID fighter, int slot, int floor, long fightStart) {}
+    /** @param slot numéro d'arène de débordement, ou −1 si le combat a lieu sur le ring de l'étage */
+    private record Fight(UUID player, UUID fighter, BlockPos center, int slot, int floor, long fightStart) {}
 
     private static final Map<UUID, Fight> FIGHTS = new HashMap<>();
 
@@ -138,6 +139,85 @@ public final class ArenaManager {
         player.teleportTo(level, s.getX() + 0.5, s.getY(), s.getZ() + 0.5, 180f, 0f);
     }
 
+    /** Ascenseur : on peut aller du hall (0) jusqu'à son étage de combat, pas au-delà. */
+    public static int maxFloor(ServerPlayer player) {
+        QuestData d = QuestManager.data(player);
+        return d.arenaRegistered() ? d.arenaFloor() : 0;
+    }
+
+    /** Clic droit sur un ascenseur : ouvre le choix de l'étage (inscription nécessaire pour monter). */
+    public static void useElevator(ServerPlayer player) {
+        if (!ArenaWorld.isArenaLevel(player.level())) {
+            player.sendSystemMessage(Component.translatable("message.hxh.arena_not_inside").withStyle(ChatFormatting.RED));
+            return;
+        }
+        if (inFight(player)) return;
+        if (!QuestManager.data(player).arenaRegistered()) {
+            player.sendSystemMessage(Component.translatable("message.hxh.arena_not_registered").withStyle(ChatFormatting.RED));
+            return;
+        }
+        int here = Math.max(0, ArenaWorld.floorAt(player.blockPosition()));
+        com.evandouard.hxh.network.HxHNetwork.sendTo(player,
+                new com.evandouard.hxh.network.OpenElevatorPayload(maxFloor(player), here));
+    }
+
+    /**
+     * Emmène le joueur à un étage (0 = hall).
+     * @return null si c'est fait, sinon la clé du refus
+     */
+    @Nullable
+    public static String goToFloor(ServerPlayer player, int floor) {
+        if (!ArenaWorld.isArenaLevel(player.level())) return "message.hxh.arena_not_inside";
+        if (inFight(player)) return "message.hxh.arena_already_fighting";
+        if (floor < 0 || floor > maxFloor(player)) return "message.hxh.arena_floor_locked";
+        if (floor == 0) {
+            toLobby(player);
+        } else {
+            ServerLevel level = (ServerLevel) player.level();
+            if (!floorRingBusy(level, floor, player)) ArenaWorld.buildFloor(level, floor);
+            BlockPos a = ArenaWorld.floorArrival(floor);
+            player.fallDistance = 0;
+            // Regard vers le sud, sur le ring
+            player.teleportTo(level, a.getX() + 0.5, a.getY(), a.getZ() + 0.5, 0f, 0f);
+        }
+        title(player, floor == 0 ? Component.translatable("title.hxh.arena_lobby")
+                : Component.translatable("title.hxh.arena_floor", floor));
+        return null;
+    }
+
+    /** Le joueur se tient près d'un ascenseur (vérification des demandes venues du client). */
+    public static boolean nearElevator(ServerPlayer player) {
+        BlockPos p = player.blockPosition();
+        for (BlockPos q : BlockPos.betweenClosed(p.offset(-6, -2, -6), p.offset(6, 3, 6))) {
+            if (player.level().getBlockState(q).is(com.evandouard.hxh.registry.ModBlocks.ARENA_ELEVATOR.get())) return true;
+        }
+        return false;
+    }
+
+    /** Le ring d'un étage est occupé par un combat ou par un autre joueur qui s'y tient. */
+    private static boolean floorRingBusy(ServerLevel level, int floor, ServerPlayer except) {
+        BlockPos c = ArenaWorld.floorCenter(floor);
+        for (Fight f : FIGHTS.values()) if (f.slot < 0 && f.center.equals(c)) return true;
+        AABB ring = new AABB(c).inflate(ArenaWorld.ARENA_HALF + 0.5, 6, ArenaWorld.ARENA_HALF + 0.5);
+        return !level.getEntitiesOfClass(Player.class, ring, p -> p != except).isEmpty();
+    }
+
+    /** L'arbitre d'un étage : lance le combat si c'est l'étage du joueur, sinon lui indique le bon étage. */
+    public static void talkToReferee(ServerPlayer player, BlockPos refereeHome) {
+        int here = ArenaWorld.floorAt(refereeHome);
+        int floor = QuestManager.data(player).arenaFloor();
+        if (!QuestManager.data(player).arenaRegistered()) {
+            player.sendSystemMessage(Component.translatable("message.hxh.arena_not_registered").withStyle(ChatFormatting.RED));
+            return;
+        }
+        if (here != floor) {
+            player.sendSystemMessage(Component.translatable("dialog.hxh.referee.wrong_floor", floor).withStyle(ChatFormatting.YELLOW));
+            return;
+        }
+        String refusal = startFight(player);
+        if (refusal != null) player.sendSystemMessage(Component.translatable(refusal).withStyle(ChatFormatting.RED));
+    }
+
     /** Quitte la Tour : retour à l'endroit d'où l'on est venu (ou au point d'apparition du monde). */
     public static void leave(ServerPlayer player) {
         Fight fight = FIGHTS.get(player.getUUID());
@@ -173,12 +253,21 @@ public final class ArenaManager {
         if (floor >= ArenaRules.NEN_FLOOR && !HunterStats.get(player).nenUnlocked()) return "message.hxh.arena_need_nen";
 
         ServerLevel level = (ServerLevel) player.level();
-        int slot = freeSlot();
-        ArenaWorld.buildArena(level, slot);
-        BlockPos c = ArenaWorld.arenaCenter(slot);
+        // Le ring de l'étage s'il est libre, sinon une arène de débordement au même décor
+        int slot = -1;
+        BlockPos c;
+        if (!floorRingBusy(level, floor, player)) {
+            ArenaWorld.buildFloor(level, floor);
+            c = ArenaWorld.floorCenter(floor);
+        } else {
+            slot = freeSlot();
+            ArenaWorld.buildOverflow(level, slot, floor);
+            c = ArenaWorld.overflowCenter(slot);
+        }
         // Restes d'un ancien combat
         AABB box = new AABB(c).inflate(ArenaWorld.ARENA_HALF + 2, 8, ArenaWorld.ARENA_HALF + 2);
-        for (Entity e : level.getEntitiesOfClass(Entity.class, box, e -> !(e instanceof Player))) e.discard();
+        for (Entity e : level.getEntitiesOfClass(Entity.class, box,
+                e -> !(e instanceof Player) && !(e instanceof com.evandouard.hxh.npc.NpcEntity))) e.discard();
 
         ArenaFighterEntity fighter = ModEntities.ARENA_FIGHTER.get().create(level);
         if (fighter == null) return "message.hxh.arena_missing";
@@ -189,7 +278,7 @@ public final class ArenaManager {
         fighter.setWaiting(true);
         level.addFreshEntity(fighter);
 
-        FIGHTS.put(player.getUUID(), new Fight(player.getUUID(), fighter.getUUID(), slot, floor,
+        FIGHTS.put(player.getUUID(), new Fight(player.getUUID(), fighter.getUUID(), c, slot, floor,
                 level.getGameTime() + COUNTDOWN_TICKS));
         player.fallDistance = 0;
         player.teleportTo(level, c.getX() - 5.5, c.getY(), c.getZ() + 0.5, -90f, 0f);
@@ -202,7 +291,7 @@ public final class ArenaManager {
     private static int freeSlot() {
         for (int slot = 0; ; slot++) {
             boolean used = false;
-            for (Fight f : FIGHTS.values()) if (f.slot == slot) used = true;
+            for (Fight f : FIGHTS.values()) if (f.slot == slot && slot >= 0) used = true;
             if (!used) return slot;
         }
     }
@@ -248,11 +337,20 @@ public final class ArenaManager {
             }
         }
 
-        // Joueurs tombés du hall ou restés dans la zone des arènes sans combat (reconnexion…)
+        // Joueurs tombés, ou restés dans une arène de débordement sans combat (reconnexion…)
         for (ServerPlayer p : level.players()) {
             if (inFight(p) || p.isCreative() || p.isSpectator()) continue;
-            if (p.getY() < ArenaWorld.FLOOR_Y - 14 || ArenaWorld.inArenaZone(p.getX())) toLobby(p);
+            boolean fell = p.getY() < ArenaWorld.FLOOR_Y - 14;
+            if (ArenaWorld.inOverflowZone(p.getX())) {
+                returnToFloor(p);
+            } else if (fell) {
+                int floor = ArenaWorld.inFloorZone(p.getX()) ? ArenaWorld.floorAt(p.blockPosition()) : 0;
+                if (floor > 0 && floor <= maxFloor(p)) goToFloor(p, floor);
+                else toLobby(p);
+            }
         }
+        // Répare les mondes où l'hôtesse a été dupliquée
+        if (now % 100 == 0) ArenaWorld.removeDuplicateNpcs(level);
     }
 
     /** On ne meurt pas dans la Tour : le joueur est mis K.-O., l'adversaire vaincu quitte l'arène. */
@@ -302,8 +400,13 @@ public final class ArenaManager {
             player.setHealth(player.getMaxHealth());
             player.clearFire();
             player.removeAllEffects();
-            toLobby(player);
+            returnToFloor(player);
         }
+    }
+
+    /** Après un combat : retour sur le palier de son (nouvel) étage. */
+    private static void returnToFloor(ServerPlayer player) {
+        if (goToFloor(player, maxFloor(player)) != null) toLobby(player);
     }
 
     /**

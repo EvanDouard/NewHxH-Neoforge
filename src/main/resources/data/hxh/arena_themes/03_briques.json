@@ -1,0 +1,15 @@
+{
+  "from": 50,
+  "to": 99,
+  "floor": [
+    "minecraft:bricks",
+    "minecraft:terracotta",
+    "minecraft:orange_terracotta"
+  ],
+  "border": "minecraft:white_terracotta",
+  "accent": "minecraft:red_terracotta",
+  "under": "minecraft:bricks",
+  "pillar": "minecraft:bricks",
+  "pillar_height": 4,
+  "light": "minecraft:lantern"
+}

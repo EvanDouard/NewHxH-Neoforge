@@ -1,0 +1,15 @@
+{
+  "from": 20,
+  "to": 49,
+  "floor": [
+    "minecraft:smooth_sandstone",
+    "minecraft:cut_sandstone",
+    "minecraft:sandstone"
+  ],
+  "border": "minecraft:red_sandstone",
+  "accent": "minecraft:chiseled_sandstone",
+  "under": "minecraft:sandstone",
+  "pillar": "minecraft:cut_sandstone",
+  "pillar_height": 3,
+  "light": "minecraft:lantern"
+}

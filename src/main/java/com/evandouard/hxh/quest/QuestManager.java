@@ -69,6 +69,11 @@ public final class QuestManager {
                 && !d.completed.contains(QuestRegistry.HUNTER_EXAM.toString())) {
             start(player, QuestRegistry.HUNTER_EXAM);
         }
+        // L'arbitre d'un étage de la Tour Céleste
+        if (npc.npcId().equals("referee")) {
+            com.evandouard.hxh.arena.ArenaManager.talkToReferee(player, npc.home());
+            return;
+        }
         // L'hôtesse de la Tour Céleste inscrit aux combats et donne ses petites quêtes
         if (npc.npcId().equals("receptionist")) {
             if (!d.arenaRegistered) {

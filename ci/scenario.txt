@@ -386,51 +386,78 @@ expect Nouvelle quête : La Tour Céleste
 shot 38_guichet_et_quete
 cmd tp @s 8.5 64 0.5 -90 0
 wait 20
-shot 39_ascenseur
-clearchat
 useblock 2 0 0
+wait 20
+shot 39_ecran_ascenseur
+click Y aller
+wait 40
+shot 40_etage_1_palier
+clearchat
+talkto referee
 wait 30
 expect Étage 1 : ton adversaire
-shot 40_arene_compte_a_rebours
+expectnot just fists
+expectnot seulement les poings
+shot 41_arene_compte_a_rebours
 wait 60
 camera back
 wait 10
-shot 41_combat_etage_1
+shot 42_combat_etage_1
 camera first
 cmd kill @e[type=hxh:arena_fighter]
-wait 30
+wait 40
 expect Victoire par K.-O.
 expect Tu montes au
-shot 42_victoire_retour_au_hall
+shot 43_victoire_nouvel_etage
+cmd hunter arena goto 0
+wait 20
 cmd tp @s 0.5 64 -4.5 180 10
 wait 10
 clearchat
 talkto receptionist
 wait 10
 expect +500 Jenny
+cmd hunter arena floor 120
+cmd hunter arena goto 120
+wait 40
+shot 44_decor_etage_120
 cmd hunter arena floor 200
-cmd tp @s 8.5 64 0.5 -90 0
-wait 10
+cmd hunter arena goto 200
+wait 40
 clearchat
-useblock 2 0 0
+talkto referee
 wait 10
 expect Reviens quand tu l'auras éveillé
-shot 43_refus_sans_nen
+shot 45_etage_200_refus_sans_nen
 cmd hunter nen unlock
 clearchat
-useblock 2 0 0
+talkto referee
 wait 100
 expect ton adversaire maîtrise le Nen
 camera back
 wait 10
-shot 44_combat_maitre_du_nen
+shot 46_combat_maitre_du_nen
 camera first
-cmd hunter arena info
-wait 5
+cmd hunter arena floor 240
+cmd hunter arena goto 240
+wait 40
+shot 47_decor_etage_240
+cmd hunter arena enter
+wait 20
+cmd hunter arena leave
+wait 20
+cmd hunter arena enter
+wait 40
+cmd hunter arena enter
+wait 40
 clearchat
+cmd execute if entity @e[type=hxh:npc,distance=..30]
+wait 5
+expect : 1
+shot 48_hall_une_seule_hotesse
 cmd hunter arena leave
 wait 60
 expect Tu quittes la Tour Céleste
-shot 45_retour_dans_le_monde
+shot 49_retour_dans_le_monde
 cmd difficulty peaceful
 quit

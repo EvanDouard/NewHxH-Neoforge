@@ -4,6 +4,7 @@ import com.evandouard.hxh.HxHMod;
 import com.evandouard.hxh.arena.ArenaFighterEntity;
 import com.evandouard.hxh.arena.ArenaManager;
 import com.evandouard.hxh.arena.ArenaRules;
+import com.evandouard.hxh.arena.ArenaThemes;
 import com.evandouard.hxh.arena.ArenaWorld;
 import com.evandouard.hxh.data.HunterData;
 import com.evandouard.hxh.data.Stat;
@@ -92,9 +93,66 @@ public final class ArenaTests {
         int count = arena.getEntitiesOfClass(NpcEntity.class, new AABB(ArenaWorld.RECEPTIONIST).inflate(4),
                 n -> n.npcId().equals("receptionist")).size();
         helper.assertTrue(count == 1, "Une seule hôtesse même si le hall est revérifié, obtenu " + count);
-        ArenaWorld.buildArena(arena, 3);
-        helper.assertTrue(arena.getBlockState(ArenaWorld.arenaCenter(3).below()).is(Blocks.CHISELED_STONE_BRICKS),
-                "Plateforme de l'arène construite");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void floorIsBuiltWithOneReferee(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        ArenaWorld.buildFloor(level, 7);
+        ArenaWorld.buildFloor(level, 7);
+        helper.assertTrue(level.getBlockState(ArenaWorld.floorElevator(7)).is(ModBlocks.ARENA_ELEVATOR.get()),
+                "Ascenseur sur le palier de l'étage");
+        helper.assertTrue(level.getBlockState(ArenaWorld.floorCenter(7).below())
+                        .is(ArenaThemes.forFloor(7).accent().getBlock()),
+                "Le centre du ring porte le bloc d'accent du décor");
+        int referees = level.getEntities(ModEntities.NPC.get(),
+                n -> n.npcId().equals("referee") && n.home().equals(ArenaWorld.floorReferee(7))).size();
+        helper.assertTrue(referees == 1, "Un seul arbitre même si l'étage est reconstruit, obtenu " + referees);
+        helper.assertTrue(ArenaWorld.floorAt(ArenaWorld.floorArrival(7)) == 7, "On retrouve l'étage depuis le palier");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void themesChangeWithFloors(GameTestHelper helper) {
+        helper.assertTrue(ArenaThemes.count() >= 5, "Décors chargés depuis data/hxh/arena_themes, obtenu " + ArenaThemes.count());
+        helper.assertTrue(!ArenaThemes.forFloor(5).id().equals(ArenaThemes.forFloor(210).id()),
+                "Décor différent entre le 5e et le 210e étage");
+        // Deux étages voisins d'une même tranche n'ont pas le même motif de sol
+        var t = ArenaThemes.forFloor(10);
+        boolean differs = false;
+        for (int x = -8; x <= 8 && !differs; x++)
+            for (int z = -8; z <= 8; z++)
+                if (t.floorIndex(10, x, z) != t.floorIndex(11, x, z)) { differs = true; break; }
+        helper.assertTrue(differs, "Le motif change d'un étage à l'autre");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void duplicateNpcsAreRemoved(GameTestHelper helper) {
+        BlockPos home = helper.absolutePos(new BlockPos(1, 1, 1)).offset(0, 1000, 0);
+        for (int i = 0; i < 3; i++) {
+            NpcEntity npc = helper.spawn(ModEntities.NPC.get(), new BlockPos(1, 1, 1));
+            npc.setNpcId("receptionist");
+            npc.setHome(home);
+            npc.setNoGravity(true);
+        }
+        int removed = ArenaWorld.removeDuplicateNpcs(helper.getLevel());
+        helper.assertTrue(removed >= 2, "Les hôtesses en double sont retirées, obtenu " + removed);
+        int left = helper.getLevel().getEntities(ModEntities.NPC.get(), n -> n.isAlive() && n.home().equals(home)).size();
+        helper.assertTrue(left == 1, "Il en reste une, obtenu " + left);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void elevatorLimits(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        helper.assertTrue(ArenaManager.maxFloor(player) == 0, "Sans inscription, seul le hall est accessible");
+        QuestManager.data(player).setArenaRegistered(true);
+        QuestManager.data(player).setArenaFloor(31);
+        helper.assertTrue(ArenaManager.maxFloor(player) == 31, "Inscrit : jusqu'à son étage de combat");
+        helper.assertTrue("message.hxh.arena_not_inside".equals(ArenaManager.goToFloor(player, 5)),
+                "L'ascenseur ne marche que dans la Tour");
         helper.succeed();
     }
 

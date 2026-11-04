@@ -12,12 +12,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * La dimension de la Tour Céleste et ce qu'on y construit par le code :
- * le hall d'accueil (guichet, ascenseur, sortie) et une arène par emplacement de combat.
+ * le hall d'accueil (étage 0 : guichet, ascenseur, sortie), un étage par numéro (ring au décor de l'étage,
+ * palier avec ascenseur et arbitre), et des arènes de débordement quand le ring d'un étage est occupé.
  */
 public final class ArenaWorld {
     public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, HxHMod.id("heavens_arena"));
@@ -50,25 +50,20 @@ public final class ArenaWorld {
         return level.dimension() == DIMENSION;
     }
 
-    public static BlockPos arenaCenter(int slot) {
-        return new BlockPos(ARENA_X0 + slot * ARENA_SPACING, FLOOR_Y, 0);
-    }
-
-    /** Vrai si la position est dans la zone des arènes (et pas dans le hall). */
-    public static boolean inArenaZone(double x) {
-        return x > ARENA_X0 - ARENA_SPACING / 2.0;
-    }
-
     // ---------- Hall d'accueil ----------
 
-    /** Construit le hall s'il n'existe pas encore. */
+    /**
+     * Construit le hall (étage 0) et pose l'hôtesse, une seule fois par monde.
+     * Un hall bâti avant cette règle (repère présent) est gardé tel quel, sans nouvelle hôtesse.
+     */
     public static void ensureLobby(ServerLevel level) {
-        if (level.getBlockState(LOBBY_MARKER).is(Blocks.POLISHED_DEEPSLATE)) {
-            ensureReceptionist(level);
-            return;
-        }
+        ArenaSavedData data = ArenaSavedData.get(level);
+        if (data.lobbyBuilt) return;
+        data.lobbyBuilt = true;
+        data.setDirty();
+        if (level.getBlockState(LOBBY_MARKER).is(Blocks.POLISHED_DEEPSLATE)) return;
         buildLobby(level);
-        ensureReceptionist(level);
+        spawnNpc(level, "receptionist", RECEPTIONIST, 0f);
     }
 
     private static void buildLobby(ServerLevel level) {
@@ -131,39 +126,132 @@ public final class ArenaWorld {
         }
     }
 
-    private static void ensureReceptionist(ServerLevel level) {
-        AABB box = new AABB(RECEPTIONIST).inflate(4);
-        if (!level.getEntitiesOfClass(NpcEntity.class, box, n -> n.npcId().equals("receptionist")).isEmpty()) return;
+    private static void spawnNpc(ServerLevel level, String id, BlockPos pos, float yaw) {
         NpcEntity npc = ModEntities.NPC.get().create(level);
         if (npc == null) return;
-        npc.moveTo(RECEPTIONIST.getX() + 0.5, RECEPTIONIST.getY(), RECEPTIONIST.getZ() + 0.5, 0, 0);
-        npc.setYHeadRot(0);
-        npc.setNpcId("receptionist");
-        npc.setHome(RECEPTIONIST);
+        npc.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, yaw, 0);
+        npc.setYHeadRot(yaw);
+        npc.setNpcId(id);
+        npc.setHome(pos);
         level.addFreshEntity(npc);
     }
 
-    // ---------- Arènes ----------
+    /**
+     * Supprime les PNJ en double (même rôle, même place) : répare les mondes où l'hôtesse
+     * était recréée à chaque entrée.
+     * @return le nombre de doublons retirés
+     */
+    public static int removeDuplicateNpcs(ServerLevel level) {
+        java.util.Map<String, NpcEntity> kept = new java.util.HashMap<>();
+        int removed = 0;
+        for (NpcEntity npc : level.getEntities(ModEntities.NPC.get(), n -> n.isAlive())) {
+            String key = npc.npcId() + "@" + npc.home().asLong();
+            if (kept.putIfAbsent(key, npc) != null) {
+                npc.discard();
+                removed++;
+            }
+        }
+        return removed;
+    }
 
-    /** Construit (ou répare) l'arène d'un emplacement : plateforme, liseré, coins. */
-    public static void buildArena(ServerLevel level, int slot) {
-        BlockPos c = arenaCenter(slot);
+    // ---------- Étages ----------
+
+    /** Étages : alignés le long de l'axe Z, loin du hall. */
+    private static final int FLOORS_X = 3000;
+    private static final int FLOOR_SPACING = 48;
+    /** Le palier (arrivée de l'ascenseur, arbitre) est séparé du ring par 4 blocs de vide. */
+    private static final int LANDING_NEAR = ARENA_HALF + 5;
+    private static final int LANDING_FAR = ARENA_HALF + 9;
+    private static final int LANDING_HALF_WIDTH = 4;
+
+    public static BlockPos floorCenter(int floor) {
+        return new BlockPos(FLOORS_X, FLOOR_Y, floor * FLOOR_SPACING);
+    }
+
+    /** Point d'arrivée de l'ascenseur à un étage (sur le palier, face au ring). */
+    public static BlockPos floorArrival(int floor) {
+        return floorCenter(floor).offset(0, 0, -(LANDING_NEAR + 2));
+    }
+
+    public static BlockPos floorElevator(int floor) {
+        return floorCenter(floor).offset(-LANDING_HALF_WIDTH, 0, -LANDING_FAR);
+    }
+
+    public static BlockPos floorReferee(int floor) {
+        return floorCenter(floor).offset(3, 0, -LANDING_NEAR - 1);
+    }
+
+    /** Étage auquel correspond une position de la zone des étages (−1 hors de cette zone). */
+    public static int floorAt(BlockPos pos) {
+        if (Math.abs(pos.getX() - FLOORS_X) > 40) return -1;
+        return Math.round(pos.getZ() / (float) FLOOR_SPACING);
+    }
+
+    public static boolean inFloorZone(double x) {
+        return x > FLOORS_X - 100;
+    }
+
+    /** Zone des arènes de débordement (quand le ring d'un étage est déjà occupé). */
+    public static boolean inOverflowZone(double x) {
+        return x > ARENA_X0 - ARENA_SPACING / 2.0 && x < FLOORS_X - 100;
+    }
+
+    /** Arène de débordement numéro {@code slot}. */
+    public static BlockPos overflowCenter(int slot) {
+        return new BlockPos(ARENA_X0 + slot * ARENA_SPACING, FLOOR_Y, 0);
+    }
+
+    /** Construit (ou remet à neuf) un étage : ring au décor de l'étage, palier, ascenseur, et l'arbitre une seule fois. */
+    public static void buildFloor(ServerLevel level, int floor) {
+        BlockPos c = floorCenter(floor);
+        ArenaTheme theme = ArenaThemes.forFloor(floor);
+        buildRing(level, c, floor, theme);
+        // Palier
+        for (int x = -LANDING_HALF_WIDTH; x <= LANDING_HALF_WIDTH; x++) {
+            for (int z = -LANDING_FAR; z <= -LANDING_NEAR; z++) {
+                boolean edge = Math.abs(x) == LANDING_HALF_WIDTH || z == -LANDING_FAR || z == -LANDING_NEAR;
+                level.setBlock(c.offset(x, -1, z), edge ? theme.border() : theme.floor().get(0), 2);
+                level.setBlock(c.offset(x, -2, z), theme.under(), 2);
+            }
+        }
+        BlockPos elevator = floorElevator(floor);
+        level.setBlock(elevator, ModBlocks.ARENA_ELEVATOR.get().defaultBlockState(), 2);
+        level.setBlock(elevator.above(), ModBlocks.ARENA_ELEVATOR.get().defaultBlockState(), 2);
+
+        ArenaSavedData data = ArenaSavedData.get(level);
+        if (data.floorsWithReferee.add(floor)) {
+            data.setDirty();
+            spawnNpc(level, "referee", floorReferee(floor), 0f);
+        }
+    }
+
+    /** Construit une arène de débordement au décor de l'étage {@code floor}. */
+    public static void buildOverflow(ServerLevel level, int slot, int floor) {
+        buildRing(level, overflowCenter(slot), floor, ArenaThemes.forFloor(floor));
+    }
+
+    /** Le ring : sol à motif, liseré, ligne et cercle centraux, piliers et lumières aux coins. */
+    public static void buildRing(ServerLevel level, BlockPos c, int floor, ArenaTheme theme) {
         for (int x = -ARENA_HALF; x <= ARENA_HALF; x++) {
             for (int z = -ARENA_HALF; z <= ARENA_HALF; z++) {
                 boolean edge = Math.abs(x) == ARENA_HALF || Math.abs(z) == ARENA_HALF;
-                boolean centerLine = x == 0 && Math.abs(z) < ARENA_HALF;
-                BlockState s = edge ? Blocks.WHITE_CONCRETE.defaultBlockState()
-                        : centerLine ? Blocks.CHISELED_STONE_BRICKS.defaultBlockState()
-                        : Blocks.STONE_BRICKS.defaultBlockState();
+                int d2 = x * x + z * z;
+                boolean accent = (x == 0 && Math.abs(z) < ARENA_HALF) || (d2 >= 6 && d2 <= 10);
+                BlockState s = edge ? theme.border()
+                        : accent ? theme.accent()
+                        : theme.floor().get(theme.floorIndex(floor, x, z));
                 level.setBlock(c.offset(x, -1, z), s, 2);
-                level.setBlock(c.offset(x, -2, z), Blocks.SMOOTH_STONE.defaultBlockState(), 2);
-                for (int y = 0; y <= 4; y++) level.setBlock(c.offset(x, y, z), Blocks.AIR.defaultBlockState(), 2);
+                level.setBlock(c.offset(x, -2, z), theme.under(), 2);
+                for (int y = 0; y <= 6; y++) level.setBlock(c.offset(x, y, z), Blocks.AIR.defaultBlockState(), 2);
             }
         }
-        // Lampes aux quatre coins, sous la plateforme pour ne pas gêner le combat
-        for (int sx = -1; sx <= 1; sx += 2) {
-            for (int sz = -1; sz <= 1; sz += 2) {
-                level.setBlock(c.offset(sx * ARENA_HALF, -3, sz * ARENA_HALF), Blocks.SEA_LANTERN.defaultBlockState(), 2);
+        if (!theme.pillar().isAir() && theme.pillarHeight() > 0) {
+            for (int sx = -1; sx <= 1; sx += 2) {
+                for (int sz = -1; sz <= 1; sz += 2) {
+                    BlockPos base = c.offset(sx * ARENA_HALF, 0, sz * ARENA_HALF);
+                    for (int y = 0; y < theme.pillarHeight(); y++) level.setBlock(base.above(y), theme.pillar(), 2);
+                    if (!theme.light().isAir()) level.setBlock(base.above(theme.pillarHeight()), theme.light(), 2);
+                }
             }
         }
     }

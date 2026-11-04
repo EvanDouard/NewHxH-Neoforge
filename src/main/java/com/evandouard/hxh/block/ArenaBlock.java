@@ -2,9 +2,7 @@ package com.evandouard.hxh.block;
 
 import com.evandouard.hxh.arena.ArenaManager;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +13,7 @@ import net.minecraft.world.phys.BlockHitResult;
 
 /**
  * Blocs de la Tour Céleste : le portail (dans le monde, pour entrer), l'ascenseur (lance un combat)
- * et la sortie du hall. Un clic droit suffit.
+ * et la sortie du hall. L'ascenseur ouvre le choix de l'étage. Un clic droit suffit.
  */
 public class ArenaBlock extends Block {
     public enum Kind { GATE, ELEVATOR, EXIT }
@@ -37,10 +35,7 @@ public class ArenaBlock extends Block {
         if (!(player instanceof ServerPlayer sp)) return InteractionResult.SUCCESS;
         switch (kind) {
             case GATE -> ArenaManager.enter(sp);
-            case ELEVATOR -> {
-                String refusal = ArenaManager.startFight(sp);
-                if (refusal != null) sp.sendSystemMessage(Component.translatable(refusal).withStyle(ChatFormatting.RED));
-            }
+            case ELEVATOR -> ArenaManager.useElevator(sp);
             case EXIT -> ArenaManager.leave(sp);
         }
         return InteractionResult.CONSUME;

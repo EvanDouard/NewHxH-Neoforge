@@ -1,0 +1,15 @@
+{
+  "from": 230,
+  "to": 250,
+  "floor": [
+    "minecraft:obsidian",
+    "minecraft:polished_deepslate",
+    "minecraft:black_concrete"
+  ],
+  "border": "minecraft:gold_block",
+  "accent": "minecraft:crying_obsidian",
+  "under": "minecraft:obsidian",
+  "pillar": "minecraft:obsidian",
+  "pillar_height": 6,
+  "light": "minecraft:shroomlight"
+}
