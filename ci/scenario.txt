@@ -420,6 +420,8 @@ expect +500 Jenny
 cmd hunter arena floor 120
 cmd hunter arena goto 120
 wait 40
+look 0 30
+wait 5
 shot 44_decor_etage_120
 cmd hunter arena floor 200
 cmd hunter arena goto 200
@@ -438,9 +440,13 @@ camera back
 wait 10
 shot 46_combat_maitre_du_nen
 camera first
+cmd kill @e[type=hxh:arena_fighter]
+wait 40
 cmd hunter arena floor 240
 cmd hunter arena goto 240
 wait 40
+look 0 30
+wait 5
 shot 47_decor_etage_240
 cmd hunter arena enter
 wait 20

@@ -113,6 +113,9 @@ public final class ArenaManager {
     /** Entre dans la Tour (portail ou commande) : on retient d'où l'on vient. */
     public static boolean enter(ServerPlayer player) {
         if (ArenaWorld.isArenaLevel(player.level())) {
+            // Quitter son combat de cette façon compte comme un forfait
+            Fight fight = FIGHTS.get(player.getUUID());
+            if (fight != null) finish(player.server, fight, player, false, "forfeit", false);
             toLobby(player);
             return true;
         }
