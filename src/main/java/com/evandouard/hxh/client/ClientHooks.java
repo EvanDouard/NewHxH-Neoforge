@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 public final class ClientHooks {
     private ClientHooks() {}
 
-    public static void openElevator(int maxFloor, int currentFloor) {
-        Minecraft.getInstance().setScreen(new ElevatorScreen(maxFloor, currentFloor));
+    public static void openElevator(com.evandouard.hxh.network.OpenElevatorPayload payload) {
+        Minecraft.getInstance().setScreen(new ElevatorScreen(payload.brackets(), payload.current(), payload.room()));
     }
 }

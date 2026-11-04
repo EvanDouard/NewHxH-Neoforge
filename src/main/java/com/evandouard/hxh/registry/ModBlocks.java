@@ -32,7 +32,10 @@ public final class ModBlocks {
     // Repères pour les étages construits à la main (remplacés par de l'air quand la structure est posée)
     public static final DeferredBlock<Block> MARKER_PLAYER = marker("arena_marker_player");
     public static final DeferredBlock<Block> MARKER_OPPONENT = marker("arena_marker_opponent");
+    /** Ancien repère « PNJ » (compris comme l'arbitre) ; remplacé par les deux suivants. */
     public static final DeferredBlock<Block> MARKER_NPC = marker("arena_marker_npc");
+    public static final DeferredBlock<Block> MARKER_RECEPTIONIST = marker("arena_marker_receptionist");
+    public static final DeferredBlock<Block> MARKER_REFEREE = marker("arena_marker_referee");
     public static final DeferredBlock<Block> MARKER_ARRIVAL = marker("arena_marker_arrival");
 
     private static DeferredBlock<Block> marker(String name) {

@@ -5,6 +5,7 @@ import com.evandouard.hxh.npc.NpcEntity;
 import com.evandouard.hxh.registry.ModBlocks;
 import com.evandouard.hxh.registry.ModEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -13,71 +14,84 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * La dimension de la Tour Céleste et ce qu'on y construit :
  * <ul>
- *     <li>le hall d'accueil (étage 0) : construit par le code, ou la structure {@code hxh:heavens_arena/lobby} si elle existe ;</li>
- *     <li>un étage par numéro : ring généré selon le décor de l'étage, ou la structure indiquée par ce décor ;</li>
- *     <li>des arènes de débordement quand le ring d'un étage est occupé.</li>
+ *     <li><b>hall d'entrée</b> (lieu 0) : où l'on arrive, hôtesse d'inscription, ascenseur, sortie ;
+ *         structure {@code hxh:heavens_arena/lobby} si elle existe ;</li>
+ *     <li><b>un grand hall par tranche d'étages</b> (lieu = n° de tranche + 1) : ring central visible de tous,
+ *         hôtesse, arbitre ; structure indiquée par la tranche si elle existe, sinon hall généré ;</li>
+ *     <li><b>une chambre par joueur</b> : structure {@code hxh:heavens_arena/room} si elle existe.</li>
  * </ul>
- * Dans une structure, des blocs repères disent où placer le joueur, l'adversaire, le PNJ et l'arrivée de
- * l'ascenseur ; ils sont retirés une fois la structure posée.
+ * Dans une structure, des blocs repères disent où placer les choses ; ils sont retirés une fois la structure posée.
+ * Un lieu n'est reconstruit que si sa définition change (ou par {@code /hunter arena rebuild}).
  */
 public final class ArenaWorld {
     public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, HxHMod.id("heavens_arena"));
     public static final ResourceLocation LOBBY_STRUCTURE = HxHMod.id("heavens_arena/lobby");
+    public static final ResourceLocation ROOM_STRUCTURE = HxHMod.id("heavens_arena/room");
 
-    /** Sol du hall et des étages (on marche à Y = 64). */
+    /** On marche à Y = 64. */
     public static final int FLOOR_Y = 64;
+    public static final int ENTRY = 0;
     public static final BlockPos LOBBY_SPAWN = new BlockPos(0, FLOOR_Y, 5);
     public static final BlockPos RECEPTIONIST = new BlockPos(0, FLOOR_Y, -8);
     public static final BlockPos ELEVATOR = new BlockPos(10, FLOOR_Y, 0);
     public static final BlockPos EXIT = new BlockPos(-10, FLOOR_Y, 0);
     private static final int LOBBY_HALF = 10;
-    /** Bloc repère « hall construit » (dans un coin du sol). */
     private static final BlockPos LOBBY_MARKER = new BlockPos(-LOBBY_HALF, FLOOR_Y - 1, -LOBBY_HALF);
     private static final int LOBBY_HEIGHT = 7;
 
-    /** Ring généré : 19 × 19 dans le vide. */
-    public static final int ARENA_HALF = 9;
     /** Tomber de plus de 6 blocs sous son point de départ = sortie de ring. */
     public static final int RING_OUT_DROP = 6;
-    private static final int ARENA_SPACING = 200;
-    private static final int ARENA_X0 = 1000;
 
-    /** Étages alignés le long de Z ; une structure d'étage peut faire jusqu'à ~150 × 150 blocs. */
-    private static final int FLOORS_X = 5000;
-    private static final int FLOOR_SPACING = 160;
-    private static final int LANDING_NEAR = ARENA_HALF + 5;
-    private static final int LANDING_FAR = ARENA_HALF + 9;
-    private static final int LANDING_HALF_WIDTH = 4;
+    /** Halls de tranche alignés le long de Z ; un hall construit peut faire jusqu'à ~300 × 300 blocs. */
+    private static final int HALLS_X = 5000;
+    private static final int HALL_SPACING = 320;
+    /** Hall généré : 45 × 45. */
+    private static final int GEN_HALF = 22;
+
+    /** Chambres alignées le long de Z, de l'autre côté. */
+    private static final int ROOMS_X = -5000;
+    private static final int ROOM_SPACING = 64;
+    /** Zone de chaque chambre où son propriétaire peut construire. */
+    public static final int ROOM_BUILD_RADIUS = 24;
 
     /**
-     * Où se trouvent les choses d'un étage une fois construit.
-     * @param ring zone de combat (sert à savoir si le ring est occupé et à le nettoyer)
+     * Ce qu'on trouve dans un lieu une fois construit.
+     * @param ringCenter centre du ring (sortir du carré de demi-côté ringRadius = sortie de ring)
      */
-    public record FloorLayout(BlockPos arrival, float arrivalYaw, BlockPos playerStart, BlockPos opponentStart,
-                              @Nullable BlockPos npc, AABB ring) {
+    public record Layout(BlockPos arrival, float arrivalYaw, BlockPos playerStart, BlockPos opponentStart,
+                         BlockPos ringCenter, int ringRadius,
+                         @Nullable BlockPos receptionist, @Nullable BlockPos referee) {
         public int ringOutY() {
             return Math.min(playerStart.getY(), opponentStart.getY()) - RING_OUT_DROP;
         }
+
+        public boolean inRing(double x, double z) {
+            double cx = ringCenter.getX() + 0.5, cz = ringCenter.getZ() + 0.5;
+            return Math.abs(x - cx) <= ringRadius + 0.5 && Math.abs(z - cz) <= ringRadius + 0.5;
+        }
     }
 
-    /** Dernière disposition construite de chaque étage (0 = hall). */
-    private static final Map<Integer, FloorLayout> LAYOUTS = new HashMap<>();
+    private static final Map<Integer, Layout> LAYOUTS = new HashMap<>();
+    private static final Map<UUID, BlockPos> ROOM_ARRIVALS = new HashMap<>();
 
     private ArenaWorld() {}
 
@@ -90,44 +104,81 @@ public final class ArenaWorld {
         return level.dimension() == DIMENSION;
     }
 
-    // ---------- Hall d'accueil (étage 0) ----------
+    // ---------- Lieux ----------
 
-    /**
-     * Prépare le hall et renvoie où faire apparaître le joueur.
-     * Avec la structure {@code hxh:heavens_arena/lobby}, elle est reposée à chaque entrée (une modification
-     * du fichier se voit tout de suite) ; sinon le hall du code est construit une seule fois par monde.
-     */
-    public static FloorLayout ensureLobby(ServerLevel level) {
+    public static int locationOfBracket(int bracketIndex) {
+        return bracketIndex + 1;
+    }
+
+    public static BlockPos hallCenter(int bracketIndex) {
+        return new BlockPos(HALLS_X, FLOOR_Y, locationOfBracket(bracketIndex) * HALL_SPACING);
+    }
+
+    /** Lieu d'une position : 0 = hall d'entrée, n = hall de la tranche n − 1, −1 ailleurs (chambres…). */
+    public static int locationAt(BlockPos pos) {
+        if (Math.abs(pos.getX() - HALLS_X) <= HALL_SPACING / 2) {
+            int loc = Math.round(pos.getZ() / (float) HALL_SPACING);
+            return loc >= 1 ? loc : -1;
+        }
+        if (Math.abs(pos.getX()) <= 150 && Math.abs(pos.getZ()) <= 150) return ENTRY;
+        return -1;
+    }
+
+    public static boolean inRoomZone(double x) {
+        return Math.abs(x - ROOMS_X) <= 200;
+    }
+
+    /** Disposition connue d'un lieu (celle du hall généré si on ne l'a pas encore construit). */
+    public static Layout layout(int location) {
+        Layout l = LAYOUTS.get(location);
+        if (l != null) return l;
+        return location == ENTRY ? entryLayout() : generatedLayout(hallCenter(location - 1), 9);
+    }
+
+    /** Force la reconstruction de tous les lieux (après avoir modifié une structure). */
+    public static void forgetBuilds(ServerLevel level) {
+        ArenaSavedData d = ArenaSavedData.get(level);
+        d.signatures.clear();
+        d.setDirty();
+    }
+
+    // ---------- Hall d'entrée (lieu 0) ----------
+
+    public static Layout ensureLobby(ServerLevel level) {
         ArenaSavedData data = ArenaSavedData.get(level);
         Optional<StructureTemplate> template = level.getStructureManager().get(LOBBY_STRUCTURE);
+        String signature = template.map(t -> "structure:" + t.getSize()).orElse("generated");
+        boolean rebuild = !signature.equals(data.signatures.get(ENTRY)) || !LAYOUTS.containsKey(ENTRY);
+        if (!rebuild) return LAYOUTS.get(ENTRY);
+        Layout layout;
         if (template.isPresent()) {
-            if (!data.lobbyBuilt || !data.lobbyFromStructure) clearBox(level, new BlockPos(-LOBBY_HALF - 1, FLOOR_Y - 2, -LOBBY_HALF - 1),
-                    new BlockPos(LOBBY_HALF + 1, FLOOR_Y + LOBBY_HEIGHT + 2, LOBBY_HALF + 1));
-            data.lobbyBuilt = true;
-            data.lobbyFromStructure = true;
-            data.setDirty();
-            Placed p = placeStructure(level, template.get(), new BlockPos(0, FLOOR_Y, 0), 0);
+            if (!data.signatures.containsKey(ENTRY) || "generated".equals(data.signatures.get(ENTRY))) {
+                clearBox(level, new BlockPos(-LOBBY_HALF - 1, FLOOR_Y - 2, -LOBBY_HALF - 1),
+                        new BlockPos(LOBBY_HALF + 1, FLOOR_Y + LOBBY_HEIGHT + 2, LOBBY_HALF + 1));
+            }
+            boolean place = !signature.equals(data.signatures.get(ENTRY));
+            Placed p = placeStructure(level, template.get(), new BlockPos(0, FLOOR_Y, 0), 0, place);
             BlockPos arrival = p.first(ModBlocks.MARKER_ARRIVAL.get(), new BlockPos(0, FLOOR_Y, 0));
-            BlockPos npc = p.first(ModBlocks.MARKER_NPC.get(), null);
-            if (npc != null) ensureNpc(level, 0, "receptionist", npc);
-            FloorLayout layout = new FloorLayout(arrival, yawToward(arrival, npc), arrival, arrival, npc, new AABB(arrival));
-            LAYOUTS.put(0, layout);
-            return layout;
-        }
-        if (!data.lobbyBuilt || data.lobbyFromStructure) {
+            BlockPos rec = p.first(ModBlocks.MARKER_RECEPTIONIST.get(), null);
+            layout = new Layout(arrival, yawToward(arrival, rec), arrival, arrival, arrival, 0, rec, null);
+        } else {
             boolean legacy = !data.lobbyBuilt && level.getBlockState(LOBBY_MARKER).is(Blocks.POLISHED_DEEPSLATE);
-            data.lobbyBuilt = true;
-            data.lobbyFromStructure = false;
-            data.setDirty();
-            if (!legacy) buildLobby(level);
-            ensureNpc(level, 0, "receptionist", RECEPTIONIST);
+            if (!legacy && !signature.equals(data.signatures.get(ENTRY)) && !data.lobbyBuilt) buildEntryHall(level);
+            layout = entryLayout();
         }
-        FloorLayout layout = new FloorLayout(LOBBY_SPAWN, 180f, LOBBY_SPAWN, LOBBY_SPAWN, RECEPTIONIST, new AABB(LOBBY_SPAWN));
-        LAYOUTS.put(0, layout);
+        data.lobbyBuilt = true;
+        data.signatures.put(ENTRY, signature);
+        data.setDirty();
+        if (layout.receptionist() != null) ensureNpc(level, "receptionist", ENTRY, layout.receptionist());
+        LAYOUTS.put(ENTRY, layout);
         return layout;
     }
 
-    private static void buildLobby(ServerLevel level) {
+    private static Layout entryLayout() {
+        return new Layout(LOBBY_SPAWN, 180f, LOBBY_SPAWN, LOBBY_SPAWN, LOBBY_SPAWN, 0, RECEPTIONIST, null);
+    }
+
+    private static void buildEntryHall(ServerLevel level) {
         BlockState floor = Blocks.SMOOTH_QUARTZ.defaultBlockState();
         BlockState wall = Blocks.QUARTZ_BRICKS.defaultBlockState();
         BlockState pillar = Blocks.QUARTZ_PILLAR.defaultBlockState();
@@ -187,42 +238,194 @@ public final class ArenaWorld {
         }
     }
 
-    // ---------- PNJ fixes (hôtesse, arbitres) ----------
+    // ---------- Halls de tranche ----------
 
     /**
-     * Pose le PNJ d'un étage s'il n'est pas déjà enregistré à cette place. On ne cherche pas l'entité
+     * Prépare le hall d'une tranche (construit seulement si nouveau ou modifié) et pose son hôtesse et son arbitre.
+     */
+    public static Layout ensureHall(ServerLevel level, ArenaBracket bracket) {
+        int loc = locationOfBracket(bracket.index());
+        ArenaSavedData data = ArenaSavedData.get(level);
+        Optional<StructureTemplate> template = bracket.structure() == null ? Optional.empty()
+                : level.getStructureManager().get(bracket.structure());
+        if (bracket.structure() != null && template.isEmpty()) {
+            HxHMod.LOGGER.warn("[HxH] Structure {} introuvable pour la tranche {} : hall généré à la place",
+                    bracket.structure(), bracket.label());
+        }
+        String signature = bracket.signature() + template.map(t -> ":" + t.getSize()).orElse(":gen");
+        boolean place = !signature.equals(data.signatures.get(loc));
+        if (!place && LAYOUTS.containsKey(loc)) return LAYOUTS.get(loc);
+        BlockPos c = hallCenter(bracket.index());
+        Layout layout;
+        if (template.isPresent()) {
+            if (place) clearBox(level, c.offset(-GEN_HALF - 1, -3, -GEN_HALF - 1), c.offset(GEN_HALF + 1, 8, GEN_HALF + 1));
+            Placed p = placeStructure(level, template.get(), c, bracket.yOffset(), place);
+            Layout def = generatedLayout(c, bracket.ringRadius());
+            BlockPos ps = p.first(ModBlocks.MARKER_PLAYER.get(), def.playerStart());
+            BlockPos os = p.first(ModBlocks.MARKER_OPPONENT.get(), def.opponentStart());
+            BlockPos arrival = p.first(ModBlocks.MARKER_ARRIVAL.get(), def.arrival());
+            BlockPos ringCenter = new BlockPos((ps.getX() + os.getX()) / 2, ps.getY(), (ps.getZ() + os.getZ()) / 2);
+            layout = new Layout(arrival, yawToward(arrival, ringCenter), ps, os, ringCenter, bracket.ringRadius(),
+                    p.first(ModBlocks.MARKER_RECEPTIONIST.get(), null),
+                    p.first(ModBlocks.MARKER_REFEREE.get(), p.first(ModBlocks.MARKER_NPC.get(), null)));
+        } else {
+            if (place) buildGeneratedHall(level, c, bracket);
+            layout = generatedLayout(c, bracket.ringRadius());
+        }
+        data.signatures.put(loc, signature);
+        data.setDirty();
+        if (layout.receptionist() != null) ensureNpc(level, "receptionist", loc, layout.receptionist());
+        if (layout.referee() != null) ensureNpc(level, "referee", loc, layout.referee());
+        LAYOUTS.put(loc, layout);
+        return layout;
+    }
+
+    /** Disposition du hall généré : ring au centre, arrivée et guichet au nord, arbitre au nord-ouest. */
+    private static Layout generatedLayout(BlockPos c, int ringRadius) {
+        BlockPos arrival = c.offset(0, 0, -GEN_HALF + 3);
+        return new Layout(arrival, 0f, c.offset(-6, 0, 0), c.offset(6, 0, 0), c, ringRadius,
+                c.offset(8, 0, -GEN_HALF + 2), c.offset(-ringRadius - 3, 0, -ringRadius - 3));
+    }
+
+    private static void buildGeneratedHall(ServerLevel level, BlockPos c, ArenaBracket b) {
+        int r = b.ringRadius();
+        for (int x = -GEN_HALF; x <= GEN_HALF; x++) {
+            for (int z = -GEN_HALF; z <= GEN_HALF; z++) {
+                boolean hallEdge = Math.abs(x) == GEN_HALF || Math.abs(z) == GEN_HALF;
+                boolean inRing = Math.abs(x) <= r && Math.abs(z) <= r;
+                boolean ringEdge = inRing && (Math.abs(x) == r || Math.abs(z) == r);
+                int d2 = x * x + z * z;
+                boolean accent = inRing && ((x == 0 && Math.abs(z) < r) || (d2 >= 6 && d2 <= 10));
+                BlockState s = !inRing ? b.lobbyFloor() : ringEdge ? b.border() : accent ? b.accent()
+                        : b.floor().get(b.floorIndex(x, z));
+                level.setBlock(c.offset(x, -1, z), s, 2);
+                level.setBlock(c.offset(x, -2, z), b.under(), 2);
+                for (int y = 0; y <= 8; y++) level.setBlock(c.offset(x, y, z), Blocks.AIR.defaultBlockState(), 2);
+                // Garde-corps autour du hall
+                if (hallEdge) level.setBlock(c.offset(x, 0, z), b.border(), 2);
+            }
+        }
+        // Piliers et lumières aux coins du ring (côté spectateurs)
+        if (!b.pillar().isAir() && b.pillarHeight() > 0) {
+            for (int sx = -1; sx <= 1; sx += 2) {
+                for (int sz = -1; sz <= 1; sz += 2) {
+                    BlockPos base = c.offset(sx * (r + 2), 0, sz * (r + 2));
+                    for (int y = 0; y < b.pillarHeight(); y++) level.setBlock(base.above(y), b.pillar(), 2);
+                    if (!b.light().isAir()) level.setBlock(base.above(b.pillarHeight()), b.light(), 2);
+                }
+            }
+        }
+        // Guichet : comptoir devant l'hôtesse
+        for (int x = 5; x <= 11; x++) level.setBlock(c.offset(x, 0, -GEN_HALF + 3), Blocks.DARK_OAK_PLANKS.defaultBlockState(), 2);
+        // Ascenseur
+        BlockPos elevator = c.offset(-3, 0, -GEN_HALF + 1);
+        level.setBlock(elevator, ModBlocks.ARENA_ELEVATOR.get().defaultBlockState(), 2);
+        level.setBlock(elevator.above(), ModBlocks.ARENA_ELEVATOR.get().defaultBlockState(), 2);
+    }
+
+    // ---------- Chambres ----------
+
+    /** Prépare la chambre d'un joueur (construite une seule fois : il peut la décorer) et renvoie son entrée. */
+    public static BlockPos ensureRoom(ServerLevel level, UUID player) {
+        ArenaSavedData data = ArenaSavedData.get(level);
+        Integer slot = data.roomSlots.get(player);
+        boolean build = slot == null;
+        if (build) {
+            slot = data.roomSlots.size();
+            data.roomSlots.put(player, slot);
+            data.setDirty();
+        }
+        BlockPos c = roomCenter(slot);
+        if (!build) {
+            BlockPos known = ROOM_ARRIVALS.get(player);
+            if (known != null) return known;
+            if (data.roomArrivals.containsKey(player)) return BlockPos.of(data.roomArrivals.get(player));
+        }
+        BlockPos arrival;
+        Optional<StructureTemplate> template = level.getStructureManager().get(ROOM_STRUCTURE);
+        if (template.isPresent()) {
+            Placed p = placeStructure(level, template.get(), c, 0, true);
+            arrival = p.first(ModBlocks.MARKER_ARRIVAL.get(), c);
+        } else {
+            buildGeneratedRoom(level, c);
+            arrival = c.offset(0, 0, 2);
+        }
+        data.roomArrivals.put(player, arrival.asLong());
+        data.setDirty();
+        ROOM_ARRIVALS.put(player, arrival);
+        return arrival;
+    }
+
+    public static BlockPos roomCenter(int slot) {
+        return new BlockPos(ROOMS_X, FLOOR_Y, slot * ROOM_SPACING);
+    }
+
+    /** Le joueur peut-il modifier ce bloc (dans sa propre chambre) ? */
+    public static boolean inOwnRoom(ServerLevel level, UUID player, BlockPos pos) {
+        Integer slot = ArenaSavedData.get(level).roomSlots.get(player);
+        if (slot == null) return false;
+        BlockPos c = roomCenter(slot);
+        return Math.abs(pos.getX() - c.getX()) <= ROOM_BUILD_RADIUS && Math.abs(pos.getZ() - c.getZ()) <= ROOM_BUILD_RADIUS
+                && pos.getY() >= FLOOR_Y - 8 && pos.getY() <= FLOOR_Y + 24;
+    }
+
+    private static void buildGeneratedRoom(ServerLevel level, BlockPos c) {
+        int half = 5, height = 5;
+        for (int x = -half; x <= half; x++) {
+            for (int z = -half; z <= half; z++) {
+                boolean edge = Math.abs(x) == half || Math.abs(z) == half;
+                level.setBlock(c.offset(x, -1, z), Blocks.SPRUCE_PLANKS.defaultBlockState(), 2);
+                level.setBlock(c.offset(x, height, z), Blocks.SMOOTH_QUARTZ.defaultBlockState(), 2);
+                for (int y = 0; y < height; y++) {
+                    BlockState s = !edge ? Blocks.AIR.defaultBlockState()
+                            : (y >= 1 && y <= 3 && z == -half && Math.abs(x) <= 3) ? Blocks.GLASS.defaultBlockState()
+                            : Blocks.QUARTZ_BRICKS.defaultBlockState();
+                    level.setBlock(c.offset(x, y, z), s, 2);
+                }
+            }
+        }
+        level.setBlock(c.offset(0, height, 0), Blocks.SEA_LANTERN.defaultBlockState(), 2);
+        // Tapis, lit, coffre, ascenseur
+        for (int x = -2; x <= 2; x++) for (int z = -2; z <= 2; z++)
+            level.setBlock(c.offset(x, 0, z), Blocks.RED_CARPET.defaultBlockState(), 2);
+        BlockState foot = Blocks.WHITE_BED.defaultBlockState().setValue(BedBlock.FACING, Direction.NORTH).setValue(BedBlock.PART, BedPart.FOOT);
+        level.setBlock(c.offset(-4, 0, -3), foot, 2);
+        level.setBlock(c.offset(-4, 0, -4), foot.setValue(BedBlock.PART, BedPart.HEAD), 2);
+        level.setBlock(c.offset(4, 0, -4), Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH), 2);
+        level.setBlock(c.offset(3, 0, -4), Blocks.CRAFTING_TABLE.defaultBlockState(), 2);
+        BlockPos elevator = c.offset(0, 0, half - 1);
+        level.setBlock(elevator, ModBlocks.ARENA_ELEVATOR.get().defaultBlockState(), 2);
+        level.setBlock(elevator.above(), ModBlocks.ARENA_ELEVATOR.get().defaultBlockState(), 2);
+    }
+
+    // ---------- PNJ fixes (hôtesses, arbitres) ----------
+
+    /**
+     * Pose le PNJ d'un lieu s'il n'est pas déjà enregistré à cette place. On ne cherche pas l'entité
      * (elle n'est peut-être pas encore chargée) : on se fie au registre du monde.
      */
-    static void ensureNpc(ServerLevel level, int floor, String id, BlockPos pos) {
+    static void ensureNpc(ServerLevel level, String id, int location, BlockPos pos) {
         ArenaSavedData data = ArenaSavedData.get(level);
-        Long known = data.npcHomes.get(floor);
+        String key = id + "@" + location;
+        Long known = data.npcHomes.get(key);
         if (known != null && known == pos.asLong()) return;
-        data.npcHomes.put(floor, pos.asLong());
+        data.npcHomes.put(key, pos.asLong());
         data.setDirty();
-        // L'ancien PNJ (si chargé) part tout de suite ; sinon le ménage périodique s'en charge
-        for (NpcEntity old : level.getEntities(ModEntities.NPC.get(), n -> n.npcId().equals(id) && !n.home().equals(pos)
-                && npcFloor(n) == floor)) old.discard();
-        spawnNpc(level, id, pos, 0f);
+        for (NpcEntity old : level.getEntities(ModEntities.NPC.get(), n -> n.npcId().equals(id)
+                && !n.home().equals(pos) && locationAt(n.home()) == location)) old.discard();
+        spawnNpc(level, id, pos);
     }
 
-    private static int npcFloor(NpcEntity npc) {
-        return npc.npcId().equals("receptionist") ? 0 : floorAt(npc.home());
-    }
-
-    private static void spawnNpc(ServerLevel level, String id, BlockPos pos, float yaw) {
+    private static void spawnNpc(ServerLevel level, String id, BlockPos pos) {
         NpcEntity npc = ModEntities.NPC.get().create(level);
         if (npc == null) return;
-        npc.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, yaw, 0);
-        npc.setYHeadRot(yaw);
+        npc.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
         npc.setNpcId(id);
         npc.setHome(pos);
         level.addFreshEntity(npc);
     }
 
-    /**
-     * Supprime les PNJ en double (même rôle, même place).
-     * @return le nombre de doublons retirés
-     */
+    /** Supprime les PNJ en double (même rôle, même place). */
     public static int removeDuplicateNpcs(ServerLevel level) {
         Map<String, NpcEntity> kept = new HashMap<>();
         int removed = 0;
@@ -236,117 +439,19 @@ public final class ArenaWorld {
         return removed;
     }
 
-    /** Ménage de la Tour : doublons, et hôtesse ou arbitres qui ne sont plus à la place enregistrée. */
+    /** Ménage : doublons, et hôtesses ou arbitres qui ne sont plus à la place enregistrée (anciens étages…). */
     public static void cleanNpcs(ServerLevel level) {
         removeDuplicateNpcs(level);
         ArenaSavedData data = ArenaSavedData.get(level);
-        for (NpcEntity npc : level.getEntities(ModEntities.NPC.get(), n -> n.npcId().equals("receptionist") || n.npcId().equals("referee"))) {
-            Long home = data.npcHomes.get(npcFloor(npc));
+        for (NpcEntity npc : level.getEntities(ModEntities.NPC.get(),
+                n -> n.npcId().equals("receptionist") || n.npcId().equals("referee"))) {
+            Long home = data.npcHomes.get(npc.npcId() + "@" + locationAt(npc.home()));
             if (home == null || home != npc.home().asLong()) npc.discard();
         }
     }
 
-    // ---------- Étages ----------
-
-    public static BlockPos floorCenter(int floor) {
-        return new BlockPos(FLOORS_X, FLOOR_Y, floor * FLOOR_SPACING);
-    }
-
-    /** Étage auquel correspond une position de la zone des étages (−1 hors de cette zone). */
-    public static int floorAt(BlockPos pos) {
-        if (Math.abs(pos.getX() - FLOORS_X) > FLOOR_SPACING / 2) return -1;
-        return Math.round(pos.getZ() / (float) FLOOR_SPACING);
-    }
-
-    public static boolean inFloorZone(double x) {
-        return Math.abs(x - FLOORS_X) <= FLOOR_SPACING / 2.0;
-    }
-
-    /** Zone des arènes de débordement (quand le ring d'un étage est déjà occupé). */
-    public static boolean inOverflowZone(double x) {
-        return x > ARENA_X0 - ARENA_SPACING / 2.0 && x < FLOORS_X - FLOOR_SPACING;
-    }
-
-    public static BlockPos overflowCenter(int slot) {
-        return new BlockPos(ARENA_X0 + slot * ARENA_SPACING, FLOOR_Y, 0);
-    }
-
-    /** Disposition connue d'un étage (celle par défaut s'il n'a jamais été construit depuis le démarrage). */
-    public static FloorLayout layout(int floor) {
-        FloorLayout l = LAYOUTS.get(floor);
-        return l != null ? l : generatedLayout(floorCenter(floor));
-    }
-
-    /** Construit (ou remet à neuf) un étage selon son décor, et pose son arbitre s'il n'y est pas encore. */
-    public static FloorLayout buildFloor(ServerLevel level, int floor) {
-        return buildFloor(level, floor, ArenaThemes.forFloor(floor));
-    }
-
-    public static FloorLayout buildFloor(ServerLevel level, int floor, ArenaTheme theme) {
-        FloorLayout layout = build(level, floorCenter(floor), floor, theme, true);
-        if (layout.npc() != null) ensureNpc(level, floor, "referee", layout.npc());
-        LAYOUTS.put(floor, layout);
-        return layout;
-    }
-
-    /** Arène de débordement au décor de l'étage {@code floor} (sans palier ni arbitre). */
-    public static FloorLayout buildOverflow(ServerLevel level, int slot, int floor) {
-        return build(level, overflowCenter(slot), floor, ArenaThemes.forFloor(floor), false);
-    }
-
-    private static FloorLayout build(ServerLevel level, BlockPos c, int floor, ArenaTheme theme, boolean withLanding) {
-        Optional<StructureTemplate> template = theme.structure() == null ? Optional.empty()
-                : level.getStructureManager().get(theme.structure());
-        if (template.isEmpty()) {
-            if (theme.structure() != null) {
-                HxHMod.LOGGER.warn("[HxH] Structure {} introuvable pour l'étage {} : décor généré à la place", theme.structure(), floor);
-            }
-            buildRing(level, c, floor, theme);
-            if (withLanding) buildLanding(level, c, theme);
-            return generatedLayout(c);
-        }
-        Placed p = placeStructure(level, template.get(), c, theme.yOffset());
-        FloorLayout def = generatedLayout(c);
-        BlockPos playerStart = p.first(ModBlocks.MARKER_PLAYER.get(), def.playerStart());
-        BlockPos opponentStart = p.first(ModBlocks.MARKER_OPPONENT.get(), def.opponentStart());
-        BlockPos arrival = p.first(ModBlocks.MARKER_ARRIVAL.get(), playerStart);
-        BlockPos npc = withLanding ? p.first(ModBlocks.MARKER_NPC.get(), null) : null;
-        AABB ring = new AABB(playerStart).minmax(new AABB(opponentStart)).inflate(4, 3, 4);
-        return new FloorLayout(arrival, yawToward(arrival, playerStart.equals(arrival) ? opponentStart : playerStart),
-                playerStart, opponentStart, npc, ring);
-    }
-
-    /** Disposition du ring généré : joueur à l'ouest, adversaire à l'est, palier au nord. */
-    private static FloorLayout generatedLayout(BlockPos c) {
-        BlockPos arrival = c.offset(0, 0, -(LANDING_NEAR + 2));
-        return new FloorLayout(arrival, 0f, c.offset(-6, 0, 0), c.offset(6, 0, 0),
-                c.offset(3, 0, -LANDING_NEAR - 1),
-                new AABB(c).inflate(ARENA_HALF + 0.5, 6, ARENA_HALF + 0.5));
-    }
-
-    private static float yawToward(BlockPos from, @Nullable BlockPos to) {
-        if (to == null || to.equals(from)) return 0f;
-        double dx = to.getX() - from.getX(), dz = to.getZ() - from.getZ();
-        return (float) (Mth.atan2(dz, dx) * Mth.RAD_TO_DEG) - 90f;
-    }
-
-    private static void buildLanding(ServerLevel level, BlockPos c, ArenaTheme theme) {
-        for (int x = -LANDING_HALF_WIDTH; x <= LANDING_HALF_WIDTH; x++) {
-            for (int z = -LANDING_FAR; z <= -LANDING_NEAR; z++) {
-                boolean edge = Math.abs(x) == LANDING_HALF_WIDTH || z == -LANDING_FAR || z == -LANDING_NEAR;
-                level.setBlock(c.offset(x, -1, z), edge ? theme.border() : theme.floor().get(0), 2);
-                level.setBlock(c.offset(x, -2, z), theme.under(), 2);
-                for (int y = 0; y <= 3; y++) level.setBlock(c.offset(x, y, z), Blocks.AIR.defaultBlockState(), 2);
-            }
-        }
-        BlockPos elevator = c.offset(-LANDING_HALF_WIDTH, 0, -LANDING_FAR);
-        level.setBlock(elevator, ModBlocks.ARENA_ELEVATOR.get().defaultBlockState(), 2);
-        level.setBlock(elevator.above(), ModBlocks.ARENA_ELEVATOR.get().defaultBlockState(), 2);
-    }
-
     // ---------- Structures ----------
 
-    /** Repères trouvés dans une structure posée (positions dans le monde). */
     private record Placed(Map<Block, List<BlockPos>> markers) {
         BlockPos first(Block marker, @Nullable BlockPos fallback) {
             List<BlockPos> l = markers.get(marker);
@@ -355,54 +460,37 @@ public final class ArenaWorld {
     }
 
     /**
-     * Pose une structure centrée (en X/Z) sur {@code center}, sa couche du bas à {@code center.y - 1 + yOffset},
-     * puis remplace ses blocs repères par de l'air.
+     * Pose (si {@code place}) une structure centrée en X/Z sur {@code center}, sa couche du bas à
+     * {@code center.y - 1 + yOffset}, et renvoie la position de ses repères (remplacés par de l'air).
      */
-    private static Placed placeStructure(ServerLevel level, StructureTemplate template, BlockPos center, int yOffset) {
+    private static Placed placeStructure(ServerLevel level, StructureTemplate template, BlockPos center, int yOffset, boolean place) {
         Vec3i size = template.getSize();
         BlockPos origin = center.offset(-size.getX() / 2, -1 + yOffset, -size.getZ() / 2);
         StructurePlaceSettings settings = new StructurePlaceSettings().setIgnoreEntities(true);
         Map<Block, List<BlockPos>> markers = new HashMap<>();
         for (Block marker : List.of(ModBlocks.MARKER_PLAYER.get(), ModBlocks.MARKER_OPPONENT.get(),
-                ModBlocks.MARKER_NPC.get(), ModBlocks.MARKER_ARRIVAL.get())) {
+                ModBlocks.MARKER_RECEPTIONIST.get(), ModBlocks.MARKER_REFEREE.get(), ModBlocks.MARKER_NPC.get(),
+                ModBlocks.MARKER_ARRIVAL.get())) {
             markers.put(marker, template.filterBlocks(origin, settings, marker).stream().map(i -> i.pos()).toList());
         }
-        template.placeInWorld(level, origin, origin, settings, level.getRandom(), 2);
-        for (List<BlockPos> list : markers.values()) {
-            for (BlockPos pos : list) level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+        if (place) {
+            template.placeInWorld(level, origin, origin, settings, level.getRandom(), 2);
+            for (List<BlockPos> list : markers.values()) {
+                for (BlockPos pos : list) level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+            }
         }
         return new Placed(markers);
+    }
+
+    private static float yawToward(BlockPos from, @Nullable BlockPos to) {
+        if (to == null || to.equals(from)) return 0f;
+        double dx = to.getX() - from.getX(), dz = to.getZ() - from.getZ();
+        return (float) (Mth.atan2(dz, dx) * Mth.RAD_TO_DEG) - 90f;
     }
 
     private static void clearBox(ServerLevel level, BlockPos a, BlockPos b) {
         for (BlockPos p : BlockPos.betweenClosed(a, b)) {
             if (!level.getBlockState(p).isAir()) level.setBlock(p, Blocks.AIR.defaultBlockState(), 2);
-        }
-    }
-
-    /** Le ring : sol à motif, liseré, ligne et cercle centraux, piliers et lumières aux coins. */
-    public static void buildRing(ServerLevel level, BlockPos c, int floor, ArenaTheme theme) {
-        for (int x = -ARENA_HALF; x <= ARENA_HALF; x++) {
-            for (int z = -ARENA_HALF; z <= ARENA_HALF; z++) {
-                boolean edge = Math.abs(x) == ARENA_HALF || Math.abs(z) == ARENA_HALF;
-                int d2 = x * x + z * z;
-                boolean accent = (x == 0 && Math.abs(z) < ARENA_HALF) || (d2 >= 6 && d2 <= 10);
-                BlockState s = edge ? theme.border()
-                        : accent ? theme.accent()
-                        : theme.floor().get(theme.floorIndex(floor, x, z));
-                level.setBlock(c.offset(x, -1, z), s, 2);
-                level.setBlock(c.offset(x, -2, z), theme.under(), 2);
-                for (int y = 0; y <= 6; y++) level.setBlock(c.offset(x, y, z), Blocks.AIR.defaultBlockState(), 2);
-            }
-        }
-        if (!theme.pillar().isAir() && theme.pillarHeight() > 0) {
-            for (int sx = -1; sx <= 1; sx += 2) {
-                for (int sz = -1; sz <= 1; sz += 2) {
-                    BlockPos base = c.offset(sx * ARENA_HALF, 0, sz * ARENA_HALF);
-                    for (int y = 0; y < theme.pillarHeight(); y++) level.setBlock(base.above(y), theme.pillar(), 2);
-                    if (!theme.light().isAir()) level.setBlock(base.above(theme.pillarHeight()), theme.light(), 2);
-                }
-            }
         }
     }
 }

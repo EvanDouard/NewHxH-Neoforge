@@ -1,6 +1,6 @@
 {
-  "from": 100,
-  "to": 149,
+  "from": 151,
+  "to": 200,
   "floor": [
     "minecraft:oak_planks",
     "minecraft:spruce_planks",
@@ -9,6 +9,7 @@
   "border": "minecraft:dark_oak_planks",
   "accent": "minecraft:stripped_spruce_log",
   "under": "minecraft:spruce_planks",
+  "lobby_floor": "minecraft:spruce_planks",
   "pillar": "minecraft:stripped_dark_oak_log",
   "pillar_height": 4,
   "light": "minecraft:lantern"

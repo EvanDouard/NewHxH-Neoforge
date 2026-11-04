@@ -25,6 +25,10 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     // ---------- Tour Céleste ----------
     boolean arenaRegistered = false;
     int arenaFloor = 1;
+    /** Dernière tranche d'étages où l'hôtesse a inscrit le joueur (−1 = aucune). */
+    int registeredBracket = -1;
+    /** Inscrit au 200e étage (il faut le Nen). */
+    boolean registered200 = false;
     int arenaWins = 0;
     int arenaLosses = 0;
     int jenny = 0;
@@ -70,6 +74,22 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
 
     public void setArenaFloor(int floor) {
         arenaFloor = Math.max(1, Math.min(com.evandouard.hxh.arena.ArenaRules.TOP_FLOOR, floor));
+    }
+
+    public int registeredBracket() {
+        return registeredBracket;
+    }
+
+    public void setRegisteredBracket(int value) {
+        registeredBracket = value;
+    }
+
+    public boolean registered200() {
+        return registered200;
+    }
+
+    public void setRegistered200(boolean value) {
+        registered200 = value;
     }
 
     public int arenaWins() {
@@ -119,6 +139,8 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         hunter = false;
         arenaRegistered = false;
         arenaFloor = 1;
+        registeredBracket = -1;
+        registered200 = false;
         arenaWins = 0;
         arenaLosses = 0;
         jenny = 0;
@@ -137,6 +159,8 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         CompoundTag arena = new CompoundTag();
         arena.putBoolean("registered", arenaRegistered);
         arena.putInt("floor", arenaFloor);
+        arena.putInt("registered_bracket", registeredBracket);
+        arena.putBoolean("registered_200", registered200);
         arena.putInt("wins", arenaWins);
         arena.putInt("losses", arenaLosses);
         arena.putInt("jenny", jenny);
@@ -159,6 +183,8 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         CompoundTag arena = tag.getCompound("arena");
         arenaRegistered = arena.getBoolean("registered");
         arenaFloor = Math.max(1, arena.getInt("floor"));
+        registeredBracket = arena.contains("registered_bracket") ? arena.getInt("registered_bracket") : (arenaRegistered ? 0 : -1);
+        registered200 = arena.getBoolean("registered_200");
         arenaWins = arena.getInt("wins");
         arenaLosses = arena.getInt("losses");
         jenny = arena.getInt("jenny");

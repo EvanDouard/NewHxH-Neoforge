@@ -140,6 +140,22 @@ public final class HxHConfig {
             .comment("Aura consommée par seconde quand l'En est actif")
             .defineInRange("senses.enDrainPerSecond", 2.0, 0.0, 1000.0);
 
+    public static final ModConfigSpec.IntValue ARENA_WIN_STEP = BUILDER
+            .comment("Tour Céleste : étages gagnés par victoire sous le 200e")
+            .defineInRange("arena.winStep", 5, 1, 100);
+
+    public static final ModConfigSpec.IntValue ARENA_FAST_WIN_BONUS = BUILDER
+            .comment("Tour Céleste : étages en plus pour une victoire rapide sous le 200e")
+            .defineInRange("arena.fastWinBonus", 3, 0, 100);
+
+    public static final ModConfigSpec.IntValue ARENA_WIN_STEP_ABOVE_200 = BUILDER
+            .comment("Tour Céleste : étages gagnés par victoire à partir du 200e")
+            .defineInRange("arena.winStepAbove200", 1, 1, 50);
+
+    public static final ModConfigSpec.IntValue ARENA_LOSS_DROP_FIRST_BRACKET = BUILDER
+            .comment("Tour Céleste : étages perdus par défaite dans la première tranche (ailleurs, on redescend dans la tranche d'en dessous)")
+            .defineInRange("arena.lossDropFirstBracket", 5, 0, 100);
+
     public static final ModConfigSpec SPEC = BUILDER.build();
 
     private HxHConfig() {}

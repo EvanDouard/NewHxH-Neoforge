@@ -12,14 +12,14 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /**
- * Client → serveur : le joueur a choisi un étage dans l'ascenseur. Le serveur revérifie
+ * Client → serveur : le joueur a choisi une destination dans l'ascenseur (−1 chambre, 0 hall, n tranche). Le serveur revérifie
  * (dans la Tour, pas en combat, étage autorisé) et doit être à côté d'un ascenseur.
  */
-public record ElevatorGoPayload(int floor) implements CustomPacketPayload {
+public record ElevatorGoPayload(int destination) implements CustomPacketPayload {
     public static final Type<ElevatorGoPayload> TYPE = new Type<>(HxHMod.id("elevator_go"));
 
     public static final StreamCodec<ByteBuf, ElevatorGoPayload> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.VAR_INT, ElevatorGoPayload::floor,
+            ByteBufCodecs.INT, ElevatorGoPayload::destination,
             ElevatorGoPayload::new);
 
     @Override
@@ -31,7 +31,7 @@ public record ElevatorGoPayload(int floor) implements CustomPacketPayload {
         context.enqueueWork(() -> {
             if (!(context.player() instanceof ServerPlayer player)) return;
             if (!ArenaManager.nearElevator(player)) return;
-            String refusal = ArenaManager.goToFloor(player, payload.floor());
+            String refusal = ArenaManager.goTo(player, payload.destination());
             if (refusal != null) player.sendSystemMessage(Component.translatable(refusal).withStyle(ChatFormatting.RED));
         });
     }

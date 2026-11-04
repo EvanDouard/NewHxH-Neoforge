@@ -389,26 +389,30 @@ wait 20
 useblock 2 0 0
 wait 20
 shot 39_ecran_ascenseur
-click Y aller
+click 1–50
 wait 40
-shot 40_etage_1_palier
+shot 40_hall_etages_1_50
 clearchat
 talkto referee
-wait 30
+wait 10
 expect Étage 1 : ton adversaire
-expectnot just fists
-expectnot seulement les poings
-shot 41_arene_compte_a_rebours
-wait 60
+hold key.forward
+wait 30
+release key.forward
+clearchat
+cmd execute positioned 4994.5 64 320.5 if entity @s[distance=..0.8]
+wait 5
+expect Test réussi
+shot 41_compte_a_rebours_immobile
+wait 30
 camera back
 wait 10
-shot 42_combat_etage_1
+shot 42_combat_sur_le_ring_central
 camera first
 cmd kill @e[type=hxh:arena_fighter]
 wait 40
 expect Victoire par K.-O.
-expect Tu montes au
-shot 43_victoire_nouvel_etage
+expect Tu montes au 9e
 cmd hunter arena goto 0
 wait 20
 cmd tp @s 0.5 64 -4.5 180 10
@@ -420,34 +424,55 @@ expect +500 Jenny
 cmd hunter arena floor 120
 cmd hunter arena goto 120
 wait 40
-look 0 30
-wait 5
-shot 44_decor_etage_120
+clearchat
+talkto referee
+wait 10
+expect Tu dois d'abord t'inscrire
+shot 43_hall_101_150_inscription_requise
 cmd hunter arena floor 200
 cmd hunter arena goto 200
 wait 40
 clearchat
-talkto referee
+cmd tp @s 5008.5 64 1262.5 180 10
 wait 10
-expect Reviens quand tu l'auras éveillé
-shot 45_etage_200_refus_sans_nen
+talkto receptionist
+wait 10
+expect Sans Nen
+shot 44_hall_151_200_refus_sans_nen
 cmd hunter nen unlock
 clearchat
+talkto receptionist
+wait 10
+expect Inscription au 200e étage validée
 talkto referee
 wait 100
 expect ton adversaire maîtrise le Nen
 camera back
 wait 10
-shot 46_combat_maitre_du_nen
+shot 45_combat_maitre_du_nen
 camera first
 cmd kill @e[type=hxh:arena_fighter]
 wait 40
-cmd hunter arena floor 240
-cmd hunter arena goto 240
+cmd hunter arena floor 250
+cmd hunter arena register
+cmd hunter arena goto 250
 wait 40
-look 0 30
+clearchat
+talkto referee
+wait 120
+cmd kill @e[type=hxh:arena_fighter]
+wait 40
+expect Maître d'étage
+shot 46_maitre_d_etage
+clearchat
+talkto referee
+wait 10
+expect plus personne dans cette Tour
+cmd hunter arena room
+wait 40
+look 0 20
 wait 5
-shot 47_decor_etage_240
+shot 47_chambre_privee
 cmd hunter arena enter
 wait 20
 cmd hunter arena leave
@@ -460,15 +485,9 @@ clearchat
 cmd execute if entity @e[type=hxh:npc,distance=..30]
 wait 5
 expect : 1
-shot 48_hall_une_seule_hotesse
 cmd hunter arena leave
 wait 60
 expect Tu quittes la Tour Céleste
-shot 49_retour_dans_le_monde
-cmd place template hxh:heavens_arena/exemple ~4 ~-1 ~-10
-cmd tp @s ~1 ~8 ~3
-look -110 40
-wait 20
-shot 50_structure_exemple_avec_reperes
+shot 48_retour_dans_le_monde
 cmd difficulty peaceful
 quit

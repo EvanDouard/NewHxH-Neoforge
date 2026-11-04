@@ -1,6 +1,6 @@
 {
-  "from": 20,
-  "to": 49,
+  "from": 51,
+  "to": 100,
   "floor": [
     "minecraft:smooth_sandstone",
     "minecraft:cut_sandstone",
@@ -9,6 +9,7 @@
   "border": "minecraft:red_sandstone",
   "accent": "minecraft:chiseled_sandstone",
   "under": "minecraft:sandstone",
+  "lobby_floor": "minecraft:smooth_sandstone",
   "pillar": "minecraft:cut_sandstone",
   "pillar_height": 3,
   "light": "minecraft:lantern"

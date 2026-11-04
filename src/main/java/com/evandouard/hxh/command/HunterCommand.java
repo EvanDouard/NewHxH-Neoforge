@@ -251,10 +251,9 @@ public final class HunterCommand {
                     return 1;
                 }))
                 .then(Commands.literal("fight").requires(s -> s.hasPermission(2)).executes(ctx -> {
-                    net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
-                    String refusal = com.evandouard.hxh.arena.ArenaManager.startFight(p);
+                    Component refusal = com.evandouard.hxh.arena.ArenaManager.startFight(ctx.getSource().getPlayerOrException());
                     if (refusal != null) {
-                        ctx.getSource().sendFailure(Component.translatable(refusal));
+                        ctx.getSource().sendFailure(refusal);
                         return 0;
                     }
                     return 1;
@@ -262,14 +261,40 @@ public final class HunterCommand {
                 .then(Commands.literal("goto").requires(s -> s.hasPermission(2))
                         .then(Commands.argument("floor", IntegerArgumentType.integer(0, com.evandouard.hxh.arena.ArenaRules.TOP_FLOOR))
                                 .executes(ctx -> {
-                                    String refusal = com.evandouard.hxh.arena.ArenaManager.goToFloor(
-                                            ctx.getSource().getPlayerOrException(), IntegerArgumentType.getInteger(ctx, "floor"));
+                                    int floor = IntegerArgumentType.getInteger(ctx, "floor");
+                                    int dest = floor == 0 ? 0 : com.evandouard.hxh.arena.ArenaWorld.locationOfBracket(
+                                            com.evandouard.hxh.arena.ArenaBrackets.indexOf(floor));
+                                    String refusal = com.evandouard.hxh.arena.ArenaManager.goTo(ctx.getSource().getPlayerOrException(), dest);
                                     if (refusal != null) {
                                         ctx.getSource().sendFailure(Component.translatable(refusal));
                                         return 0;
                                     }
                                     return 1;
                                 })))
+                .then(Commands.literal("room").requires(s -> s.hasPermission(2)).executes(ctx -> {
+                    String refusal = com.evandouard.hxh.arena.ArenaManager.goTo(ctx.getSource().getPlayerOrException(),
+                            com.evandouard.hxh.arena.ArenaManager.ROOM);
+                    if (refusal != null) {
+                        ctx.getSource().sendFailure(Component.translatable(refusal));
+                        return 0;
+                    }
+                    return 1;
+                }))
+                .then(Commands.literal("register").requires(s -> s.hasPermission(2)).executes(ctx -> {
+                    net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
+                    com.evandouard.hxh.quest.QuestData d = com.evandouard.hxh.quest.QuestManager.data(p);
+                    d.setArenaRegistered(true);
+                    d.setRegisteredBracket(com.evandouard.hxh.arena.ArenaBrackets.indexOf(d.arenaFloor()));
+                    if (d.arenaFloor() >= com.evandouard.hxh.arena.ArenaRules.NEN_FLOOR) d.setRegistered200(true);
+                    ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.arena_register"), false);
+                    return 1;
+                }))
+                .then(Commands.literal("rebuild").requires(s -> s.hasPermission(2)).executes(ctx -> {
+                    net.minecraft.server.level.ServerLevel arena = com.evandouard.hxh.arena.ArenaWorld.level(ctx.getSource().getServer());
+                    if (arena != null) com.evandouard.hxh.arena.ArenaWorld.forgetBuilds(arena);
+                    ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.arena_rebuild"), false);
+                    return 1;
+                }))
                 .then(Commands.literal("floor").requires(s -> s.hasPermission(2))
                         .then(Commands.argument("floor", IntegerArgumentType.integer(1, com.evandouard.hxh.arena.ArenaRules.TOP_FLOOR))
                                 .executes(ctx -> {

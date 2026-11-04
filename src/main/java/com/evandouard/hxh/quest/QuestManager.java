@@ -69,21 +69,14 @@ public final class QuestManager {
                 && !d.completed.contains(QuestRegistry.HUNTER_EXAM.toString())) {
             start(player, QuestRegistry.HUNTER_EXAM);
         }
-        // L'arbitre d'un étage de la Tour Céleste
+        // L'arbitre du hall d'une tranche de la Tour Céleste lance les combats
         if (npc.npcId().equals("referee")) {
-            com.evandouard.hxh.arena.ArenaManager.talkToReferee(player, npc.home());
+            com.evandouard.hxh.arena.ArenaManager.talkToReferee(player, npc);
             return;
         }
-        // L'hôtesse de la Tour Céleste inscrit aux combats et donne ses petites quêtes
+        // L'hôtesse de la Tour Céleste inscrit (hall d'entrée, chaque tranche, 200e) et donne ses petites quêtes
         if (npc.npcId().equals("receptionist")) {
-            if (!d.arenaRegistered) {
-                d.arenaRegistered = true;
-                player.sendSystemMessage(Component.translatable("message.hxh.arena_registered", d.arenaFloor)
-                        .withStyle(ChatFormatting.GREEN));
-            }
-            if (d.active.isEmpty() && !d.completed.contains(QuestRegistry.HEAVENS_ARENA.toString())) {
-                start(player, QuestRegistry.HEAVENS_ARENA);
-            }
+            com.evandouard.hxh.arena.ArenaManager.talkToReceptionist(player, npc);
         }
         Quest q = activeQuest(d);
         Quest.Step step = currentStep(d);
@@ -92,7 +85,16 @@ public final class QuestManager {
             advance(player);
             return;
         }
-        say(player, npc, "dialog.hxh." + npc.npcId() + ".idle");
+        String idle = com.evandouard.hxh.arena.ArenaManager.idleDialog(player, npc);
+        say(player, npc, idle != null ? idle : "dialog.hxh." + npc.npcId() + ".idle");
+    }
+
+    /** La quête du guichet de la Tour Céleste démarre au premier passage (si aucune autre quête n'est en cours). */
+    public static void startArenaQuestIfNew(ServerPlayer player) {
+        QuestData d = data(player);
+        if (d.active.isEmpty() && !d.completed.contains(QuestRegistry.HEAVENS_ARENA.toString())) {
+            start(player, QuestRegistry.HEAVENS_ARENA);
+        }
     }
 
     /** Un mob tué par le joueur. */

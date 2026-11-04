@@ -1,0 +1,15 @@
+{
+  "from": 236,
+  "to": 240,
+  "floor": [
+    "minecraft:deepslate_tiles",
+    "minecraft:polished_deepslate"
+  ],
+  "border": "minecraft:cyan_concrete",
+  "accent": "minecraft:prismarine_bricks",
+  "under": "minecraft:deepslate_bricks",
+  "lobby_floor": "minecraft:deepslate_tiles",
+  "pillar": "minecraft:deepslate_bricks",
+  "pillar_height": 5,
+  "light": "minecraft:sea_lantern"
+}

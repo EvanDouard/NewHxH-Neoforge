@@ -1,6 +1,6 @@
 {
-  "from": 230,
-  "to": 250,
+  "from": 251,
+  "to": 251,
   "floor": [
     "minecraft:obsidian",
     "minecraft:polished_deepslate",
@@ -9,6 +9,7 @@
   "border": "minecraft:gold_block",
   "accent": "minecraft:crying_obsidian",
   "under": "minecraft:obsidian",
+  "lobby_floor": "minecraft:polished_blackstone",
   "pillar": "minecraft:obsidian",
   "pillar_height": 6,
   "light": "minecraft:shroomlight"

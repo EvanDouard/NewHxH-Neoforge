@@ -1,11 +1,12 @@
 {
   "from": 1,
-  "to": 19,
+  "to": 50,
   "floor": [
     "minecraft:stone_bricks",
     "minecraft:polished_andesite"
   ],
   "border": "minecraft:white_concrete",
   "accent": "minecraft:chiseled_stone_bricks",
-  "under": "minecraft:smooth_stone"
+  "under": "minecraft:smooth_stone",
+  "lobby_floor": "minecraft:polished_andesite"
 }

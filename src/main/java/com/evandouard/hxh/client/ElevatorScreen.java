@@ -1,70 +1,61 @@
 package com.evandouard.hxh.client;
 
 import com.evandouard.hxh.network.ElevatorGoPayload;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import java.util.List;
+
 /**
- * Ascenseur de la Tour Céleste : choisir un étage entre le hall (0) et son étage de combat.
+ * Ascenseur de la Tour Céleste : hall d'entrée, sa chambre, et les halls des tranches d'étages
+ * jusqu'à la sienne. Un clic = on y va.
  */
 public class ElevatorScreen extends Screen {
-    private final int maxFloor;
-    private final int currentFloor;
-    private int selected;
-    private Button go;
+    private static final int COLUMNS = 4;
+    private static final int BUTTON_W = 70;
+    private final List<String> brackets;
+    private final int current;
+    private final boolean room;
 
-    public ElevatorScreen(int maxFloor, int currentFloor) {
+    public ElevatorScreen(List<String> brackets, int current, boolean room) {
         super(Component.translatable("screen.hxh.elevator.title"));
-        this.maxFloor = maxFloor;
-        this.currentFloor = currentFloor;
-        // Par défaut : son étage de combat (ou le hall si on y est déjà)
-        this.selected = currentFloor == maxFloor ? 0 : maxFloor;
+        this.brackets = brackets;
+        this.current = current;
+        this.room = room;
     }
 
     @Override
     protected void init() {
-        int cx = width / 2;
-        int y = height / 2 - 10;
-        int[] steps = {-10, -1, 1, 10};
-        String[] labels = {"−10", "−1", "+1", "+10"};
-        for (int i = 0; i < steps.length; i++) {
-            int step = steps[i];
-            addRenderableWidget(Button.builder(Component.literal(labels[i]), b -> select(selected + step))
-                    .bounds(cx - 102 + i * 52, y, 48, 20).build());
+        int left = width / 2 - (COLUMNS * (BUTTON_W + 4) - 4) / 2;
+        int y = height / 2 - 60;
+        addDestination(Component.translatable("screen.hxh.elevator.lobby"), 0, left, y, BUTTON_W * 2 + 4);
+        if (room) addDestination(Component.translatable("screen.hxh.elevator.room"), -1, left + 2 * (BUTTON_W + 4), y, BUTTON_W * 2 + 4);
+        y += 30;
+        for (int i = 0; i < brackets.size(); i++) {
+            int col = i % COLUMNS, row = i / COLUMNS;
+            addDestination(Component.literal(brackets.get(i)), i + 1, left + col * (BUTTON_W + 4), y + row * 24, BUTTON_W);
         }
-        addRenderableWidget(Button.builder(Component.translatable("screen.hxh.elevator.lobby"), b -> select(0))
-                .bounds(cx - 102, y + 26, 100, 20).build());
-        addRenderableWidget(Button.builder(Component.translatable("screen.hxh.elevator.my_floor"), b -> select(maxFloor))
-                .bounds(cx + 2, y + 26, 100, 20).build());
-        go = addRenderableWidget(Button.builder(Component.translatable("screen.hxh.elevator.go"), b -> {
-            PacketDistributor.sendToServer(new ElevatorGoPayload(selected));
-            onClose();
-        }).bounds(cx - 102, y + 56, 100, 20).build());
+        int rows = (brackets.size() + COLUMNS - 1) / COLUMNS;
         addRenderableWidget(Button.builder(Component.translatable("gui.cancel"), b -> onClose())
-                .bounds(cx + 2, y + 56, 100, 20).build());
-        select(selected);
+                .bounds(width / 2 - 50, y + rows * 24 + 8, 100, 20).build());
     }
 
-    private void select(int floor) {
-        selected = Math.max(0, Math.min(maxFloor, floor));
-        if (go != null) go.active = selected != currentFloor;
+    private void addDestination(Component label, int destination, int x, int y, int w) {
+        Button b = addRenderableWidget(Button.builder(label, btn -> {
+            PacketDistributor.sendToServer(new ElevatorGoPayload(destination));
+            onClose();
+        }).bounds(x, y, w, 20).build());
+        b.active = destination != current;
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
-        int cx = width / 2;
-        int y = height / 2 - 70;
-        graphics.drawCenteredString(font, title, cx, y, 0xFFD27F);
-        Component floor = selected == 0 ? Component.translatable("screen.hxh.elevator.selected_lobby")
-                : Component.translatable("screen.hxh.elevator.selected", selected);
-        graphics.drawCenteredString(font, floor.copy().withStyle(ChatFormatting.BOLD), cx, y + 22, 0xFFFFFF);
-        graphics.drawCenteredString(font, Component.translatable("screen.hxh.elevator.info", currentFloor, maxFloor),
-                cx, y + 38, 0xAAAAAA);
+        graphics.drawCenteredString(font, title, width / 2, height / 2 - 90, 0xFFD27F);
+        graphics.drawCenteredString(font, Component.translatable("screen.hxh.elevator.hint"), width / 2, height / 2 - 76, 0xAAAAAA);
     }
 
     @Override

@@ -24,7 +24,8 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.ARENA_EXIT.get());
                         output.accept(ModItems.MARKER_PLAYER.get());
                         output.accept(ModItems.MARKER_OPPONENT.get());
-                        output.accept(ModItems.MARKER_NPC.get());
+                        output.accept(ModItems.MARKER_RECEPTIONIST.get());
+                        output.accept(ModItems.MARKER_REFEREE.get());
                         output.accept(ModItems.MARKER_ARRIVAL.get());
                     })
                     .build());

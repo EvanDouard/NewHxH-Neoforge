@@ -33,6 +33,10 @@ public final class ModItems {
             ITEMS.registerSimpleBlockItem("arena_marker_opponent", ModBlocks.MARKER_OPPONENT);
     public static final DeferredItem<BlockItem> MARKER_NPC =
             ITEMS.registerSimpleBlockItem("arena_marker_npc", ModBlocks.MARKER_NPC);
+    public static final DeferredItem<BlockItem> MARKER_RECEPTIONIST =
+            ITEMS.registerSimpleBlockItem("arena_marker_receptionist", ModBlocks.MARKER_RECEPTIONIST);
+    public static final DeferredItem<BlockItem> MARKER_REFEREE =
+            ITEMS.registerSimpleBlockItem("arena_marker_referee", ModBlocks.MARKER_REFEREE);
     public static final DeferredItem<BlockItem> MARKER_ARRIVAL =
             ITEMS.registerSimpleBlockItem("arena_marker_arrival", ModBlocks.MARKER_ARRIVAL);
 

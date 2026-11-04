@@ -1,6 +1,6 @@
 {
-  "from": 50,
-  "to": 99,
+  "from": 101,
+  "to": 150,
   "floor": [
     "minecraft:bricks",
     "minecraft:terracotta",
@@ -9,6 +9,7 @@
   "border": "minecraft:white_terracotta",
   "accent": "minecraft:red_terracotta",
   "under": "minecraft:bricks",
+  "lobby_floor": "minecraft:mud_bricks",
   "pillar": "minecraft:bricks",
   "pillar_height": 4,
   "light": "minecraft:lantern"

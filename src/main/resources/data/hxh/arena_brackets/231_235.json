@@ -1,0 +1,16 @@
+{
+  "from": 231,
+  "to": 235,
+  "floor": [
+    "minecraft:polished_blackstone",
+    "minecraft:polished_blackstone_bricks",
+    "minecraft:blackstone"
+  ],
+  "border": "minecraft:purple_concrete",
+  "accent": "minecraft:amethyst_block",
+  "under": "minecraft:blackstone",
+  "lobby_floor": "minecraft:polished_deepslate",
+  "pillar": "minecraft:polished_blackstone_bricks",
+  "pillar_height": 5,
+  "light": "minecraft:soul_lantern"
+}
