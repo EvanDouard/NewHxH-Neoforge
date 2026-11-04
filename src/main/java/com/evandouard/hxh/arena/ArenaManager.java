@@ -51,7 +51,7 @@ public final class ArenaManager {
 
     /** Un combat en cours (joueur → combat). */
     /** @param slot numéro d'arène de débordement, ou −1 si le combat a lieu sur le ring de l'étage */
-    private record Fight(UUID player, UUID fighter, BlockPos center, int slot, int floor, long fightStart) {}
+    private record Fight(UUID player, UUID fighter, ArenaWorld.FloorLayout layout, int slot, int floor, long fightStart) {}
 
     private static final Map<UUID, Fight> FIGHTS = new HashMap<>();
 
@@ -135,11 +135,10 @@ public final class ArenaManager {
     public static void toLobby(ServerPlayer player) {
         ServerLevel level = ArenaWorld.level(player.server);
         if (level == null) return;
-        ArenaWorld.ensureLobby(level);
-        BlockPos s = ArenaWorld.LOBBY_SPAWN;
+        ArenaWorld.FloorLayout lobby = ArenaWorld.ensureLobby(level);
+        BlockPos s = lobby.arrival();
         player.fallDistance = 0;
-        // Regard vers le nord, sur le guichet
-        player.teleportTo(level, s.getX() + 0.5, s.getY(), s.getZ() + 0.5, 180f, 0f);
+        player.teleportTo(level, s.getX() + 0.5, s.getY(), s.getZ() + 0.5, lobby.arrivalYaw(), 0f);
     }
 
     /** Ascenseur : on peut aller du hall (0) jusqu'à son étage de combat, pas au-delà. */
@@ -177,11 +176,11 @@ public final class ArenaManager {
             toLobby(player);
         } else {
             ServerLevel level = (ServerLevel) player.level();
-            if (!floorRingBusy(level, floor, player)) ArenaWorld.buildFloor(level, floor);
-            BlockPos a = ArenaWorld.floorArrival(floor);
+            ArenaWorld.FloorLayout layout = floorRingBusy(level, floor, player)
+                    ? ArenaWorld.layout(floor) : ArenaWorld.buildFloor(level, floor);
+            BlockPos a = layout.arrival();
             player.fallDistance = 0;
-            // Regard vers le sud, sur le ring
-            player.teleportTo(level, a.getX() + 0.5, a.getY(), a.getZ() + 0.5, 0f, 0f);
+            player.teleportTo(level, a.getX() + 0.5, a.getY(), a.getZ() + 0.5, layout.arrivalYaw(), 0f);
         }
         title(player, floor == 0 ? Component.translatable("title.hxh.arena_lobby")
                 : Component.translatable("title.hxh.arena_floor", floor));
@@ -199,9 +198,8 @@ public final class ArenaManager {
 
     /** Le ring d'un étage est occupé par un combat ou par un autre joueur qui s'y tient. */
     private static boolean floorRingBusy(ServerLevel level, int floor, ServerPlayer except) {
-        BlockPos c = ArenaWorld.floorCenter(floor);
-        for (Fight f : FIGHTS.values()) if (f.slot < 0 && f.center.equals(c)) return true;
-        AABB ring = new AABB(c).inflate(ArenaWorld.ARENA_HALF + 0.5, 6, ArenaWorld.ARENA_HALF + 0.5);
+        for (Fight f : FIGHTS.values()) if (f.slot < 0 && f.floor == floor) return true;
+        AABB ring = ArenaWorld.layout(floor).ring();
         return !level.getEntitiesOfClass(Player.class, ring, p -> p != except).isEmpty();
     }
 
@@ -258,33 +256,34 @@ public final class ArenaManager {
         ServerLevel level = (ServerLevel) player.level();
         // Le ring de l'étage s'il est libre, sinon une arène de débordement au même décor
         int slot = -1;
-        BlockPos c;
+        ArenaWorld.FloorLayout layout;
         if (!floorRingBusy(level, floor, player)) {
-            ArenaWorld.buildFloor(level, floor);
-            c = ArenaWorld.floorCenter(floor);
+            layout = ArenaWorld.buildFloor(level, floor);
         } else {
             slot = freeSlot();
-            ArenaWorld.buildOverflow(level, slot, floor);
-            c = ArenaWorld.overflowCenter(slot);
+            layout = ArenaWorld.buildOverflow(level, slot, floor);
         }
+        BlockPos ps = layout.playerStart();
+        BlockPos os = layout.opponentStart();
+        float playerYaw = (float) (Math.atan2(os.getZ() - ps.getZ(), os.getX() - ps.getX()) * 180 / Math.PI) - 90f;
         // Restes d'un ancien combat
-        AABB box = new AABB(c).inflate(ArenaWorld.ARENA_HALF + 2, 8, ArenaWorld.ARENA_HALF + 2);
+        AABB box = layout.ring().inflate(2, 4, 2);
         for (Entity e : level.getEntitiesOfClass(Entity.class, box,
                 e -> !(e instanceof Player) && !(e instanceof com.evandouard.hxh.npc.NpcEntity))) e.discard();
 
         ArenaFighterEntity fighter = ModEntities.ARENA_FIGHTER.get().create(level);
         if (fighter == null) return "message.hxh.arena_missing";
-        fighter.moveTo(c.getX() + 6.5, c.getY(), c.getZ() + 0.5, 90f, 0f);
-        fighter.setYHeadRot(90f);
-        fighter.setYBodyRot(90f);
+        fighter.moveTo(os.getX() + 0.5, os.getY(), os.getZ() + 0.5, playerYaw + 180f, 0f);
+        fighter.setYHeadRot(playerYaw + 180f);
+        fighter.setYBodyRot(playerYaw + 180f);
         fighter.configure(floor, player.getUUID());
         fighter.setWaiting(true);
         level.addFreshEntity(fighter);
 
-        FIGHTS.put(player.getUUID(), new Fight(player.getUUID(), fighter.getUUID(), c, slot, floor,
+        FIGHTS.put(player.getUUID(), new Fight(player.getUUID(), fighter.getUUID(), layout, slot, floor,
                 level.getGameTime() + COUNTDOWN_TICKS));
         player.fallDistance = 0;
-        player.teleportTo(level, c.getX() - 5.5, c.getY(), c.getZ() + 0.5, -90f, 0f);
+        player.teleportTo(level, ps.getX() + 0.5, ps.getY(), ps.getZ() + 0.5, playerYaw, 0f);
         player.setHealth(player.getMaxHealth());
         player.sendSystemMessage(Component.translatable(floor >= ArenaRules.NEN_FLOOR
                 ? "message.hxh.arena_fight_nen" : "message.hxh.arena_fight", floor).withStyle(ChatFormatting.GOLD));
@@ -327,11 +326,12 @@ public final class ArenaManager {
                 title(player, Component.translatable("title.hxh.arena_go").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
                 if (fighter != null) fighter.setWaiting(false);
             }
-            if (player.getY() < ArenaWorld.RING_OUT_Y) {
+            int ringOutY = fight.layout.ringOutY();
+            if (player.getY() < ringOutY) {
                 finish(server, fight, player, false, "ring_out", true);
             } else if (fighter == null || !fighter.isAlive()) {
                 finish(server, fight, player, true, "ko", true);
-            } else if (fighter.getY() < ArenaWorld.RING_OUT_Y) {
+            } else if (fighter.getY() < ringOutY) {
                 finish(server, fight, player, true, "ring_out", true);
             } else if (now - fight.fightStart >= ArenaRules.FIGHT_TIME_LIMIT_TICKS) {
                 // Décision des juges : la meilleure santé restante l'emporte
@@ -353,7 +353,7 @@ public final class ArenaManager {
             }
         }
         // Répare les mondes où l'hôtesse a été dupliquée
-        if (now % 100 == 0) ArenaWorld.removeDuplicateNpcs(level);
+        if (now % 100 == 0) ArenaWorld.cleanNpcs(level);
     }
 
     /** On ne meurt pas dans la Tour : le joueur est mis K.-O., l'adversaire vaincu quitte l'arène. */

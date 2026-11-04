@@ -465,5 +465,9 @@ cmd hunter arena leave
 wait 60
 expect Tu quittes la Tour Céleste
 shot 49_retour_dans_le_monde
+cmd place template hxh:heavens_arena/exemple ~4 ~-1 ~-10
+look -90 35
+wait 20
+shot 50_structure_exemple_avec_reperes
 cmd difficulty peaceful
 quit

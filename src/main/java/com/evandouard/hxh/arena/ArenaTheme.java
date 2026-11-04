@@ -23,19 +23,22 @@ import java.util.List;
  *   "under": "minecraft:smooth_stone",            // dessous de la plateforme
  *   "pillar": "minecraft:quartz_pillar",          // piliers des 4 coins (vide = aucun)
  *   "pillar_height": 4,
- *   "light": "minecraft:lantern"                  // posé en haut des piliers
+ *   "light": "minecraft:lantern",                 // posé en haut des piliers
+ *   "structure": "hxh:heavens_arena/dojo",        // optionnel : étage construit à la main (remplace tout le reste)
+ *   "y_offset": 0                                 // optionnel : décale la structure en hauteur
  * }
  * </pre>
  * Le motif du sol change à chaque étage (damier, anneaux, rayures, croix…), donc deux étages voisins
  * d'une même tranche ne se ressemblent pas.
  */
 public record ArenaTheme(String id, int from, int to, List<BlockState> floor, BlockState border, BlockState accent,
-                         BlockState under, BlockState pillar, int pillarHeight, BlockState light) {
+                         BlockState under, BlockState pillar, int pillarHeight, BlockState light,
+                         @org.jetbrains.annotations.Nullable ResourceLocation structure, int yOffset) {
 
     public static final ArenaTheme DEFAULT = new ArenaTheme("default", 0, Integer.MAX_VALUE,
             List.of(Blocks.STONE_BRICKS.defaultBlockState(), Blocks.POLISHED_ANDESITE.defaultBlockState()),
             Blocks.WHITE_CONCRETE.defaultBlockState(), Blocks.CHISELED_STONE_BRICKS.defaultBlockState(),
-            Blocks.SMOOTH_STONE.defaultBlockState(), Blocks.AIR.defaultBlockState(), 0, Blocks.AIR.defaultBlockState());
+            Blocks.SMOOTH_STONE.defaultBlockState(), Blocks.AIR.defaultBlockState(), 0, Blocks.AIR.defaultBlockState(), null, 0);
 
     public boolean covers(int floorNumber) {
         return floorNumber >= from && floorNumber <= to;
@@ -71,7 +74,9 @@ public record ArenaTheme(String id, int from, int to, List<BlockState> floor, Bl
                 block(o, "under", DEFAULT.under),
                 block(o, "pillar", Blocks.AIR.defaultBlockState()),
                 o.has("pillar_height") ? o.get("pillar_height").getAsInt() : 4,
-                block(o, "light", Blocks.AIR.defaultBlockState()));
+                block(o, "light", Blocks.AIR.defaultBlockState()),
+                o.has("structure") ? ResourceLocation.tryParse(o.get("structure").getAsString()) : null,
+                o.has("y_offset") ? o.get("y_offset").getAsInt() : 0);
     }
 
     /** Nombre de motifs de sol différents. */

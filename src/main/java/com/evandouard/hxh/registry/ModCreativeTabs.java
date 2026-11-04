@@ -20,6 +20,12 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.WATER_DIVINATION.get());
                         output.accept(ModItems.EXAM_BADGE.get());
                         output.accept(ModItems.HEAVENS_ARENA_GATE.get());
+                        output.accept(ModItems.ARENA_ELEVATOR.get());
+                        output.accept(ModItems.ARENA_EXIT.get());
+                        output.accept(ModItems.MARKER_PLAYER.get());
+                        output.accept(ModItems.MARKER_OPPONENT.get());
+                        output.accept(ModItems.MARKER_NPC.get());
+                        output.accept(ModItems.MARKER_ARRIVAL.get());
                     })
                     .build());
 

@@ -4,6 +4,7 @@ import com.evandouard.hxh.HxHMod;
 import com.evandouard.hxh.arena.ArenaFighterEntity;
 import com.evandouard.hxh.arena.ArenaManager;
 import com.evandouard.hxh.arena.ArenaRules;
+import com.evandouard.hxh.arena.ArenaTheme;
 import com.evandouard.hxh.arena.ArenaThemes;
 import com.evandouard.hxh.arena.ArenaWorld;
 import com.evandouard.hxh.data.HunterData;
@@ -100,16 +101,32 @@ public final class ArenaTests {
     public static void floorIsBuiltWithOneReferee(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         ArenaWorld.buildFloor(level, 7);
-        ArenaWorld.buildFloor(level, 7);
-        helper.assertTrue(level.getBlockState(ArenaWorld.floorElevator(7)).is(ModBlocks.ARENA_ELEVATOR.get()),
-                "Ascenseur sur le palier de l'étage");
+        ArenaWorld.FloorLayout layout = ArenaWorld.buildFloor(level, 7);
         helper.assertTrue(level.getBlockState(ArenaWorld.floorCenter(7).below())
                         .is(ArenaThemes.forFloor(7).accent().getBlock()),
                 "Le centre du ring porte le bloc d'accent du décor");
         int referees = level.getEntities(ModEntities.NPC.get(),
-                n -> n.npcId().equals("referee") && n.home().equals(ArenaWorld.floorReferee(7))).size();
+                n -> n.npcId().equals("referee") && n.home().equals(layout.npc())).size();
         helper.assertTrue(referees == 1, "Un seul arbitre même si l'étage est reconstruit, obtenu " + referees);
-        helper.assertTrue(ArenaWorld.floorAt(ArenaWorld.floorArrival(7)) == 7, "On retrouve l'étage depuis le palier");
+        helper.assertTrue(ArenaWorld.floorAt(layout.arrival()) == 7, "On retrouve l'étage depuis le palier");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void handBuiltFloorUsesMarkers(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        // Décor de démonstration : la structure d'exemple livrée avec le mod
+        ArenaTheme theme = ArenaThemes.forFloor(251);
+        helper.assertTrue(theme.structure() != null, "Le décor d'exemple (étage 251) pointe vers une structure");
+        ArenaWorld.FloorLayout layout = ArenaWorld.buildFloor(level, 248, theme);
+        BlockPos c = ArenaWorld.floorCenter(248);
+        helper.assertTrue(!layout.playerStart().equals(c.offset(-6, 0, 0)), "Départ du joueur lu sur son repère");
+        helper.assertTrue(layout.npc() != null, "Repère du PNJ trouvé");
+        helper.assertTrue(level.getBlockState(layout.playerStart()).isAir(), "Le repère est retiré après la pose");
+        helper.assertTrue(!level.getBlockState(layout.playerStart().below()).isAir(), "Il y a un sol sous le départ du joueur");
+        int referees = level.getEntities(ModEntities.NPC.get(),
+                n -> n.npcId().equals("referee") && n.home().equals(layout.npc())).size();
+        helper.assertTrue(referees == 1, "L'arbitre est posé sur son repère, obtenu " + referees);
         helper.succeed();
     }
 

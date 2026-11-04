@@ -23,5 +23,18 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> HEAVENS_ARENA_GATE =
             ITEMS.registerSimpleBlockItem("heavens_arena_gate", ModBlocks.HEAVENS_ARENA_GATE);
 
+    public static final DeferredItem<BlockItem> ARENA_ELEVATOR =
+            ITEMS.registerSimpleBlockItem("arena_elevator", ModBlocks.ARENA_ELEVATOR);
+    public static final DeferredItem<BlockItem> ARENA_EXIT =
+            ITEMS.registerSimpleBlockItem("arena_exit", ModBlocks.ARENA_EXIT);
+    public static final DeferredItem<BlockItem> MARKER_PLAYER =
+            ITEMS.registerSimpleBlockItem("arena_marker_player", ModBlocks.MARKER_PLAYER);
+    public static final DeferredItem<BlockItem> MARKER_OPPONENT =
+            ITEMS.registerSimpleBlockItem("arena_marker_opponent", ModBlocks.MARKER_OPPONENT);
+    public static final DeferredItem<BlockItem> MARKER_NPC =
+            ITEMS.registerSimpleBlockItem("arena_marker_npc", ModBlocks.MARKER_NPC);
+    public static final DeferredItem<BlockItem> MARKER_ARRIVAL =
+            ITEMS.registerSimpleBlockItem("arena_marker_arrival", ModBlocks.MARKER_ARRIVAL);
+
     private ModItems() {}
 }

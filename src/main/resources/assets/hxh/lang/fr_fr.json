@@ -554,5 +554,9 @@
   "screen.hxh.elevator.go": "Y aller",
   "screen.hxh.elevator.selected": "Étage %s",
   "screen.hxh.elevator.selected_lobby": "Hall d'accueil",
-  "screen.hxh.elevator.info": "Tu es à l'étage %s · tu combats à l'étage %s"
+  "screen.hxh.elevator.info": "Tu es à l'étage %s · tu combats à l'étage %s",
+  "block.hxh.arena_marker_player": "Repère : départ du joueur",
+  "block.hxh.arena_marker_opponent": "Repère : départ de l'adversaire",
+  "block.hxh.arena_marker_npc": "Repère : PNJ (arbitre ou hôtesse)",
+  "block.hxh.arena_marker_arrival": "Repère : arrivée de l'ascenseur"
 }

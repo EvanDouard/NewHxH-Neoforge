@@ -554,5 +554,9 @@
   "screen.hxh.elevator.go": "Go",
   "screen.hxh.elevator.selected": "Floor %s",
   "screen.hxh.elevator.selected_lobby": "Lobby",
-  "screen.hxh.elevator.info": "You are on floor %s · you fight on floor %s"
+  "screen.hxh.elevator.info": "You are on floor %s · you fight on floor %s",
+  "block.hxh.arena_marker_player": "Marker: player start",
+  "block.hxh.arena_marker_opponent": "Marker: opponent start",
+  "block.hxh.arena_marker_npc": "Marker: NPC (referee or receptionist)",
+  "block.hxh.arena_marker_arrival": "Marker: elevator arrival"
 }
