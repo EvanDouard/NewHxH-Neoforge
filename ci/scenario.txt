@@ -480,7 +480,7 @@ wait 10
 expect plus personne dans cette Tour
 cmd hunter arena room
 wait 40
-look 0 20
+look 180 15
 wait 5
 shot 47_chambre_privee
 cmd hunter arena enter
