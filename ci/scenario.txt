@@ -425,7 +425,7 @@ wait 10
 expect +500 Jenny
 cmd hunter arena floor 120
 cmd hunter arena goto 120
-wait 40
+wait 100
 clearchat
 goto referee
 wait 15
@@ -435,7 +435,7 @@ expect Tu dois d'abord t'inscrire
 shot 43_hall_101_150_inscription_requise
 cmd hunter arena floor 200
 cmd hunter arena goto 200
-wait 40
+wait 100
 clearchat
 goto receptionist
 wait 15
@@ -462,7 +462,7 @@ wait 40
 cmd hunter arena floor 250
 cmd hunter arena register
 cmd hunter arena goto 250
-wait 40
+wait 100
 clearchat
 goto referee
 wait 15
