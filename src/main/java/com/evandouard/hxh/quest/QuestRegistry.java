@@ -42,6 +42,11 @@ public final class QuestRegistry extends SimpleJsonResourceReloadListener {
         HxHMod.LOGGER.info("[HxH] {} quête(s) chargée(s)", QUESTS.size());
     }
 
+    /** Toutes les quêtes, triées par identifiant. */
+    public static java.util.List<Quest> all() {
+        return QUESTS.values().stream().sorted(java.util.Comparator.comparing(q -> q.id().toString())).toList();
+    }
+
     @Nullable
     public static Quest get(ResourceLocation id) {
         return QUESTS.get(id);

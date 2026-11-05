@@ -45,6 +45,7 @@ public final class NenClient {
     public static final KeyMapping EN = new KeyMapping("key.hxh.en", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Y, CATEGORY);
     public static final KeyMapping RYU = new KeyMapping("key.hxh.ryu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_U, CATEGORY);
     public static final KeyMapping STRIKE = new KeyMapping("key.hxh.strike", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_ALT, CATEGORY);
+    public static final KeyMapping PROFILE = new KeyMapping("key.hxh.profile", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_O, CATEGORY);
     public static final KeyMapping HATSU_MENU = new KeyMapping("key.hxh.hatsu_menu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, CATEGORY);
     public static final KeyMapping CAST = new KeyMapping("key.hxh.cast", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, CATEGORY);
     public static final KeyMapping NEXT_TECHNIQUE = new KeyMapping("key.hxh.next_technique", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, CATEGORY);
@@ -85,6 +86,7 @@ public final class NenClient {
         event.register(RYU);
         event.register(STRIKE);
         event.register(HATSU_MENU);
+        event.register(PROFILE);
         event.register(CAST);
         event.register(NEXT_TECHNIQUE);
     }
@@ -117,6 +119,9 @@ public final class NenClient {
         while (CAST.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, true));
         while (NEXT_TECHNIQUE.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.NEXT_TECHNIQUE, true));
         while (HATSU_MENU.consumeClick()) openHatsuMenu(mc);
+        while (PROFILE.consumeClick()) {
+            net.neoforged.neoforge.network.PacketDistributor.sendToServer(com.evandouard.hxh.network.RequestProfilePayload.INSTANCE);
+        }
         SensesClient.tick(mc);
         boolean strikeDown = STRIKE.isDown();
         if (strikeDown != strikeWasDown) {

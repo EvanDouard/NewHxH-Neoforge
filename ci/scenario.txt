@@ -499,5 +499,15 @@ cmd hunter arena leave
 wait 60
 expect Tu quittes la Tour Céleste
 shot 48_retour_dans_le_monde
+key key.hxh.profile
+wait 20
+shot 49_carnet_personnage
+click Quêtes
+wait 5
+shot 50_carnet_quetes
+click Tour Céleste
+wait 5
+shot 51_carnet_tour_celeste
+closescreen
 cmd difficulty peaceful
 quit

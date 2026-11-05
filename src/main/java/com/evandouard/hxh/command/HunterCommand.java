@@ -373,66 +373,14 @@ public final class HunterCommand {
     private static int show(CommandSourceStack source, Entity entity) {
         if (!(entity instanceof LivingEntity living)) return 0;
         HunterData data = HunterStats.get(living);
-        List<Component> lines = new ArrayList<>();
-        lines.add(Component.translatable("command.hxh.show.header", living.getDisplayName(), data.hunterLevel())
-                .withStyle(ChatFormatting.GOLD));
-        for (Stat stat : Stat.values()) {
-            int level = data.level(stat);
-            MutableComponent xpPart = level >= Stat.MAX_LEVEL
-                    ? Component.translatable("command.hxh.show.max")
-                    : Component.translatable("command.hxh.show.xp", data.xp(stat), Stat.xpToNext(level));
-            lines.add(Component.translatable("command.hxh.show.stat",
-                    Component.translatable(stat.translationKey()), level, xpPart));
-        }
-        Component nenType = data.nenType() == null
-                ? Component.translatable("nen.hxh.none")
-                : Component.translatable(data.nenType().translationKey());
-        if (!data.nenUnlocked()) {
-            lines.add(Component.translatable("command.hxh.show.nen_locked"));
-        } else if (data.nenRevealed()) {
-            lines.add(Component.translatable("command.hxh.show.nen", nenType));
-        } else {
-            lines.add(Component.translatable("command.hxh.show.nen", "???"));
-        }
-        if (data.nenUnlocked()) {
-            lines.add(Component.translatable("command.hxh.show.nen_level", data.nenLevel(),
-                    data.nenLevel() >= com.evandouard.hxh.data.Mastery.MAX_LEVEL
-                            ? Component.translatable("command.hxh.show.max")
-                            : Component.translatable("command.hxh.show.xp", data.nenXp(),
-                            com.evandouard.hxh.data.Mastery.nenXpToNext(data.nenLevel()))));
-            MutableComponent masteries = Component.translatable("command.hxh.show.masteries");
-            boolean first = true;
-            for (com.evandouard.hxh.data.Mastery m : com.evandouard.hxh.data.Mastery.values()) {
-                masteries.append(Component.literal(first ? " " : " · "))
-                        .append(Component.translatable(m.translationKey()))
-                        .append(Component.literal(" " + data.masteryLevel(m)));
-                first = false;
-            }
-            lines.add(masteries.withStyle(ChatFormatting.GRAY));
-            lines.add(Component.translatable("command.hxh.show.resistance",
-                    String.format(java.util.Locale.ROOT, "%.1f", com.evandouard.hxh.nen.NenDefense.totalResistance(living))));
-            lines.add(Component.translatable("command.hxh.show.aura", (int) data.aura(), data.auraMax(),
-                    Component.translatable(data.mode().translationKey())));
-        }
-        HatsuKit kit = Hatsu.kitOf(data);
-        if (kit != null) {
-            Technique current = Hatsu.selectedTechnique(data);
-            lines.add(Component.translatable("command.hxh.show.hatsu", Component.translatable(kit.translationKey()),
-                    current == null ? Component.literal("-") : Component.translatable(current.translationKey())));
-        }
-        if (data.healUnlocked()) {
-            lines.add(Component.translatable("command.hxh.show.heal", data.healLevel(),
-                    data.healLevel() >= HunterData.HEAL_MAX_LEVEL
-                            ? Component.translatable("command.hxh.show.max")
-                            : Component.translatable("command.hxh.show.xp", data.healXp(), HunterData.healXpToNext(data.healLevel()))));
-        }
-        if (!data.nenUnlocked() && data.meditationTicks() > 0) {
-            lines.add(Component.translatable("command.hxh.show.meditation", data.meditationTicks() / 20));
-        }
+        List<Component> lines = new ArrayList<>(com.evandouard.hxh.stats.ProfileText.statsAndNen(living));
         if (living instanceof net.minecraft.server.level.ServerPlayer sp) {
             lines.add(Component.translatable("command.hxh.show.hunter", Component.translatable(
                     com.evandouard.hxh.quest.QuestManager.data(sp).isHunter() ? "command.hxh.yes" : "command.hxh.no")));
         }
+        Component nenType = data.nenType() == null
+                ? Component.translatable("nen.hxh.none")
+                : Component.translatable(data.nenType().translationKey());
         if (source.hasPermission(2)) {
             lines.add(Component.translatable("command.hxh.show.nen_admin", nenType).withStyle(ChatFormatting.DARK_GRAY));
         }

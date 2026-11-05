@@ -16,6 +16,8 @@ public final class HxHNetwork {
         registrar.playToClient(SyncHunterPayload.TYPE, SyncHunterPayload.STREAM_CODEC, SyncHunterPayload::handle);
         registrar.playToClient(QuestStatusPayload.TYPE, QuestStatusPayload.STREAM_CODEC, QuestStatusPayload::handle);
         registrar.playToClient(DamageNumberPayload.TYPE, DamageNumberPayload.STREAM_CODEC, DamageNumberPayload::handle);
+        registrar.playToClient(ProfilePayload.TYPE, ProfilePayload.STREAM_CODEC, ProfilePayload::handle);
+        registrar.playToServer(RequestProfilePayload.TYPE, RequestProfilePayload.STREAM_CODEC, RequestProfilePayload::handle);
         registrar.playToClient(OpenElevatorPayload.TYPE, OpenElevatorPayload.STREAM_CODEC, OpenElevatorPayload::handle);
         registrar.playToServer(ElevatorGoPayload.TYPE, ElevatorGoPayload.STREAM_CODEC, ElevatorGoPayload::handle);
         registrar.playToServer(SetRyuPayload.TYPE, SetRyuPayload.STREAM_CODEC, SetRyuPayload::handle);

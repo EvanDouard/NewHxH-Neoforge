@@ -1,0 +1,114 @@
+package com.evandouard.hxh.client;
+
+import com.evandouard.hxh.network.ProfilePayload;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Carnet de Hunter (touche P) : statistiques et Nen, quêtes, Tour Céleste et Jenny, par onglets.
+ * La molette fait défiler les longues pages.
+ */
+public class ProfileScreen extends Screen {
+    private static int lastTab = 0;
+    private ProfilePayload data;
+    private int tab;
+    private int scroll;
+    private final List<Button> tabs = new ArrayList<>();
+
+    public ProfileScreen(ProfilePayload data) {
+        super(Component.translatable("screen.hxh.profile.title"));
+        this.data = data;
+        this.tab = lastTab;
+    }
+
+    /** Nouvelles données reçues pendant que l'écran est ouvert. */
+    public void update(ProfilePayload newData) {
+        this.data = newData;
+    }
+
+    private int panelW() {
+        return Math.min(340, width - 20);
+    }
+
+    @Override
+    protected void init() {
+        tabs.clear();
+        String[] keys = {"screen.hxh.profile.tab_character", "screen.hxh.profile.tab_quests", "screen.hxh.profile.tab_arena"};
+        int w = panelW();
+        int left = width / 2 - w / 2;
+        int bw = (w - 8) / 3;
+        for (int i = 0; i < keys.length; i++) {
+            int index = i;
+            tabs.add(addRenderableWidget(Button.builder(Component.translatable(keys[i]), b -> select(index))
+                    .bounds(left + i * (bw + 4), 28, bw, 20).build()));
+        }
+        addRenderableWidget(Button.builder(Component.translatable("gui.done"), b -> onClose())
+                .bounds(width / 2 - 50, height - 28, 100, 20).build());
+        select(tab);
+    }
+
+    private void select(int index) {
+        tab = index;
+        lastTab = index;
+        scroll = 0;
+        for (int i = 0; i < tabs.size(); i++) tabs.get(i).active = i != index;
+    }
+
+    private List<Component> lines() {
+        return switch (tab) {
+            case 1 -> data.quests();
+            case 2 -> data.arena();
+            default -> data.character();
+        };
+    }
+
+    private List<FormattedCharSequence> wrapped() {
+        List<FormattedCharSequence> out = new ArrayList<>();
+        for (Component line : lines()) {
+            if (line.getString().isEmpty()) out.add(FormattedCharSequence.EMPTY);
+            else out.addAll(font.split(line, panelW() - 16));
+        }
+        return out;
+    }
+
+    private int visibleRows() {
+        return Math.max(1, (height - 60 - 36) / 11);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        int max = Math.max(0, wrapped().size() - visibleRows());
+        scroll = Math.max(0, Math.min(max, scroll - (int) Math.signum(scrollY) * 2));
+        return true;
+    }
+
+    @Override
+    public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
+        super.render(g, mouseX, mouseY, partialTick);
+        int w = panelW();
+        int left = width / 2 - w / 2;
+        g.drawCenteredString(font, title, width / 2, 12, 0xFFD27F);
+        int top = 56, bottom = height - 34;
+        g.fill(left, top - 4, left + w, bottom, 0xAA000000);
+        List<FormattedCharSequence> rows = wrapped();
+        int y = top;
+        for (int i = scroll; i < rows.size() && y + 9 <= bottom; i++) {
+            g.drawString(font, rows.get(i), left + 8, y, 0xFFFFFF);
+            y += 11;
+        }
+        if (rows.size() > visibleRows()) {
+            g.drawString(font, Component.literal(scroll + visibleRows() < rows.size() ? "▼" : "▲"), left + w - 12, bottom - 12, 0xAAAAAA);
+        }
+    }
+
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
+}
