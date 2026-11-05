@@ -393,6 +393,8 @@ click 1–50
 wait 40
 shot 40_hall_etages_1_50
 clearchat
+goto referee
+wait 15
 talkto referee
 wait 10
 expect Étage 1 : ton adversaire
@@ -425,6 +427,8 @@ cmd hunter arena floor 120
 cmd hunter arena goto 120
 wait 40
 clearchat
+goto referee
+wait 15
 talkto referee
 wait 10
 expect Tu dois d'abord t'inscrire
@@ -433,8 +437,8 @@ cmd hunter arena floor 200
 cmd hunter arena goto 200
 wait 40
 clearchat
-cmd tp @s 5008.5 64 1262.5 180 10
-wait 10
+goto receptionist
+wait 15
 talkto receptionist
 wait 10
 expect Sans Nen
@@ -444,6 +448,8 @@ clearchat
 talkto receptionist
 wait 10
 expect Inscription au 200e étage validée
+goto referee
+wait 15
 talkto referee
 wait 100
 expect ton adversaire maîtrise le Nen
@@ -458,6 +464,8 @@ cmd hunter arena register
 cmd hunter arena goto 250
 wait 40
 clearchat
+goto referee
+wait 15
 talkto referee
 wait 120
 cmd kill @e[type=hxh:arena_fighter]
@@ -465,6 +473,8 @@ wait 40
 expect Maître d'étage
 shot 46_maitre_d_etage
 clearchat
+goto referee
+wait 15
 talkto referee
 wait 10
 expect plus personne dans cette Tour
