@@ -12,5 +12,7 @@
   "lobby_floor": "minecraft:mud_bricks",
   "pillar": "minecraft:bricks",
   "pillar_height": 4,
-  "light": "minecraft:lantern"
+  "light": "minecraft:lantern",
+  "structure": "hxh:heavens_arena/arene",
+  "ring_radius": 10
 }

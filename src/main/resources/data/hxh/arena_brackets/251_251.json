@@ -12,5 +12,7 @@
   "lobby_floor": "minecraft:polished_blackstone",
   "pillar": "minecraft:obsidian",
   "pillar_height": 6,
-  "light": "minecraft:shroomlight"
+  "light": "minecraft:shroomlight",
+  "structure": "hxh:heavens_arena/arene",
+  "ring_radius": 10
 }

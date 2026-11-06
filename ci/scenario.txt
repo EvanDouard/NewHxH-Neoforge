@@ -510,6 +510,13 @@ cmd hunter arena leave
 wait 60
 expect Tu quittes la Tour Céleste
 shot 48_retour_dans_le_monde
+clearchat
+cmd place structure hxh:heavens_arena_tower ~60 ~ ~-25
+wait 80
+cmd tp @s ~-30 ~25 ~
+look -90 -15
+wait 60
+shot 48b_tour_celeste_dans_le_monde
 key key.hxh.profile
 wait 20
 shot 49_carnet_personnage

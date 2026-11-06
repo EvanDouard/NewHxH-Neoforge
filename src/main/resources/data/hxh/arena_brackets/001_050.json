@@ -8,5 +8,7 @@
   "border": "minecraft:white_concrete",
   "accent": "minecraft:chiseled_stone_bricks",
   "under": "minecraft:smooth_stone",
-  "lobby_floor": "minecraft:polished_andesite"
+  "lobby_floor": "minecraft:polished_andesite",
+  "structure": "hxh:heavens_arena/arene",
+  "ring_radius": 10
 }

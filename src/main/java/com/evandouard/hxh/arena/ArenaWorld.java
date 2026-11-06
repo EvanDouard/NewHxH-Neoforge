@@ -79,7 +79,17 @@ public final class ArenaWorld {
      */
     public record Layout(BlockPos arrival, float arrivalYaw, BlockPos playerStart, BlockPos opponentStart,
                          BlockPos ringCenter, int ringRadius,
-                         @Nullable BlockPos receptionist, @Nullable BlockPos referee) {
+                         List<BlockPos> receptionists, List<BlockPos> referees) {
+        @Nullable
+        public BlockPos receptionist() {
+            return receptionists.isEmpty() ? null : receptionists.get(0);
+        }
+
+        @Nullable
+        public BlockPos referee() {
+            return referees.isEmpty() ? null : referees.get(0);
+        }
+
         public int ringOutY() {
             return Math.min(playerStart.getY(), opponentStart.getY()) - RING_OUT_DROP;
         }
@@ -159,8 +169,9 @@ public final class ArenaWorld {
             boolean place = !signature.equals(data.signatures.get(ENTRY));
             Placed p = placeStructure(level, template.get(), new BlockPos(0, FLOOR_Y, 0), 0, place);
             BlockPos arrival = p.first(ModBlocks.MARKER_ARRIVAL.get(), new BlockPos(0, FLOOR_Y, 0));
-            BlockPos rec = p.first(ModBlocks.MARKER_RECEPTIONIST.get(), null);
-            layout = new Layout(arrival, yawToward(arrival, rec), arrival, arrival, arrival, 0, rec, null);
+            List<BlockPos> recs = p.all(ModBlocks.MARKER_RECEPTIONIST.get());
+            layout = new Layout(arrival, yawToward(arrival, recs.isEmpty() ? null : recs.get(0)), arrival, arrival, arrival, 0,
+                    recs, List.of());
         } else {
             boolean legacy = !data.lobbyBuilt && level.getBlockState(LOBBY_MARKER).is(Blocks.POLISHED_DEEPSLATE);
             if (!legacy && !signature.equals(data.signatures.get(ENTRY)) && !data.lobbyBuilt) buildEntryHall(level);
@@ -169,13 +180,13 @@ public final class ArenaWorld {
         data.lobbyBuilt = true;
         data.signatures.put(ENTRY, signature);
         data.setDirty();
-        if (layout.receptionist() != null) ensureNpc(level, "receptionist", ENTRY, layout.receptionist());
+        ensureNpcs(level, "receptionist", ENTRY, layout.receptionists());
         LAYOUTS.put(ENTRY, layout);
         return layout;
     }
 
     private static Layout entryLayout() {
-        return new Layout(LOBBY_SPAWN, 180f, LOBBY_SPAWN, LOBBY_SPAWN, LOBBY_SPAWN, 0, RECEPTIONIST, null);
+        return new Layout(LOBBY_SPAWN, 180f, LOBBY_SPAWN, LOBBY_SPAWN, LOBBY_SPAWN, 0, List.of(RECEPTIONIST), List.of());
     }
 
     private static void buildEntryHall(ServerLevel level) {
@@ -266,16 +277,16 @@ public final class ArenaWorld {
             BlockPos arrival = p.first(ModBlocks.MARKER_ARRIVAL.get(), def.arrival());
             BlockPos ringCenter = new BlockPos((ps.getX() + os.getX()) / 2, ps.getY(), (ps.getZ() + os.getZ()) / 2);
             layout = new Layout(arrival, yawToward(arrival, ringCenter), ps, os, ringCenter, bracket.ringRadius(),
-                    p.first(ModBlocks.MARKER_RECEPTIONIST.get(), null),
-                    p.first(ModBlocks.MARKER_REFEREE.get(), p.first(ModBlocks.MARKER_NPC.get(), null)));
+                    p.all(ModBlocks.MARKER_RECEPTIONIST.get()),
+                    p.all(ModBlocks.MARKER_REFEREE.get(), ModBlocks.MARKER_NPC.get()));
         } else {
             if (place) buildGeneratedHall(level, c, bracket);
             layout = generatedLayout(c, bracket.ringRadius());
         }
         data.signatures.put(loc, signature);
         data.setDirty();
-        if (layout.receptionist() != null) ensureNpc(level, "receptionist", loc, layout.receptionist());
-        if (layout.referee() != null) ensureNpc(level, "referee", loc, layout.referee());
+        ensureNpcs(level, "receptionist", loc, layout.receptionists());
+        ensureNpcs(level, "referee", loc, layout.referees());
         LAYOUTS.put(loc, layout);
         return layout;
     }
@@ -284,7 +295,7 @@ public final class ArenaWorld {
     private static Layout generatedLayout(BlockPos c, int ringRadius) {
         BlockPos arrival = c.offset(0, 0, -GEN_HALF + 3);
         return new Layout(arrival, 0f, c.offset(-6, 0, 0), c.offset(6, 0, 0), c, ringRadius,
-                c.offset(8, 0, -GEN_HALF + 2), c.offset(-ringRadius - 3, 0, -ringRadius - 3));
+                List.of(c.offset(8, 0, -GEN_HALF + 2)), List.of(c.offset(-ringRadius - 3, 0, -ringRadius - 3)));
     }
 
     private static void buildGeneratedHall(ServerLevel level, BlockPos c, ArenaBracket b) {
@@ -401,19 +412,29 @@ public final class ArenaWorld {
     // ---------- PNJ fixes (hôtesses, arbitres) ----------
 
     /**
-     * Pose le PNJ d'un lieu s'il n'est pas déjà enregistré à cette place. On ne cherche pas l'entité
-     * (elle n'est peut-être pas encore chargée) : on se fie au registre du monde.
+     * Pose les PNJ d'un rôle dans un lieu (une hôtesse ou un arbitre par repère), seulement à des places pas encore
+     * enregistrées. On ne cherche pas les entités (elles ne sont peut-être pas encore chargées) : on se fie au registre.
      */
-    static void ensureNpc(ServerLevel level, String id, int location, BlockPos pos) {
+    static void ensureNpcs(ServerLevel level, String id, int location, List<BlockPos> places) {
         ArenaSavedData data = ArenaSavedData.get(level);
-        String key = id + "@" + location;
-        Long known = data.npcHomes.get(key);
-        if (known != null && known == pos.asLong()) return;
-        data.npcHomes.put(key, pos.asLong());
+        String prefix = id + "@" + location + "#";
+        String legacy = id + "@" + location;
+        java.util.Set<Long> registered = new java.util.HashSet<>();
+        data.npcHomes.entrySet().removeIf(e -> {
+            boolean mine = e.getKey().startsWith(prefix) || e.getKey().equals(legacy);
+            if (mine) registered.add(e.getValue());
+            return mine;
+        });
+        java.util.Set<Long> wanted = new java.util.HashSet<>();
+        for (int i = 0; i < places.size(); i++) {
+            BlockPos p = places.get(i);
+            wanted.add(p.asLong());
+            data.npcHomes.put(prefix + i, p.asLong());
+            if (!registered.contains(p.asLong())) spawnNpc(level, id, p);
+        }
         data.setDirty();
         for (NpcEntity old : level.getEntities(ModEntities.NPC.get(), n -> n.npcId().equals(id)
-                && !n.home().equals(pos) && locationAt(n.home()) == location)) old.discard();
-        spawnNpc(level, id, pos);
+                && locationAt(n.home()) == location && !wanted.contains(n.home().asLong()))) old.discard();
     }
 
     private static void spawnNpc(ServerLevel level, String id, BlockPos pos) {
@@ -445,14 +466,23 @@ public final class ArenaWorld {
         ArenaSavedData data = ArenaSavedData.get(level);
         for (NpcEntity npc : level.getEntities(ModEntities.NPC.get(),
                 n -> n.npcId().equals("receptionist") || n.npcId().equals("referee"))) {
-            Long home = data.npcHomes.get(npc.npcId() + "@" + locationAt(npc.home()));
-            if (home == null || home != npc.home().asLong()) npc.discard();
+            String prefix = npc.npcId() + "@" + locationAt(npc.home()) + "#";
+            long home = npc.home().asLong();
+            boolean registered = data.npcHomes.entrySet().stream()
+                    .anyMatch(e -> e.getKey().startsWith(prefix) && e.getValue() == home);
+            if (!registered) npc.discard();
         }
     }
 
     // ---------- Structures ----------
 
     private record Placed(Map<Block, List<BlockPos>> markers) {
+        List<BlockPos> all(Block... kinds) {
+            List<BlockPos> out = new java.util.ArrayList<>();
+            for (Block k : kinds) out.addAll(markers.getOrDefault(k, List.of()));
+            return out;
+        }
+
         BlockPos first(Block marker, @Nullable BlockPos fallback) {
             List<BlockPos> l = markers.get(marker);
             return l == null || l.isEmpty() ? fallback : l.get(0);

@@ -604,5 +604,14 @@
   "screen.hxh.profile.ryu": "Ryu (distribution)",
   "screen.hxh.profile.open_pores": "Open pores (target)",
   "command.hxh.structure.saved": "Structure %s saved (%s × %s × %s) to %s",
-  "command.hxh.structure.failed": "Could not write structure %s."
+  "command.hxh.structure.failed": "Could not write structure %s.",
+  "talent.hxh.ordinary": "Ordinary talent",
+  "talent.hxh.promising": "Promising apprentice",
+  "talent.hxh.gifted": "Gifted student",
+  "talent.hxh.exceptional": "Exceptional talent",
+  "talent.hxh.prodigy": "Nen prodigy",
+  "talent.hxh.genius": "Nen genius",
+  "talent.hxh.monster": "Monster of talent",
+  "profile.hxh.talent": "Nen talent: %s",
+  "command.hxh.talent_set": "Nen talent set to %s."
 }

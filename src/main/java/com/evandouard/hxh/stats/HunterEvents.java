@@ -71,6 +71,8 @@ public final class HunterEvents {
         if (data.nenType() == null && player.serverLevel().getGameRules().getBoolean(HxHGameRules.RANDOM_NEN_TYPE)) {
             data.setNenType(NenType.random(player.getRandom()));
         }
+        // Talent pour le Nen : tiré une fois pour toutes en début de partie
+        if (data.talent() == null) data.setTalent(com.evandouard.hxh.data.NenTalent.roll(player.getRandom()));
         HxHNetwork.syncFull(player);
     }
 

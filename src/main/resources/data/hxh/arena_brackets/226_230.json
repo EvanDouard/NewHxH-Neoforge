@@ -11,5 +11,7 @@
   "lobby_floor": "minecraft:deepslate_tiles",
   "pillar": "minecraft:deepslate_bricks",
   "pillar_height": 5,
-  "light": "minecraft:sea_lantern"
+  "light": "minecraft:sea_lantern",
+  "structure": "hxh:heavens_arena/arene",
+  "ring_radius": 10
 }

@@ -12,5 +12,7 @@
   "lobby_floor": "minecraft:spruce_planks",
   "pillar": "minecraft:stripped_dark_oak_log",
   "pillar_height": 4,
-  "light": "minecraft:lantern"
+  "light": "minecraft:lantern",
+  "structure": "hxh:heavens_arena/arene",
+  "ring_radius": 10
 }

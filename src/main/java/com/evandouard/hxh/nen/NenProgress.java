@@ -9,14 +9,27 @@ import net.minecraft.world.entity.player.Player;
 
 /**
  * Progression du Nen : toute utilisation du Nen rapporte de l'XP de Nen ; pratiquer une technique
- * de base rapporte en plus de l'XP à sa maîtrise (plafonnée par le niveau de Nen).
+ * de base rapporte en plus de l'XP à sa maîtrise (plafonnée par le niveau de Nen). Les deux sont multipliées
+ * par le talent pour le Nen du joueur.
  */
 public final class NenProgress {
     private NenProgress() {}
 
+    /**
+     * Applique le talent pour le Nen à un gain d'XP. L'arrondi est aléatoire pour que les petits gains
+     * (1 XP) restent justes en moyenne : ×1,25 donne 1 ou 2, en moyenne 1,25.
+     */
+    public static int withTalent(LivingEntity entity, int amount) {
+        double scaled = amount * HunterStats.get(entity).talentMultiplier();
+        int whole = (int) Math.floor(scaled);
+        return whole + (entity.getRandom().nextDouble() < scaled - whole ? 1 : 0);
+    }
+
     public static void addNenXp(LivingEntity entity, int amount) {
         HunterData data = HunterStats.get(entity);
         if (!data.nenUnlocked() || amount <= 0) return;
+        amount = withTalent(entity, amount);
+        if (amount <= 0) return;
         if (data.addNenXp(amount) > 0 && entity instanceof Player player) {
             player.displayClientMessage(Component.translatable("message.hxh.nen_level_up", data.nenLevel()), true);
         }
@@ -26,7 +39,8 @@ public final class NenProgress {
     public static void train(LivingEntity entity, Mastery mastery, int amount) {
         HunterData data = HunterStats.get(entity);
         if (!data.nenUnlocked() || amount <= 0) return;
-        if (data.addMasteryXp(mastery, amount) > 0 && entity instanceof Player player) {
+        int masteryXp = withTalent(entity, amount);
+        if (masteryXp > 0 && data.addMasteryXp(mastery, masteryXp) > 0 && entity instanceof Player player) {
             player.displayClientMessage(Component.translatable("message.hxh.mastery_level_up",
                     Component.translatable(mastery.translationKey()), data.masteryLevel(mastery)), true);
         }

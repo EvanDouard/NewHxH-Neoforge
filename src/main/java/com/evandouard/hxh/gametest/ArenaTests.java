@@ -106,23 +106,40 @@ public final class ArenaTests {
         helper.succeed();
     }
 
-    @GameTest(template = "empty")
-    public static void bracketHallHasRingReceptionistAndReferee(GameTestHelper helper) {
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void evansArenaHasFourReceptionistsAndReferees(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         ArenaBracket bracket = ArenaBrackets.forFloor(120);
+        helper.assertTrue(bracket.structure() != null && bracket.structure().getPath().equals("heavens_arena/arene"),
+                "Les tranches utilisent l'arène d'Evan");
         ArenaWorld.ensureHall(level, bracket);
         ArenaWorld.Layout layout = ArenaWorld.ensureHall(level, bracket);
-        helper.assertTrue(level.getBlockState(layout.ringCenter().below()).is(bracket.accent().getBlock()),
-                "Le centre du ring porte le bloc d'accent de la tranche");
-        helper.assertTrue(layout.inRing(layout.playerStart().getX(), layout.playerStart().getZ()), "Le joueur démarre dans le ring");
+        helper.assertTrue(layout.receptionists().size() == 4 && layout.referees().size() == 4,
+                "4 hôtesses et 4 arbitres lus sur les repères, obtenu " + layout.receptionists().size() + "/" + layout.referees().size());
+        helper.assertTrue(layout.ringRadius() == 10, "Ring de 21 × 21");
+        helper.assertTrue(layout.inRing(layout.playerStart().getX(), layout.playerStart().getZ())
+                && layout.inRing(layout.opponentStart().getX(), layout.opponentStart().getZ()), "Les deux combattants démarrent dans le ring");
         helper.assertTrue(!layout.inRing(layout.arrival().getX(), layout.arrival().getZ()), "On arrive hors du ring (côté spectateurs)");
+        helper.assertTrue(!level.getBlockState(layout.playerStart().below()).isAir(), "Sol sous le départ du joueur");
+        helper.assertTrue(level.getBlockState(layout.playerStart()).isAir(), "Repère retiré après la pose");
         for (String id : List.of("receptionist", "referee")) {
-            BlockPos home = id.equals("referee") ? layout.referee() : layout.receptionist();
-            int n = level.getEntities(ModEntities.NPC.get(), e -> e.npcId().equals(id) && e.home().equals(home)).size();
-            helper.assertTrue(n == 1, "Un seul PNJ « " + id + " », obtenu " + n);
+            List<BlockPos> homes = id.equals("referee") ? layout.referees() : layout.receptionists();
+            for (BlockPos home : homes) {
+                int n = level.getEntities(ModEntities.NPC.get(), e -> e.npcId().equals(id) && e.home().equals(home)).size();
+                helper.assertTrue(n == 1, "Un seul PNJ « " + id + " » en " + home.toShortString() + ", obtenu " + n);
+            }
         }
-        helper.assertTrue(ArenaWorld.locationAt(layout.arrival()) == ArenaWorld.locationOfBracket(bracket.index()),
-                "On retrouve la tranche depuis l'arrivée");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void overworldTowerIsAvailable(GameTestHelper helper) {
+        var tower = helper.getLevel().getStructureManager().get(ResourceLocation.parse("hxh:heavens_arena/tour"));
+        helper.assertTrue(tower.isPresent(), "La structure de la tour est livrée avec le mod");
+        helper.assertTrue(tower.get().getSize().getY() == 253, "Tour de 253 blocs de haut");
+        int gates = tower.get().filterBlocks(BlockPos.ZERO, new net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings(),
+                ModBlocks.HEAVENS_ARENA_GATE.get()).size();
+        helper.assertTrue(gates == 2, "Deux portails d'entrée, obtenu " + gates);
         helper.succeed();
     }
 

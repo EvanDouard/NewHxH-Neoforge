@@ -111,4 +111,38 @@ public final class NenAdvancedTests {
         helper.assertTrue(!"message.hxh.hatsu_nen_level".equals(Hatsu.cast(gon)), "Au niveau 10, Papier est débloqué");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void talentRollsMatchTheTable(GameTestHelper helper) {
+        net.minecraft.util.RandomSource random = net.minecraft.util.RandomSource.create(42);
+        java.util.Map<com.evandouard.hxh.data.NenTalent, Integer> counts = new java.util.EnumMap<>(com.evandouard.hxh.data.NenTalent.class);
+        int n = 100_000;
+        for (int i = 0; i < n; i++) counts.merge(com.evandouard.hxh.data.NenTalent.roll(random), 1, Integer::sum);
+        int total = 0;
+        for (com.evandouard.hxh.data.NenTalent t : com.evandouard.hxh.data.NenTalent.values()) {
+            total += t.weightPerMille();
+            double share = counts.getOrDefault(t, 0) * 1000.0 / n;
+            helper.assertTrue(Math.abs(share - t.weightPerMille()) <= Math.max(3, t.weightPerMille() * 0.1),
+                    t.id() + " : " + share + " ‰ au lieu de " + t.weightPerMille());
+        }
+        helper.assertTrue(total == 1000, "Les chances font 100 %");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void talentMultipliesNenXp(GameTestHelper helper) {
+        net.minecraft.world.entity.monster.Zombie zombie = helper.spawn(net.minecraft.world.entity.EntityType.ZOMBIE, new net.minecraft.core.BlockPos(1, 1, 1));
+        com.evandouard.hxh.data.HunterData d = com.evandouard.hxh.stats.HunterStats.get(zombie);
+        com.evandouard.hxh.nen.NenModes.unlock(zombie);
+        d.setTalent(com.evandouard.hxh.data.NenTalent.GENIUS);
+        int before = d.nenXp();
+        com.evandouard.hxh.nen.NenProgress.addNenXp(zombie, 10);
+        helper.assertTrue(d.nenXp() - before == 30, "Génie du Nen : 10 XP deviennent 30, obtenu " + (d.nenXp() - before));
+        d.setTalent(com.evandouard.hxh.data.NenTalent.ORDINARY);
+        before = d.nenXp();
+        com.evandouard.hxh.nen.NenProgress.addNenXp(zombie, 10);
+        helper.assertTrue(d.nenXp() - before == 8, "Talent ordinaire : 10 XP deviennent 8, obtenu " + (d.nenXp() - before));
+        zombie.discard();
+        helper.succeed();
+    }
 }

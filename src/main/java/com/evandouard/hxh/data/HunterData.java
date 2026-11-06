@@ -37,6 +37,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private boolean nenRevealed = false;
     @Nullable
     private NenType nenType = null;
+    @Nullable
+    private NenTalent talent;
 
     private float aura = 0;
     private int auraMax = 100;
@@ -159,6 +161,21 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     public void setNenType(@Nullable NenType type) {
         this.nenType = type;
         dirty.add(NEN);
+    }
+
+    /** Talent pour le Nen (null tant qu'il n'a pas été tiré ; les mobs n'en ont pas : ×1). */
+    @Nullable
+    public NenTalent talent() {
+        return talent;
+    }
+
+    public void setTalent(@Nullable NenTalent talent) {
+        this.talent = talent;
+        dirty.add(NEN);
+    }
+
+    public double talentMultiplier() {
+        return talent == null ? 1.0 : talent.multiplier();
     }
 
     // ---------- Aura ----------
@@ -440,6 +457,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             nen.putBoolean("unlocked", nenUnlocked);
             nen.putBoolean("revealed", nenRevealed);
             if (nenType != null) nen.putString("type", nenType.id());
+            if (talent != null) nen.putString("talent", talent.id());
             out.put(NEN, nen);
             return;
         }
@@ -566,6 +584,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             nenUnlocked = nen.getBoolean("unlocked");
             nenRevealed = nen.getBoolean("revealed");
             nenType = nen.contains("type") ? NenType.byId(nen.getString("type")) : null;
+            talent = nen.contains("talent") ? NenTalent.byId(nen.getString("talent")) : null;
         }
         if (in.contains(AURA)) {
             CompoundTag a = in.getCompound(AURA);

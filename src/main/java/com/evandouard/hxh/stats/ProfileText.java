@@ -87,6 +87,14 @@ public final class ProfileText {
         if (!data.nenUnlocked() && data.meditationTicks() > 0) {
             lines.add(Component.translatable("command.hxh.show.meditation", data.meditationTicks() / 20));
         }
+        if (living instanceof ServerPlayer) {
+            // Le talent se révèle avec le type de Nen (divination par l'eau)
+            Component talent = data.talent() == null || !data.nenRevealed()
+                    ? Component.literal("???")
+                    : Component.translatable(data.talent().translationKey()).append(Component.literal(" (×"
+                    + String.valueOf(data.talent().multiplier()).replace(".0", "").replace('.', ',') + ")"));
+            lines.add(Component.translatable("profile.hxh.talent", talent));
+        }
         return lines;
     }
 

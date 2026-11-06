@@ -12,5 +12,7 @@
   "lobby_floor": "minecraft:polished_deepslate",
   "pillar": "minecraft:polished_blackstone_bricks",
   "pillar_height": 5,
-  "light": "minecraft:soul_lantern"
+  "light": "minecraft:soul_lantern",
+  "structure": "hxh:heavens_arena/arene",
+  "ring_radius": 10
 }

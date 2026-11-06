@@ -12,5 +12,7 @@
   "lobby_floor": "minecraft:smooth_sandstone",
   "pillar": "minecraft:cut_sandstone",
   "pillar_height": 3,
-  "light": "minecraft:lantern"
+  "light": "minecraft:lantern",
+  "structure": "hxh:heavens_arena/arene",
+  "ring_radius": 10
 }

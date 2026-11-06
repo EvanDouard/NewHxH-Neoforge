@@ -121,6 +121,18 @@ public final class HunterCommand {
                     d.setMeditationTicks(0);
                 }))
                 .then(targeted("reveal", e -> HunterStats.get(e).setNenRevealed(true)))
+                .then(Commands.literal("talent")
+                        .then(Commands.argument("talent", StringArgumentType.word())
+                                .suggests((c, b) -> SharedSuggestionProvider.suggest(
+                                        Arrays.stream(com.evandouard.hxh.data.NenTalent.values()).map(com.evandouard.hxh.data.NenTalent::id), b))
+                                .executes(ctx -> {
+                                    com.evandouard.hxh.data.NenTalent t = com.evandouard.hxh.data.NenTalent.byId(StringArgumentType.getString(ctx, "talent"));
+                                    if (t == null) return 0;
+                                    HunterStats.get(ctx.getSource().getPlayerOrException()).setTalent(t);
+                                    ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.talent_set",
+                                            Component.translatable(t.translationKey())), false);
+                                    return 1;
+                                })))
                 .then(Commands.literal("mode")
                         .then(Commands.argument("mode", StringArgumentType.word())
                                 .suggests((ctx, b) -> SharedSuggestionProvider.suggest(
