@@ -10,6 +10,11 @@ le hall d'entrée, le hall de chaque tranche d'étages (avec son ring central) e
 | Hall d'entrée (étage 0) | Arrivée dans la Tour, hôtesse d'inscription, ascenseur, sortie | `hxh:heavens_arena/lobby` |
 | Hall d'une tranche (1–50, 51–100…) | Ring central visible des spectateurs, hôtesse, arbitre, ascenseur | Celle que tu indiques dans le fichier de la tranche |
 | Chambre d'un joueur | Lit, coffre, ascenseur ; le joueur peut la décorer | `hxh:heavens_arena/room` |
+| Tour extérieure (Overworld) | La tour visible dans le monde, avec ses portails d'entrée | `hxh:heavens_arena/tour` |
+
+Actuellement, les 15 tranches utilisent ton arène `hxh:heavens_arena/arene` (ring de 21 × 21,
+`"ring_radius": 10`). La tour extérieure apparaît une fois par monde (près de l'origine, dans une plaine, une
+savane, une prairie ou une forêt) ; dans un monde existant, `/place structure hxh:heavens_arena_tower` la pose.
 
 Tous les joueurs dont l'étage est dans la même tranche partagent le même hall et le même ring.
 Un seul combat à la fois par ring : les autres joueurs attendent dans une file et regardent.
@@ -40,9 +45,22 @@ Règles :
 - Les spectateurs qui entrent dans le ring pendant un combat sont renvoyés au repère E :
   place E **hors du ring**.
 - Un repère manquant prend une place par défaut. Sans repère H ou R, pas d'hôtesse ou pas d'arbitre.
-- Taille maximale conseillée : environ 300 × 300 blocs pour un hall, 48 × 48 pour une chambre.
+- Tu peux poser **plusieurs repères H et R** : une hôtesse ou un arbitre apparaît sur chacun.
+  N'importe lequel des arbitres lance le combat. Un seul repère J, A et E compte : le premier trouvé.
+- Taille maximale conseillée : environ 300 × 300 blocs pour un hall.
 
-## 2. Sauvegarder avec un bloc de structure
+## 2. Sauvegarder
+
+**Le plus simple, quelle que soit la taille** : vise deux coins opposés de ta construction (F3 donne leurs
+coordonnées dans « Targeted Block »), puis :
+
+```
+/hunter structure save hxh:heavens_arena/<nom> X1 Y1 Z1 X2 Y2 Z2
+```
+
+Le fichier arrive au même endroit qu'avec un bloc de structure (voir plus bas).
+
+**Avec un bloc de structure** (limité à 48 × 48 × 48) :
 
 1. `/give @s minecraft:structure_block`, pose-le dans un coin de ta construction.
 2. Mode **Save** (Sauvegarde). Nom de la structure : `hxh:heavens_arena/<nom>`, par exemple
@@ -132,6 +150,5 @@ Si ta construction est dans une autre map (téléchargée ou ancienne sauvegarde
    sous `generated/hxh/structures/`.
 4. Copie ce `.nbt` dans ton monde de test (même chemin) ou directement dans le mod (étape 5).
 
-Pour une construction trop grande pour un seul bloc de structure (limite de 48 × 48 × 48 en vanilla),
-découpe-la en plusieurs morceaux, ou utilise un outil comme WorldEdit / Axiom pour l'exporter en
-`.nbt` de structure ; dis-le à Claude si tu as besoin d'assembler plusieurs morceaux en un seul hall.
+Pour une construction plus grande que 48 × 48 × 48, utilise `/hunter structure save` (étape 2) : pas de
+découpage nécessaire.
