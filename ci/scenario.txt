@@ -122,7 +122,9 @@ cmd summon minecraft:villager ~ ~ ~3 {NoAI:1b}
 look 0 10
 wait 20
 clearchat
-key key.hxh.open_pores
+key key.hxh.profile
+wait 15
+click Ouvrir les pores
 wait 20
 cmd hunter show @e[type=minecraft:villager,limit=1,sort=nearest]
 wait 10

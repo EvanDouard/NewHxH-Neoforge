@@ -36,7 +36,6 @@ public final class NenClient {
     public static final KeyMapping ZETSU = new KeyMapping("key.hxh.zetsu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, CATEGORY);
     public static final KeyMapping REN = new KeyMapping("key.hxh.ren", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_R, CATEGORY);
     public static final KeyMapping HEAL = new KeyMapping("key.hxh.heal", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, CATEGORY);
-    public static final KeyMapping OPEN_PORES = new KeyMapping("key.hxh.open_pores", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, CATEGORY);
 
     public static final KeyMapping KEN = new KeyMapping("key.hxh.ken", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_N, CATEGORY);
     public static final KeyMapping KO = new KeyMapping("key.hxh.ko", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, CATEGORY);
@@ -74,7 +73,6 @@ public final class NenClient {
         event.register(ZETSU);
         event.register(REN);
         event.register(HEAL);
-        event.register(OPEN_PORES);
         event.register(KEN);
         event.register(KO);
         event.register(GYO);
@@ -107,7 +105,6 @@ public final class NenClient {
         while (KO.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.KO, true));
         while (GYO.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.GYO, true));
         while (EN.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.EN, true));
-        while (OPEN_PORES.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.OPEN_PORES, true));
         while (CAST.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, true));
         while (NEXT_TECHNIQUE.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.NEXT_TECHNIQUE, true));
         while (PROFILE.consumeClick()) {
@@ -129,6 +126,11 @@ public final class NenClient {
     }
 
     /** Ouvre le choix du Hatsu, ou explique pourquoi ce n'est pas (ou plus) possible. */
+    /** Ouvrir les pores de la cible visée (bouton du carnet de Hunter). */
+    public static void openPores() {
+        PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.OPEN_PORES, true));
+    }
+
     /** Méditer (bouton du carnet de Hunter). */
     public static void meditate() {
         PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.MEDITATE, true));

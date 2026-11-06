@@ -49,7 +49,6 @@
   "divination.hxh.specialist": "Quelque chose d'étrange se produit...",
   "divination.hxh.result": "Ton type de Nen : %s",
   "key.hxh.heal": "Soin par le Nen (maintenir)",
-  "key.hxh.open_pores": "Ouvrir les pores (cible)",
   "hud.hxh.healing": "Soin",
   "hud.hxh.meditation": "Méditation",
   "hud.hxh.meditating": "Méditation… %s s",
@@ -602,5 +601,6 @@
   "profile.hxh.arena.register": "À faire : t'inscrire auprès de l'hôtesse de ta tranche.",
   "screen.hxh.profile.hatsu": "Hatsu",
   "screen.hxh.profile.meditate": "Méditer",
-  "screen.hxh.profile.ryu": "Ryu (répartition)"
+  "screen.hxh.profile.ryu": "Ryu (répartition)",
+  "screen.hxh.profile.open_pores": "Ouvrir les pores (cible)"
 }

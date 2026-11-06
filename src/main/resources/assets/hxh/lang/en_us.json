@@ -49,7 +49,6 @@
   "divination.hxh.specialist": "Something strange happens...",
   "divination.hxh.result": "Your Nen type: %s",
   "key.hxh.heal": "Nen healing (hold)",
-  "key.hxh.open_pores": "Open pores (target)",
   "hud.hxh.healing": "Healing",
   "hud.hxh.meditation": "Meditation",
   "hud.hxh.meditating": "Meditating… %s s",
@@ -602,5 +601,6 @@
   "profile.hxh.arena.register": "To do: register with your bracket's receptionist.",
   "screen.hxh.profile.hatsu": "Hatsu",
   "screen.hxh.profile.meditate": "Meditate",
-  "screen.hxh.profile.ryu": "Ryu (distribution)"
+  "screen.hxh.profile.ryu": "Ryu (distribution)",
+  "screen.hxh.profile.open_pores": "Open pores (target)"
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Carnet de Hunter (touche O) : statistiques et Nen, quêtes, Tour Céleste et Jenny, par onglets ;
- * boutons pour le Hatsu, la méditation et le Ryu.
+ * boutons pour le Hatsu, la méditation, le Ryu et l'ouverture des pores de la cible visée.
  * La molette fait défiler les longues pages.
  */
 public class ProfileScreen extends Screen {
@@ -49,9 +49,9 @@ public class ProfileScreen extends Screen {
             tabs.add(addRenderableWidget(Button.builder(Component.translatable(keys[i]), b -> select(index))
                     .bounds(left + i * (bw + 4), 28, bw, 20).build()));
         }
-        // Actions : choix/fiche du Hatsu, méditation, répartition du Ryu
-        int aw = (w - 8) / 3;
-        int ay = height - 52;
+        // Actions (2 lignes de 2) : Hatsu, méditation, Ryu, ouverture des pores de la cible visée
+        int aw = (w - 4) / 2;
+        int ay = height - 76;
         net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
         com.evandouard.hxh.data.HunterData hunter = mc.player.getData(com.evandouard.hxh.data.ModAttachments.HUNTER);
         addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.hatsu"), b -> NenClient.openHatsuMenu(mc))
@@ -61,8 +61,13 @@ public class ProfileScreen extends Screen {
             NenClient.meditate();
         }).bounds(left + aw + 4, ay, aw, 20).build());
         Button ryu = addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.ryu"), b -> NenClient.openRyu(mc))
-                .bounds(left + 2 * (aw + 4), ay, aw, 20).build());
+                .bounds(left, ay + 24, aw, 20).build());
         ryu.active = hunter.nenUnlocked();
+        Button pores = addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.open_pores"), b -> {
+            onClose();
+            NenClient.openPores();
+        }).bounds(left + aw + 4, ay + 24, aw, 20).build());
+        pores.active = hunter.nenUnlocked();
         addRenderableWidget(Button.builder(Component.translatable("gui.done"), b -> onClose())
                 .bounds(width / 2 - 50, height - 28, 100, 20).build());
         select(tab);
@@ -93,7 +98,7 @@ public class ProfileScreen extends Screen {
     }
 
     private int visibleRows() {
-        return Math.max(1, (height - 60 - 60) / 11);
+        return Math.max(1, (height - 60 - 84) / 11);
     }
 
     @Override
@@ -109,7 +114,7 @@ public class ProfileScreen extends Screen {
         int w = panelW();
         int left = width / 2 - w / 2;
         g.drawCenteredString(font, title, width / 2, 12, 0xFFD27F);
-        int top = 56, bottom = height - 58;
+        int top = 56, bottom = height - 82;
         g.fill(left, top - 4, left + w, bottom, 0xAA000000);
         List<FormattedCharSequence> rows = wrapped();
         int y = top;
