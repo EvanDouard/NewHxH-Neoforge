@@ -512,10 +512,11 @@ expect Tu quittes la Tour Céleste
 shot 48_retour_dans_le_monde
 clearchat
 cmd place structure hxh:heavens_arena_tower ~60 ~ ~-25
-wait 80
-cmd tp @s ~-30 ~25 ~
-look -90 -15
-wait 60
+wait 300
+expect a été générée
+cmd tp @s ~-40 ~30 ~
+look -90 -10
+wait 200
 shot 48b_tour_celeste_dans_le_monde
 key key.hxh.profile
 wait 20
