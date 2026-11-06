@@ -49,7 +49,6 @@
   "divination.hxh.specialist": "Quelque chose d'étrange se produit...",
   "divination.hxh.result": "Ton type de Nen : %s",
   "key.hxh.heal": "Soin par le Nen (maintenir)",
-  "key.hxh.meditate": "Méditer",
   "key.hxh.open_pores": "Ouvrir les pores (cible)",
   "hud.hxh.healing": "Soin",
   "hud.hxh.meditation": "Méditation",
@@ -72,7 +71,6 @@
   "message.hxh.awakened_by_meditation": "Après une longue méditation, ton aura s'éveille enfin !",
   "message.hxh.awakened_by_accident": "Le coup chargé de Nen a ouvert tes pores par accident !",
   "message.hxh.awakened_hint": "Ton aura s'échappe… Utilise le Ten pour la retenir.",
-  "key.hxh.hatsu_menu": "Choisir son Hatsu",
   "key.hxh.cast": "Lancer la technique",
   "key.hxh.next_technique": "Technique suivante",
   "screen.hxh.hatsu.title": "Choisis ton Hatsu",
@@ -439,7 +437,6 @@
   "mastery.hxh.shu": "Shu",
   "key.hxh.gyo": "Gyo",
   "key.hxh.en": "En",
-  "key.hxh.ryu": "Ryu (répartition)",
   "nen_mode.hxh.in": "In",
   "effect.hxh.gyo": "Gyo",
   "effect.hxh.en": "En",
@@ -602,5 +599,8 @@
   "profile.hxh.arena.master": "Maître d'étage du 251e",
   "profile.hxh.arena.floor": "Étage %s · tranche %s",
   "profile.hxh.arena.record": "%s victoire(s) · %s défaite(s)",
-  "profile.hxh.arena.register": "À faire : t'inscrire auprès de l'hôtesse de ta tranche."
+  "profile.hxh.arena.register": "À faire : t'inscrire auprès de l'hôtesse de ta tranche.",
+  "screen.hxh.profile.hatsu": "Hatsu",
+  "screen.hxh.profile.meditate": "Méditer",
+  "screen.hxh.profile.ryu": "Ryu (répartition)"
 }

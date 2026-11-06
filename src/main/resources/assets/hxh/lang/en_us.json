@@ -49,7 +49,6 @@
   "divination.hxh.specialist": "Something strange happens...",
   "divination.hxh.result": "Your Nen type: %s",
   "key.hxh.heal": "Nen healing (hold)",
-  "key.hxh.meditate": "Meditate",
   "key.hxh.open_pores": "Open pores (target)",
   "hud.hxh.healing": "Healing",
   "hud.hxh.meditation": "Meditation",
@@ -72,7 +71,6 @@
   "message.hxh.awakened_by_meditation": "After a long meditation, your aura finally awakens!",
   "message.hxh.awakened_by_accident": "The Nen-charged blow opened your pores by accident!",
   "message.hxh.awakened_hint": "Your aura is leaking… Use Ten to hold it in.",
-  "key.hxh.hatsu_menu": "Choose your Hatsu",
   "key.hxh.cast": "Cast technique",
   "key.hxh.next_technique": "Next technique",
   "screen.hxh.hatsu.title": "Choose your Hatsu",
@@ -439,7 +437,6 @@
   "mastery.hxh.shu": "Shu",
   "key.hxh.gyo": "Gyo",
   "key.hxh.en": "En",
-  "key.hxh.ryu": "Ryu (distribution)",
   "nen_mode.hxh.in": "In",
   "effect.hxh.gyo": "Gyo",
   "effect.hxh.en": "En",
@@ -602,5 +599,8 @@
   "profile.hxh.arena.master": "Floor Master of floor 251",
   "profile.hxh.arena.floor": "Floor %s · bracket %s",
   "profile.hxh.arena.record": "%s win(s) · %s loss(es)",
-  "profile.hxh.arena.register": "To do: register with your bracket's receptionist."
+  "profile.hxh.arena.register": "To do: register with your bracket's receptionist.",
+  "screen.hxh.profile.hatsu": "Hatsu",
+  "screen.hxh.profile.meditate": "Meditate",
+  "screen.hxh.profile.ryu": "Ryu (distribution)"
 }

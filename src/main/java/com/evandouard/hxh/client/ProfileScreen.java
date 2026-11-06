@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Carnet de Hunter (touche P) : statistiques et Nen, quêtes, Tour Céleste et Jenny, par onglets.
+ * Carnet de Hunter (touche O) : statistiques et Nen, quêtes, Tour Céleste et Jenny, par onglets ;
+ * boutons pour le Hatsu, la méditation et le Ryu.
  * La molette fait défiler les longues pages.
  */
 public class ProfileScreen extends Screen {
@@ -48,6 +49,20 @@ public class ProfileScreen extends Screen {
             tabs.add(addRenderableWidget(Button.builder(Component.translatable(keys[i]), b -> select(index))
                     .bounds(left + i * (bw + 4), 28, bw, 20).build()));
         }
+        // Actions : choix/fiche du Hatsu, méditation, répartition du Ryu
+        int aw = (w - 8) / 3;
+        int ay = height - 52;
+        net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+        com.evandouard.hxh.data.HunterData hunter = mc.player.getData(com.evandouard.hxh.data.ModAttachments.HUNTER);
+        addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.hatsu"), b -> NenClient.openHatsuMenu(mc))
+                .bounds(left, ay, aw, 20).build());
+        addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.meditate"), b -> {
+            onClose();
+            NenClient.meditate();
+        }).bounds(left + aw + 4, ay, aw, 20).build());
+        Button ryu = addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.ryu"), b -> NenClient.openRyu(mc))
+                .bounds(left + 2 * (aw + 4), ay, aw, 20).build());
+        ryu.active = hunter.nenUnlocked();
         addRenderableWidget(Button.builder(Component.translatable("gui.done"), b -> onClose())
                 .bounds(width / 2 - 50, height - 28, 100, 20).build());
         select(tab);
@@ -78,7 +93,7 @@ public class ProfileScreen extends Screen {
     }
 
     private int visibleRows() {
-        return Math.max(1, (height - 60 - 36) / 11);
+        return Math.max(1, (height - 60 - 60) / 11);
     }
 
     @Override
@@ -94,7 +109,7 @@ public class ProfileScreen extends Screen {
         int w = panelW();
         int left = width / 2 - w / 2;
         g.drawCenteredString(font, title, width / 2, 12, 0xFFD27F);
-        int top = 56, bottom = height - 34;
+        int top = 56, bottom = height - 58;
         g.fill(left, top - 4, left + w, bottom, 0xAA000000);
         List<FormattedCharSequence> rows = wrapped();
         int y = top;

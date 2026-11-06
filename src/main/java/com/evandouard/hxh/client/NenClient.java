@@ -36,17 +36,14 @@ public final class NenClient {
     public static final KeyMapping ZETSU = new KeyMapping("key.hxh.zetsu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, CATEGORY);
     public static final KeyMapping REN = new KeyMapping("key.hxh.ren", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_R, CATEGORY);
     public static final KeyMapping HEAL = new KeyMapping("key.hxh.heal", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, CATEGORY);
-    public static final KeyMapping MEDITATE = new KeyMapping("key.hxh.meditate", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_M, CATEGORY);
     public static final KeyMapping OPEN_PORES = new KeyMapping("key.hxh.open_pores", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, CATEGORY);
 
     public static final KeyMapping KEN = new KeyMapping("key.hxh.ken", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_N, CATEGORY);
     public static final KeyMapping KO = new KeyMapping("key.hxh.ko", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, CATEGORY);
     public static final KeyMapping GYO = new KeyMapping("key.hxh.gyo", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, CATEGORY);
     public static final KeyMapping EN = new KeyMapping("key.hxh.en", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Y, CATEGORY);
-    public static final KeyMapping RYU = new KeyMapping("key.hxh.ryu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_U, CATEGORY);
     public static final KeyMapping STRIKE = new KeyMapping("key.hxh.strike", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_ALT, CATEGORY);
     public static final KeyMapping PROFILE = new KeyMapping("key.hxh.profile", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_O, CATEGORY);
-    public static final KeyMapping HATSU_MENU = new KeyMapping("key.hxh.hatsu_menu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, CATEGORY);
     public static final KeyMapping CAST = new KeyMapping("key.hxh.cast", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, CATEGORY);
     public static final KeyMapping NEXT_TECHNIQUE = new KeyMapping("key.hxh.next_technique", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, CATEGORY);
 
@@ -77,15 +74,12 @@ public final class NenClient {
         event.register(ZETSU);
         event.register(REN);
         event.register(HEAL);
-        event.register(MEDITATE);
         event.register(OPEN_PORES);
         event.register(KEN);
         event.register(KO);
         event.register(GYO);
         event.register(EN);
-        event.register(RYU);
         event.register(STRIKE);
-        event.register(HATSU_MENU);
         event.register(PROFILE);
         event.register(CAST);
         event.register(NEXT_TECHNIQUE);
@@ -113,12 +107,9 @@ public final class NenClient {
         while (KO.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.KO, true));
         while (GYO.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.GYO, true));
         while (EN.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.EN, true));
-        while (RYU.consumeClick()) mc.setScreen(new RyuScreen());
-        while (MEDITATE.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.MEDITATE, true));
         while (OPEN_PORES.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.OPEN_PORES, true));
         while (CAST.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, true));
         while (NEXT_TECHNIQUE.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.NEXT_TECHNIQUE, true));
-        while (HATSU_MENU.consumeClick()) openHatsuMenu(mc);
         while (PROFILE.consumeClick()) {
             net.neoforged.neoforge.network.PacketDistributor.sendToServer(com.evandouard.hxh.network.RequestProfilePayload.INSTANCE);
         }
@@ -138,7 +129,18 @@ public final class NenClient {
     }
 
     /** Ouvre le choix du Hatsu, ou explique pourquoi ce n'est pas (ou plus) possible. */
-    private static void openHatsuMenu(Minecraft mc) {
+    /** Méditer (bouton du carnet de Hunter). */
+    public static void meditate() {
+        PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.MEDITATE, true));
+    }
+
+    /** Écran de répartition du Ryu (bouton du carnet de Hunter). */
+    public static void openRyu(Minecraft mc) {
+        mc.setScreen(new RyuScreen());
+    }
+
+    /** Choix ou fiche du Hatsu (bouton du carnet de Hunter). */
+    public static void openHatsuMenu(Minecraft mc) {
         HunterData data = mc.player.getData(ModAttachments.HUNTER);
         HatsuKit kit = Hatsu.kitOf(data);
         if (kit != null) {
