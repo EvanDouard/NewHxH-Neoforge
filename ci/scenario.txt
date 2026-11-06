@@ -413,7 +413,7 @@ hold key.forward
 wait 30
 release key.forward
 clearchat
-cmd execute positioned 4994.5 64 320.5 if entity @s[distance=..0.8]
+cmd execute positioned 5000.5 71 327.5 if entity @s[distance=..0.8]
 wait 5
 expect Test réussi
 shot 41_compte_a_rebours_immobile
