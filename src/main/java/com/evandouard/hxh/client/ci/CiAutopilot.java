@@ -237,6 +237,13 @@ public final class CiAutopilot {
                         if (e instanceof com.evandouard.hxh.npc.NpcEntity n && n.npcId().equals(arg)
                                 && (npc == null || n.distanceTo(mc.player) < npc.distanceTo(mc.player))) npc = n;
                     }
+                    if (npc == null && op.equals("goto")) {
+                        // Trop loin pour être vu du client : le serveur nous y emmène (le plus proche de ce rôle)
+                        mc.player.connection.sendCommand("tp @s @e[type=hxh:npc,nbt={npc:\"" + arg + "\"},sort=nearest,limit=1]");
+                        log("rapprochement de " + arg + " par le serveur");
+                        waitTicks = 40;
+                        return true;
+                    }
                     if (npc == null) {
                         log("ECHEC : PNJ '" + arg + "' introuvable");
                         return false;
