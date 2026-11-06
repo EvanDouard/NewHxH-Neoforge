@@ -478,7 +478,7 @@ clearchat
 goto referee
 wait 15
 talkto referee
-wait 120
+wait 66
 cmd kill @e[type=hxh:arena_fighter]
 wait 40
 expect Maître d'étage
