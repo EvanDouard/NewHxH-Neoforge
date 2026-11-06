@@ -483,9 +483,10 @@ cmd kill @e[type=hxh:arena_fighter]
 wait 40
 expect Maître d'étage
 shot 46_maitre_d_etage
+wait 100
 clearchat
 goto referee
-wait 15
+wait 40
 talkto referee
 wait 10
 expect plus personne dans cette Tour
