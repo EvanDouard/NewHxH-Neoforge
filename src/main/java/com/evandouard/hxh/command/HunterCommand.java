@@ -61,6 +61,7 @@ public final class HunterCommand {
                 .then(Commands.literal("exam").requires(src -> src.hasPermission(2))
                         .then(Commands.literal("setup").executes(ctx -> examSetup(ctx.getSource()))))
                 .then(arenaCommand())
+                .then(structureCommand())
                 .then(Commands.literal("quest").requires(src -> src.hasPermission(2))
                         .then(Commands.literal("reset").executes(ctx -> {
                             net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
@@ -237,6 +238,35 @@ public final class HunterCommand {
             HunterStats.get(e).addXp(stat, amount);
             HunterStats.applyAttributes(e);
         });
+    }
+
+    /**
+     * /hunter structure save &lt;nom&gt; &lt;coin1&gt; &lt;coin2&gt; : sauvegarde une zone de n'importe quelle taille en structure
+     * (le bloc de structure vanilla est limité à 48 × 48 × 48). Le fichier va dans generated/&lt;ns&gt;/structures/.
+     */
+    private static LiteralArgumentBuilder<CommandSourceStack> structureCommand() {
+        return Commands.literal("structure").requires(s -> s.hasPermission(2))
+                .then(Commands.literal("save")
+                        .then(Commands.argument("name", net.minecraft.commands.arguments.ResourceLocationArgument.id())
+                                .then(Commands.argument("from", net.minecraft.commands.arguments.coordinates.BlockPosArgument.blockPos())
+                                        .then(Commands.argument("to", net.minecraft.commands.arguments.coordinates.BlockPosArgument.blockPos())
+                                                .executes(ctx -> saveStructure(ctx.getSource(),
+                                                        net.minecraft.commands.arguments.ResourceLocationArgument.getId(ctx, "name"),
+                                                        net.minecraft.commands.arguments.coordinates.BlockPosArgument.getLoadedBlockPos(ctx, "from"),
+                                                        net.minecraft.commands.arguments.coordinates.BlockPosArgument.getLoadedBlockPos(ctx, "to")))))));
+    }
+
+    private static int saveStructure(CommandSourceStack source, net.minecraft.resources.ResourceLocation id,
+                                     net.minecraft.core.BlockPos a, net.minecraft.core.BlockPos b) {
+        net.minecraft.core.Vec3i size = com.evandouard.hxh.arena.StructureSaver.save(source.getLevel(), id, a, b);
+        if (size == null) {
+            source.sendFailure(Component.translatable("command.hxh.structure.failed", id.toString()));
+            return 0;
+        }
+        source.sendSuccess(() -> Component.translatable("command.hxh.structure.saved", id.toString(),
+                size.getX(), size.getY(), size.getZ(),
+                "generated/" + id.getNamespace() + "/structures/" + id.getPath() + ".nbt").withStyle(ChatFormatting.GREEN), true);
+        return 1;
     }
 
     /** /hunter arena : bilan pour tous ; entrer, sortir, combattre et régler l'étage pour les admins (tests). */

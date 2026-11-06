@@ -146,6 +146,24 @@ public final class ArenaTests {
     }
 
     @GameTest(template = "empty")
+    public static void bigStructureCanBeSaved(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos a = helper.absolutePos(new BlockPos(0, 1, 0));
+        // Plus grand que la limite de 48 du bloc de structure, en hauteur
+        BlockPos b = a.offset(2, 59, 2);
+        level.setBlock(a, net.minecraft.world.level.block.Blocks.GOLD_BLOCK.defaultBlockState(), 2);
+        level.setBlock(b, net.minecraft.world.level.block.Blocks.DIAMOND_BLOCK.defaultBlockState(), 2);
+        ResourceLocation id = ResourceLocation.parse("hxh:test/grande_structure");
+        net.minecraft.core.Vec3i size = com.evandouard.hxh.arena.StructureSaver.save(level, id, b, a);
+        helper.assertTrue(size != null && size.getY() == 60, "Zone de 3 × 60 × 3 sauvegardée, obtenu " + size);
+        level.setBlock(a, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 2);
+        level.setBlock(b, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 2);
+        var template = level.getStructureManager().get(id);
+        helper.assertTrue(template.isPresent() && template.get().getSize().getY() == 60, "La structure relue fait 60 de haut");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void duplicateNpcsAreRemoved(GameTestHelper helper) {
         BlockPos home = helper.absolutePos(new BlockPos(1, 1, 1)).offset(0, 1000, 0);
         for (int i = 0; i < 3; i++) {

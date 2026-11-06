@@ -602,5 +602,7 @@
   "screen.hxh.profile.hatsu": "Hatsu",
   "screen.hxh.profile.meditate": "Meditate",
   "screen.hxh.profile.ryu": "Ryu (distribution)",
-  "screen.hxh.profile.open_pores": "Open pores (target)"
+  "screen.hxh.profile.open_pores": "Open pores (target)",
+  "command.hxh.structure.saved": "Structure %s saved (%s × %s × %s) to %s",
+  "command.hxh.structure.failed": "Could not write structure %s."
 }
