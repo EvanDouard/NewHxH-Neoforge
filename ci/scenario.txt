@@ -514,8 +514,8 @@ clearchat
 cmd place structure hxh:heavens_arena_tower ~60 ~ ~-25
 wait 300
 expect a été générée
-cmd tp @s ~-40 ~30 ~
-look -90 -10
+cmd tp @s 15 -40 10
+look -90 -25
 wait 200
 shot 48b_tour_celeste_dans_le_monde
 key key.hxh.profile
