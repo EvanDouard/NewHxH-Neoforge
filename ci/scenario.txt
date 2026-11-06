@@ -399,7 +399,7 @@ useblock 2 0 0
 wait 20
 shot 39_ecran_ascenseur
 click 1–50
-wait 40
+wait 100
 shot 40_hall_etages_1_50
 clearchat
 goto referee
