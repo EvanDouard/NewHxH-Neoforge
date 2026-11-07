@@ -421,10 +421,10 @@ useblock 2 0 0
 wait 20
 shot 39_ecran_ascenseur
 click 101–150
-wait 100
+wait 160
 clearchat
 goto referee
-wait 15
+wait 30
 talkto referee
 wait 10
 expect Ton étage est le 1e
