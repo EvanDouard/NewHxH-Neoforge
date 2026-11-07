@@ -1,0 +1,5 @@
+{
+  "entity": "minecraft:zombie",
+  "stats": { "all": 35 },
+  "nen": { "level": 30, "kit": "gon", "mastery": 20 }
+}

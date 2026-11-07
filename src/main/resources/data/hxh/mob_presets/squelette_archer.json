@@ -1,0 +1,5 @@
+{
+  "entity": "minecraft:skeleton",
+  "stats": { "all": 15, "vitality": 25, "endurance": 25 },
+  "equipment": { "mainhand": "minecraft:bow" }
+}

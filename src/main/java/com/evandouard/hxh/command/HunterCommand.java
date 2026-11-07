@@ -23,6 +23,7 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -84,6 +85,20 @@ public final class HunterCommand {
                                             if (!ok) ctx.getSource().sendFailure(Component.translatable("command.hxh.quest_start_failed", id.toString()));
                                             return ok ? 1 : 0;
                                         }))))
+                // Mobs d'exemple (data/hxh/mob_presets) : /hunter spawn <nom> [position] [nombre]
+                .then(Commands.literal("spawn").requires(s -> s.hasPermission(2))
+                        .then(Commands.argument("preset", StringArgumentType.string())
+                                .suggests((c, b) -> SharedSuggestionProvider.suggest(
+                                        com.evandouard.hxh.mob.MobPresets.all().keySet().stream().map(ResourceLocation::getPath), b))
+                                .executes(ctx -> spawnPreset(ctx.getSource(), StringArgumentType.getString(ctx, "preset"),
+                                        ctx.getSource().getPosition(), 1))
+                                .then(Commands.argument("pos", net.minecraft.commands.arguments.coordinates.Vec3Argument.vec3())
+                                        .executes(ctx -> spawnPreset(ctx.getSource(), StringArgumentType.getString(ctx, "preset"),
+                                                net.minecraft.commands.arguments.coordinates.Vec3Argument.getVec3(ctx, "pos"), 1))
+                                        .then(Commands.argument("count", IntegerArgumentType.integer(1, 20))
+                                                .executes(ctx -> spawnPreset(ctx.getSource(), StringArgumentType.getString(ctx, "preset"),
+                                                        net.minecraft.commands.arguments.coordinates.Vec3Argument.getVec3(ctx, "pos"),
+                                                        IntegerArgumentType.getInteger(ctx, "count")))))))
                 // Joue une animation de combat sur des entités (tests, mise en scène)
                 .then(Commands.literal("anim").requires(s -> s.hasPermission(2))
                         .then(Commands.argument("targets", EntityArgument.entities())
@@ -113,6 +128,25 @@ public final class HunterCommand {
                         .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()), e -> resetAll(e)))
                         .then(Commands.argument("targets", EntityArgument.entities())
                                 .executes(ctx -> apply(ctx, EntityArgument.getEntities(ctx, "targets"), e -> resetAll(e))))));
+    }
+
+    private static int spawnPreset(CommandSourceStack source, String name, net.minecraft.world.phys.Vec3 pos, int count) {
+        com.evandouard.hxh.mob.MobPreset preset = com.evandouard.hxh.mob.MobPresets.get(name);
+        if (preset == null) {
+            source.sendFailure(Component.translatable("command.hxh.spawn_unknown", name,
+                    String.join(", ", com.evandouard.hxh.mob.MobPresets.all().keySet().stream().map(ResourceLocation::getPath).toList())));
+            return 0;
+        }
+        // Tourné vers celui qui lance la commande
+        float yaw = source.getEntity() != null ? source.getEntity().getYRot() + 180f : 0f;
+        int n = 0;
+        for (int i = 0; i < count; i++) {
+            net.minecraft.world.phys.Vec3 p = count == 1 ? pos : pos.add((i % 5) * 1.5 - 3, 0, (i / 5) * 1.5);
+            if (preset.spawn(source.getLevel(), p, yaw) != null) n++;
+        }
+        int spawned = n;
+        source.sendSuccess(() -> Component.translatable("command.hxh.spawned", spawned, Component.translatable(preset.nameKey())), true);
+        return n;
     }
 
     private static void resetAll(LivingEntity entity) {

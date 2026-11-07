@@ -654,5 +654,15 @@
   "dialog.hxh.navigator.other_center": "This exam center already failed you. Find another one.",
   "quest.hxh.arena_register_pending": "Register with the receptionist of floors %s",
   "message.hxh.arena_back_in_ring": "Out of the ring! Back to the centre — ring-outs no longer count here.",
-  "message.hxh.arena_items_stored": "Bare-handed fight: your items are kept until the fight ends."
+  "message.hxh.arena_items_stored": "Bare-handed fight: your items are kept until the fight ends.",
+  "mob_preset.hxh.zombie_costaud": "Brawny zombie",
+  "mob_preset.hxh.zombie_rapide": "Fast zombie",
+  "mob_preset.hxh.squelette_archer": "Skeleton archer",
+  "mob_preset.hxh.mannequin": "Training dummy",
+  "mob_preset.hxh.zombie_renforceur": "Enhancer zombie (Nen)",
+  "mob_preset.hxh.vindicateur_transmuteur": "Transmuter vindicator (Nen)",
+  "mob_preset.hxh.cochon_emetteur": "Emitter pig (Nen)",
+  "mob_preset.hxh.elite_manipulateur": "Elite manipulator (Nen)",
+  "command.hxh.spawned": "Spawned %s × %s",
+  "command.hxh.spawn_unknown": "Unknown example mob: %s. Available: %s"
 }

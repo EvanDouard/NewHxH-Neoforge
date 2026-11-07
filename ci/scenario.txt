@@ -159,6 +159,20 @@ shot 13g_frappe_chargee_vue_subjective
 wait 20
 look 0 0
 
+# --- Mobs d'exemple ---
+clearchat
+cmd hunter spawn mannequin ^-3 ^ ^5
+cmd hunter spawn elite_manipulateur ^ ^ ^6
+cmd hunter spawn squelette_archer ^3 ^ ^5
+wait 3
+expect apparu
+wait 5
+shot 13h_mobs_exemple
+cmd kill @e[type=minecraft:zombie,distance=..12]
+cmd kill @e[type=minecraft:husk,distance=..12]
+cmd kill @e[type=minecraft:skeleton,distance=..12]
+wait 10
+
 # --- Éveil 1 : un maître ouvre les pores du villageois en face ---
 cmd summon minecraft:villager ~ ~ ~3 {NoAI:1b}
 look 0 10

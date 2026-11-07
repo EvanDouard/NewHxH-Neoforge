@@ -1,0 +1,6 @@
+{
+  "entity": "minecraft:husk",
+  "stats": { "all": 80, "willpower": 90 },
+  "nen": { "level": 70, "kit": "illumi", "mastery": 60, "mode": "ten" },
+  "equipment": { "head": "minecraft:netherite_helmet", "chest": "minecraft:netherite_chestplate" }
+}

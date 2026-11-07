@@ -1,0 +1,6 @@
+{
+  "entity": "minecraft:zombie",
+  "stats": { "all": 0, "vitality": 90 },
+  "no_ai": true,
+  "knockback_resistance": 0.6
+}

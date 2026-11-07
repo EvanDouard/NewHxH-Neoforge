@@ -1,0 +1,4 @@
+{
+  "entity": "minecraft:zombie",
+  "stats": { "all": 5, "speed": 70, "strength": 15 }
+}

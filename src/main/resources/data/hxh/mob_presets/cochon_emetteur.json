@@ -1,0 +1,5 @@
+{
+  "entity": "minecraft:pig",
+  "stats": { "all": 25 },
+  "nen": { "level": 20, "kit": "leorio", "mastery": 12 }
+}
