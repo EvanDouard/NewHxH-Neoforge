@@ -420,7 +420,16 @@ wait 20
 useblock 2 0 0
 wait 20
 shot 39_ecran_ascenseur
-click 1–50
+click 101–150
+wait 100
+clearchat
+goto referee
+wait 15
+talkto referee
+wait 10
+expect Ton étage est le 1e
+shot 39b_arbitre_autre_etage_refuse
+cmd hunter arena goto 1
 wait 100
 shot 40_hall_etages_1_50
 clearchat
@@ -479,17 +488,26 @@ clearchat
 talkto receptionist
 wait 10
 expect Inscription au 200e étage validée
+cmd give @s diamond_sword
+cmd item replace entity @s armor.chest with diamond_chestplate
 goto referee
 wait 15
 talkto referee
 wait 100
 expect ton adversaire maîtrise le Nen
+expectnot éfaite
 camera back
 wait 10
-shot 45_combat_maitre_du_nen
+shot 45_combat_maitre_du_nen_sans_objets
 camera first
+cmd tp @s ~25 ~ ~
+wait 10
+shot 45b_sortie_de_ring_ignoree
+expectnot éfaite
 cmd kill @e[type=hxh:arena_fighter]
 wait 40
+expect Victoire
+shot 45c_objets_rendus
 cmd hunter arena floor 250
 cmd hunter arena register
 cmd hunter arena goto 250

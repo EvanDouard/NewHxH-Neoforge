@@ -149,7 +149,7 @@ public final class HxHConfig {
             .defineInRange("arena.fastWinBonus", 3, 0, 100);
 
     public static final ModConfigSpec.IntValue ARENA_WIN_STEP_ABOVE_200 = BUILDER
-            .comment("Tour Céleste : étages gagnés par victoire à partir du 200e")
+            .comment("Tour Céleste : étages gagnés par victoire à partir du 240e (avant : +10 jusqu'au 220e, puis +5)")
             .defineInRange("arena.winStepAbove200", 1, 1, 50);
 
     public static final ModConfigSpec.IntValue ARENA_LOSS_DROP_FIRST_BRACKET = BUILDER

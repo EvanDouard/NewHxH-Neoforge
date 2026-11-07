@@ -120,7 +120,10 @@ public final class Combat {
         double strength = attacker.hasData(ModAttachments.HUNTER) ? HunterStats.get(attacker).level(Stat.STRENGTH) : 0;
         double push = projection == Projection.HEAVY ? 2.0 + strength * 0.015 : 0.8;
         target.knockback(push, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
-        if (projection == Projection.HEAVY) target.setDeltaMovement(target.getDeltaMovement().add(0, 0.35, 0));
+        if (projection == Projection.HEAVY) {
+            double lift = 0.35 * (1.0 - target.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE));
+            if (lift > 0) target.setDeltaMovement(target.getDeltaMovement().add(0, lift, 0));
+        }
         target.hurtMarked = true;
     }
 

@@ -164,9 +164,10 @@ public final class NenClient {
         com.evandouard.hxh.network.QuestStatusPayload q = com.evandouard.hxh.network.QuestStatusPayload.latest;
         if (mc.options.hideGui || q.titleKey().isEmpty() || mc.screen != null) return;
         Component title = Component.translatable(q.titleKey());
+        Component stepText = q.stepArg().isEmpty() ? Component.translatable(q.stepKey()) : Component.translatable(q.stepKey(), q.stepArg());
         Component step = q.goal() > 0
-                ? Component.translatable("hud.hxh.quest_progress", Component.translatable(q.stepKey()), q.progress(), q.goal())
-                : Component.translatable(q.stepKey());
+                ? Component.translatable("hud.hxh.quest_progress", stepText, q.progress(), q.goal())
+                : stepText;
         int w = Math.max(mc.font.width(title), mc.font.width(step)) + 10;
         graphics.fill(4, 4, 4 + w, 30, 0x90000000);
         graphics.fill(4, 4, 6, 30, 0xFFFFD27F);

@@ -651,5 +651,8 @@
   "message.hxh.exam_failed": "Try again next year!",
   "message.hxh.exam_failed_detail": "You failed the Hunter Exam. Next session in one Minecraft day, at another exam center.",
   "dialog.hxh.navigator.next_year": "This year's exam is over for you. Next session in about %s min.",
-  "dialog.hxh.navigator.other_center": "This exam center already failed you. Find another one."
+  "dialog.hxh.navigator.other_center": "This exam center already failed you. Find another one.",
+  "quest.hxh.arena_register_pending": "Register with the receptionist of floors %s",
+  "message.hxh.arena_back_in_ring": "Out of the ring! Back to the centre — ring-outs no longer count here.",
+  "message.hxh.arena_items_stored": "Bare-handed fight: your items are kept until the fight ends."
 }

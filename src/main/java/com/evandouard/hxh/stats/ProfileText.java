@@ -147,6 +147,12 @@ public final class ProfileText {
 
     private static MutableComponent objective(QuestData d, Quest q, int stepIndex, int progressValue) {
         Quest.Step step = q.steps().get(stepIndex);
+        com.evandouard.hxh.arena.ArenaBracket pending = com.evandouard.hxh.quest.QuestManager.isArenaQuest(q)
+                ? com.evandouard.hxh.arena.ArenaManager.pendingRegistration(d) : null;
+        if (pending != null) {
+            return Component.translatable("profile.hxh.quests.objective",
+                    Component.translatable("quest.hxh.arena_register_pending", pending.label()));
+        }
         MutableComponent obj = Component.translatable("profile.hxh.quests.objective", Component.translatable(q.stepKey(step)));
         if (step.goal() > 0) {
             int progress = step.type().equals("follow") ? progressValue / 20

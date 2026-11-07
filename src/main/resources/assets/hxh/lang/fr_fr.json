@@ -651,5 +651,8 @@
   "message.hxh.exam_failed": "Retentez l'année prochaine !",
   "message.hxh.exam_failed_detail": "Tu as échoué à l'Examen Hunter. Prochaine session dans un jour Minecraft, et dans un autre centre d'examen.",
   "dialog.hxh.navigator.next_year": "L'examen de cette année est terminé pour toi. Prochaine session dans %s min environ.",
-  "dialog.hxh.navigator.other_center": "Ce centre d'examen t'a déjà recalé. Trouve-en un autre."
+  "dialog.hxh.navigator.other_center": "Ce centre d'examen t'a déjà recalé. Trouve-en un autre.",
+  "quest.hxh.arena_register_pending": "S'inscrire auprès de l'hôtesse des étages %s",
+  "message.hxh.arena_back_in_ring": "Hors du ring ! Retour au centre — ici, les sorties ne comptent plus.",
+  "message.hxh.arena_items_stored": "Combat à mains nues : vos objets sont gardés jusqu'à la fin du combat."
 }

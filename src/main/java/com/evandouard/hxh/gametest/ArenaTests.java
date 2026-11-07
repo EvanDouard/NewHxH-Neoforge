@@ -54,7 +54,13 @@ public final class ArenaTests {
         helper.assertTrue(ArenaRules.floorAfterWin(1, false) == 6, "Victoire : +5 étages");
         helper.assertTrue(ArenaRules.floorAfterWin(1, true) == 9, "Victoire rapide : +8 étages");
         helper.assertTrue(ArenaRules.floorAfterWin(197, true) == 200, "On ne saute pas le 200e étage");
-        helper.assertTrue(ArenaRules.floorAfterWin(203, true) == 204, "Au-delà du 200e : +1 étage");
+        helper.assertTrue(ArenaRules.floorAfterWin(200, false) == 210, "200e → 210e (+10)");
+        helper.assertTrue(ArenaRules.floorAfterWin(213, true) == 223, "Jusqu'au 220e : +10");
+        helper.assertTrue(ArenaRules.floorAfterWin(225, false) == 230, "Du 220e au 240e : +5");
+        helper.assertTrue(ArenaRules.floorAfterWin(243, false) == 244, "Après le 240e : +1");
+        helper.assertTrue(ArenaRules.opponentKnockbackResistance(10) < ArenaRules.opponentKnockbackResistance(150),
+                "Les adversaires encaissent mieux le recul en montant");
+        helper.assertTrue(ArenaRules.opponentKnockbackResistance(200) >= 1.0, "À partir du 200e : recul nul");
         helper.assertTrue(ArenaRules.floorAfterWin(250, false) == 251, "251e = Maître d'étage");
         helper.assertTrue(ArenaRules.floorAfterLoss(30) == 25, "1re tranche : −5 étages");
         helper.assertTrue(ArenaRules.floorAfterLoss(3) == 1, "Jamais sous le 1er étage");
@@ -204,8 +210,50 @@ public final class ArenaTests {
         d.setArenaRegistered(true);
         d.setRegisteredBracket(0);
         d.setArenaFloor(73);
-        helper.assertTrue(ArenaManager.maxLocation(player) == ArenaWorld.locationOfBracket(1), "Jusqu'au hall de sa tranche (51–100)");
+        helper.assertTrue(ArenaManager.maxLocation(player) == ArenaWorld.locationOfBracket(ArenaBrackets.count() - 1),
+                "Inscrit : l'ascenseur dessert tous les étages");
+        helper.assertTrue(ArenaManager.ownLocation(player) == ArenaWorld.locationOfBracket(1), "Son propre hall : 51–100");
+        ArenaBracket pending = ArenaManager.pendingRegistration(d);
+        helper.assertTrue(pending != null && pending.index() == 1, "Inscription 51–100 en attente");
+        d.setRegisteredBracket(1);
+        helper.assertTrue(ArenaManager.pendingRegistration(d) == null, "Plus rien en attente une fois inscrit");
+        d.setArenaFloor(200);
+        d.setRegisteredBracket(4);
+        helper.assertTrue(ArenaManager.pendingRegistration(d) != null, "Au 200e il faut l'inscription spéciale");
         helper.assertTrue("message.hxh.arena_not_inside".equals(ArenaManager.goTo(player, 1)), "L'ascenseur ne marche que dans la Tour");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void inventoryStashedDuringFight(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        player.getInventory().add(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND_SWORD));
+        player.getInventory().armor.set(3, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.IRON_HELMET));
+        QuestData d = QuestManager.data(player);
+        d.setArenaStash(player.getInventory().save(new net.minecraft.nbt.ListTag()));
+        player.getInventory().clearContent();
+        player.getInventory().add(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.APPLE));
+        ArenaManager.restoreInventory(player);
+        helper.assertTrue(player.getInventory().contains(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND_SWORD)),
+                "L'épée est rendue");
+        helper.assertTrue(player.getInventory().armor.get(3).is(net.minecraft.world.item.Items.IRON_HELMET), "Le casque est rendu");
+        helper.assertTrue(player.getInventory().contains(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.APPLE)),
+                "Ce qui a été obtenu entre-temps est gardé");
+        helper.assertTrue(d.arenaStash().isEmpty(), "Plus rien en réserve");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void fighterKnockbackGrowsWithFloor(GameTestHelper helper) {
+        ArenaFighterEntity low = helper.spawn(ModEntities.ARENA_FIGHTER.get(), new BlockPos(1, 1, 1));
+        ArenaFighterEntity high = helper.spawn(ModEntities.ARENA_FIGHTER.get(), new BlockPos(3, 1, 1));
+        low.configure(20, null);
+        high.configure(210, null);
+        double a = low.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE);
+        double b = high.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE);
+        helper.assertTrue(a < b && b >= 1.0, "Résistance au recul : 20e=" + a + ", 210e=" + b);
+        low.discard();
+        high.discard();
         helper.succeed();
     }
 

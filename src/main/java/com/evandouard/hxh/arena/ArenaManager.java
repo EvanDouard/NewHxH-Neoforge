@@ -76,6 +76,12 @@ public final class ArenaManager {
         bus.addListener(ServerTickEvent.Post.class, e -> tick(e.getServer()));
         bus.addListener(EventPriority.HIGHEST, LivingDeathEvent.class, ArenaManager::onDeath);
         bus.addListener(EventPriority.HIGH, LivingIncomingDamageEvent.class, ArenaManager::onDamage);
+        bus.addListener(net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent.Pre.class, e -> {
+            if (e.getPlayer() instanceof ServerPlayer p && inFight(p)) e.setCanPickup(net.neoforged.neoforge.common.util.TriState.FALSE);
+        });
+        bus.addListener(PlayerEvent.PlayerLoggedInEvent.class, e -> {
+            if (e.getEntity() instanceof ServerPlayer p && !inFight(p)) restoreInventory(p);
+        });
         bus.addListener(PlayerEvent.PlayerLoggedOutEvent.class, e -> {
             if (e.getEntity() instanceof ServerPlayer p) onLogout(p);
         });
@@ -212,10 +218,31 @@ public final class ArenaManager {
         return ArenaBrackets.forFloor(QuestManager.data(player).arenaFloor());
     }
 
-    /** Lieu le plus haut accessible : le hall de sa tranche (0 = hall d'entrée seulement, sans inscription). */
+    /**
+     * Lieu le plus haut accessible : tous les halls une fois inscrit (on peut aller regarder n'importe quel étage,
+     * seul l'arbitre de sa tranche lance son combat) ; sans inscription, le hall d'entrée seulement.
+     */
     public static int maxLocation(ServerPlayer player) {
         QuestData d = QuestManager.data(player);
-        return d.arenaRegistered() ? ArenaWorld.locationOfBracket(bracketOf(player).index()) : ArenaWorld.ENTRY;
+        return d.arenaRegistered() ? ArenaWorld.locationOfBracket(ArenaBrackets.count() - 1) : ArenaWorld.ENTRY;
+    }
+
+    /**
+     * Tranche où le joueur doit encore s'inscrire auprès de l'hôtesse avant que l'arbitre accepte un combat
+     * (null = rien en attente). Sert aussi au suivi de quête, pour que l'objectif affiché soit le même que le refus.
+     */
+    @org.jetbrains.annotations.Nullable
+    public static ArenaBracket pendingRegistration(QuestData d) {
+        if (!d.arenaRegistered() || ArenaBrackets.count() == 0) return null;
+        ArenaBracket mine = ArenaBrackets.forFloor(d.arenaFloor());
+        if (d.registeredBracket() < mine.index()) return mine;
+        if (d.arenaFloor() >= ArenaRules.NEN_FLOOR && !d.registered200()) return mine;
+        return null;
+    }
+
+    /** Hall de la tranche du joueur. */
+    public static int ownLocation(ServerPlayer player) {
+        return ArenaWorld.locationOfBracket(bracketOf(player).index());
     }
 
     /** Clic droit sur un ascenseur : ouvre le choix de la destination. */
@@ -230,7 +257,7 @@ public final class ArenaManager {
             return;
         }
         List<String> labels = new ArrayList<>();
-        for (int i = 0; i <= bracketOf(player).index(); i++) labels.add(ArenaBrackets.get(i).label());
+        for (int i = 0; i < ArenaBrackets.count(); i++) labels.add(ArenaBrackets.get(i).label());
         int here = ArenaWorld.inRoomZone(player.getX()) ? ROOM : Math.max(0, ArenaWorld.locationAt(player.blockPosition()));
         HxHNetwork.sendTo(player, new OpenElevatorPayload(labels, here, true));
     }
@@ -276,7 +303,7 @@ public final class ArenaManager {
 
     /** Retour au hall de sa tranche (après un combat). */
     private static void returnToHall(ServerPlayer player) {
-        if (goTo(player, maxLocation(player)) != null) toLobby(player);
+        if (goTo(player, ownLocation(player)) != null) toLobby(player);
     }
 
     // ---------- Hôtesse et arbitre ----------
@@ -308,6 +335,7 @@ public final class ArenaManager {
             }
         }
         QuestManager.startArenaQuestIfNew(player);
+        QuestManager.sync(player); // l'objectif « s'inscrire » disparaît du suivi
     }
 
     /** Réplique « au repos » des PNJ de la Tour, selon où en est le joueur (null = réplique par défaut). */
@@ -318,7 +346,7 @@ public final class ArenaManager {
         if (npc.npcId().equals("receptionist")) {
             if (master) return "dialog.hxh.receptionist.master";
             int loc = ArenaWorld.locationAt(npc.home());
-            if (loc > 0 && loc != maxLocation(player)) return "dialog.hxh.receptionist.other_floor";
+            if (loc > 0 && loc != ownLocation(player)) return "dialog.hxh.receptionist.other_floor";
             if (d.arenaFloor() >= ArenaRules.NEN_FLOOR && !d.registered200()) return "dialog.hxh.receptionist.need_nen";
         }
         return null;
@@ -400,6 +428,7 @@ public final class ArenaManager {
         Vec3 start = new Vec3(ps.getX() + 0.5, ps.getY(), ps.getZ() + 0.5);
         FIGHTS.put(player.getUUID(), new Fight(player.getUUID(), fighter.getUUID(), bracket.index(), floor, layout,
                 start, level.getGameTime() + COUNTDOWN_TICKS));
+        stashInventory(player);
         player.fallDistance = 0;
         player.teleportTo(level, start.x, start.y, start.z, playerYaw, 0f);
         player.setDeltaMovement(Vec3.ZERO);
@@ -407,6 +436,35 @@ public final class ArenaManager {
         say(player, floor >= ArenaRules.NEN_FLOOR ? "message.hxh.arena_fight_nen" : "message.hxh.arena_fight",
                 ChatFormatting.GOLD, floor);
         return null;
+    }
+
+    /** Combat à mains nues : armes, armures et objets sont mis de côté et rendus à la fin. */
+    private static void stashInventory(ServerPlayer player) {
+        QuestData d = QuestManager.data(player);
+        if (!d.arenaStash().isEmpty()) restoreInventory(player); // reste d'un combat interrompu
+        net.minecraft.nbt.ListTag stash = player.getInventory().save(new net.minecraft.nbt.ListTag());
+        if (stash.isEmpty()) return;
+        d.setArenaStash(stash);
+        player.getInventory().clearContent();
+        player.containerMenu.broadcastChanges();
+        player.displayClientMessage(Component.translatable("message.hxh.arena_items_stored").withStyle(ChatFormatting.GRAY), true);
+    }
+
+    /** Rend l'inventaire mis de côté (ce qui a été ramassé entre-temps est gardé ou lâché au sol). */
+    public static void restoreInventory(ServerPlayer player) {
+        QuestData d = QuestManager.data(player);
+        if (d.arenaStash().isEmpty()) return;
+        java.util.List<net.minecraft.world.item.ItemStack> extra = new java.util.ArrayList<>();
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            net.minecraft.world.item.ItemStack s = player.getInventory().getItem(i);
+            if (!s.isEmpty()) extra.add(s.copy());
+        }
+        player.getInventory().load(d.arenaStash());
+        d.setArenaStash(new net.minecraft.nbt.ListTag());
+        for (net.minecraft.world.item.ItemStack s : extra) {
+            if (!player.getInventory().add(s)) player.drop(s, false);
+        }
+        player.containerMenu.broadcastChanges();
     }
 
     private static Component refusal(String key) {
@@ -461,11 +519,25 @@ public final class ArenaManager {
                 if (fighter != null) fighter.setWaiting(false);
             }
             ArenaWorld.Layout l = fight.layout;
-            if (player.getY() < l.ringOutY() || !l.inRing(player.getX(), player.getZ())) {
+            boolean playerOut = player.getY() < l.ringOutY() || !l.inRing(player.getX(), player.getZ());
+            boolean fighterOut = fighter != null && fighter.isAlive() && (fighter.getY() < l.ringOutY() || !l.inRing(fighter.getX(), fighter.getZ()));
+            if (fight.floor >= ArenaRules.NO_RING_OUT_FROM && (playerOut || fighterOut)) {
+                // Au-delà du 200e, les sorties de ring ne comptent plus : retour sur le ring
+                if (playerOut) {
+                    player.connection.teleport(fight.start.x, fight.start.y, fight.start.z, player.getYRot(), player.getXRot());
+                    player.displayClientMessage(Component.translatable("message.hxh.arena_back_in_ring").withStyle(ChatFormatting.YELLOW), true);
+                }
+                if (fighterOut) {
+                    BlockPos os = l.opponentStart();
+                    fighter.teleportTo(os.getX() + 0.5, os.getY(), os.getZ() + 0.5);
+                }
+                continue;
+            }
+            if (playerOut) {
                 finish(server, fight, player, false, "ring_out", true);
             } else if (fighter == null || !fighter.isAlive()) {
                 finish(server, fight, player, true, "ko", true);
-            } else if (fighter.getY() < l.ringOutY() || !l.inRing(fighter.getX(), fighter.getZ())) {
+            } else if (fighterOut) {
                 finish(server, fight, player, true, "ring_out", true);
             } else if (now - fight.fightStart >= ArenaRules.FIGHT_TIME_LIMIT_TICKS) {
                 boolean win = player.getHealth() / player.getMaxHealth() >= fighter.getHealth() / fighter.getMaxHealth();
@@ -536,6 +608,7 @@ public final class ArenaManager {
         ServerLevel level = ArenaWorld.level(server);
         if (level != null && level.getEntity(fight.fighter) instanceof ArenaFighterEntity f) f.discard();
         if (player != null) {
+            restoreInventory(player);
             long elapsed = level == null ? Long.MAX_VALUE : level.getGameTime() - fight.fightStart;
             boolean fast = win && elapsed <= ArenaRules.FAST_WIN_TICKS;
             say(player, "message.hxh.arena_" + (win ? "win" : "loss") + "_" + reason,

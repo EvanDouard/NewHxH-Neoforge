@@ -119,6 +119,8 @@ public class ArenaFighterEntity extends PathfinderMob implements Enemy {
             data.setKit(kit.id());
         }
         HunterStats.applyAttributes(this);
+        var kb = getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+        if (kb != null) kb.setBaseValue(ArenaRules.opponentKnockbackResistance(floor));
         setHealth(getMaxHealth());
         setCustomName(Component.translatable(nen > 0 ? "entity.hxh.arena_fighter.nen" : "entity.hxh.arena_fighter.floor", floor));
         setCustomNameVisible(true);

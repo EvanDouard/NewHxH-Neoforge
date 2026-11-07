@@ -58,6 +58,17 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
+        // Deuxième joueur pour tester le multijoueur : ./gradlew runClient2 (pseudo « Joueur2 », dossier run-client2).
+        // Lancer runClient (pseudo « Dev ») ET runClient2, puis : Échap → Ouvrir au LAN dans le 1er,
+        // et Multijoueur → connexion directe « localhost:<port affiché> » dans le 2e. (Ou runServer + 2 clients sur localhost,
+        // avec online-mode=false dans run/server.properties.)
+        client2 {
+            client()
+            gameDirectory = project.file('run-client2')
+            programArguments.addAll('--username', 'Joueur2')
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
         server {
             server()
             programArgument '--nogui'

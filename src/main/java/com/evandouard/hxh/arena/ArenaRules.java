@@ -6,7 +6,8 @@ import com.evandouard.hxh.HxHConfig;
  * Règles chiffrées de la Tour Céleste.
  * <ul>
  *     <li>Sous le 200e : victoire = +5 étages (+3 si elle est rapide), sans jamais sauter le 200e.</li>
- *     <li>À partir du 200e : victoire = +1 étage, jusqu'au 251e (Maître d'étage).</li>
+ *     <li>À partir du 200e : victoire = +10 étages jusqu'au 220e, +5 jusqu'au 240e, puis +1 jusqu'au 251e
+ *         (Maître d'étage).</li>
  *     <li>Défaite : retour au dernier étage de la tranche d'en dessous, qu'il faut repasser ;
  *         dans la première tranche, −5 étages.</li>
  * </ul>
@@ -29,7 +30,16 @@ public final class ArenaRules {
             int step = HxHConfig.ARENA_WIN_STEP.get() + (fast ? HxHConfig.ARENA_FAST_WIN_BONUS.get() : 0);
             return Math.min(NEN_FLOOR, floor + step);
         }
-        return Math.min(TOP_FLOOR, floor + HxHConfig.ARENA_WIN_STEP_ABOVE_200.get());
+        int step = floor < 220 ? 10 : floor < 240 ? 5 : HxHConfig.ARENA_WIN_STEP_ABOVE_200.get();
+        return Math.min(TOP_FLOOR, floor + step);
+    }
+
+    /** À partir de ce étage, sortir du ring ne compte plus : on est remis sur le ring. */
+    public static final int NO_RING_OUT_FROM = NEN_FLOOR;
+
+    /** Résistance au recul des adversaires : grandit avec l'étage, totale à partir du 200e. */
+    public static double opponentKnockbackResistance(int floor) {
+        return floor >= NEN_FLOOR ? 1.0 : Math.min(0.9, floor / 220.0);
     }
 
     public static int floorAfterLoss(int floor) {

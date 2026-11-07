@@ -339,7 +339,7 @@ public final class QuestManager {
         int[] st = q == null ? null : d.running.get(q.id().toString());
         Quest.Step step = st == null || st[0] >= q.steps().size() ? null : q.steps().get(st[0]);
         if (q == null || step == null) {
-            com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload("", "", 0, 0));
+            com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload("", "", "", 0, 0));
             return;
         }
         int progress = switch (step.type()) {
@@ -347,6 +347,18 @@ public final class QuestManager {
             case "arena_floor" -> Math.min(d.arenaFloor, step.count());
             default -> st[1];
         };
-        com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.titleKey(), q.stepKey(step), progress, step.goal()));
+        // Inscription en attente : même objectif que le refus de l'arbitre
+        com.evandouard.hxh.arena.ArenaBracket pending = isArenaQuest(q) ? com.evandouard.hxh.arena.ArenaManager.pendingRegistration(d) : null;
+        if (pending != null) {
+            com.evandouard.hxh.network.HxHNetwork.sendTo(player,
+                    new QuestStatusPayload(q.titleKey(), "quest.hxh.arena_register_pending", pending.label(), 0, 0));
+            return;
+        }
+        com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.titleKey(), q.stepKey(step), "", progress, step.goal()));
+    }
+
+    /** Quête de la Tour Céleste (son objectif peut être remplacé par une inscription en attente). */
+    public static boolean isArenaQuest(Quest q) {
+        return q.id().getPath().equals("heavens_arena");
     }
 }

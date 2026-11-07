@@ -46,6 +46,8 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     int jenny = 0;
     /** Où renvoyer le joueur quand il quitte la Tour (dimension + position), vide = point d'apparition. */
     String returnDim = "";
+    /** Inventaire mis de côté pendant un combat de la Tour (vide = rien à rendre). */
+    net.minecraft.nbt.ListTag arenaStash = new net.minecraft.nbt.ListTag();
     double returnX, returnY, returnZ;
 
     /** Quête suivie (vide si aucune quête en cours). */
@@ -193,6 +195,14 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         addJenny(jennyGained);
     }
 
+    public net.minecraft.nbt.ListTag arenaStash() {
+        return arenaStash;
+    }
+
+    public void setArenaStash(net.minecraft.nbt.ListTag stash) {
+        arenaStash = stash;
+    }
+
     public void setReturnPoint(String dimension, double x, double y, double z) {
         returnDim = dimension;
         returnX = x;
@@ -258,6 +268,7 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         arena.putInt("losses", arenaLosses);
         arena.putInt("jenny", jenny);
         arena.putString("return_dim", returnDim);
+        arena.put("stash", arenaStash);
         arena.putDouble("return_x", returnX);
         arena.putDouble("return_y", returnY);
         arena.putDouble("return_z", returnZ);
@@ -296,6 +307,7 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         arenaLosses = arena.getInt("losses");
         jenny = arena.getInt("jenny");
         returnDim = arena.getString("return_dim");
+        arenaStash = arena.getList("stash", Tag.TAG_COMPOUND);
         returnX = arena.getDouble("return_x");
         returnY = arena.getDouble("return_y");
         returnZ = arena.getDouble("return_z");
