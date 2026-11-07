@@ -41,14 +41,28 @@ public final class QuestManager {
         return q == null || d.step >= q.steps().size() ? null : q.steps().get(d.step);
     }
 
-    /** Démarre une quête si elle n'est ni en cours ni déjà terminée. */
+    /** Applique {@code action} à chaque quête en cours (curseur placé dessus), puis revient sur la quête suivie. */
+    private static void forEachQuest(ServerPlayer player, java.util.function.Consumer<QuestData> action) {
+        QuestData d = data(player);
+        for (String id : new java.util.ArrayList<>(d.running.keySet())) {
+            if (!d.running.containsKey(id)) continue;
+            d.focus(id);
+            action.accept(d);
+            d.commit();
+        }
+        d.refocus();
+    }
+
+    /** Démarre une quête si elle n'est ni en cours ni déjà terminée. Elle devient suivie si rien ne l'était. */
     public static boolean start(ServerPlayer player, ResourceLocation questId) {
         QuestData d = data(player);
         Quest q = QuestRegistry.get(questId);
-        if (q == null || !d.active.isEmpty() || d.completed.contains(questId.toString())) return false;
-        d.active = questId.toString();
-        d.step = 0;
-        d.progress = 0;
+        String id = questId.toString();
+        if (q == null || d.running.containsKey(id) || d.completed.contains(id)) return false;
+        d.commit();
+        d.running.put(id, new int[]{0, 0});
+        if (d.tracked.isEmpty()) d.tracked = id;
+        d.refocus();
         player.sendSystemMessage(Component.translatable("message.hxh.quest_started",
                 Component.translatable(q.titleKey())).withStyle(ChatFormatting.GOLD));
         sync(player);
@@ -65,7 +79,7 @@ public final class QuestManager {
     public static void onTalk(ServerPlayer player, NpcEntity npc) {
         QuestData d = data(player);
         // Le Navigateur lance l'Examen Hunter
-        if (d.active.isEmpty() && npc.npcId().equals("navigator") && !d.hunter
+        if (npc.npcId().equals("navigator") && !d.hunter && !d.running.containsKey(QuestRegistry.HUNTER_EXAM.toString())
                 && !d.completed.contains(QuestRegistry.HUNTER_EXAM.toString())) {
             start(player, QuestRegistry.HUNTER_EXAM);
         }
@@ -78,28 +92,36 @@ public final class QuestManager {
         if (npc.npcId().equals("receptionist")) {
             com.evandouard.hxh.arena.ArenaManager.talkToReceptionist(player, npc);
         }
-        Quest q = activeQuest(d);
-        Quest.Step step = currentStep(d);
-        if (q != null && step != null && step.type().equals("talk") && step.npc().equals(npc.npcId())) {
-            say(player, npc, "dialog.hxh." + q.id().getPath() + "." + step.id());
-            advance(player);
-            return;
+        // Une seule réplique par clic : la quête suivie d'abord, puis les autres quêtes en cours
+        java.util.List<String> order = new java.util.ArrayList<>(d.runningQuests());
+        if (order.remove(d.tracked)) order.add(0, d.tracked);
+        for (String id : order) {
+            d.focus(id);
+            Quest q = activeQuest(d);
+            Quest.Step step = currentStep(d);
+            if (q != null && step != null && step.type().equals("talk") && step.npc().equals(npc.npcId())) {
+                say(player, npc, "dialog.hxh." + q.id().getPath() + "." + step.id());
+                advance(player);
+                d.refocus();
+                return;
+            }
         }
+        d.refocus();
         String idle = com.evandouard.hxh.arena.ArenaManager.idleDialog(player, npc);
         say(player, npc, idle != null ? idle : "dialog.hxh." + npc.npcId() + ".idle");
     }
 
-    /** La quête du guichet de la Tour Céleste démarre au premier passage (si aucune autre quête n'est en cours). */
+    /** La quête du guichet de la Tour Céleste démarre au premier passage. */
     public static void startArenaQuestIfNew(ServerPlayer player) {
-        QuestData d = data(player);
-        if (d.active.isEmpty() && !d.completed.contains(QuestRegistry.HEAVENS_ARENA.toString())) {
-            start(player, QuestRegistry.HEAVENS_ARENA);
-        }
+        start(player, QuestRegistry.HEAVENS_ARENA);
     }
 
     /** Un mob tué par le joueur. */
     public static void onKill(ServerPlayer player, Entity killed) {
-        QuestData d = data(player);
+        forEachQuest(player, d -> killStep(player, d, killed));
+    }
+
+    private static void killStep(ServerPlayer player, QuestData d, Entity killed) {
         Quest.Step step = currentStep(d);
         if (step == null || !step.type().equals("kill")) return;
         ResourceLocation type = EntityType.getKey(killed.getType());
@@ -111,7 +133,10 @@ public final class QuestManager {
 
     /** Résultat d'un combat de la Tour Céleste (étapes « gagner N combats »). */
     public static void onArenaResult(ServerPlayer player, boolean win) {
-        QuestData d = data(player);
+        forEachQuest(player, d -> arenaStep(player, d, win));
+    }
+
+    private static void arenaStep(ServerPlayer player, QuestData d, boolean win) {
         Quest.Step step = currentStep(d);
         if (step == null) return;
         if (step.type().equals("arena_win") && win) {
@@ -134,7 +159,11 @@ public final class QuestManager {
 
     /** Chaque tick : étape « suivre un PNJ » (et vérification de l'étage atteint, chaque seconde). */
     public static void tick(ServerPlayer player) {
-        QuestData d = data(player);
+        if (data(player).running.isEmpty()) return;
+        forEachQuest(player, d -> tickStep(player, d));
+    }
+
+    private static void tickStep(ServerPlayer player, QuestData d) {
         Quest.Step step = currentStep(d);
         if (step == null) return;
         if (step.type().equals("arena_floor") && player.tickCount % 20 == 0 && d.arenaFloor >= step.count()) {
@@ -188,6 +217,7 @@ public final class QuestManager {
         d.progress = 0;
         if (d.step >= q.steps().size()) {
             d.completed.add(d.active);
+            d.running.remove(d.active);
             d.active = "";
             d.step = 0;
             player.sendSystemMessage(Component.translatable("message.hxh.quest_completed",
@@ -222,16 +252,23 @@ public final class QuestManager {
     /** Envoie au client ce qu'il faut afficher dans le suivi de quête. */
     public static void sync(ServerPlayer player) {
         QuestData d = data(player);
-        Quest q = activeQuest(d);
-        Quest.Step step = currentStep(d);
+        d.commit();
+        // Toujours la quête suivie, même pendant le traitement d'une autre quête
+        ResourceLocation trackedId = ResourceLocation.tryParse(d.tracked);
+        if (!d.running.containsKey(d.tracked)) {
+            trackedId = d.running.isEmpty() ? null : ResourceLocation.tryParse(d.running.keySet().iterator().next());
+        }
+        Quest q = trackedId == null ? null : QuestRegistry.get(trackedId);
+        int[] st = q == null ? null : d.running.get(q.id().toString());
+        Quest.Step step = st == null || st[0] >= q.steps().size() ? null : q.steps().get(st[0]);
         if (q == null || step == null) {
             com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload("", "", 0, 0));
             return;
         }
         int progress = switch (step.type()) {
-            case "follow" -> d.progress / 20;
+            case "follow" -> st[1] / 20;
             case "arena_floor" -> Math.min(d.arenaFloor, step.count());
-            default -> d.progress;
+            default -> st[1];
         };
         com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.titleKey(), q.stepKey(step), progress, step.goal()));
     }

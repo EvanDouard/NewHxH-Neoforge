@@ -31,6 +31,7 @@ public class ProfileScreen extends Screen {
     /** Nouvelles données reçues pendant que l'écran est ouvert. */
     public void update(ProfilePayload newData) {
         this.data = newData;
+        rebuildWidgets();
     }
 
     private int panelW() {
@@ -49,35 +50,56 @@ public class ProfileScreen extends Screen {
             tabs.add(addRenderableWidget(Button.builder(Component.translatable(keys[i]), b -> select(index))
                     .bounds(left + i * (bw + 4), 28, bw, 20).build()));
         }
-        // Actions (2 lignes de 2) : Hatsu, méditation, Ryu, ouverture des pores de la cible visée
-        int aw = (w - 4) / 2;
-        int ay = height - 76;
-        net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
-        com.evandouard.hxh.data.HunterData hunter = mc.player.getData(com.evandouard.hxh.data.ModAttachments.HUNTER);
-        addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.hatsu"), b -> NenClient.openHatsuMenu(mc))
-                .bounds(left, ay, aw, 20).build());
-        addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.meditate"), b -> {
-            onClose();
-            NenClient.meditate();
-        }).bounds(left + aw + 4, ay, aw, 20).build());
-        Button ryu = addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.ryu"), b -> NenClient.openRyu(mc))
-                .bounds(left, ay + 24, aw, 20).build());
-        ryu.active = hunter.nenUnlocked();
-        Button pores = addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.open_pores"), b -> {
-            onClose();
-            NenClient.openPores();
-        }).bounds(left + aw + 4, ay + 24, aw, 20).build());
-        pores.active = hunter.nenUnlocked();
+        if (tab == 1) addTrackButtons(left, w);
+        else {
+            // Actions (2 lignes de 2) : Hatsu, méditation, Ryu, ouverture des pores de la cible visée
+            int aw = (w - 4) / 2;
+            int ay = height - 76;
+            net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+            com.evandouard.hxh.data.HunterData hunter = mc.player.getData(com.evandouard.hxh.data.ModAttachments.HUNTER);
+            addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.hatsu"), b -> NenClient.openHatsuMenu(mc))
+                    .bounds(left, ay, aw, 20).build());
+            addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.meditate"), b -> {
+                onClose();
+                NenClient.meditate();
+            }).bounds(left + aw + 4, ay, aw, 20).build());
+            Button ryu = addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.ryu"), b -> NenClient.openRyu(mc))
+                    .bounds(left, ay + 24, aw, 20).build());
+            ryu.active = hunter.nenUnlocked();
+            Button pores = addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.open_pores"), b -> {
+                onClose();
+                NenClient.openPores();
+            }).bounds(left + aw + 4, ay + 24, aw, 20).build());
+            pores.active = hunter.nenUnlocked();
+        }
         addRenderableWidget(Button.builder(Component.translatable("gui.done"), b -> onClose())
                 .bounds(width / 2 - 50, height - 28, 100, 20).build());
         select(tab);
     }
 
     private void select(int index) {
+        boolean changed = tab != index;
         tab = index;
         lastTab = index;
         scroll = 0;
         for (int i = 0; i < tabs.size(); i++) tabs.get(i).active = i != index;
+        if (changed) rebuildWidgets();
+    }
+
+    /** Onglet Quêtes : un bouton « Suivre » par autre quête en cours (jusqu'à 4). */
+    private void addTrackButtons(int left, int w) {
+        int aw = (w - 4) / 2;
+        int ay = height - 76;
+        int i = 0;
+        for (String id : data.runningQuests()) {
+            if (id.equals(data.trackedQuest()) || i >= 4) continue;
+            String path = id.contains(":") ? id.substring(id.indexOf(':') + 1) : id;
+            Component title = Component.translatable("quest.hxh." + path);
+            addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.track", title),
+                            b -> net.neoforged.neoforge.network.PacketDistributor.sendToServer(new com.evandouard.hxh.network.TrackQuestPayload(id)))
+                    .bounds(left + (i % 2) * (aw + 4), ay + (i / 2) * 24, aw, 20).build());
+            i++;
+        }
     }
 
     private List<Component> lines() {

@@ -583,14 +583,13 @@
   "screen.hxh.profile.tab_character": "Personnage",
   "screen.hxh.profile.tab_quests": "Quêtes",
   "screen.hxh.profile.tab_arena": "Tour Céleste",
-  "profile.hxh.quests.tracked": "Quête suivie",
+  "profile.hxh.quests.tracked": "Quête suivie (affichée à l'écran)",
   "profile.hxh.quests.none": "Aucune quête en cours.",
   "profile.hxh.quests.objective": "Objectif : %s",
   "profile.hxh.quests.step": "Étape %s sur %s",
   "profile.hxh.quests.others": "Autres quêtes",
   "profile.hxh.quests.done": "terminée",
   "profile.hxh.quests.not_started": "pas commencée",
-  "profile.hxh.quests.soon": "Bientôt : choisir la quête à suivre.",
   "profile.hxh.jenny": "Jenny : %s",
   "profile.hxh.hunter": "Licence de Hunter : %s",
   "profile.hxh.arena.title": "Tour Céleste",
@@ -632,5 +631,8 @@
   "item.hxh.dumbbell_3": "Haltères III",
   "block.hxh.treadmill_3": "Tapis de course III",
   "item.hxh.dumbbell_4": "Haltères IV",
-  "block.hxh.treadmill_4": "Tapis de course IV"
+  "block.hxh.treadmill_4": "Tapis de course IV",
+  "profile.hxh.quests.running": "Autres quêtes en cours",
+  "profile.hxh.quests.no_other": "Aucune autre quête en cours.",
+  "screen.hxh.profile.track": "Suivre : %s"
 }

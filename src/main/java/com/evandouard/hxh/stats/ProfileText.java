@@ -98,40 +98,62 @@ public final class ProfileText {
         return lines;
     }
 
-    /** Quête suivie, puis les autres quêtes (terminées ou pas encore commencées). */
+    /** Quête suivie, autres quêtes en cours, puis quêtes terminées ou pas encore commencées. */
     public static List<Component> quests(ServerPlayer player) {
         QuestData d = QuestManager.data(player);
         List<Component> lines = new ArrayList<>();
-        Quest active = d.active().isEmpty() ? null : QuestRegistry.get(ResourceLocation.parse(d.active()));
+        List<String> running = d.runningQuests();
         lines.add(Component.translatable("profile.hxh.quests.tracked").withStyle(ChatFormatting.GOLD));
-        if (active == null || d.step() >= active.steps().size()) {
+        Quest tracked = d.active().isEmpty() ? null : QuestRegistry.get(ResourceLocation.parse(d.active()));
+        if (tracked == null || d.step() >= tracked.steps().size()) {
             lines.add(Component.translatable("profile.hxh.quests.none").withStyle(ChatFormatting.GRAY));
         } else {
-            Quest.Step step = active.steps().get(d.step());
-            lines.add(Component.translatable(active.titleKey()).withStyle(ChatFormatting.YELLOW));
-            MutableComponent obj = Component.translatable("profile.hxh.quests.objective", Component.translatable(active.stepKey(step)));
-            if (step.goal() > 0) {
-                int progress = step.type().equals("follow") ? d.progress() / 20
-                        : step.type().equals("arena_floor") ? Math.min(d.arenaFloor(), step.count()) : d.progress();
-                obj.append(Component.literal(" (" + progress + "/" + step.goal() + ")"));
-            }
-            lines.add(obj);
-            lines.add(Component.translatable("profile.hxh.quests.step", d.step() + 1, active.steps().size()).withStyle(ChatFormatting.GRAY));
+            lines.add(Component.translatable(tracked.titleKey()).withStyle(ChatFormatting.YELLOW));
+            lines.add(objective(d, tracked, d.step(), d.progress()));
+            lines.add(Component.translatable("profile.hxh.quests.step", d.step() + 1, tracked.steps().size()).withStyle(ChatFormatting.GRAY));
         }
+        lines.add(Component.empty());
+        lines.add(Component.translatable("profile.hxh.quests.running").withStyle(ChatFormatting.GOLD));
+        boolean any = false;
+        for (String id : running) {
+            if (tracked != null && id.equals(tracked.id().toString())) continue;
+            Quest q = QuestRegistry.get(ResourceLocation.parse(id));
+            if (q == null) continue;
+            any = true;
+            int[] st = runningState(d, id);
+            lines.add(Component.literal("• ").withStyle(ChatFormatting.AQUA).append(Component.translatable(q.titleKey()).withStyle(ChatFormatting.WHITE)));
+            if (st[0] < q.steps().size()) lines.add(Component.literal("   ").append(objective(d, q, st[0], st[1])).withStyle(ChatFormatting.GRAY));
+        }
+        if (!any) lines.add(Component.translatable("profile.hxh.quests.no_other").withStyle(ChatFormatting.DARK_GRAY));
         lines.add(Component.empty());
         lines.add(Component.translatable("profile.hxh.quests.others").withStyle(ChatFormatting.GOLD));
         for (Quest q : QuestRegistry.all()) {
-            if (active != null && q.id().equals(active.id())) continue;
-            boolean done = d.isCompleted(q.id().toString());
+            String id = q.id().toString();
+            if (running.contains(id)) continue;
+            boolean done = d.isCompleted(id);
             lines.add(Component.literal(done ? "✔ " : "• ").withStyle(done ? ChatFormatting.GREEN : ChatFormatting.GRAY)
                     .append(Component.translatable(q.titleKey()).withStyle(ChatFormatting.WHITE))
                     .append(Component.literal("  "))
                     .append(Component.translatable(done ? "profile.hxh.quests.done" : "profile.hxh.quests.not_started")
                             .withStyle(ChatFormatting.DARK_GRAY)));
         }
-        lines.add(Component.empty());
-        lines.add(Component.translatable("profile.hxh.quests.soon").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
         return lines;
+    }
+
+    private static int[] runningState(QuestData d, String id) {
+        int[] st = d.stateOf(id);
+        return st == null ? new int[]{0, 0} : st;
+    }
+
+    private static MutableComponent objective(QuestData d, Quest q, int stepIndex, int progressValue) {
+        Quest.Step step = q.steps().get(stepIndex);
+        MutableComponent obj = Component.translatable("profile.hxh.quests.objective", Component.translatable(q.stepKey(step)));
+        if (step.goal() > 0) {
+            int progress = step.type().equals("follow") ? progressValue / 20
+                    : step.type().equals("arena_floor") ? Math.min(d.arenaFloor(), step.count()) : progressValue;
+            obj.append(Component.literal(" (" + progress + "/" + step.goal() + ")"));
+        }
+        return obj;
     }
 
     /** Tour Céleste et Jenny. */

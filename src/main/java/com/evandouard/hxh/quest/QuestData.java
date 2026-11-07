@@ -11,14 +11,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Progression des quêtes d'un joueur : la quête en cours, son étape, la progression de l'étape,
- * les quêtes terminées, et le statut de Hunter (licence obtenue).
+ * Progression des quêtes d'un joueur : les quêtes en cours (plusieurs à la fois, chacune avec son étape et sa
+ * progression), la quête suivie (affichée à l'écran), les quêtes terminées, le statut de Hunter, la Tour Céleste.
+ * <p>
+ * {@link #active}, {@link #step} et {@link #progress} forment un « curseur » sur une des quêtes en cours :
+ * {@link #focus} le place, {@link #commit} enregistre ce qu'il contient. Au repos, il est sur la quête suivie.
  */
 public final class QuestData implements INBTSerializable<CompoundTag> {
     String active = "";
     int step = 0;
     /** Mobs tués, ou ticks passés à suivre le PNJ, selon l'étape. */
     int progress = 0;
+    /** Quêtes en cours : identifiant → {étape, progression}, dans l'ordre où elles ont commencé. */
+    final java.util.LinkedHashMap<String, int[]> running = new java.util.LinkedHashMap<>();
+    /** Quête suivie (affichée à l'écran), vide si aucune. */
+    String tracked = "";
     final Set<String> completed = new HashSet<>();
     boolean hunter = false;
 
@@ -36,8 +43,60 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     String returnDim = "";
     double returnX, returnY, returnZ;
 
+    /** Quête suivie (vide si aucune quête en cours). */
     public String active() {
         return active;
+    }
+
+    /** Quêtes en cours, dans l'ordre où elles ont commencé. */
+    public java.util.List<String> runningQuests() {
+        commit();
+        return java.util.List.copyOf(running.keySet());
+    }
+
+    /** {étape, progression} d'une quête en cours, ou null. */
+    public int[] stateOf(String questId) {
+        commit();
+        int[] st = running.get(questId);
+        return st == null ? null : st.clone();
+    }
+
+    public boolean isRunning(String questId) {
+        return running.containsKey(questId);
+    }
+
+    public String tracked() {
+        return tracked;
+    }
+
+    /** Suit une autre quête en cours ; renvoie false si elle n'est pas en cours. */
+    public boolean track(String questId) {
+        commit();
+        if (!running.containsKey(questId)) return false;
+        tracked = questId;
+        focus(questId);
+        return true;
+    }
+
+    /** Place le curseur sur une quête en cours. */
+    void focus(String questId) {
+        commit();
+        int[] state = running.get(questId);
+        active = state == null ? "" : questId;
+        step = state == null ? 0 : state[0];
+        progress = state == null ? 0 : state[1];
+    }
+
+    /** Enregistre le curseur dans la quête qu'il désigne (si elle est toujours en cours). */
+    void commit() {
+        if (!active.isEmpty() && running.containsKey(active)) running.put(active, new int[]{step, progress});
+    }
+
+    /** Remet le curseur sur la quête suivie (ou la première en cours si la quête suivie est finie). */
+    void refocus() {
+        commit();
+        if (!running.containsKey(tracked)) tracked = running.isEmpty() ? "" : running.keySet().iterator().next();
+        focus(tracked);
     }
 
     public int step() {
@@ -132,6 +191,8 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     }
 
     public void reset() {
+        running.clear();
+        tracked = "";
         active = "";
         step = 0;
         progress = 0;
@@ -149,9 +210,17 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     @Override
     public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
-        tag.putString("active", active);
-        tag.putInt("step", step);
-        tag.putInt("progress", progress);
+        commit();
+        ListTag quests = new ListTag();
+        running.forEach((id, st) -> {
+            CompoundTag q = new CompoundTag();
+            q.putString("id", id);
+            q.putInt("step", st[0]);
+            q.putInt("progress", st[1]);
+            quests.add(q);
+        });
+        tag.put("running", quests);
+        tag.putString("tracked", tracked);
         tag.putBoolean("hunter", hunter);
         ListTag done = new ListTag();
         for (String id : completed) done.add(StringTag.valueOf(id));
@@ -174,9 +243,20 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
 
     @Override
     public void deserializeNBT(HolderLookup.Provider provider, CompoundTag tag) {
-        active = tag.getString("active");
-        step = tag.getInt("step");
-        progress = tag.getInt("progress");
+        running.clear();
+        for (Tag t : tag.getList("running", Tag.TAG_COMPOUND)) {
+            CompoundTag q = (CompoundTag) t;
+            running.put(q.getString("id"), new int[]{q.getInt("step"), q.getInt("progress")});
+        }
+        tracked = tag.getString("tracked");
+        // Ancien format : une seule quête en cours
+        String legacy = tag.getString("active");
+        if (!legacy.isEmpty() && !running.containsKey(legacy)) {
+            running.put(legacy, new int[]{tag.getInt("step"), tag.getInt("progress")});
+            if (tracked.isEmpty()) tracked = legacy;
+        }
+        active = "";
+        refocus();
         hunter = tag.getBoolean("hunter");
         completed.clear();
         for (Tag t : tag.getList("completed", Tag.TAG_STRING)) completed.add(t.getAsString());

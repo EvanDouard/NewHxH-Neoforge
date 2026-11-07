@@ -14,7 +14,8 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import java.util.List;
 
 /** Serveur → client : contenu des onglets du carnet de Hunter. */
-public record ProfilePayload(List<Component> character, List<Component> quests, List<Component> arena)
+public record ProfilePayload(List<Component> character, List<Component> quests, List<Component> arena,
+                             List<String> runningQuests, String trackedQuest)
         implements CustomPacketPayload {
     public static final Type<ProfilePayload> TYPE = new Type<>(HxHMod.id("profile"));
 
@@ -25,10 +26,14 @@ public record ProfilePayload(List<Component> character, List<Component> quests, 
             LINES, ProfilePayload::character,
             LINES, ProfilePayload::quests,
             LINES, ProfilePayload::arena,
+            ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()), ProfilePayload::runningQuests,
+            ByteBufCodecs.STRING_UTF8, ProfilePayload::trackedQuest,
             ProfilePayload::new);
 
     public static ProfilePayload of(ServerPlayer player) {
-        return new ProfilePayload(ProfileText.statsAndNen(player), ProfileText.quests(player), ProfileText.arena(player));
+        var d = com.evandouard.hxh.quest.QuestManager.data(player);
+        return new ProfilePayload(ProfileText.statsAndNen(player), ProfileText.quests(player), ProfileText.arena(player),
+                d.runningQuests(), d.active());
     }
 
     @Override

@@ -99,4 +99,30 @@ public final class QuestTests {
         helper.assertTrue(d.progress() == 0, "Distancé : le marathon repart de zéro");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void questsRunInParallelAndCanBeTracked(GameTestHelper helper) {
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.quest.QuestData d = com.evandouard.hxh.quest.QuestManager.data(player);
+        String exam = com.evandouard.hxh.quest.QuestRegistry.HUNTER_EXAM.toString();
+        String arena = com.evandouard.hxh.quest.QuestRegistry.HEAVENS_ARENA.toString();
+        com.evandouard.hxh.quest.QuestManager.start(player, com.evandouard.hxh.quest.QuestRegistry.HUNTER_EXAM);
+        helper.assertTrue(com.evandouard.hxh.quest.QuestManager.start(player, com.evandouard.hxh.quest.QuestRegistry.HEAVENS_ARENA),
+                "Une 2e quête peut démarrer pendant la 1re");
+        helper.assertTrue(d.runningQuests().size() == 2, "Deux quêtes en cours");
+        helper.assertTrue(exam.equals(d.active()), "La 1re quête reste suivie");
+
+        // La quête de la Tour avance même si elle n'est pas suivie
+        com.evandouard.hxh.npc.NpcEntity hostess = helper.spawn(com.evandouard.hxh.registry.ModEntities.NPC.get(), new net.minecraft.core.BlockPos(1, 1, 1));
+        hostess.setNpcId("receptionist");
+        hostess.setNoGravity(true);
+        com.evandouard.hxh.quest.QuestManager.onTalk(player, hostess);
+        helper.assertTrue(d.stateOf(arena)[0] == 1, "L'étape « parler à l'hôtesse » de la quête non suivie est validée");
+        helper.assertTrue(exam.equals(d.active()) && d.step() == 0, "La quête suivie n'a pas bougé");
+
+        helper.assertTrue(d.track(arena), "On peut suivre l'autre quête");
+        helper.assertTrue(arena.equals(d.active()) && d.step() == 1, "Le curseur suit la quête de la Tour");
+        helper.assertTrue(!d.track("hxh:inconnue"), "Impossible de suivre une quête qui n'est pas en cours");
+        helper.succeed();
+    }
 }
