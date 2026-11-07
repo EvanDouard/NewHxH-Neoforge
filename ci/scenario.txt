@@ -552,9 +552,9 @@ cmd give @s hxh:dumbbell_4
 cmd tp @s 3.5 -60 59.5 0 35
 wait 40
 shot 48c_objets_entrainement
-cmd setblock 1 -60 58 hxh:marker_npc
-cmd setblock 3 -60 58 hxh:marker_waypoint
-cmd setblock 5 -60 58 hxh:marker_prey
+cmd setblock 1 -60 64 hxh:marker_npc
+cmd setblock 3 -60 64 hxh:marker_waypoint
+cmd setblock 5 -60 64 hxh:marker_prey
 wait 20
 shot 48d_reperes_examen
 cmd hunter quest reset
