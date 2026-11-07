@@ -1,5 +1,14 @@
 {
   "entity": "minecraft:zombie",
-  "stats": { "all": 35 },
-  "nen": { "level": 30, "kit": "gon", "mastery": 20 }
+  "stats": {
+    "all": 35
+  },
+  "nen": {
+    "level": 30,
+    "kit": "gon",
+    "mastery": 20
+  },
+  "equipment": {
+    "head": "minecraft:golden_helmet"
+  }
 }

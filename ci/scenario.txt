@@ -172,7 +172,7 @@ cmd execute if entity @e[type=minecraft:husk,distance=..10]
 wait 5
 expect Test réussi
 shot 13h_mobs_exemple
-cmd kill @e[type=minecraft:zombie,distance=..12]
+cmd kill @e[type=minecraft:husk,distance=..12]
 cmd kill @e[type=minecraft:husk,distance=..12]
 cmd kill @e[type=minecraft:skeleton,distance=..12]
 cmd difficulty peaceful

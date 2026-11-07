@@ -1,4 +1,11 @@
 {
   "entity": "minecraft:zombie",
-  "stats": { "all": 5, "speed": 70, "strength": 15 }
+  "stats": {
+    "all": 5,
+    "speed": 70,
+    "strength": 15
+  },
+  "equipment": {
+    "head": "minecraft:leather_helmet"
+  }
 }
