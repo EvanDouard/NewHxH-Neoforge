@@ -82,6 +82,18 @@ public final class QuestManager {
     /** Ticks passés trop loin du PNJ à suivre (par joueur). */
     private static final java.util.Map<java.util.UUID, Integer> LOST_TICKS = new java.util.HashMap<>();
 
+    /** Un tick passé trop loin du guide : avertit, et renvoie true quand la limite est atteinte. */
+    private static boolean fallBehind(ServerPlayer player) {
+        int lost = LOST_TICKS.merge(player.getUUID(), 1, Integer::sum);
+        int limit = com.evandouard.hxh.HxHConfig.EXAM_LOST_SECONDS.get() * 20;
+        if (lost >= limit) return true;
+        if (lost % 20 == 1) {
+            player.displayClientMessage(Component.translatable("message.hxh.quest_left_behind", (limit - lost) / 20 + 1)
+                    .withStyle(ChatFormatting.RED), true);
+        }
+        return false;
+    }
+
     /**
      * Examen raté (distancé au marathon…) : l'examen s'arrête, le prochain essai sera dans un jour Minecraft
      * et dans un autre centre d'examen.
@@ -209,7 +221,11 @@ public final class QuestManager {
         }
         if (!step.type().equals("follow")) return;
         NpcEntity npc = findNpc(player, step.npc(), 96);
-        if (npc == null) return;
+        if (npc == null) {
+            // Hors de portée : c'est être distancé
+            if (fallBehind(player)) failExam(player);
+            return;
+        }
         // Vitesse réglable (≈ Vitesse I par défaut) : le modificateur de déplacement agit au carré chez les mobs
         double attr = npc.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
         double speed = Math.sqrt(com.evandouard.hxh.HxHConfig.EXAM_MARATHON_SPEED.get()) / Math.max(0.01, attr);
@@ -244,18 +260,10 @@ public final class QuestManager {
                 advance(player);
                 return;
             }
-        } else {
-            int lost = LOST_TICKS.merge(player.getUUID(), 1, Integer::sum);
-            int limit = com.evandouard.hxh.HxHConfig.EXAM_LOST_SECONDS.get() * 20;
-            if (lost >= limit) {
-                npc.resetRoute();
-                failExam(player);
-                return;
-            }
-            if (lost % 20 == 1) {
-                player.displayClientMessage(Component.translatable("message.hxh.quest_left_behind", (limit - lost) / 20 + 1)
-                        .withStyle(ChatFormatting.RED), true);
-            }
+        } else if (fallBehind(player)) {
+            npc.resetRoute();
+            failExam(player);
+            return;
         }
         if (player.tickCount % 20 == 0) sync(player);
     }
