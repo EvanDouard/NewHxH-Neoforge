@@ -119,19 +119,30 @@ expect Soin par le Nen : niveau
 
 # --- Animations de combat (mains nues) ---
 cmd item replace entity @s weapon.mainhand with air
-camera front
-wait 5
-cmd hunter anim @s charge
-wait 14
-shot 13b_anim_frappe_armee
-cmd hunter anim @s charged_punch
-wait 3
-shot 13c_anim_frappe_chargee
-wait 15
-cmd hunter anim @s punch_off
+cmd summon hxh:npc ~3 ~ ~ {npc:"cook",NoAI:1b,Rotation:[180f,0f],Tags:["anim_ci"]}
+look -90 0
+wait 20
+clearchat
+cmd hunter anim @e[tag=anim_ci] punch_main
 wait 2
-shot 13d_anim_poing_gauche
-wait 10
+shot 13a_anim_poing_droit_pnj
+wait 15
+cmd hunter anim @e[tag=anim_ci] punch_off
+wait 2
+shot 13b_anim_poing_gauche_pnj
+wait 15
+cmd hunter anim @e[tag=anim_ci] charge
+wait 14
+shot 13c_anim_frappe_armee_pnj
+cmd hunter anim @e[tag=anim_ci] charged_punch
+wait 3
+shot 13d_anim_frappe_chargee_pnj
+wait 15
+cmd hunter anim @e[tag=anim_ci] kick
+wait 4
+shot 13d2_anim_coup_de_pied_pnj
+wait 15
+cmd kill @e[tag=anim_ci]
 camera first
 look 0 -35
 wait 5
