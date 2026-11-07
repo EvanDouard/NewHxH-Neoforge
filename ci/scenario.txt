@@ -162,6 +162,7 @@ look 0 0
 # --- Mobs d'exemple ---
 clearchat
 look 0 10
+cmd difficulty easy
 cmd hunter spawn mannequin ~3 ~ ~5
 cmd hunter spawn elite_manipulateur ~ ~ ~6
 cmd hunter spawn squelette_archer ~-3 ~ ~5
@@ -174,6 +175,7 @@ shot 13h_mobs_exemple
 cmd kill @e[type=minecraft:zombie,distance=..12]
 cmd kill @e[type=minecraft:husk,distance=..12]
 cmd kill @e[type=minecraft:skeleton,distance=..12]
+cmd difficulty peaceful
 wait 10
 
 # --- Éveil 1 : un maître ouvre les pores du villageois en face ---
