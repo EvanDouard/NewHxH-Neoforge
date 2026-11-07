@@ -64,6 +64,8 @@ public final class NenClient {
                 e -> {
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NPC.get(), NpcRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.ARENA_FIGHTER.get(), ArenaFighterRenderer::new);
+                    e.registerBlockEntityRenderer(com.evandouard.hxh.registry.ModBlockEntities.MARKER.get(),
+                            com.evandouard.hxh.marker.MarkerLabelRenderer::new);
                 });
         NeoForge.EVENT_BUS.addListener(NenClient::onClientTick);
     }

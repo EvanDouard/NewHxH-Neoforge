@@ -27,6 +27,7 @@ public final class HxHMod {
     public HxHMod(IEventBus modEventBus, ModContainer modContainer) {
         ModBlocks.BLOCKS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
+        com.evandouard.hxh.registry.ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModCreativeTabs.TABS.register(modEventBus);
         ModAttachments.TYPES.register(modEventBus);
         com.evandouard.hxh.effect.ModEffects.EFFECTS.register(modEventBus);

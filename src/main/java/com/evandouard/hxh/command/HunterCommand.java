@@ -380,6 +380,18 @@ public final class HunterCommand {
             npc.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
             npc.setNpcId(npcs[i]);
             npc.setHome(pos);
+            if (npcs[i].equals("satotz")) {
+                // Parcours de démonstration : une boucle de 8 points autour du site, qui revient près du départ
+                java.util.List<net.minecraft.core.BlockPos> route = new java.util.ArrayList<>();
+                for (int k = 1; k <= 8; k++) {
+                    double a = k * Math.PI / 4;
+                    int x = (int) Math.round(Math.cos(a) * 14), z = (int) Math.round(Math.sin(a) * 14);
+                    net.minecraft.core.BlockPos p = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                            pos.offset(x - 14, 0, z));
+                    route.add(p);
+                }
+                npc.setRoute(route);
+            }
             level.addFreshEntity(npc);
         }
         for (int i = 0; i < 3; i++) {

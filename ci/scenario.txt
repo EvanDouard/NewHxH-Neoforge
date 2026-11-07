@@ -357,6 +357,26 @@ goto satotz
 talkto satotz
 wait 10
 expect Satotz
+cmd tp @s ~80 ~ ~
+wait 160
+expect Retentez l'année prochaine
+shot 34b_examen_rate
+goto navigator
+clearchat
+talkto navigator
+wait 10
+expect Prochaine session
+cmd hunter quest reset
+clearchat
+goto navigator
+talkto navigator
+wait 10
+goto beans
+talkto beans
+wait 10
+goto satotz
+talkto satotz
+wait 10
 cmd hunter quest skip
 goto buhara
 talkto buhara
@@ -532,6 +552,11 @@ cmd give @s hxh:dumbbell_4
 cmd tp @s 3.5 -60 59.5 0 35
 wait 40
 shot 48c_objets_entrainement
+cmd setblock 1 -60 58 hxh:marker_npc
+cmd setblock 3 -60 58 hxh:marker_waypoint
+cmd setblock 5 -60 58 hxh:marker_prey
+wait 20
+shot 48d_reperes_examen
 cmd hunter quest reset
 cmd hunter quest start hxh:hunter_exam
 cmd hunter quest start hxh:heavens_arena

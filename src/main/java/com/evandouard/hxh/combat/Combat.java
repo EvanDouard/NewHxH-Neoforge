@@ -29,7 +29,7 @@ import java.util.WeakHashMap;
  * Combat au corps à corps, pour joueurs et mobs :
  * <ul>
  *     <li>combos : enchaîner les coups sur la même cible (+5 % par coup, 5e coup = coup final qui projette) ;</li>
- *     <li>coup de pied (appui court sur la touche Frappe) : gros recul, petite recharge ;</li>
+ *     <li>coup de pied (appui court sur la touche Frappe) : petite recharge ;</li>
  *     <li>frappe chargée (maintien) : une barre monte et descend, relâcher au sommet = frappe parfaite,
  *         trop bas = frappe ratée ;</li>
  *     <li>peur : face à un ennemi bien plus puissant qui déploie son aura (Ren, Ken), on est ralenti et affaibli.</li>
@@ -88,6 +88,42 @@ public final class Combat {
 
     // ---------- Coup de pied et frappe chargée ----------
 
+    /** Projection d'un coup de pied ou d'une frappe chargée. */
+    public enum Projection { NONE, LIGHT, HEAVY }
+
+    /** Charge du coup : pas chargé (coup de pied), chargé hors de la meilleure zone, chargé dans la meilleure zone. */
+    public enum Charge { NONE, GOOD, PERFECT }
+
+    /** « Fort » : Force au moins égale au seuil de la config ({@code combat.strongFromStrength}). */
+    public static boolean isStrong(LivingEntity attacker) {
+        return attacker.hasData(ModAttachments.HUNTER)
+                && HunterStats.get(attacker).level(Stat.STRENGTH) >= com.evandouard.hxh.HxHConfig.COMBAT_STRONG_FROM.get();
+    }
+
+    /**
+     * Tableau des projections :
+     * <pre>
+     *                     pas fort   fort
+     * pas chargé          aucune     légère
+     * chargé (bon)        aucune     légère
+     * chargé (parfait)    légère     grosse
+     * </pre>
+     */
+    public static Projection projection(boolean strong, Charge charge) {
+        if (charge == Charge.PERFECT) return strong ? Projection.HEAVY : Projection.LIGHT;
+        return strong ? Projection.LIGHT : Projection.NONE;
+    }
+
+    /** Applique la projection : légère = petit recul, grosse = envol (un peu plus fort avec la Force). */
+    private static void project(LivingEntity attacker, LivingEntity target, Projection projection) {
+        if (projection == Projection.NONE) return;
+        double strength = attacker.hasData(ModAttachments.HUNTER) ? HunterStats.get(attacker).level(Stat.STRENGTH) : 0;
+        double push = projection == Projection.HEAVY ? 2.0 + strength * 0.015 : 0.8;
+        target.knockback(push, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
+        if (projection == Projection.HEAVY) target.setDeltaMovement(target.getDeltaMovement().add(0, 0.35, 0));
+        target.hurtMarked = true;
+    }
+
     private static float baseAttack(LivingEntity entity) {
         AttributeInstance attack = entity.getAttribute(Attributes.ATTACK_DAMAGE);
         return attack != null ? (float) attack.getValue() : 1f;
@@ -108,12 +144,9 @@ public final class Combat {
         attacker.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
                 SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.PLAYERS, 1f, 0.8f);
         if (target == null) return null; // coup dans le vide : il part quand même
-        float strength = attacker.hasData(ModAttachments.HUNTER) ? HunterStats.get(attacker).level(Stat.STRENGTH) : 0;
         target.invulnerableTime = 0;
         target.hurt(meleeSource(attacker), baseAttack(attacker) * 0.7f + 1f);
-        double push = 1.6 + strength * 0.01;
-        target.knockback(push, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
-        target.setDeltaMovement(target.getDeltaMovement().add(0, 0.25, 0));
+        project(attacker, target, projection(isStrong(attacker), Charge.NONE));
         if (attacker.level() instanceof ServerLevel server) {
             Vec3 c = target.getBoundingBox().getCenter();
             server.sendParticles(ParticleTypes.SWEEP_ATTACK, c.x, c.y, c.z, 1, 0, 0, 0, 0);
@@ -145,8 +178,8 @@ public final class Combat {
     }
 
     /**
-     * Frappe chargée. Sous {@link #CHARGE_FAIL_BELOW} : ratée (on trébuche). Sinon dégâts × (1 + 2 × barre),
-     * et à partir de {@link #CHARGE_PERFECT_FROM} : frappe parfaite qui projette.
+     * Frappe chargée. Sous {@link #CHARGE_FAIL_BELOW} : ratée (on trébuche). Sinon dégâts × (1 + 2 × barre).
+     * La projection suit {@link #projection} : à partir de {@link #CHARGE_PERFECT_FROM}, la frappe est parfaite.
      * @return les dégâts infligés (0 si ratée ou sans cible)
      */
     public static float chargedStrike(LivingEntity attacker, float value) {
@@ -167,8 +200,8 @@ public final class Combat {
         float damage = baseAttack(attacker) * (1f + 2f * value);
         target.invulnerableTime = 0;
         target.hurt(meleeSource(attacker), damage);
+        project(attacker, target, projection(isStrong(attacker), perfect ? Charge.PERFECT : Charge.GOOD));
         if (perfect) {
-            target.knockback(1.5, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
             if (attacker.level() instanceof ServerLevel server) {
                 Vec3 c = target.getBoundingBox().getCenter();
                 server.sendParticles(ParticleTypes.CRIT, c.x, c.y, c.z, 25, 0.3, 0.4, 0.3, 0.3);

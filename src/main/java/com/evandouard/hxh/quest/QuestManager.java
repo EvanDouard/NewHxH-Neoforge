@@ -4,6 +4,7 @@ import com.evandouard.hxh.data.ModAttachments;
 import com.evandouard.hxh.network.QuestStatusPayload;
 import com.evandouard.hxh.npc.NpcEntity;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -70,18 +71,54 @@ public final class QuestManager {
     }
 
     private static void say(ServerPlayer player, NpcEntity npc, String line) {
+        say(player, npc, Component.translatable(line));
+    }
+
+    private static void say(ServerPlayer player, NpcEntity npc, Component line) {
         player.sendSystemMessage(Component.translatable("dialog.hxh.format",
-                Component.translatable("npc.hxh." + npc.npcId()).withStyle(ChatFormatting.YELLOW),
-                Component.translatable(line)));
+                Component.translatable("npc.hxh." + npc.npcId()).withStyle(ChatFormatting.YELLOW), line));
+    }
+
+    /** Ticks passés trop loin du PNJ à suivre (par joueur). */
+    private static final java.util.Map<java.util.UUID, Integer> LOST_TICKS = new java.util.HashMap<>();
+
+    /**
+     * Examen raté (distancé au marathon…) : l'examen s'arrête, le prochain essai sera dans un jour Minecraft
+     * et dans un autre centre d'examen.
+     */
+    public static void failExam(ServerPlayer player) {
+        QuestData d = data(player);
+        String exam = QuestRegistry.HUNTER_EXAM.toString();
+        if (!d.running.containsKey(exam)) return;
+        d.commit();
+        d.running.remove(exam);
+        if (d.active.equals(exam)) d.active = "";
+        d.examRetryAt = player.level().getGameTime() + com.evandouard.hxh.HxHConfig.EXAM_RETRY_TICKS.get();
+        d.examFailedCenter = d.examCenter;
+        LOST_TICKS.remove(player.getUUID());
+        player.sendSystemMessage(Component.translatable("message.hxh.exam_failed").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
+        player.sendSystemMessage(Component.translatable("message.hxh.exam_failed_detail").withStyle(ChatFormatting.GRAY));
+        d.refocus();
+        sync(player);
     }
 
     /** Clic droit sur un PNJ. */
     public static void onTalk(ServerPlayer player, NpcEntity npc) {
         QuestData d = data(player);
-        // Le Navigateur lance l'Examen Hunter
+        // Le Navigateur lance l'Examen Hunter (sauf juste après un échec, ou dans le centre qui t'a recalé)
         if (npc.npcId().equals("navigator") && !d.hunter && !d.running.containsKey(QuestRegistry.HUNTER_EXAM.toString())
                 && !d.completed.contains(QuestRegistry.HUNTER_EXAM.toString())) {
-            start(player, QuestRegistry.HUNTER_EXAM);
+            long now = player.level().getGameTime();
+            if (now < d.examRetryAt) {
+                long minutes = Math.max(1, (d.examRetryAt - now) / 20 / 60);
+                say(player, npc, Component.translatable("dialog.hxh.navigator.next_year", minutes));
+                return;
+            }
+            if (npc.home().asLong() == d.examFailedCenter) {
+                say(player, npc, Component.translatable("dialog.hxh.navigator.other_center"));
+                return;
+            }
+            if (start(player, QuestRegistry.HUNTER_EXAM)) d.examCenter = npc.home().asLong();
         }
         // L'arbitre du hall d'une tranche de la Tour Céleste lance les combats
         if (npc.npcId().equals("referee")) {
@@ -171,28 +208,54 @@ public final class QuestManager {
             return;
         }
         if (!step.type().equals("follow")) return;
-        NpcEntity npc = findNpc(player, step.npc(), 64);
+        NpcEntity npc = findNpc(player, step.npc(), 96);
         if (npc == null) return;
+        // Vitesse réglable (≈ Vitesse I par défaut) : le modificateur de déplacement agit au carré chez les mobs
+        double attr = npc.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
+        double speed = Math.sqrt(com.evandouard.hxh.HxHConfig.EXAM_MARATHON_SPEED.get()) / Math.max(0.01, attr);
 
-        // Le PNJ avance vers des points successifs autour de chez lui : il faut le suivre
-        if (npc.getNavigation().isDone()) {
+        boolean arrived = false;
+        if (!npc.route().isEmpty()) {
+            // Parcours posé par des repères numérotés : le dernier point est l'arrivée
+            int i = Math.min(npc.routeIndex(), npc.route().size() - 1);
+            BlockPos target = npc.route().get(i);
+            if (npc.blockPosition().distSqr(target) <= 2.5 * 2.5) {
+                if (i >= npc.route().size() - 1) arrived = true;
+                else npc.setRouteIndex(i + 1);
+            }
+            if (!arrived && (npc.getNavigation().isDone() || player.tickCount % 20 == 0)) {
+                BlockPos t = npc.route().get(Math.min(npc.routeIndex(), npc.route().size() - 1));
+                npc.walkTo(Vec3.atBottomCenterOf(t), speed);
+            }
+        } else if (npc.getNavigation().isDone()) {
+            // Sans parcours : il avance vers des points successifs autour de chez lui
             double angle = player.getRandom().nextDouble() * Math.PI * 2;
             double radius = 12 + player.getRandom().nextDouble() * 10;
-            Vec3 home = Vec3.atBottomCenterOf(npc.home().equals(net.minecraft.core.BlockPos.ZERO) ? npc.blockPosition() : npc.home());
-            npc.walkTo(home.add(Math.cos(angle) * radius, 0, Math.sin(angle) * radius), 1.1);
+            Vec3 home = Vec3.atBottomCenterOf(npc.home().equals(BlockPos.ZERO) ? npc.blockPosition() : npc.home());
+            npc.walkTo(home.add(Math.cos(angle) * radius, 0, Math.sin(angle) * radius), speed);
         }
 
         if (player.distanceTo(npc) <= step.maxDistance()) {
+            LOST_TICKS.remove(player.getUUID());
             d.progress++;
-            if (d.progress >= step.seconds() * 20) {
+            boolean done = npc.route().isEmpty() ? d.progress >= step.seconds() * 20 : arrived;
+            if (done) {
                 npc.getNavigation().stop();
                 advance(player);
                 return;
             }
-        } else if (d.progress > 0) {
-            d.progress = 0;
-            player.displayClientMessage(Component.translatable("message.hxh.quest_left_behind").withStyle(ChatFormatting.RED), true);
-            sync(player);
+        } else {
+            int lost = LOST_TICKS.merge(player.getUUID(), 1, Integer::sum);
+            int limit = com.evandouard.hxh.HxHConfig.EXAM_LOST_SECONDS.get() * 20;
+            if (lost >= limit) {
+                npc.resetRoute();
+                failExam(player);
+                return;
+            }
+            if (lost % 20 == 1) {
+                player.displayClientMessage(Component.translatable("message.hxh.quest_left_behind", (limit - lost) / 20 + 1)
+                        .withStyle(ChatFormatting.RED), true);
+            }
         }
         if (player.tickCount % 20 == 0) sync(player);
     }
@@ -223,8 +286,14 @@ public final class QuestManager {
             player.sendSystemMessage(Component.translatable("message.hxh.quest_completed",
                     Component.translatable(q.titleKey())).withStyle(ChatFormatting.GOLD));
         } else {
+            Quest.Step next = q.steps().get(d.step);
             player.sendSystemMessage(Component.translatable("message.hxh.quest_next",
-                    Component.translatable(q.stepKey(q.steps().get(d.step)))).withStyle(ChatFormatting.AQUA));
+                    Component.translatable(q.stepKey(next))).withStyle(ChatFormatting.AQUA));
+            if (next.type().equals("follow")) {
+                NpcEntity guide = findNpc(player, next.npc(), 96);
+                if (guide != null) guide.resetRoute();
+                LOST_TICKS.remove(player.getUUID());
+            }
         }
         sync(player);
     }

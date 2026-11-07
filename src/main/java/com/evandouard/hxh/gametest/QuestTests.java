@@ -85,19 +85,62 @@ public final class QuestTests {
     }
 
     @GameTest(template = "empty")
-    public static void fallingBehindResetsMarathon(GameTestHelper helper) {
+    public static void fallingBehindFailsTheExam(GameTestHelper helper) {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        NpcEntity navigator = npc(helper, "navigator", 0);
         NpcEntity satotz = npc(helper, "satotz", 1);
         QuestData d = QuestManager.data(player);
-        QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
-        for (int i = 0; i < 3; i++) QuestManager.advance(player); // jusqu'au marathon
+        String exam = QuestRegistry.HUNTER_EXAM.toString();
+        QuestManager.onTalk(player, navigator);
+        helper.assertTrue(d.isRunning(exam), "Le Navigateur lance l'examen");
+        for (int i = 0; i < 2; i++) QuestManager.advance(player); // jusqu'au marathon
+        helper.assertTrue(d.step() == 3, "Étape du marathon attendue");
         player.moveTo(satotz.getX(), satotz.getY(), satotz.getZ());
-        for (int i = 0; i < 100; i++) QuestManager.tick(player);
-        helper.assertTrue(d.progress() > 0, "La progression du marathon doit avancer");
-        player.moveTo(satotz.getX() + 40, satotz.getY(), satotz.getZ());
-        QuestManager.tick(player);
-        helper.assertTrue(d.progress() == 0, "Distancé : le marathon repart de zéro");
+        for (int i = 0; i < 40; i++) QuestManager.tick(player);
+        helper.assertTrue(d.isRunning(exam), "Tant qu'on suit, l'examen continue");
+        // Distancé trop longtemps : échec
+        player.moveTo(satotz.getX() + 60, satotz.getY(), satotz.getZ());
+        int limit = com.evandouard.hxh.HxHConfig.EXAM_LOST_SECONDS.get() * 20;
+        for (int i = 0; i < limit - 2; i++) QuestManager.tick(player);
+        helper.assertTrue(d.isRunning(exam), "Un court retard est toléré");
+        for (int i = 0; i < 4; i++) QuestManager.tick(player);
+        helper.assertTrue(!d.isRunning(exam) && !d.isCompleted(exam), "Distancé trop longtemps : examen raté");
+        helper.assertTrue(d.examRetryAt() > helper.getLevel().getGameTime(), "Il faut attendre avant de retenter");
+        helper.assertTrue(d.examFailedCenter() == navigator.home().asLong(), "Le centre qui a recalé est retenu");
+
+        // Trop tôt : le Navigateur refuse
+        QuestManager.onTalk(player, navigator);
+        helper.assertTrue(!d.isRunning(exam), "Pas de nouvel examen avant un jour Minecraft");
+        // Un jour plus tard, le même centre refuse toujours, un autre accepte
+        d.setExamRetryAt(0);
+        QuestManager.onTalk(player, navigator);
+        helper.assertTrue(!d.isRunning(exam), "Le même centre ne te reprend pas");
+        NpcEntity otherCenter = npc(helper, "navigator", 3);
+        QuestManager.onTalk(player, otherCenter);
+        helper.assertTrue(d.isRunning(exam), "Un autre centre d'examen accepte");
         helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void satotzFollowsHisCourse(GameTestHelper helper) {
+        for (int x = 0; x <= 5; x++) for (int z = 0; z <= 6; z++)
+            helper.setBlock(new BlockPos(x, 1, z), net.minecraft.world.level.block.Blocks.STONE);
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        NpcEntity satotz = helper.spawn(ModEntities.NPC.get(), new BlockPos(1, 2, 1));
+        satotz.setNpcId("satotz");
+        satotz.setHome(satotz.blockPosition());
+        satotz.setRoute(java.util.List.of(helper.absolutePos(new BlockPos(3, 2, 1)), helper.absolutePos(new BlockPos(3, 2, 4))));
+        QuestData d = QuestManager.data(player);
+        QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
+        for (int i = 0; i < 3; i++) QuestManager.advance(player); // marathon
+        helper.onEachTick(() -> {
+            if (d.step() != 3) return;
+            player.moveTo(satotz.getX(), satotz.getY(), satotz.getZ());
+            QuestManager.tick(player);
+        });
+        helper.succeedWhen(() -> {
+            helper.assertTrue(d.step() == 4, "Satotz doit atteindre la fin de son parcours (point " + satotz.routeIndex() + ")");
+        });
     }
 
     @GameTest(template = "empty")

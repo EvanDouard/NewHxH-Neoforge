@@ -75,6 +75,34 @@ public class NpcEntity extends PathfinderMob {
         home = pos;
     }
 
+    /** Parcours à suivre (marathon de Satotz) : points dans l'ordre, le dernier est l'arrivée. */
+    private java.util.List<BlockPos> route = java.util.List.of();
+    private int routeIndex = 0;
+
+    public java.util.List<BlockPos> route() {
+        return route;
+    }
+
+    public void setRoute(java.util.List<BlockPos> points) {
+        route = java.util.List.copyOf(points);
+        routeIndex = 0;
+    }
+
+    public int routeIndex() {
+        return routeIndex;
+    }
+
+    public void setRouteIndex(int index) {
+        routeIndex = index;
+    }
+
+    /** Remet le parcours au départ : retour au point de départ (sa place). */
+    public void resetRoute() {
+        routeIndex = 0;
+        getNavigation().stop();
+        if (!home.equals(BlockPos.ZERO)) moveTo(home.getX() + 0.5, home.getY(), home.getZ() + 0.5, getYRot(), 0);
+    }
+
     /** Déplace le PNJ vers un point (utilisé par Satotz pendant le marathon). */
     public void walkTo(Vec3 target, double speed) {
         getNavigation().moveTo(target.x, target.y, target.z, speed);
@@ -108,12 +136,20 @@ public class NpcEntity extends PathfinderMob {
         super.addAdditionalSaveData(tag);
         tag.putString("npc", npcId());
         tag.put("home", NbtUtils.writeBlockPos(home));
+        if (!route.isEmpty()) {
+            tag.putLongArray("route", route.stream().mapToLong(BlockPos::asLong).toArray());
+            tag.putInt("route_index", routeIndex);
+        }
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("npc")) setNpcId(tag.getString("npc"));
+        if (tag.contains("route")) {
+            route = java.util.Arrays.stream(tag.getLongArray("route")).mapToObj(BlockPos::of).toList();
+            routeIndex = tag.getInt("route_index");
+        }
         NbtUtils.readBlockPos(tag, "home").ifPresent(p -> home = p);
     }
 }

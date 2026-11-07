@@ -38,6 +38,17 @@ public final class ModBlocks {
     public static final DeferredBlock<Block> MARKER_REFEREE = marker("arena_marker_referee");
     public static final DeferredBlock<Block> MARKER_ARRIVAL = marker("arena_marker_arrival");
 
+    /** Repère PNJ réglable (clic droit pour choisir le PNJ). */
+    public static final DeferredBlock<com.evandouard.hxh.marker.MarkerBlock> MARKER_NPC_CHOICE = BLOCKS.register("marker_npc",
+            () -> new com.evandouard.hxh.marker.MarkerBlock(com.evandouard.hxh.marker.MarkerBlock.Kind.NPC,
+                    BlockBehaviour.Properties.of().strength(0.2f).sound(SoundType.WOOL).noLootTable()));
+    /** Point de parcours numéroté (clic droit pour changer le numéro ; le plus grand = arrivée). */
+    public static final DeferredBlock<com.evandouard.hxh.marker.MarkerBlock> MARKER_WAYPOINT = BLOCKS.register("marker_waypoint",
+            () -> new com.evandouard.hxh.marker.MarkerBlock(com.evandouard.hxh.marker.MarkerBlock.Kind.WAYPOINT,
+                    BlockBehaviour.Properties.of().strength(0.2f).sound(SoundType.WOOL).noLootTable()));
+    /** Point d'apparition des proies d'une épreuve de chasse. */
+    public static final DeferredBlock<Block> MARKER_PREY = marker("marker_prey");
+
     private static DeferredBlock<Block> marker(String name) {
         return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of()
                 .strength(0.2f).sound(SoundType.WOOL).noLootTable()));

@@ -54,5 +54,12 @@ public final class ModItems {
                     new Item.Properties().rarity(com.evandouard.hxh.training.TrainingTier.values()[i].rarity())))
             .toList();
 
+    public static final DeferredItem<BlockItem> MARKER_NPC_CHOICE =
+            ITEMS.registerSimpleBlockItem("marker_npc", ModBlocks.MARKER_NPC_CHOICE);
+    public static final DeferredItem<BlockItem> MARKER_WAYPOINT =
+            ITEMS.registerSimpleBlockItem("marker_waypoint", ModBlocks.MARKER_WAYPOINT);
+    public static final DeferredItem<BlockItem> MARKER_PREY =
+            ITEMS.registerSimpleBlockItem("marker_prey", ModBlocks.MARKER_PREY);
+
     private ModItems() {}
 }

@@ -54,8 +54,31 @@ public final class CombatTests {
         float before = v.getHealth();
         helper.assertTrue(Combat.kick(a) == null, "Le coup de pied aurait dû partir");
         helper.assertTrue(v.getHealth() < before, "Le coup de pied blesse");
-        helper.assertTrue(v.getDeltaMovement().x > 0.1, "Le coup de pied repousse vers l'arrière : " + v.getDeltaMovement());
         helper.assertTrue("message.hxh.kick_cooldown".equals(Combat.kick(a)), "Petite recharge entre deux coups de pied");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void projectionDependsOnStrengthAndCharge(GameTestHelper helper) {
+        // Le tableau voulu
+        helper.assertTrue(Combat.projection(false, Combat.Charge.NONE) == Combat.Projection.NONE, "Pas chargé + pas fort : rien");
+        helper.assertTrue(Combat.projection(false, Combat.Charge.GOOD) == Combat.Projection.NONE, "Chargé (bon) + pas fort : rien");
+        helper.assertTrue(Combat.projection(true, Combat.Charge.NONE) == Combat.Projection.LIGHT, "Pas chargé + fort : légère");
+        helper.assertTrue(Combat.projection(true, Combat.Charge.GOOD) == Combat.Projection.LIGHT, "Chargé (bon) + fort : légère");
+        helper.assertTrue(Combat.projection(false, Combat.Charge.PERFECT) == Combat.Projection.LIGHT, "Parfait + pas fort : légère");
+        helper.assertTrue(Combat.projection(true, Combat.Charge.PERFECT) == Combat.Projection.HEAVY, "Parfait + fort : grosse");
+
+        // En vrai : un débutant ne projette pas d'un coup de pied, un combattant fort si
+        Zombie weak = husk(helper, 0);
+        Zombie v1 = husk(helper, 2);
+        Combat.kick(weak);
+        double weakPush = Math.abs(v1.getDeltaMovement().x);
+        Zombie strong = husk(helper, 6);
+        com.evandouard.hxh.stats.HunterStats.setLevel(strong, com.evandouard.hxh.data.Stat.STRENGTH, 60);
+        Zombie v2 = husk(helper, 8);
+        Combat.kick(strong);
+        double strongPush = Math.abs(v2.getDeltaMovement().x);
+        helper.assertTrue(strongPush > weakPush + 0.2, "Le coup de pied d'un fort projette plus : " + weakPush + " / " + strongPush);
         helper.succeed();
     }
 

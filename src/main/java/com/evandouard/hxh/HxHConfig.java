@@ -156,6 +156,22 @@ public final class HxHConfig {
             .comment("Tour Céleste : étages perdus par défaite dans la première tranche (ailleurs, on redescend dans la tranche d'en dessous)")
             .defineInRange("arena.lossDropFirstBracket", 5, 0, 100);
 
+    public static final ModConfigSpec.IntValue COMBAT_STRONG_FROM = BUILDER
+            .comment("Combat : niveau de Force à partir duquel on est « fort » (coup de pied et frappe chargée projettent)")
+            .defineInRange("combat.strongFromStrength", 30, 0, 100);
+
+    public static final ModConfigSpec.DoubleValue EXAM_MARATHON_SPEED = BUILDER
+            .comment("Examen Hunter : vitesse de Satotz au marathon (joueur qui marche = 0.10, qui sprinte = 0.13 ; 0.12 ≈ Vitesse I)")
+            .defineInRange("exam.marathonSpeed", 0.12, 0.05, 0.3);
+
+    public static final ModConfigSpec.IntValue EXAM_LOST_SECONDS = BUILDER
+            .comment("Examen Hunter : secondes passées trop loin de Satotz avant d'échouer")
+            .defineInRange("exam.lostSeconds", 5, 1, 120);
+
+    public static final ModConfigSpec.IntValue EXAM_RETRY_TICKS = BUILDER
+            .comment("Examen Hunter : attente avant de retenter après un échec (24000 = un jour Minecraft)")
+            .defineInRange("exam.retryTicks", 24000, 0, 2_400_000);
+
     public static final ModConfigSpec SPEC = BUILDER.build();
 
     private HxHConfig() {}

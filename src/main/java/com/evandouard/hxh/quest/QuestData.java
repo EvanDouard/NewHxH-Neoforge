@@ -28,6 +28,11 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     String tracked = "";
     final Set<String> completed = new HashSet<>();
     boolean hunter = false;
+    /** Examen Hunter raté : pas de nouvel essai avant ce moment (temps de jeu), ni dans le même centre. */
+    long examRetryAt = 0;
+    long examFailedCenter = Long.MIN_VALUE;
+    /** Centre d'examen (place du Navigateur) de l'examen en cours. */
+    long examCenter = Long.MIN_VALUE;
 
     // ---------- Tour Céleste ----------
     boolean arenaRegistered = false;
@@ -109,6 +114,19 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
 
     public boolean isCompleted(String questId) {
         return completed.contains(questId);
+    }
+
+    public long examRetryAt() {
+        return examRetryAt;
+    }
+
+    /** Pour l'administration et les tests : moment du prochain essai possible à l'examen. */
+    public void setExamRetryAt(long gameTime) {
+        examRetryAt = gameTime;
+    }
+
+    public long examFailedCenter() {
+        return examFailedCenter;
     }
 
     public boolean isHunter() {
@@ -198,6 +216,9 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         progress = 0;
         completed.clear();
         hunter = false;
+        examRetryAt = 0;
+        examFailedCenter = Long.MIN_VALUE;
+        examCenter = Long.MIN_VALUE;
         arenaRegistered = false;
         arenaFloor = 1;
         registeredBracket = -1;
@@ -222,6 +243,9 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         tag.put("running", quests);
         tag.putString("tracked", tracked);
         tag.putBoolean("hunter", hunter);
+        tag.putLong("exam_retry_at", examRetryAt);
+        tag.putLong("exam_failed_center", examFailedCenter);
+        tag.putLong("exam_center", examCenter);
         ListTag done = new ListTag();
         for (String id : completed) done.add(StringTag.valueOf(id));
         tag.put("completed", done);
@@ -258,6 +282,9 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         active = "";
         refocus();
         hunter = tag.getBoolean("hunter");
+        examRetryAt = tag.getLong("exam_retry_at");
+        examFailedCenter = tag.contains("exam_failed_center") ? tag.getLong("exam_failed_center") : Long.MIN_VALUE;
+        examCenter = tag.contains("exam_center") ? tag.getLong("exam_center") : Long.MIN_VALUE;
         completed.clear();
         for (Tag t : tag.getList("completed", Tag.TAG_STRING)) completed.add(t.getAsString());
         CompoundTag arena = tag.getCompound("arena");
