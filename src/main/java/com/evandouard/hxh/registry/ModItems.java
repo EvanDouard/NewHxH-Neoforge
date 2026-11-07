@@ -40,5 +40,19 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> MARKER_ARRIVAL =
             ITEMS.registerSimpleBlockItem("arena_marker_arrival", ModBlocks.MARKER_ARRIVAL);
 
+    /** Haltères I à IV (Force). */
+    public static final java.util.List<DeferredItem<com.evandouard.hxh.training.DumbbellItem>> DUMBBELLS =
+            java.util.Arrays.stream(com.evandouard.hxh.training.TrainingTier.values())
+                    .map(t -> ITEMS.register("dumbbell" + t.suffix(),
+                            () -> new com.evandouard.hxh.training.DumbbellItem(t, new Item.Properties())))
+                    .toList();
+
+    /** Tapis de course I à IV (Vitesse ou Endurance). */
+    public static final java.util.List<DeferredItem<BlockItem>> TREADMILLS = java.util.stream.IntStream
+            .range(0, ModBlocks.TREADMILLS.size())
+            .mapToObj(i -> ITEMS.registerSimpleBlockItem(ModBlocks.TREADMILLS.get(i).getId().getPath(), ModBlocks.TREADMILLS.get(i),
+                    new Item.Properties().rarity(com.evandouard.hxh.training.TrainingTier.values()[i].rarity())))
+            .toList();
+
     private ModItems() {}
 }

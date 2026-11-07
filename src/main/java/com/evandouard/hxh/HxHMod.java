@@ -36,6 +36,7 @@ public final class HxHMod {
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.arena.ArenaBrackets::register);
         com.evandouard.hxh.quest.QuestEvents.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.arena.ArenaManager.register(NeoForge.EVENT_BUS);
+        com.evandouard.hxh.training.TrainingEvents.register(NeoForge.EVENT_BUS);
         modEventBus.addListener(HxHNetwork::register);
         modContainer.registerConfig(ModConfig.Type.SERVER, HxHConfig.SPEC);
         HxHGameRules.init();

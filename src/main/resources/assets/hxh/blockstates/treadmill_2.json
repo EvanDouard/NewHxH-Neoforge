@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,mode=speed": {
+      "model": "hxh:block/treadmill_2_speed"
+    },
+    "facing=north,mode=endurance": {
+      "model": "hxh:block/treadmill_2_endurance"
+    },
+    "facing=east,mode=speed": {
+      "model": "hxh:block/treadmill_2_speed",
+      "y": 90
+    },
+    "facing=east,mode=endurance": {
+      "model": "hxh:block/treadmill_2_endurance",
+      "y": 90
+    },
+    "facing=south,mode=speed": {
+      "model": "hxh:block/treadmill_2_speed",
+      "y": 180
+    },
+    "facing=south,mode=endurance": {
+      "model": "hxh:block/treadmill_2_endurance",
+      "y": 180
+    },
+    "facing=west,mode=speed": {
+      "model": "hxh:block/treadmill_2_speed",
+      "y": 270
+    },
+    "facing=west,mode=endurance": {
+      "model": "hxh:block/treadmill_2_endurance",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " I ",
+    "IDI",
+    " I "
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "hxh:dumbbell_1"
+    }
+  },
+  "result": {
+    "id": "hxh:dumbbell_2",
+    "count": 1
+  }
+}

@@ -520,6 +520,19 @@ wait 200
 cmd tp @s 15 -50 0 -90 -35
 wait 200
 shot 48b_tour_celeste_dans_le_monde
+cmd tp @s 0.5 -60 60.5 0 30
+cmd setblock 0 -61 62 hxh:treadmill_1[facing=south]
+cmd setblock 2 -61 62 hxh:treadmill_2[facing=south,mode=endurance]
+cmd setblock 4 -61 62 hxh:treadmill_3[facing=south]
+cmd setblock 6 -61 62 hxh:treadmill_4[facing=south,mode=endurance]
+cmd clear @s
+cmd give @s hxh:dumbbell_1
+cmd give @s hxh:dumbbell_2
+cmd give @s hxh:dumbbell_3
+cmd give @s hxh:dumbbell_4
+cmd tp @s 3.5 -60 59.5 0 35
+wait 40
+shot 48c_objets_entrainement
 key key.hxh.profile
 wait 20
 shot 49_carnet_personnage

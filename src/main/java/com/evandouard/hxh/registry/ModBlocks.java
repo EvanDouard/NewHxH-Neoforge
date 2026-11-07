@@ -43,5 +43,12 @@ public final class ModBlocks {
                 .strength(0.2f).sound(SoundType.WOOL).noLootTable()));
     }
 
+    /** Tapis de course I à IV. */
+    public static final java.util.List<DeferredBlock<com.evandouard.hxh.training.TreadmillBlock>> TREADMILLS =
+            java.util.Arrays.stream(com.evandouard.hxh.training.TrainingTier.values())
+                    .map(t -> BLOCKS.register("treadmill" + t.suffix(), () -> new com.evandouard.hxh.training.TreadmillBlock(t,
+                            BlockBehaviour.Properties.of().strength(2f).sound(SoundType.METAL).noOcclusion())))
+                    .toList();
+
     private ModBlocks() {}
 }
