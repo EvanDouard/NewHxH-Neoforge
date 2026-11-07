@@ -161,12 +161,15 @@ look 0 0
 
 # --- Mobs d'exemple ---
 clearchat
-cmd hunter spawn mannequin ^-3 ^ ^5
-cmd hunter spawn elite_manipulateur ^ ^ ^6
-cmd hunter spawn squelette_archer ^3 ^ ^5
+look 0 10
+cmd hunter spawn mannequin ~3 ~ ~5
+cmd hunter spawn elite_manipulateur ~ ~ ~6
+cmd hunter spawn squelette_archer ~-3 ~ ~5
 wait 3
 expect apparu
+cmd execute if entity @e[type=minecraft:husk,distance=..10]
 wait 5
+expect Test réussi
 shot 13h_mobs_exemple
 cmd kill @e[type=minecraft:zombie,distance=..12]
 cmd kill @e[type=minecraft:husk,distance=..12]
