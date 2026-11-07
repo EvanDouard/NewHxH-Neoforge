@@ -73,7 +73,17 @@ public final class HunterCommand {
                         .then(Commands.literal("skip").executes(ctx -> {
                             com.evandouard.hxh.quest.QuestManager.advance(ctx.getSource().getPlayerOrException());
                             return 1;
-                        })))
+                        }))
+                        .then(Commands.literal("start")
+                                .then(Commands.argument("quest", net.minecraft.commands.arguments.ResourceLocationArgument.id())
+                                        .suggests((c, b) -> SharedSuggestionProvider.suggestResource(
+                                                com.evandouard.hxh.quest.QuestRegistry.all().stream().map(com.evandouard.hxh.quest.Quest::id), b))
+                                        .executes(ctx -> {
+                                            net.minecraft.resources.ResourceLocation id = net.minecraft.commands.arguments.ResourceLocationArgument.getId(ctx, "quest");
+                                            boolean ok = com.evandouard.hxh.quest.QuestManager.start(ctx.getSource().getPlayerOrException(), id);
+                                            if (!ok) ctx.getSource().sendFailure(Component.translatable("command.hxh.quest_start_failed", id.toString()));
+                                            return ok ? 1 : 0;
+                                        }))))
                 .then(Commands.literal("reset").requires(s -> s.hasPermission(2))
                         .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()), e -> resetAll(e)))
                         .then(Commands.argument("targets", EntityArgument.entities())

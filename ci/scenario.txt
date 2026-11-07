@@ -532,6 +532,9 @@ cmd give @s hxh:dumbbell_4
 cmd tp @s 3.5 -60 59.5 0 35
 wait 40
 shot 48c_objets_entrainement
+cmd hunter quest reset
+cmd hunter quest start hxh:hunter_exam
+cmd hunter quest start hxh:heavens_arena
 key key.hxh.profile
 wait 20
 shot 49_carnet_personnage

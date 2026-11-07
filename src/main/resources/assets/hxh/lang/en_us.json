@@ -634,5 +634,6 @@
   "block.hxh.treadmill_4": "Treadmill IV",
   "profile.hxh.quests.running": "Other quests in progress",
   "profile.hxh.quests.no_other": "No other quest in progress.",
-  "screen.hxh.profile.track": "Track: %s"
+  "screen.hxh.profile.track": "Track: %s",
+  "command.hxh.quest_start_failed": "Cannot start quest %s (unknown, already running or completed)."
 }

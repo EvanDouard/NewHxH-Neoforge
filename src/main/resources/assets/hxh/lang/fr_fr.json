@@ -634,5 +634,6 @@
   "block.hxh.treadmill_4": "Tapis de course IV",
   "profile.hxh.quests.running": "Autres quêtes en cours",
   "profile.hxh.quests.no_other": "Aucune autre quête en cours.",
-  "screen.hxh.profile.track": "Suivre : %s"
+  "screen.hxh.profile.track": "Suivre : %s",
+  "command.hxh.quest_start_failed": "Impossible de lancer la quête %s (inconnue, déjà en cours ou terminée)."
 }
