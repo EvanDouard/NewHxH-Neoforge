@@ -63,6 +63,7 @@ public final class Combat {
      * Le 5e coup est un coup final : recul supplémentaire, puis le combo repart de zéro.
      */
     public static float onMeleeHit(LivingEntity attacker, LivingEntity victim) {
+        CombatAnimations.punch(attacker); // poing droit / gauche à mains nues (ignoré si déjà joué ce tick)
         long now = attacker.level().getGameTime();
         Combo previous = COMBOS.get(attacker);
         int count = previous != null && previous.targetId() == victim.getId() && now - previous.lastTick() <= COMBO_WINDOW_TICKS
@@ -142,7 +143,7 @@ public final class Combat {
         Long ready = KICK_READY.get(attacker);
         if (ready != null && now < ready) return "message.hxh.kick_cooldown";
         KICK_READY.put(attacker, now + KICK_COOLDOWN_TICKS);
-        attacker.swing(InteractionHand.OFF_HAND, true);
+        CombatAnimations.play(attacker, CombatAnim.KICK);
         LivingEntity target = Targeting.inFront(attacker, 3.0, 0.8);
         attacker.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
                 SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.PLAYERS, 1f, 0.8f);
@@ -165,6 +166,12 @@ public final class Combat {
 
     public static void startStrike(LivingEntity attacker) {
         CHARGE_START.put(attacker, attacker.level().getGameTime());
+        CombatAnimations.play(attacker, CombatAnim.CHARGE); // le bras ne recule qu'après un appui « long »
+    }
+
+    /** Touche Frappe maintenue (frappe en cours d'armement). */
+    public static boolean isCharging(LivingEntity attacker) {
+        return CHARGE_START.containsKey(attacker);
     }
 
     /** Touche relâchée : coup de pied si l'appui était court, sinon frappe chargée selon la barre. */
@@ -186,13 +193,14 @@ public final class Combat {
      * @return les dégâts infligés (0 si ratée ou sans cible)
      */
     public static float chargedStrike(LivingEntity attacker, float value) {
-        attacker.swing(InteractionHand.MAIN_HAND, true);
         if (value < CHARGE_FAIL_BELOW) {
+            CombatAnimations.play(attacker, CombatAnim.STOP);
             attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
             if (attacker instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.strike_failed"), true);
             return 0f;
         }
         boolean perfect = value >= CHARGE_PERFECT_FROM;
+        CombatAnimations.play(attacker, CombatAnim.CHARGED_PUNCH);
         if (attacker instanceof Player p) {
             p.displayClientMessage(Component.translatable(perfect ? "message.hxh.strike_perfect" : "message.hxh.strike_good"), true);
         }

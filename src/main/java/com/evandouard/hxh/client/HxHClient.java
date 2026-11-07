@@ -16,6 +16,7 @@ public final class HxHClient {
         NenClient.register(modEventBus);
         LevelTagRenderer.register();
         DamageNumberRenderer.register();
+        CombatAnimClient.register();
         CiAutopilot.initIfRequested();
     }
 }

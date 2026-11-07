@@ -47,6 +47,33 @@ public final class CombatTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void combatAnimationsAlternateAndCharge(GameTestHelper helper) {
+        Zombie a = husk(helper, 0);
+        a.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, net.minecraft.world.item.ItemStack.EMPTY);
+        helper.assertTrue(com.evandouard.hxh.combat.CombatAnimations.punch(a) == com.evandouard.hxh.combat.CombatAnim.PUNCH_MAIN,
+                "Premier coup : main principale");
+        helper.assertTrue(com.evandouard.hxh.combat.CombatAnimations.punch(a) == null, "Même tick : pas de double animation");
+        helper.runAfterDelay(4, () -> {
+            helper.assertTrue(com.evandouard.hxh.combat.CombatAnimations.punch(a) == com.evandouard.hxh.combat.CombatAnim.PUNCH_OFF,
+                    "Deuxième coup : l'autre main");
+            Combat.startStrike(a);
+            helper.assertTrue(com.evandouard.hxh.combat.CombatAnimations.last(a) == com.evandouard.hxh.combat.CombatAnim.CHARGE,
+                    "Touche Frappe maintenue : armement");
+            Combat.chargedStrike(a, 1.0f);
+            helper.assertTrue(com.evandouard.hxh.combat.CombatAnimations.last(a) == com.evandouard.hxh.combat.CombatAnim.CHARGED_PUNCH,
+                    "Frappe chargée : gros coup de poing");
+            Combat.kick(a);
+            helper.assertTrue(com.evandouard.hxh.combat.CombatAnimations.last(a) == com.evandouard.hxh.combat.CombatAnim.KICK,
+                    "Appui court : coup de pied");
+            a.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.IRON_SWORD));
+            helper.runAfterDelay(4, () -> {
+                helper.assertTrue(com.evandouard.hxh.combat.CombatAnimations.punch(a) == null, "Avec une arme : animation de Minecraft");
+                helper.succeed();
+            });
+        });
+    }
+
     @GameTest(template = "empty")
     public static void kickPushesAndHasCooldown(GameTestHelper helper) {
         Zombie a = husk(helper, 0);

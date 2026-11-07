@@ -84,6 +84,31 @@ public final class HunterCommand {
                                             if (!ok) ctx.getSource().sendFailure(Component.translatable("command.hxh.quest_start_failed", id.toString()));
                                             return ok ? 1 : 0;
                                         }))))
+                // Joue une animation de combat sur des entités (tests, mise en scène)
+                .then(Commands.literal("anim").requires(s -> s.hasPermission(2))
+                        .then(Commands.argument("targets", EntityArgument.entities())
+                                .then(Commands.argument("anim", StringArgumentType.word())
+                                        .suggests((c, b) -> SharedSuggestionProvider.suggest(
+                                                Arrays.stream(com.evandouard.hxh.combat.CombatAnim.values())
+                                                        .map(a -> a.name().toLowerCase(java.util.Locale.ROOT)), b))
+                                        .executes(ctx -> {
+                                            String name = StringArgumentType.getString(ctx, "anim").toUpperCase(java.util.Locale.ROOT);
+                                            com.evandouard.hxh.combat.CombatAnim anim;
+                                            try {
+                                                anim = com.evandouard.hxh.combat.CombatAnim.valueOf(name);
+                                            } catch (IllegalArgumentException ex) {
+                                                ctx.getSource().sendFailure(Component.literal("? " + name));
+                                                return 0;
+                                            }
+                                            int n = 0;
+                                            for (Entity e : EntityArgument.getEntities(ctx, "targets")) {
+                                                if (e instanceof LivingEntity living) {
+                                                    com.evandouard.hxh.combat.CombatAnimations.play(living, anim);
+                                                    n++;
+                                                }
+                                            }
+                                            return n;
+                                        }))))
                 .then(Commands.literal("reset").requires(s -> s.hasPermission(2))
                         .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()), e -> resetAll(e)))
                         .then(Commands.argument("targets", EntityArgument.entities())

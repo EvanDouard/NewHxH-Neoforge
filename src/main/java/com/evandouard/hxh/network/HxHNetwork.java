@@ -24,6 +24,8 @@ public final class HxHNetwork {
         registrar.playToServer(SetRyuPayload.TYPE, SetRyuPayload.STREAM_CODEC, SetRyuPayload::handle);
         registrar.playToServer(ChooseKitPayload.TYPE, ChooseKitPayload.STREAM_CODEC, ChooseKitPayload::handle);
         registrar.playToServer(NenActionPayload.TYPE, NenActionPayload.STREAM_CODEC, NenActionPayload::handle);
+        registrar.playToClient(CombatAnimPayload.TYPE, CombatAnimPayload.STREAM_CODEC, CombatAnimPayload::handle);
+        registrar.playToServer(PunchPayload.TYPE, PunchPayload.STREAM_CODEC, PunchPayload::handle);
         registrar.playToServer(ToggleNenModePayload.TYPE, ToggleNenModePayload.STREAM_CODEC, ToggleNenModePayload::handle);
     }
 

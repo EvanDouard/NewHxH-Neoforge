@@ -117,6 +117,37 @@ cmd hunter
 wait 10
 expect Soin par le Nen : niveau
 
+# --- Animations de combat (mains nues) ---
+cmd item replace entity @s weapon.mainhand with air
+camera front
+wait 5
+cmd hunter anim @s charge
+wait 14
+shot 13b_anim_frappe_armee
+cmd hunter anim @s charged_punch
+wait 3
+shot 13c_anim_frappe_chargee
+wait 15
+cmd hunter anim @s punch_off
+wait 2
+shot 13d_anim_poing_gauche
+wait 10
+camera first
+look 0 -35
+wait 5
+key key.attack
+wait 2
+shot 13e_poing_vue_subjective
+wait 10
+hold key.hxh.strike
+wait 14
+shot 13f_frappe_armee_vue_subjective
+release key.hxh.strike
+wait 2
+shot 13g_frappe_chargee_vue_subjective
+wait 20
+look 0 0
+
 # --- Éveil 1 : un maître ouvre les pores du villageois en face ---
 cmd summon minecraft:villager ~ ~ ~3 {NoAI:1b}
 look 0 10
