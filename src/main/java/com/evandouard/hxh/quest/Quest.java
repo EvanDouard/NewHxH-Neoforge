@@ -13,7 +13,8 @@ import java.util.List;
  * <p>
  * Types d'étapes : {@code talk} (parler à un PNJ), {@code kill} (tuer {@code count} {@code entity}),
  * {@code follow} (rester à moins de {@code max_distance} blocs du PNJ pendant {@code seconds} s).
- * Tour Céleste : {@code arena_win} (gagner {@code count} combats), {@code arena_floor} (atteindre l'étage {@code count}).
+ * Tour Céleste : {@code arena_win} (gagner {@code count} combats), {@code arena_floor} (atteindre l'étage {@code count}),
+ * {@code arena_register_200} (être inscrit au 200e auprès de l'hôtesse, validé quel que soit le moment de l'inscription).
  * Récompenses d'étape : {@code reward_item} (identifiant d'objet), {@code reward_hunter} (devient Hunter),
  * {@code reward_jenny} (Jenny).
  */

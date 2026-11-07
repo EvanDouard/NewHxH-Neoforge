@@ -219,6 +219,11 @@ public final class QuestManager {
             advance(player);
             return;
         }
+        // Inscription au 200e : validée même si elle a eu lieu avant d'arriver à cette étape
+        if (step.type().equals("arena_register_200") && player.tickCount % 20 == 0 && d.registered200()) {
+            advance(player);
+            return;
+        }
         if (!step.type().equals("follow")) return;
         NpcEntity npc = findNpc(player, step.npc(), 96);
         if (npc == null) {
@@ -348,10 +353,9 @@ public final class QuestManager {
             default -> st[1];
         };
         // Inscription en attente : même objectif que le refus de l'arbitre
-        com.evandouard.hxh.arena.ArenaBracket pending = isArenaQuest(q) ? com.evandouard.hxh.arena.ArenaManager.pendingRegistration(d) : null;
+        String[] pending = isArenaQuest(q) ? com.evandouard.hxh.arena.ArenaManager.pendingObjective(d) : null;
         if (pending != null) {
-            com.evandouard.hxh.network.HxHNetwork.sendTo(player,
-                    new QuestStatusPayload(q.titleKey(), "quest.hxh.arena_register_pending", pending.label(), 0, 0));
+            com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.titleKey(), pending[0], pending[1], 0, 0));
             return;
         }
         com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.titleKey(), q.stepKey(step), "", progress, step.goal()));

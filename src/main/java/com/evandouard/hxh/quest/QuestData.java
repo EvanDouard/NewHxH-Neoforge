@@ -61,6 +61,16 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         return java.util.List.copyOf(running.keySet());
     }
 
+    /** Place une quête en cours à une étape donnée (commandes et tests). */
+    public void setQuestStep(String questId, int stepIndex) {
+        commit();
+        running.put(questId, new int[]{stepIndex, 0});
+        if (questId.equals(active)) {
+            step = stepIndex;
+            progress = 0;
+        }
+    }
+
     /** {étape, progression} d'une quête en cours, ou null. */
     public int[] stateOf(String questId) {
         commit();

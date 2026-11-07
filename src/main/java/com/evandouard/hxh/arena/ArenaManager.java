@@ -240,6 +240,15 @@ public final class ArenaManager {
         return null;
     }
 
+    /** Objectif à afficher tant qu'une inscription est en attente : {clé, argument}, ou null. Même texte que le refus de l'arbitre. */
+    @org.jetbrains.annotations.Nullable
+    public static String[] pendingObjective(QuestData d) {
+        ArenaBracket b = pendingRegistration(d);
+        if (b == null) return null;
+        if (d.arenaFloor() >= ArenaRules.NEN_FLOOR && !d.registered200()) return new String[]{"quest.hxh.heavens_arena.nen_warning", ""};
+        return new String[]{"quest.hxh.arena_register_pending", b.label()};
+    }
+
     /** Hall de la tranche du joueur. */
     public static int ownLocation(ServerPlayer player) {
         return ArenaWorld.locationOfBracket(bracketOf(player).index());

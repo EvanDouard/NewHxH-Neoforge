@@ -44,9 +44,7 @@
       "count": 200
     },
     {
-      "id": "nen_warning",
-      "type": "talk",
-      "npc": "receptionist"
+      "id": "nen_warning", "type": "arena_register_200"
     },
     {
       "id": "floor_master",

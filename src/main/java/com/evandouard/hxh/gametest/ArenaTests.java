@@ -225,6 +225,32 @@ public final class ArenaTests {
     }
 
     @GameTest(template = "empty")
+    public static void registration200BeforeQuestStepStaysInSync(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(player);
+        QuestManager.start(player, QuestRegistry.HEAVENS_ARENA);
+        Quest quest = QuestRegistry.get(QuestRegistry.HEAVENS_ARENA);
+        int warning = -1;
+        for (int i = 0; i < quest.steps().size(); i++) if (quest.steps().get(i).id().equals("nen_warning")) warning = i;
+        int target = warning;
+        helper.assertTrue(target > 0, "Étape nen_warning présente");
+        d.setQuestStep(QuestRegistry.HEAVENS_ARENA.toString(), target);
+        d.setArenaRegistered(true);
+        d.setArenaFloor(200);
+        d.setRegisteredBracket(4);
+        String[] before = ArenaManager.pendingObjective(d);
+        helper.assertTrue(before != null && before[0].equals("quest.hxh.heavens_arena.nen_warning"),
+                "Pas encore inscrit au 200e : même objectif que le refus de l'arbitre");
+        d.setRegistered200(true); // inscrit AVANT d'arriver à l'étape
+        helper.assertTrue(ArenaManager.pendingObjective(d) == null, "Inscrit : aucun objectif d'inscription en attente");
+        player.tickCount = 20;
+        QuestManager.tick(player);
+        int[] st = d.stateOf(QuestRegistry.HEAVENS_ARENA.toString());
+        helper.assertTrue(st != null && st[0] > target, "L'étape « s'inscrire au 200e » doit se valider seule");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void inventoryStashedDuringFight(GameTestHelper helper) {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
         player.getInventory().add(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND_SWORD));
