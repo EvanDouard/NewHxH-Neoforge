@@ -174,8 +174,22 @@ public final class NenFxClient {
         return e.getPosition(pt).add(0, e.getBbHeight() * 0.5, 0);
     }
 
+    /** L'entité est celle d'où l'on regarde, en vue subjective. */
+    static boolean firstPerson(Entity e) {
+        Minecraft mc = Minecraft.getInstance();
+        return e == mc.getCameraEntity() && mc.options.getCameraType().isFirstPerson();
+    }
+
     /** Main droite (approximative) d'une entité : d'où partent chaînes, boules et aiguilles. */
     static Vec3 hand(Entity e, float pt) {
+        if (firstPerson(e)) {
+            // Vue subjective : là où l'on voit sa main à l'écran (devant, en bas à droite)
+            Vec3 look = e.getViewVector(pt);
+            Vec3 right = look.cross(new Vec3(0, 1, 0));
+            right = right.lengthSqr() < 1e-6 ? new Vec3(1, 0, 0) : right.normalize();
+            Vec3 up = right.cross(look).normalize();
+            return e.getEyePosition(pt).add(look.scale(0.9)).add(right.scale(0.35)).add(up.scale(-0.3));
+        }
         float yaw = e instanceof LivingEntity l ? Mth.rotLerp(pt, l.yBodyRotO, l.yBodyRot) : e.getViewYRot(pt);
         double r = yaw * Mth.DEG_TO_RAD;
         Vec3 forward = new Vec3(-Math.sin(r), 0, Math.cos(r));
@@ -355,7 +369,7 @@ public final class NenFxClient {
     /** Petits arcs électriques autour du corps, renouvelés toutes les deux images. */
     private static void crackle(Ctx c, Fx f, float age) {
         Entity src = entity(f.source);
-        if (src == null) return;
+        if (src == null || firstPerson(src)) return; // autour de soi : il passerait devant la caméra
         Vec3 base = src.getPosition(c.pt);
         int frame = (int) (age / 2);
         float w = Math.max(0.6f, src.getBbWidth()), h = src.getBbHeight();
