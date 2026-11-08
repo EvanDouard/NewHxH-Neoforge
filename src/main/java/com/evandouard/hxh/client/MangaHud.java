@@ -127,7 +127,7 @@ public final class MangaHud {
             return;
         }
 
-        int barW = 96, barH = 8;
+        int barW = 120, barH = 8;
         int barY = bottom - barH;
         float ratio = data.auraMax() > 0 ? Mth.clamp(data.aura() / data.auraMax(), 0f, 1f) : 0f;
         int color = auraColor(data);
@@ -154,8 +154,9 @@ public final class MangaHud {
         int tabY = barY - 16;
         int tabW = tab(g, x - 2, tabY, Component.literal(state.getString().toUpperCase(Locale.ROOT)), ko ? 0xFF9A1E1E : INK);
         outlined(g, Component.translatable("hud.hxh.nen_level", data.nenLevel()), x + tabW + 4, tabY + 3, PAPER, 1f);
-        Component value = Component.literal(String.valueOf((int) data.aura()));
-        outlined(g, value, x + barW - font.width(value), tabY + 3, PAPER, 1f);
+        Component value = Component.literal((int) data.aura() + "/" + data.auraMax());
+        int nenRight = x + tabW + 4 + font.width(Component.translatable("hud.hxh.nen_level", data.nenLevel()));
+        outlined(g, value, Math.max(nenRight + 8, x + barW - font.width(value)), tabY + 3, PAPER, 1f);
     }
 
     /** Onglet noir penché avec un texte blanc ; renvoie sa largeur. */
@@ -241,7 +242,9 @@ public final class MangaHud {
             // glisse depuis la gauche, puis repart
             float slide = age < TOAST_IN ? 1f - ease(age / TOAST_IN)
                     : age > TOAST_IN + TOAST_STAY ? ease((age - TOAST_IN - TOAST_STAY) / TOAST_OUT) : 0f;
-            int w = Math.max(font.width(t.title()) + 4, font.width(t.subtitle())) + 46;
+            int badgeW = Math.max(22, font.width(t.badge()) * 2 + 4); // badge dessiné en ×2
+            int textX = 8 + badgeW + 6;
+            int w = Math.max(font.width(t.title()) + 4, font.width(t.subtitle())) + textX + 8;
             int h = 26;
             float dx = -slide * (w + 12);
             g.pose().pushPose();
@@ -249,8 +252,8 @@ public final class MangaHud {
             g.pose().rotateAround(Axis.ZP.rotationDegrees(i % 2 == 0 ? -1.5f : 1f), w / 2f, h / 2f, 0);
             panel(g, 0, 0, w, h, PAPER, 3);
             outlined(g, Component.literal(t.badge()), 7, 6, t.color(), 2f);
-            g.drawString(font, t.title().copy().withStyle(ChatFormatting.BOLD), 38, 5, INK, false);
-            g.drawString(font, t.subtitle(), 38, 15, GREY, false);
+            g.drawString(font, t.title().copy().withStyle(ChatFormatting.BOLD), textX, 5, INK, false);
+            g.drawString(font, t.subtitle(), textX, 15, GREY, false);
             g.pose().popPose();
             y += h + 8;
             i++;
