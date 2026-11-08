@@ -335,10 +335,8 @@ public final class HunterCommand {
             throws CommandSyntaxException {
         Stat stat = statArg(ctx);
         int amount = IntegerArgumentType.getInteger(ctx, "amount");
-        return apply(ctx, targets, e -> {
-            HunterStats.get(e).addXp(stat, amount);
-            HunterStats.applyAttributes(e);
-        });
+        // Même chemin que l'XP gagnée en jeu (montées de niveau notifiées)
+        return apply(ctx, targets, e -> HunterStats.addXp(e, stat, amount));
     }
 
     /**
