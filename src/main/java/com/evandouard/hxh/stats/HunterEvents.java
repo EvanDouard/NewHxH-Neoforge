@@ -68,11 +68,14 @@ public final class HunterEvents {
     private static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         HunterData data = HunterStats.get(player);
+        // Tirage indépendant du joueur (le générateur de l'entité donnait toujours le même résultat au 1er tirage)
+        net.minecraft.util.RandomSource roll = net.minecraft.util.RandomSource.create(System.nanoTime()
+                ^ player.getUUID().getLeastSignificantBits() ^ player.serverLevel().getSeed());
         if (data.nenType() == null && player.serverLevel().getGameRules().getBoolean(HxHGameRules.RANDOM_NEN_TYPE)) {
-            data.setNenType(NenType.random(player.getRandom()));
+            data.setNenType(NenType.random(roll));
         }
         // Talent pour le Nen : tiré une fois pour toutes en début de partie
-        if (data.talent() == null) data.setTalent(com.evandouard.hxh.data.NenTalent.roll(player.getRandom()));
+        if (data.talent() == null) data.setTalent(com.evandouard.hxh.data.NenTalent.roll(roll));
         HxHNetwork.syncFull(player);
     }
 

@@ -133,6 +133,10 @@ public final class Hatsu {
         if (technique == null) return "message.hxh.hatsu_none";
         long now = entity.level().getGameTime();
         if (NenCharge.isCharging(entity)) return null; // déjà en train de charger
+        // Tour Céleste : pas de technique hors du ring (halls, guichets, chambres)
+        if (entity instanceof net.minecraft.server.level.ServerPlayer sp
+                && sp.level().dimension().equals(com.evandouard.hxh.arena.ArenaWorld.DIMENSION)
+                && !com.evandouard.hxh.arena.ArenaManager.inFight(sp)) return "message.hxh.arena_no_hatsu";
         String refusal = castRefusal(data, technique, now);
         if (refusal != null) return refusal;
         if (technique.isCharged()) {

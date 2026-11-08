@@ -686,5 +686,6 @@
   "technique.hxh.cond.charged": "Hold to charge (%s aura/s, %s s max), release to throw",
   "technique.hxh.cond.projectile": "Projectile, range %s blocks",
   "message.hxh.charge_too_short": "Charge too short: the fist relaxes.",
-  "entity.hxh.nen_projectile": "Nen projectile"
+  "entity.hxh.nen_projectile": "Nen projectile",
+  "message.hxh.arena_no_hatsu": "No techniques here: only in the ring, during a fight."
 }

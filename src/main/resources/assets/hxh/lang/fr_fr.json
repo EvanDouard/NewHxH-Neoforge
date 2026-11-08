@@ -686,5 +686,6 @@
   "technique.hxh.cond.charged": "Maintenir pour charger (%s aura/s, %s s max), relâcher pour lancer",
   "technique.hxh.cond.projectile": "Projectile, portée %s blocs",
   "message.hxh.charge_too_short": "Charge trop courte : le poing se relâche.",
-  "entity.hxh.nen_projectile": "Projectile de Nen"
+  "entity.hxh.nen_projectile": "Projectile de Nen",
+  "message.hxh.arena_no_hatsu": "Pas de technique ici : seulement sur le ring, pendant un combat."
 }

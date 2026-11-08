@@ -510,29 +510,29 @@ public final class NenFxClient {
     private static void chargeOrb(Ctx c, Fx f, float age) {
         Entity src = entity(f.source);
         if (src == null) return;
-        int[] tiers = {0, 30, 65};
-        int[] colors = {NenFx.ENHANCER, 0xFFFFC23A, 0xFFFFF4C8};
-        int tier = age >= tiers[2] ? 2 : age >= tiers[1] ? 1 : 0;
-        float sinceTier = age - tiers[tier];
-        // Grossit avec le temps ; à chaque palier, se recondense (rétrécit) avant de regrossir
-        float grow = 0.18f + Math.min(0.5f, age / 140f);
-        float squeeze = tier > 0 && sinceTier < 6 ? 0.55f + 0.45f * ease(sinceTier / 6f) : 1f;
-        float half = grow * squeeze;
-        Vec3 at = hand(src, c.pt);
-        if (!firstPerson(src)) {
-            Vec3 look = src.getViewVector(c.pt);
-            at = at.add(look.scale(0.25));
+        // Cycles : la boule grossit jusqu'à environ 2,4 blocs de large, puis repart petite avec la couleur suivante
+        int[] colors = {NenFx.ENHANCER, 0xFFFFC23A, 0xFFFFF4C8, 0xFFFFFFFF};
+        float cycle = 26f;
+        int tier = Math.min(colors.length - 1, (int) (age / cycle));
+        float inCycle = tier == colors.length - 1 ? cycle : age - tier * cycle;
+        float half = 0.15f + 1.05f * ease(inCycle / cycle);
+        Vec3 look = src.getViewVector(c.pt);
+        Vec3 right = look.cross(new Vec3(0, 1, 0));
+        right = right.lengthSqr() < 1e-6 ? new Vec3(1, 0, 0) : right.normalize();
+        Vec3 at;
+        if (firstPerson(src)) {
+            // à droite, devant : visible sans boucher la vue
+            at = src.getEyePosition(c.pt).add(look.scale(2.6)).add(right.scale(1.5)).add(0, -0.6, 0);
+            half *= 0.7f;
         } else {
-            // Vue subjective : la boule est tout près des yeux, on la dessine plus petite et un peu plus loin
-            at = at.add(src.getViewVector(c.pt).scale(0.6));
-            half *= 0.45f;
+            at = center(src, c.pt).add(right.scale(0.5 + half)).add(look.scale(0.3));
         }
         int color = colors[tier];
-        billboard(c, RenderType.eyes(GLOW), at, half * 2.6f, 0, color, 0.85f);
-        billboard(c, RenderType.entityTranslucent(IMPACT), at, half * 1.6f, age * 0.3f, color, 0.6f + 0.1f * tier);
-        billboard(c, RenderType.entityTranslucent(ORB), at, half * (1f + 0.07f * Mth.sin(age * 1.3f)), 0, color, 1f);
-        // Éclat blanc au passage de palier
-        if (tier > 0 && sinceTier < 4) billboard(c, RenderType.eyes(GLOW), at, half * 4f, 0, 0xFFFFFFFF, 1f - sinceTier / 4f);
+        billboard(c, RenderType.eyes(GLOW), at, half * 2.2f, 0, color, 0.85f);
+        billboard(c, RenderType.entityTranslucent(IMPACT), at, half * 1.5f, age * 0.3f, color, 0.6f + 0.1f * tier);
+        billboard(c, RenderType.entityTranslucent(ORB), at, half * (1f + 0.05f * Mth.sin(age * 1.3f)), 0, color, 1f);
+        // Éclat au moment où elle se recondense
+        if (tier > 0 && inCycle < 4) billboard(c, RenderType.eyes(GLOW), at, 2.5f, 0, 0xFFFFFFFF, 1f - inCycle / 4f);
     }
 
     /** Montée d'aura : deux anneaux qui remontent le long du corps et une lueur. */
