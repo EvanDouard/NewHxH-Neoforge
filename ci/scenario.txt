@@ -651,9 +651,9 @@ shot 46_maitre_d_etage
 wait 100
 clearchat
 goto referee
-wait 40
+wait 60
 talkto referee
-wait 10
+wait 20
 expect plus personne dans cette Tour
 cmd hunter arena room
 wait 40
