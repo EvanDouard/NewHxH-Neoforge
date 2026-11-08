@@ -127,7 +127,8 @@ public final class MangaHud {
             return;
         }
 
-        int barW = 120, barH = 8;
+        // Ne déborde jamais sur la barre d'objets (petites fenêtres)
+        int barW = Math.max(70, Math.min(120, g.guiWidth() / 2 - 91 - x - 12)), barH = 8;
         int barY = bottom - barH;
         float ratio = data.auraMax() > 0 ? Mth.clamp(data.aura() / data.auraMax(), 0f, 1f) : 0f;
         int color = auraColor(data);
@@ -154,9 +155,12 @@ public final class MangaHud {
         int tabY = barY - 16;
         int tabW = tab(g, x - 2, tabY, Component.literal(state.getString().toUpperCase(Locale.ROOT)), ko ? 0xFF9A1E1E : INK);
         outlined(g, Component.translatable("hud.hxh.nen_level", data.nenLevel()), x + tabW + 4, tabY + 3, PAPER, 1f);
-        Component value = Component.literal((int) data.aura() + "/" + data.auraMax());
         int nenRight = x + tabW + 4 + font.width(Component.translatable("hud.hxh.nen_level", data.nenLevel()));
-        outlined(g, value, Math.max(nenRight + 8, x + barW - font.width(value)), tabY + 3, PAPER, 1f);
+        Component value = Component.literal((int) data.aura() + "/" + data.auraMax());
+        if (nenRight + 6 + font.width(value) > x + barW) value = Component.literal(String.valueOf((int) data.aura()));
+        if (nenRight + 6 + font.width(value) <= x + barW + 4) {
+            outlined(g, value, x + barW - font.width(value), tabY + 3, PAPER, 1f);
+        }
     }
 
     /** Onglet noir penché avec un texte blanc ; renvoie sa largeur. */
