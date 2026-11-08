@@ -77,6 +77,7 @@ public final class NenFxClient {
         NeoForge.EVENT_BUS.addListener(RenderLevelStageEvent.class, NenFxClient::onRender);
         NeoForge.EVENT_BUS.addListener(ClientTickEvent.Post.class, e -> tick());
         NeoForge.EVENT_BUS.addListener(ClientPlayerNetworkEvent.LoggingOut.class, e -> ACTIVE.clear());
+        ImpactFrameClient.register();
     }
 
     private static void add(NenFx.Payload p) {
@@ -84,6 +85,10 @@ public final class NenFxClient {
         if (mc.level == null) return;
         if (p.kindEnum() == NenFx.Kind.CLEAR) {
             ACTIVE.removeIf(f -> f.source == p.source() && f.kind == NenFx.Kind.CHARGE_ORB);
+            return;
+        }
+        if (p.kindEnum() == NenFx.Kind.IMPACT_FRAME) {
+            ImpactFrameClient.trigger(new Vec3(p.x(), p.y(), p.z()), p.duration());
             return;
         }
         ACTIVE.add(new Fx(p, mc.level.getGameTime()));
@@ -165,7 +170,8 @@ public final class NenFxClient {
             case NEEDLE -> needle(c, f, age);
             case FLARE -> flare(c, f, t);
             case CHARGE_ORB -> chargeOrb(c, f, age);
-            case CLEAR -> {}
+            case QUAKE -> quake(c, f, age);
+            case CLEAR, IMPACT_FRAME -> {}
         }
     }
 
@@ -554,5 +560,49 @@ public final class NenFxClient {
         }
         // Lueur sur le corps, sauf pour soi en vue subjective (elle teinterait tout l'écran)
         if (!firstPerson(src)) billboard(c, RenderType.eyes(GLOW), base.add(0, h * 0.5, 0), h * 0.8f * f.size, 0, f.color, 0.5f * (1f - t));
+    }
+
+    /**
+     * Les blocs du sol sautent en vague : chaque anneau (1, 2, 3… blocs du centre) se soulève puis retombe, un peu
+     * après le précédent. On dessine une copie du vrai bloc, soulevée et penchée, par-dessus.
+     */
+    private static void quake(Ctx c, Fx f, float age) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null) return;
+        int radius = Math.max(1, Math.round(f.size));
+        net.minecraft.core.BlockPos center = net.minecraft.core.BlockPos.containing(f.at.x, f.at.y - 0.5, f.at.z);
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                double d = Math.sqrt(dx * dx + dz * dz);
+                if (d > radius + 0.3 || d < 0.9) continue;
+                float local = age - (float) d * 1.6f;
+                if (local < 0 || local > 8) continue;
+                net.minecraft.core.BlockPos p = surface(mc.level, center.offset(dx, 0, dz));
+                if (p == null) continue;
+                net.minecraft.world.level.block.state.BlockState s = mc.level.getBlockState(p);
+                if (s.getRenderShape() != net.minecraft.world.level.block.RenderShape.MODEL) continue;
+                int h = (p.getX() * 73856093) ^ (p.getZ() * 19349663);
+                float lift = Mth.sin(local / 8f * Mth.PI) * (0.45f + 0.3f * ((h >>> 3) & 3) / 3f)
+                        * (1f - (float) d / (radius + 1) * 0.5f);
+                float tilt = lift * (((h >>> 7) & 1) == 0 ? 25f : -25f);
+                c.pose.pushPose();
+                c.pose.translate(p.getX() - c.cam.x, p.getY() - c.cam.y + lift, p.getZ() - c.cam.z);
+                c.pose.translate(0.5, 0.5, 0.5);
+                c.pose.mulPose(com.mojang.math.Axis.of(new Vector3f((float) -dz, 0, (float) dx).normalize()).rotationDegrees(tilt));
+                c.pose.translate(-0.5, -0.5, -0.5);
+                mc.getBlockRenderer().renderSingleBlock(s, c.pose, c.buffers,
+                        net.minecraft.client.renderer.LevelRenderer.getLightColor(mc.level, p.above()), OverlayTexture.NO_OVERLAY);
+                c.pose.popPose();
+            }
+        }
+    }
+
+    /** Bloc plein dont le dessus est libre, à deux blocs près de la hauteur donnée. */
+    private static net.minecraft.core.BlockPos surface(net.minecraft.world.level.Level level, net.minecraft.core.BlockPos start) {
+        for (int dy = 2; dy >= -2; dy--) {
+            net.minecraft.core.BlockPos p = start.offset(0, dy, 0);
+            if (!level.getBlockState(p).isAir() && level.getBlockState(p.above()).isAir()) return p;
+        }
+        return null;
     }
 }

@@ -43,7 +43,11 @@ public final class NenFx {
         /** Boule d'aura qui grossit à côté du lanceur pendant une charge (Pierre de Gon). */
         CHARGE_ORB,
         /** Efface les effets en cours du lanceur (fin de charge). */
-        CLEAR
+        CLEAR,
+        /** Les blocs du sol sautent en vague autour du point (coup lourd). Taille = rayon. */
+        QUAKE,
+        /** Image d'impact plein écran (éclair, lignes de vitesse) pour les joueurs proches de la cible. */
+        IMPACT_FRAME
     }
 
     /**
@@ -169,6 +173,17 @@ public final class NenFx {
 
     public static void needle(LivingEntity source, LivingEntity target, Vec3 at, int duration) {
         if (source.level() instanceof ServerLevel s) send(s, Kind.NEEDLE, source, target, at, 1f, WHITE, duration);
+    }
+
+    public static void quake(ServerLevel level, Vec3 at, float radius) {
+        send(level, Kind.QUAKE, null, null, at, radius, WHITE, (int) (radius * 2 + 10));
+    }
+
+    /** Image d'impact : vue par les joueurs à moins de 24 blocs de la cible. */
+    public static void impactFrame(LivingEntity source, LivingEntity target, int duration) {
+        if (source.level() instanceof ServerLevel s) {
+            send(s, Kind.IMPACT_FRAME, source, target, target.getBoundingBox().getCenter(), 1f, WHITE, duration);
+        }
     }
 
     public static void flare(LivingEntity entity, float size, int color) {

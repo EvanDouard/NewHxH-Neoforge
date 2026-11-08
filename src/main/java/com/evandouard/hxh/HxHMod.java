@@ -39,6 +39,8 @@ public final class HxHMod {
         com.evandouard.hxh.mob.MobPresets.registerEvents(NeoForge.EVENT_BUS);
         NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.tick.ServerTickEvent.Post.class,
                 e -> com.evandouard.hxh.hatsu.NenCharge.tickAll());
+        NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.tick.ServerTickEvent.Post.class,
+                e -> com.evandouard.hxh.combat.Impacts.tickAll());
         // Tour Céleste : posée par le mod dans une plaine, une fois par monde
         NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.server.ServerStartedEvent.class,
                 e -> com.evandouard.hxh.arena.TowerPlacer.ensurePlaced(e.getServer()));

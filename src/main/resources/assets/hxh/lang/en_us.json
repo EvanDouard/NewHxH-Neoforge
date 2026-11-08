@@ -720,5 +720,10 @@
   "technique.hxh.basic_charged": "Charged strike",
   "technique.hxh.basic_charged.desc": "Hold the key: the bar rises and falls; release in the green for a perfect strike. Endurance lowers the cooldown.",
   "technique.hxh.cond.melee": "Melee (3 blocks)",
-  "technique.hxh.cond.strike": "Hold, then release in the green"
+  "technique.hxh.cond.strike": "Hold, then release in the green",
+  "command.hxh.strike": "Charged strike (Strength tier: %s): %s damage",
+  "impact.hxh.weak": "weak",
+  "impact.hxh.medium": "medium",
+  "impact.hxh.heavy": "heavy",
+  "impact.hxh.devastating": "devastating"
 }

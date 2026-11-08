@@ -168,8 +168,9 @@ public final class Combat {
         if (target == null) return null; // coup dans le vide : il part quand même
         target.invulnerableTime = 0;
         target.hurt(meleeSource(attacker), baseAttack(attacker) * 0.7f + 1f);
-        project(attacker, target, projection(isStrong(attacker), Charge.NONE));
         com.evandouard.hxh.fx.NenFx.impactOn(attacker, target, 1.2f, com.evandouard.hxh.fx.NenFx.WHITE);
+        Projection proj = projection(isStrong(attacker), Charge.NONE);
+        Impacts.land(attacker, target, Impacts.tierOf(attacker).down(), () -> project(attacker, target, proj));
         return target;
     }
 
@@ -182,8 +183,9 @@ public final class Combat {
         if (target == null) return null;
         target.invulnerableTime = 0;
         target.hurt(meleeSource(attacker), baseAttack(attacker));
-        target.knockback(0.3, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
         com.evandouard.hxh.fx.NenFx.impactOn(attacker, target, 0.8f, com.evandouard.hxh.fx.NenFx.WHITE);
+        Impacts.land(attacker, target, Impacts.tierOf(attacker).atMost(Impacts.Tier.MEDIUM),
+                () -> target.knockback(0.3, attacker.getX() - target.getX(), attacker.getZ() - target.getZ()));
         return target;
     }
 
@@ -249,11 +251,14 @@ public final class Combat {
         float damage = baseAttack(attacker) * (1f + 2f * value);
         target.invulnerableTime = 0;
         target.hurt(meleeSource(attacker), damage);
-        project(attacker, target, projection(isStrong(attacker), perfect ? Charge.PERFECT : Charge.GOOD));
         // Étoile d'impact : dorée et grosse pour une frappe parfaite, avec onde au sol
         com.evandouard.hxh.fx.NenFx.impactOn(attacker, target, perfect ? 2.4f : 1.6f,
                 perfect ? com.evandouard.hxh.fx.NenFx.GOLD : com.evandouard.hxh.fx.NenFx.WHITE);
         if (perfect) com.evandouard.hxh.fx.NenFx.shockwave(target, 2.5f, com.evandouard.hxh.fx.NenFx.GOLD);
+        // Palier d'impact selon la Force (un de moins si la frappe n'est pas parfaite)
+        Projection proj = projection(isStrong(attacker), perfect ? Charge.PERFECT : Charge.GOOD);
+        Impacts.Tier tier = perfect ? Impacts.tierOf(attacker) : Impacts.tierOf(attacker).down();
+        Impacts.land(attacker, target, tier, () -> project(attacker, target, proj));
         return damage;
     }
 

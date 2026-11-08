@@ -720,5 +720,10 @@
   "technique.hxh.basic_charged": "Frappe chargée",
   "technique.hxh.basic_charged.desc": "Maintiens la touche : la barre monte et redescend ; relâche dans le vert pour une frappe parfaite. L'Endurance réduit la recharge.",
   "technique.hxh.cond.melee": "Corps à corps (3 blocs)",
-  "technique.hxh.cond.strike": "Maintenir puis relâcher dans le vert"
+  "technique.hxh.cond.strike": "Maintenir puis relâcher dans le vert",
+  "command.hxh.strike": "Frappe chargée (palier de Force : %s) : %s dégâts",
+  "impact.hxh.weak": "faible",
+  "impact.hxh.medium": "moyen",
+  "impact.hxh.heavy": "lourd",
+  "impact.hxh.devastating": "dévastateur"
 }

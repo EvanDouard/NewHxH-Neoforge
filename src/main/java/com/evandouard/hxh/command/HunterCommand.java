@@ -143,6 +143,19 @@ public final class HunterCommand {
                                                 .executes(ctx -> spawnPreset(ctx.getSource(), StringArgumentType.getString(ctx, "preset"),
                                                         net.minecraft.commands.arguments.coordinates.Vec3Argument.getVec3(ctx, "pos"),
                                                         IntegerArgumentType.getInteger(ctx, "count")))))))
+                // Frappe chargée immédiate avec une valeur de barre donnée (tests des paliers d'impact)
+                .then(Commands.literal("strike").requires(s -> s.hasPermission(2))
+                        .then(Commands.argument("value", com.mojang.brigadier.arguments.FloatArgumentType.floatArg(0f, 1f))
+                                .executes(ctx -> {
+                                    if (!(ctx.getSource().getEntityOrException() instanceof LivingEntity living)) return 0;
+                                    float value = com.mojang.brigadier.arguments.FloatArgumentType.getFloat(ctx, "value");
+                                    com.evandouard.hxh.combat.Impacts.Tier tier = com.evandouard.hxh.combat.Impacts.tierOf(living);
+                                    float dmg = com.evandouard.hxh.combat.Combat.chargedStrike(living, value);
+                                    ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.strike",
+                                            Component.translatable("impact.hxh." + tier.name().toLowerCase(java.util.Locale.ROOT)),
+                                            String.format(java.util.Locale.ROOT, "%.1f", dmg)), false);
+                                    return dmg > 0 ? 1 : 0;
+                                })))
                 // Joue une animation de combat sur des entités (tests, mise en scène)
                 .then(Commands.literal("anim").requires(s -> s.hasPermission(2))
                         .then(Commands.argument("targets", EntityArgument.entities())

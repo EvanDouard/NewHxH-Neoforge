@@ -172,6 +172,38 @@ shot 13i_hud_notifications
 wait 20
 look 0 0
 
+# --- Paliers d'impact : Force en % du max (lourd = blocs qui sautent, dévastateur = image d'impact et cratère) ---
+clearchat
+cmd difficulty easy
+cmd hunter spawn mannequin ~-3 ~ ~
+look 90 20
+wait 10
+cmd hunter stat strength set 60
+cmd hunter strike 1
+wait 4
+expect lourd
+shot 13j_impact_lourd_blocs_qui_sautent
+wait 20
+cmd tp @e[type=minecraft:husk,distance=..12] ~-3 ~ ~
+cmd hunter stat strength set 100
+clearchat
+wait 5
+cmd hunter strike 1
+wait 2
+expect [hud] Image d'impact
+shot 13k_image_impact
+wait 5
+shot 13l_image_impact_negatif
+wait 25
+shot 13m_cratere_apres_impact
+cmd kill @e[type=minecraft:husk,distance=..30]
+cmd fill ~-7 ~-3 ~-4 ~-1 ~-2 ~4 minecraft:dirt
+cmd fill ~-7 ~-1 ~-4 ~-1 ~-1 ~4 minecraft:grass_block
+cmd hunter stat strength set 30
+cmd difficulty peaceful
+wait 10
+look 0 0
+
 # --- Mobs d'exemple ---
 clearchat
 look 0 10
