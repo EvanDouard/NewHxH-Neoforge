@@ -146,7 +146,10 @@ public final class CombatTests {
         helper.assertTrue(!Combat.applyFearIfThreatened(weak), "Aura au repos, pas regardé : pas de peur");
         // Il le regarde : présence écrasante (écart ≥ 40) → peur, comme le loup chimère devant le Roi
         face(weak, strong);
-        helper.assertTrue(Combat.isLookingAt(weak, strong), "Le faible regarde le fort");
+        net.minecraft.world.phys.Vec3 lv = weak.getViewVector(1f);
+        helper.assertTrue(Combat.isLookingAt(weak, strong), "Le faible regarde le fort (vue " + lv + ", yaw " + weak.getYRot()
+                + "/" + weak.getYHeadRot() + ", ligne de vue " + weak.hasLineOfSight(strong) + ", vers "
+                + strong.getEyePosition().subtract(weak.getEyePosition()) + ")");
         helper.assertTrue(Combat.applyFearIfThreatened(weak), "Rien qu'à la vue : peur");
         weak.removeEffect(ModEffects.FEAR);
         // Zetsu : présence masquée
