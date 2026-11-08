@@ -91,6 +91,7 @@ public final class CiAutopilot {
             NeoForge.EVENT_BUS.addListener(ClientTickEvent.Post.class, pilot::onTick);
             NeoForge.EVENT_BUS.addListener(ClientChatReceivedEvent.class,
                     e -> pilot.received.add(e.getMessage().getString()));
+            com.evandouard.hxh.client.MangaHud.listener = pilot.received::add;
         } catch (IOException e) {
             HxHMod.LOGGER.error("[HxH CI] Impossible de lire le scénario {}", scenario, e);
         }

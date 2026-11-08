@@ -58,6 +58,7 @@ public final class NenClient {
     public static void register(IEventBus modBus) {
         modBus.addListener(NenClient::onRegisterKeys);
         modBus.addListener(NenClient::onRegisterLayers);
+        MangaHud.register(modBus);
         modBus.addListener(NenClient::onRegisterBlockColors);
         modBus.addListener(EntityRenderersEvent.AddLayers.class, AuraLayer::addToRenderers);
         modBus.addListener(EntityRenderersEvent.RegisterRenderers.class,
@@ -86,10 +87,8 @@ public final class NenClient {
     }
 
     private static void onRegisterLayers(RegisterGuiLayersEvent event) {
-        event.registerAbove(VanillaGuiLayers.HOTBAR, HxHMod.id("aura_bar"), NenClient::renderAuraBar);
         event.registerAbove(VanillaGuiLayers.HOTBAR, HxHMod.id("technique_box"), NenClient::renderTechniqueBox);
         event.registerAbove(VanillaGuiLayers.CROSSHAIR, HxHMod.id("strike_bar"), NenClient::renderStrikeBar);
-        event.registerAbove(VanillaGuiLayers.HOTBAR, HxHMod.id("quest_tracker"), NenClient::renderQuestTracker);
     }
 
     private static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
@@ -183,18 +182,21 @@ public final class NenClient {
         if (held < com.evandouard.hxh.combat.Combat.CHARGE_MIN_TICKS) return;
         float value = com.evandouard.hxh.combat.Combat.chargeValue(held);
         int w = 60;
-        int h = 5;
+        int h = 6;
         int x = graphics.guiWidth() / 2 - w / 2;
         int y = graphics.guiHeight() / 2 + 12;
         int fail = (int) (w * com.evandouard.hxh.combat.Combat.CHARGE_FAIL_BELOW);
         int perfect = (int) (w * com.evandouard.hxh.combat.Combat.CHARGE_PERFECT_FROM);
-        graphics.fill(x - 1, y - 1, x + w + 1, y + h + 1, 0xC0000000);
-        graphics.fill(x, y, x + fail, y + h, 0x60FF3030);
-        graphics.fill(x + perfect, y, x + w, y + h, 0x6030FF30);
+        graphics.fill(x + 1, y + 1, x + w + 3, y + h + 3, MangaHud.INK);
+        graphics.fill(x - 2, y - 2, x + w + 2, y + h + 2, MangaHud.INK);
+        graphics.fill(x, y, x + w, y + h, MangaHud.PAPER);
+        graphics.fill(x, y, x + fail, y + h, 0xFFFFC9C0);
+        graphics.fill(x + perfect, y, x + w, y + h, 0xFFC8F5D2);
         int fill = (int) (w * value);
-        int color = value < com.evandouard.hxh.combat.Combat.CHARGE_FAIL_BELOW ? 0xFFFF5555
-                : value >= com.evandouard.hxh.combat.Combat.CHARGE_PERFECT_FROM ? 0xFF55FF55 : 0xFFFFD27F;
+        int color = value < com.evandouard.hxh.combat.Combat.CHARGE_FAIL_BELOW ? 0xFFFF5A3C
+                : value >= com.evandouard.hxh.combat.Combat.CHARGE_PERFECT_FROM ? 0xFF52D273 : MangaHud.GOLD;
         graphics.fill(x, y + 1, x + fill, y + h - 1, color);
+        graphics.fill(x + perfect, y - 2, x + perfect + 1, y + h + 2, MangaHud.INK);
     }
 
     /** Encart en bas à droite : technique sélectionnée, coût et état. */
@@ -215,21 +217,21 @@ public final class NenClient {
         long now = mc.level.getGameTime();
         String refusal = Hatsu.castRefusal(data, technique, now);
 
-        graphics.fill(x, y, x + w, y + h, 0xB0000000);
-        graphics.fill(x, y, x + 2, y + h, refusal == null ? 0xFF55FF77 : 0xFFFF5555);
+        MangaHud.panel(graphics, x, y, w, h, MangaHud.PAPER, 3);
+        graphics.fill(x + 2, y + 2, x + 6, y + h - 2, refusal == null ? 0xFF52D273 : 0xFFFF5A3C);
 
         int index = Math.floorMod(data.selected(), kit.techniques().size()) + 1;
         Component counter = Component.literal(index + "/" + kit.techniques().size());
         int counterWidth = mc.font.width(counter);
-        graphics.drawString(mc.font, counter, x + w - 4 - counterWidth, y + 4, 0xFF9A9A9A, true);
+        graphics.drawString(mc.font, counter, x + w - 5 - counterWidth, y + 5, 0xFF777777, false);
         // Nom tronqué avec « … » s'il déborde sur le compteur
         String name = Component.translatable(technique.translationKey()).getString();
-        int maxName = w - 6 - counterWidth - 10;
+        int maxName = w - 10 - counterWidth - 10;
         if (mc.font.width(name) > maxName) name = mc.font.plainSubstrByWidth(name, maxName - mc.font.width("…")) + "…";
-        graphics.drawString(mc.font, name, x + 6, y + 4, 0xFFFFD27F, true);
+        graphics.drawString(mc.font, Component.literal(name).withStyle(net.minecraft.ChatFormatting.BOLD), x + 10, y + 5, MangaHud.INK, false);
 
         graphics.drawString(mc.font, Component.translatable("hud.hxh.technique_cost", technique.auraCost()),
-                x + 6, y + 14, 0xFFBFE6FF, true);
+                x + 10, y + 14, 0xFF1F6FA8, false);
 
         Component state;
         if (refusal == null) {
@@ -242,7 +244,7 @@ public final class NenClient {
         } else {
             state = Component.translatable(refusal);
         }
-        graphics.drawString(mc.font, state, x + 6, y + 24, refusal == null ? 0xFF7CFF8A : 0xFFFF7A7A, true);
+        graphics.drawString(mc.font, state, x + 10, y + 23, refusal == null ? 0xFF1E8A3A : 0xFFB3261E, false);
     }
 
     private static void renderAuraBar(GuiGraphics graphics, DeltaTracker delta) {

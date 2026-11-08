@@ -153,9 +153,17 @@ wait 10
 hold key.hxh.strike
 wait 14
 shot 13f_frappe_armee_vue_subjective
+clearchat
 release key.hxh.strike
 wait 2
 shot 13g_frappe_chargee_vue_subjective
+expect [hud]
+clearchat
+cmd hunter stat strength addxp 3000
+cmd hunter stat speed addxp 3000
+wait 10
+expect [hud] Force
+shot 13i_hud_notifications
 wait 20
 look 0 0
 

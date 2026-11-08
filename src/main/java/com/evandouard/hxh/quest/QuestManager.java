@@ -66,6 +66,8 @@ public final class QuestManager {
         d.refocus();
         player.sendSystemMessage(Component.translatable("message.hxh.quest_started",
                 Component.translatable(q.titleKey())).withStyle(ChatFormatting.GOLD));
+        com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.new_quest"),
+                Component.translatable(q.titleKey()), "!", com.evandouard.hxh.network.Hud.GOLD);
         sync(player);
         return true;
     }
@@ -298,10 +300,12 @@ public final class QuestManager {
             d.step = 0;
             player.sendSystemMessage(Component.translatable("message.hxh.quest_completed",
                     Component.translatable(q.titleKey())).withStyle(ChatFormatting.GOLD));
+            com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.quest_done"),
+                    Component.translatable(q.titleKey()), "★", com.evandouard.hxh.network.Hud.GOLD);
         } else {
             Quest.Step next = q.steps().get(d.step);
-            player.sendSystemMessage(Component.translatable("message.hxh.quest_next",
-                    Component.translatable(q.stepKey(next))).withStyle(ChatFormatting.AQUA));
+            com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.new_step"),
+                    Component.translatable(q.stepKey(next)), "!", com.evandouard.hxh.network.Hud.GOLD);
             if (next.type().equals("follow")) {
                 NpcEntity guide = findNpc(player, next.npc(), 96);
                 if (guide != null) guide.resetRoute();

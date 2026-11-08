@@ -17,6 +17,7 @@ public final class HxHNetwork {
         registrar.playToClient(QuestStatusPayload.TYPE, QuestStatusPayload.STREAM_CODEC, QuestStatusPayload::handle);
         registrar.playToClient(DamageNumberPayload.TYPE, DamageNumberPayload.STREAM_CODEC, DamageNumberPayload::handle);
         registrar.playToServer(TrackQuestPayload.TYPE, TrackQuestPayload.STREAM_CODEC, TrackQuestPayload::handle);
+        registrar.playToClient(HudPayload.TYPE, HudPayload.STREAM_CODEC, HudPayload::handle);
         registrar.playToClient(ProfilePayload.TYPE, ProfilePayload.STREAM_CODEC, ProfilePayload::handle);
         registrar.playToServer(RequestProfilePayload.TYPE, RequestProfilePayload.STREAM_CODEC, RequestProfilePayload::handle);
         registrar.playToClient(OpenElevatorPayload.TYPE, OpenElevatorPayload.STREAM_CODEC, OpenElevatorPayload::handle);

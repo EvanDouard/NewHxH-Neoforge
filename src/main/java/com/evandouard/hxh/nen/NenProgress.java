@@ -31,7 +31,8 @@ public final class NenProgress {
         amount = withTalent(entity, amount);
         if (amount <= 0) return;
         if (data.addNenXp(amount) > 0 && entity instanceof Player player) {
-            player.displayClientMessage(Component.translatable("message.hxh.nen_level_up", data.nenLevel()), true);
+            com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.nen"),
+                    Component.translatable("hud.hxh.toast.level", data.nenLevel()), "+1", com.evandouard.hxh.network.Hud.BLUE);
         }
     }
 
@@ -41,8 +42,8 @@ public final class NenProgress {
         if (!data.nenUnlocked() || amount <= 0) return;
         int masteryXp = withTalent(entity, amount);
         if (masteryXp > 0 && data.addMasteryXp(mastery, masteryXp) > 0 && entity instanceof Player player) {
-            player.displayClientMessage(Component.translatable("message.hxh.mastery_level_up",
-                    Component.translatable(mastery.translationKey()), data.masteryLevel(mastery)), true);
+            com.evandouard.hxh.network.Hud.toast(player, Component.translatable(mastery.translationKey()),
+                    Component.translatable("hud.hxh.toast.level", data.masteryLevel(mastery)), "+1", com.evandouard.hxh.network.Hud.PURPLE);
         }
         addNenXp(entity, amount);
     }

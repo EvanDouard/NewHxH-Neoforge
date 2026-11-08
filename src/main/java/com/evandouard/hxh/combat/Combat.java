@@ -79,12 +79,14 @@ public final class Combat {
         float factor = 1f + 0.05f * (count - 1);
         if (count >= COMBO_MAX) {
             victim.knockback(1.2, attacker.getX() - victim.getX(), attacker.getZ() - victim.getZ());
-            if (attacker instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.combo_finisher"), true);
+            com.evandouard.hxh.network.Hud.callout(attacker, Component.translatable("message.hxh.combo_finisher"),
+                    com.evandouard.hxh.network.Hud.RED, true);
             COMBOS.remove(attacker);
         } else {
             COMBOS.put(attacker, new Combo(victim.getId(), count, now));
-            if (count >= 2 && attacker instanceof Player p) {
-                p.displayClientMessage(Component.translatable("message.hxh.combo", count), true);
+            if (count >= 2) {
+                com.evandouard.hxh.network.Hud.callout(attacker, Component.translatable("message.hxh.combo", count),
+                        0xFFFFFFFF, false);
             }
         }
         return factor;
@@ -204,13 +206,14 @@ public final class Combat {
         if (value < CHARGE_FAIL_BELOW) {
             CombatAnimations.play(attacker, CombatAnim.STOP);
             attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
-            if (attacker instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.strike_failed"), true);
+            com.evandouard.hxh.network.Hud.callout(attacker, Component.translatable("message.hxh.strike_failed"), 0xFF9A9A9A, false);
             return 0f;
         }
         boolean perfect = value >= CHARGE_PERFECT_FROM;
         CombatAnimations.play(attacker, CombatAnim.CHARGED_PUNCH);
         if (attacker instanceof Player p) {
-            p.displayClientMessage(Component.translatable(perfect ? "message.hxh.strike_perfect" : "message.hxh.strike_good"), true);
+            com.evandouard.hxh.network.Hud.callout(p, Component.translatable(perfect ? "message.hxh.strike_perfect" : "message.hxh.strike_good"),
+                    perfect ? com.evandouard.hxh.network.Hud.GOLD : 0xFFFFFFFF, perfect);
         }
         attacker.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
                 perfect ? SoundEvents.PLAYER_ATTACK_CRIT : SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS, 1f, 1f);

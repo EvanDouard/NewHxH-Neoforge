@@ -39,8 +39,9 @@ public final class HunterStats {
         if (gained > 0) {
             applyAttributes(entity);
             if (entity instanceof Player player) {
-                player.displayClientMessage(Component.translatable("message.hxh.stat_level_up",
-                        Component.translatable(stat.translationKey()), data.level(stat)), true);
+                com.evandouard.hxh.network.Hud.toast(player, Component.translatable(stat.translationKey()),
+                        Component.translatable("hud.hxh.toast.level", data.level(stat)), "+" + gained,
+                        com.evandouard.hxh.network.Hud.statColor(stat));
             }
         }
     }

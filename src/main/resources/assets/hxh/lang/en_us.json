@@ -667,5 +667,12 @@
   "command.hxh.spawn_unknown": "Unknown example mob: %s. Available: %s",
   "message.hxh.fear.0": "%s's presence makes you uneasy…",
   "message.hxh.fear.1": "%s's aura chills you to the bone!",
-  "message.hxh.fear.2": "Terror: before %s, your body refuses to move!"
+  "message.hxh.fear.2": "Terror: before %s, your body refuses to move!",
+  "hud.hxh.toast.level": "Level %s",
+  "hud.hxh.toast.nen": "Nen",
+  "hud.hxh.toast.heal": "Nen healing",
+  "hud.hxh.toast.new_step": "New step",
+  "hud.hxh.toast.new_quest": "New quest",
+  "hud.hxh.toast.quest_done": "Quest complete",
+  "hud.hxh.nen_level": "Nen %s"
 }

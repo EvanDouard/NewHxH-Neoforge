@@ -667,5 +667,12 @@
   "command.hxh.spawn_unknown": "Mob d'exemple inconnu : %s. Disponibles : %s",
   "message.hxh.fear.0": "La présence de %s vous met mal à l'aise…",
   "message.hxh.fear.1": "L'aura de %s vous glace le sang !",
-  "message.hxh.fear.2": "Terreur : face à %s, votre corps refuse de bouger !"
+  "message.hxh.fear.2": "Terreur : face à %s, votre corps refuse de bouger !",
+  "hud.hxh.toast.level": "Niveau %s",
+  "hud.hxh.toast.nen": "Nen",
+  "hud.hxh.toast.heal": "Soin par le Nen",
+  "hud.hxh.toast.new_step": "Nouvelle étape",
+  "hud.hxh.toast.new_quest": "Nouvelle quête",
+  "hud.hxh.toast.quest_done": "Quête terminée",
+  "hud.hxh.nen_level": "Nen %s"
 }

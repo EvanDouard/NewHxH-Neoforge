@@ -88,7 +88,8 @@ public final class NenHealing {
             NenProgress.addNenXp(entity, 1);
             int gained = data.addHealXp(2 + level / 10);
             if (gained > 0 && entity instanceof Player player) {
-                player.displayClientMessage(Component.translatable("message.hxh.heal_level_up", data.healLevel()), true);
+                com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.heal"),
+                        Component.translatable("hud.hxh.toast.level", data.healLevel()), "+1", com.evandouard.hxh.network.Hud.GREEN);
             }
         }
     }
