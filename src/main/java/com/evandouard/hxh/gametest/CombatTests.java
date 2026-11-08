@@ -134,7 +134,7 @@ public final class CombatTests {
     @GameTest(template = "empty")
     public static void overwhelmingAuraCausesFear(GameTestHelper helper) {
         Zombie weak = husk(helper, 0);
-        Zombie strong = husk(helper, 4);
+        Zombie strong = husk(helper, 2); // gabarit 3×3×3 entouré de barrières : rester dedans
         weak.setNoAi(true);
         strong.setNoAi(true);
         NenModes.unlock(strong);
