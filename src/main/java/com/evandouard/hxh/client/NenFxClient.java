@@ -522,8 +522,8 @@ public final class NenFxClient {
         Vec3 at;
         if (firstPerson(src)) {
             // à droite, devant : visible sans boucher la vue
-            at = src.getEyePosition(c.pt).add(look.scale(2.6)).add(right.scale(1.5)).add(0, -0.6, 0);
-            half *= 0.7f;
+            at = src.getEyePosition(c.pt).add(look.scale(4.0)).add(right.scale(1.3)).add(0, -0.4, 0);
+            half *= 0.6f;
         } else {
             at = center(src, c.pt).add(right.scale(0.5 + half)).add(look.scale(0.3));
         }
