@@ -522,6 +522,10 @@ public final class NenFxClient {
         if (!firstPerson(src)) {
             Vec3 look = src.getViewVector(c.pt);
             at = at.add(look.scale(0.25));
+        } else {
+            // Vue subjective : la boule est tout près des yeux, on la dessine plus petite et un peu plus loin
+            at = at.add(src.getViewVector(c.pt).scale(0.6));
+            half *= 0.45f;
         }
         int color = colors[tier];
         billboard(c, RenderType.eyes(GLOW), at, half * 2.6f, 0, color, 0.85f);
