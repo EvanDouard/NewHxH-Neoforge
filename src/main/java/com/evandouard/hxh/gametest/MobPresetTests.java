@@ -65,4 +65,19 @@ public class MobPresetTests {
         archer.discard();
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void dummyNeverDiesButKillCommandWorks(GameTestHelper helper) {
+        LivingEntity dummy = spawn(helper, "mannequin", 1);
+        dummy.hurt(helper.getLevel().damageSources().generic(), 10000f);
+        helper.assertTrue(dummy.isAlive() && dummy.getHealth() > 0, "Le mannequin encaisse sans mourir");
+        dummy.kill(); // /kill : on peut quand même le retirer
+        helper.assertTrue(!dummy.isAlive(), "/kill le retire");
+        // PNJ de quête : aucun effet ne les touche
+        com.evandouard.hxh.npc.NpcEntity npc = helper.spawn(com.evandouard.hxh.registry.ModEntities.NPC.get(), new net.minecraft.core.BlockPos(2, 1, 1));
+        npc.addEffect(new net.minecraft.world.effect.MobEffectInstance(com.evandouard.hxh.effect.ModEffects.FEAR, 100));
+        helper.assertTrue(!npc.hasEffect(com.evandouard.hxh.effect.ModEffects.FEAR), "PNJ insensible à la peur");
+        npc.discard();
+        helper.succeed();
+    }
 }

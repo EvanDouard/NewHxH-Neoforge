@@ -40,7 +40,9 @@ import java.util.Map;
  *   "stats": { "all": 10, "strength": 50 },           // niveaux 0 à 90 ; "all" = valeur par défaut
  *   "nen": { "level": 30, "kit": "gon", "mastery": 20, "mode": "ten" },   // optionnel ; "type" si pas de kit
  *   "equipment": { "mainhand": "minecraft:iron_sword", "head": "minecraft:iron_helmet" },   // optionnel
- *   "no_ai": false, "knockback_resistance": 0.0, "persistent": true
+ *   "no_ai": false, "knockback_resistance": 0.0, "persistent": true,
+ *   "dummy": false                                     // mannequin : ne meurt pas, se régénère, retiré par
+ *                                                      // accroupi + clic droit main vide (ou /kill)
  * }
  * </pre>
  * Le nom affiché est la traduction {@code mob_preset.<namespace>.<nom>}.
@@ -48,7 +50,10 @@ import java.util.Map;
 public record MobPreset(ResourceLocation id, ResourceLocation entity, Map<Stat, Integer> stats,
                         int nenLevel, @Nullable String kit, @Nullable NenType nenType, int mastery,
                         @Nullable NenMode mode, Map<EquipmentSlot, ResourceLocation> equipment,
-                        boolean noAi, double knockbackResistance, boolean persistent) {
+                        boolean noAi, double knockbackResistance, boolean persistent, boolean dummy) {
+
+    /** Étiquette des mannequins : ils encaissent (on voit les dégâts) mais ne meurent pas. */
+    public static final String DUMMY_TAG = "hxh_dummy";
 
     public String nameKey() {
         return "mob_preset." + id.getNamespace() + "." + id.getPath();
@@ -91,7 +96,8 @@ public record MobPreset(ResourceLocation id, ResourceLocation entity, Map<Stat, 
         return new MobPreset(id, entity, stats, nenLevel, kit, type, mastery, mode, equipment,
                 GsonHelper.getAsBoolean(json, "no_ai", false),
                 GsonHelper.getAsDouble(json, "knockback_resistance", 0.0),
-                GsonHelper.getAsBoolean(json, "persistent", true));
+                GsonHelper.getAsBoolean(json, "persistent", true),
+                GsonHelper.getAsBoolean(json, "dummy", false));
     }
 
     private static int clamp(int level) {
@@ -140,6 +146,7 @@ public record MobPreset(ResourceLocation id, ResourceLocation entity, Map<Stat, 
             if (persistent) mob.setPersistenceRequired();
         }
         living.setHealth(living.getMaxHealth());
+        if (dummy) living.addTag(DUMMY_TAG);
         living.setCustomName(Component.translatable(nameKey()));
         living.setCustomNameVisible(true);
         level.addFreshEntity(living);

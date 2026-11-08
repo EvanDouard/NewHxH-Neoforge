@@ -25,6 +25,38 @@ public final class MobPresets extends SimpleJsonResourceReloadListener {
         event.addListener(new MobPresets());
     }
 
+    /** Comportement des mannequins d'entraînement. */
+    public static void registerEvents(net.neoforged.bus.api.IEventBus bus) {
+        // Ne meurt jamais (sauf /kill) : on voit les dégâts, puis il revient à fond
+        bus.addListener(net.neoforged.neoforge.event.entity.living.LivingDeathEvent.class, e -> {
+            net.minecraft.world.entity.LivingEntity l = e.getEntity();
+            if (l.getTags().contains(MobPreset.DUMMY_TAG)
+                    && !e.getSource().is(net.minecraft.world.damagesource.DamageTypes.GENERIC_KILL)) {
+                e.setCanceled(true);
+                l.setHealth(l.getMaxHealth());
+            }
+        });
+        // Très forte régénération : 10 % de sa vie par seconde
+        bus.addListener(net.neoforged.neoforge.event.tick.EntityTickEvent.Post.class, e -> {
+            if (e.getEntity() instanceof net.minecraft.world.entity.LivingEntity l && !l.level().isClientSide()
+                    && l.tickCount % 10 == 0 && l.getTags().contains(MobPreset.DUMMY_TAG) && l.getHealth() < l.getMaxHealth()) {
+                l.heal(l.getMaxHealth() * 0.05f);
+            }
+        });
+        // Accroupi + clic droit main vide : on le range
+        bus.addListener(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.EntityInteract.class, e -> {
+            if (e.getTarget().getTags().contains(MobPreset.DUMMY_TAG) && e.getEntity().isShiftKeyDown()
+                    && e.getItemStack().isEmpty() && e.getHand() == net.minecraft.world.InteractionHand.MAIN_HAND) {
+                if (!e.getLevel().isClientSide()) {
+                    e.getTarget().discard();
+                    e.getEntity().displayClientMessage(net.minecraft.network.chat.Component.translatable("message.hxh.dummy_removed"), true);
+                }
+                e.setCanceled(true);
+                e.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+            }
+        });
+    }
+
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> files, ResourceManager manager, ProfilerFiller profiler) {
         Map<ResourceLocation, MobPreset> map = new TreeMap<>();

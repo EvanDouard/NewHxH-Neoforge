@@ -17,8 +17,12 @@ public final class HxHConfig {
             .defineInRange("stats.strengthDamagePerLevel", 0.1, 0.0, 10.0);
 
     public static final ModConfigSpec.DoubleValue SPEED_PERCENT_PER_LEVEL = BUILDER
-            .comment("Vitesse de déplacement ajoutée par niveau de Vitesse (0.004 = +0,4 %)")
-            .defineInRange("stats.speedPercentPerLevel", 0.004, 0.0, 0.1);
+            .comment("Vitesse de déplacement ajoutée par niveau de Vitesse (0.015 = +1,5 %, soit +150 % au niveau 100)")
+            .defineInRange("stats.speedPercentPerLevel", 0.015, 0.0, 0.1);
+
+    public static final ModConfigSpec.DoubleValue STEP_UP_FROM_SPEED_BONUS = BUILDER
+            .comment("Bonus de vitesse à partir duquel on monte les blocs d'un coup, comme un cheval (0.35 = +35 %)")
+            .defineInRange("stats.stepUpFromSpeedBonus", 0.35, 0.0, 10.0);
 
     public static final ModConfigSpec.DoubleValue ENDURANCE_FLAT_PER_LEVEL = BUILDER
             .comment("Résistance plate aux attaques par niveau d'Endurance, en PV (0.05 = 5 PV au niveau 100)")

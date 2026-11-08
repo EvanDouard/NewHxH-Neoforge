@@ -22,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 public final class HunterStats {
     private static final ResourceLocation STRENGTH_ID = HxHMod.id("stat_strength");
     private static final ResourceLocation SPEED_ID = HxHMod.id("stat_speed");
+    private static final ResourceLocation STEP_ID = HxHMod.id("stat_speed_step");
     private static final ResourceLocation VITALITY_ID = HxHMod.id("stat_vitality");
 
     private HunterStats() {}
@@ -57,9 +58,11 @@ public final class HunterStats {
         setModifier(entity, Attributes.ATTACK_DAMAGE, STRENGTH_ID,
                 data.level(Stat.STRENGTH) * HxHConfig.STRENGTH_DAMAGE_PER_LEVEL.get(),
                 AttributeModifier.Operation.ADD_VALUE);
-        setModifier(entity, Attributes.MOVEMENT_SPEED, SPEED_ID,
-                data.level(Stat.SPEED) * HxHConfig.SPEED_PERCENT_PER_LEVEL.get(),
-                AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+        double speedBonus = data.level(Stat.SPEED) * HxHConfig.SPEED_PERCENT_PER_LEVEL.get() * data.speedCap();
+        setModifier(entity, Attributes.MOVEMENT_SPEED, SPEED_ID, speedBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+        // Très rapide : on monte les blocs d'un coup, comme un cheval
+        setModifier(entity, Attributes.STEP_HEIGHT, STEP_ID,
+                speedBonus >= HxHConfig.STEP_UP_FROM_SPEED_BONUS.get() ? 0.5 : 0, AttributeModifier.Operation.ADD_VALUE);
         setModifier(entity, Attributes.MAX_HEALTH, VITALITY_ID,
                 data.level(Stat.VITALITY) * HxHConfig.VITALITY_HEALTH_PER_LEVEL.get(),
                 AttributeModifier.Operation.ADD_VALUE);

@@ -68,6 +68,11 @@ public abstract class Technique {
         return Double.MAX_VALUE;
     }
 
+    /** Technique qu'on charge en maintenant la touche ({@link NenCharge}) : la recharge part au relâchement. */
+    public boolean isCharged() {
+        return false;
+    }
+
     /** Technique de soin : un mob ne la lance que s'il est blessé. */
     public boolean isHeal() {
         return false;

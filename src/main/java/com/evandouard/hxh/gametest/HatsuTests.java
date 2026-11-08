@@ -61,21 +61,47 @@ public final class HatsuTests {
         helper.succeed();
     }
 
-    @GameTest(template = "empty")
+    @GameTest(template = "empty", timeoutTicks = 120)
     public static void castHitsTargetCostsAuraAndCoolsDown(GameTestHelper helper) {
+        // Ciseaux : lame d'aura lancée tout droit, coût et recharge immédiats
         Zombie gon = husk(helper, 0);
         Zombie target = husk(helper, 2);
         HunterData d = hunter(gon, NenType.ENHANCER, "gon");
+        d.setSelected(1);
         float aura = d.aura();
         float health = target.getHealth();
-
-        helper.assertTrue(Hatsu.cast(gon) == null, "Jajanken Pierre aurait dû partir");
-        helper.assertTrue(target.getHealth() < health, "La cible aurait dû prendre des dégâts");
-        helper.assertTrue(Math.abs(d.aura() - (aura - Techniques.GON_ROCK.auraCost())) < 0.01,
-                "Le coût en aura doit être retiré");
-        helper.assertTrue(d.readyAt("gon_rock") > helper.getLevel().getGameTime(), "La recharge doit démarrer");
+        helper.assertTrue(Hatsu.cast(gon) == null, "Ciseaux aurait dû partir");
+        helper.assertTrue(Math.abs(d.aura() - (aura - Techniques.GON_SCISSORS.auraCost())) < 0.01, "Coût retiré");
+        helper.assertTrue(d.readyAt("gon_scissors") > helper.getLevel().getGameTime(), "La recharge doit démarrer");
         helper.assertTrue("message.hxh.hatsu_cooldown".equals(Hatsu.cast(gon)), "Second lancement : en recharge");
-        helper.succeed();
+        helper.succeedWhen(() -> helper.assertTrue(target.getHealth() < health, "La lame aurait dû toucher la cible"));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 160)
+    public static void rockChargesInPlaceThenThrowsOrb(GameTestHelper helper) {
+        Zombie gon = husk(helper, 0);
+        Zombie target = husk(helper, 2);
+        HunterData d = hunter(gon, NenType.ENHANCER, "gon");
+        d.setSelected(0);
+        float health = target.getHealth();
+        helper.assertTrue(Hatsu.cast(gon) == null, "La Pierre commence à charger");
+        helper.assertTrue(com.evandouard.hxh.hatsu.NenCharge.isCharging(gon), "En charge");
+        helper.assertTrue(gon.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED) <= 1e-6,
+                "Figé sur place pendant la charge");
+        float before = d.aura();
+        helper.runAfterDelay(20, () -> {
+            helper.assertTrue(d.aura() < before - 20, "L'aura part en continu pendant la charge (" + d.aura() + ")");
+            float spent = com.evandouard.hxh.hatsu.NenCharge.spent(gon);
+            Hatsu.releaseCast(gon);
+            helper.assertTrue(!com.evandouard.hxh.hatsu.NenCharge.isCharging(gon), "Relâchée");
+            helper.assertTrue(spent >= 30, "Aura mise dans le coup : " + spent);
+            helper.assertTrue(d.readyAt("gon_rock") > helper.getLevel().getGameTime(), "Recharge au relâchement");
+            helper.assertTrue(gon.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED) > 0,
+                    "Peut de nouveau bouger");
+            helper.assertTrue(!helper.getLevel().getEntitiesOfClass(com.evandouard.hxh.hatsu.NenProjectile.class,
+                    gon.getBoundingBox().inflate(6)).isEmpty() || target.getHealth() < health, "La boule est partie");
+            helper.succeedWhen(() -> helper.assertTrue(target.getHealth() < health, "La boule aurait dû toucher la cible"));
+        });
     }
 
     @GameTest(template = "empty")

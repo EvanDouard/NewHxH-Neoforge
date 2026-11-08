@@ -71,10 +71,33 @@ public class ProfileScreen extends Screen {
                 NenClient.openPores();
             }).bounds(left + aw + 4, ay + 24, aw, 20).build());
             pores.active = hunter.nenUnlocked();
+            if (tab == 0) {
+                // Vitesse max : pour aller très vite seulement quand on le veut
+                addRenderableWidget(new SpeedSlider(left, ay - 24, w, 20, hunter.speedCap()));
+            }
         }
         addRenderableWidget(Button.builder(Component.translatable("gui.done"), b -> onClose())
                 .bounds(width / 2 - 50, height - 28, 100, 20).build());
         select(tab);
+    }
+
+    /** Curseur « Vitesse max » : part du bonus de Vitesse utilisée, envoyée au serveur au relâchement. */
+    private static final class SpeedSlider extends net.minecraft.client.gui.components.AbstractSliderButton {
+        SpeedSlider(int x, int y, int w, int h, float value) {
+            super(x, y, w, h, Component.empty(), value);
+            updateMessage();
+        }
+
+        @Override
+        protected void updateMessage() {
+            setMessage(Component.translatable("screen.hxh.profile.speed_cap", Math.round(value * 100)));
+        }
+
+        @Override
+        protected void applyValue() {
+            net.neoforged.neoforge.network.PacketDistributor.sendToServer(
+                    new com.evandouard.hxh.network.SpeedCapPayload((float) value));
+        }
     }
 
     private void select(int index) {

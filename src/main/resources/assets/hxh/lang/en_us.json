@@ -376,8 +376,8 @@
   "passive.hxh.poison_training.desc": "Immune to poison.",
   "passive.hxh.doctor": "Doctor",
   "passive.hxh.doctor.desc": "Recovers 1 HP every 5 seconds.",
-  "technique.hxh.gon_rock.desc": "A punch charged with all his Enhancement: heavy damage and knockback.",
-  "technique.hxh.gon_scissors.desc": "Aura shaped into a blade at the fingertips: short-range cut.",
+  "technique.hxh.gon_rock.desc": "Gon gathers aura in his fist, standing still: the orb grows and changes colour while the key is held. Releasing throws it straight ahead: it digs its way, carries the target along and explodes. The longer the charge, the more destructive.",
+  "technique.hxh.gon_scissors.desc": "Aura takes the shape of a blade that flies straight until it hits a block or an enemy.",
   "technique.hxh.gon_paper.desc": "A ranged aura ball (Emission category: 80% for Gon).",
   "technique.hxh.killua_thunderbolt.desc": "An electric shock that nearly paralyses the target.",
   "technique.hxh.killua_godspeed.desc": "Electric reflexes: Speed III and Haste for 10 s.",
@@ -678,5 +678,13 @@
   "dialog.hxh.bring_missing": "I still need %s × %s.",
   "profile.hxh.quests.custom_note": "  (to implement: %s)",
   "command.hxh.quest_not_custom": "The tracked quest's current step is not a \"custom\" step.",
-  "command.hxh.quest_check": "%s quest(s) loaded, %s problem(s)."
+  "command.hxh.quest_check": "%s quest(s) loaded, %s problem(s).",
+  "message.hxh.dummy_removed": "Dummy put away.",
+  "screen.hxh.profile.speed_cap": "Max speed: %s%%",
+  "command.hxh.tower_at": "Heavens Arena stands at %s %s %s (click to teleport).",
+  "command.hxh.tower_none": "Heavens Arena hasn't been placed in this world yet.",
+  "technique.hxh.cond.charged": "Hold to charge (%s aura/s, %s s max), release to throw",
+  "technique.hxh.cond.projectile": "Projectile, range %s blocks",
+  "message.hxh.charge_too_short": "Charge too short: the fist relaxes.",
+  "entity.hxh.nen_projectile": "Nen projectile"
 }

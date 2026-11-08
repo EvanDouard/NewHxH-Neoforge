@@ -2,6 +2,7 @@ package com.evandouard.hxh.hatsu;
 
 import com.evandouard.hxh.data.HunterData;
 import com.evandouard.hxh.data.NenMode;
+import com.evandouard.hxh.nen.NenModes;
 import com.evandouard.hxh.data.NenType;
 import com.evandouard.hxh.data.Stat;
 import com.evandouard.hxh.stats.HunterStats;
@@ -35,6 +36,13 @@ public final class Hatsu {
      */
     @Nullable
     public static String chooseRefusal(HunterData data, HatsuKit kit) {
+        return chooseRefusal(data, kit, false);
+    }
+
+    /** En créatif ({@code free}) : n'importe quel personnage jouable, à tout moment, même pour en changer. */
+    @Nullable
+    public static String chooseRefusal(HunterData data, HatsuKit kit, boolean free) {
+        if (free) return kit.implemented() ? null : "message.hxh.hatsu_not_available";
         if (!data.nenUnlocked()) return "message.hxh.nen_locked";
         if (!data.nenRevealed() || data.nenType() == null) return "message.hxh.hatsu_need_divination";
         if (data.hasKit()) return "message.hxh.hatsu_already_chosen";
@@ -49,8 +57,16 @@ public final class Hatsu {
         HatsuKit kit = HatsuKits.get(kitId);
         if (kit == null) return "message.hxh.hatsu_unknown";
         HunterData data = HunterStats.get(entity);
-        String refusal = chooseRefusal(data, kit);
+        boolean free = entity instanceof net.minecraft.world.entity.player.Player p && p.isCreative();
+        String refusal = chooseRefusal(data, kit, free);
         if (refusal != null) return refusal;
+        if (free) {
+            // Créatif : Nen éveillé et type aligné sur le personnage, pour pouvoir l'essayer tout de suite
+            if (!data.nenUnlocked()) NenModes.unlock(entity);
+            data.setNenType(kit.type());
+            data.setNenRevealed(true);
+            data.setSelected(0);
+        }
         data.setKit(kit.id());
         return null;
     }
@@ -116,14 +132,26 @@ public final class Hatsu {
         Technique technique = selectedTechnique(data);
         if (technique == null) return "message.hxh.hatsu_none";
         long now = entity.level().getGameTime();
+        if (NenCharge.isCharging(entity)) return null; // déjà en train de charger
         String refusal = castRefusal(data, technique, now);
         if (refusal != null) return refusal;
+        if (technique.isCharged()) {
+            // On commence à charger : la recharge partira au relâchement
+            data.setAura(data.aura() - technique.auraCost());
+            technique.perform(entity, power(data, technique));
+            return null;
+        }
         // Raté ou pas, l'aura et la recharge partent : lancer dans le vide a un prix
         boolean hit = technique.perform(entity, power(data, technique));
         data.setAura(data.aura() - technique.auraCost());
         data.setReadyAt(technique.id(), now + technique.cooldownTicks());
         com.evandouard.hxh.nen.NenProgress.addNenXp(entity, Math.max(1, technique.auraCost() / 5));
         return hit ? null : "message.hxh.hatsu_missed";
+    }
+
+    /** Touche de technique relâchée : lance une technique en charge. */
+    public static void releaseCast(LivingEntity entity) {
+        NenCharge.release(entity);
     }
 
     public static void requestCast(LivingEntity entity) {

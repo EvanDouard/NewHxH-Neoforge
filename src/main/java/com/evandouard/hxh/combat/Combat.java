@@ -287,6 +287,7 @@ public final class Combat {
     /** @return true si l'entité a peur (voir {@link #fearSource}) ; applique l'effet Peur, plus fort si l'écart est énorme */
     public static boolean applyFearIfThreatened(LivingEntity entity) {
         if (entity instanceof Player p && (p.isCreative() || p.isSpectator())) return false;
+        if (entity instanceof com.evandouard.hxh.npc.NpcEntity) return false; // PNJ de quête : imperturbables
         Map.Entry<LivingEntity, Integer> source = fearSource(entity);
         if (source == null) return false;
         int gap = source.getValue();

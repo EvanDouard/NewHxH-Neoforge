@@ -82,6 +82,10 @@ public final class NenFxClient {
     private static void add(NenFx.Payload p) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
+        if (p.kindEnum() == NenFx.Kind.CLEAR) {
+            ACTIVE.removeIf(f -> f.source == p.source() && f.kind == NenFx.Kind.CHARGE_ORB);
+            return;
+        }
         ACTIVE.add(new Fx(p, mc.level.getGameTime()));
     }
 
@@ -160,6 +164,8 @@ public final class NenFxClient {
             case HOLY_CHAIN -> holyChain(c, f, age);
             case NEEDLE -> needle(c, f, age);
             case FLARE -> flare(c, f, t);
+            case CHARGE_ORB -> chargeOrb(c, f, age);
+            case CLEAR -> {}
         }
     }
 
@@ -495,6 +501,34 @@ public final class NenFxClient {
             f.impactDone = true;
             PENDING.add(localFx(NenFx.Kind.IMPACT, hit, 0.6f, NenFx.MANIPULATOR, 6));
         }
+    }
+
+    /**
+     * Boule de la Pierre en charge : elle grossit dans le poing, puis se recondense et change de couleur à chaque
+     * palier (orange → jaune → blanc incandescent), comme dans l'anime.
+     */
+    private static void chargeOrb(Ctx c, Fx f, float age) {
+        Entity src = entity(f.source);
+        if (src == null) return;
+        int[] tiers = {0, 30, 65};
+        int[] colors = {NenFx.ENHANCER, 0xFFFFC23A, 0xFFFFF4C8};
+        int tier = age >= tiers[2] ? 2 : age >= tiers[1] ? 1 : 0;
+        float sinceTier = age - tiers[tier];
+        // Grossit avec le temps ; à chaque palier, se recondense (rétrécit) avant de regrossir
+        float grow = 0.18f + Math.min(0.5f, age / 140f);
+        float squeeze = tier > 0 && sinceTier < 6 ? 0.55f + 0.45f * ease(sinceTier / 6f) : 1f;
+        float half = grow * squeeze;
+        Vec3 at = hand(src, c.pt);
+        if (!firstPerson(src)) {
+            Vec3 look = src.getViewVector(c.pt);
+            at = at.add(look.scale(0.25));
+        }
+        int color = colors[tier];
+        billboard(c, RenderType.eyes(GLOW), at, half * 2.6f, 0, color, 0.85f);
+        billboard(c, RenderType.entityTranslucent(IMPACT), at, half * 1.6f, age * 0.3f, color, 0.6f + 0.1f * tier);
+        billboard(c, RenderType.entityTranslucent(ORB), at, half * (1f + 0.07f * Mth.sin(age * 1.3f)), 0, color, 1f);
+        // Éclat blanc au passage de palier
+        if (tier > 0 && sinceTier < 4) billboard(c, RenderType.eyes(GLOW), at, half * 4f, 0, 0xFFFFFFFF, 1f - sinceTier / 4f);
     }
 
     /** Montée d'aura : deux anneaux qui remontent le long du corps et une lueur. */

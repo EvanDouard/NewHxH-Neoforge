@@ -105,6 +105,29 @@ public final class HunterCommand {
                                             if (!ok) ctx.getSource().sendFailure(Component.translatable("command.hxh.quest_start_failed", id.toString()));
                                             return ok ? 1 : 0;
                                         }))))
+                // Où est la Tour Céleste ? (cliquer pour s'y téléporter)
+                .then(Commands.literal("tower")
+                        .then(Commands.literal("tp").executes(ctx -> {
+                            net.minecraft.core.BlockPos c = com.evandouard.hxh.arena.TowerPlacer.center(ctx.getSource().getServer());
+                            if (c == null) return 0;
+                            net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
+                            // À 70 blocs au nord, regard vers la tour et vers le haut
+                            p.teleportTo(ctx.getSource().getServer().overworld(), c.getX() + 0.5, c.getY() + 8, c.getZ() - 70.5,
+                                    0f, -30f);
+                            return 1;
+                        }))
+                        .executes(ctx -> {
+                    net.minecraft.core.BlockPos c = com.evandouard.hxh.arena.TowerPlacer.center(ctx.getSource().getServer());
+                    if (c == null) {
+                        ctx.getSource().sendFailure(Component.translatable("command.hxh.tower_none"));
+                        return 0;
+                    }
+                    String tp = "/tp @s " + c.getX() + " " + (c.getY() + 3) + " " + (c.getZ() - 40);
+                    ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.tower_at", c.getX(), c.getY(), c.getZ())
+                            .withStyle(s -> s.withColor(net.minecraft.ChatFormatting.GOLD)
+                                    .withClickEvent(new net.minecraft.network.chat.ClickEvent(net.minecraft.network.chat.ClickEvent.Action.SUGGEST_COMMAND, tp))), false);
+                    return 1;
+                }))
                 // Mobs d'exemple (data/hxh/mob_presets) : /hunter spawn <nom> [position] [nombre]
                 .then(Commands.literal("spawn").requires(s -> s.hasPermission(2))
                         .then(Commands.argument("preset", StringArgumentType.string())
@@ -310,6 +333,7 @@ public final class HunterCommand {
                                         .executes(ctx -> setKit(ctx, EntityArgument.getEntities(ctx, "targets"))))))
                 .then(targeted("clear", e -> HunterStats.get(e).setKit("")))
                 .then(targeted("cast", e -> Hatsu.requestCast(e)))
+                .then(targeted("release", e -> Hatsu.releaseCast(e)))
                 .then(targeted("next", e -> Hatsu.cycle(e)));
     }
 

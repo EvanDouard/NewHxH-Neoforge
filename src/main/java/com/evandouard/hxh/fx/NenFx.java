@@ -39,7 +39,11 @@ public final class NenFx {
         /** Aiguille lancée qui reste plantée dans la cible. */
         NEEDLE,
         /** Montée d'aura : anneau qui remonte le long du corps et lueur (renforcements, transformations). */
-        FLARE
+        FLARE,
+        /** Boule d'aura qui grossit à côté du lanceur pendant une charge (Pierre de Gon). */
+        CHARGE_ORB,
+        /** Efface les effets en cours du lanceur (fin de charge). */
+        CLEAR
     }
 
     /**
@@ -103,6 +107,28 @@ public final class NenFx {
     }
 
     // ---------- Raccourcis ----------
+
+    public static void impactAt(ServerLevel level, Vec3 at, float size, int color) {
+        send(level, Kind.IMPACT, null, null, at, size, color, 9);
+    }
+
+    public static void slashAt(ServerLevel level, Vec3 at, float size, int color) {
+        send(level, Kind.SLASH, null, null, at, size, color, 7);
+    }
+
+    public static void shockwaveAt(ServerLevel level, Vec3 at, float radius, int color) {
+        send(level, Kind.SHOCKWAVE, null, null, at, radius, color, 14);
+    }
+
+    /** Boule de la Pierre qui grossit à côté du lanceur pendant la charge (jusqu'à {@code maxTicks}). */
+    public static void chargeOrb(LivingEntity caster, int color, int maxTicks) {
+        if (caster.level() instanceof ServerLevel s) send(s, Kind.CHARGE_ORB, caster, null, caster.position(), 1f, color, maxTicks);
+    }
+
+    /** Efface la boule en charge du lanceur (relâchée ou annulée). */
+    public static void clear(LivingEntity caster) {
+        if (caster.level() instanceof ServerLevel s) send(s, Kind.CLEAR, caster, null, caster.position(), 1f, 0, 1);
+    }
 
     public static void impact(LivingEntity source, Vec3 at, float size, int color) {
         if (source.level() instanceof ServerLevel s) send(s, Kind.IMPACT, source, null, at, size, color, 8);

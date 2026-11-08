@@ -376,8 +376,8 @@
   "passive.hxh.poison_training.desc": "Immunisé au poison.",
   "passive.hxh.doctor": "Médecin",
   "passive.hxh.doctor.desc": "Récupère 1 PV toutes les 5 secondes.",
-  "technique.hxh.gon_rock.desc": "Coup de poing chargé de tout le Renforcement : gros dégâts et fort recul.",
-  "technique.hxh.gon_scissors.desc": "L'aura forme une lame au bout des doigts : coupe à courte distance.",
+  "technique.hxh.gon_rock.desc": "Gon charge son aura dans le poing, immobile : la boule grossit et change de couleur tant qu'on maintient la touche. Relâcher la lance tout droit : elle creuse sa route, emporte la cible et explose. Plus on charge, plus c'est destructeur.",
+  "technique.hxh.gon_scissors.desc": "L'aura prend la forme d'une lame qui file tout droit jusqu'à toucher un bloc ou un ennemi.",
   "technique.hxh.gon_paper.desc": "Boule d'aura lancée à distance (catégorie Émission : 80 % pour Gon).",
   "technique.hxh.killua_thunderbolt.desc": "Décharge électrique qui paralyse presque complètement la cible.",
   "technique.hxh.killua_godspeed.desc": "Son corps réagit par réflexe électrique : vitesse III et minage rapide pendant 10 s.",
@@ -678,5 +678,13 @@
   "dialog.hxh.bring_missing": "Il m'en faut encore %s × %s.",
   "profile.hxh.quests.custom_note": "  (à coder : %s)",
   "command.hxh.quest_not_custom": "L'étape en cours de la quête suivie n'est pas une étape « custom ».",
-  "command.hxh.quest_check": "%s quête(s) chargée(s), %s problème(s)."
+  "command.hxh.quest_check": "%s quête(s) chargée(s), %s problème(s).",
+  "message.hxh.dummy_removed": "Mannequin rangé.",
+  "screen.hxh.profile.speed_cap": "Vitesse max : %s %%",
+  "command.hxh.tower_at": "La Tour Céleste se dresse en %s %s %s (cliquer pour s'y téléporter).",
+  "command.hxh.tower_none": "La Tour Céleste n'a pas encore été posée dans ce monde.",
+  "technique.hxh.cond.charged": "Maintenir pour charger (%s aura/s, %s s max), relâcher pour lancer",
+  "technique.hxh.cond.projectile": "Projectile, portée %s blocs",
+  "message.hxh.charge_too_short": "Charge trop courte : le poing se relâche.",
+  "entity.hxh.nen_projectile": "Projectile de Nen"
 }

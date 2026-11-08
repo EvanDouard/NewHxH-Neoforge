@@ -35,7 +35,10 @@ public record NenActionPayload(Action action, boolean pressed) implements Custom
                 case HEAL -> NenHealing.request(context.player(), payload.pressed());
                 case MEDITATE -> { if (payload.pressed()) NenAwakening.toggleMeditation(context.player()); }
                 case OPEN_PORES -> { if (payload.pressed()) NenAwakening.requestOpenPores(context.player()); }
-                case CAST -> { if (payload.pressed()) Hatsu.requestCast(context.player()); }
+                case CAST -> {
+                    if (payload.pressed()) Hatsu.requestCast(context.player());
+                    else Hatsu.releaseCast(context.player());
+                }
                 case NEXT_TECHNIQUE -> { if (payload.pressed()) Hatsu.cycle(context.player()); }
                 case STRIKE -> {
                     if (payload.pressed()) com.evandouard.hxh.combat.Combat.startStrike(context.player());

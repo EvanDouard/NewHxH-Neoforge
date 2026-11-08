@@ -45,10 +45,9 @@ public final class NenSensesTests {
         helper.assertTrue(d.mode() == NenMode.NONE, "Zetsu pas encore débloqué : retour au neutre");
         d.setMasteryLevel(Mastery.IN, HxHConfig.ZETSU_UNLOCK_IN_LEVEL.get());
         NenModes.toggle(z, NenMode.ZETSU);
+        helper.assertTrue(d.mode() == NenMode.ZETSU, "Zetsu débloqué : la touche donne directement le Zetsu (plus d'In)");
         NenModes.toggle(z, NenMode.ZETSU);
-        helper.assertTrue(d.mode() == NenMode.ZETSU, "In assez travaillé : le 2e appui donne le Zetsu");
-        NenModes.toggle(z, NenMode.ZETSU);
-        helper.assertTrue(d.mode() == NenMode.NONE, "3e appui : neutre");
+        helper.assertTrue(d.mode() == NenMode.NONE, "2e appui : neutre");
         helper.succeed();
     }
 

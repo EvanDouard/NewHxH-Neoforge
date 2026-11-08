@@ -54,13 +54,11 @@ public final class NenModes {
     public static void toggle(LivingEntity entity, NenMode mode) {
         HunterData data = HunterStats.get(entity);
         NenMode target = data.mode() == mode ? NenMode.NONE : mode;
-        // Touche de dissimulation : Neutre → In → Zetsu (si débloqué) → Neutre
+        // Touche de dissimulation : In tant que le Zetsu n'est pas débloqué, puis seulement le Zetsu
+        // (qui le remplace) ; appuyer à nouveau revient au neutre.
         if (mode == NenMode.ZETSU || mode == NenMode.IN) {
-            target = switch (data.mode()) {
-                case IN -> zetsuUnlocked(data) ? NenMode.ZETSU : NenMode.NONE;
-                case ZETSU -> NenMode.NONE;
-                default -> NenMode.IN;
-            };
+            NenMode hide = zetsuUnlocked(data) ? NenMode.ZETSU : NenMode.IN;
+            target = data.mode() == NenMode.ZETSU || data.mode() == NenMode.IN ? NenMode.NONE : hide;
         }
         String refusal = trySetMode(entity, target);
         if (refusal == null && (target == NenMode.ZETSU || target == NenMode.IN)) {

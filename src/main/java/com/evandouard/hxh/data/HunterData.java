@@ -39,6 +39,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private NenType nenType = null;
     @Nullable
     private NenTalent talent;
+    /** Part du bonus de Vitesse utilisée (réglable dans le carnet) : 1 = tout. */
+    private float speedCap = 1f;
 
     private float aura = 0;
     private int auraMax = 100;
@@ -165,6 +167,15 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
 
     /** Talent pour le Nen (null tant qu'il n'a pas été tiré ; les mobs n'en ont pas : ×1). */
     @Nullable
+    public float speedCap() {
+        return speedCap;
+    }
+
+    public void setSpeedCap(float cap) {
+        speedCap = Math.max(0f, Math.min(1f, cap));
+        dirty.add(NEN);
+    }
+
     public NenTalent talent() {
         return talent;
     }
@@ -458,6 +469,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             nen.putBoolean("revealed", nenRevealed);
             if (nenType != null) nen.putString("type", nenType.id());
             if (talent != null) nen.putString("talent", talent.id());
+            nen.putFloat("speed_cap", speedCap);
             out.put(NEN, nen);
             return;
         }
@@ -585,6 +597,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             nenRevealed = nen.getBoolean("revealed");
             nenType = nen.contains("type") ? NenType.byId(nen.getString("type")) : null;
             talent = nen.contains("talent") ? NenTalent.byId(nen.getString("talent")) : null;
+            speedCap = nen.contains("speed_cap") ? Math.max(0f, Math.min(1f, nen.getFloat("speed_cap"))) : 1f;
         }
         if (in.contains(AURA)) {
             CompoundTag a = in.getCompound(AURA);

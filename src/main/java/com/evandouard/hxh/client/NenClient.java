@@ -43,6 +43,7 @@ public final class NenClient {
     public static final KeyMapping EN = new KeyMapping("key.hxh.en", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Y, CATEGORY);
     public static final KeyMapping STRIKE = new KeyMapping("key.hxh.strike", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_ALT, CATEGORY);
     public static final KeyMapping PROFILE = new KeyMapping("key.hxh.profile", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_O, CATEGORY);
+    private static boolean castWasDown;
     public static final KeyMapping CAST = new KeyMapping("key.hxh.cast", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, CATEGORY);
     public static final KeyMapping NEXT_TECHNIQUE = new KeyMapping("key.hxh.next_technique", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, CATEGORY);
 
@@ -65,6 +66,7 @@ public final class NenClient {
                 e -> {
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NPC.get(), NpcRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.ARENA_FIGHTER.get(), ArenaFighterRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NEN_PROJECTILE.get(), NenProjectileRenderer::new);
                     e.registerBlockEntityRenderer(com.evandouard.hxh.registry.ModBlockEntities.MARKER.get(),
                             com.evandouard.hxh.marker.MarkerLabelRenderer::new);
                 });
@@ -107,6 +109,10 @@ public final class NenClient {
         while (GYO.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.GYO, true));
         while (EN.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.EN, true));
         while (CAST.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, true));
+        // Relâcher la touche lance une technique qu'on charge (Pierre de Gon)
+        boolean castDown = CAST.isDown();
+        if (castWasDown && !castDown) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, false));
+        castWasDown = castDown;
         while (NEXT_TECHNIQUE.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.NEXT_TECHNIQUE, true));
         while (PROFILE.consumeClick()) {
             net.neoforged.neoforge.network.PacketDistributor.sendToServer(com.evandouard.hxh.network.RequestProfilePayload.INSTANCE);
@@ -146,7 +152,9 @@ public final class NenClient {
     public static void openHatsuMenu(Minecraft mc) {
         HunterData data = mc.player.getData(ModAttachments.HUNTER);
         HatsuKit kit = Hatsu.kitOf(data);
-        if (kit != null) {
+        if (mc.player.isCreative()) {
+            mc.setScreen(new HatsuSelectionScreen()); // créatif : on peut changer de personnage librement
+        } else if (kit != null) {
             mc.setScreen(new TechniqueListScreen(kit, null)); // déjà choisi : on consulte sa fiche
         } else if (!data.nenUnlocked()) {
             mc.player.displayClientMessage(Component.translatable("message.hxh.nen_locked"), true);

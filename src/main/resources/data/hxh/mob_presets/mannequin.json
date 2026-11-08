@@ -2,8 +2,9 @@
   "entity": "minecraft:husk",
   "stats": {
     "all": 0,
-    "vitality": 90
+    "vitality": 40
   },
   "no_ai": true,
-  "knockback_resistance": 0.6
+  "knockback_resistance": 0.6,
+  "dummy": true
 }

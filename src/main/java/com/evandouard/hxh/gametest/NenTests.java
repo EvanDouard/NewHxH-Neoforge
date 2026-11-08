@@ -156,4 +156,5 @@ public final class NenTests {
         helper.assertTrue(after == before.getClockWise(), "La feuille doit avoir tourné");
         helper.succeed();
     }
+
 }

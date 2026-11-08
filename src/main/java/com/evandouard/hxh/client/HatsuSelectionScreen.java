@@ -60,7 +60,7 @@ public class HatsuSelectionScreen extends Screen {
             HatsuKit kit = kits.get(index);
             int y = TOP + row * ROW_HEIGHT + 3;
 
-            String refusal = Hatsu.chooseRefusal(data(), kit);
+            String refusal = Hatsu.chooseRefusal(data(), kit, minecraft.player != null && minecraft.player.isCreative());
             Button choose = Button.builder(Component.translatable("screen.hxh.hatsu.choose_short"), b -> confirm(kit))
                     .bounds(right - 60, y, 60, 20).build();
             choose.active = refusal == null;

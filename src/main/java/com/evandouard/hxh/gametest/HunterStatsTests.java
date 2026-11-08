@@ -139,4 +139,36 @@ public final class HunterStatsTests {
         helper.assertTrue(!data.isDirty(), "Plus rien à envoyer après l'envoi");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void speedCapAndStepUp(GameTestHelper helper) {
+        net.minecraft.server.level.ServerPlayer p = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.data.HunterData d = HunterStats.get(p);
+        double base = p.getAttributeBaseValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
+        HunterStats.setLevel(p, Stat.SPEED, 100);
+        double full = p.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
+        helper.assertTrue(full > base * 2.2, "Vitesse max nettement plus haute (" + full / base + "×)");
+        helper.assertTrue(p.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.STEP_HEIGHT) >= 1.0,
+                "Très rapide : monte les blocs comme un cheval");
+        d.setSpeedCap(0.2f);
+        HunterStats.applyAttributes(p);
+        double capped = p.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
+        helper.assertTrue(capped < full && capped > base, "Vitesse bridée par le réglage du carnet");
+        helper.assertTrue(p.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.STEP_HEIGHT) < 1.0,
+                "Bridée : plus de montée de blocs");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void nenTypeIsRandom(GameTestHelper helper) {
+        java.util.Map<com.evandouard.hxh.data.NenType, Integer> count = new java.util.EnumMap<>(com.evandouard.hxh.data.NenType.class);
+        net.minecraft.util.RandomSource r = net.minecraft.util.RandomSource.create();
+        for (int i = 0; i < 2000; i++) count.merge(com.evandouard.hxh.data.NenType.random(r), 1, Integer::sum);
+        for (com.evandouard.hxh.data.NenType t : com.evandouard.hxh.data.NenType.values()) {
+            int n = count.getOrDefault(t, 0);
+            boolean ok = t == com.evandouard.hxh.data.NenType.SPECIALIST ? n > 40 && n < 180 : n > 280 && n < 480;
+            helper.assertTrue(ok, "Tirage du type " + t + " : " + n + " / 2000");
+        }
+        helper.succeed();
+    }
 }

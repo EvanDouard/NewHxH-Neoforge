@@ -117,6 +117,13 @@ public class NpcEntity extends PathfinderMob {
     }
 
     @Override
+    /** PNJ de quête : aucun effet ne les touche (ni peur, ni ralentissement…). */
+    @Override
+    public boolean canBeAffected(net.minecraft.world.effect.MobEffectInstance effect) {
+        return false;
+    }
+
+    @Override
     public boolean isInvulnerableTo(DamageSource source) {
         return !source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY);
     }

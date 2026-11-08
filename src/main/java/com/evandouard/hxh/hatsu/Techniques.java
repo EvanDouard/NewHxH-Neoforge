@@ -44,10 +44,16 @@ public final class Techniques {
     }
 
     // ---------- Gon : Jajanken ----------
-    public static final Technique GON_ROCK = register(new Strike("gon_rock", NenType.ENHANCER, 40, 160,
-            3.5, 0.85, 9f, 1.6f, List.of(), new Look(Style.IMPACT, NenFx.ENHANCER, 2.2f), SoundEvents.GENERIC_EXPLODE.value()));
-    public static final Technique GON_SCISSORS = register(new Strike("gon_scissors", NenType.TRANSMUTER, 25, 100,
-            5, 0.85, 6f, 0.4f, List.of(), new Look(Style.SLASH, NenFx.TRANSMUTER, 1.6f), SoundEvents.PLAYER_ATTACK_SWEEP)).requiresNenLevel(5);
+    /**
+     * Jajanken : Pierre. On charge sur place (aura consommée en continu, 2/tick, jusqu'à 5 s), une boule d'aura
+     * grossit dans le poing ; au relâchement elle part tout droit, creuse sa trace, emporte la cible et explose.
+     * Dégâts : 4 + 0,12 par point d'aura chargé (× puissance).
+     */
+    public static final Technique GON_ROCK = register(new ChargedOrb("gon_rock", NenType.ENHANCER, 10, 160,
+            2f, 100, 12f, 4f, 0.12f, NenFx.ENHANCER));
+    /** Jajanken : Ciseaux. Lame d'aura qui file tout droit (14 blocs) jusqu'à toucher un bloc ou une cible. */
+    public static final Technique GON_SCISSORS = register(new Blade("gon_scissors", NenType.TRANSMUTER, 25, 100,
+            7f, NenFx.TRANSMUTER)).requiresNenLevel(5);
     public static final Technique GON_PAPER = register(new Strike("gon_paper", NenType.EMITTER, 30, 120,
             16, 0.97, 5f, 0.8f, List.of(), new Look(Style.ORB, NenFx.EMITTER, 1.4f), SoundEvents.FIREWORK_ROCKET_BLAST)).requiresNenLevel(10);
 
@@ -141,6 +147,65 @@ public final class Techniques {
             }
             case HOLY_CHAIN -> NenFx.holyChain(caster, look.color(), 50);
             default -> NenFx.flare(caster, look.size(), look.color());
+        }
+    }
+
+    /** Technique qu'on charge en maintenant la touche, puis qu'on lance en boule (voir {@link NenCharge}). */
+    public static class ChargedOrb extends Technique {
+        final float drainPerTick, minSpent, baseDamage, damagePerAura;
+        final int maxTicks, color;
+
+        ChargedOrb(String id, NenType category, int startCost, int cooldown, float drainPerTick, int maxTicks,
+                   float minSpent, float baseDamage, float damagePerAura, int color) {
+            super(id, category, startCost, cooldown);
+            this.drainPerTick = drainPerTick;
+            this.maxTicks = maxTicks;
+            this.minSpent = minSpent;
+            this.baseDamage = baseDamage;
+            this.damagePerAura = damagePerAura;
+            this.color = color;
+        }
+
+        @Override
+        public boolean isCharged() {
+            return true;
+        }
+
+        @Override
+        public net.minecraft.network.chat.Component conditions() {
+            return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.charged",
+                    Math.round(drainPerTick * 20), maxTicks / 20);
+        }
+
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            NenCharge.start(caster, this, power);
+            return true;
+        }
+    }
+
+    /** Lame d'aura lancée tout droit (voir {@link NenProjectile#BLADE}). */
+    public static class Blade extends Technique {
+        private final float damage;
+        private final int color;
+
+        Blade(String id, NenType category, int cost, int cooldown, float damage, int color) {
+            super(id, category, cost, cooldown);
+            this.damage = damage;
+            this.color = color;
+        }
+
+        @Override
+        public net.minecraft.network.chat.Component conditions() {
+            return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.projectile",
+                    (int) NenProjectile.BLADE_RANGE);
+        }
+
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            NenProjectile.launch(caster, NenProjectile.BLADE, power, damage * power, color);
+            sound(caster, SoundEvents.PLAYER_ATTACK_SWEEP);
+            return true;
         }
     }
 

@@ -290,6 +290,8 @@ expectnot Raté
 # --- Effets du Nen dessinés à la main (plus de particules de Minecraft) ---
 cmd gamerule sendCommandFeedback false
 cmd kill @e[type=minecraft:husk]
+cmd tp @s ~300 ~ ~
+wait 40
 cmd hunter nen level 40
 cmd summon minecraft:husk ~ ~ ~3.2 {NoAI:1b,PersistenceRequired:1b,Silent:1b}
 look 0 8
@@ -322,8 +324,21 @@ shot 22e2_godspeed
 cmd hunter hatsu set gon
 cmd hunter nen refill
 cmd hunter hatsu cast
+wait 15
+shot 22f_pierre_charge_debut
+wait 40
+shot 22f2_pierre_charge_palier
+cmd hunter hatsu release
 wait 2
-shot 22f_impact_gon
+shot 22f3_pierre_lancee
+wait 25
+shot 22f4_pierre_explosion
+cmd hunter hatsu next
+cmd hunter nen refill
+cmd summon minecraft:husk ~ ~ ~6 {NoAI:1b,PersistenceRequired:1b,Silent:1b}
+cmd hunter hatsu cast
+wait 3
+shot 22f5_ciseaux_lame
 cmd hunter hatsu set leorio
 cmd hunter nen refill
 cmd hunter hatsu cast
@@ -337,6 +352,9 @@ wait 4
 shot 22h_onde_de_choc
 cmd hunter hatsu set illumi
 cmd hunter nen refill
+cmd kill @e[type=minecraft:husk]
+cmd tp @s ~-300 ~ ~
+wait 40
 cmd gamerule sendCommandFeedback true
 wait 10
 
@@ -398,8 +416,6 @@ wait 10
 expect (In)
 key key.hxh.zetsu
 cmd hunter nen mastery in 10
-wait 5
-key key.hxh.zetsu
 wait 5
 key key.hxh.zetsu
 wait 10
@@ -677,14 +693,14 @@ wait 60
 expect Tu quittes la Tour Céleste
 shot 48_retour_dans_le_monde
 clearchat
-cmd place structure hxh:heavens_arena_tower ~60 ~ ~-25
-wait 300
-expect a été générée
-cmd place template hxh:heavens_arena/tour 40 -61 -25
+cmd hunter tower
+wait 5
+expect se dresse en
+cmd hunter tower tp
 wait 200
-cmd tp @s 15 -50 0 -90 -35
-wait 200
-shot 48b_tour_celeste_dans_le_monde
+shot 48b_tour_celeste_posee_dans_une_plaine
+cmd tp @s 0 -60 58 0 0
+wait 40
 cmd setblock 0 -60 62 hxh:treadmill_1[facing=north]
 cmd setblock 2 -60 62 hxh:treadmill_2[facing=north,mode=endurance]
 cmd setblock 4 -60 62 hxh:treadmill_3[facing=north]
