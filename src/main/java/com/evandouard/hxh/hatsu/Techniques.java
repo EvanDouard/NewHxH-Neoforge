@@ -34,6 +34,10 @@ public final class Techniques {
         return ALL.get(id);
     }
 
+    public static java.util.Collection<String> allIds() {
+        return ALL.keySet();
+    }
+
     public static Map<String, Technique> all() {
         return ALL;
     }
@@ -147,6 +151,69 @@ public final class Techniques {
             }
             case HOLY_CHAIN -> NenFx.holyChain(caster, look.color(), 50);
             default -> NenFx.flare(caster, look.size(), look.color());
+        }
+    }
+
+    // ---------- Coups de base (sans Nen, dès le début, à la fin de la liste du menu) ----------
+
+    /** Identifiants des coups de base, dans l'ordre du menu. */
+    public static final List<String> BASE = List.of("basic_attack", "basic_kick", "basic_charged");
+
+    public static final Technique BASIC_ATTACK = register(new BaseMove("basic_attack", 12, 4, 0.08f) {
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            return com.evandouard.hxh.combat.Combat.basicPunch(caster) != null;
+        }
+    });
+    public static final Technique BASIC_KICK = register(new BaseMove("basic_kick", 30, 10, 0.2f) {
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            return com.evandouard.hxh.combat.Combat.kickNow(caster) != null;
+        }
+    });
+    public static final Technique BASIC_CHARGED = register(new BaseMove("basic_charged", 40, 12, 0.28f) {
+        @Override
+        public boolean isCharged() {
+            return true;
+        }
+
+        @Override
+        public net.minecraft.network.chat.Component conditions() {
+            return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.strike");
+        }
+
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            com.evandouard.hxh.combat.Combat.startStrike(caster);
+            return true;
+        }
+    });
+
+    /** Coup de base : gratuit, sans Nen ; recharge {@code base} ticks, moins {@code perEndurance} par niveau d'Endurance. */
+    public abstract static class BaseMove extends Technique {
+        private final int min;
+        private final float perEndurance;
+
+        BaseMove(String id, int base, int min, float perEndurance) {
+            super(id, NenType.ENHANCER, 0, base);
+            this.min = min;
+            this.perEndurance = perEndurance;
+        }
+
+        @Override
+        public boolean isBase() {
+            return true;
+        }
+
+        @Override
+        public int cooldownFor(com.evandouard.hxh.data.HunterData data) {
+            int endurance = data.level(com.evandouard.hxh.data.Stat.ENDURANCE);
+            return Math.max(min, Math.round(cooldownTicks() - endurance * perEndurance));
+        }
+
+        @Override
+        public net.minecraft.network.chat.Component conditions() {
+            return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.melee");
         }
     }
 

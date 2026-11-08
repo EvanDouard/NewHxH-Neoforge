@@ -712,5 +712,13 @@
   "message.hxh.not_learned.ko": "Tu n'as pas encore appris le Ko : va voir Wing, au hall d'entrée de la Tour Céleste.",
   "message.hxh.not_learned.ryu": "Tu n'as pas encore appris le Ryu : va voir Wing, au hall d'entrée de la Tour Céleste.",
   "message.hxh.not_learned.shu": "Tu n'as pas encore appris le Shu : va voir Wing, au hall d'entrée de la Tour Céleste.",
-  "message.hxh.not_learned.hatsu": "Tu n'as pas encore appris le Hatsu : va voir Wing, au hall d'entrée de la Tour Céleste."
+  "message.hxh.not_learned.hatsu": "Tu n'as pas encore appris le Hatsu : va voir Wing, au hall d'entrée de la Tour Céleste.",
+  "technique.hxh.basic_attack": "Attaque basique",
+  "technique.hxh.basic_attack.desc": "Un coup de poing, droit puis gauche. Sans Nen. L'Endurance réduit la recharge.",
+  "technique.hxh.basic_kick": "Coup de pied",
+  "technique.hxh.basic_kick.desc": "Projette la cible selon ta Force. Sans Nen. L'Endurance réduit la recharge.",
+  "technique.hxh.basic_charged": "Frappe chargée",
+  "technique.hxh.basic_charged.desc": "Maintiens la touche : la barre monte et redescend ; relâche dans le vert pour une frappe parfaite. L'Endurance réduit la recharge.",
+  "technique.hxh.cond.melee": "Corps à corps (3 blocs)",
+  "technique.hxh.cond.strike": "Maintenir puis relâcher dans le vert"
 }

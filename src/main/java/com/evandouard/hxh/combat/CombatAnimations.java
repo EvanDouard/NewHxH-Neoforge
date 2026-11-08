@@ -46,6 +46,16 @@ public final class CombatAnimations {
         return next;
     }
 
+    /** Poing animé même si un coup vient d'être joué (attaque basique) : alterne droite / gauche. */
+    public static CombatAnim punchAnyway(LivingEntity entity) {
+        Last last = LAST.get(entity);
+        long now = entity.level().getGameTime();
+        CombatAnim next = last != null && last.anim() == CombatAnim.PUNCH_MAIN && now - last.tick() <= 30
+                ? CombatAnim.PUNCH_OFF : CombatAnim.PUNCH_MAIN;
+        play(entity, next);
+        return next;
+    }
+
     /** Dernière animation jouée (tests). */
     public static CombatAnim last(LivingEntity entity) {
         Last l = LAST.get(entity);

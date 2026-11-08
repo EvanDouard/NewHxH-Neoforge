@@ -41,7 +41,6 @@ public final class NenClient {
     public static final KeyMapping KO = new KeyMapping("key.hxh.ko", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, CATEGORY);
     public static final KeyMapping GYO = new KeyMapping("key.hxh.gyo", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, CATEGORY);
     public static final KeyMapping EN = new KeyMapping("key.hxh.en", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Y, CATEGORY);
-    public static final KeyMapping STRIKE = new KeyMapping("key.hxh.strike", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_ALT, CATEGORY);
     public static final KeyMapping PROFILE = new KeyMapping("key.hxh.profile", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_O, CATEGORY);
     private static boolean castWasDown;
     public static final KeyMapping CAST = new KeyMapping("key.hxh.cast", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, CATEGORY);
@@ -82,7 +81,6 @@ public final class NenClient {
         event.register(KO);
         event.register(GYO);
         event.register(EN);
-        event.register(STRIKE);
         event.register(PROFILE);
         event.register(CAST);
         event.register(NEXT_TECHNIQUE);
@@ -118,11 +116,13 @@ public final class NenClient {
             net.neoforged.neoforge.network.PacketDistributor.sendToServer(com.evandouard.hxh.network.RequestProfilePayload.INSTANCE);
         }
         SensesClient.tick(mc);
-        boolean strikeDown = STRIKE.isDown();
-        if (strikeDown != strikeWasDown) {
-            strikeWasDown = strikeDown;
-            strikeStart = strikeDown ? mc.level.getGameTime() : -1;
-            PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.STRIKE, strikeDown));
+        // Barre de la frappe chargée : touche de technique maintenue sur « Frappe chargée » prête
+        HunterData me = mc.player.getData(ModAttachments.HUNTER);
+        boolean charging = castDown && Hatsu.selectedTechnique(me) == com.evandouard.hxh.hatsu.Techniques.BASIC_CHARGED;
+        if (charging != strikeWasDown) {
+            strikeWasDown = charging;
+            boolean ready = Hatsu.castRefusal(me, com.evandouard.hxh.hatsu.Techniques.BASIC_CHARGED, mc.level.getGameTime()) == null;
+            strikeStart = charging && ready ? mc.level.getGameTime() : -1;
         }
         // Soin : touche maintenue, on n'envoie que les changements d'état
         boolean healDown = HEAL.isDown();
@@ -170,7 +170,6 @@ public final class NenClient {
         Minecraft mc = Minecraft.getInstance();
         if (strikeStart < 0 || mc.level == null || mc.options.hideGui) return;
         long held = mc.level.getGameTime() - strikeStart;
-        if (held < com.evandouard.hxh.combat.Combat.CHARGE_MIN_TICKS) return;
         float value = com.evandouard.hxh.combat.Combat.chargeValue(held);
         int w = 60;
         int h = 6;
@@ -195,9 +194,9 @@ public final class NenClient {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.options.hideGui) return;
         HunterData data = mc.player.getData(ModAttachments.HUNTER);
-        HatsuKit kit = Hatsu.kitOf(data);
         Technique technique = Hatsu.selectedTechnique(data);
-        if (kit == null || technique == null) return;
+        if (technique == null) return;
+        java.util.List<String> ids = Hatsu.techniqueIds(data);
 
         int w = 130;
         int h = 34;
@@ -211,8 +210,8 @@ public final class NenClient {
         MangaHud.panel(graphics, x, y, w, h, MangaHud.PAPER, 3);
         graphics.fill(x + 2, y + 2, x + 6, y + h - 2, refusal == null ? 0xFF52D273 : 0xFFFF5A3C);
 
-        int index = Math.floorMod(data.selected(), kit.techniques().size()) + 1;
-        Component counter = Component.literal(index + "/" + kit.techniques().size());
+        int index = Math.floorMod(data.selected(), ids.size()) + 1;
+        Component counter = Component.literal(index + "/" + ids.size());
         int counterWidth = mc.font.width(counter);
         graphics.drawString(mc.font, counter, x + w - 5 - counterWidth, y + 5, 0xFF777777, false);
         // Nom tronqué avec « … » s'il déborde sur le compteur

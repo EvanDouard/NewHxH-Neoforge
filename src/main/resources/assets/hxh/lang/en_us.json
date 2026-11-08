@@ -712,5 +712,13 @@
   "message.hxh.not_learned.ko": "You haven't learned Ko yet: see Wing, in the Heavens Arena entry hall.",
   "message.hxh.not_learned.ryu": "You haven't learned Ryu yet: see Wing, in the Heavens Arena entry hall.",
   "message.hxh.not_learned.shu": "You haven't learned Shu yet: see Wing, in the Heavens Arena entry hall.",
-  "message.hxh.not_learned.hatsu": "You haven't learned Hatsu yet: see Wing, in the Heavens Arena entry hall."
+  "message.hxh.not_learned.hatsu": "You haven't learned Hatsu yet: see Wing, in the Heavens Arena entry hall.",
+  "technique.hxh.basic_attack": "Basic attack",
+  "technique.hxh.basic_attack.desc": "A punch, right then left. No Nen. Endurance lowers the cooldown.",
+  "technique.hxh.basic_kick": "Kick",
+  "technique.hxh.basic_kick.desc": "Knocks the target back according to your Strength. No Nen. Endurance lowers the cooldown.",
+  "technique.hxh.basic_charged": "Charged strike",
+  "technique.hxh.basic_charged.desc": "Hold the key: the bar rises and falls; release in the green for a perfect strike. Endurance lowers the cooldown.",
+  "technique.hxh.cond.melee": "Melee (3 blocks)",
+  "technique.hxh.cond.strike": "Hold, then release in the green"
 }

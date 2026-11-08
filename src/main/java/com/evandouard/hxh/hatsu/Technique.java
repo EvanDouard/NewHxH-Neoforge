@@ -68,6 +68,16 @@ public abstract class Technique {
         return Double.MAX_VALUE;
     }
 
+    /** Coup de base (sans Nen, disponible dès le début, gratuit) : sa recharge baisse avec l'Endurance. */
+    public boolean isBase() {
+        return false;
+    }
+
+    /** Recharge réelle pour cette entité (les coups de base raccourcissent avec l'Endurance). */
+    public int cooldownFor(com.evandouard.hxh.data.HunterData data) {
+        return cooldownTicks;
+    }
+
     /** Technique qu'on charge en maintenant la touche ({@link NenCharge}) : la recharge part au relâchement. */
     public boolean isCharged() {
         return false;

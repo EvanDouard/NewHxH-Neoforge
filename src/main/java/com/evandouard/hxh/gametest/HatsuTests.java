@@ -169,6 +169,11 @@ public final class HatsuTests {
         Hatsu.cycle(gon);
         helper.assertTrue(Hatsu.selectedTechnique(d) == Techniques.GON_PAPER, "3 : Papier");
         Hatsu.cycle(gon);
+        helper.assertTrue(Hatsu.selectedTechnique(d) == Techniques.BASIC_ATTACK, "4 : attaque basique (coups de base à la suite)");
+        Hatsu.cycle(gon);
+        Hatsu.cycle(gon);
+        helper.assertTrue(Hatsu.selectedTechnique(d) == Techniques.BASIC_CHARGED, "6 : frappe chargée");
+        Hatsu.cycle(gon);
         helper.assertTrue(Hatsu.selectedTechnique(d) == Techniques.GON_ROCK, "Retour à 1 : Pierre");
         helper.succeed();
     }
@@ -193,5 +198,31 @@ public final class HatsuTests {
         helper.assertTrue(Hatsu.cast(killua) == null, "Hors Zetsu, Godspeed doit partir");
         helper.assertTrue(killua.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED), "Godspeed donne de la vitesse");
         helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void baseMovesWorkWithoutNenAndEnduranceShortensCooldown(GameTestHelper helper) {
+        Zombie fighter = husk(helper, 0);
+        Zombie target = husk(helper, 2);
+        HunterData d = HunterStats.get(fighter); // pas de Nen, pas de personnage
+        helper.assertTrue(Hatsu.techniqueIds(d).equals(Techniques.BASE), "Sans personnage : seulement les coups de base");
+        helper.assertTrue(Hatsu.selectedTechnique(d) == Techniques.BASIC_ATTACK, "Attaque basique sélectionnée");
+        float health = target.getHealth();
+        helper.assertTrue(Hatsu.cast(fighter) == null, "Attaque basique lancée sans Nen");
+        helper.assertTrue(target.getHealth() < health, "La cible prend le coup");
+        helper.assertTrue("message.hxh.hatsu_cooldown".equals(Hatsu.cast(fighter)), "Puis en recharge");
+        int slow = Techniques.BASIC_KICK.cooldownFor(d);
+        d.setLevel(com.evandouard.hxh.data.Stat.ENDURANCE, 100);
+        int fast = Techniques.BASIC_KICK.cooldownFor(d);
+        helper.assertTrue(fast < slow, "L'Endurance raccourcit la recharge du coup de pied (" + slow + " → " + fast + ")");
+        // Frappe chargée : maintien puis relâchement
+        helper.assertTrue(Hatsu.select(fighter, "basic_charged"), "Sélection par identifiant");
+        helper.assertTrue(Hatsu.cast(fighter) == null && com.evandouard.hxh.combat.Combat.isCharging(fighter), "En charge");
+        helper.runAfterDelay(10, () -> {
+            Hatsu.releaseCast(fighter);
+            helper.assertTrue(!com.evandouard.hxh.combat.Combat.isCharging(fighter), "Relâchée");
+            helper.assertTrue(d.readyAt("basic_charged") > helper.getLevel().getGameTime(), "Recharge au relâchement");
+            helper.succeed();
+        });
     }
 }

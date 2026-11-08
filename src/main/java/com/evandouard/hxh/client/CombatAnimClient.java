@@ -40,10 +40,7 @@ public final class CombatAnimClient {
     public static void register() {
         CombatAnimPayload.clientHandler = CombatAnimClient::onPayload;
         NeoForge.EVENT_BUS.addListener(RenderHandEvent.class, CombatAnimClient::onRenderHand);
-        // Frappe dans le vide : on prévient le serveur, qui décide de l'animation
-        NeoForge.EVENT_BUS.addListener(PlayerInteractEvent.LeftClickEmpty.class, e -> {
-            if (e.getEntity().getMainHandItem().isEmpty()) PacketDistributor.sendToServer(PunchPayload.INSTANCE);
-        });
+
         NeoForge.EVENT_BUS.addListener(ClientPlayerNetworkEvent.LoggingOut.class, e -> PLAYING.clear());
     }
 

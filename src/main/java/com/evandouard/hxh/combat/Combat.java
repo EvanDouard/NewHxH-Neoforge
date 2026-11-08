@@ -71,10 +71,9 @@ public final class Combat {
      * Le 5e coup est un coup final : recul supplémentaire, puis le combo repart de zéro.
      */
     public static float onMeleeHit(LivingEntity attacker, LivingEntity victim) {
-        CombatAnimations.punch(attacker); // poing droit / gauche à mains nues (ignoré si déjà joué ce tick)
-        if (attacker.getMainHandItem().isEmpty()) {
-            com.evandouard.hxh.fx.NenFx.impactOn(attacker, victim, 0.7f, com.evandouard.hxh.fx.NenFx.WHITE);
-        }
+        // Le coup de Minecraft (clic main vide) n'a plus d'animation : l'attaque basique est une capacité du menu.
+        // Les mobs, eux, gardent leurs poings animés.
+        if (!(attacker instanceof Player)) CombatAnimations.punch(attacker);
         long now = attacker.level().getGameTime();
         Combo previous = COMBOS.get(attacker);
         int count = previous != null && previous.targetId() == victim.getId() && now - previous.lastTick() <= COMBO_WINDOW_TICKS
@@ -156,6 +155,12 @@ public final class Combat {
         Long ready = KICK_READY.get(attacker);
         if (ready != null && now < ready) return "message.hxh.kick_cooldown";
         KICK_READY.put(attacker, now + KICK_COOLDOWN_TICKS);
+        kickNow(attacker);
+        return null;
+    }
+
+    /** Le coup de pied lui-même (la recharge est gérée par la technique « coup de pied »). @return la cible ou null */
+    public static LivingEntity kickNow(LivingEntity attacker) {
         CombatAnimations.play(attacker, CombatAnim.KICK);
         LivingEntity target = Targeting.inFront(attacker, 3.0, 0.8);
         attacker.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
@@ -165,7 +170,29 @@ public final class Combat {
         target.hurt(meleeSource(attacker), baseAttack(attacker) * 0.7f + 1f);
         project(attacker, target, projection(isStrong(attacker), Charge.NONE));
         com.evandouard.hxh.fx.NenFx.impactOn(attacker, target, 1.2f, com.evandouard.hxh.fx.NenFx.WHITE);
-        return null;
+        return target;
+    }
+
+    /** Attaque basique : un poing (droit puis gauche) sur ce qui est devant. @return la cible ou null */
+    public static LivingEntity basicPunch(LivingEntity attacker) {
+        CombatAnim anim = CombatAnimations.punchAnyway(attacker);
+        LivingEntity target = Targeting.inFront(attacker, 3.0, 0.8);
+        attacker.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
+                target != null ? SoundEvents.PLAYER_ATTACK_STRONG : SoundEvents.PLAYER_ATTACK_NODAMAGE, SoundSource.PLAYERS, 0.9f, 1.1f);
+        if (target == null) return null;
+        target.invulnerableTime = 0;
+        target.hurt(meleeSource(attacker), baseAttack(attacker));
+        target.knockback(0.3, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
+        com.evandouard.hxh.fx.NenFx.impactOn(attacker, target, 0.8f, com.evandouard.hxh.fx.NenFx.WHITE);
+        return target;
+    }
+
+    /** Relâche une frappe chargée par la technique (la barre décide : ratée, chargée ou parfaite). */
+    public static boolean releaseChargedTechnique(LivingEntity attacker) {
+        Long start = CHARGE_START.remove(attacker);
+        if (start == null) return false;
+        chargedStrike(attacker, chargeValue(attacker.level().getGameTime() - start));
+        return true;
     }
 
     /** Valeur de la barre (0 à 1) après {@code heldTicks} de maintien : elle monte puis redescend en boucle. */

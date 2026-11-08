@@ -6,6 +6,7 @@ import com.evandouard.hxh.data.Stat;
 import com.evandouard.hxh.hatsu.Hatsu;
 import com.evandouard.hxh.hatsu.HatsuKit;
 import com.evandouard.hxh.hatsu.HatsuKits;
+import com.evandouard.hxh.hatsu.Techniques;
 import com.evandouard.hxh.hatsu.Technique;
 import com.evandouard.hxh.nen.NenModes;
 import com.evandouard.hxh.stats.HunterStats;
@@ -349,7 +350,11 @@ public final class HunterCommand {
                 .then(targeted("clear", e -> HunterStats.get(e).setKit("")))
                 .then(targeted("cast", e -> Hatsu.requestCast(e)))
                 .then(targeted("release", e -> Hatsu.releaseCast(e)))
-                .then(targeted("next", e -> Hatsu.cycle(e)));
+                .then(targeted("next", e -> Hatsu.cycle(e)))
+                .then(Commands.literal("select").then(Commands.argument("technique", StringArgumentType.word())
+                        .suggests((ctx, b) -> SharedSuggestionProvider.suggest(Techniques.allIds(), b))
+                        .executes(ctx -> Hatsu.select((LivingEntity) ctx.getSource().getEntityOrException(),
+                                StringArgumentType.getString(ctx, "technique")) ? 1 : 0)));
     }
 
     private static int setKit(CommandContext<CommandSourceStack> ctx, Collection<? extends Entity> targets)
@@ -367,6 +372,7 @@ public final class HunterCommand {
             if (!d.nenUnlocked()) NenModes.unlock(e);
             d.setNenRevealed(true);
             d.setKit(kit.id());
+            d.setSelected(0); // première technique du personnage
         });
     }
 

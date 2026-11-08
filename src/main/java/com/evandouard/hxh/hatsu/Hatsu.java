@@ -25,9 +25,17 @@ public final class Hatsu {
 
     @Nullable
     public static Technique selectedTechnique(HunterData data) {
+        java.util.List<String> ids = techniqueIds(data);
+        return Techniques.get(ids.get(Math.floorMod(data.selected(), ids.size())));
+    }
+
+    /** Menu des pouvoirs : techniques du personnage, puis les coups de base (toujours là, même sans Nen). */
+    public static java.util.List<String> techniqueIds(HunterData data) {
         HatsuKit kit = kitOf(data);
-        if (kit == null || kit.techniques().isEmpty()) return null;
-        return Techniques.get(kit.techniques().get(Math.floorMod(data.selected(), kit.techniques().size())));
+        java.util.List<String> ids = new java.util.ArrayList<>();
+        if (kit != null) ids.addAll(kit.techniques());
+        ids.addAll(Techniques.BASE);
+        return ids;
     }
 
     /**
@@ -102,9 +110,7 @@ public final class Hatsu {
     /** Passe à la technique suivante (boucle), sans délai. */
     public static void cycle(LivingEntity entity) {
         HunterData data = HunterStats.get(entity);
-        HatsuKit kit = kitOf(data);
-        if (kit == null || kit.techniques().isEmpty()) return;
-        data.setSelected((data.selected() + 1) % kit.techniques().size());
+        data.setSelected((data.selected() + 1) % techniqueIds(data).size());
     }
 
     /** Puissance : affinité de l'hexagone × bonus de Volonté (+1 % par niveau). */
@@ -120,6 +126,7 @@ public final class Hatsu {
      */
     @Nullable
     public static String castRefusal(HunterData data, Technique technique, long gameTime) {
+        if (technique.isBase()) return gameTime < data.readyAt(technique.id()) ? "message.hxh.hatsu_cooldown" : null;
         if (!data.nenUnlocked()) return "message.hxh.nen_locked";
         if (data.mode() == NenMode.ZETSU) return "message.hxh.hatsu_zetsu";
         if (data.nenLevel() < technique.minNenLevel()) return "message.hxh.hatsu_nen_level";
@@ -135,8 +142,8 @@ public final class Hatsu {
         Technique technique = selectedTechnique(data);
         if (technique == null) return "message.hxh.hatsu_none";
         long now = entity.level().getGameTime();
-        if (NenCharge.isCharging(entity)) return null; // déjà en train de charger
-        if (com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU) != null) {
+        if (NenCharge.isCharging(entity) || com.evandouard.hxh.combat.Combat.isCharging(entity)) return null; // déjà en charge
+        if (!technique.isBase() && com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU) != null) {
             return com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU);
         }
         // Tour Céleste : pas de technique hors du ring (halls, guichets, chambres)
@@ -157,7 +164,7 @@ public final class Hatsu {
         // Raté ou pas, l'aura et la recharge partent : lancer dans le vide a un prix
         boolean hit = technique.perform(entity, power(data, technique));
         data.setAura(data.aura() - technique.auraCost());
-        data.setReadyAt(technique.id(), now + technique.cooldownTicks());
+        data.setReadyAt(technique.id(), now + technique.cooldownFor(data));
         com.evandouard.hxh.nen.NenProgress.addNenXp(entity, Math.max(1, technique.auraCost() / 5));
         return hit ? null : "message.hxh.hatsu_missed";
     }
@@ -165,6 +172,25 @@ public final class Hatsu {
     /** Touche de technique relâchée : lance une technique en charge. */
     public static void releaseCast(LivingEntity entity) {
         NenCharge.release(entity);
+        // Frappe chargée (coup de base) : la recharge part au relâchement
+        if (com.evandouard.hxh.combat.Combat.releaseChargedTechnique(entity)) {
+            HunterData data = HunterStats.get(entity);
+            data.setReadyAt(Techniques.BASIC_CHARGED.id(),
+                    entity.level().getGameTime() + Techniques.BASIC_CHARGED.cooldownFor(data));
+        }
+    }
+
+    /** Sélectionne une technique du menu par identifiant. @return false si absente du menu */
+    public static boolean select(LivingEntity entity, String id) {
+        HunterData data = HunterStats.get(entity);
+        if (id.matches("\\d+")) {
+            data.setSelected(Integer.parseInt(id) % techniqueIds(data).size());
+            return true;
+        }
+        int i = techniqueIds(data).indexOf(id);
+        if (i < 0) return false;
+        data.setSelected(i);
+        return true;
     }
 
     public static void requestCast(LivingEntity entity) {

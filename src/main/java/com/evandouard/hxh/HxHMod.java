@@ -50,10 +50,7 @@ public final class HxHMod {
         HxHGameRules.init();
 
         HunterEvents.register(NeoForge.EVENT_BUS);
-        // Coup de base d'un joueur (même sans dégâts) : poing droit / gauche à mains nues
-        NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.entity.player.AttackEntityEvent.class, e -> {
-            if (!e.getEntity().level().isClientSide()) com.evandouard.hxh.combat.CombatAnimations.punch(e.getEntity());
-        });
+
         NeoForge.EVENT_BUS.addListener(HunterCommand::register);
         LOGGER.info("[HxH] Mod chargé");
     }
