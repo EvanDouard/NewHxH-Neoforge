@@ -106,10 +106,15 @@ public final class NenClient {
         while (KO.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.KO, true));
         while (GYO.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.GYO, true));
         while (EN.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.EN, true));
-        while (CAST.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, true));
-        // Relâcher la touche lance une technique qu'on charge (Pierre de Gon)
+        // Touche de technique : appui (clic ou passage à « enfoncée »), puis relâchement — qui lance les techniques
+        // qu'on charge (Pierre, frappe chargée). Un simple clic sans maintien est relâché aussitôt.
+        boolean clicked = false;
+        while (CAST.consumeClick()) clicked = true;
         boolean castDown = CAST.isDown();
-        if (castWasDown && !castDown) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, false));
+        if (!castWasDown && (castDown || clicked)) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, true));
+        if ((castWasDown && !castDown) || (clicked && !castDown && !castWasDown)) {
+            PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, false));
+        }
         castWasDown = castDown;
         while (NEXT_TECHNIQUE.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.NEXT_TECHNIQUE, true));
         while (PROFILE.consumeClick()) {
