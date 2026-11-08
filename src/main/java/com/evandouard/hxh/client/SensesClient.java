@@ -6,11 +6,8 @@ import com.evandouard.hxh.data.ModAttachments;
 import com.evandouard.hxh.data.NenMode;
 import com.evandouard.hxh.nen.NenSenses;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import org.joml.Vector3f;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -55,27 +52,6 @@ public final class SensesClient {
         }
         GLOWING.clear();
         GLOWING.addAll(wanted);
-
-        // Sphère d'En visible autour de chaque joueur qui l'utilise (comme Pitou autour du palais)
-        if (mc.level.getGameTime() % 5 == 0) {
-            for (Player p : mc.level.players()) {
-                if (!p.hasData(ModAttachments.HUNTER)) continue;
-                HunterData d = p.getData(ModAttachments.HUNTER);
-                if (!d.en()) continue;
-                double r = NenSenses.enRadius(d);
-                int rgb = d.auraColor();
-                DustParticleOptions dust = new DustParticleOptions(new Vector3f(
-                        ((rgb >> 16) & 0xFF) / 255f, ((rgb >> 8) & 0xFF) / 255f, (rgb & 0xFF) / 255f), 1.0f);
-                int count = (int) Math.min(120, 12 + r * 6);
-                for (int i = 0; i < count; i++) {
-                    double u = p.getRandom().nextDouble() * 2 - 1;
-                    double theta = p.getRandom().nextDouble() * Math.PI * 2;
-                    double s = Math.sqrt(1 - u * u);
-                    double y = p.getY() + p.getBbHeight() * 0.5 + r * u;
-                    if (y < p.getY() - 0.5) continue; // dôme : rien sous les pieds
-                    mc.level.addParticle(dust, p.getX() + r * s * Math.cos(theta), y, p.getZ() + r * s * Math.sin(theta), 0, 0, 0);
-                }
-            }
-        }
+        // Le dôme d'En lui-même est dessiné par EnDomeClient
     }
 }
