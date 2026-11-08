@@ -101,6 +101,10 @@ public final class HunterEvents {
 
     /** Les mobs avec des données Hunter gèrent aussi leur aura. */
     private static void onEntityTick(EntityTickEvent.Post event) {
+        // Peur : tous les mobs, même ordinaires (un zombie fuit aussi le Roi)
+        if (event.getEntity() instanceof net.minecraft.world.entity.Mob mob && !mob.level().isClientSide()) {
+            com.evandouard.hxh.combat.Combat.tickFear(mob);
+        }
         if (event.getEntity() instanceof LivingEntity living && !(living instanceof Player)
                 && !living.level().isClientSide() && living.hasData(ModAttachments.HUNTER)) {
             if (living instanceof net.minecraft.world.entity.Mob mob) NenMobAI.tick(mob);

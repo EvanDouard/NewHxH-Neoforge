@@ -664,5 +664,8 @@
   "mob_preset.hxh.cochon_emetteur": "Emitter pig (Nen)",
   "mob_preset.hxh.elite_manipulateur": "Elite manipulator (Nen)",
   "command.hxh.spawned": "Spawned %s × %s",
-  "command.hxh.spawn_unknown": "Unknown example mob: %s. Available: %s"
+  "command.hxh.spawn_unknown": "Unknown example mob: %s. Available: %s",
+  "message.hxh.fear.0": "%s's presence makes you uneasy…",
+  "message.hxh.fear.1": "%s's aura chills you to the bone!",
+  "message.hxh.fear.2": "Terror: before %s, your body refuses to move!"
 }

@@ -57,6 +57,8 @@ public final class HunterCommand {
                         .then(Commands.argument("target", EntityArgument.entity())
                                 .executes(ctx -> show(ctx.getSource(), EntityArgument.getEntity(ctx, "target")))))
                 .then(statCommand())
+                // Tout au maximum : stats, Nen, maîtrises, soin, aura (tests)
+                .then(targeted("max", HunterCommand::maxAll).requires(s -> s.hasPermission(2)))
                 .then(nenCommand())
                 .then(hatsuCommand())
                 .then(Commands.literal("exam").requires(src -> src.hasPermission(2))
@@ -147,6 +149,24 @@ public final class HunterCommand {
         int spawned = n;
         source.sendSuccess(() -> Component.translatable("command.hxh.spawned", spawned, Component.translatable(preset.nameKey())), true);
         return n;
+    }
+
+    private static void maxAll(LivingEntity entity) {
+        HunterData d = HunterStats.get(entity);
+        for (Stat s : Stat.values()) d.setLevel(s, Stat.MAX_LEVEL);
+        if (d.nenType() == null) d.setNenType(NenType.ENHANCER);
+        if (!d.nenUnlocked()) NenModes.unlock(entity);
+        d.setNenRevealed(true);
+        d.setNenLevel(com.evandouard.hxh.data.Mastery.MAX_LEVEL);
+        for (com.evandouard.hxh.data.Mastery m : com.evandouard.hxh.data.Mastery.values()) {
+            d.setMasteryLevel(m, com.evandouard.hxh.data.Mastery.MAX_LEVEL);
+        }
+        d.setHealUnlocked(true);
+        d.setHealLevel(HunterData.HEAL_MAX_LEVEL);
+        d.setAuraMax(NenModes.computeAuraMax(d));
+        d.setAura(d.auraMax());
+        HunterStats.applyAttributes(entity);
+        entity.setHealth(entity.getMaxHealth());
     }
 
     private static void resetAll(LivingEntity entity) {

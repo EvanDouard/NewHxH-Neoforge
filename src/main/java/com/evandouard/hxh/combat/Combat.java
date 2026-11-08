@@ -32,7 +32,8 @@ import java.util.WeakHashMap;
  *     <li>coup de pied (appui court sur la touche Frappe) : petite recharge ;</li>
  *     <li>frappe chargée (maintien) : une barre monte et descend, relâcher au sommet = frappe parfaite,
  *         trop bas = frappe ratée ;</li>
- *     <li>peur : face à un ennemi bien plus puissant qui déploie son aura (Ren, Ken), on est ralenti et affaibli.</li>
+ *     <li>peur : rien qu'en regardant une entité bien plus puissante (le loup chimère devant le Roi), ou quand elle
+ *         déploie son aura (Ren, Ken) même sans la voir, on est ralenti et affaibli ; un mob terrifié recule.</li>
  * </ul>
  */
 public final class Combat {
@@ -45,8 +46,14 @@ public final class Combat {
     public static final int CHARGE_PERIOD_TICKS = 30;
     public static final float CHARGE_FAIL_BELOW = 0.3f;
     public static final float CHARGE_PERFECT_FROM = 0.85f;
-    /** Écart de puissance (niveau Hunter + niveau de Nen) qui déclenche la peur. */
+    /** Écart de puissance (niveau Hunter + niveau de Nen) qui fait peur quand le plus fort déploie son aura (Ren, Ken). */
     public static final int FEAR_POWER_GAP = 25;
+    /** Écart qui fait peur rien qu'à la vue (présence écrasante, aura au repos). */
+    public static final int FEAR_PRESENCE_GAP = 40;
+    /** Portée de la peur par l'aura déployée (pas besoin de voir), et par la seule présence (il faut la regarder). */
+    public static final double FEAR_AURA_RANGE = 16, FEAR_PRESENCE_RANGE = 10;
+    /** Écarts à partir desquels la peur s'aggrave (niveau II : on recule ; niveau III : quasi paralysé). */
+    public static final int FEAR_STRONG_GAP = 60, FEAR_TERROR_GAP = 100;
 
     private record Combo(int targetId, int count, long lastTick) {}
 
@@ -230,23 +237,72 @@ public final class Combat {
         return d.hunterLevel() + (d.nenUnlocked() ? d.nenLevel() : 0);
     }
 
-    /** Chaque seconde : un ennemi bien plus puissant qui déploie son aura (Ren, Ken) à 12 blocs fait peur. */
+    /** Chaque seconde (décalé d'une entité à l'autre) : vérifie si quelque chose de bien plus puissant fait peur. */
     public static void tickFear(LivingEntity entity) {
-        if (entity.tickCount % 20 == 0) applyFearIfThreatened(entity);
+        if ((entity.tickCount + entity.getId()) % 20 == 0) applyFearIfThreatened(entity);
     }
 
-    /** @return true si l'entité a peur (un ennemi bien plus puissant déploie son aura à moins de 12 blocs) */
-    public static boolean applyFearIfThreatened(LivingEntity entity) {
+    /**
+     * Source de peur la plus écrasante autour de l'entité, et l'écart de puissance, ou null.
+     * <ul>
+     *     <li>présence : elle est à moins de 10 blocs, en vue, et on la regarde ; écart ≥ 40 ;</li>
+     *     <li>aura déployée (Ren, Ken) : à moins de 16 blocs, même sans la voir ; écart ≥ 25.</li>
+     * </ul>
+     * En Zetsu ou en In, la présence est masquée : elle ne fait pas peur.
+     */
+    @org.jetbrains.annotations.Nullable
+    public static Map.Entry<LivingEntity, Integer> fearSource(LivingEntity entity) {
         int mine = power(entity);
-        for (LivingEntity other : Targeting.around(entity, 12)) {
+        LivingEntity best = null;
+        int bestGap = 0;
+        for (LivingEntity other : Targeting.around(entity, FEAR_AURA_RANGE)) {
             if (!other.hasData(ModAttachments.HUNTER)) continue;
+            if (other instanceof Player p && p.isSpectator()) continue;
             HunterData d = HunterStats.get(other);
-            boolean flaring = d.nenUnlocked() && (d.mode() == NenMode.REN || d.mode() == NenMode.KEN);
-            if (flaring && power(other) - mine >= FEAR_POWER_GAP) {
-                entity.addEffect(new MobEffectInstance(ModEffects.FEAR, 60, 0, false, false, true));
-                return true;
+            NenMode mode = d.nenUnlocked() ? d.mode() : NenMode.NONE;
+            if (mode == NenMode.ZETSU || mode == NenMode.IN) continue;
+            int gap = power(other) - mine;
+            boolean flaring = mode == NenMode.REN || mode == NenMode.KEN;
+            boolean scary = flaring && gap >= FEAR_POWER_GAP
+                    || gap >= FEAR_PRESENCE_GAP && entity.distanceTo(other) <= FEAR_PRESENCE_RANGE && isLookingAt(entity, other);
+            if (scary && gap > bestGap) {
+                best = other;
+                bestGap = gap;
             }
         }
-        return false;
+        return best == null ? null : Map.entry(best, bestGap);
+    }
+
+    /** L'entité regarde l'autre (dans un cône devant elle) et la voit (rien entre les deux). */
+    public static boolean isLookingAt(LivingEntity viewer, LivingEntity target) {
+        Vec3 look = viewer.getViewVector(1f).normalize();
+        Vec3 to = target.getEyePosition().subtract(viewer.getEyePosition());
+        double dist = to.length();
+        if (dist < 1e-3) return true;
+        return look.dot(to.scale(1 / dist)) > 0.6 && viewer.hasLineOfSight(target);
+    }
+
+    /** @return true si l'entité a peur (voir {@link #fearSource}) ; applique l'effet Peur, plus fort si l'écart est énorme */
+    public static boolean applyFearIfThreatened(LivingEntity entity) {
+        if (entity instanceof Player p && (p.isCreative() || p.isSpectator())) return false;
+        Map.Entry<LivingEntity, Integer> source = fearSource(entity);
+        if (source == null) return false;
+        int gap = source.getValue();
+        int amplifier = gap >= FEAR_TERROR_GAP ? 2 : gap >= FEAR_STRONG_GAP ? 1 : 0;
+        boolean onset = !entity.hasEffect(ModEffects.FEAR);
+        entity.addEffect(new MobEffectInstance(ModEffects.FEAR, 60, amplifier, false, false, true));
+        LivingEntity scary = source.getKey();
+        if (onset && entity instanceof net.minecraft.server.level.ServerPlayer player) {
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
+                    "message.hxh.fear." + amplifier, scary.getDisplayName()).withStyle(net.minecraft.ChatFormatting.DARK_PURPLE), true);
+            player.playNotifySound(net.minecraft.sounds.SoundEvents.WARDEN_HEARTBEAT, net.minecraft.sounds.SoundSource.PLAYERS, 1f, 0.8f);
+        }
+        // Un mob terrifié n'ose plus attaquer et recule
+        if (amplifier >= 1 && entity instanceof net.minecraft.world.entity.PathfinderMob mob) {
+            if (mob.getTarget() == scary) mob.setTarget(null);
+            Vec3 away = net.minecraft.world.entity.ai.util.DefaultRandomPos.getPosAway(mob, 10, 5, scary.position());
+            if (away != null) mob.getNavigation().moveTo(away.x, away.y, away.z, 1.2);
+        }
+        return true;
     }
 }

@@ -171,7 +171,12 @@ expect apparu
 cmd execute if entity @e[type=minecraft:husk,distance=..10]
 wait 5
 expect Test réussi
-shot 13h_mobs_exemple
+wait 30
+clearchat
+cmd execute if entity @s[nbt={active_effects:[{id:"hxh:fear"}]}]
+wait 5
+expect Test réussi
+shot 13h_mobs_exemple_peur
 cmd kill @e[type=minecraft:husk,distance=..12]
 cmd kill @e[type=minecraft:husk,distance=..12]
 cmd kill @e[type=minecraft:skeleton,distance=..12]

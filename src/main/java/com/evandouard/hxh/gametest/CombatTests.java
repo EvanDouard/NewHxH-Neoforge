@@ -134,15 +134,66 @@ public final class CombatTests {
     @GameTest(template = "empty")
     public static void overwhelmingAuraCausesFear(GameTestHelper helper) {
         Zombie weak = husk(helper, 0);
-        Zombie strong = husk(helper, 2);
+        Zombie strong = husk(helper, 4);
+        weak.setNoAi(true);
+        strong.setNoAi(true);
         NenModes.unlock(strong);
         HunterData d = HunterStats.get(strong);
-        for (Stat s : Stat.values()) d.setLevel(s, 60);
-        d.setNenLevel(60);
-        helper.assertTrue(!Combat.applyFearIfThreatened(weak), "Aura au repos : pas de peur");
-        NenModes.trySetMode(strong, NenMode.REN);
-        helper.assertTrue(Combat.applyFearIfThreatened(weak), "Aura déployée bien plus puissante : peur");
-        helper.assertTrue(weak.hasEffect(ModEffects.FEAR), "Effet Peur attendu");
+        for (Stat s : Stat.values()) d.setLevel(s, 30);
+        d.setNenLevel(20); // puissance 50 : au-dessus de l'écart d'aura (25), en dessous de 60
+        // Le faible regarde ailleurs : aura au repos → rien
+        faceAway(weak, strong);
+        helper.assertTrue(!Combat.applyFearIfThreatened(weak), "Aura au repos, pas regardé : pas de peur");
+        // Il le regarde : présence écrasante (écart ≥ 40) → peur, comme le loup chimère devant le Roi
+        face(weak, strong);
+        helper.assertTrue(Combat.isLookingAt(weak, strong), "Le faible regarde le fort");
+        helper.assertTrue(Combat.applyFearIfThreatened(weak), "Rien qu'à la vue : peur");
+        weak.removeEffect(ModEffects.FEAR);
+        // Zetsu : présence masquée
+        d.setMode(NenMode.ZETSU);
+        helper.assertTrue(!Combat.applyFearIfThreatened(weak), "En Zetsu : pas de peur");
+        // Aura déployée : même sans regarder
+        faceAway(weak, strong);
+        d.setMode(NenMode.REN);
+        helper.assertTrue(Combat.applyFearIfThreatened(weak), "Aura déployée : peur même sans la voir");
+        helper.assertTrue(weak.getEffect(ModEffects.FEAR).getAmplifier() == 0, "Écart 50 : peur de niveau I");
+        // Écart énorme : terreur
+        for (Stat s : Stat.values()) d.setLevel(s, 90);
+        d.setNenLevel(90);
+        Combat.applyFearIfThreatened(weak);
+        helper.assertTrue(weak.getEffect(ModEffects.FEAR).getAmplifier() == 2, "Écart ≥ 100 : terreur (niveau III)");
+        helper.succeed();
+    }
+
+    private static void face(Zombie viewer, Zombie target) {
+        net.minecraft.world.phys.Vec3 d = target.getEyePosition().subtract(viewer.getEyePosition());
+        float yaw = (float) (Math.atan2(d.z, d.x) * 180 / Math.PI) - 90f;
+        viewer.setYRot(yaw);
+        viewer.setYHeadRot(yaw);
+        viewer.setXRot(0f);
+        viewer.yRotO = yaw;
+        viewer.yHeadRotO = yaw;
+    }
+
+    private static void faceAway(Zombie viewer, Zombie target) {
+        face(viewer, target);
+        float yaw = viewer.getYRot() + 180f;
+        viewer.setYRot(yaw);
+        viewer.setYHeadRot(yaw);
+        viewer.yRotO = yaw;
+        viewer.yHeadRotO = yaw;
+    }
+
+    @GameTest(template = "empty")
+    public static void maxCommandMaxesEverything(GameTestHelper helper) {
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        player.getServer().getCommands().performPrefixedCommand(
+                player.createCommandSourceStack().withPermission(4).withSuppressedOutput(), "hunter max");
+        HunterData d = HunterStats.get(player);
+        for (Stat s : Stat.values()) helper.assertTrue(d.level(s) == Stat.MAX_LEVEL, "Stat au max : " + s.id());
+        helper.assertTrue(d.nenUnlocked() && d.nenLevel() == 100, "Nen au max");
+        helper.assertTrue(d.masteryLevel(com.evandouard.hxh.data.Mastery.KO) == 100, "Maîtrises au max");
+        helper.assertTrue(d.aura() >= d.auraMax() && d.auraMax() > 0, "Aura pleine");
         helper.succeed();
     }
 }
