@@ -43,6 +43,7 @@ public final class NenSenses {
 
     public static String setGyo(LivingEntity entity, boolean on) {
         HunterData data = HunterStats.get(entity);
+        if (on && NenLearning.refusal(entity, NenLearning.Ability.GYO) != null) return NenLearning.refusal(entity, NenLearning.Ability.GYO);
         if (on) {
             String refusal = senseRefusal(data);
             if (refusal != null) return refusal;
@@ -53,6 +54,7 @@ public final class NenSenses {
 
     public static String setEn(LivingEntity entity, boolean on) {
         HunterData data = HunterStats.get(entity);
+        if (on && NenLearning.refusal(entity, NenLearning.Ability.EN) != null) return NenLearning.refusal(entity, NenLearning.Ability.EN);
         if (on) {
             String refusal = senseRefusal(data);
             if (refusal != null) return refusal;
@@ -112,6 +114,7 @@ public final class NenSenses {
     public static boolean shuActive(LivingEntity entity, ItemStack held) {
         if (held.isEmpty() || !held.isDamageableItem() || !entity.hasData(ModAttachments.HUNTER)) return false;
         HunterData data = HunterStats.get(entity);
+        if (!NenLearning.knows(entity, NenLearning.Ability.SHU)) return false;
         return data.nenUnlocked() && (data.mode() == NenMode.TEN || data.mode() == NenMode.REN || data.mode() == NenMode.KEN);
     }
 

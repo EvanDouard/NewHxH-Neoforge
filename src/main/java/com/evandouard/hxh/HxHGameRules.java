@@ -17,6 +17,10 @@ public final class HxHGameRules {
     public static final GameRules.Key<GameRules.BooleanValue> NEN_DESTRUCTION =
             GameRules.register("hxhNenDestruction", GameRules.Category.MOBS, GameRules.BooleanValue.create(true));
 
+    /** Si vrai, chaque capacité du Nen doit être apprise auprès d'un maître (quêtes de Wing) avant d'être utilisée. */
+    public static final GameRules.Key<GameRules.BooleanValue> NEN_LEARNING =
+            GameRules.register("hxhNenLearning", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
+
     private HxHGameRules() {}
 
     /** Force le chargement de la classe (et donc l'enregistrement des règles) au démarrage du mod. */

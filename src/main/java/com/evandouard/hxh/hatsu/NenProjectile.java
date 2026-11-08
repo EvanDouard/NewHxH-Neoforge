@@ -93,7 +93,7 @@ public class NenProjectile extends Entity {
 
     /** Rayon de la boule (blocs) selon l'aura chargée. */
     public float radius() {
-        return kind() == ORB ? 0.45f + Math.min(2.6f, power() / 55f) : 0.6f;
+        return kind() == ORB ? 0.6f + Math.min(2.4f, power() / 45f) : 0.6f;
     }
 
     @Override
@@ -197,7 +197,7 @@ public class NenProjectile extends Entity {
     /** Bouquet final : dégâts et projection selon l'aura chargée, cratère si la règle est active. */
     private void explode(ServerLevel level, @Nullable LivingEntity caster) {
         float power = power();
-        float blast = 1.8f + power / 35f;
+        float blast = 2.5f + power / 30f;
         Vec3 c = position();
         for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, new AABB(c, c).inflate(blast),
                 e -> e.isAlive() && e != caster && !(e instanceof com.evandouard.hxh.npc.NpcEntity))) {
@@ -213,8 +213,10 @@ public class NenProjectile extends Entity {
             int ir = (int) Math.ceil(blast);
             BlockPos b = BlockPos.containing(c);
             for (BlockPos p : BlockPos.betweenClosed(b.offset(-ir, -ir, -ir), b.offset(ir, ir, ir))) {
-                double d = p.distToCenterSqr(c);
-                if (d > blast * blast || level.random.nextFloat() < d / (blast * blast) * 0.3f) continue; // bords irréguliers
+                double d = Math.sqrt(p.distToCenterSqr(c));
+                if (d > blast) continue;
+                // Tout disparaît dans le rayon ; seule la dernière couronne est irrégulière
+                if (d > blast - 1 && level.random.nextFloat() < 0.4f) continue;
                 BlockState s = level.getBlockState(p);
                 if (!s.isAir() && breakable(level, p, s)) level.destroyBlock(p, false, this);
             }

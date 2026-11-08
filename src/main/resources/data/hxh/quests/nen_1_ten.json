@@ -1,0 +1,67 @@
+{
+  "title": {
+    "fr": "Leçon de Nen : le Ten",
+    "en": "Nen lesson: Ten"
+  },
+  "start_npc": "wing",
+  "intro": {
+    "fr": "Osu ! Je suis Wing. Tu veux apprendre le Nen ? Commence par ouvrir tes pores : médite jusqu'à sentir ton aura.",
+    "en": "Osu! I'm Wing. You want to learn Nen? First open your pores: meditate until you feel your aura."
+  },
+  "npcs": {
+    "wing": {
+      "fr": "Wing",
+      "en": "Wing"
+    }
+  },
+  "steps": [
+    {
+      "id": "awaken",
+      "type": "nen_flag",
+      "mode": "unlocked",
+      "objective": {
+        "fr": "Éveiller son aura (méditer)",
+        "en": "Awaken your aura (meditate)"
+      }
+    },
+    {
+      "id": "learn",
+      "type": "talk",
+      "npc": "wing",
+      "reward_learn": [
+        "ten"
+      ],
+      "objective": {
+        "fr": "Écouter la leçon de Wing",
+        "en": "Listen to Wing's lesson"
+      },
+      "dialog": {
+        "fr": "Bien. Maintenant, garde ton aura autour de toi, sans la laisser fuir : c'est le Ten.",
+        "en": "Good. Now keep your aura around you without letting it leak: that's Ten."
+      }
+    },
+    {
+      "id": "practice",
+      "type": "nen_mode",
+      "mode": "ten",
+      "seconds": 20,
+      "objective": {
+        "fr": "Tenir le Ten 20 secondes",
+        "en": "Hold Ten for 20 seconds"
+      }
+    },
+    {
+      "id": "done",
+      "type": "talk",
+      "npc": "wing",
+      "objective": {
+        "fr": "Retourner voir Wing",
+        "en": "Go back to Wing"
+      },
+      "dialog": {
+        "fr": "Ton corps ne s'épuise plus aussi vite. Le Ten est la base de tout.",
+        "en": "Your body no longer tires as fast. Ten is the basis of everything."
+      }
+    }
+  ]
+}

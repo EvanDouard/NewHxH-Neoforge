@@ -3,6 +3,7 @@
 wait 100
 cmd time set noon
 cmd gamerule doDaylightCycle false
+cmd gamerule hxhNenLearning false
 cmd give @s hxh:hunter_card
 look 30 20
 wait 60
@@ -558,6 +559,35 @@ wait 20
 expect Inscription validée
 expect Nouvelle quête : La Tour Céleste
 shot 38_guichet_et_quete
+
+# --- Apprentissage du Nen avec Wing (hall d'entrée) ---
+cmd gamerule hxhNenLearning true
+cmd hunter nen mode none
+wait 5
+clearchat
+key key.hxh.ten
+wait 10
+expect pas encore appris le Ten
+goto wing
+wait 20
+talkto wing
+wait 10
+expect Leçon de Nen : le Ten
+wait 40
+clearchat
+talkto wing
+wait 10
+expect [hud] Capacité apprise
+shot 38b_wing_lecon_ten
+key key.hxh.ten
+wait 420
+clearchat
+talkto wing
+wait 10
+expect Le Ten est la base
+cmd hunter nen mode none
+cmd gamerule hxhNenLearning false
+wait 10
 cmd tp @s 8.5 64 0.5 -90 0
 wait 20
 useblock 2 0 0

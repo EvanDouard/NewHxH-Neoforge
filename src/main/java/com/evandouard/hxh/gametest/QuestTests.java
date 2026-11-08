@@ -215,4 +215,43 @@ public final class QuestTests {
         helper.assertTrue(d.isCompleted(id.toString()), "Quête terminée");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void nenMustBeLearnedFromWing(GameTestHelper helper) {
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.data.HunterData h = com.evandouard.hxh.stats.HunterStats.get(player);
+        com.evandouard.hxh.nen.NenModes.unlock(player);
+        com.evandouard.hxh.nen.NenLearning.forceInTests = true;
+        try {
+            helper.assertTrue(com.evandouard.hxh.nen.NenModes.trySetMode(player, com.evandouard.hxh.data.NenMode.TEN) != null,
+                    "Ten pas appris : refusé");
+            helper.assertTrue(com.evandouard.hxh.nen.NenSenses.setGyo(player, true) != null, "Gyo pas appris : refusé");
+            // Wing donne la première leçon ; l'éveil est déjà fait, l'étape suivante apprend le Ten
+            NpcEntity wing = npc(helper, "wing", 1);
+            QuestManager.onTalk(player, wing);
+            QuestData d = QuestManager.data(player);
+            net.minecraft.resources.ResourceLocation ten = HxHMod.id("nen_1_ten");
+            helper.assertTrue(d.isRunning(ten.toString()), "Wing lance la leçon du Ten");
+            d.track(ten.toString());
+            player.tickCount = 20;
+            QuestManager.tick(player); // éveil déjà fait : étape validée
+            QuestManager.onTalk(player, wing);
+            helper.assertTrue(h.learned("ten"), "Leçon écoutée : Ten appris");
+            helper.assertTrue(com.evandouard.hxh.nen.NenModes.trySetMode(player, com.evandouard.hxh.data.NenMode.TEN) == null,
+                    "Ten utilisable une fois appris");
+            for (int s = 1; s <= 20; s++) {
+                player.tickCount = 20 * (s + 1);
+                QuestManager.tick(player);
+            }
+            QuestManager.onTalk(player, wing);
+            helper.assertTrue(d.isCompleted(ten.toString()), "Ten tenu 20 s puis retour à Wing : leçon terminée");
+            // /hunter max : tout est su
+            com.evandouard.hxh.nen.NenLearning.learnAll(player);
+            helper.assertTrue(com.evandouard.hxh.nen.NenSenses.setGyo(player, true) == null, "Tout appris : Gyo accepté");
+            helper.assertTrue(QuestRegistry.problems().isEmpty(), "Leçons sans erreur : " + QuestRegistry.problems());
+        } finally {
+            com.evandouard.hxh.nen.NenLearning.forceInTests = false;
+        }
+        helper.succeed();
+    }
 }

@@ -35,19 +35,21 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
 
     /** Types d'étapes connus. */
     public static final Set<String> TYPES = Set.of("talk", "kill", "follow", "bring", "reach", "custom",
+            "nen_mode", "nen_sense", "nen_flag",
             "arena_win", "arena_floor", "arena_register_200");
 
     public record Step(String id, String type, String npc, String entity, int count, int seconds,
                        double maxDistance, String rewardItem, boolean rewardHunter, int rewardJenny,
                        String item, double[] pos, double radius, String note,
-                       Map<String, String> objective, Map<String, String> dialog) {
+                       Map<String, String> objective, Map<String, String> dialog,
+                       String mode, List<String> rewardLearn) {
 
         /** Objectif chiffré de l'étape (pour la progression affichée) : nombre de mobs ou secondes, sinon 0. */
         public int goal() {
             return switch (type) {
                 case "kill", "arena_win", "arena_floor" -> count;
                 case "bring" -> count;
-                case "follow" -> seconds;
+                case "follow", "nen_mode", "nen_sense" -> seconds;
                 default -> 0;
             };
         }
@@ -123,6 +125,16 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
         return map;
     }
 
+    /** Une chaîne ou une liste de chaînes. */
+    static List<String> stringList(JsonObject o, String key) {
+        List<String> out = new ArrayList<>();
+        if (!o.has(key)) return out;
+        JsonElement e = o.get(key);
+        if (e.isJsonArray()) for (JsonElement x : e.getAsJsonArray()) out.add(x.getAsString());
+        else out.add(e.getAsString());
+        return List.copyOf(out);
+    }
+
     public static Quest parse(ResourceLocation id, JsonElement json) {
         JsonObject root = json.getAsJsonObject();
         List<String> problems = new ArrayList<>();
@@ -155,7 +167,9 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                     s.has("radius") ? s.get("radius").getAsDouble() : 4,
                     str(s, "note", ""),
                     texts(s, "objective"),
-                    texts(s, "dialog"));
+                    texts(s, "dialog"),
+                    str(s, "mode", ""),
+                    stringList(s, "reward_learn"));
             // Vérifications : les erreurs ne bloquent pas, elles s'affichent avec /hunter quest check
             if (!TYPES.contains(type)) problems.add(where + "type inconnu « " + type + " »");
             if (List.of("talk", "follow", "bring").contains(type) && step.npc().isEmpty()) problems.add(where + "il manque \"npc\"");
@@ -165,6 +179,14 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                 problems.add(where + "objet inconnu « " + step.item() + " »");
             if (type.equals("reach") && pos == null) problems.add(where + "il manque \"pos\": [x, y, z]");
             if (type.equals("custom") && step.note().isEmpty()) problems.add(where + "décrire la condition dans \"note\"");
+            if (type.equals("nen_mode") && com.evandouard.hxh.data.NenMode.byId(step.mode()) == null)
+                problems.add(where + "posture inconnue « " + step.mode() + " » (ten, zetsu, in, ren, ken)");
+            if (type.equals("nen_sense") && !List.of("gyo", "en").contains(step.mode()))
+                problems.add(where + "sens inconnu « " + step.mode() + " » (gyo, en)");
+            if (type.equals("nen_flag") && !List.of("unlocked", "revealed", "kit").contains(step.mode()))
+                problems.add(where + "drapeau inconnu « " + step.mode() + " » (unlocked, revealed, kit)");
+            for (String a : step.rewardLearn())
+                if (com.evandouard.hxh.nen.NenLearning.Ability.byId(a) == null) problems.add(where + "capacité inconnue « " + a + " »");
             if (!step.rewardItem().isEmpty() && !BuiltInRegistries.ITEM.containsKey(ResourceLocation.tryParse(step.rewardItem())))
                 problems.add(where + "récompense inconnue « " + step.rewardItem() + " »");
             steps.add(step);

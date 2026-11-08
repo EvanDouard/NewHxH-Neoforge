@@ -22,6 +22,13 @@ public record SetRyuPayload(int attackPercent) implements CustomPacketPayload {
     }
 
     public static void handle(SetRyuPayload payload, IPayloadContext context) {
-        context.enqueueWork(() -> HunterStats.get(context.player()).setRyuAttack(payload.attackPercent()));
+        context.enqueueWork(() -> {
+            String refusal = com.evandouard.hxh.nen.NenLearning.refusal(context.player(), com.evandouard.hxh.nen.NenLearning.Ability.RYU);
+            if (refusal != null) {
+                context.player().displayClientMessage(net.minecraft.network.chat.Component.translatable(refusal), true);
+                return;
+            }
+            HunterStats.get(context.player()).setRyuAttack(payload.attackPercent());
+        });
     }
 }

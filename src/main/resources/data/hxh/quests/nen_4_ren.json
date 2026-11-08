@@ -1,0 +1,61 @@
+{
+  "title": {
+    "fr": "Leçon de Nen : le Ren",
+    "en": "Nen lesson: Ren"
+  },
+  "start_npc": "wing",
+  "intro": {
+    "fr": "Le Ten protège. Le Ren attaque.",
+    "en": "Ten protects. Ren attacks."
+  },
+  "npcs": {
+    "wing": {
+      "fr": "Wing",
+      "en": "Wing"
+    }
+  },
+  "steps": [
+    {
+      "id": "learn",
+      "type": "talk",
+      "npc": "wing",
+      "reward_learn": [
+        "ren"
+      ],
+      "objective": {
+        "fr": "Écouter la leçon de Wing",
+        "en": "Listen to Wing's lesson"
+      },
+      "dialog": {
+        "fr": "Fais jaillir plus d'aura que d'habitude, et garde-la : c'est le Ren.",
+        "en": "Make more aura gush out than usual, and hold it: that's Ren."
+      }
+    },
+    {
+      "id": "practice",
+      "type": "nen_mode",
+      "mode": "ren",
+      "seconds": 15,
+      "objective": {
+        "fr": "Tenir le Ren 15 secondes",
+        "en": "Hold Ren for 15 seconds"
+      }
+    },
+    {
+      "id": "done",
+      "type": "talk",
+      "npc": "wing",
+      "objective": {
+        "fr": "Retourner voir Wing",
+        "en": "Go back to Wing"
+      },
+      "dialog": {
+        "fr": "Ton aura est puissante. Ne la gaspille pas.",
+        "en": "Your aura is powerful. Don't waste it."
+      }
+    }
+  ],
+  "requires": [
+    "hxh:nen_1_ten"
+  ]
+}

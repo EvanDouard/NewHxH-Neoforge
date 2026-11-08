@@ -1,0 +1,61 @@
+{
+  "title": {
+    "fr": "Leçon de Nen : le Zetsu",
+    "en": "Nen lesson: Zetsu"
+  },
+  "start_npc": "wing",
+  "intro": {
+    "fr": "Tu sais réduire ton aura. Maintenant, ferme tes pores.",
+    "en": "You can shrink your aura. Now close your pores."
+  },
+  "npcs": {
+    "wing": {
+      "fr": "Wing",
+      "en": "Wing"
+    }
+  },
+  "steps": [
+    {
+      "id": "learn",
+      "type": "talk",
+      "npc": "wing",
+      "reward_learn": [
+        "zetsu"
+      ],
+      "objective": {
+        "fr": "Écouter la leçon de Wing",
+        "en": "Listen to Wing's lesson"
+      },
+      "dialog": {
+        "fr": "Coupe ton aura entièrement : plus personne ne te sentira. Mais tu es sans défense.",
+        "en": "Cut your aura entirely: no one will sense you. But you are defenceless."
+      }
+    },
+    {
+      "id": "practice",
+      "type": "nen_mode",
+      "mode": "zetsu",
+      "seconds": 20,
+      "objective": {
+        "fr": "Tenir le Zetsu 20 secondes",
+        "en": "Hold Zetsu for 20 seconds"
+      }
+    },
+    {
+      "id": "done",
+      "type": "talk",
+      "npc": "wing",
+      "objective": {
+        "fr": "Retourner voir Wing",
+        "en": "Go back to Wing"
+      },
+      "dialog": {
+        "fr": "Parfait. Le Zetsu remplace l'In : ta touche de dissimulation donne désormais le Zetsu.",
+        "en": "Perfect. Zetsu replaces In: your hide key now gives Zetsu."
+      }
+    }
+  ],
+  "requires": [
+    "hxh:nen_2_in"
+  ]
+}

@@ -58,6 +58,9 @@ public final class Hatsu {
         if (kit == null) return "message.hxh.hatsu_unknown";
         HunterData data = HunterStats.get(entity);
         boolean free = entity instanceof net.minecraft.world.entity.player.Player p && p.isCreative();
+        if (!free && com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU) != null) {
+            return com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU);
+        }
         String refusal = chooseRefusal(data, kit, free);
         if (refusal != null) return refusal;
         if (free) {
@@ -133,6 +136,9 @@ public final class Hatsu {
         if (technique == null) return "message.hxh.hatsu_none";
         long now = entity.level().getGameTime();
         if (NenCharge.isCharging(entity)) return null; // déjà en train de charger
+        if (com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU) != null) {
+            return com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU);
+        }
         // Tour Céleste : pas de technique hors du ring (halls, guichets, chambres)
         if (entity instanceof net.minecraft.server.level.ServerPlayer sp
                 && sp.level().dimension().equals(com.evandouard.hxh.arena.ArenaWorld.DIMENSION)

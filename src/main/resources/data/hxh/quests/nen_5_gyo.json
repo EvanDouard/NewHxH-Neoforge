@@ -1,0 +1,61 @@
+{
+  "title": {
+    "fr": "Leçon de Nen : le Gyo",
+    "en": "Nen lesson: Gyo"
+  },
+  "start_npc": "wing",
+  "intro": {
+    "fr": "Ce qu'on ne voit pas peut te tuer.",
+    "en": "What you can't see can kill you."
+  },
+  "npcs": {
+    "wing": {
+      "fr": "Wing",
+      "en": "Wing"
+    }
+  },
+  "steps": [
+    {
+      "id": "learn",
+      "type": "talk",
+      "npc": "wing",
+      "reward_learn": [
+        "gyo"
+      ],
+      "objective": {
+        "fr": "Écouter la leçon de Wing",
+        "en": "Listen to Wing's lesson"
+      },
+      "dialog": {
+        "fr": "Concentre ton aura dans tes yeux : tu verras l'aura cachée. C'est le Gyo.",
+        "en": "Focus your aura in your eyes: you'll see hidden aura. That's Gyo."
+      }
+    },
+    {
+      "id": "practice",
+      "type": "nen_sense",
+      "mode": "gyo",
+      "seconds": 15,
+      "objective": {
+        "fr": "Garder le Gyo 15 secondes",
+        "en": "Keep Gyo for 15 seconds"
+      }
+    },
+    {
+      "id": "done",
+      "type": "talk",
+      "npc": "wing",
+      "objective": {
+        "fr": "Retourner voir Wing",
+        "en": "Go back to Wing"
+      },
+      "dialog": {
+        "fr": "Garde l'habitude du Gyo en combat.",
+        "en": "Keep the Gyo habit in combat."
+      }
+    }
+  ],
+  "requires": [
+    "hxh:nen_4_ren"
+  ]
+}

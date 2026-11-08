@@ -40,6 +40,8 @@ public final class NenModes {
     public static String trySetMode(LivingEntity entity, NenMode mode) {
         HunterData data = HunterStats.get(entity);
         if (!data.nenUnlocked()) return "message.hxh.nen_locked";
+        NenLearning.Ability ability = NenLearning.forMode(mode);
+        if (ability != null && NenLearning.refusal(entity, ability) != null) return NenLearning.refusal(entity, ability);
         if ((mode == NenMode.REN || mode == NenMode.KEN) && data.aura() < 1) return "message.hxh.no_aura";
         data.setMode(mode);
         return null;
@@ -50,6 +52,12 @@ public final class NenModes {
         return data.masteryLevel(com.evandouard.hxh.data.Mastery.IN) >= HxHConfig.ZETSU_UNLOCK_IN_LEVEL.get();
     }
 
+    /** Zetsu débloqué : appris auprès du maître (apprentissage actif), sinon en travaillant l'In. */
+    public static boolean zetsuUnlocked(LivingEntity entity) {
+        if (NenLearning.applies(entity)) return HunterStats.get(entity).learned(NenLearning.Ability.ZETSU.id());
+        return zetsuUnlocked(HunterStats.get(entity));
+    }
+
     /** Touche pressée : même mode = retour au neutre, sinon on essaie le nouveau mode. */
     public static void toggle(LivingEntity entity, NenMode mode) {
         HunterData data = HunterStats.get(entity);
@@ -57,7 +65,7 @@ public final class NenModes {
         // Touche de dissimulation : In tant que le Zetsu n'est pas débloqué, puis seulement le Zetsu
         // (qui le remplace) ; appuyer à nouveau revient au neutre.
         if (mode == NenMode.ZETSU || mode == NenMode.IN) {
-            NenMode hide = zetsuUnlocked(data) ? NenMode.ZETSU : NenMode.IN;
+            NenMode hide = zetsuUnlocked(entity) ? NenMode.ZETSU : NenMode.IN;
             target = data.mode() == NenMode.ZETSU || data.mode() == NenMode.IN ? NenMode.NONE : hide;
         }
         String refusal = trySetMode(entity, target);

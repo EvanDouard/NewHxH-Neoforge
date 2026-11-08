@@ -1,0 +1,61 @@
+{
+  "title": {
+    "fr": "Leçon de Nen : le Ken",
+    "en": "Nen lesson: Ken"
+  },
+  "start_npc": "wing",
+  "intro": {
+    "fr": "Le Ren, mais tenu longtemps, pour se défendre partout.",
+    "en": "Ren, held for long, to defend everywhere."
+  },
+  "npcs": {
+    "wing": {
+      "fr": "Wing",
+      "en": "Wing"
+    }
+  },
+  "steps": [
+    {
+      "id": "learn",
+      "type": "talk",
+      "npc": "wing",
+      "reward_learn": [
+        "ken"
+      ],
+      "objective": {
+        "fr": "Écouter la leçon de Wing",
+        "en": "Listen to Wing's lesson"
+      },
+      "dialog": {
+        "fr": "Maintiens un Ren égal sur tout le corps : c'est le Ken.",
+        "en": "Keep an even Ren over your whole body: that's Ken."
+      }
+    },
+    {
+      "id": "practice",
+      "type": "nen_mode",
+      "mode": "ken",
+      "seconds": 15,
+      "objective": {
+        "fr": "Tenir le Ken 15 secondes",
+        "en": "Hold Ken for 15 seconds"
+      }
+    },
+    {
+      "id": "done",
+      "type": "talk",
+      "npc": "wing",
+      "objective": {
+        "fr": "Retourner voir Wing",
+        "en": "Go back to Wing"
+      },
+      "dialog": {
+        "fr": "Tu tiendras plus longtemps en combat.",
+        "en": "You'll last longer in a fight."
+      }
+    }
+  ],
+  "requires": [
+    "hxh:nen_4_ren"
+  ]
+}

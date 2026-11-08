@@ -515,17 +515,19 @@ public final class NenFxClient {
         float cycle = 26f;
         int tier = Math.min(colors.length - 1, (int) (age / cycle));
         float inCycle = tier == colors.length - 1 ? cycle : age - tier * cycle;
-        float half = 0.15f + 1.05f * ease(inCycle / cycle);
+        // Au sommet de chaque cycle : au moins 2× la taille de celui qui charge
+        float maxHalf = Math.max(1.9f, src.getBbHeight() * 1.05f);
+        float half = 0.15f + (maxHalf - 0.15f) * ease(inCycle / cycle);
         Vec3 look = src.getViewVector(c.pt);
         Vec3 right = look.cross(new Vec3(0, 1, 0));
         right = right.lengthSqr() < 1e-6 ? new Vec3(1, 0, 0) : right.normalize();
         Vec3 at;
         if (firstPerson(src)) {
             // à droite, devant : visible sans boucher la vue
-            at = src.getEyePosition(c.pt).add(look.scale(4.0)).add(right.scale(1.3)).add(0, -0.4, 0);
+            at = src.getEyePosition(c.pt).add(look.scale(6.0)).add(right.scale(2.6)).add(0, -0.2, 0);
             half *= 0.6f;
         } else {
-            at = center(src, c.pt).add(right.scale(0.5 + half)).add(look.scale(0.3));
+            at = center(src, c.pt).add(right.scale(0.5 + half)).add(look.scale(0.3)).add(0, half * 0.5, 0);
         }
         int color = colors[tier];
         billboard(c, RenderType.eyes(GLOW), at, half * 2.2f, 0, color, 0.85f);

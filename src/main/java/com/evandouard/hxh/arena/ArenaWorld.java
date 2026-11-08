@@ -181,6 +181,11 @@ public final class ArenaWorld {
         data.signatures.put(ENTRY, signature);
         data.setDirty();
         ensureNpcs(level, "receptionist", ENTRY, layout.receptionists());
+        // Wing, le maître de Nen (comme dans l'anime, il enseigne à la Tour Céleste) : à côté de l'hôtesse
+        if (!layout.receptionists().isEmpty()) {
+            BlockPos spot = standSpot(level, layout.receptionists().get(0));
+            if (spot != null) ensureNpcs(level, "wing", ENTRY, List.of(spot));
+        }
         LAYOUTS.put(ENTRY, layout);
         return layout;
     }
@@ -415,6 +420,20 @@ public final class ArenaWorld {
      * Pose les PNJ d'un rôle dans un lieu (une hôtesse ou un arbitre par repère), seulement à des places pas encore
      * enregistrées. On ne cherche pas les entités (elles ne sont peut-être pas encore chargées) : on se fie au registre.
      */
+    /** Case libre (deux blocs d'air sur un sol) à 2–6 blocs de {@code base}, ou null. */
+    static BlockPos standSpot(ServerLevel level, BlockPos base) {
+        for (int r = 3; r <= 6; r++) {
+            for (int[] d : new int[][]{{r, 0}, {-r, 0}, {0, r}, {0, -r}, {r, r}, {-r, r}, {r, -r}, {-r, -r}}) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    BlockPos p = base.offset(d[0], dy, d[1]);
+                    if (level.getBlockState(p).isAir() && level.getBlockState(p.above()).isAir()
+                            && level.getBlockState(p.below()).isFaceSturdy(level, p.below(), net.minecraft.core.Direction.UP)) return p;
+                }
+            }
+        }
+        return null;
+    }
+
     static void ensureNpcs(ServerLevel level, String id, int location, List<BlockPos> places) {
         ArenaSavedData data = ArenaSavedData.get(level);
         String prefix = id + "@" + location + "#";

@@ -1,0 +1,61 @@
+{
+  "title": {
+    "fr": "Leçon de Nen : l'In",
+    "en": "Nen lesson: In"
+  },
+  "start_npc": "wing",
+  "intro": {
+    "fr": "Prochaine étape : cacher ton aura.",
+    "en": "Next step: hiding your aura."
+  },
+  "npcs": {
+    "wing": {
+      "fr": "Wing",
+      "en": "Wing"
+    }
+  },
+  "steps": [
+    {
+      "id": "learn",
+      "type": "talk",
+      "npc": "wing",
+      "reward_learn": [
+        "in"
+      ],
+      "objective": {
+        "fr": "Écouter la leçon de Wing",
+        "en": "Listen to Wing's lesson"
+      },
+      "dialog": {
+        "fr": "Réduis ton aura jusqu'à ce qu'on ne la remarque presque plus : c'est l'In.",
+        "en": "Shrink your aura until it's barely noticeable: that's In."
+      }
+    },
+    {
+      "id": "practice",
+      "type": "nen_mode",
+      "mode": "in",
+      "seconds": 20,
+      "objective": {
+        "fr": "Tenir l'In 20 secondes",
+        "en": "Hold In for 20 seconds"
+      }
+    },
+    {
+      "id": "done",
+      "type": "talk",
+      "npc": "wing",
+      "objective": {
+        "fr": "Retourner voir Wing",
+        "en": "Go back to Wing"
+      },
+      "dialog": {
+        "fr": "Pas mal. Va plus loin, et tu pourras la couper complètement.",
+        "en": "Not bad. Go further and you'll cut it completely."
+      }
+    }
+  ],
+  "requires": [
+    "hxh:nen_1_ten"
+  ]
+}

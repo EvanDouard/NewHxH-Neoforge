@@ -52,6 +52,14 @@ public final class ProfileText {
         } else {
             lines.add(Component.translatable("command.hxh.show.nen", "???"));
         }
+        if (data.nenUnlocked() && com.evandouard.hxh.nen.NenLearning.applies(living)) {
+            java.util.List<String> names = new java.util.ArrayList<>();
+            for (com.evandouard.hxh.nen.NenLearning.Ability ab : com.evandouard.hxh.nen.NenLearning.Ability.values()) {
+                if (data.learned(ab.id())) names.add(Component.translatable(ab.translationKey()).getString());
+            }
+            lines.add(Component.translatable("profile.hxh.learned", names.isEmpty()
+                    ? Component.translatable("profile.hxh.learned_none") : Component.literal(String.join(", ", names))));
+        }
         if (data.nenUnlocked()) {
             lines.add(Component.translatable("command.hxh.show.nen_level", data.nenLevel(),
                     data.nenLevel() >= com.evandouard.hxh.data.Mastery.MAX_LEVEL

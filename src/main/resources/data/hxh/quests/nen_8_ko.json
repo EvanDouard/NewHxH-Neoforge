@@ -1,0 +1,63 @@
+{
+  "title": {
+    "fr": "Leçon de Nen : Ko, Ryu et Shu",
+    "en": "Nen lesson: Ko, Ryu and Shu"
+  },
+  "start_npc": "wing",
+  "intro": {
+    "fr": "Dernière leçon des techniques avancées : répartir ton aura.",
+    "en": "Last advanced lesson: distributing your aura."
+  },
+  "npcs": {
+    "wing": {
+      "fr": "Wing",
+      "en": "Wing"
+    }
+  },
+  "steps": [
+    {
+      "id": "learn",
+      "type": "talk",
+      "npc": "wing",
+      "reward_learn": [
+        "ko",
+        "ryu",
+        "shu"
+      ],
+      "objective": {
+        "fr": "Écouter la leçon de Wing",
+        "en": "Listen to Wing's lesson"
+      },
+      "dialog": {
+        "fr": "Toute ton aura dans un poing : le Ko. La répartir en combat : le Ryu. La prolonger dans un objet : le Shu.",
+        "en": "All your aura in one fist: Ko. Distributing it in combat: Ryu. Extending it into an object: Shu."
+      }
+    },
+    {
+      "id": "practice",
+      "type": "nen_mode",
+      "mode": "ten",
+      "seconds": 10,
+      "objective": {
+        "fr": "Tenir le Ten 10 secondes pour te concentrer",
+        "en": "Hold Ten for 10 seconds to focus"
+      }
+    },
+    {
+      "id": "done",
+      "type": "talk",
+      "npc": "wing",
+      "objective": {
+        "fr": "Retourner voir Wing",
+        "en": "Go back to Wing"
+      },
+      "dialog": {
+        "fr": "Tu connais maintenant toutes les bases. Le reste, c'est l'entraînement.",
+        "en": "You now know all the basics. The rest is training."
+      }
+    }
+  ],
+  "requires": [
+    "hxh:nen_6_ken"
+  ]
+}

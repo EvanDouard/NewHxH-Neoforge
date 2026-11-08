@@ -1,0 +1,69 @@
+{
+  "title": {
+    "fr": "Leçon de Nen : le Hatsu",
+    "en": "Nen lesson: Hatsu"
+  },
+  "start_npc": "wing",
+  "requires": [
+    "hxh:nen_4_ren"
+  ],
+  "npcs": {
+    "wing": {
+      "fr": "Wing",
+      "en": "Wing"
+    }
+  },
+  "intro": {
+    "fr": "Il est temps de découvrir ton type de Nen.",
+    "en": "Time to discover your Nen type."
+  },
+  "steps": [
+    {
+      "id": "divine",
+      "type": "nen_flag",
+      "mode": "revealed",
+      "objective": {
+        "fr": "Faire la divination du verre d'eau (clic droit sur le verre)",
+        "en": "Do the water divination (right-click the glass)"
+      }
+    },
+    {
+      "id": "learn",
+      "type": "talk",
+      "npc": "wing",
+      "reward_learn": [
+        "hatsu"
+      ],
+      "objective": {
+        "fr": "Montrer le résultat à Wing",
+        "en": "Show Wing the result"
+      },
+      "dialog": {
+        "fr": "Voilà ton type. Ton Hatsu doit lui ressembler : choisis-le avec soin, c'est définitif.",
+        "en": "There's your type. Your Hatsu should match it: choose carefully, it's final."
+      }
+    },
+    {
+      "id": "choose",
+      "type": "nen_flag",
+      "mode": "kit",
+      "objective": {
+        "fr": "Choisir son Hatsu (carnet, touche O)",
+        "en": "Choose your Hatsu (notebook, O key)"
+      }
+    },
+    {
+      "id": "done",
+      "type": "talk",
+      "npc": "wing",
+      "objective": {
+        "fr": "Retourner voir Wing",
+        "en": "Go back to Wing"
+      },
+      "dialog": {
+        "fr": "Ton Nen t'appartient, maintenant. Osu !",
+        "en": "Your Nen is yours now. Osu!"
+      }
+    }
+  ]
+}

@@ -39,6 +39,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private NenType nenType = null;
     @Nullable
     private NenTalent talent;
+    /** Capacités du Nen apprises auprès d'un maître (identifiants de NenLearning.Ability). */
+    private final java.util.Set<String> learned = new java.util.LinkedHashSet<>();
     /** Part du bonus de Vitesse utilisée (réglable dans le carnet) : 1 = tout. */
     private float speedCap = 1f;
 
@@ -167,6 +169,21 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
 
     /** Talent pour le Nen (null tant qu'il n'a pas été tiré ; les mobs n'en ont pas : ×1). */
     @Nullable
+    public boolean learned(String ability) {
+        return learned.contains(ability);
+    }
+
+    public java.util.Set<String> learnedAbilities() {
+        return java.util.Collections.unmodifiableSet(learned);
+    }
+
+    /** @return true si la capacité est nouvelle */
+    public boolean learn(String ability) {
+        boolean added = learned.add(ability);
+        if (added) dirty.add(NEN);
+        return added;
+    }
+
     public float speedCap() {
         return speedCap;
     }
@@ -470,6 +487,9 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             if (nenType != null) nen.putString("type", nenType.id());
             if (talent != null) nen.putString("talent", talent.id());
             nen.putFloat("speed_cap", speedCap);
+            net.minecraft.nbt.ListTag list = new net.minecraft.nbt.ListTag();
+            for (String a : learned) list.add(net.minecraft.nbt.StringTag.valueOf(a));
+            nen.put("learned", list);
             out.put(NEN, nen);
             return;
         }
@@ -597,6 +617,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             nenRevealed = nen.getBoolean("revealed");
             nenType = nen.contains("type") ? NenType.byId(nen.getString("type")) : null;
             talent = nen.contains("talent") ? NenTalent.byId(nen.getString("talent")) : null;
+            learned.clear();
+            for (net.minecraft.nbt.Tag t : nen.getList("learned", net.minecraft.nbt.Tag.TAG_STRING)) learned.add(t.getAsString());
             speedCap = nen.contains("speed_cap") ? Math.max(0f, Math.min(1f, nen.getFloat("speed_cap"))) : 1f;
         }
         if (in.contains(AURA)) {

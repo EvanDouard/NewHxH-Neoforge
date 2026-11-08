@@ -258,6 +258,31 @@ public final class QuestManager {
             advance(player);
             return;
         }
+        // Entraînement au Nen : tenir une posture / un sens, ou attendre un état (éveil, divination, Hatsu)
+        if (player.tickCount % 20 == 0 && (step.type().equals("nen_mode") || step.type().equals("nen_sense")
+                || step.type().equals("nen_flag"))) {
+            com.evandouard.hxh.data.HunterData h = com.evandouard.hxh.stats.HunterStats.get(player);
+            boolean ok = switch (step.type()) {
+                case "nen_mode" -> h.mode().id().equals(step.mode());
+                case "nen_sense" -> step.mode().equals("gyo") ? h.gyo() : h.en();
+                default -> switch (step.mode()) {
+                    case "unlocked" -> h.nenUnlocked();
+                    case "revealed" -> h.nenRevealed();
+                    default -> h.hasKit();
+                };
+            };
+            if (step.type().equals("nen_flag")) {
+                if (ok) advance(player);
+                return;
+            }
+            int[] st = d.running.get(d.active);
+            if (ok && st != null) {
+                d.progress++;
+                if (d.progress >= step.seconds()) advance(player);
+                else sync(player);
+            }
+            return;
+        }
         // Aller à un endroit
         if (step.type().equals("reach") && step.pos() != null && player.tickCount % 10 == 0) {
             double[] p = step.pos();
@@ -371,6 +396,14 @@ public final class QuestManager {
             d.jenny += step.rewardJenny();
             player.sendSystemMessage(Component.translatable("message.hxh.jenny_gained", step.rewardJenny(), d.jenny)
                     .withStyle(ChatFormatting.YELLOW));
+        }
+        // Capacités du Nen apprises auprès du maître
+        for (String a : step.rewardLearn()) {
+            com.evandouard.hxh.nen.NenLearning.Ability ability = com.evandouard.hxh.nen.NenLearning.Ability.byId(a);
+            if (ability != null && com.evandouard.hxh.stats.HunterStats.get(player).learn(a)) {
+                com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.learned"),
+                        Component.translatable(ability.translationKey()), "★", com.evandouard.hxh.network.Hud.BLUE);
+            }
         }
         if (step.rewardHunter()) {
             d.hunter = true;

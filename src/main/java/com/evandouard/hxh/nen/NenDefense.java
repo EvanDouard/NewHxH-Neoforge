@@ -113,6 +113,7 @@ public final class NenDefense {
     public static String ko(LivingEntity entity) {
         HunterData data = HunterStats.get(entity);
         if (!data.nenUnlocked()) return "message.hxh.nen_locked";
+        if (NenLearning.refusal(entity, NenLearning.Ability.KO) != null) return NenLearning.refusal(entity, NenLearning.Ability.KO);
         if (data.mode() == NenMode.ZETSU) return "message.hxh.hatsu_zetsu";
         int cost = koCost(data);
         if (data.aura() < cost) return "message.hxh.no_aura";

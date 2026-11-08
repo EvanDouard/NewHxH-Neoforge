@@ -204,6 +204,7 @@ public final class HunterCommand {
         }
         d.setHealUnlocked(true);
         d.setHealLevel(HunterData.HEAL_MAX_LEVEL);
+        com.evandouard.hxh.nen.NenLearning.learnAll(entity); // toutes les capacités apprises
         d.setAuraMax(NenModes.computeAuraMax(d));
         d.setAura(d.auraMax());
         HunterStats.applyAttributes(entity);
@@ -251,6 +252,20 @@ public final class HunterCommand {
                     d.setMeditationTicks(0);
                 }))
                 .then(targeted("reveal", e -> HunterStats.get(e).setNenRevealed(true)))
+                // Apprendre une capacité (ou toutes) sans passer par le maître
+                .then(Commands.literal("learn")
+                        .then(Commands.argument("ability", StringArgumentType.word())
+                                .suggests((c, b) -> SharedSuggestionProvider.suggest(java.util.stream.Stream.concat(
+                                        java.util.stream.Stream.of("all"),
+                                        Arrays.stream(com.evandouard.hxh.nen.NenLearning.Ability.values()).map(com.evandouard.hxh.nen.NenLearning.Ability::id)), b))
+                                .executes(ctx -> {
+                                    String id = StringArgumentType.getString(ctx, "ability");
+                                    LivingEntity e = (LivingEntity) ctx.getSource().getEntityOrException();
+                                    if (id.equals("all")) com.evandouard.hxh.nen.NenLearning.learnAll(e);
+                                    else if (com.evandouard.hxh.nen.NenLearning.Ability.byId(id) != null) HunterStats.get(e).learn(id);
+                                    else return 0;
+                                    return 1;
+                                })))
                 .then(targeted("refill", e -> {
                     HunterData d = HunterStats.get(e);
                     d.setAura(d.auraMax());

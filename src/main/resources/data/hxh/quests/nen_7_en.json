@@ -1,0 +1,61 @@
+{
+  "title": {
+    "fr": "Leçon de Nen : l'En",
+    "en": "Nen lesson: En"
+  },
+  "start_npc": "wing",
+  "intro": {
+    "fr": "Étends ce que tu perçois.",
+    "en": "Extend what you perceive."
+  },
+  "npcs": {
+    "wing": {
+      "fr": "Wing",
+      "en": "Wing"
+    }
+  },
+  "steps": [
+    {
+      "id": "learn",
+      "type": "talk",
+      "npc": "wing",
+      "reward_learn": [
+        "en"
+      ],
+      "objective": {
+        "fr": "Écouter la leçon de Wing",
+        "en": "Listen to Wing's lesson"
+      },
+      "dialog": {
+        "fr": "Étire ton aura en cercle autour de toi : tu sentiras tout ce qui y entre. C'est l'En.",
+        "en": "Stretch your aura in a circle around you: you'll feel everything that enters it. That's En."
+      }
+    },
+    {
+      "id": "practice",
+      "type": "nen_sense",
+      "mode": "en",
+      "seconds": 15,
+      "objective": {
+        "fr": "Garder l'En 15 secondes",
+        "en": "Keep En for 15 seconds"
+      }
+    },
+    {
+      "id": "done",
+      "type": "talk",
+      "npc": "wing",
+      "objective": {
+        "fr": "Retourner voir Wing",
+        "en": "Go back to Wing"
+      },
+      "dialog": {
+        "fr": "Avec de l'entraînement, ton cercle grandira.",
+        "en": "With training, your circle will grow."
+      }
+    }
+  ],
+  "requires": [
+    "hxh:nen_5_gyo"
+  ]
+}
