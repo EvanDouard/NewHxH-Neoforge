@@ -145,6 +145,9 @@ public final class Hatsu {
                 && !com.evandouard.hxh.arena.ArenaManager.inFight(sp)) return "message.hxh.arena_no_hatsu";
         String refusal = castRefusal(data, technique, now);
         if (refusal != null) return refusal;
+        if (technique instanceof Techniques.ChargedOrb orb && data.aura() < orb.auraCost() + orb.minSpent) {
+            return "message.hxh.no_aura"; // pas de quoi charger un vrai coup
+        }
         if (technique.isCharged()) {
             // On commence à charger : la recharge partira au relâchement
             data.setAura(data.aura() - technique.auraCost());

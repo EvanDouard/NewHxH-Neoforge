@@ -562,6 +562,7 @@ shot 38_guichet_et_quete
 
 # --- Apprentissage du Nen avec Wing (hall d'entrée) ---
 cmd gamerule hxhNenLearning true
+cmd hunter nen unlock
 cmd hunter nen mode none
 wait 5
 clearchat
@@ -586,6 +587,7 @@ talkto wing
 wait 10
 expect Le Ten est la base
 cmd hunter nen mode none
+cmd hunter nen lock
 cmd gamerule hxhNenLearning false
 wait 10
 cmd tp @s 8.5 64 0.5 -90 0
@@ -715,7 +717,7 @@ wait 40
 cmd hunter arena enter
 wait 40
 clearchat
-cmd execute if entity @e[type=hxh:npc,distance=..30]
+cmd execute if entity @e[type=hxh:npc,distance=..30,nbt={npc:"receptionist"}]
 wait 5
 expect : 1
 cmd hunter arena leave

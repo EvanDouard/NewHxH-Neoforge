@@ -105,7 +105,7 @@ public final class NenCharge {
         HunterData data = HunterStats.get(entity);
         data.setReadyAt(t.id(), entity.level().getGameTime() + t.cooldownTicks());
         com.evandouard.hxh.nen.NenProgress.addNenXp(entity, Math.max(1, Math.round(spent / 5)));
-        if (spent < t.minSpent) {
+        if (spent < t.minSpent && entity instanceof Player) {
             // Trop court : le poing se relâche sans rien lancer
             if (entity instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.charge_too_short"), true);
             return;
