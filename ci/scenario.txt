@@ -174,14 +174,18 @@ look 0 0
 
 # --- Paliers d'impact : Force en % du max (lourd = blocs qui sautent, dévastateur = image d'impact et cratère) ---
 clearchat
+cmd tp @s ~-200 ~ ~
+wait 40
 cmd difficulty easy
 cmd hunter spawn mannequin ~-3 ~ ~
 look 90 20
 wait 10
 cmd hunter stat strength set 60
+clearchat
 cmd hunter strike 1
 wait 4
 expect lourd
+clearchat
 shot 13j_impact_lourd_blocs_qui_sautent
 wait 20
 cmd tp @e[type=minecraft:husk,distance=..12] ~-3 ~ ~
@@ -197,8 +201,8 @@ shot 13l_image_impact_negatif
 wait 25
 shot 13m_cratere_apres_impact
 cmd kill @e[type=minecraft:husk,distance=..30]
-cmd fill ~-7 ~-3 ~-4 ~-1 ~-2 ~4 minecraft:dirt
-cmd fill ~-7 ~-1 ~-4 ~-1 ~-1 ~4 minecraft:grass_block
+cmd tp @s ~200 -60 ~
+wait 30
 cmd hunter stat strength set 30
 cmd difficulty peaceful
 wait 10
@@ -381,9 +385,9 @@ cmd hunter hatsu select gon_rock_epic
 cmd hunter nen refill
 camera front
 cmd hunter hatsu cast
-wait 25
+wait 14
 shot 22f6_pierre_sans_retenue_enfle
-wait 30
+wait 16
 shot 22f7_pierre_sans_retenue_aveuglante
 cmd hunter hatsu release
 camera first
@@ -403,7 +407,7 @@ shot 22h_onde_de_choc
 cmd hunter hatsu set illumi
 cmd hunter nen refill
 cmd kill @e[type=minecraft:husk]
-cmd tp @s ~-300 ~ ~
+cmd tp @s ~-300 -60 ~
 wait 40
 cmd gamerule sendCommandFeedback true
 wait 10

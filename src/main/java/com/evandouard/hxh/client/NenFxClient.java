@@ -535,7 +535,7 @@ public final class NenFxClient {
             color = colors[tier];
             if (tier > 0 && inCycle < 4) flash = 1f - inCycle / 4f;
         } else {
-            float grow = 40f, squeeze = 6f;
+            float grow = 20f, squeeze = 5f;
             float maxHalf = Math.max(1.9f, src.getBbHeight() * 1.05f);
             float small = 0.22f;
             if (age < grow) {

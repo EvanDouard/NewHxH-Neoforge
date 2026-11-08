@@ -57,10 +57,11 @@ public final class Techniques {
             2f, 100, 12f, 4f, 0.12f, NenFx.ENHANCER));
     /**
      * Jajanken : Pierre sans retenue. La boule enfle une fois jusqu'à deux fois la taille du lanceur, puis se
-     * recondense, minuscule et aveuglante. Plus chère (4/tick), plus de dégâts, explosion et trace 1,6 fois plus grosses.
+     * recondense, minuscule et aveuglante (environ 1 s pour enfler, puis elle brille). Plus chère (40 au départ, au
+     * moins 30 à charger), plus de dégâts, explosion et trace 1,6 fois plus grosses.
      */
-    public static final Technique GON_ROCK_EPIC = register(new ChargedOrb("gon_rock_epic", NenType.ENHANCER, 30, 400,
-            4f, 100, 40f, 10f, 0.2f, NenFx.ENHANCER).epic(1.6f)).requiresNenLevel(30);
+    public static final Technique GON_ROCK_EPIC = register(new ChargedOrb("gon_rock_epic", NenType.ENHANCER, 40, 400,
+            1.5f, 80, 30f, 10f, 0.25f, NenFx.ENHANCER).epic(1.6f)).requiresNenLevel(30);
     /** Jajanken : Ciseaux. Lame d'aura qui file tout droit (14 blocs) jusqu'à toucher un bloc ou une cible. */
     public static final Technique GON_SCISSORS = register(new Blade("gon_scissors", NenType.TRANSMUTER, 25, 100,
             7f, NenFx.TRANSMUTER)).requiresNenLevel(5);

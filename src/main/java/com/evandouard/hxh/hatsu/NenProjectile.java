@@ -49,6 +49,8 @@ public class NenProjectile extends Entity {
     @Nullable private LivingEntity carried;
     private int carryTicks;
     private float damage;
+    /** Hauteur des pieds du lanceur au départ : la boule ne creuse pas sous lui (il tomberait dans sa propre trace). */
+    private double launchFeetY = Double.NEGATIVE_INFINITY;
 
     public NenProjectile(EntityType<? extends NenProjectile> type, Level level) {
         super(type, level);
@@ -61,6 +63,7 @@ public class NenProjectile extends Entity {
         p.owner = caster.getUUID();
         p.dir = caster.getLookAngle().normalize();
         p.damage = damage;
+        p.launchFeetY = caster.getY();
         p.entityData.set(KIND, kind);
         p.entityData.set(POWER, power);
         p.entityData.set(COLOR, color);
@@ -178,6 +181,8 @@ public class NenProjectile extends Entity {
         boolean blocked = false;
         for (BlockPos p : BlockPos.betweenClosed(c.offset(-ir, -ir, -ir), c.offset(ir, ir, ir))) {
             if (p.distToCenterSqr(position()) > r * r) continue;
+            // Les premiers blocs : on laisse le sol sous les pieds du lanceur
+            if (traveled < r + 2.5 && p.getY() < launchFeetY - 0.01) continue;
             BlockState s = level.getBlockState(p);
             if (s.isAir() || s.getCollisionShape(level, p).isEmpty()) continue;
             if (destroy && breakable(level, p, s)) {
