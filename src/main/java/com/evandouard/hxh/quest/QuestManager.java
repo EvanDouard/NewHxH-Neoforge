@@ -65,9 +65,9 @@ public final class QuestManager {
         if (d.tracked.isEmpty()) d.tracked = id;
         d.refocus();
         player.sendSystemMessage(Component.translatable("message.hxh.quest_started",
-                Component.translatable(q.titleKey())).withStyle(ChatFormatting.GOLD));
+                q.title(player)).withStyle(ChatFormatting.GOLD));
         com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.new_quest"),
-                Component.translatable(q.titleKey()), "!", com.evandouard.hxh.network.Hud.GOLD);
+                q.title(player), "!", com.evandouard.hxh.network.Hud.GOLD);
         sync(player);
         return true;
     }
@@ -78,7 +78,7 @@ public final class QuestManager {
 
     private static void say(ServerPlayer player, NpcEntity npc, Component line) {
         player.sendSystemMessage(Component.translatable("dialog.hxh.format",
-                Component.translatable("npc.hxh." + npc.npcId()).withStyle(ChatFormatting.YELLOW), line));
+                QuestRegistry.npcName(npc.npcId()).copy().withStyle(ChatFormatting.YELLOW), line));
     }
 
     /** Ticks passés trop loin du PNJ à suivre (par joueur). */
@@ -151,13 +151,45 @@ public final class QuestManager {
             Quest q = activeQuest(d);
             Quest.Step step = currentStep(d);
             if (q != null && step != null && step.type().equals("talk") && step.npc().equals(npc.npcId())) {
-                say(player, npc, "dialog.hxh." + q.id().getPath() + "." + step.id());
+                say(player, npc, q.dialog(step, player));
                 advance(player);
+                d.refocus();
+                return;
+            }
+            // Apporter des objets au PNJ : ils sont pris de l'inventaire s'il y en a assez
+            if (q != null && step != null && step.type().equals("bring") && step.npc().equals(npc.npcId())) {
+                net.minecraft.world.item.Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(ResourceLocation.parse(step.item()));
+                int have = player.getInventory().countItem(item);
+                if (have >= step.count()) {
+                    int left = step.count();
+                    for (int i = 0; i < player.getInventory().getContainerSize() && left > 0; i++) {
+                        net.minecraft.world.item.ItemStack s = player.getInventory().getItem(i);
+                        if (s.is(item)) {
+                            int take = Math.min(left, s.getCount());
+                            s.shrink(take);
+                            left -= take;
+                        }
+                    }
+                    say(player, npc, q.dialog(step, player));
+                    advance(player);
+                } else {
+                    say(player, npc, Component.translatable("dialog.hxh.bring_missing", step.count() - have,
+                            new net.minecraft.world.item.ItemStack(item).getHoverName()));
+                }
                 d.refocus();
                 return;
             }
         }
         d.refocus();
+        // Un PNJ qui donne une quête (start_npc) : elle démarre si ses prérequis sont faits
+        for (Quest q : QuestRegistry.all()) {
+            String id = q.id().toString();
+            if (!q.startNpc().equals(npc.npcId()) || d.running.containsKey(id) || d.completed.contains(id)) continue;
+            if (!q.requires().stream().allMatch(r -> d.completed.contains(ResourceLocation.parse(r).toString()))) continue;
+            say(player, npc, q.introDialog(player));
+            start(player, q.id());
+            return;
+        }
         String idle = com.evandouard.hxh.arena.ArenaManager.idleDialog(player, npc);
         say(player, npc, idle != null ? idle : "dialog.hxh." + npc.npcId() + ".idle");
     }
@@ -224,6 +256,17 @@ public final class QuestManager {
         // Inscription au 200e : validée même si elle a eu lieu avant d'arriver à cette étape
         if (step.type().equals("arena_register_200") && player.tickCount % 20 == 0 && d.registered200()) {
             advance(player);
+            return;
+        }
+        // Aller à un endroit
+        if (step.type().equals("reach") && step.pos() != null && player.tickCount % 10 == 0) {
+            double[] p = step.pos();
+            if (player.distanceToSqr(p[0], p[1], p[2]) <= step.radius() * step.radius()) advance(player);
+            return;
+        }
+        // Apporter des objets : le compteur suit l'inventaire
+        if (step.type().equals("bring") && player.tickCount % 20 == 0) {
+            sync(player);
             return;
         }
         if (!step.type().equals("follow")) return;
@@ -299,13 +342,13 @@ public final class QuestManager {
             d.active = "";
             d.step = 0;
             player.sendSystemMessage(Component.translatable("message.hxh.quest_completed",
-                    Component.translatable(q.titleKey())).withStyle(ChatFormatting.GOLD));
+                    q.title(player)).withStyle(ChatFormatting.GOLD));
             com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.quest_done"),
-                    Component.translatable(q.titleKey()), "★", com.evandouard.hxh.network.Hud.GOLD);
+                    q.title(player), "★", com.evandouard.hxh.network.Hud.GOLD);
         } else {
             Quest.Step next = q.steps().get(d.step);
             com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.new_step"),
-                    Component.translatable(q.stepKey(next)), "!", com.evandouard.hxh.network.Hud.GOLD);
+                    q.objective(next, player), "!", com.evandouard.hxh.network.Hud.GOLD);
             if (next.type().equals("follow")) {
                 NpcEntity guide = findNpc(player, next.npc(), 96);
                 if (guide != null) guide.resetRoute();
@@ -348,21 +391,41 @@ public final class QuestManager {
         int[] st = q == null ? null : d.running.get(q.id().toString());
         Quest.Step step = st == null || st[0] >= q.steps().size() ? null : q.steps().get(st[0]);
         if (q == null || step == null) {
-            com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload("", "", "", 0, 0));
+            com.evandouard.hxh.network.HxHNetwork.sendTo(player, QuestStatusPayload.NONE);
             return;
         }
         int progress = switch (step.type()) {
             case "follow" -> st[1] / 20;
             case "arena_floor" -> Math.min(d.arenaFloor, step.count());
+            case "bring" -> Math.min(step.count(), player.getInventory().countItem(
+                    net.minecraft.core.registries.BuiltInRegistries.ITEM.get(ResourceLocation.parse(step.item()))));
             default -> st[1];
         };
         // Inscription en attente : même objectif que le refus de l'arbitre
         String[] pending = isArenaQuest(q) ? com.evandouard.hxh.arena.ArenaManager.pendingObjective(d) : null;
         if (pending != null) {
-            com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.titleKey(), pending[0], pending[1], 0, 0));
+            Component pend = pending[1].isEmpty() ? Component.translatable(pending[0]) : Component.translatable(pending[0], pending[1]);
+            com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.title(player), pend, 0, 0));
             return;
         }
-        com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.titleKey(), q.stepKey(step), "", progress, step.goal()));
+        com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.title(player), q.objective(step, player), progress, step.goal()));
+    }
+
+    /**
+     * Valide l'étape « custom » en cours d'une quête (pour le code qui gérera plus tard ces conditions, ou
+     * {@code /hunter quest validate}).
+     * @return true si l'étape était bien une étape « custom » en cours
+     */
+    public static boolean completeCustom(ServerPlayer player, ResourceLocation questId) {
+        QuestData d = data(player);
+        if (!d.running.containsKey(questId.toString())) return false;
+        d.focus(questId.toString());
+        Quest.Step step = currentStep(d);
+        boolean ok = step != null && step.type().equals("custom");
+        if (ok) advance(player);
+        d.refocus();
+        sync(player);
+        return ok;
     }
 
     /** Quête de la Tour Céleste (son objectif peut être remplacé par une inscription en attente). */

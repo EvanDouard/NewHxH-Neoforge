@@ -37,6 +37,32 @@ public final class MangaHud {
     static final int GREY = 0xFF555555;
     static final int GOLD = 0xFFFFD23F;
 
+    /** Police du lettrage manga (Bangers, SIL Open Font License). */
+    static final net.minecraft.resources.ResourceLocation FONT = HxHMod.id("manga");
+
+    /** Le même texte, en lettrage manga. */
+    static Component manga(Component c) {
+        return c.copy().withStyle(st -> st.withFont(FONT));
+    }
+
+    static Component manga(String s) {
+        return manga(Component.literal(s));
+    }
+
+    // ---------- État des animations ----------
+    /** Bulle : contenu affiché, depuis quand, et quête qui vient de disparaître (animation de sortie). */
+    private static String bubbleKey = "";
+    private static long bubbleSince = -100;
+    private static QuestStatusPayload leaving;
+    private static long leavingSince;
+    /** Jauge : visible depuis quand, dernière posture (pop de l'onglet quand elle change). */
+    private static long gaugeSince = -100;
+    private static boolean gaugeShown;
+    private static String lastState = "";
+    private static long stateSince = -100;
+
+    static final int BUBBLE_IN = 7, BUBBLE_OUT = 6, GAUGE_IN = 8, STATE_POP = 6;
+
     /** Pour le client scripté de la CI : reçoit le texte de chaque notification et lettrage affichés. */
     public static Consumer<String> listener = s -> {};
 
@@ -89,12 +115,19 @@ public final class MangaHud {
 
     /** Texte cerné de noir (lettrage manga), à l'échelle {@code scale}. */
     static void outlined(GuiGraphics g, Component text, float x, float y, int color, float scale) {
+        outlined(g, text, x, y, color, scale, 1f);
+    }
+
+    static void outlined(GuiGraphics g, Component text, float x, float y, int color, float scale, float alpha) {
+        if (alpha <= 0.02f) return;
         Font font = Minecraft.getInstance().font;
         g.pose().pushPose();
         g.pose().translate(x, y, 0);
         g.pose().scale(scale, scale, 1f);
         FormattedCharSequence seq = text.getVisualOrderText();
-        font.drawInBatch8xOutline(seq, 0, 0, color, INK, g.pose().last().pose(), g.bufferSource(), 0xF000F0);
+        int a = Mth.clamp((int) (alpha * 255), 0, 255) << 24;
+        font.drawInBatch8xOutline(seq, 0, 0, (color & 0xFFFFFF) | a, (INK & 0xFFFFFF) | a,
+                g.pose().last().pose(), g.bufferSource(), 0xF000F0);
         g.flush();
         g.pose().popPose();
     }
@@ -120,12 +153,22 @@ public final class MangaHud {
         int x = 10;
         int bottom = g.guiHeight() - 10;
 
+        float now = ticks + partial(delta);
         if (!data.nenUnlocked()) {
+            gaugeShown = false;
             if (data.meditating()) {
-                tab(g, x, bottom - 12, Component.translatable("hud.hxh.meditating", data.meditationTicks() / 20), INK);
+                tab(g, x, bottom - 12, manga(Component.translatable("hud.hxh.meditating", data.meditationTicks() / 20)), INK, 1f);
             }
             return;
         }
+        if (!gaugeShown) {
+            gaugeShown = true;
+            gaugeSince = ticks;
+        }
+        // Apparition : la jauge monte depuis le bas de l'écran avec un petit rebond
+        float in = easeBack((now - gaugeSince) / GAUGE_IN);
+        g.pose().pushPose();
+        g.pose().translate(0, (1f - in) * 40f, 0);
 
         // Ne déborde jamais sur la barre d'objets (petites fenêtres)
         int barW = Math.max(70, Math.min(120, g.guiWidth() / 2 - 91 - x - 12)), barH = 8;
@@ -140,6 +183,9 @@ public final class MangaHud {
         g.fill(x - 2, barY - 2, x + barW + 2, bottom + 2, INK);
         g.fill(x, barY, x + barW, bottom, PAPER);
         g.fill(x, barY, x + Math.round(barW * ratio), bottom, color);
+        // Éclair blanc quand la posture change
+        float flash = 1f - (now - stateSince) / STATE_POP;
+        if (flash > 0) g.fill(x, barY, x + barW, bottom, ((int) (flash * 200) << 24) | 0xFFFFFF);
         for (int i = 1; i < 10; i++) {
             int sx = x + barW * i / 10;
             g.fill(sx, barY, sx + 1, bottom, INK);
@@ -152,26 +198,40 @@ public final class MangaHud {
                 : data.healing() ? Component.translatable("hud.hxh.healing")
                 : data.meditating() ? Component.translatable("hud.hxh.meditation")
                 : Component.translatable(data.mode().translationKey());
-        int tabY = barY - 16;
-        int tabW = tab(g, x - 2, tabY, Component.literal(state.getString().toUpperCase(Locale.ROOT)), ko ? 0xFF9A1E1E : INK);
-        outlined(g, Component.translatable("hud.hxh.nen_level", data.nenLevel()), x + tabW + 4, tabY + 3, PAPER, 1f);
-        int nenRight = x + tabW + 4 + font.width(Component.translatable("hud.hxh.nen_level", data.nenLevel()));
-        Component value = Component.literal((int) data.aura() + "/" + data.auraMax());
-        if (nenRight + 6 + font.width(value) > x + barW) value = Component.literal(String.valueOf((int) data.aura()));
-        if (nenRight + 6 + font.width(value) <= x + barW + 4) {
-            outlined(g, value, x + barW - font.width(value), tabY + 3, PAPER, 1f);
+        String stateText = state.getString().toUpperCase(Locale.ROOT);
+        if (!stateText.equals(lastState)) {
+            if (!lastState.isEmpty()) stateSince = ticks;
+            lastState = stateText;
         }
+        float pop = 1f + 0.45f * Math.max(0f, 1f - (now - stateSince) / STATE_POP);
+        int tabY = barY - 16;
+        int tabW = tab(g, x - 2, tabY, manga(stateText), ko ? 0xFF9A1E1E : INK, pop);
+        Component nen = manga(Component.translatable("hud.hxh.nen_level", data.nenLevel()));
+        outlined(g, nen, x + tabW + 4, tabY + 2, PAPER, 1f);
+        int nenRight = x + tabW + 4 + font.width(nen);
+        Component value = manga((int) data.aura() + "/" + data.auraMax());
+        if (nenRight + 6 + font.width(value) > x + barW) value = manga(String.valueOf((int) data.aura()));
+        if (nenRight + 6 + font.width(value) <= x + barW + 4) {
+            outlined(g, value, x + barW - font.width(value), tabY + 2, PAPER, 1f);
+        }
+        g.pose().popPose();
     }
 
     /** Onglet noir penché avec un texte blanc ; renvoie sa largeur. */
-    private static int tab(GuiGraphics g, int x, int y, Component text, int fill) {
+    private static int tab(GuiGraphics g, int x, int y, Component text, int fill, float scale) {
         Font font = Minecraft.getInstance().font;
         int w = font.width(text) + 8;
+        g.pose().pushPose();
+        // pop autour du coin bas-gauche quand la posture change
+        g.pose().translate(x, y + 12, 0);
+        g.pose().scale(scale, scale, 1f);
+        g.pose().translate(-x, -(y + 12), 0);
         g.pose().pushPose();
         shear(g, x, y + 12, -0.3f);
         g.fill(x, y, x + w, y + 12, fill);
         g.pose().popPose();
         g.drawString(font, text, x + 4, y + 2, PAPER, false);
+        g.pose().popPose();
         return w;
     }
 
@@ -192,18 +252,58 @@ public final class MangaHud {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.options.hideGui || mc.screen != null) return;
         int y = 6;
+        float now = ticks + partial(delta);
         QuestStatusPayload q = QuestStatusPayload.latest;
-        if (!q.titleKey().isEmpty()) y = questBubble(g, q, 6, 6) + 12;
+        String key = q.isEmpty() ? "" : q.title().getString() + "|" + q.step().getString();
+        if (!key.equals(bubbleKey)) {
+            // Changement d'objectif : l'ancienne bulle sort, la nouvelle entre
+            if (!bubbleKey.isEmpty() && lastBubble != null) {
+                leaving = lastBubble;
+                leavingSince = ticks;
+            }
+            bubbleKey = key;
+            bubbleSince = ticks;
+        }
+        if (leaving != null) {
+            float out = (now - leavingSince) / BUBBLE_OUT;
+            if (out >= 1f) leaving = null;
+            else if (q.isEmpty()) {
+                // quête finie ou abandonnée : la bulle rétrécit et s'efface
+                bubbleAnimated(g, leaving, 6, 6, 1f - ease(out), 1f - out);
+            }
+        }
+        if (!q.isEmpty()) {
+            lastBubble = q;
+            float in = (now - bubbleSince) / BUBBLE_IN;
+            int bottom = bubbleAnimated(g, q, 6, 6, easeBack(in), Math.min(1f, in * 2f));
+            y = bottom + 12;
+        }
         renderToasts(g, 6, y, partial(delta));
+    }
+
+    private static QuestStatusPayload lastBubble;
+
+    /** Bulle à l'échelle {@code scale} autour de sa queue (elle « sort » du coin), renvoie le bas de la bulle. */
+    private static int bubbleAnimated(GuiGraphics g, QuestStatusPayload q, int x, int y, float scale, float alpha) {
+        if (scale <= 0.02f || alpha <= 0.02f) return y;
+        g.pose().pushPose();
+        float px = x + 14, py = y + 40;
+        g.pose().translate(px, py, 0);
+        g.pose().scale(scale, scale, 1f);
+        g.pose().mulPose(Axis.ZP.rotationDegrees((1f - Math.min(1f, scale)) * -8f));
+        g.pose().translate(-px, -py, 0);
+        int bottom = questBubble(g, q, x, y);
+        g.pose().popPose();
+        return bottom;
     }
 
     /** Bulle de BD avec la quête suivie ; renvoie le bas de la bulle (queue comprise). */
     private static int questBubble(GuiGraphics g, QuestStatusPayload q, int x, int y) {
         Font font = Minecraft.getInstance().font;
-        Component title = Component.translatable(q.titleKey()).copy().withStyle(ChatFormatting.BOLD);
-        Component step = q.stepArg().isEmpty() ? Component.translatable(q.stepKey()) : Component.translatable(q.stepKey(), q.stepArg());
+        Component title = manga(q.title());
+        Component step = q.step();
         boolean progress = q.goal() > 0;
-        Component count = Component.literal(q.progress() + "/" + q.goal());
+        Component count = manga(q.progress() + "/" + q.goal());
         int w = Math.max(font.width(title), font.width(step) + (progress ? 0 : 0));
         w = Math.max(w, 90) + 16;
         int h = progress ? 40 : 30;
@@ -244,19 +344,22 @@ public final class MangaHud {
         for (Toast t : TOASTS) {
             float age = now - t.start();
             // glisse depuis la gauche, puis repart
-            float slide = age < TOAST_IN ? 1f - ease(age / TOAST_IN)
+            float slide = age < TOAST_IN ? 1f - easeBack(age / TOAST_IN)
                     : age > TOAST_IN + TOAST_STAY ? ease((age - TOAST_IN - TOAST_STAY) / TOAST_OUT) : 0f;
-            int badgeW = Math.max(22, font.width(t.badge()) * 2 + 4); // badge dessiné en ×2
+            float tilt = age > TOAST_IN + TOAST_STAY ? -10f * ease((age - TOAST_IN - TOAST_STAY) / TOAST_OUT) : 0f;
+            Component badge = manga(t.badge());
+            Component title = manga(t.title());
+            int badgeW = Math.max(22, font.width(badge) * 2 + 4); // badge dessiné en ×2
             int textX = 8 + badgeW + 6;
-            int w = Math.max(font.width(t.title()) + 4, font.width(t.subtitle())) + textX + 8;
+            int w = Math.max(font.width(title) + 4, font.width(t.subtitle())) + textX + 8;
             int h = 26;
             float dx = -slide * (w + 12);
             g.pose().pushPose();
             g.pose().translate(x + dx, y, 0);
-            g.pose().rotateAround(Axis.ZP.rotationDegrees(i % 2 == 0 ? -1.5f : 1f), w / 2f, h / 2f, 0);
+            g.pose().rotateAround(Axis.ZP.rotationDegrees((i % 2 == 0 ? -1.5f : 1f) + tilt), w / 2f, h / 2f, 0);
             panel(g, 0, 0, w, h, PAPER, 3);
-            outlined(g, Component.literal(t.badge()), 7, 6, t.color(), 2f);
-            g.drawString(font, t.title().copy().withStyle(ChatFormatting.BOLD), textX, 5, INK, false);
+            outlined(g, badge, 7, 4, t.color(), 2f);
+            g.drawString(font, title, textX, 4, INK, false);
             g.drawString(font, t.subtitle(), textX, 15, GREY, false);
             g.pose().popPose();
             y += h + 8;
@@ -276,20 +379,28 @@ public final class MangaHud {
             return;
         }
         String text = c.text().getString().toUpperCase(Locale.ROOT);
-        Component comp = Component.literal(text);
+        Component comp = manga(text);
         float base = c.big() ? 2.5f : 1.6f;
         // apparition avec dépassement (pop), puis petite montée en sortie
         float pop = age < 4 ? Mth.lerp(ease(age / 4f), 1.7f, 1f) : 1f;
         float rise = age > CALLOUT_TICKS - 8 ? (age - CALLOUT_TICKS + 8) * 1.5f : 0f;
-        float scale = base * pop;
+        float out = age > CALLOUT_TICKS - 6 ? (age - CALLOUT_TICKS + 6) / 6f : 0f;
+        float scale = base * pop * (1f - 0.35f * ease(out));
         int width = mc.font.width(comp);
         float cx = g.guiWidth() / 2f;
         float cy = g.guiHeight() * 0.66f - rise;
         g.pose().pushPose();
         g.pose().translate(cx, cy, 0);
         g.pose().mulPose(Axis.ZP.rotationDegrees(-4f));
-        outlined(g, comp, -width * scale / 2f, -4 * scale, c.color(), scale);
+        outlined(g, comp, -width * scale / 2f, -4 * scale, c.color(), scale, 1f - ease(out));
         g.pose().popPose();
+    }
+
+    /** Entrée avec léger dépassement (rebond). */
+    static float easeBack(float x) {
+        x = Mth.clamp(x, 0f, 1f);
+        float c1 = 1.70158f, c3 = c1 + 1f;
+        return 1f + c3 * (float) Math.pow(x - 1, 3) + c1 * (float) Math.pow(x - 1, 2);
     }
 
     static float ease(float x) {

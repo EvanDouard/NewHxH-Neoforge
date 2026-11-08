@@ -73,6 +73,24 @@ public final class HunterCommand {
                             ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.quest_reset"), false);
                             return 1;
                         }))
+                        // Valide l'étape « custom » en cours de la quête suivie (conditions pas encore codées)
+                        .then(Commands.literal("validate").executes(ctx -> {
+                            net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
+                            String tracked = com.evandouard.hxh.quest.QuestManager.data(p).tracked();
+                            net.minecraft.resources.ResourceLocation id = net.minecraft.resources.ResourceLocation.tryParse(tracked);
+                            boolean ok = id != null && com.evandouard.hxh.quest.QuestManager.completeCustom(p, id);
+                            if (!ok) ctx.getSource().sendFailure(Component.translatable("command.hxh.quest_not_custom"));
+                            return ok ? 1 : 0;
+                        }))
+                        // Erreurs repérées dans les fichiers de quête
+                        .then(Commands.literal("check").executes(ctx -> {
+                            java.util.List<String> problems = com.evandouard.hxh.quest.QuestRegistry.problems();
+                            ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.quest_check",
+                                    com.evandouard.hxh.quest.QuestRegistry.all().size(), problems.size()), false);
+                            for (String p : problems) ctx.getSource().sendSuccess(() -> Component.literal(" ⚠ " + p)
+                                    .withStyle(net.minecraft.ChatFormatting.YELLOW), false);
+                            return problems.isEmpty() ? 1 : 0;
+                        }))
                         .then(Commands.literal("skip").executes(ctx -> {
                             com.evandouard.hxh.quest.QuestManager.advance(ctx.getSource().getPlayerOrException());
                             return 1;
@@ -210,6 +228,10 @@ public final class HunterCommand {
                     d.setMeditationTicks(0);
                 }))
                 .then(targeted("reveal", e -> HunterStats.get(e).setNenRevealed(true)))
+                .then(targeted("refill", e -> {
+                    HunterData d = HunterStats.get(e);
+                    d.setAura(d.auraMax());
+                }))
                 .then(Commands.literal("talent")
                         .then(Commands.argument("talent", StringArgumentType.word())
                                 .suggests((c, b) -> SharedSuggestionProvider.suggest(

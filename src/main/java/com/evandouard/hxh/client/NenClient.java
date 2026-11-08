@@ -157,23 +157,6 @@ public final class NenClient {
         }
     }
 
-    /** Suivi de la quête en cours, en haut à gauche. */
-    private static void renderQuestTracker(GuiGraphics graphics, DeltaTracker delta) {
-        Minecraft mc = Minecraft.getInstance();
-        com.evandouard.hxh.network.QuestStatusPayload q = com.evandouard.hxh.network.QuestStatusPayload.latest;
-        if (mc.options.hideGui || q.titleKey().isEmpty() || mc.screen != null) return;
-        Component title = Component.translatable(q.titleKey());
-        Component stepText = q.stepArg().isEmpty() ? Component.translatable(q.stepKey()) : Component.translatable(q.stepKey(), q.stepArg());
-        Component step = q.goal() > 0
-                ? Component.translatable("hud.hxh.quest_progress", stepText, q.progress(), q.goal())
-                : stepText;
-        int w = Math.max(mc.font.width(title), mc.font.width(step)) + 10;
-        graphics.fill(4, 4, 4 + w, 30, 0x90000000);
-        graphics.fill(4, 4, 6, 30, 0xFFFFD27F);
-        graphics.drawString(mc.font, title, 10, 8, 0xFFFFD27F, true);
-        graphics.drawString(mc.font, step, 10, 19, 0xFFFFFFFF, true);
-    }
-
     /** Barre de la frappe chargée, sous le viseur : rouge = ratée, vert = parfaite. */
     private static void renderStrikeBar(GuiGraphics graphics, DeltaTracker delta) {
         Minecraft mc = Minecraft.getInstance();
@@ -247,41 +230,4 @@ public final class NenClient {
         graphics.drawString(mc.font, state, x + 10, y + 23, refusal == null ? 0xFF1E8A3A : 0xFFB3261E, false);
     }
 
-    private static void renderAuraBar(GuiGraphics graphics, DeltaTracker delta) {
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null || mc.options.hideGui) return;
-        HunterData data = mc.player.getData(ModAttachments.HUNTER);
-        if (!data.nenUnlocked()) {
-            if (data.meditating()) {
-                Component text = Component.translatable("hud.hxh.meditating", data.meditationTicks() / 20);
-                graphics.drawString(mc.font, text, 8, graphics.guiHeight() - 24, 0xFFE8E0C8, true);
-            }
-            return;
-        }
-
-        int width = 80;
-        int x = 8;
-        int y = graphics.guiHeight() - 14;
-        float ratio = data.auraMax() > 0 ? data.aura() / data.auraMax() : 0;
-        int color = switch (data.mode()) {
-            case TEN -> 0xFFBFE6FF;
-            case ZETSU -> 0xFF6E6E6E;
-            case REN -> 0xFFFF4A3A;
-            case KEN -> 0xFFFFC23A;
-            case IN -> 0xFF9A8FB0;
-            case NONE -> 0xFFE8E0C8;
-        };
-        graphics.fill(x - 1, y - 1, x + width + 1, y + 6, 0xC0000000);
-        graphics.fill(x, y, x + (int) (width * ratio), y + 5, color);
-
-        Component state = data.healing()
-                ? Component.translatable("hud.hxh.healing")
-                : data.meditating()
-                ? Component.translatable("hud.hxh.meditation")
-                : Component.translatable(data.mode().translationKey());
-        boolean ko = data.koUntil() > mc.level.getGameTime();
-        Component label = Component.translatable("hud.hxh.aura_full", data.nenLevel(), (int) data.aura(), data.auraMax(),
-                ko ? Component.translatable("hud.hxh.ko") : state);
-        graphics.drawString(mc.font, label, x, y - 10, 0xFFFFFFFF, true);
-    }
 }

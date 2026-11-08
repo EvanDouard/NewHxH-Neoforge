@@ -63,7 +63,7 @@ public class NpcEntity extends PathfinderMob {
 
     public void setNpcId(String id) {
         entityData.set(NPC_ID, id);
-        setCustomName(Component.translatable("npc.hxh." + id));
+        setCustomName(com.evandouard.hxh.quest.QuestRegistry.npcName(id));
         setCustomNameVisible(true);
     }
 

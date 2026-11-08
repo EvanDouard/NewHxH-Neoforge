@@ -72,6 +72,9 @@ public final class Combat {
      */
     public static float onMeleeHit(LivingEntity attacker, LivingEntity victim) {
         CombatAnimations.punch(attacker); // poing droit / gauche à mains nues (ignoré si déjà joué ce tick)
+        if (attacker.getMainHandItem().isEmpty()) {
+            com.evandouard.hxh.fx.NenFx.impactOn(attacker, victim, 0.7f, com.evandouard.hxh.fx.NenFx.WHITE);
+        }
         long now = attacker.level().getGameTime();
         Combo previous = COMBOS.get(attacker);
         int count = previous != null && previous.targetId() == victim.getId() && now - previous.lastTick() <= COMBO_WINDOW_TICKS
@@ -161,10 +164,7 @@ public final class Combat {
         target.invulnerableTime = 0;
         target.hurt(meleeSource(attacker), baseAttack(attacker) * 0.7f + 1f);
         project(attacker, target, projection(isStrong(attacker), Charge.NONE));
-        if (attacker.level() instanceof ServerLevel server) {
-            Vec3 c = target.getBoundingBox().getCenter();
-            server.sendParticles(ParticleTypes.SWEEP_ATTACK, c.x, c.y, c.z, 1, 0, 0, 0, 0);
-        }
+        com.evandouard.hxh.fx.NenFx.impactOn(attacker, target, 1.2f, com.evandouard.hxh.fx.NenFx.WHITE);
         return null;
     }
 
@@ -223,12 +223,10 @@ public final class Combat {
         target.invulnerableTime = 0;
         target.hurt(meleeSource(attacker), damage);
         project(attacker, target, projection(isStrong(attacker), perfect ? Charge.PERFECT : Charge.GOOD));
-        if (perfect) {
-            if (attacker.level() instanceof ServerLevel server) {
-                Vec3 c = target.getBoundingBox().getCenter();
-                server.sendParticles(ParticleTypes.CRIT, c.x, c.y, c.z, 25, 0.3, 0.4, 0.3, 0.3);
-            }
-        }
+        // Étoile d'impact : dorée et grosse pour une frappe parfaite, avec onde au sol
+        com.evandouard.hxh.fx.NenFx.impactOn(attacker, target, perfect ? 2.4f : 1.6f,
+                perfect ? com.evandouard.hxh.fx.NenFx.GOLD : com.evandouard.hxh.fx.NenFx.WHITE);
+        if (perfect) com.evandouard.hxh.fx.NenFx.shockwave(target, 2.5f, com.evandouard.hxh.fx.NenFx.GOLD);
         return damage;
     }
 

@@ -69,8 +69,11 @@ public class MarkerBlock extends BaseEntityBlock {
         if (level.isClientSide() || !(level.getBlockEntity(pos) instanceof MarkerBlockEntity be)) return InteractionResult.SUCCESS;
         int step = player.isShiftKeyDown() ? -1 : 1;
         if (kind == Kind.NPC) {
-            int i = Math.max(0, NPCS.indexOf(be.npc()));
-            String next = NPCS.get(Math.floorMod(i + step, NPCS.size()));
+            // PNJ de base, puis ceux déclarés dans les quêtes ("npcs")
+            List<String> all = new java.util.ArrayList<>(NPCS);
+            for (String id : com.evandouard.hxh.quest.QuestRegistry.npcIds()) if (!all.contains(id)) all.add(id);
+            int i = Math.max(0, all.indexOf(be.npc()));
+            String next = all.get(Math.floorMod(i + step, all.size()));
             be.setNpc(next);
             player.displayClientMessage(Component.translatable("message.hxh.marker.npc",
                     Component.translatable("npc.hxh." + next)).withStyle(ChatFormatting.AQUA), true);

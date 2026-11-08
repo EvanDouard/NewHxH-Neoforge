@@ -16,6 +16,14 @@ public class NpcRenderer extends HumanoidMobRenderer<NpcEntity, PlayerModel<NpcE
 
     @Override
     public ResourceLocation getTextureLocation(NpcEntity entity) {
-        return HxHMod.id("textures/entity/npc/" + entity.npcId() + ".png");
+        return SKINS.computeIfAbsent(entity.npcId(), id -> {
+            ResourceLocation own = HxHMod.id("textures/entity/npc/" + id + ".png");
+            // PNJ créé dans une quête sans skin : apparence par défaut (ajouter textures/entity/npc/<id>.png)
+            return net.minecraft.client.Minecraft.getInstance().getResourceManager().getResource(own).isPresent()
+                    ? own : DEFAULT;
+        });
     }
+
+    private static final ResourceLocation DEFAULT = ResourceLocation.withDefaultNamespace("textures/entity/player/wide/steve.png");
+    private static final java.util.Map<String, ResourceLocation> SKINS = new java.util.concurrent.ConcurrentHashMap<>();
 }

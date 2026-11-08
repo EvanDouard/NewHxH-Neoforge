@@ -674,5 +674,9 @@
   "hud.hxh.toast.new_step": "Nouvelle étape",
   "hud.hxh.toast.new_quest": "Nouvelle quête",
   "hud.hxh.toast.quest_done": "Quête terminée",
-  "hud.hxh.nen_level": "Nen %s"
+  "hud.hxh.nen_level": "Nen %s",
+  "dialog.hxh.bring_missing": "Il m'en faut encore %s × %s.",
+  "profile.hxh.quests.custom_note": "  (à coder : %s)",
+  "command.hxh.quest_not_custom": "L'étape en cours de la quête suivie n'est pas une étape « custom ».",
+  "command.hxh.quest_check": "%s quête(s) chargée(s), %s problème(s)."
 }

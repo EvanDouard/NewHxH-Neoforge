@@ -18,6 +18,7 @@ public final class HxHClient {
         DamageNumberRenderer.register();
         CombatAnimClient.register();
         FearClient.register();
+        NenFxClient.register();
         CiAutopilot.initIfRequested();
     }
 }

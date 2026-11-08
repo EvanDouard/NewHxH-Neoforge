@@ -674,5 +674,9 @@
   "hud.hxh.toast.new_step": "New step",
   "hud.hxh.toast.new_quest": "New quest",
   "hud.hxh.toast.quest_done": "Quest complete",
-  "hud.hxh.nen_level": "Nen %s"
+  "hud.hxh.nen_level": "Nen %s",
+  "dialog.hxh.bring_missing": "I still need %s × %s.",
+  "profile.hxh.quests.custom_note": "  (to implement: %s)",
+  "command.hxh.quest_not_custom": "The tracked quest's current step is not a \"custom\" step.",
+  "command.hxh.quest_check": "%s quest(s) loaded, %s problem(s)."
 }

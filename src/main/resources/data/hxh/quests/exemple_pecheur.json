@@ -1,0 +1,41 @@
+{
+  "title": { "fr": "Exemple — Le vieux pêcheur", "en": "Example — The old fisherman" },
+  "start_npc": "pecheur",
+  "intro": { "fr": "Ah, un Hunter ! Tu pourrais m'aider ? Les mouettes ont volé mes poissons…", "en": "Ah, a Hunter! Could you help me? Gulls stole my fish…" },
+  "npcs": {
+    "pecheur": { "fr": "Vieux pêcheur", "en": "Old fisherman" }
+  },
+  "steps": [
+    {
+      "id": "fish",
+      "type": "bring",
+      "npc": "pecheur",
+      "item": "minecraft:cod",
+      "count": 3,
+      "objective": { "fr": "Rapporter 3 morues au vieux pêcheur", "en": "Bring 3 cod to the old fisherman" },
+      "dialog": { "fr": "Merci ! Elles sont encore fraîches.", "en": "Thanks! They're still fresh." }
+    },
+    {
+      "id": "lighthouse",
+      "type": "reach",
+      "pos": [0, 70, 0],
+      "radius": 6,
+      "objective": { "fr": "Aller voir le phare (au centre du monde)", "en": "Visit the lighthouse (world centre)" }
+    },
+    {
+      "id": "secret",
+      "type": "custom",
+      "note": "Pêcher un poisson pendant un orage, la nuit (à coder plus tard)",
+      "objective": { "fr": "Pêcher un poisson sous l'orage, de nuit", "en": "Catch a fish during a night storm" }
+    },
+    {
+      "id": "back",
+      "type": "talk",
+      "npc": "pecheur",
+      "objective": { "fr": "Retourner voir le vieux pêcheur", "en": "Go back to the old fisherman" },
+      "dialog": { "fr": "Incroyable ! Tiens, prends ça.", "en": "Incredible! Here, take this." },
+      "reward_jenny": 300,
+      "reward_item": "minecraft:fishing_rod"
+    }
+  ]
+}

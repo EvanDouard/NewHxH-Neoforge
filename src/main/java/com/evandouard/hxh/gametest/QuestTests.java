@@ -168,4 +168,51 @@ public final class QuestTests {
         helper.assertTrue(!d.track("hxh:inconnue"), "Impossible de suivre une quête qui n'est pas en cours");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void questFilesHaveNoProblems(GameTestHelper helper) {
+        helper.assertTrue(QuestRegistry.problems().isEmpty(), "Erreurs dans les quêtes : " + QuestRegistry.problems());
+        // Un fichier mal écrit est signalé
+        Quest broken = Quest.parse(HxHMod.id("test_cassee"), com.google.gson.JsonParser.parseString(
+                "{\"steps\":[{\"id\":\"a\",\"type\":\"voler\"},{\"id\":\"b\",\"type\":\"bring\",\"item\":\"minecraft:inexistant\"}]}"));
+        helper.assertTrue(broken.problems().size() >= 3, "Problèmes repérés : " + broken.problems());
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void exampleQuestWithInlineTexts(GameTestHelper helper) {
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(player);
+        net.minecraft.resources.ResourceLocation id = HxHMod.id("exemple_pecheur");
+        Quest q = QuestRegistry.get(id);
+        helper.assertTrue(q != null, "Quête d'exemple chargée");
+        helper.assertTrue(q.title(player).getString().contains("pêcheur") || q.title(player).getString().contains("fisherman"),
+                "Titre écrit dans le JSON : " + q.title(player).getString());
+        helper.assertTrue(QuestRegistry.npcName("pecheur").getString().contains("cheur")
+                || QuestRegistry.npcName("pecheur").getString().contains("isherman"), "Nom du PNJ déclaré dans la quête");
+
+        // Parler au PNJ qui la donne la démarre
+        NpcEntity fisher = npc(helper, "pecheur", 1);
+        QuestManager.onTalk(player, fisher);
+        helper.assertTrue(d.isRunning(id.toString()), "Le PNJ (start_npc) lance la quête");
+        d.track(id.toString());
+
+        // Apporter : pas assez → rien ; assez → objets pris et étape suivante
+        player.getInventory().add(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.COD, 2));
+        QuestManager.onTalk(player, fisher);
+        helper.assertTrue(d.stateOf(id.toString())[0] == 0, "2 morues sur 3 : l'étape reste");
+        player.getInventory().add(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.COD, 2));
+        QuestManager.onTalk(player, fisher);
+        helper.assertTrue(d.stateOf(id.toString())[0] == 1, "3 morues apportées : étape suivante");
+        helper.assertTrue(player.getInventory().countItem(net.minecraft.world.item.Items.COD) == 1, "Seules 3 morues sont prises");
+
+        // Aller quelque part, puis étape « custom » validée par la commande / le futur code
+        QuestManager.advance(player);
+        helper.assertTrue(!QuestManager.completeCustom(player, HxHMod.id("inconnue")), "Quête absente : refus");
+        helper.assertTrue(QuestManager.completeCustom(player, id), "Étape custom validée");
+        helper.assertTrue(d.stateOf(id.toString())[0] == 3, "Dernière étape : revenir au pêcheur");
+        QuestManager.onTalk(player, fisher);
+        helper.assertTrue(d.isCompleted(id.toString()), "Quête terminée");
+        helper.succeed();
+    }
 }
