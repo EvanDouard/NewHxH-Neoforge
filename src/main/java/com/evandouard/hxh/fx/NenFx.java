@@ -8,7 +8,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.function.Consumer;
@@ -97,7 +96,10 @@ public final class NenFx {
                             int duration) {
         Payload p = new Payload(kind.ordinal(), source == null ? -1 : source.getId(), target == null ? -1 : target.getId(),
                 at.x, at.y, at.z, size, color, duration);
-        PacketDistributor.sendToPlayersNear(level, null, at.x, at.y, at.z, VIEW_RANGE, p);
+        // Seulement aux joueurs proches qui ont le mod (pas aux faux joueurs des tests)
+        for (net.minecraft.server.level.ServerPlayer player : level.players()) {
+            if (player.distanceToSqr(at) <= VIEW_RANGE * VIEW_RANGE) com.evandouard.hxh.network.HxHNetwork.sendTo(player, p);
+        }
     }
 
     // ---------- Raccourcis ----------
