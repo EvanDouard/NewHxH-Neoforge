@@ -17,6 +17,7 @@ public final class HxHClient {
         LevelTagRenderer.register();
         DamageNumberRenderer.register();
         CombatAnimClient.register();
+        FearClient.register();
         CiAutopilot.initIfRequested();
     }
 }

@@ -33,7 +33,8 @@ import java.util.WeakHashMap;
  *     <li>frappe chargée (maintien) : une barre monte et descend, relâcher au sommet = frappe parfaite,
  *         trop bas = frappe ratée ;</li>
  *     <li>peur : rien qu'en regardant une entité bien plus puissante (le loup chimère devant le Roi), ou quand elle
- *         déploie son aura (Ren, Ken) même sans la voir, on est ralenti et affaibli ; un mob terrifié recule.</li>
+ *         déploie son aura (Ren, Ken) même sans la voir, on est ralenti et la vue se dézoome (panique) ; un mob
+ *         terrifié recule.</li>
  * </ul>
  */
 public final class Combat {
@@ -295,7 +296,6 @@ public final class Combat {
         if (onset && entity instanceof net.minecraft.server.level.ServerPlayer player) {
             player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
                     "message.hxh.fear." + amplifier, scary.getDisplayName()).withStyle(net.minecraft.ChatFormatting.DARK_PURPLE), true);
-            player.playNotifySound(net.minecraft.sounds.SoundEvents.WARDEN_HEARTBEAT, net.minecraft.sounds.SoundSource.PLAYERS, 1f, 0.8f);
         }
         // Un mob terrifié n'ose plus attaquer et recule
         if (amplifier >= 1 && entity instanceof net.minecraft.world.entity.PathfinderMob mob) {

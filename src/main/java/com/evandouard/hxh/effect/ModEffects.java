@@ -17,12 +17,10 @@ public final class ModEffects {
     public static final DeferredHolder<MobEffect, NenEffect> GYO = EFFECTS.register("gyo", () -> new NenEffect(0xFFD27F));
     public static final DeferredHolder<MobEffect, NenEffect> EN = EFFECTS.register("en", () -> new NenEffect(0x7FC8FF));
 
-    /** Peur : face à une aura écrasante, on bouge moins vite et on frappe moins fort. */
+    /** Peur : face à une aura écrasante, on bouge moins vite ; côté client, la vue se dézoome comme une crise de panique. */
     public static final DeferredHolder<MobEffect, MobEffect> FEAR = EFFECTS.register("fear", () -> new FearEffect()
             .addAttributeModifier(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, HxHMod.id("fear_speed"),
-                    -0.15, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-            .addAttributeModifier(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE, HxHMod.id("fear_damage"),
-                    -0.2, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+                    -0.15, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
     private ModEffects() {}
 
