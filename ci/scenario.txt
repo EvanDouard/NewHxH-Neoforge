@@ -376,6 +376,19 @@ cmd summon minecraft:husk ~ ~ ~6 {NoAI:1b,PersistenceRequired:1b,Silent:1b}
 cmd hunter hatsu cast
 wait 3
 shot 22f5_ciseaux_lame
+cmd hunter nen level 40
+cmd hunter hatsu select gon_rock_epic
+cmd hunter nen refill
+camera front
+cmd hunter hatsu cast
+wait 25
+shot 22f6_pierre_sans_retenue_enfle
+wait 30
+shot 22f7_pierre_sans_retenue_aveuglante
+cmd hunter hatsu release
+camera first
+wait 30
+shot 22f8_pierre_sans_retenue_explosion
 cmd hunter hatsu set leorio
 cmd hunter nen refill
 cmd hunter hatsu cast

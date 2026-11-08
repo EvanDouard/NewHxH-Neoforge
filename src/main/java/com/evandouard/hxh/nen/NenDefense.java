@@ -93,6 +93,17 @@ public final class NenDefense {
     }
 
     /** Multiplicateur des dégâts au corps à corps selon la part d'aura mise dans l'attaque. */
+    /**
+     * Ryu tourné vers l'attaque : les techniques spéciales (Jajanken) grossissent. 1 jusqu'à 50 %, puis jusqu'à
+     * ×1,5 à 100 %.
+     */
+    public static float ryuSpecialFactor(LivingEntity entity) {
+        if (!entity.hasData(ModAttachments.HUNTER)) return 1f;
+        HunterData data = HunterStats.get(entity);
+        if (!data.nenUnlocked()) return 1f;
+        return 1f + 0.5f * Math.max(0, data.ryuAttack() - 50) / 50f;
+    }
+
     public static float ryuAttackFactor(HunterData data) {
         return (float) (1 + ryuSwing(data));
     }

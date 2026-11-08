@@ -49,12 +49,18 @@ public final class Techniques {
 
     // ---------- Gon : Jajanken ----------
     /**
-     * Jajanken : Pierre. On charge sur place (aura consommée en continu, 2/tick, jusqu'à 5 s), une boule d'aura
-     * grossit dans le poing ; au relâchement elle part tout droit, creuse sa trace, emporte la cible et explose.
-     * Dégâts : 4 + 0,12 par point d'aura chargé (× puissance).
+     * Jajanken : Pierre. On charge sur place (aura consommée en continu, 2/tick, jusqu'à 5 s) ; une boule d'aura
+     * d'une demi-taille de joueur brille dans le poing et change de couleur à chaque palier. Au relâchement elle part
+     * tout droit, creuse sa trace, emporte la cible et explose. Dégâts : 4 + 0,12 par point d'aura chargé (× puissance).
      */
     public static final Technique GON_ROCK = register(new ChargedOrb("gon_rock", NenType.ENHANCER, 10, 160,
             2f, 100, 12f, 4f, 0.12f, NenFx.ENHANCER));
+    /**
+     * Jajanken : Pierre sans retenue. La boule enfle une fois jusqu'à deux fois la taille du lanceur, puis se
+     * recondense, minuscule et aveuglante. Plus chère (4/tick), plus de dégâts, explosion et trace 1,6 fois plus grosses.
+     */
+    public static final Technique GON_ROCK_EPIC = register(new ChargedOrb("gon_rock_epic", NenType.ENHANCER, 30, 400,
+            4f, 100, 40f, 10f, 0.2f, NenFx.ENHANCER).epic(1.6f)).requiresNenLevel(30);
     /** Jajanken : Ciseaux. Lame d'aura qui file tout droit (14 blocs) jusqu'à toucher un bloc ou une cible. */
     public static final Technique GON_SCISSORS = register(new Blade("gon_scissors", NenType.TRANSMUTER, 25, 100,
             7f, NenFx.TRANSMUTER)).requiresNenLevel(5);
@@ -221,6 +227,10 @@ public final class Techniques {
     public static class ChargedOrb extends Technique {
         final float drainPerTick, minSpent, baseDamage, damagePerAura;
         final int maxTicks, color;
+        /** Version sans retenue : la boule enfle une fois puis se recondense, aveuglante. */
+        boolean epic;
+        /** Multiplie la taille de la trace et de l'explosion. */
+        float blastScale = 1f;
 
         ChargedOrb(String id, NenType category, int startCost, int cooldown, float drainPerTick, int maxTicks,
                    float minSpent, float baseDamage, float damagePerAura, int color) {
@@ -231,6 +241,16 @@ public final class Techniques {
             this.baseDamage = baseDamage;
             this.damagePerAura = damagePerAura;
             this.color = color;
+        }
+
+        ChargedOrb epic(float blastScale) {
+            this.epic = true;
+            this.blastScale = blastScale;
+            return this;
+        }
+
+        public boolean isEpic() {
+            return epic;
         }
 
         @Override

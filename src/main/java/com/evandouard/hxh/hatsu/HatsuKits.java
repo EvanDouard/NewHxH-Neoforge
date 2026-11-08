@@ -37,7 +37,7 @@ public final class HatsuKits {
 
     // ---------- Premier lot jouable ----------
     public static final HatsuKit GON = playable("gon", ENHANCER, List.of(Passives.GON_WILD_INSTINCT),
-            Techniques.GON_ROCK, Techniques.GON_SCISSORS, Techniques.GON_PAPER);
+            Techniques.GON_ROCK, Techniques.GON_SCISSORS, Techniques.GON_PAPER, Techniques.GON_ROCK_EPIC);
     public static final HatsuKit KILLUA = playable("killua", TRANSMUTER, List.of(Passives.ZOLDYCK_BODY),
             Techniques.KILLUA_THUNDERBOLT, Techniques.KILLUA_GODSPEED);
     public static final HatsuKit KURAPIKA = playable("kurapika", CONJURER, List.of(Passives.DOWSING_CHAIN),

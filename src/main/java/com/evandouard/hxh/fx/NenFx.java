@@ -124,9 +124,12 @@ public final class NenFx {
         send(level, Kind.SHOCKWAVE, null, null, at, radius, color, 14);
     }
 
-    /** Boule de la Pierre qui grossit à côté du lanceur pendant la charge (jusqu'à {@code maxTicks}). */
-    public static void chargeOrb(LivingEntity caster, int color, int maxTicks) {
-        if (caster.level() instanceof ServerLevel s) send(s, Kind.CHARGE_ORB, caster, null, caster.position(), 1f, color, maxTicks);
+    /** Boule de la Pierre à côté du lanceur pendant la charge (jusqu'à {@code maxTicks}). */
+    public static void chargeOrb(LivingEntity caster, int color, int maxTicks, boolean epic) {
+        // taille : 1 = Pierre normale (demi-joueur, couleurs), 2 = sans retenue (enfle puis se recondense, aveuglante)
+        if (caster.level() instanceof ServerLevel s) {
+            send(s, Kind.CHARGE_ORB, caster, null, caster.position(), epic ? 2f : 1f, color, maxTicks);
+        }
     }
 
     /** Efface la boule en charge du lanceur (relâchée ou annulée). */

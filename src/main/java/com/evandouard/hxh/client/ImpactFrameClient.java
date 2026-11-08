@@ -27,6 +27,8 @@ public final class ImpactFrameClient {
     private static long start = -1;
     private static int duration;
     private static int seed;
+    /** Éblouissement de cette image (Pierre sans retenue regardée en face), remis à zéro après dessin. */
+    private static float glare;
 
     private ImpactFrameClient() {}
 
@@ -44,6 +46,11 @@ public final class ImpactFrameClient {
         MangaHud.listener.accept("[hud] Image d'impact");
     }
 
+    /** Demande un voile blanc pour cette image (le plus fort l'emporte). */
+    static void glare(float amount) {
+        glare = Math.max(glare, amount);
+    }
+
     public static boolean active() {
         Minecraft mc = Minecraft.getInstance();
         return start >= 0 && mc.level != null && mc.level.getGameTime() - start <= duration;
@@ -51,6 +58,10 @@ public final class ImpactFrameClient {
 
     private static void render(GuiGraphics g, float pt) {
         Minecraft mc = Minecraft.getInstance();
+        if (glare > 0.01f) {
+            g.fill(0, 0, g.guiWidth(), g.guiHeight(), (Mth.clamp((int) (glare * 255), 0, 255) << 24) | 0xFFFDF2);
+            glare = 0;
+        }
         if (start < 0 || mc.level == null) return;
         float age = mc.level.getGameTime() - start + pt;
         if (age > duration || age < 0) {

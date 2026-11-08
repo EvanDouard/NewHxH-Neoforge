@@ -169,10 +169,12 @@ public final class HatsuTests {
         Hatsu.cycle(gon);
         helper.assertTrue(Hatsu.selectedTechnique(d) == Techniques.GON_PAPER, "3 : Papier");
         Hatsu.cycle(gon);
-        helper.assertTrue(Hatsu.selectedTechnique(d) == Techniques.BASIC_ATTACK, "4 : attaque basique (coups de base à la suite)");
+        helper.assertTrue(Hatsu.selectedTechnique(d) == Techniques.GON_ROCK_EPIC, "4 : Pierre sans retenue");
+        Hatsu.cycle(gon);
+        helper.assertTrue(Hatsu.selectedTechnique(d) == Techniques.BASIC_ATTACK, "5 : attaque basique (coups de base à la suite)");
         Hatsu.cycle(gon);
         Hatsu.cycle(gon);
-        helper.assertTrue(Hatsu.selectedTechnique(d) == Techniques.BASIC_CHARGED, "6 : frappe chargée");
+        helper.assertTrue(Hatsu.selectedTechnique(d) == Techniques.BASIC_CHARGED, "7 : frappe chargée");
         Hatsu.cycle(gon);
         helper.assertTrue(Hatsu.selectedTechnique(d) == Techniques.GON_ROCK, "Retour à 1 : Pierre");
         helper.succeed();
@@ -224,5 +226,18 @@ public final class HatsuTests {
             helper.assertTrue(d.readyAt("basic_charged") > helper.getLevel().getGameTime(), "Recharge au relâchement");
             helper.succeed();
         });
+    }
+
+    @GameTest(template = "empty")
+    public static void ryuOnAttackGrowsSpecialMoves(GameTestHelper helper) {
+        Zombie gon = husk(helper, 1);
+        HunterData d = hunter(gon, NenType.ENHANCER, "gon");
+        d.setRyuAttack(50);
+        helper.assertTrue(com.evandouard.hxh.nen.NenDefense.ryuSpecialFactor(gon) == 1f, "Ryu équilibré : taille normale");
+        d.setRyuAttack(100);
+        helper.assertTrue(Math.abs(com.evandouard.hxh.nen.NenDefense.ryuSpecialFactor(gon) - 1.5f) < 1e-4, "Ryu 100 % : ×1,5");
+        helper.assertTrue(((Techniques.ChargedOrb) Techniques.GON_ROCK_EPIC).isEpic()
+                && !((Techniques.ChargedOrb) Techniques.GON_ROCK).isEpic(), "Pierre normale et sans retenue");
+        helper.succeed();
     }
 }

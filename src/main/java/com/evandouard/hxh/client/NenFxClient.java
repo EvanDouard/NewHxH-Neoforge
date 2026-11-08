@@ -510,37 +510,82 @@ public final class NenFxClient {
     }
 
     /**
-     * Boule de la Pierre en charge : elle grossit dans le poing, puis se recondense et change de couleur à chaque
-     * palier (orange → jaune → blanc incandescent), comme dans l'anime.
+     * Boule de la Pierre en charge, à côté du poing.
+     * <ul>
+     *     <li>Pierre normale : une demi-taille de joueur, qui palpite et change de couleur à chaque palier
+     *         (orange → jaune → blanc incandescent), avec un éclat à chaque changement ;</li>
+     *     <li>sans retenue : elle enfle une fois jusqu'à deux fois la taille du lanceur, puis se recondense,
+     *         minuscule et aveuglante (ceux qui la regardent sont éblouis).</li>
+     * </ul>
      */
     private static void chargeOrb(Ctx c, Fx f, float age) {
         Entity src = entity(f.source);
         if (src == null) return;
-        // Cycles : la boule grossit jusqu'à environ 2,4 blocs de large, puis repart petite avec la couleur suivante
+        boolean epic = f.size > 1.5f;
         int[] colors = {NenFx.ENHANCER, 0xFFFFC23A, 0xFFFFF4C8, 0xFFFFFFFF};
-        float cycle = 26f;
-        int tier = Math.min(colors.length - 1, (int) (age / cycle));
-        float inCycle = tier == colors.length - 1 ? cycle : age - tier * cycle;
-        // Au sommet de chaque cycle : au moins 2× la taille de celui qui charge
-        float maxHalf = Math.max(1.9f, src.getBbHeight() * 1.05f);
-        float half = 0.15f + (maxHalf - 0.15f) * ease(inCycle / cycle);
+        float half, flash = 0f;
+        int color;
+        boolean blinding = false;
+        if (!epic) {
+            float cycle = 26f;
+            int tier = Math.min(colors.length - 1, (int) (age / cycle));
+            float inCycle = age - tier * cycle;
+            half = Math.max(0.3f, src.getBbHeight() * 0.25f) * (1f + 0.06f * Mth.sin(age * 1.1f));
+            color = colors[tier];
+            if (tier > 0 && inCycle < 4) flash = 1f - inCycle / 4f;
+        } else {
+            float grow = 40f, squeeze = 6f;
+            float maxHalf = Math.max(1.9f, src.getBbHeight() * 1.05f);
+            float small = 0.22f;
+            if (age < grow) {
+                half = 0.2f + (maxHalf - 0.2f) * ease(age / grow);
+                color = colors[Math.min(2, (int) (age / grow * 3))];
+            } else if (age < grow + squeeze) {
+                float k = (age - grow) / squeeze;
+                half = maxHalf + (small - maxHalf) * ease(k);
+                color = 0xFFFFFFFF;
+                flash = k;
+            } else {
+                half = small * (1f + 0.15f * Mth.sin(age * 2.3f));
+                color = 0xFFFFFFFF;
+                blinding = true;
+            }
+        }
         Vec3 look = src.getViewVector(c.pt);
         Vec3 right = look.cross(new Vec3(0, 1, 0));
         right = right.lengthSqr() < 1e-6 ? new Vec3(1, 0, 0) : right.normalize();
         Vec3 at;
-        if (firstPerson(src)) {
+        boolean self = firstPerson(src);
+        if (self) {
             // à droite, devant : visible sans boucher la vue
             at = src.getEyePosition(c.pt).add(look.scale(6.0)).add(right.scale(2.6)).add(0, -0.2, 0);
             half *= 0.6f;
         } else {
             at = center(src, c.pt).add(right.scale(0.5 + half)).add(look.scale(0.3)).add(0, half * 0.5, 0);
         }
-        int color = colors[tier];
         billboard(c, RenderType.eyes(GLOW), at, half * 2.2f, 0, color, 0.85f);
-        billboard(c, RenderType.entityTranslucent(IMPACT), at, half * 1.5f, age * 0.3f, color, 0.6f + 0.1f * tier);
+        billboard(c, RenderType.entityTranslucent(IMPACT), at, half * 1.5f, age * 0.3f, color, 0.7f);
         billboard(c, RenderType.entityTranslucent(ORB), at, half * (1f + 0.05f * Mth.sin(age * 1.3f)), 0, color, 1f);
-        // Éclat au moment où elle se recondense
-        if (tier > 0 && inCycle < 4) billboard(c, RenderType.eyes(GLOW), at, 2.5f, 0, 0xFFFFFFFF, 1f - inCycle / 4f);
+        if (flash > 0) billboard(c, RenderType.eyes(GLOW), at, epic ? 4f : 1.6f, 0, 0xFFFFFFFF, flash);
+        if (blinding) {
+            // Petite étoile incandescente : grand halo blanc qui palpite, rayons tournants
+            float pulse = 0.85f + 0.15f * Mth.sin(age * 1.7f);
+            billboard(c, RenderType.eyes(GLOW), at, (self ? 2.2f : 5f) * pulse, 0, 0xFFFFFFFF, 1f);
+            billboard(c, RenderType.eyes(IMPACT), at, (self ? 1.6f : 3.2f) * pulse, age * 0.12f, 0xFFFFF4C8, 0.9f);
+            if (!self) {
+                // Ceux qui la regardent sont éblouis
+                Vec3 to = at.subtract(c.cam);
+                double dist = to.length();
+                Vector3f fwd = c.camera.getLookVector();
+                double dot = dist < 1e-3 ? 1 : (fwd.x() * to.x + fwd.y() * to.y + fwd.z() * to.z) / dist;
+                if (dot > 0.6 && dist < 24) {
+                    float g = (float) ((dot - 0.6) / 0.4) * (float) (1 - dist / 24) * pulse;
+                    ImpactFrameClient.glare(Math.min(0.8f, g));
+                }
+            } else {
+                ImpactFrameClient.glare(0.2f);
+            }
+        }
     }
 
     /** Montée d'aura : deux anneaux qui remontent le long du corps et une lueur. */
