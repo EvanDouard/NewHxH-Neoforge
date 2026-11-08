@@ -116,7 +116,6 @@ public class NpcEntity extends PathfinderMob {
         return InteractionResult.sidedSuccess(level().isClientSide());
     }
 
-    @Override
     /** PNJ de quête : aucun effet ne les touche (ni peur, ni ralentissement…). */
     @Override
     public boolean canBeAffected(net.minecraft.world.effect.MobEffectInstance effect) {
