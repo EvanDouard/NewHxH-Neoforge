@@ -205,7 +205,7 @@ public final class Combat {
     public static float chargedStrike(LivingEntity attacker, float value) {
         if (value < CHARGE_FAIL_BELOW) {
             CombatAnimations.play(attacker, CombatAnim.STOP);
-            attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
+            attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2, false, false, true));
             com.evandouard.hxh.network.Hud.callout(attacker, Component.translatable("message.hxh.strike_failed"), 0xFF9A9A9A, false);
             return 0f;
         }

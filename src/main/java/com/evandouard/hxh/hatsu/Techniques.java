@@ -94,7 +94,8 @@ public final class Techniques {
 
     public record Effect(Holder<MobEffect> effect, int ticks, int amplifier) {
         MobEffectInstance create(float power) {
-            return new MobEffectInstance(effect, Math.round(ticks * Math.max(0.5f, power)), amplifier);
+            // Sans les bulles d'effet de Minecraft (direction artistique : pas de particules vanilla)
+            return new MobEffectInstance(effect, Math.round(ticks * Math.max(0.5f, power)), amplifier, false, false, true);
         }
     }
 

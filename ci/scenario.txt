@@ -288,11 +288,12 @@ shot 22_aiguille_ratee_dans_le_vide
 expectnot Raté
 
 # --- Effets du Nen dessinés à la main (plus de particules de Minecraft) ---
+cmd gamerule sendCommandFeedback false
 cmd kill @e[type=minecraft:husk]
 cmd hunter nen level 40
 cmd summon minecraft:husk ~ ~ ~3.2 {NoAI:1b,PersistenceRequired:1b,Silent:1b}
 look 0 8
-camera back
+camera first
 wait 20
 clearchat
 cmd hunter hatsu set kurapika
@@ -336,7 +337,7 @@ wait 4
 shot 22h_onde_de_choc
 cmd hunter hatsu set illumi
 cmd hunter nen refill
-camera first
+cmd gamerule sendCommandFeedback true
 wait 10
 
 # --- Mob à Nen : un husk avec le Hatsu de Gon se bat avec ses techniques ---

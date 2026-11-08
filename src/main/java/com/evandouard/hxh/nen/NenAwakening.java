@@ -159,7 +159,7 @@ public final class NenAwakening {
     public static void forcedAwakening(LivingEntity target, String messageKey) {
         NenModes.unlock(target);
         HunterStats.get(target).setAura(0);
-        target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 0));
+        target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 0, false, false, true));
         if (target instanceof Player player) {
             player.displayClientMessage(Component.translatable(messageKey), false);
             player.displayClientMessage(Component.translatable("message.hxh.awakened_hint"), false);

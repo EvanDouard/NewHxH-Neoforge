@@ -441,10 +441,10 @@ public final class NenFxClient {
             link(c, hand.add(down.scale(0.12 + i * 0.15)), down, n[i % 2], 0.2f, 0.1f, f.color, fade);
         }
         Vec3 tip = hand.add(down.scale(0.12 + 5 * 0.15 + 0.05));
-        billboard(c, RenderType.eyes(GLOW), tip, 0.35f, 0, NenFx.HEAL, fade * (0.6f + 0.3f * Mth.sin(age * 0.5f)));
-        billboard(c, RenderType.entityTranslucent(CROSS), tip, 0.16f, (float) swing, 0xFFFFFFFF, fade);
+        billboard(c, RenderType.eyes(GLOW), tip, 0.22f, 0, NenFx.HEAL, fade * (0.6f + 0.3f * Mth.sin(age * 0.5f)));
+        billboard(c, RenderType.entityTranslucent(CROSS), tip, 0.1f, (float) swing, 0xFFFFFFFF, fade);
         // Halo de soin sur le corps
-        billboard(c, RenderType.eyes(GLOW), center(src, c.pt), src.getBbHeight() * 0.7f, 0, NenFx.HEAL, fade * 0.25f);
+        billboard(c, RenderType.eyes(GLOW), center(src, c.pt), src.getBbHeight() * 0.55f, 0, NenFx.HEAL, fade * 0.35f);
     }
 
     /** Aiguille qui file puis reste plantée dans la cible. */

@@ -124,8 +124,8 @@ public final class NenModes {
         data.setMode(NenMode.NONE);
         int ticks = HxHConfig.EXHAUSTION_TICKS.get();
         if (ticks > 0) {
-            entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 1));
-            entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 1));
+            entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 1, false, false, true));
+            entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 1, false, false, true));
         }
         if (entity instanceof Player player) {
             player.displayClientMessage(Component.translatable("message.hxh.exhausted"), true);
