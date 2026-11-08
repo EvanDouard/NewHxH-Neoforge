@@ -340,7 +340,7 @@ public final class NenFxClient {
         Vec3 from = src != null ? hand(src, c.pt) : f.at;
         Vec3 to = tgt != null ? center(tgt, c.pt) : f.at;
         float alpha = age > f.duration - 3 ? (f.duration - age) / 3f : 1f;
-        zigzag(c, from, to, 12, 0.35f, f.seed + (int) (age / 2), 0.16f, f.color, alpha);
+        zigzag(c, from, to, 12, 0.35f, f.seed + (int) (age / 2), 0.07f, f.color, alpha);
         if (!f.impactDone && age > 1) {
             f.impactDone = true;
             PENDING.add(localFx(NenFx.Kind.IMPACT, to, 1.2f, f.color, 8));
@@ -458,7 +458,7 @@ public final class NenFxClient {
         billboard(c, RenderType.eyes(GLOW), tip, 0.22f, 0, NenFx.HEAL, fade * (0.6f + 0.3f * Mth.sin(age * 0.5f)));
         billboard(c, RenderType.entityTranslucent(CROSS), tip, 0.1f, (float) swing, 0xFFFFFFFF, fade);
         // Halo de soin sur le corps
-        billboard(c, RenderType.eyes(GLOW), center(src, c.pt), src.getBbHeight() * 0.55f, 0, NenFx.HEAL, fade * 0.35f);
+        if (!firstPerson(src)) billboard(c, RenderType.eyes(GLOW), center(src, c.pt), src.getBbHeight() * 0.55f, 0, NenFx.HEAL, fade * 0.35f);
     }
 
     /** Aiguille qui file puis reste plantée dans la cible. */
@@ -512,6 +512,7 @@ public final class NenFxClient {
             quad(c, RenderType.entityTranslucent(RING), p.add(-r, 0, -r), p.add(r, 0, -r), p.add(r, 0, r), p.add(-r, 0, r),
                     f.color, 1f - tk);
         }
-        billboard(c, RenderType.eyes(GLOW), base.add(0, h * 0.5, 0), h * 0.8f * f.size, 0, f.color, 0.5f * (1f - t));
+        // Lueur sur le corps, sauf pour soi en vue subjective (elle teinterait tout l'écran)
+        if (!firstPerson(src)) billboard(c, RenderType.eyes(GLOW), base.add(0, h * 0.5, 0), h * 0.8f * f.size, 0, f.color, 0.5f * (1f - t));
     }
 }
