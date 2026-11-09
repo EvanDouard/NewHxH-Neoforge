@@ -48,12 +48,12 @@ public class AuraLayer<T extends LivingEntity, M extends EntityModel<T>> extends
         float pulse = Mth.sin(ageInTicks * 0.15f) * 0.5f + 0.5f;
         float body = look.bodyVisibility();
         if (look.flames()) {
-            shell(poseStack, buffers, look.color(), (0.55f + 0.15f * pulse) * look.strength() * body, 1.05f);
-            shell(poseStack, buffers, look.color(), 0.25f * look.strength() * body, 1.12f + 0.02f * pulse);
+            shell(poseStack, buffers, look.color(), (0.22f + 0.08f * pulse) * look.strength() * body, 1.06f);
+            shell(poseStack, buffers, look.color(), 0.12f * look.strength() * body, 1.14f + 0.02f * pulse);
         } else {
             float k = data.mode() == NenMode.TEN ? 1f : 0.6f;
-            shell(poseStack, buffers, look.color(), (0.32f + 0.08f * pulse) * k * body, 1.05f);
-            shell(poseStack, buffers, look.color(), (0.16f + 0.05f * pulse) * k * body, 1.14f + 0.02f * pulse);
+            shell(poseStack, buffers, look.color(), (0.10f + 0.04f * pulse) * k * body, 1.08f);
+            shell(poseStack, buffers, look.color(), (0.07f + 0.03f * pulse) * k * body, 1.16f + 0.02f * pulse);
         }
     }
 

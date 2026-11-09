@@ -82,7 +82,8 @@ cmd hunter
 wait 10
 expectnot Nen : ???
 
-# --- Aura visible façon enchantement (vue de face) ---
+# --- Aura visible (vue de face) : vapeur au repos et au Ten, flammes au Ren et au Ken ---
+clearchat
 camera front
 look 0 0
 wait 30
