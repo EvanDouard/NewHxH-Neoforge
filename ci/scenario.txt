@@ -108,6 +108,8 @@ key key.hxh.ken
 cmd hunter aura wild
 key key.hxh.ten
 wait 30
+clearchat
+wait 2
 shot 12c_aura_sauvage_au_ten
 key key.hxh.ten
 cmd hunter aura calm
