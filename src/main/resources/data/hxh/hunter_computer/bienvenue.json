@@ -1,0 +1,16 @@
+{
+  "category": {
+    "fr": "Général",
+    "en": "General"
+  },
+  "order": 10,
+  "title": {
+    "fr": "Bienvenue sur le site des Hunters",
+    "en": "Welcome to the Hunter site"
+  },
+  "text": {
+    "fr": "Cet ordinateur donne accès au site de l'Association des Hunters.\n\nLes fiches se débloquent au fil de ton aventure : passe l'Examen, monte à la Tour Céleste, éveille ton Nen… Une fiche verrouillée affiche un indice pour savoir comment l'ouvrir.\n\nSans licence, tu n'as qu'un accès invité : la base de données est réservée aux Hunters.",
+    "en": "This computer opens the Hunter Association website.\n\nEntries unlock as your adventure goes on: pass the Exam, climb Heavens Arena, awaken your Nen… A locked entry shows a hint on how to open it.\n\nWithout a license you only get guest access: the database is reserved for Hunters."
+  },
+  "requires": []
+}

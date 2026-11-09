@@ -1,0 +1,22 @@
+{
+  "category": {
+    "fr": "Nen",
+    "en": "Nen"
+  },
+  "order": 30,
+  "title": {
+    "fr": "Techniques avancées",
+    "en": "Advanced techniques"
+  },
+  "text": {
+    "fr": "Gyo : concentrer l'aura dans les yeux pour voir l'invisible.\nIn : cacher son aura.\nEn : étendre son aura pour tout sentir autour de soi.\nKen : Ten et Ren mêlés, une défense de combat.\nKo : toute l'aura dans un seul point.\nRyu : répartir l'aura entre attaque et défense au fil du combat.",
+    "en": "Gyo: focus aura in the eyes to see the invisible.\nIn: hide your aura.\nEn: extend your aura to sense everything around you.\nKen: Ten and Ren combined, a combat defense.\nKo: all the aura in a single point.\nRyu: shift aura between attack and defense during a fight."
+  },
+  "requires": [
+    "learned:gyo"
+  ],
+  "hint": {
+    "fr": "Apprends le Gyo avec un maître.",
+    "en": "Learn Gyo from a master."
+  }
+}

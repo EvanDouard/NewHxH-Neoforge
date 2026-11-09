@@ -1,0 +1,16 @@
+{
+  "category": {
+    "fr": "Général",
+    "en": "General"
+  },
+  "order": 30,
+  "title": {
+    "fr": "L'Examen Hunter",
+    "en": "The Hunter Exam"
+  },
+  "text": {
+    "fr": "Pour s'inscrire, il faut d'abord trouver le Navigateur, qui guide les candidats jusqu'au lieu de l'Examen. Les épreuves changent chaque année et sont choisies par des examinateurs eux-mêmes Hunters : marathon, chasse, survie…\n\nUn échec ? Il faudra attendre l'année suivante.",
+    "en": "To sign up, you first have to find the Navigator, who guides candidates to the Exam site. The trials change every year and are chosen by examiners who are Hunters themselves: marathon, hunt, survival…\n\nFailed? You'll have to wait for next year."
+  },
+  "requires": []
+}

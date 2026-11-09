@@ -12,6 +12,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(HxHMod.MODID);
 
+    public static final DeferredBlock<com.evandouard.hxh.block.HunterComputerBlock> HUNTER_COMPUTER = BLOCKS.register("hunter_computer",
+            () -> new com.evandouard.hxh.block.HunterComputerBlock(BlockBehaviour.Properties.of()
+                    .strength(1.5f).sound(SoundType.METAL).noOcclusion().lightLevel(s -> 6)));
     public static final DeferredBlock<WaterDivinationBlock> WATER_DIVINATION = BLOCKS.register("water_divination",
             () -> new WaterDivinationBlock(BlockBehaviour.Properties.of()
                     .strength(0.3f)

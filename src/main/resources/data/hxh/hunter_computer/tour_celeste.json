@@ -1,0 +1,22 @@
+{
+  "category": {
+    "fr": "Lieux",
+    "en": "Places"
+  },
+  "order": 10,
+  "title": {
+    "fr": "La Tour Céleste",
+    "en": "Heavens Arena"
+  },
+  "text": {
+    "fr": "Une tour de 251 étages où l'on vient se battre devant le public. Chaque victoire fait monter, chaque défaite redescendre. Jusqu'au 200e étage, les combats rapportent des Jenny.\n\nÀ partir du 100e étage, une chambre privée t'attend.",
+    "en": "A 251-floor tower where people come to fight in front of a crowd. Each win takes you up, each loss down. Up to floor 200, fights earn Jenny.\n\nFrom floor 100, a private room awaits you."
+  },
+  "requires": [
+    "floor:1"
+  ],
+  "hint": {
+    "fr": "Inscris-toi à la Tour Céleste.",
+    "en": "Register at Heavens Arena."
+  }
+}

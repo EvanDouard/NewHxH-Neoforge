@@ -31,6 +31,7 @@ public final class HxHNetwork {
         registrar.playToServer(PunchPayload.TYPE, PunchPayload.STREAM_CODEC, PunchPayload::handle);
         registrar.playToServer(ToggleNenModePayload.TYPE, ToggleNenModePayload.STREAM_CODEC, ToggleNenModePayload::handle);
         registrar.playToClient(OpenShopPayload.TYPE, OpenShopPayload.STREAM_CODEC, OpenShopPayload::handle);
+        registrar.playToClient(OpenComputerPayload.TYPE, OpenComputerPayload.STREAM_CODEC, OpenComputerPayload::handle);
         registrar.playToServer(ShopActionPayload.TYPE, ShopActionPayload.STREAM_CODEC, ShopActionPayload::handle);
     }
 

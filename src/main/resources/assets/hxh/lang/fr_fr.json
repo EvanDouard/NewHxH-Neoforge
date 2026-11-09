@@ -745,5 +745,11 @@
   "shop.hxh.buys": "Il rachète",
   "shop.hxh.empty": "Rien à vendre pour l'instant.",
   "shop.hxh.not_enough": "Il te manque %s Jenny.",
-  "command.hxh.jenny": "Jenny : %s"
+  "command.hxh.jenny": "Jenny : %s",
+  "block.hxh.hunter_computer": "Ordinateur Hunter",
+  "screen.hxh.computer.title": "Site des Hunters",
+  "screen.hxh.computer.hunter": "Hunter licencié",
+  "screen.hxh.computer.guest": "Accès invité",
+  "screen.hxh.computer.locked": "Fiche verrouillée",
+  "screen.hxh.computer.empty": "Aucune fiche disponible pour l'instant."
 }

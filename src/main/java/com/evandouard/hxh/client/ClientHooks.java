@@ -22,4 +22,8 @@ public final class ClientHooks {
         if (mc.screen instanceof ShopScreen open && open.shopId().equals(payload.shop())) open.update(payload);
         else mc.setScreen(new ShopScreen(payload));
     }
+
+    public static void openComputer(com.evandouard.hxh.network.OpenComputerPayload payload) {
+        Minecraft.getInstance().setScreen(new HunterComputerScreen(payload));
+    }
 }

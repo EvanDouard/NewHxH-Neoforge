@@ -1,21 +1,70 @@
 {
   "npc": "merchant",
   "sells": [
-    { "item": "hxh:dumbbell_3", "price": 800 },
-    { "item": "hxh:treadmill_3", "price": 1500 },
-    { "item": "minecraft:cooked_beef", "count": 8, "price": 40 },
-    { "item": "minecraft:bread", "count": 16, "price": 30 },
-    { "item": "minecraft:golden_apple", "price": 250 },
-    { "item": "minecraft:ender_pearl", "count": 4, "price": 120 }
+    {
+      "item": "hxh:dumbbell_3",
+      "price": 800
+    },
+    {
+      "item": "hxh:treadmill_3",
+      "price": 1500
+    },
+    {
+      "item": "hxh:hunter_computer",
+      "price": 300
+    },
+    {
+      "item": "minecraft:cooked_beef",
+      "count": 8,
+      "price": 40
+    },
+    {
+      "item": "minecraft:bread",
+      "count": 16,
+      "price": 30
+    },
+    {
+      "item": "minecraft:golden_apple",
+      "price": 250
+    },
+    {
+      "item": "minecraft:ender_pearl",
+      "count": 4,
+      "price": 120
+    }
   ],
   "buys": [
-    { "item": "minecraft:rotten_flesh", "price": 1 },
-    { "item": "minecraft:bone", "price": 2 },
-    { "item": "minecraft:string", "price": 3 },
-    { "item": "minecraft:leather", "price": 5 },
-    { "item": "minecraft:iron_ingot", "price": 10 },
-    { "item": "minecraft:gold_ingot", "price": 25 },
-    { "item": "minecraft:emerald", "price": 40 },
-    { "item": "minecraft:diamond", "price": 150 }
+    {
+      "item": "minecraft:rotten_flesh",
+      "price": 1
+    },
+    {
+      "item": "minecraft:bone",
+      "price": 2
+    },
+    {
+      "item": "minecraft:string",
+      "price": 3
+    },
+    {
+      "item": "minecraft:leather",
+      "price": 5
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "price": 10
+    },
+    {
+      "item": "minecraft:gold_ingot",
+      "price": 25
+    },
+    {
+      "item": "minecraft:emerald",
+      "price": 40
+    },
+    {
+      "item": "minecraft:diamond",
+      "price": 150
+    }
   ]
 }

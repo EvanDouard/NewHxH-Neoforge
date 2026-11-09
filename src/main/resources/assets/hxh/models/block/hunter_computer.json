@@ -1,0 +1,22 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "hxh:block/hunter_computer_case",
+    "case": "hxh:block/hunter_computer_case",
+    "screen": "hxh:block/hunter_computer_screen",
+    "keys": "hxh:block/hunter_computer_keys"
+  },
+  "elements": [
+    { "from": [2, 0, 2], "to": [14, 1, 7],
+      "faces": { "up": { "texture": "#keys" }, "down": { "texture": "#case" },
+                 "north": { "texture": "#case" }, "south": { "texture": "#case" },
+                 "east": { "texture": "#case" }, "west": { "texture": "#case" } } },
+    { "from": [7, 0, 9], "to": [9, 4, 11],
+      "faces": { "north": { "texture": "#case" }, "south": { "texture": "#case" },
+                 "east": { "texture": "#case" }, "west": { "texture": "#case" }, "up": { "texture": "#case" } } },
+    { "from": [1, 3, 8], "to": [15, 14, 10],
+      "faces": { "north": { "uv": [0, 0, 16, 16], "texture": "#screen" }, "south": { "texture": "#case" },
+                 "east": { "texture": "#case" }, "west": { "texture": "#case" },
+                 "up": { "texture": "#case" }, "down": { "texture": "#case" } } }
+  ]
+}

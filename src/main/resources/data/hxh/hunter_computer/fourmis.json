@@ -1,0 +1,22 @@
+{
+  "category": {
+    "fr": "Base de données Hunter",
+    "en": "Hunter database"
+  },
+  "order": 20,
+  "title": {
+    "fr": "Les Fourmis-Chimères",
+    "en": "Chimera Ants"
+  },
+  "text": {
+    "fr": "Insectes géants classés comme espèce dangereuse de niveau maximal. La reine dévore d'autres espèces et donne naissance à des soldats qui héritent de leurs traits. Une reine assez puissante peut engendrer un Roi.\n\nSignalement immédiat à l'Association en cas d'observation.",
+    "en": "Giant insects classified as a top-level hazardous species. The queen devours other species and gives birth to soldiers inheriting their traits. A powerful enough queen can bear a King.\n\nReport any sighting to the Association immediately."
+  },
+  "requires": [
+    "hunter"
+  ],
+  "hint": {
+    "fr": "Réservé aux Hunters licenciés.",
+    "en": "Licensed Hunters only."
+  }
+}

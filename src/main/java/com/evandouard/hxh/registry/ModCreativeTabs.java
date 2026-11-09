@@ -18,6 +18,7 @@ public final class ModCreativeTabs {
                     .displayItems((params, output) -> {
                         output.accept(ModItems.HUNTER_CARD.get());
                         output.accept(ModItems.WATER_DIVINATION.get());
+                        output.accept(ModItems.HUNTER_COMPUTER.get());
                         output.accept(ModItems.EXAM_BADGE.get());
                         ModItems.DUMBBELLS.forEach(i -> output.accept(i.get()));
                         ModItems.TREADMILLS.forEach(i -> output.accept(i.get()));

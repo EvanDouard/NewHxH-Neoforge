@@ -1,0 +1,22 @@
+{
+  "category": {
+    "fr": "Lieux",
+    "en": "Places"
+  },
+  "order": 20,
+  "title": {
+    "fr": "Le 200e étage",
+    "en": "Floor 200"
+  },
+  "text": {
+    "fr": "Au-delà du 200e étage, plus d'argent : on s'y bat pour l'honneur, et tous les combattants maîtrisent le Nen. Un combattant qui n'est pas prêt ne redescend pas toujours en un seul morceau.\n\nLes Maîtres d'étage, au sommet, sont les plus redoutables.",
+    "en": "Beyond floor 200 there's no more money: people fight for honor, and every fighter masters Nen. A fighter who isn't ready doesn't always come back down in one piece.\n\nThe Floor Masters at the top are the most fearsome."
+  },
+  "requires": [
+    "floor:200"
+  ],
+  "hint": {
+    "fr": "Atteins le 200e étage.",
+    "en": "Reach floor 200."
+  }
+}

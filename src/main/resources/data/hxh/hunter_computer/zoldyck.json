@@ -1,0 +1,22 @@
+{
+  "category": {
+    "fr": "Base de données Hunter",
+    "en": "Hunter database"
+  },
+  "order": 30,
+  "title": {
+    "fr": "La famille Zoldyck",
+    "en": "The Zoldyck family"
+  },
+  "text": {
+    "fr": "Famille d'assassins légendaire vivant sur le mont Kukuroo. Leurs contrats coûtent des fortunes ; leurs enfants sont entraînés dès la naissance à résister au poison et à l'électricité.\n\nLa Porte de la Probation, à l'entrée du domaine, pèse plusieurs tonnes.",
+    "en": "Legendary family of assassins living on Kukuroo Mountain. Their contracts cost fortunes; their children are trained from birth to resist poison and electricity.\n\nThe Testing Gate at the estate's entrance weighs several tons."
+  },
+  "requires": [
+    "hunter"
+  ],
+  "hint": {
+    "fr": "Réservé aux Hunters licenciés.",
+    "en": "Licensed Hunters only."
+  }
+}

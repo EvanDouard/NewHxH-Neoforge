@@ -1,0 +1,22 @@
+{
+  "category": {
+    "fr": "Nen",
+    "en": "Nen"
+  },
+  "order": 40,
+  "title": {
+    "fr": "Le Hatsu",
+    "en": "Hatsu"
+  },
+  "text": {
+    "fr": "Le Hatsu est la technique propre à chaque utilisateur de Nen, née de sa personnalité et de son type. Imposer des conditions à son pouvoir (un pacte) le rend plus fort.",
+    "en": "Hatsu is each Nen user's own technique, born from their personality and type. Imposing conditions on your power (a vow) makes it stronger."
+  },
+  "requires": [
+    "kit"
+  ],
+  "hint": {
+    "fr": "Choisis ton Hatsu.",
+    "en": "Choose your Hatsu."
+  }
+}

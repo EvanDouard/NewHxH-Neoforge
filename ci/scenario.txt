@@ -888,6 +888,14 @@ expect Jenny : 224
 shot 47c_boutique_apres_achat
 closescreen
 wait 10
+# --- Ordinateur Hunter : fiches débloquées au fil du jeu ---
+cmd setblock ~1 ~ ~ hxh:hunter_computer[facing=west]
+wait 5
+useblock 1 0 0
+wait 15
+shot 47d_ordinateur_hunter
+closescreen
+wait 5
 clearchat
 cmd execute if entity @e[type=hxh:npc,distance=..30,nbt={npc:"receptionist"}]
 wait 5

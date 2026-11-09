@@ -17,6 +17,8 @@ public final class ModItems {
     public static final DeferredItem<Item> EXAM_BADGE =
             ITEMS.registerSimpleItem("exam_badge", new Item.Properties().stacksTo(1));
 
+    public static final DeferredItem<BlockItem> HUNTER_COMPUTER =
+            ITEMS.registerSimpleBlockItem("hunter_computer", ModBlocks.HUNTER_COMPUTER);
     public static final DeferredItem<BlockItem> WATER_DIVINATION =
             ITEMS.registerSimpleBlockItem("water_divination", ModBlocks.WATER_DIVINATION);
 

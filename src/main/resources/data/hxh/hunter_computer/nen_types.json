@@ -1,0 +1,22 @@
+{
+  "category": {
+    "fr": "Nen",
+    "en": "Nen"
+  },
+  "order": 20,
+  "title": {
+    "fr": "Les six types de Nen",
+    "en": "The six Nen types"
+  },
+  "text": {
+    "fr": "Renforcement, Transformation, Émission, Matérialisation, Manipulation, Spécialisation. Chacun naît avec un type, révélé par la divination par l'eau : l'eau déborde, change de goût, de couleur, des impuretés apparaissent, la feuille bouge… ou autre chose.\n\nPlus un type est loin du sien sur l'hexagone, plus il est difficile à maîtriser.",
+    "en": "Enhancement, Transmutation, Emission, Conjuration, Manipulation, Specialization. Everyone is born with one type, revealed by water divination: the water overflows, changes taste or color, impurities appear, the leaf moves… or something else.\n\nThe farther a type is from yours on the hexagon, the harder it is to master."
+  },
+  "requires": [
+    "nen"
+  ],
+  "hint": {
+    "fr": "Éveille ton Nen.",
+    "en": "Awaken your Nen."
+  }
+}

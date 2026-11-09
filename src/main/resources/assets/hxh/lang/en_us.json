@@ -745,5 +745,11 @@
   "shop.hxh.buys": "Buys",
   "shop.hxh.empty": "Nothing for sale yet.",
   "shop.hxh.not_enough": "You are %s Jenny short.",
-  "command.hxh.jenny": "Jenny: %s"
+  "command.hxh.jenny": "Jenny: %s",
+  "block.hxh.hunter_computer": "Hunter computer",
+  "screen.hxh.computer.title": "Hunter website",
+  "screen.hxh.computer.hunter": "Licensed Hunter",
+  "screen.hxh.computer.guest": "Guest access",
+  "screen.hxh.computer.locked": "Locked entry",
+  "screen.hxh.computer.empty": "No entry available yet."
 }

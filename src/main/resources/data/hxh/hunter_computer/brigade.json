@@ -1,0 +1,22 @@
+{
+  "category": {
+    "fr": "Base de données Hunter",
+    "en": "Hunter database"
+  },
+  "order": 10,
+  "title": {
+    "fr": "La Brigade Fantôme",
+    "en": "The Phantom Troupe"
+  },
+  "text": {
+    "fr": "Groupe de voleurs de rang A, treize membres reconnaissables à leur tatouage d'araignée numérotée. Extrêmement dangereux : tout Hunter qui croise l'un d'eux doit éviter le combat s'il n'est pas au niveau.\n\nChef : Chrollo Lucilfer.",
+    "en": "A-class bandit group, thirteen members recognizable by their numbered spider tattoo. Extremely dangerous: any Hunter who meets one should avoid the fight if not up to it.\n\nLeader: Chrollo Lucilfer."
+  },
+  "requires": [
+    "hunter"
+  ],
+  "hint": {
+    "fr": "Réservé aux Hunters licenciés.",
+    "en": "Licensed Hunters only."
+  }
+}

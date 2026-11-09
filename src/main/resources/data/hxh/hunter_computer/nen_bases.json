@@ -1,0 +1,22 @@
+{
+  "category": {
+    "fr": "Nen",
+    "en": "Nen"
+  },
+  "order": 10,
+  "title": {
+    "fr": "Le Nen : les bases",
+    "en": "Nen: the basics"
+  },
+  "text": {
+    "fr": "Le Nen est l'art de contrôler son aura, l'énergie vitale qui s'échappe du corps.\n\nTen : garder l'aura autour de soi, comme une armure.\nZetsu : fermer ses pores, disparaître.\nRen : faire jaillir plus d'aura.\nHatsu : sa technique personnelle.",
+    "en": "Nen is the art of controlling your aura, the life energy leaking from the body.\n\nTen: keep the aura around you, like armor.\nZetsu: close your pores, vanish.\nRen: release more aura.\nHatsu: your personal technique."
+  },
+  "requires": [
+    "nen"
+  ],
+  "hint": {
+    "fr": "Éveille ton Nen.",
+    "en": "Awaken your Nen."
+  }
+}

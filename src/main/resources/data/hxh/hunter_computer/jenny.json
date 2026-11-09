@@ -1,0 +1,22 @@
+{
+  "category": {
+    "fr": "Général",
+    "en": "General"
+  },
+  "order": 40,
+  "title": {
+    "fr": "Jenny et marchands",
+    "en": "Jenny and merchants"
+  },
+  "text": {
+    "fr": "Le Jenny est la monnaie du monde. On en gagne en combattant à la Tour Céleste (jusqu'au 200e étage) et en accomplissant des quêtes.\n\nLe marchand de la Tour Céleste vend du matériel d'entraînement de gamme III et rachète les butins de chasse.",
+    "en": "Jenny is the world's currency. You earn it by fighting at Heavens Arena (up to floor 200) and by completing quests.\n\nThe Heavens Arena merchant sells tier III training gear and buys hunting loot."
+  },
+  "requires": [
+    "jenny:1"
+  ],
+  "hint": {
+    "fr": "Gagne tes premiers Jenny.",
+    "en": "Earn your first Jenny."
+  }
+}
