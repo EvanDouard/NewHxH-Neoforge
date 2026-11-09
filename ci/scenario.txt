@@ -873,17 +873,21 @@ wait 10
 talkto merchant
 wait 20
 shot 47b_boutique_marchand
-click Acheter
-wait 10
-click Tout
-wait 10
-shot 47c_boutique_apres_achat
-closescreen
-wait 10
 clearchat
+click Acheter
+wait 15
+cmd hunter jenny add 0
+wait 5
+expect Jenny : 200
+clearchat
+click Tout
+wait 15
 cmd hunter jenny add 0
 wait 5
 expect Jenny : 224
+shot 47c_boutique_apres_achat
+closescreen
+wait 10
 clearchat
 cmd execute if entity @e[type=hxh:npc,distance=..30,nbt={npc:"receptionist"}]
 wait 5
