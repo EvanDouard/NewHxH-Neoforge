@@ -895,8 +895,11 @@ cmd hunter jenny add 0
 wait 5
 expect Jenny : 200
 clearchat
+closescreen
 cmd clear @s minecraft:rotten_flesh
 wait 5
+talkto merchant
+wait 15
 click Tout
 wait 15
 cmd hunter jenny add 0
