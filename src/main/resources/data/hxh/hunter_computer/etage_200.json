@@ -18,5 +18,6 @@
   "hint": {
     "fr": "Atteins le 200e étage.",
     "en": "Reach floor 200."
-  }
+  },
+  "category_order": 10
 }

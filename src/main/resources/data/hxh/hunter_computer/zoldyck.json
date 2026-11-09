@@ -18,5 +18,6 @@
   "hint": {
     "fr": "Réservé aux Hunters licenciés.",
     "en": "Licensed Hunters only."
-  }
+  },
+  "category_order": 30
 }

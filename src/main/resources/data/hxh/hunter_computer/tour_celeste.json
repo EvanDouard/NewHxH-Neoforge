@@ -18,5 +18,6 @@
   "hint": {
     "fr": "Inscris-toi à la Tour Céleste.",
     "en": "Register at Heavens Arena."
-  }
+  },
+  "category_order": 10
 }

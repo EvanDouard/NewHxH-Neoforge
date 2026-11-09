@@ -12,5 +12,6 @@
     "fr": "La licence Hunter est délivrée à ceux qui réussissent l'Examen Hunter, organisé une fois par an. Elle ouvre presque toutes les portes : transports gratuits, accès aux zones interdites au public, et à cette base de données.\n\nRevendue, elle vaut une fortune : ne la perds pas.",
     "en": "The Hunter license is granted to those who pass the yearly Hunter Exam. It opens almost every door: free transport, access to restricted areas, and to this database.\n\nResold, it is worth a fortune: don't lose it."
   },
-  "requires": []
+  "requires": [],
+  "category_order": 0
 }

@@ -867,6 +867,7 @@ wait 40
 # --- Marchand de la Tour : gamme III et rachat des butins, payés en Jenny ---
 clearchat
 cmd hunter jenny set 1000
+cmd clear @s minecraft:bone
 cmd give @s minecraft:bone 12
 goto merchant
 wait 10
@@ -880,6 +881,8 @@ cmd hunter jenny add 0
 wait 5
 expect Jenny : 200
 clearchat
+cmd clear @s minecraft:rotten_flesh
+wait 5
 click Tout
 wait 15
 cmd hunter jenny add 0

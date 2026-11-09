@@ -65,7 +65,8 @@ public final class HunterComputer extends SimpleJsonResourceReloadListener {
         boolean learningOff = !player.serverLevel().getGameRules().getBoolean(com.evandouard.hxh.HxHGameRules.NEN_LEARNING);
         List<OpenComputerPayload.Entry> out = new ArrayList<>();
         List<ComputerEntry> sorted = new ArrayList<>(ENTRIES);
-        sorted.sort(Comparator.comparing((ComputerEntry e) -> pick(e.category(), lang)).thenComparingInt(ComputerEntry::order));
+        sorted.sort(Comparator.comparingInt(ComputerEntry::categoryOrder)
+                .thenComparing((ComputerEntry e) -> pick(e.category(), lang)).thenComparingInt(ComputerEntry::order));
         for (ComputerEntry e : sorted) {
             boolean open = e.unlocked(q, h, learningOff);
             out.add(new OpenComputerPayload.Entry(e.id().getPath(), pick(e.category(), lang),

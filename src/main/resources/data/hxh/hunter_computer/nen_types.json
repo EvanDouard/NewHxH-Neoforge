@@ -18,5 +18,6 @@
   "hint": {
     "fr": "Éveille ton Nen.",
     "en": "Awaken your Nen."
-  }
+  },
+  "category_order": 20
 }

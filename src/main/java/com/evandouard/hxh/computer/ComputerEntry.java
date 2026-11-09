@@ -17,6 +17,7 @@ import java.util.Map;
  * <pre>
  * {
  *   "category": { "fr": "Lieux", "en": "Places" },
+ *   "category_order": 10,                          // place de la catégorie dans la liste
  *   "order": 20,                                   // tri dans la catégorie
  *   "title": { "fr": "La Tour Céleste", "en": "Heavens Arena" },
  *   "text":  { "fr": "…", "en": "…" },             // \n pour aller à la ligne
@@ -28,13 +29,14 @@ import java.util.Map;
  * {@code floor:<n>} (étage atteint à la Tour), {@code quest:<id>} (quête terminée), {@code learned:<capacité>}
  * (ten, ren, gyo, en, ken…), {@code jenny:<n>} (en avoir au moins autant).
  */
-public record ComputerEntry(ResourceLocation id, Map<String, String> category, int order, Map<String, String> title,
+public record ComputerEntry(ResourceLocation id, Map<String, String> category, int categoryOrder, int order, Map<String, String> title,
                             Map<String, String> text, List<String> requires, Map<String, String> hint) {
 
     public static ComputerEntry parse(ResourceLocation id, JsonObject json) {
         List<String> req = new ArrayList<>();
         if (json.has("requires")) for (JsonElement e : json.getAsJsonArray("requires")) req.add(e.getAsString());
-        return new ComputerEntry(id, texts(json, "category"), GsonHelper.getAsInt(json, "order", 100),
+        return new ComputerEntry(id, texts(json, "category"), GsonHelper.getAsInt(json, "category_order", 100),
+                GsonHelper.getAsInt(json, "order", 100),
                 texts(json, "title"), texts(json, "text"), List.copyOf(req), texts(json, "hint"));
     }
 
