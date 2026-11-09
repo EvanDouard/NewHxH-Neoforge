@@ -162,10 +162,13 @@ public final class AuraClient {
         Vec3 right = NenFxClient.hand(e, pt);
         Vec3 center = e.getPosition(pt).add(0, right.y - e.getPosition(pt).y, 0);
         Vec3 left = center.add(center.subtract(right).multiply(1, 0, 1));
-        VertexConsumer outer = buffers.getBuffer(RenderType.entityTranslucent(FLAME));
+        // Une couche à la fois : demander un autre tampon termine le précédent
         VertexConsumer glow = buffers.getBuffer(RenderType.eyes(NenFxClient.GLOW));
         for (Vec3 fist : new Vec3[]{right, left}) {
             billboard(glow, pose, cam, fist, 0.55f + 0.08f * Mth.sin(time * 0.6f), dim(look.color(), 0.9f), 0.9f);
+        }
+        VertexConsumer outer = buffers.getBuffer(RenderType.entityTranslucent(FLAME));
+        for (Vec3 fist : new Vec3[]{right, left}) {
             for (int i = 0; i < 4; i++) {
                 float phase = ((time / 8f) + i * 0.25f) % 1f;
                 float size = 0.5f * Mth.sin(Mth.PI * phase);
