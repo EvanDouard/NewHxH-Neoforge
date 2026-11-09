@@ -39,6 +39,9 @@ public final class TrialPlan {
         int min = Math.min(q.minTrials(), max);
         int want = min + (max > min ? random.nextInt(max - min + 1) : 0);
         List<String> picked = new ArrayList<>();
+        // Les épreuves toujours au programme d'abord (badges, tournoi final)
+        for (Quest.Trial t : pool) if (t.always()) for (String c : chain(q, t)) if (!picked.contains(c)) picked.add(c);
+        want = Math.max(want, picked.size());
         for (int pass = 0; pass < 2 && picked.size() < want; pass++) {
             for (Quest.Trial t : pool) {
                 if (picked.size() >= want) break;

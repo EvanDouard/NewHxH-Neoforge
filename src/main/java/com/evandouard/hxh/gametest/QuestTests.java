@@ -45,13 +45,13 @@ public final class QuestTests {
     public static void examQuestIsLoaded(GameTestHelper helper) {
         Quest exam = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
         helper.assertTrue(exam != null, "La quête hxh:hunter_exam doit être chargée depuis le datapack");
-        helper.assertTrue(exam.steps().size() == 17, "17 étapes attendues, obtenu " + exam.steps().size());
-        helper.assertTrue(exam.trials().size() == 6 && exam.minTrials() == 4 && exam.maxTrials() == 6, "6 épreuves, 4 à 6 tirées");
+        helper.assertTrue(exam.steps().size() == 19, "19 étapes attendues, obtenu " + exam.steps().size());
+        helper.assertTrue(exam.trials().size() == 7 && exam.minTrials() == 4 && exam.maxTrials() == 6, "7 épreuves, 4 à 6 tirées");
         helper.succeed();
     }
 
     /** Toutes les épreuves, dans l'ordre du fichier (le parcours est alors identique au fichier). */
-    private static final java.util.List<String> ALL_TRIALS = java.util.List.of("dolle", "zaban", "numele", "biska", "menchi", "zevil");
+    private static final java.util.List<String> ALL_TRIALS = java.util.List.of("dolle", "zaban", "numele", "biska", "menchi", "zevil", "tournoi");
 
     @GameTest(template = "empty")
     public static void trialDrawsStayCoherent(GameTestHelper helper) {
@@ -63,6 +63,8 @@ public final class QuestTests {
             seen.add(t);
             helper.assertTrue(t.size() >= 4 && t.size() <= 6, "4 à 6 épreuves : " + t);
             helper.assertTrue(new java.util.HashSet<>(t).size() == t.size(), "Pas deux fois la même épreuve : " + t);
+            helper.assertTrue(t.get(t.size() - 1).equals("tournoi") && t.get(t.size() - 2).equals("zevil"),
+                    "Toujours les badges de Zevil puis le tournoi final : " + t);
             int lastPhase = -1;
             for (int i = 0; i < t.size(); i++) {
                 Quest.Trial tr = exam.trials().get(t.get(i));
@@ -156,7 +158,14 @@ public final class QuestTests {
         player.getInventory().add(new net.minecraft.world.item.ItemStack(ModItems.TARGET_PLATE.get()));
         player.tickCount = 0;
         QuestManager.tick(player);
-        helper.assertTrue(d.step() == idx("netero"), "6 points de plaques");
+        helper.assertTrue(d.step() == idx("tournament"), "6 points de badges");
+        // Tournoi final : Netero l'annonce, puis deux adversaires abandonnent
+        QuestManager.onTalk(player, netero);
+        helper.assertTrue(d.step() == idx("duels"), "Le tournoi commence");
+        QuestManager.duelWon(player);
+        helper.assertTrue(d.step() == idx("duels") && d.progress() == 1, "Une victoire sur deux");
+        QuestManager.duelWon(player);
+        helper.assertTrue(d.step() == idx("netero"), "Tournoi gagné");
         QuestManager.onTalk(player, netero);
         helper.assertTrue(d.isHunter(), "Le joueur doit être Hunter");
         helper.assertTrue(d.isCompleted(QuestRegistry.HUNTER_EXAM.toString()) && d.active().isEmpty(), "Examen terminé");
@@ -209,6 +218,46 @@ public final class QuestTests {
         // Le guide reprend le candidat tout de suite, vers les nouvelles épreuves
         QuestManager.onTalk(player, navigator);
         helper.assertTrue(QuestManager.currentStep(d).id().equals("captain"), "Nouveau parcours : le bateau pour Dolle");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void tournamentGivesASecondChanceThenEliminates(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(player);
+        com.evandouard.hxh.quest.TrialPlan.forcedForTests = java.util.List.of("zevil", "tournoi");
+        QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
+        while (!QuestManager.currentStep(d).id().equals("duels")) QuestManager.advance(player);
+        player.moveTo(helper.absoluteVec(new Vec3(1.5, 1, 1.5)));
+        QuestManager.tick(player);
+        player.tickCount = 0;
+        QuestManager.tick(player);
+        var opponent = com.evandouard.hxh.exam.ExamTournament.opponent(player);
+        helper.assertTrue(opponent != null && opponent.getTags().contains("hxh_duel"), "Un adversaire entre en lice");
+        com.evandouard.hxh.exam.ExamTournament.opponentGivesUp(player, opponent);
+        helper.assertTrue(d.progress() == 1, "L'adversaire abandonne : une victoire");
+        com.evandouard.hxh.exam.ExamTournament.playerGivesUp(player);
+        helper.assertTrue(QuestManager.currentStep(d).id().equals("duels"), "Premier abandon : repêché");
+        com.evandouard.hxh.exam.ExamTournament.playerGivesUp(player);
+        helper.assertTrue(QuestManager.currentStep(d).id().equals("guide"), "Second abandon : Examen raté, retour au guide");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void guideGivesADepartureTheFerrymanBoards(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(player);
+        com.evandouard.hxh.quest.TrialPlan.forcedForTests = java.util.List.of("dolle", "zevil", "tournoi");
+        QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
+        QuestManager.advance(player);
+        helper.assertTrue(com.evandouard.hxh.exam.ExamDeparture.pendingSite(d) == com.evandouard.hxh.exam.ExamSite.BOAT, "Départ vers le bateau");
+        NpcEntity near = npc(helper, "passeur", 1);
+        NpcEntity far = npc(helper, "passeur", 2);
+        far.setHome(far.blockPosition().offset(100, 0, 0));
+        d.setExamDeparture(near.home().asLong());
+        helper.assertTrue(!com.evandouard.hxh.exam.ExamDeparture.board(player, far), "Un autre passeur ne t'embarque pas");
+        helper.assertTrue(com.evandouard.hxh.exam.ExamDeparture.board(player, near), "Ton passeur t'embarque");
+        helper.assertTrue(d.examDeparture() == Long.MIN_VALUE && d.examUses("boat") == 1, "Départ utilisé, bateau visité");
         helper.succeed();
     }
 

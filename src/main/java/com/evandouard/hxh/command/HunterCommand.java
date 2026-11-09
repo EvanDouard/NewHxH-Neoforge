@@ -68,13 +68,30 @@ public final class HunterCommand {
                                 .executes(ctx -> com.evandouard.hxh.quest.QuestManager.answer(ctx.getSource().getPlayerOrException(),
                                         IntegerArgumentType.getInteger(ctx, "n")) ? 1 : 0)))
                         .then(Commands.literal("setup").requires(src -> src.hasPermission(2)).executes(ctx -> examSetup(ctx.getSource())))
+                        // Raccourci (tests) : aller au point de départ donné par le guide
+                        .then(Commands.literal("go").requires(src -> src.hasPermission(2)).executes(ctx -> {
+                            net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
+                            long dep = com.evandouard.hxh.quest.QuestManager.data(p).examDeparture();
+                            if (dep == Long.MIN_VALUE) {
+                                ctx.getSource().sendFailure(Component.translatable("command.hxh.exam_go_none"));
+                                return 0;
+                            }
+                            net.minecraft.core.BlockPos b = net.minecraft.core.BlockPos.of(dep);
+                            p.teleportTo(p.server.overworld(), b.getX() - 1.5, b.getY(), b.getZ() + 0.5, -90f, 10f);
+                            return 1;
+                        }))
                         // Épreuves tirées : les afficher, ou imposer le prochain tirage (tests, essais)
                         .then(Commands.literal("plan").requires(src -> src.hasPermission(2))
                                 .executes(ctx -> {
                                     net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
-                                    java.util.List<String> t = com.evandouard.hxh.quest.QuestManager.data(p)
-                                            .planTrials(com.evandouard.hxh.quest.QuestRegistry.HUNTER_EXAM.toString());
-                                    ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.exam_plan", String.join(" → ", t)), false);
+                                    com.evandouard.hxh.quest.QuestData qd = com.evandouard.hxh.quest.QuestManager.data(p);
+                                    java.util.List<String> t = qd.planTrials(com.evandouard.hxh.quest.QuestRegistry.HUNTER_EXAM.toString());
+                                    StringBuilder places = new StringBuilder();
+                                    for (com.evandouard.hxh.exam.ExamSite site : com.evandouard.hxh.exam.ExamSite.values())
+                                        if (qd.examUses(site.id()) > 0 || qd.examInstance(site.id()) > 0)
+                                            places.append(" ").append(site.id()).append("#").append(qd.examInstance(site.id()));
+                                    ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.exam_plan",
+                                            String.join(" → ", t) + " |" + places), false);
                                     return t.size();
                                 })
                                 .then(Commands.argument("trials", StringArgumentType.greedyString()).executes(ctx -> {

@@ -36,9 +36,10 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
     /**
      * Épreuve tirée au sort (Examen Hunter) : un groupe d'étapes ({@code "trial": "<id>"} sur chaque étape).
      * {@code phase} ordonne les épreuves (0 avant 1…) ; {@code follows} lie une épreuve à une autre, qu'elle suit
-     * immédiatement (le bateau mène à Dolle, Numele suit le tunnel…).
+     * immédiatement (le bateau mène à Dolle, Numele suit le tunnel…). {@code always} : toujours au programme
+     * (chasse aux badges, tournoi final).
      */
-    public record Trial(String id, int phase, String follows) {}
+    public record Trial(String id, int phase, String follows, boolean always) {}
 
     /** Quête dont les épreuves sont tirées au sort pour chaque joueur (et à chaque nouvel essai). */
     public boolean randomTrials() {
@@ -47,7 +48,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
 
     /** Types d'étapes connus. */
     public static final Set<String> TYPES = Set.of("talk", "kill", "follow", "bring", "reach", "custom",
-            "quiz", "survive", "points",
+            "quiz", "survive", "points", "duel",
             "nen_mode", "nen_sense", "nen_flag",
             "arena_win", "arena_floor", "arena_register_200");
 
@@ -66,7 +67,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                 case "bring" -> count;
                 case "follow", "nen_mode", "nen_sense", "survive" -> seconds;
                 case "quiz" -> "silence".equals(answer) ? seconds : 0;
-                case "points" -> count;
+                case "points", "duel" -> count;
                 default -> 0;
             };
         }
@@ -237,6 +238,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                     problems.add(where + "\"answer\" doit être un numéro de choix, \"any\" ou \"silence\"");
                 }
             }
+            if (type.equals("duel") && step.count() < 1) problems.add(where + "\"count\" : nombre de victoires (au moins 1)");
             if (!step.hazard().isEmpty() && !List.of("storm", "fog").contains(step.hazard()))
                 problems.add(where + "danger inconnu « " + step.hazard() + " » (storm, fog)");
             if (!step.site().isEmpty() && com.evandouard.hxh.exam.ExamSite.byId(step.site()) == null)
@@ -261,7 +263,8 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
         if (root.has("trials")) {
             for (Map.Entry<String, JsonElement> t : root.getAsJsonObject("trials").entrySet()) {
                 JsonObject o = t.getValue().getAsJsonObject();
-                trials.put(t.getKey(), new Trial(t.getKey(), o.has("phase") ? o.get("phase").getAsInt() : 0, str(o, "follows", "")));
+                trials.put(t.getKey(), new Trial(t.getKey(), o.has("phase") ? o.get("phase").getAsInt() : 0, str(o, "follows", ""),
+                        o.has("always") && o.get("always").getAsBoolean()));
             }
             for (Trial t : trials.values()) {
                 if (!t.follows().isEmpty() && !trials.containsKey(t.follows()))

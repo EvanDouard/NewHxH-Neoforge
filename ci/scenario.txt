@@ -636,17 +636,25 @@ look 90 5
 wait 40
 shot 33_navigateur_qui_attend
 clearchat
-cmd hunter exam plan dolle zaban numele biska menchi zevil
+cmd hunter exam plan dolle zaban numele biska menchi zevil tournoi
 wait 10
 expect Nouvelle quête : Examen Hunter
 cmd hunter exam plan
-expect dolle → zaban → numele → biska → menchi → zevil
+expect dolle → zaban → numele → biska → menchi → zevil → tournoi
 goto navigator
 clearchat
 talkto navigator
+wait 20
+expect Épreuve 1/7 : Le voyage vers l'île de Dolle
+expect Point de départ de l'Examen
+shot 34_guide_donne_le_depart
+cmd hunter exam go
+wait 60
+shot 34_point_de_depart_passeur
+clearchat
+talkto passeur
 wait 80
-expect Épreuve 1/6 : Le voyage vers l'île de Dolle
-expect z 0)
+expect En route
 shot 34_bateau_pour_dolle
 goto captain
 clearchat
@@ -671,7 +679,7 @@ expect Tu as cinq secondes
 shot 34_quiz_de_la_mamie
 wait 140
 expect se taire était la seule
-expect Épreuve 2/6 : Zaban
+expect Épreuve 2/7 : Zaban
 wait 60
 shot 34_zaban_gargote
 goto cook
@@ -695,12 +703,18 @@ wait 40
 shot 34c_examen_rate_retour
 # Nouvel essai : nouveaux exemplaires de chaque lieu (un lieu passé ne revient jamais)
 clearchat
-cmd hunter exam plan dolle zaban numele biska menchi zevil
+cmd hunter exam plan dolle zaban numele biska menchi zevil tournoi
+clearchat
+cmd hunter exam plan dolle zaban numele biska menchi zevil tournoi
+cmd hunter exam plan
+expect boat#1
 goto navigator
 talkto navigator
+wait 20
+cmd hunter exam go
+wait 60
+talkto passeur
 wait 80
-expect Épreuve 1/6 : Le voyage vers l'île de Dolle
-expect z 400)
 shot 34c2_un_autre_bateau_pour_dolle
 cmd hunter quest skip
 wait 80
@@ -753,6 +767,15 @@ shot 34f_ile_de_zevil
 cmd give @s hxh:target_plate
 wait 60
 shot 34e_hotel_de_l_association
+goto netero
+clearchat
+talkto netero
+wait 60
+expect entre en lice
+look 180 5
+shot 34g_tournoi_final_adversaire
+cmd hunter quest skip
+wait 20
 goto netero
 clearchat
 talkto netero

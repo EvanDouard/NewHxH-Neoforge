@@ -20,7 +20,7 @@ public final class ExamTrips {
 
     private ExamTrips() {}
 
-    private static boolean enabled(ServerPlayer player) {
+    public static boolean enabled(ServerPlayer player) {
         return forceInTests || !(player.server instanceof net.minecraft.gametest.framework.GameTestServer);
     }
 

@@ -22,7 +22,12 @@
       "follows": "biska"
     },
     "zevil": {
-      "phase": 4
+      "phase": 4,
+      "always": true
+    },
+    "tournoi": {
+      "phase": 5,
+      "always": true
     }
   },
   "steps": [
@@ -177,10 +182,22 @@
       "trial": "zevil"
     },
     {
-      "id": "netero",
+      "id": "tournament",
       "type": "talk",
       "npc": "netero",
       "site": "hotel",
+      "trial": "tournoi"
+    },
+    {
+      "id": "duels",
+      "type": "duel",
+      "count": 2,
+      "trial": "tournoi"
+    },
+    {
+      "id": "netero",
+      "type": "talk",
+      "npc": "netero",
       "reward_item": "hxh:hunter_card",
       "reward_hunter": true
     }

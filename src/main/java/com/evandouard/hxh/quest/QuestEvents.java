@@ -19,7 +19,10 @@ public final class QuestEvents {
             }
         });
         bus.addListener(PlayerEvent.PlayerRespawnEvent.class, e -> {
-            if (e.getEntity() instanceof ServerPlayer p) QuestManager.sync(p);
+            if (e.getEntity() instanceof ServerPlayer p) {
+                if (!e.isEndConquered()) QuestManager.onRespawn(p);
+                QuestManager.sync(p);
+            }
         });
         bus.addListener(PlayerTickEvent.Post.class, e -> {
             if (e.getEntity() instanceof ServerPlayer p) QuestManager.tick(p);

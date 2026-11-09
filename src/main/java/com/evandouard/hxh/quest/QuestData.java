@@ -44,6 +44,8 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     final java.util.Map<String, Integer> examUses = new java.util.HashMap<>();
     /** Exemplaire de chaque lieu pour le parcours en cours (un lieu passé, réussi ou raté, ne revient jamais). */
     final java.util.Map<String, Integer> examInstances = new java.util.HashMap<>();
+    /** Point de départ de l'Examen donné par le guide (place du passeur dans le monde), ou Long.MIN_VALUE. */
+    long examDeparture = Long.MIN_VALUE;
 
     // ---------- Tour Céleste ----------
     boolean arenaRegistered = false;
@@ -155,6 +157,14 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     /** Exemplaire du lieu pour le parcours en cours (0 si le lieu n'en fait pas partie). */
     public int examInstance(String siteId) {
         return examInstances.getOrDefault(siteId, 0);
+    }
+
+    public long examDeparture() {
+        return examDeparture;
+    }
+
+    public void setExamDeparture(long pos) {
+        examDeparture = pos;
     }
 
     public int examUses(String siteId) {
@@ -301,6 +311,7 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         plans.clear();
         planTrials.clear();
         examInstances.clear();
+        examDeparture = Long.MIN_VALUE;
         arenaRegistered = false;
         arenaFloor = 1;
         registeredBracket = -1;
@@ -348,6 +359,7 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         CompoundTag inst = new CompoundTag();
         examInstances.forEach(inst::putInt);
         tag.put("exam_instances", inst);
+        tag.putLong("exam_departure", examDeparture);
         ListTag done = new ListTag();
         for (String id : completed) done.add(StringTag.valueOf(id));
         tag.put("completed", done);
@@ -406,6 +418,7 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         examInstances.clear();
         CompoundTag inst = tag.getCompound("exam_instances");
         for (String k : inst.getAllKeys()) examInstances.put(k, inst.getInt(k));
+        examDeparture = tag.contains("exam_departure") ? tag.getLong("exam_departure") : Long.MIN_VALUE;
         completed.clear();
         for (Tag t : tag.getList("completed", Tag.TAG_STRING)) completed.add(t.getAsString());
         CompoundTag arena = tag.getCompound("arena");
