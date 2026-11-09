@@ -54,7 +54,7 @@ public final class EnDomeClient {
     private static void dome(PoseStack pose, MultiBufferSource buffers, Vec3 cam, Vec3 base, float r, int color, float time) {
         VertexConsumer vc = buffers.getBuffer(RenderType.entityTranslucent(NenFxClient.WHITE));
         boolean inside = cam.distanceTo(base) < r;
-        float dim = inside ? 0.35f : 1f;
+        float dim = inside ? 0.7f : 1f;
         // Bande qui balaie le dôme de bas en haut (un tour toutes les 3 s)
         float sweep = (time % 60f) / 60f;
         for (int i = 0; i < RINGS; i++) {
@@ -68,7 +68,7 @@ public final class EnDomeClient {
                 Vec3 view = mid.subtract(cam).normalize();
                 float facing = (float) Math.abs(n.dot(view));
                 // bord de bulle plus dense, centre presque transparent
-                float alpha = 0.06f + 0.5f * (1f - facing) * (1f - facing);
+                float alpha = 0.12f + 0.55f * (1f - facing) * (1f - facing);
                 float h = (float) i / RINGS;
                 float band = Math.max(0f, 1f - Math.abs(h - sweep) * 8f);
                 alpha += band * 0.25f;
@@ -79,6 +79,17 @@ public final class EnDomeClient {
                 vertex(vc, pose, cam, p01, c, alpha);
                 vertex(vc, pose, cam, p11, c, alpha);
                 vertex(vc, pose, cam, p10, c, alpha);
+            }
+        }
+        // Deux parallèles plus clairs : on lit la forme du dôme même vu de l'intérieur
+        for (float lat : new float[]{0.45f, 0.95f}) {
+            int light = lerp(color, 0xFFFFFFFF, 0.5f);
+            for (int j = 0; j < SEGMENTS; j++) {
+                float lon0 = (float) j / SEGMENTS * Mth.TWO_PI, lon1 = (float) (j + 1) / SEGMENTS * Mth.TWO_PI;
+                vertex(vc, pose, cam, point(base, r, lat, lon0), light, 0.45f * dim);
+                vertex(vc, pose, cam, point(base, r, lat, lon1), light, 0.45f * dim);
+                vertex(vc, pose, cam, point(base, r, lat + 0.025f, lon1), light, 0.45f * dim);
+                vertex(vc, pose, cam, point(base, r, lat + 0.025f, lon0), light, 0.45f * dim);
             }
         }
         // Cercle encré au sol + liseré de couleur juste au-dessus

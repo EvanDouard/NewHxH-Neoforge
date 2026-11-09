@@ -482,6 +482,7 @@ cmd hunter nen mastery en 40
 wait 10
 key key.hxh.en
 wait 30
+clearchat
 camera back
 wait 10
 shot 26_sphere_d_en
