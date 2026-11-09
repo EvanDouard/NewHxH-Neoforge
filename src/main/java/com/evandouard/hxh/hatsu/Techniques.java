@@ -146,7 +146,14 @@ public final class Techniques {
             }
             case SLASH -> NenFx.slash(caster, at, look.size(), look.color());
             case ORB -> NenFx.orb(caster, target, end, look.size(), look.color());
-            case BOLT -> NenFx.bolt(caster, target, end, look.color());
+            case BOLT -> {
+                NenFx.bolt(caster, target, end, look.color());
+                // La cible reste parcourue d'arcs le temps de la paralysie
+                if (target != null) {
+                    NenFx.crackle(target, look.color(), Math.max(20, holdTicks));
+                    NenFx.shockwave(target, 1.6f, look.color());
+                }
+            }
             case CHAIN -> NenFx.chain(caster, target, end, look.color(), target != null ? holdTicks : 14);
             case NEEDLE -> NenFx.needle(caster, target, end, target != null ? holdTicks : 14);
             default -> NenFx.impact(caster, at, look.size(), look.color());

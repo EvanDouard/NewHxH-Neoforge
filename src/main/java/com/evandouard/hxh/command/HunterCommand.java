@@ -355,7 +355,7 @@ public final class HunterCommand {
                 .then(Commands.literal("ryu")
                         .then(Commands.argument("attack", IntegerArgumentType.integer(0, 100))
                                 .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()),
-                                        e -> HunterStats.get(e).setRyuAttack(IntegerArgumentType.getInteger(ctx, "attack"))))))
+                                        e -> HunterStats.get(e).setRyuAttack(IntegerArgumentType.getInteger(ctx, "attack"))))));
     }
 
     /** Administration du Hatsu : forcer un personnage (y compris sur un mob), effacer, faire lancer. */

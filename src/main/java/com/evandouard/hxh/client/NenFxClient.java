@@ -362,7 +362,20 @@ public final class NenFxClient {
         Vec3 from = src != null ? hand(src, c.pt) : f.at;
         Vec3 to = tgt != null ? center(tgt, c.pt) : f.at;
         float alpha = age > f.duration - 3 ? (f.duration - age) / 3f : 1f;
-        zigzag(c, from, to, 12, 0.35f, f.seed + (int) (age / 2), 0.07f, f.color, alpha);
+        int frame = f.seed + (int) (age / 2);
+        zigzag(c, from, to, 12, 0.35f, frame, 0.07f, f.color, alpha);
+        // Deux fourches qui partent du trait principal (elles changent à chaque image, comme la foudre)
+        Vec3 d = to.subtract(from);
+        for (int k = 0; k < 2; k++) {
+            float t = 0.3f + 0.4f * hash(frame, 40 + k);
+            Vec3 start = from.add(d.scale(t));
+            Vec3[] n = normals(d.normalize());
+            Vec3 end = start.add(d.scale(0.25f)).add(n[k].scale((hash(frame, 50 + k) - 0.5f) * 2.2f))
+                    .add(n[1 - k].scale((hash(frame, 60 + k) - 0.5f) * 1.2f));
+            zigzag(c, start, end, 5, 0.2f, frame * 3 + k, 0.045f, f.color, alpha * 0.85f);
+        }
+        // Éclat dans la main
+        if (age < 4) billboard(c, RenderType.eyes(GLOW), from, 0.7f, 0, f.color, 1f - age / 4f);
         if (!f.impactDone && age > 1) {
             f.impactDone = true;
             PENDING.add(localFx(NenFx.Kind.IMPACT, to, 1.2f, f.color, 8));
@@ -395,7 +408,19 @@ public final class NenFxClient {
         Vec3 base = src.getPosition(c.pt);
         int frame = (int) (age / 2);
         float w = Math.max(0.6f, src.getBbWidth()), h = src.getBbHeight();
-        for (int k = 0; k < 3; k++) {
+        boolean longCharge = f.duration > 60; // Godspeed : corps entièrement électrique
+        // Traînées de vitesse derrière un corps électrique qui file (Godspeed)
+        Vec3 moved = new Vec3(src.getX() - src.xo, 0, src.getZ() - src.zo);
+        double speed = moved.length();
+        if (longCharge && speed > 0.18) {
+            Vec3 back = moved.normalize().scale(-Math.min(4.0, speed * 9));
+            for (int k = 0; k < 5; k++) {
+                Vec3 a = base.add((hash(k, 7) - 0.5) * w, h * (0.15 + 0.17 * k), (hash(k, 8) - 0.5) * w);
+                ribbon(c, RenderType.eyes(WHITE), a, a.add(back.scale(0.6 + 0.4 * hash(frame, k))), 0.12f, f.color, 0.7f);
+                ribbon(c, RenderType.entityTranslucent(WHITE), a, a.add(back.scale(0.5)), 0.03f, INK, 0.8f);
+            }
+        }
+        for (int k = 0; k < (longCharge ? 6 : 3); k++) {
             int s = f.seed + frame * 13 + k * 101;
             Vec3 a = base.add((hash(s, 1) - 0.5) * w * 1.4, hash(s, 2) * h, (hash(s, 3) - 0.5) * w * 1.4);
             Vec3 b = a.add((hash(s, 4) - 0.5) * 0.9, (hash(s, 5) - 0.5) * 0.9, (hash(s, 6) - 0.5) * 0.9);
