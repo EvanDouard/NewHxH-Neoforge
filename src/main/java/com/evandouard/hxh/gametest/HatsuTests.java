@@ -240,4 +240,26 @@ public final class HatsuTests {
                 && !((Techniques.ChargedOrb) Techniques.GON_ROCK).isEpic(), "Pierre normale et sans retenue");
         helper.succeed();
     }
+
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void paperConeHitsAllInFront(GameTestHelper helper) {
+        Zombie gon = husk(helper, 0);
+        HunterData d = hunter(gon, NenType.ENHANCER, "gon");
+        Zombie a = husk(helper, 2);
+        Zombie b = helper.spawnWithNoFreeWill(EntityType.HUSK, new BlockPos(2, 1, 2));
+        b.setNoGravity(true);
+        Zombie behind = helper.spawnWithNoFreeWill(EntityType.HUSK, new BlockPos(0, 1, 0));
+        behind.setNoGravity(true);
+        helper.runAfterDelay(3, () -> {
+            java.util.List<net.minecraft.world.entity.LivingEntity> hit =
+                    ((Techniques.PalmWave) Techniques.GON_PAPER).targets(gon);
+            helper.assertTrue(hit.contains(a) && hit.contains(b), "Le cône touche les deux cibles devant");
+            helper.assertFalse(hit.contains(behind), "Pas la cible sur le côté/derrière");
+            float hp = a.getHealth();
+            Techniques.GON_PAPER.perform(gon, 1f);
+            helper.assertTrue(a.getHealth() < hp, "Dégâts");
+            helper.assertTrue(a.getDeltaMovement().x > 0.5, "Projetée dans la direction du regard");
+            helper.succeed();
+        });
+    }
 }

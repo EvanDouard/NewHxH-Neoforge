@@ -378,7 +378,7 @@
   "passive.hxh.doctor.desc": "Récupère 1 PV toutes les 5 secondes.",
   "technique.hxh.gon_rock.desc": "Gon charge son aura dans le poing, immobile : une boule d'une demi-taille de joueur brille et change de couleur à chaque palier tant qu'on maintient la touche. Relâcher la lance tout droit : elle creuse sa route, emporte la cible et explose. Plus on charge, plus c'est destructeur. Le Ryu tourné vers l'attaque la rend plus grosse.",
   "technique.hxh.gon_scissors.desc": "L'aura prend la forme d'une lame qui file tout droit jusqu'à toucher un bloc ou un ennemi.",
-  "technique.hxh.gon_paper.desc": "Boule d'aura lancée à distance (catégorie Émission : 80 % pour Gon).",
+  "technique.hxh.gon_paper.desc": "Gon ouvre la main et libère son aura d'un coup : un cône d'émission qui frappe tout ce qui est devant lui et le projette loin (catégorie Émission : 80 % pour Gon).",
   "technique.hxh.killua_thunderbolt.desc": "Décharge électrique qui paralyse presque complètement la cible.",
   "technique.hxh.killua_godspeed.desc": "Son corps réagit par réflexe électrique : vitesse III et minage rapide pendant 10 s.",
   "technique.hxh.kurapika_chain_jail.desc": "La chaîne immobilise la cible (lenteur VII) et l'affaiblit pendant 5 s.",
@@ -727,5 +727,6 @@
   "impact.hxh.heavy": "lourd",
   "impact.hxh.devastating": "dévastateur",
   "technique.hxh.gon_rock_epic": "Jajanken : Pierre sans retenue",
-  "technique.hxh.gon_rock_epic.desc": "Gon met tout dans le poing : la boule enfle jusqu'à deux fois sa taille, puis se recondense, minuscule et aveuglante. Ceux qui la regardent sont éblouis. Coûte deux fois plus d'aura, frappe bien plus fort et creuse un cratère énorme."
+  "technique.hxh.gon_rock_epic.desc": "Gon met tout dans le poing : la boule enfle jusqu'à deux fois sa taille, puis se recondense, minuscule et aveuglante. Ceux qui la regardent sont éblouis. Coûte deux fois plus d'aura, frappe bien plus fort et creuse un cratère énorme.",
+  "technique.hxh.cond.cone": "tout ce qui est devant toi, jusqu'à %s blocs, dans un cône de %s°"
 }

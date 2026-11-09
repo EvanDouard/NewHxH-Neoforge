@@ -172,6 +172,7 @@ public final class NenFxClient {
             case FLARE -> flare(c, f, t);
             case CHARGE_ORB -> chargeOrb(c, f, age);
             case QUAKE -> quake(c, f, age);
+            case PALM_WAVE -> palmWave(c, f, t);
             case CLEAR, IMPACT_FRAME -> {}
         }
     }
@@ -650,5 +651,47 @@ public final class NenFxClient {
             if (!level.getBlockState(p).isAir() && level.getBlockState(p.above()).isAir()) return p;
         }
         return null;
+    }
+
+    /**
+     * Papier : la paume s'illumine et une vague d'aura part en cône. Cinq anneaux encrés s'élargissent en filant vers
+     * le bout du cône, avec un cœur lumineux qui s'étire puis s'efface.
+     */
+    private static void palmWave(Ctx c, Fx f, float t) {
+        Entity src = entity(f.source);
+        if (f.offset == null) {
+            // origine et direction figées au premier dessin : la vague ne suit pas la tête ensuite
+            Vec3 o = src != null ? hand(src, c.pt) : f.at;
+            f.offset = o;
+            f.dir = f.at.subtract(o).normalize();
+        }
+        Vec3 o = f.offset, dir = f.dir;
+        Vec3 u = dir.cross(new Vec3(0, 1, 0));
+        u = u.lengthSqr() < 1e-6 ? new Vec3(1, 0, 0) : u.normalize();
+        Vec3 v = u.cross(dir).normalize();
+        float len = f.size;
+        float spread = (float) Math.tan(Math.toRadians(35));
+        // éclat de la paume
+        if (t < 0.4f) billboard(c, RenderType.eyes(GLOW), o, 1.2f * (1f - t / 0.4f) + 0.3f, 0, 0xFFFFFFFF, 1f - t / 0.4f);
+        for (int i = 0; i < 5; i++) {
+            float k = t * 1.6f - i * 0.12f;
+            if (k <= 0 || k >= 1) continue;
+            float d = len * ease(k);
+            float r = 0.35f + d * spread;
+            Vec3 at = o.add(dir.scale(d));
+            float a = (1f - k) * 0.95f;
+            Vec3 a0 = at.add(u.scale(-r)).add(v.scale(-r)), a1 = at.add(u.scale(r)).add(v.scale(-r));
+            Vec3 a2 = at.add(u.scale(r)).add(v.scale(r)), a3 = at.add(u.scale(-r)).add(v.scale(r));
+            quad(c, RenderType.entityTranslucent(RING), a0, a1, a2, a3, f.color, a);
+            float g = r * 0.75f;
+            quad(c, RenderType.eyes(GLOW), at.add(u.scale(-g)).add(v.scale(-g)), at.add(u.scale(g)).add(v.scale(-g)),
+                    at.add(u.scale(g)).add(v.scale(g)), at.add(u.scale(-g)).add(v.scale(g)), f.color, a * 0.45f);
+        }
+        // cœur : chapelet de lueurs le long de l'axe
+        float reach = len * ease(Math.min(1f, t * 1.8f));
+        for (float d = 0.3f; d < reach; d += 0.6f) {
+            float a = (1f - t) * (1f - d / (len + 1f));
+            billboard(c, RenderType.eyes(GLOW), o.add(dir.scale(d)), 0.35f + d * spread * 0.5f, 0, f.color, a * 0.7f);
+        }
     }
 }

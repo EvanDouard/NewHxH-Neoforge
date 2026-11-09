@@ -65,8 +65,12 @@ public final class Techniques {
     /** Jajanken : Ciseaux. Lame d'aura qui file tout droit (14 blocs) jusqu'à toucher un bloc ou une cible. */
     public static final Technique GON_SCISSORS = register(new Blade("gon_scissors", NenType.TRANSMUTER, 25, 100,
             7f, NenFx.TRANSMUTER)).requiresNenLevel(5);
-    public static final Technique GON_PAPER = register(new Strike("gon_paper", NenType.EMITTER, 30, 120,
-            16, 0.97, 5f, 0.8f, List.of(), new Look(Style.ORB, NenFx.EMITTER, 1.4f), SoundEvents.FIREWORK_ROCKET_BLAST)).requiresNenLevel(10);
+    /**
+     * Jajanken : Papier. Gon ouvre la main et libère son aura d'un coup : un cône d'émission (8 blocs, 35°) qui
+     * frappe tout ce qui est devant et le repousse loin, sans creuser.
+     */
+    public static final Technique GON_PAPER = register(new PalmWave("gon_paper", NenType.EMITTER, 30, 120,
+            8.0, 35.0, 9f, 2.2f, NenFx.EMITTER)).requiresNenLevel(10);
 
     // ---------- Killua : électricité ----------
     public static final Technique KILLUA_THUNDERBOLT = register(new Strike("killua_thunderbolt", NenType.TRANSMUTER, 30, 120,
@@ -423,6 +427,76 @@ public final class Techniques {
             for (LivingEntity t : targets) NenFx.impactOn(caster, t, 1f, look.color());
             sound(caster, sound);
             return true; // l'onde part même sans cible
+        }
+    }
+
+    /**
+     * Émission en cône depuis la paume (Papier de Gon) : touche toutes les cibles dans le cône et les projette dans
+     * la direction du regard.
+     */
+    public static final class PalmWave extends Technique {
+        private final double length, cosHalfAngle, halfAngle;
+        private final float damage, push;
+        private final int color;
+
+        PalmWave(String id, NenType category, int cost, int cooldown, double length, double halfAngleDeg,
+                 float damage, float push, int color) {
+            super(id, category, cost, cooldown);
+            this.length = length;
+            this.halfAngle = halfAngleDeg;
+            this.cosHalfAngle = Math.cos(Math.toRadians(halfAngleDeg));
+            this.damage = damage;
+            this.push = push;
+            this.color = color;
+        }
+
+        @Override
+        public net.minecraft.network.chat.Component conditions() {
+            return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.cone",
+                    String.format(java.util.Locale.ROOT, "%.0f", length), String.format(java.util.Locale.ROOT, "%.0f", halfAngle));
+        }
+
+        @Override
+        public double aiRange() {
+            return length * 0.8;
+        }
+
+        /** Cibles dans le cône devant le regard. */
+        public List<LivingEntity> targets(LivingEntity caster) {
+            net.minecraft.world.phys.Vec3 eye = caster.getEyePosition();
+            net.minecraft.world.phys.Vec3 look = caster.getLookAngle();
+            List<LivingEntity> out = new java.util.ArrayList<>();
+            for (LivingEntity e : caster.level().getEntitiesOfClass(LivingEntity.class,
+                    caster.getBoundingBox().inflate(length), e -> e != caster && e.isAlive() && !e.isSpectator())) {
+                net.minecraft.world.phys.Vec3 to = e.getBoundingBox().getCenter().subtract(eye);
+                double d = to.length();
+                if (d < 1e-4 || d > length + e.getBbWidth()) continue;
+                // tolérance : la largeur de la cible compte, pour qu'un mob tout proche ne passe pas « à côté »
+                double slack = Math.atan2(e.getBbWidth() * 0.6, d);
+                if (Math.acos(Math.min(1, to.normalize().dot(look))) > Math.acos(cosHalfAngle) + slack) continue;
+                out.add(e);
+            }
+            return out;
+        }
+
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            net.minecraft.world.phys.Vec3 look = caster.getLookAngle();
+            List<LivingEntity> hit = targets(caster);
+            for (LivingEntity t : hit) {
+                t.invulnerableTime = 0;
+                t.hurt(damageFrom(caster), damage * power);
+                double kb = push * power * (1 - t.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE));
+                t.setDeltaMovement(t.getDeltaMovement().add(look.x * kb, 0.35 + Math.max(0, look.y) * kb, look.z * kb));
+                t.hurtMarked = true;
+                NenFx.impactOn(caster, t, 1.3f, color);
+            }
+            NenFx.palmWave(caster, length, color);
+            caster.level().playSound(null, caster.getX(), caster.getY(), caster.getZ(),
+                    SoundEvents.FIREWORK_ROCKET_BLAST, net.minecraft.sounds.SoundSource.PLAYERS, 1f, 0.6f);
+            caster.level().playSound(null, caster.getX(), caster.getY(), caster.getZ(),
+                    SoundEvents.BREEZE_WIND_CHARGE_BURST.value(), net.minecraft.sounds.SoundSource.PLAYERS, 1f, 0.8f);
+            return true; // l'aura part même sans cible
         }
     }
 

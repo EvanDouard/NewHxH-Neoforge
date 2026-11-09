@@ -381,6 +381,17 @@ cmd hunter hatsu cast
 wait 3
 shot 22f5_ciseaux_lame
 cmd hunter nen level 40
+cmd hunter hatsu select gon_paper
+cmd hunter nen refill
+cmd summon minecraft:husk ~-1 ~ ~5 {NoAI:1b,PersistenceRequired:1b,Silent:1b}
+cmd summon minecraft:husk ~1.5 ~ ~4 {NoAI:1b,PersistenceRequired:1b,Silent:1b}
+wait 10
+cmd hunter hatsu cast
+wait 2
+shot 22f5b_papier_vague
+wait 4
+shot 22f5c_papier_cibles_projetees
+wait 10
 cmd hunter hatsu select gon_rock_epic
 cmd hunter nen refill
 camera front

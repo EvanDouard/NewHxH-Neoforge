@@ -47,7 +47,9 @@ public final class NenFx {
         /** Les blocs du sol sautent en vague autour du point (coup lourd). Taille = rayon. */
         QUAKE,
         /** Image d'impact plein écran (éclair, lignes de vitesse) pour les joueurs proches de la cible. */
-        IMPACT_FRAME
+        IMPACT_FRAME,
+        /** Papier : vague d'aura en cône qui part de la paume. Point = bout du cône, taille = longueur. */
+        PALM_WAVE
     }
 
     /**
@@ -176,6 +178,13 @@ public final class NenFx {
 
     public static void needle(LivingEntity source, LivingEntity target, Vec3 at, int duration) {
         if (source.level() instanceof ServerLevel s) send(s, Kind.NEEDLE, source, target, at, 1f, WHITE, duration);
+    }
+
+    public static void palmWave(LivingEntity caster, double length, int color) {
+        if (caster.level() instanceof ServerLevel s) {
+            Vec3 end = caster.getEyePosition().add(caster.getLookAngle().scale(length));
+            send(s, Kind.PALM_WAVE, caster, null, end, (float) length, color, 12);
+        }
     }
 
     public static void quake(ServerLevel level, Vec3 at, float radius) {

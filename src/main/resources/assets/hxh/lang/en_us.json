@@ -378,7 +378,7 @@
   "passive.hxh.doctor.desc": "Recovers 1 HP every 5 seconds.",
   "technique.hxh.gon_rock.desc": "Gon gathers aura in his fist, standing still: a half-player-sized orb glows and changes colour at each stage while the key is held. Releasing throws it straight ahead: it digs its way, carries the target along and explodes. The longer the charge, the more destructive. Ryu leaning on attack makes it bigger.",
   "technique.hxh.gon_scissors.desc": "Aura takes the shape of a blade that flies straight until it hits a block or an enemy.",
-  "technique.hxh.gon_paper.desc": "A ranged aura ball (Emission category: 80% for Gon).",
+  "technique.hxh.gon_paper.desc": "Gon opens his palm and releases his aura at once: an emission cone that hits everything in front of him and throws it far away (Emission category: 80% for Gon).",
   "technique.hxh.killua_thunderbolt.desc": "An electric shock that nearly paralyses the target.",
   "technique.hxh.killua_godspeed.desc": "Electric reflexes: Speed III and Haste for 10 s.",
   "technique.hxh.kurapika_chain_jail.desc": "The chain binds the target (Slowness VII) and weakens it for 5 s.",
@@ -727,5 +727,6 @@
   "impact.hxh.heavy": "heavy",
   "impact.hxh.devastating": "devastating",
   "technique.hxh.gon_rock_epic": "Jajanken: Rock, all out",
-  "technique.hxh.gon_rock_epic.desc": "Gon puts everything into his fist: the orb swells to twice his size, then condenses into a tiny, blinding star. Anyone looking at it is dazzled. Costs twice the aura, hits much harder and digs a huge crater."
+  "technique.hxh.gon_rock_epic.desc": "Gon puts everything into his fist: the orb swells to twice his size, then condenses into a tiny, blinding star. Anyone looking at it is dazzled. Costs twice the aura, hits much harder and digs a huge crater.",
+  "technique.hxh.cond.cone": "everything in front of you, up to %s blocks, in a %s° cone"
 }
