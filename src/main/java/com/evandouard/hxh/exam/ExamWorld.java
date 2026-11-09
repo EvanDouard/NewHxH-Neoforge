@@ -51,7 +51,17 @@ public final class ExamWorld {
     /** Ce qu'il y a dans un lieu une fois posé. */
     public record Site(BlockPos arrival, float yaw, Map<String, BlockPos> npcs, List<BlockPos> route, List<BlockPos> prey) {}
 
-    private static final Map<ExamSite, Site> SITES = new EnumMap<>(ExamSite.class);
+    /**
+     * Un exemplaire d'un lieu. Chaque lieu existe en plusieurs exemplaires (le 2e à 400 blocs au sud du 1er…) :
+     * un joueur qui rate l'Examen repart dans des exemplaires qu'il n'a jamais vus.
+     */
+    public record Key(ExamSite site, int instance) {
+        String savedId() {
+            return instance == 0 ? site.id() : site.id() + "#" + instance;
+        }
+    }
+
+    private static final Map<Key, Site> SITES = new java.util.HashMap<>();
 
     private ExamWorld() {}
 
@@ -65,26 +75,52 @@ public final class ExamWorld {
     }
 
     public static BlockPos center(ExamSite site) {
-        return new BlockPos(site.ordinal() * SPACING, FLOOR_Y, 0);
+        return center(site, 0);
     }
 
-    /** Pose le lieu s'il ne l'est pas encore (une fois par monde) et renvoie ce qu'il contient. */
+    public static BlockPos center(ExamSite site, int instance) {
+        return new BlockPos(site.ordinal() * SPACING, FLOOR_Y, instance * SPACING);
+    }
+
+    /** Centre de l'exemplaire de lieu le plus proche d'une position. */
+    public static BlockPos centerAt(BlockPos pos) {
+        return new BlockPos(Math.round(pos.getX() / (float) SPACING) * SPACING, FLOOR_Y, Math.round(pos.getZ() / (float) SPACING) * SPACING);
+    }
+
+    public static int instanceAt(BlockPos pos) {
+        return Math.max(0, Math.round(pos.getZ() / (float) SPACING));
+    }
+
     public static Site ensure(ServerLevel level, ExamSite site) {
-        Site cached = SITES.get(site);
+        return ensure(level, site, 0);
+    }
+
+    /**
+     * Pose l'exemplaire du lieu s'il ne l'est pas encore (une fois par monde) et renvoie ce qu'il contient. Une
+     * structure d'Evan propre à l'exemplaire ({@code hxh:exam/<fichier>_<n>}) passe avant la structure commune.
+     */
+    public static Site ensure(ServerLevel level, ExamSite site, int instance) {
+        Key key = new Key(site, instance);
+        Site cached = SITES.get(key);
         ExamSavedData data = ExamSavedData.get(level);
-        if (cached != null && data.built.contains(site.id())) return cached;
-        Optional<StructureTemplate> template = level.getStructureManager().get(site.template());
+        boolean place = !data.built.contains(key.savedId());
+        if (cached != null && !place) return cached;
+        BlockPos c = center(site, instance);
+        Optional<StructureTemplate> template = (instance > 0 ? level.getStructureManager()
+                .get(site.template().withSuffix("_" + instance)) : Optional.<StructureTemplate>empty())
+                .filter(t -> t.getSize().getX() > 0)
+                .or(() -> level.getStructureManager().get(site.template()));
         Site built = template.filter(t -> t.getSize().getX() > 0)
-                .map(t -> placeTemplate(level, t, center(site), !data.built.contains(site.id())))
-                .orElseGet(() -> ExamPlaceholders.build(level, site, center(site), !data.built.contains(site.id())));
-        if (!data.built.contains(site.id())) {
+                .map(t -> placeTemplate(level, t, c, place))
+                .orElseGet(() -> ExamPlaceholders.build(level, site, c, place));
+        if (place) {
             spawnNpcs(level, built);
             if (site == ExamSite.BISKA || site.ordinal() < ExamSite.BOAT.ordinal()) spawnPrey(level, built);
-            ExamHazards.populate(level, site, built);
-            data.built.add(site.id());
+            ExamHazards.populate(level, site, built, c);
+            data.built.add(key.savedId());
             data.setDirty();
         }
-        SITES.put(site, built);
+        SITES.put(key, built);
         return built;
     }
 
@@ -150,8 +186,9 @@ public final class ExamWorld {
     }
 
     /** Des porcs à chasser sur chaque repère de proie (deux par repère). */
-    public static Site cached(ExamSite site) {
-        return SITES.get(site);
+    @Nullable
+    public static Site cached(ExamSite site, int instance) {
+        return SITES.get(new Key(site, instance));
     }
 
     static void spawnPrey(ServerLevel level, Site site) {
@@ -167,8 +204,8 @@ public final class ExamWorld {
     }
 
     /** Remet des porcs si la réserve n'en a presque plus (la chasse doit rester possible pour le suivant). */
-    public static void restockPrey(ServerLevel level) {
-        Site biska = SITES.get(ExamSite.BISKA);
+    public static void restockPrey(ServerLevel level, int instance) {
+        Site biska = SITES.get(new Key(ExamSite.BISKA, instance));
         if (biska == null || biska.prey().isEmpty()) return;
         BlockPos c = biska.prey().get(0);
         int pigs = level.getEntitiesOfClass(Pig.class, new net.minecraft.world.phys.AABB(c).inflate(48)).size();

@@ -9,8 +9,8 @@
     "en": "The Hunter Exam"
   },
   "text": {
-    "fr": "Pour s'inscrire, il faut d'abord trouver le Navigateur, qui guide les candidats jusqu'au lieu de l'Examen. Les épreuves changent chaque année et sont choisies par des examinateurs eux-mêmes Hunters : marathon, chasse, survie…\n\nUn échec ? Il faudra attendre l'année suivante.",
-    "en": "To sign up, you first have to find the Navigator, who guides candidates to the Exam site. The trials change every year and are chosen by examiners who are Hunters themselves: marathon, hunt, survival…\n\nFailed? You'll have to wait for next year."
+    "fr": "Pour participer, il faut d'abord trouver un guide : il remet la plaque de candidat et emmène à la première épreuve. Chaque session tire au sort 4 à 6 épreuves (voyage vers Dolle, marathon du tunnel, marais de Numele, chasse de Buhara, mont Split, île de Zevil…), dans un ordre qui garde du sens. Toutes réussies : la licence.\n\nUn échec ? Retrouve un guide : il t'emmènera vers de nouvelles épreuves, dans des lieux où tu n'es jamais allé. Un lieu passé ne revient jamais.",
+    "en": "To take part, first find a guide: they hand over the applicant plate and take you to the first trial. Each session draws 4 to 6 trials (the voyage to Dolle, the tunnel marathon, the Numele Wetlands, Buhara's hunt, Mount Split, Zevil Island…), in an order that makes sense. Pass them all: the license.\n\nFailed? Find a guide again: they will take you to new trials, in places you have never been. A place you have been through never comes back."
   },
   "requires": [],
   "category_order": 0

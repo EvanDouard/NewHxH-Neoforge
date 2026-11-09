@@ -39,7 +39,56 @@ public final class QuestManager {
     @Nullable
     public static Quest.Step currentStep(QuestData d) {
         Quest q = activeQuest(d);
-        return q == null || d.step >= q.steps().size() ? null : q.steps().get(d.step);
+        if (q == null) return null;
+        List<Quest.Step> steps = steps(d, q);
+        return d.step >= steps.size() ? null : steps.get(d.step);
+    }
+
+    /** Étapes de la quête pour ce joueur : le parcours tiré au sort s'il y en a un, sinon celles du fichier. */
+    public static List<Quest.Step> steps(QuestData d, Quest q) {
+        int[] plan = q.randomTrials() ? d.plan(q.id().toString()) : null;
+        if (plan == null) return q.steps();
+        List<Quest.Step> out = new java.util.ArrayList<>(plan.length);
+        for (int i : plan) if (i >= 0 && i < q.steps().size()) out.add(q.steps().get(i));
+        return out;
+    }
+
+    /** Première quête de tout joueur : devenir Hunter (trouver un guide). */
+    public static void startFirstQuest(ServerPlayer player) {
+        QuestData d = data(player);
+        String exam = QuestRegistry.HUNTER_EXAM.toString();
+        if (d.hunter || d.completed.contains(exam) || d.running.containsKey(exam)) return;
+        start(player, QuestRegistry.HUNTER_EXAM);
+    }
+
+    /** Nouveau tirage de l'Examen en cours (commande) : retour à « trouver un guide ». */
+    public static boolean redrawExam(ServerPlayer player) {
+        QuestData d = data(player);
+        String exam = QuestRegistry.HUNTER_EXAM.toString();
+        Quest q = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
+        if (q == null || !d.running.containsKey(exam)) return false;
+        d.commit();
+        drawPlan(player, d, q);
+        d.running.put(exam, new int[]{0, 0});
+        if (d.active.equals(exam)) {
+            d.step = 0;
+            d.progress = 0;
+        }
+        d.refocus();
+        sync(player);
+        return true;
+    }
+
+    /** Tire un nouveau parcours d'épreuves (début de quête, ou nouvel essai après un échec). */
+    static void drawPlan(ServerPlayer player, QuestData d, Quest q) {
+        List<String> trials = TrialPlan.draw(q, player.getRandom());
+        int[] steps = TrialPlan.steps(q, trials);
+        java.util.Set<String> sites = new java.util.LinkedHashSet<>();
+        for (int i : steps) {
+            com.evandouard.hxh.exam.ExamSite site = com.evandouard.hxh.exam.ExamSite.byId(q.steps().get(i).site());
+            if (site != null) sites.add(site.id());
+        }
+        d.setPlan(q.id().toString(), trials, steps, sites);
     }
 
     /** Applique {@code action} à chaque quête en cours (curseur placé dessus), puis revient sur la quête suivie. */
@@ -61,6 +110,7 @@ public final class QuestManager {
         String id = questId.toString();
         if (q == null || d.running.containsKey(id) || d.completed.contains(id)) return false;
         d.commit();
+        if (q.randomTrials()) drawPlan(player, d, q);
         d.running.put(id, new int[]{0, 0});
         if (d.tracked.isEmpty()) d.tracked = id;
         d.refocus();
@@ -124,6 +174,12 @@ public final class QuestManager {
                 player.sendSystemMessage(Component.translatable("dialog.hxh.format",
                         QuestRegistry.npcName(step.npc()).copy().withStyle(ChatFormatting.YELLOW), q.dialog(step, player)));
                 advance(player);
+            } else if (q.id().equals(QuestRegistry.HUNTER_EXAM)) {
+                // À l'Examen, une mauvaise réponse élimine
+                player.sendSystemMessage(Component.translatable("quest.hxh.quiz.wrong_exam").withStyle(ChatFormatting.RED));
+                d.refocus();
+                failExam(player);
+                return false;
             } else {
                 player.sendSystemMessage(Component.translatable("quest.hxh.quiz.wrong").withStyle(ChatFormatting.RED));
                 d.progress = 0;
@@ -159,19 +215,24 @@ public final class QuestManager {
     }
 
     /**
-     * Examen raté (distancé au marathon…) : l'examen s'arrête, le prochain essai sera dans un jour Minecraft
-     * et dans un autre centre d'examen.
+     * Épreuve ratée (distancé, passé par-dessus bord, mauvaise réponse…) : retour au point de départ, et l'examen
+     * reprend à « trouver un guide », avec un nouveau tirage d'épreuves dans des lieux jamais vus.
      */
     public static void failExam(ServerPlayer player) {
         QuestData d = data(player);
         String exam = QuestRegistry.HUNTER_EXAM.toString();
-        if (!d.running.containsKey(exam)) return;
+        Quest q = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
+        if (!d.running.containsKey(exam) || q == null) return;
         d.commit();
-        d.running.remove(exam);
-        if (d.active.equals(exam)) d.active = "";
-        d.examRetryAt = player.level().getGameTime() + com.evandouard.hxh.HxHConfig.EXAM_RETRY_TICKS.get();
+        drawPlan(player, d, q);
+        d.running.put(exam, new int[]{0, 0});
+        if (d.active.equals(exam)) {
+            d.step = 0;
+            d.progress = 0;
+        }
         d.examFailedCenter = d.examCenter;
         LOST_TICKS.remove(player.getUUID());
+        QUIZ_ASKED.remove(player.getUUID());
         player.sendSystemMessage(Component.translatable("message.hxh.exam_failed").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
         player.sendSystemMessage(Component.translatable("message.hxh.exam_failed_detail").withStyle(ChatFormatting.GRAY));
         d.refocus();
@@ -182,19 +243,9 @@ public final class QuestManager {
     /** Clic droit sur un PNJ. */
     public static void onTalk(ServerPlayer player, NpcEntity npc) {
         QuestData d = data(player);
-        // Le Navigateur lance l'Examen Hunter (sauf juste après un échec, ou dans le centre qui t'a recalé)
+        // Un guide (Navigateur) lance l'Examen Hunter s'il n'est pas déjà en cours
         if (npc.npcId().equals("navigator") && !d.hunter && !d.running.containsKey(QuestRegistry.HUNTER_EXAM.toString())
                 && !d.completed.contains(QuestRegistry.HUNTER_EXAM.toString())) {
-            long now = player.level().getGameTime();
-            if (now < d.examRetryAt) {
-                long minutes = Math.max(1, (d.examRetryAt - now) / 20 / 60);
-                say(player, npc, Component.translatable("dialog.hxh.navigator.next_year", minutes));
-                return;
-            }
-            if (npc.home().asLong() == d.examFailedCenter) {
-                say(player, npc, Component.translatable("dialog.hxh.navigator.other_center"));
-                return;
-            }
             if (start(player, QuestRegistry.HUNTER_EXAM)) d.examCenter = npc.home().asLong();
         }
         // L'arbitre du hall d'une tranche de la Tour Céleste lance les combats
@@ -318,7 +369,7 @@ public final class QuestManager {
         Quest.Step step = currentStep(d);
         if (step == null) return;
         // Dangers des lieux de l'Examen (tempête, brouillard…)
-        if (com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level())) com.evandouard.hxh.exam.ExamHazards.tick(player, step, d);
+        if (com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level()) && com.evandouard.hxh.exam.ExamHazards.tick(player, step, d)) return;
         // Quiz « silence » : la bonne réponse est de ne rien dire pendant le temps donné
         if (step.type().equals("quiz") && step.answer().equals("silence") && quizKey(d).equals(QUIZ_ASKED.get(player.getUUID()))) {
             d.progress++;
@@ -456,7 +507,8 @@ public final class QuestManager {
         giveRewards(player, d, step);
         d.step++;
         d.progress = 0;
-        if (d.step >= q.steps().size()) {
+        List<Quest.Step> steps = steps(d, q);
+        if (d.step >= steps.size()) {
             d.completed.add(d.active);
             d.running.remove(d.active);
             d.active = "";
@@ -468,10 +520,12 @@ public final class QuestManager {
             com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.quest_done"),
                     q.title(player), "★", com.evandouard.hxh.network.Hud.GOLD);
         } else {
-            Quest.Step next = q.steps().get(d.step);
+            Quest.Step next = steps.get(d.step);
+            // Nouvelle épreuve : le guide (ou l'examinateur) annonce où elle a lieu
+            if (!next.trial().isEmpty() && !next.trial().equals(step.trial())) announceTrial(player, d, q, steps, d.step);
             // L'étape suivante se passe dans un autre lieu de l'Examen : on y est emmené
             com.evandouard.hxh.exam.ExamSite site = com.evandouard.hxh.exam.ExamSite.byId(next.site());
-            if (site != null) com.evandouard.hxh.exam.ExamTrips.sendTo(player, site);
+            if (site != null) com.evandouard.hxh.exam.ExamTrips.sendTo(player, site, d.examInstance(site.id()));
             com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.new_step"),
                     q.objective(next, player), "!", com.evandouard.hxh.network.Hud.GOLD);
             if (next.type().equals("follow")) {
@@ -481,6 +535,24 @@ public final class QuestManager {
             }
         }
         sync(player);
+    }
+
+    /** « Épreuve n/N : … — lieu (x, z) » au début de chaque épreuve tirée. */
+    private static void announceTrial(ServerPlayer player, QuestData d, Quest q, List<Quest.Step> steps, int index) {
+        String trial = steps.get(index).trial();
+        List<String> order = d.planTrials(q.id().toString());
+        int n = order.indexOf(trial) + 1;
+        com.evandouard.hxh.exam.ExamSite site = null;
+        for (int i = index; i < steps.size() && steps.get(i).trial().equals(trial) && site == null; i++)
+            site = com.evandouard.hxh.exam.ExamSite.byId(steps.get(i).site());
+        Component name = Component.translatable("exam.hxh.trial." + trial);
+        Component msg = site == null
+                ? Component.translatable("exam.hxh.trial_next", n, order.size(), name)
+                : Component.translatable("exam.hxh.trial_next_at", n, order.size(), name,
+                        Component.translatable("exam.hxh.site." + site.id()),
+                        com.evandouard.hxh.exam.ExamWorld.center(site, d.examInstance(site.id())).getX(),
+                        com.evandouard.hxh.exam.ExamWorld.center(site, d.examInstance(site.id())).getZ());
+        player.sendSystemMessage(msg.copy().withStyle(ChatFormatting.AQUA));
     }
 
     private static void giveRewards(ServerPlayer player, QuestData d, Quest.Step step) {
@@ -522,7 +594,8 @@ public final class QuestManager {
         }
         Quest q = trackedId == null ? null : QuestRegistry.get(trackedId);
         int[] st = q == null ? null : d.running.get(q.id().toString());
-        Quest.Step step = st == null || st[0] >= q.steps().size() ? null : q.steps().get(st[0]);
+        List<Quest.Step> qs = q == null ? List.of() : steps(d, q);
+        Quest.Step step = st == null || st[0] >= qs.size() ? null : qs.get(st[0]);
         if (q == null || step == null) {
             com.evandouard.hxh.network.HxHNetwork.sendTo(player, QuestStatusPayload.NONE);
             return;

@@ -68,6 +68,28 @@ public final class HunterCommand {
                                 .executes(ctx -> com.evandouard.hxh.quest.QuestManager.answer(ctx.getSource().getPlayerOrException(),
                                         IntegerArgumentType.getInteger(ctx, "n")) ? 1 : 0)))
                         .then(Commands.literal("setup").requires(src -> src.hasPermission(2)).executes(ctx -> examSetup(ctx.getSource())))
+                        // Épreuves tirées : les afficher, ou imposer le prochain tirage (tests, essais)
+                        .then(Commands.literal("plan").requires(src -> src.hasPermission(2))
+                                .executes(ctx -> {
+                                    net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
+                                    java.util.List<String> t = com.evandouard.hxh.quest.QuestManager.data(p)
+                                            .planTrials(com.evandouard.hxh.quest.QuestRegistry.HUNTER_EXAM.toString());
+                                    ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.exam_plan", String.join(" → ", t)), false);
+                                    return t.size();
+                                })
+                                .then(Commands.argument("trials", StringArgumentType.greedyString()).executes(ctx -> {
+                                    net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
+                                    java.util.List<String> t = java.util.List.of(StringArgumentType.getString(ctx, "trials").trim().split("\\s+"));
+                                    com.evandouard.hxh.quest.Quest q = com.evandouard.hxh.quest.QuestRegistry.get(com.evandouard.hxh.quest.QuestRegistry.HUNTER_EXAM);
+                                    for (String id : t) if (q == null || !q.trials().containsKey(id)) {
+                                        ctx.getSource().sendFailure(Component.translatable("command.hxh.exam_plan_unknown", id));
+                                        return 0;
+                                    }
+                                    com.evandouard.hxh.quest.TrialPlan.forcedForTests = t;
+                                    if (!com.evandouard.hxh.quest.QuestManager.redrawExam(p)) com.evandouard.hxh.quest.QuestManager.startFirstQuest(p);
+                                    ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.exam_plan", String.join(" → ", t)), false);
+                                    return 1;
+                                })))
                         .then(Commands.literal("where").requires(src -> src.hasPermission(2)).executes(ctx -> {
                             long nav = com.evandouard.hxh.exam.ExamSavedData.get(ctx.getSource().getLevel()).navigator();
                             if (nav == Long.MIN_VALUE) {

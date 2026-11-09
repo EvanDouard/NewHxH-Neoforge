@@ -31,7 +31,19 @@ import java.util.Set;
  */
 public record Quest(ResourceLocation id, Map<String, String> title, String startNpc, List<String> requires,
                     Map<String, String> intro, Map<String, Map<String, String>> npcNames, List<Step> steps,
-                    List<String> problems) {
+                    List<String> problems, Map<String, Trial> trials, int minTrials, int maxTrials) {
+
+    /**
+     * Épreuve tirée au sort (Examen Hunter) : un groupe d'étapes ({@code "trial": "<id>"} sur chaque étape).
+     * {@code phase} ordonne les épreuves (0 avant 1…) ; {@code follows} lie une épreuve à une autre, qu'elle suit
+     * immédiatement (le bateau mène à Dolle, Numele suit le tunnel…).
+     */
+    public record Trial(String id, int phase, String follows) {}
+
+    /** Quête dont les épreuves sont tirées au sort pour chaque joueur (et à chaque nouvel essai). */
+    public boolean randomTrials() {
+        return !trials.isEmpty();
+    }
 
     /** Types d'étapes connus. */
     public static final Set<String> TYPES = Set.of("talk", "kill", "follow", "bring", "reach", "custom",
@@ -44,7 +56,8 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                        String item, double[] pos, double radius, String note,
                        Map<String, String> objective, Map<String, String> dialog,
                        String mode, List<String> rewardLearn, String site,
-                       Map<String, String> question, List<Map<String, String>> options, String answer, String hazard) {
+                       Map<String, String> question, List<Map<String, String>> options, String answer, String hazard,
+                       String trial) {
 
         /** Objectif chiffré de l'étape (pour la progression affichée) : nombre de mobs ou secondes, sinon 0. */
         public int goal() {
@@ -198,7 +211,8 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                     texts(s, "question"),
                     optionList(s),
                     str(s, "answer", "any"),
-                    str(s, "hazard", ""));
+                    str(s, "hazard", ""),
+                    str(s, "trial", ""));
             // Vérifications : les erreurs ne bloquent pas, elles s'affichent avec /hunter quest check
             if (!TYPES.contains(type)) problems.add(where + "type inconnu « " + type + " »");
             if (List.of("talk", "follow", "bring").contains(type) && step.npc().isEmpty()) problems.add(where + "il manque \"npc\"");
@@ -243,7 +257,31 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                 npcNames.put(n.getKey(), texts(wrap, "name"));
             }
         }
+        Map<String, Trial> trials = new LinkedHashMap<>();
+        if (root.has("trials")) {
+            for (Map.Entry<String, JsonElement> t : root.getAsJsonObject("trials").entrySet()) {
+                JsonObject o = t.getValue().getAsJsonObject();
+                trials.put(t.getKey(), new Trial(t.getKey(), o.has("phase") ? o.get("phase").getAsInt() : 0, str(o, "follows", "")));
+            }
+            for (Trial t : trials.values()) {
+                if (!t.follows().isEmpty() && !trials.containsKey(t.follows()))
+                    problems.add("épreuve « " + t.id() + " » : suit une épreuve inconnue « " + t.follows() + " »");
+                if (steps.stream().noneMatch(st -> st.trial().equals(t.id())))
+                    problems.add("épreuve « " + t.id() + " » : aucune étape");
+            }
+        }
+        for (Step st : steps)
+            if (!st.trial().isEmpty() && !trials.containsKey(st.trial()))
+                problems.add("étape « " + st.id() + " » : épreuve inconnue « " + st.trial() + " »");
+        int min = 0, max = 0;
+        if (root.has("trial_count")) {
+            JsonArray c = root.getAsJsonArray("trial_count");
+            min = c.get(0).getAsInt();
+            max = c.get(c.size() - 1).getAsInt();
+        } else {
+            min = max = trials.size();
+        }
         return new Quest(id, texts(root, "title"), str(root, "start_npc", ""), List.copyOf(requires),
-                texts(root, "intro"), npcNames, List.copyOf(steps), List.copyOf(problems));
+                texts(root, "intro"), npcNames, List.copyOf(steps), List.copyOf(problems), java.util.Collections.unmodifiableMap(trials), min, max);
     }
 }

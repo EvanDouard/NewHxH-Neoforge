@@ -26,6 +26,11 @@ public final class ExamTrips {
 
     /** Emmène le joueur à l'arrivée du lieu (le pose d'abord s'il n'existe pas). */
     public static boolean sendTo(ServerPlayer player, ExamSite site) {
+        return sendTo(player, site, 0);
+    }
+
+    /** Emmène le joueur à l'arrivée d'un exemplaire du lieu (le pose d'abord s'il n'existe pas). */
+    public static boolean sendTo(ServerPlayer player, ExamSite site, int instance) {
         if (!enabled(player)) return false;
         ServerLevel level = ExamWorld.level(player.server);
         if (level == null) return false;
@@ -34,8 +39,8 @@ public final class ExamTrips {
         if (!ExamWorld.isExamLevel(player.level())) {
             d.setExamReturn(player.level().dimension().location().toString(), player.blockPosition().asLong());
         }
-        ExamWorld.Site s = ExamWorld.ensure(level, site);
-        if (site == ExamSite.BISKA) ExamWorld.restockPrey(level);
+        ExamWorld.Site s = ExamWorld.ensure(level, site, instance);
+        if (site == ExamSite.BISKA) ExamWorld.restockPrey(level, instance);
         BlockPos a = s.arrival();
         player.teleportTo(level, a.getX() + 0.5, a.getY(), a.getZ() + 0.5, s.yaw(), 0f);
         player.displayClientMessage(Component.translatable("exam.hxh.site." + site.id()), true);

@@ -36,6 +36,14 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     long examFailedCenter = Long.MIN_VALUE;
     /** Centre d'examen (place du Navigateur) de l'examen en cours. */
     long examCenter = Long.MIN_VALUE;
+    /** Quêtes à épreuves tirées au sort : identifiant → indices des étapes du parcours tiré. */
+    final java.util.Map<String, int[]> plans = new java.util.HashMap<>();
+    /** Épreuves du parcours tiré (dans l'ordre), pour l'affichage. */
+    final java.util.Map<String, java.util.List<String>> planTrials = new java.util.HashMap<>();
+    /** Lieux de l'Examen déjà donnés à ce joueur : identifiant du lieu → nombre d'exemplaires utilisés. */
+    final java.util.Map<String, Integer> examUses = new java.util.HashMap<>();
+    /** Exemplaire de chaque lieu pour le parcours en cours (un lieu passé, réussi ou raté, ne revient jamais). */
+    final java.util.Map<String, Integer> examInstances = new java.util.HashMap<>();
 
     // ---------- Tour Céleste ----------
     boolean arenaRegistered = false;
@@ -133,6 +141,36 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
 
     public boolean isCompleted(String questId) {
         return completed.contains(questId);
+    }
+
+    /** Indices des étapes du parcours tiré pour cette quête, ou null (parcours fixe). */
+    public int[] plan(String questId) {
+        return plans.get(questId);
+    }
+
+    public java.util.List<String> planTrials(String questId) {
+        return planTrials.getOrDefault(questId, java.util.List.of());
+    }
+
+    /** Exemplaire du lieu pour le parcours en cours (0 si le lieu n'en fait pas partie). */
+    public int examInstance(String siteId) {
+        return examInstances.getOrDefault(siteId, 0);
+    }
+
+    public int examUses(String siteId) {
+        return examUses.getOrDefault(siteId, 0);
+    }
+
+    /** Nouveau parcours : chaque lieu utilisé reçoit un exemplaire jamais vu par ce joueur. */
+    void setPlan(String questId, java.util.List<String> trials, int[] steps, java.util.Collection<String> sites) {
+        plans.put(questId, steps);
+        planTrials.put(questId, java.util.List.copyOf(trials));
+        examInstances.clear();
+        for (String site : sites) {
+            int n = examUses.getOrDefault(site, 0);
+            examInstances.put(site, n);
+            examUses.put(site, n + 1);
+        }
     }
 
     public long examRetryAt() {
@@ -259,6 +297,9 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         examRetryAt = 0;
         examFailedCenter = Long.MIN_VALUE;
         examCenter = Long.MIN_VALUE;
+        plans.clear();
+        planTrials.clear();
+        examInstances.clear();
         arenaRegistered = false;
         arenaFloor = 1;
         registeredBracket = -1;
@@ -290,6 +331,22 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         tag.putLong("exam_retry_at", examRetryAt);
         tag.putLong("exam_failed_center", examFailedCenter);
         tag.putLong("exam_center", examCenter);
+        CompoundTag planTag = new CompoundTag();
+        plans.forEach((id, steps) -> {
+            CompoundTag one = new CompoundTag();
+            one.putIntArray("steps", steps);
+            ListTag tr = new ListTag();
+            for (String t : planTrials.getOrDefault(id, java.util.List.of())) tr.add(StringTag.valueOf(t));
+            one.put("trials", tr);
+            planTag.put(id, one);
+        });
+        tag.put("plans", planTag);
+        CompoundTag uses = new CompoundTag();
+        examUses.forEach(uses::putInt);
+        tag.put("exam_uses", uses);
+        CompoundTag inst = new CompoundTag();
+        examInstances.forEach(inst::putInt);
+        tag.put("exam_instances", inst);
         ListTag done = new ListTag();
         for (String id : completed) done.add(StringTag.valueOf(id));
         tag.put("completed", done);
@@ -332,6 +389,22 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         examRetryAt = tag.getLong("exam_retry_at");
         examFailedCenter = tag.contains("exam_failed_center") ? tag.getLong("exam_failed_center") : Long.MIN_VALUE;
         examCenter = tag.contains("exam_center") ? tag.getLong("exam_center") : Long.MIN_VALUE;
+        plans.clear();
+        planTrials.clear();
+        CompoundTag planTag = tag.getCompound("plans");
+        for (String id : planTag.getAllKeys()) {
+            CompoundTag one = planTag.getCompound(id);
+            plans.put(id, one.getIntArray("steps"));
+            java.util.List<String> tr = new java.util.ArrayList<>();
+            for (Tag t : one.getList("trials", Tag.TAG_STRING)) tr.add(t.getAsString());
+            planTrials.put(id, tr);
+        }
+        examUses.clear();
+        CompoundTag uses = tag.getCompound("exam_uses");
+        for (String k : uses.getAllKeys()) examUses.put(k, uses.getInt(k));
+        examInstances.clear();
+        CompoundTag inst = tag.getCompound("exam_instances");
+        for (String k : inst.getAllKeys()) examInstances.put(k, inst.getInt(k));
         completed.clear();
         for (Tag t : tag.getList("completed", Tag.TAG_STRING)) completed.add(t.getAsString());
         CompoundTag arena = tag.getCompound("arena");

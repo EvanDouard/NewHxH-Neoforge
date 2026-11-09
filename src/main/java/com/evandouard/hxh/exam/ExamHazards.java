@@ -42,37 +42,45 @@ public final class ExamHazards {
     public static ExamSite siteAt(BlockPos pos) {
         int i = Math.round(pos.getX() / (float) ExamWorld.SPACING);
         ExamSite[] all = ExamSite.values();
-        if (i < 0 || i >= all.length || Math.abs(pos.getZ()) > ExamWorld.SPACING / 2) return null;
+        if (i < 0 || i >= all.length || pos.getZ() < -ExamWorld.SPACING / 2) return null;
         return all[i];
     }
 
-    /** Chaque tick, pour un joueur dans la dimension de l'Examen. */
-    public static void tick(ServerPlayer player, Quest.Step step, QuestData d) {
+    /** Chaque tick, pour un joueur dans la dimension de l'Examen. Renvoie true si l'épreuve vient d'être ratée. */
+    public static boolean tick(ServerPlayer player, Quest.Step step, QuestData d) {
         ExamSite site = siteAt(player.blockPosition());
         storm(player, "storm".equals(step.hazard()) && site == ExamSite.BOAT);
-        if (site == null) return;
-        BlockPos c = ExamWorld.center(site);
+        if (site == null) return false;
+        BlockPos c = ExamWorld.centerAt(player.blockPosition());
+        int instance = ExamWorld.instanceAt(player.blockPosition());
         ServerLevel level = player.serverLevel();
         switch (site) {
             case BOAT -> {
                 // Passé par-dessus bord : l'équipage repêche le candidat
                 if (player.getY() < ExamWorld.FLOOR_Y - 1.5 && player.isInWater()) {
+                    // Par-dessus bord pendant la tempête : le capitaine débarque le candidat, épreuve ratée
+                    if ("storm".equals(step.hazard())) {
+                        player.sendSystemMessage(Component.translatable("exam.hxh.overboard_fail").withStyle(ChatFormatting.RED));
+                        storm(player, false);
+                        com.evandouard.hxh.quest.QuestManager.failExam(player);
+                        return true;
+                    }
                     rescue(player, Vec3.atBottomCenterOf(c.offset(0, 0, 3)), "exam.hxh.overboard");
-                    if (step.type().equals("survive")) d.setProgress(Math.max(0, d.progress() - 200));
                 }
                 if ("storm".equals(step.hazard()) && player.tickCount % 50 == 0) gust(player);
             }
-            case MOUNT_SPLIT -> mountSplit(player, level, c);
+            case MOUNT_SPLIT -> mountSplit(player, level, c, instance);
             case BISKA -> {
                 if (player.tickCount % 200 == 0) restockSalmon(level, c);
             }
             case ZEVIL -> {
-                if (player.tickCount % 200 == 0 && step.type().equals("points")) restockCandidates(level, c);
+                if (player.tickCount % 200 == 0 && step.type().equals("points")) restockCandidates(level, c, instance);
                 if (player.getY() < ExamWorld.FLOOR_Y - 1.5 && player.isInWater()
                         && Math.abs(player.getZ() - c.getZ()) > 32) rescue(player, Vec3.atBottomCenterOf(c.offset(0, 0, 34)), "exam.hxh.overboard");
             }
             default -> {}
         }
+        return false;
     }
 
     // ------------------------------------------------------------------ Tempête
@@ -116,7 +124,7 @@ public final class ExamHazards {
      * La faille : on saute, on s'accroche aux fils (toiles), on prend un œuf, et le courant d'air remonte celui qui en
      * tient un. Sans œuf, on finit dans la rivière du fond, et on remonte au bord.
      */
-    private static void mountSplit(ServerPlayer player, ServerLevel level, BlockPos c) {
+    private static void mountSplit(ServerPlayer player, ServerLevel level, BlockPos c, int instance) {
         boolean inGap = Math.abs(player.getX() - (c.getX() + 0.5)) <= ExamPlaceholders.RAVINE_HALF + 0.7;
         if (!inGap) return;
         double y = player.getY();
@@ -136,11 +144,11 @@ public final class ExamHazards {
         if (y < ExamWorld.FLOOR_Y - ExamPlaceholders.RAVINE_DEPTH + 4) {
             rescue(player, Vec3.atBottomCenterOf(c.offset(-6, 0, 0)), "exam.hxh.river");
         }
-        if (player.tickCount % 200 == 0) restockEggs(level, c);
+        if (player.tickCount % 200 == 0) restockEggs(level, c, instance);
     }
 
-    private static void restockEggs(ServerLevel level, BlockPos c) {
-        ExamWorld.Site site = ExamWorld.cached(ExamSite.MOUNT_SPLIT);
+    private static void restockEggs(ServerLevel level, BlockPos c, int instance) {
+        ExamWorld.Site site = ExamWorld.cached(ExamSite.MOUNT_SPLIT, instance);
         if (site == null) return;
         int eggs = level.getEntitiesOfClass(ItemEntity.class, new AABB(c).inflate(20, 40, 20),
                 e -> e.getItem().is(ModItems.SPIDER_EAGLE_EGG.get())).size();
@@ -191,8 +199,8 @@ public final class ExamHazards {
         return candidate(level, p, target, 0);
     }
 
-    private static void restockCandidates(ServerLevel level, BlockPos c) {
-        ExamWorld.Site site = ExamWorld.cached(ExamSite.ZEVIL);
+    private static void restockCandidates(ServerLevel level, BlockPos c, int instance) {
+        ExamWorld.Site site = ExamWorld.cached(ExamSite.ZEVIL, instance);
         if (site == null) return;
         var around = level.getEntitiesOfClass(Vindicator.class, new AABB(c).inflate(40), v -> v.getTags().contains(CANDIDATE_TAG));
         if (around.size() >= 2) return;
@@ -216,13 +224,13 @@ public final class ExamHazards {
     }
 
     /** Ce qui peuple un lieu à sa pose : œufs, candidats, poissons. */
-    static void populate(ServerLevel level, ExamSite site, ExamWorld.Site built) {
+    static void populate(ServerLevel level, ExamSite site, ExamWorld.Site built, BlockPos center) {
         switch (site) {
             case MOUNT_SPLIT -> placeEggs(level, built);
             case ZEVIL -> {
                 for (int i = 0; i < built.prey().size(); i++) candidate(level, built.prey().get(i), i == 0, i);
             }
-            case BISKA -> restockSalmon(level, ExamWorld.center(site));
+            case BISKA -> restockSalmon(level, center);
             default -> {}
         }
     }

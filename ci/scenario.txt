@@ -628,7 +628,7 @@ wait 15
 shot 32_chiffres_de_soin_verts
 camera first
 
-# --- J6 : Examen Hunter v1 ---
+# --- J6/J8 : Examen Hunter (guide, épreuves tirées au sort ; tirage imposé ici pour la CI) ---
 cmd effect clear @s
 cmd hunter quest reset
 cmd hunter exam setup
@@ -636,10 +636,17 @@ look 90 5
 wait 40
 shot 33_navigateur_qui_attend
 clearchat
+cmd hunter exam plan dolle zaban numele biska menchi zevil
+wait 10
+expect Nouvelle quête : Examen Hunter
+cmd hunter exam plan
+expect dolle → zaban → numele → biska → menchi → zevil
 goto navigator
+clearchat
 talkto navigator
 wait 80
-expect Nouvelle quête : Examen Hunter
+expect Épreuve 1/6 : Le voyage vers l'île de Dolle
+expect z 0)
 shot 34_bateau_pour_dolle
 goto captain
 clearchat
@@ -664,6 +671,7 @@ expect Tu as cinq secondes
 shot 34_quiz_de_la_mamie
 wait 140
 expect se taire était la seule
+expect Épreuve 2/6 : Zaban
 wait 60
 shot 34_zaban_gargote
 goto cook
@@ -673,28 +681,27 @@ shot 34a_hall_souterrain
 goto beans
 talkto beans
 wait 10
-expect plaque de candidat
 goto satotz
 talkto satotz
 wait 10
 expect Satotz
 wait 40
 shot 34b_tunnel_du_marathon
-# on reste sur place : Satotz s'éloigne, examen raté, retour au point de départ
+# on reste sur place : Satotz s'éloigne, épreuve ratée, retour au point de départ et nouveau tirage
 wait 300
 expect Retentez l'année prochaine
+expect Retrouve un guide
 wait 40
 shot 34c_examen_rate_retour
-goto navigator
+# Nouvel essai : nouveaux exemplaires de chaque lieu (un lieu passé ne revient jamais)
 clearchat
-talkto navigator
-wait 10
-expect Prochaine session
-cmd hunter quest reset
-clearchat
+cmd hunter exam plan dolle zaban numele biska menchi zevil
 goto navigator
 talkto navigator
 wait 80
+expect Épreuve 1/6 : Le voyage vers l'île de Dolle
+expect z 800)
+shot 34c2_un_autre_bateau_pour_dolle
 cmd hunter quest skip
 wait 80
 cmd hunter quest skip
@@ -734,6 +741,7 @@ goto netero
 talkto netero
 wait 80
 look -90 40
+wait 5
 shot 34e_mont_split_faille_aux_oeufs
 cmd give @s hxh:spider_eagle_egg
 goto menchi

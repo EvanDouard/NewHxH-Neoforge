@@ -1,32 +1,188 @@
 {
+  "trial_count": [
+    4,
+    6
+  ],
+  "trials": {
+    "dolle": {
+      "phase": 0
+    },
+    "zaban": {
+      "phase": 1
+    },
+    "numele": {
+      "phase": 1,
+      "follows": "zaban"
+    },
+    "biska": {
+      "phase": 2
+    },
+    "menchi": {
+      "phase": 2,
+      "follows": "biska"
+    },
+    "zevil": {
+      "phase": 4
+    }
+  },
   "steps": [
-    { "id": "navigator", "type": "talk", "npc": "navigator" },
-    { "id": "captain", "type": "quiz", "npc": "captain", "site": "bateau", "answer": "any",
-      "question": { "fr": "Avant d'aller plus loin : pourquoi veux-tu devenir Hunter ?", "en": "Before we go any further: why do you want to become a Hunter?" },
+    {
+      "id": "guide",
+      "type": "talk",
+      "npc": "navigator",
+      "reward_item": "hxh:exam_badge"
+    },
+    {
+      "id": "captain",
+      "type": "quiz",
+      "npc": "captain",
+      "site": "bateau",
+      "answer": "any",
+      "question": {
+        "fr": "Avant d'aller plus loin : pourquoi veux-tu devenir Hunter ?",
+        "en": "Before we go any further: why do you want to become a Hunter?"
+      },
       "options": [
-        { "fr": "Pour retrouver mon père", "en": "To find my father" },
-        { "fr": "Pour l'argent", "en": "For the money" },
-        { "fr": "Ça ne vous regarde pas", "en": "That's none of your business" }
-      ] },
-    { "id": "storm", "type": "survive", "seconds": 40, "hazard": "storm" },
-    { "id": "granny", "type": "quiz", "npc": "quiz_granny", "site": "dolle", "answer": "silence", "seconds": 5,
-      "question": { "fr": "Ta mère et ta bien-aimée sont prises par des bandits ; tu ne peux en sauver qu'une. Laquelle ? Tu as cinq secondes.", "en": "Bandits have taken your mother and your beloved; you can only save one. Which? You have five seconds." },
+        {
+          "fr": "Pour retrouver mon père",
+          "en": "To find my father"
+        },
+        {
+          "fr": "Pour l'argent",
+          "en": "For the money"
+        },
+        {
+          "fr": "Ça ne vous regarde pas",
+          "en": "That's none of your business"
+        }
+      ],
+      "trial": "dolle"
+    },
+    {
+      "id": "storm",
+      "type": "survive",
+      "seconds": 40,
+      "hazard": "storm",
+      "trial": "dolle"
+    },
+    {
+      "id": "granny",
+      "type": "quiz",
+      "npc": "quiz_granny",
+      "site": "dolle",
+      "answer": "silence",
+      "seconds": 5,
+      "question": {
+        "fr": "Ta mère et ta bien-aimée sont prises par des bandits ; tu ne peux en sauver qu'une. Laquelle ? Tu as cinq secondes.",
+        "en": "Bandits have taken your mother and your beloved; you can only save one. Which? You have five seconds."
+      },
       "options": [
-        { "fr": "Ma mère", "en": "My mother" },
-        { "fr": "Ma bien-aimée", "en": "My beloved" }
-      ] },
-    { "id": "cook", "type": "talk", "npc": "cook", "site": "zaban" },
-    { "id": "register", "type": "talk", "npc": "beans", "site": "hall", "reward_item": "hxh:exam_badge" },
-    { "id": "satotz", "type": "talk", "npc": "satotz" },
-    { "id": "marathon", "type": "follow", "npc": "satotz", "seconds": 60, "max_distance": 16 },
-    { "id": "numele", "type": "follow", "npc": "satotz", "site": "numele", "seconds": 60, "max_distance": 10, "hazard": "fog" },
-    { "id": "buhara", "type": "talk", "npc": "buhara", "site": "biska" },
-    { "id": "hunt", "type": "kill", "entity": "minecraft:pig", "count": 2 },
-    { "id": "buhara_done", "type": "talk", "npc": "buhara" },
-    { "id": "sushi", "type": "bring", "npc": "menchi", "item": "minecraft:salmon", "count": 1 },
-    { "id": "netero_split", "type": "talk", "npc": "netero" },
-    { "id": "egg", "type": "bring", "npc": "menchi", "site": "mont_split", "item": "hxh:spider_eagle_egg", "count": 1 },
-    { "id": "zevil", "type": "points", "count": 6, "site": "zevil" },
-    { "id": "netero", "type": "talk", "npc": "netero", "site": "hotel", "reward_item": "hxh:hunter_card", "reward_hunter": true }
+        {
+          "fr": "Ma mère",
+          "en": "My mother"
+        },
+        {
+          "fr": "Ma bien-aimée",
+          "en": "My beloved"
+        }
+      ],
+      "trial": "dolle"
+    },
+    {
+      "id": "cook",
+      "type": "talk",
+      "npc": "cook",
+      "site": "zaban",
+      "trial": "zaban"
+    },
+    {
+      "id": "register",
+      "type": "talk",
+      "npc": "beans",
+      "site": "hall",
+      "trial": "zaban"
+    },
+    {
+      "id": "satotz",
+      "type": "talk",
+      "npc": "satotz",
+      "trial": "zaban"
+    },
+    {
+      "id": "marathon",
+      "type": "follow",
+      "npc": "satotz",
+      "seconds": 60,
+      "max_distance": 16,
+      "trial": "zaban"
+    },
+    {
+      "id": "numele",
+      "type": "follow",
+      "npc": "satotz",
+      "site": "numele",
+      "seconds": 60,
+      "max_distance": 10,
+      "hazard": "fog",
+      "trial": "numele"
+    },
+    {
+      "id": "buhara",
+      "type": "talk",
+      "npc": "buhara",
+      "site": "biska",
+      "trial": "biska"
+    },
+    {
+      "id": "hunt",
+      "type": "kill",
+      "entity": "minecraft:pig",
+      "count": 2,
+      "trial": "biska"
+    },
+    {
+      "id": "buhara_done",
+      "type": "talk",
+      "npc": "buhara",
+      "trial": "biska"
+    },
+    {
+      "id": "sushi",
+      "type": "bring",
+      "npc": "menchi",
+      "item": "minecraft:salmon",
+      "count": 1,
+      "trial": "menchi"
+    },
+    {
+      "id": "netero_split",
+      "type": "talk",
+      "npc": "netero",
+      "trial": "menchi"
+    },
+    {
+      "id": "egg",
+      "type": "bring",
+      "npc": "menchi",
+      "site": "mont_split",
+      "item": "hxh:spider_eagle_egg",
+      "count": 1,
+      "trial": "menchi"
+    },
+    {
+      "id": "zevil",
+      "type": "points",
+      "count": 6,
+      "site": "zevil",
+      "trial": "zevil"
+    },
+    {
+      "id": "netero",
+      "type": "talk",
+      "npc": "netero",
+      "site": "hotel",
+      "reward_item": "hxh:hunter_card",
+      "reward_hunter": true
+    }
   ]
 }

@@ -46,6 +46,46 @@ public final class QuestTests {
         Quest exam = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
         helper.assertTrue(exam != null, "La quête hxh:hunter_exam doit être chargée depuis le datapack");
         helper.assertTrue(exam.steps().size() == 17, "17 étapes attendues, obtenu " + exam.steps().size());
+        helper.assertTrue(exam.trials().size() == 6 && exam.minTrials() == 4 && exam.maxTrials() == 6, "6 épreuves, 4 à 6 tirées");
+        helper.succeed();
+    }
+
+    /** Toutes les épreuves, dans l'ordre du fichier (le parcours est alors identique au fichier). */
+    private static final java.util.List<String> ALL_TRIALS = java.util.List.of("dolle", "zaban", "numele", "biska", "menchi", "zevil");
+
+    @GameTest(template = "empty")
+    public static void trialDrawsStayCoherent(GameTestHelper helper) {
+        Quest exam = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
+        net.minecraft.util.RandomSource random = net.minecraft.util.RandomSource.create(42);
+        java.util.Set<java.util.List<String>> seen = new java.util.HashSet<>();
+        for (int n = 0; n < 300; n++) {
+            java.util.List<String> t = com.evandouard.hxh.quest.TrialPlan.draw(exam, random);
+            seen.add(t);
+            helper.assertTrue(t.size() >= 4 && t.size() <= 6, "4 à 6 épreuves : " + t);
+            helper.assertTrue(new java.util.HashSet<>(t).size() == t.size(), "Pas deux fois la même épreuve : " + t);
+            int lastPhase = -1;
+            for (int i = 0; i < t.size(); i++) {
+                Quest.Trial tr = exam.trials().get(t.get(i));
+                if (!tr.follows().isEmpty())
+                    helper.assertTrue(i > 0 && t.get(i - 1).equals(tr.follows()), tr.id() + " doit suivre " + tr.follows() + " : " + t);
+                int phase = tr.follows().isEmpty() ? tr.phase() : exam.trials().get(tr.follows()).phase();
+                helper.assertTrue(phase >= lastPhase, "Phases dans l'ordre : " + t);
+                lastPhase = phase;
+            }
+        }
+        helper.assertTrue(seen.size() >= 5, "Les tirages varient : " + seen.size() + " parcours différents");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void firstQuestIsBecomingAHunter(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(player);
+        QuestManager.startFirstQuest(player);
+        helper.assertTrue(d.isRunning(QuestRegistry.HUNTER_EXAM.toString()), "L'Examen démarre dès l'arrivée");
+        helper.assertTrue(QuestManager.currentStep(d).id().equals("guide"), "Première étape : trouver un guide");
+        int trials = d.planTrials(QuestRegistry.HUNTER_EXAM.toString()).size();
+        helper.assertTrue(trials >= 4 && trials <= 6, "Parcours tiré : " + trials + " épreuves");
         helper.succeed();
     }
 
@@ -67,8 +107,10 @@ public final class QuestTests {
 
         QuestManager.onTalk(player, beans);
         helper.assertTrue(d.active().isEmpty(), "Parler à Beans d'abord ne lance rien");
+        com.evandouard.hxh.quest.TrialPlan.forcedForTests = ALL_TRIALS;
         QuestManager.onTalk(player, navigator);
-        helper.assertTrue(!d.active().isEmpty() && d.step() == idx("captain"), "Le Navigateur envoie au bateau");
+        helper.assertTrue(!d.active().isEmpty() && d.step() == idx("captain"), "Le guide envoie au bateau");
+        helper.assertTrue(player.getInventory().contains(ModItems.EXAM_BADGE.get().getDefaultInstance()), "Le guide remet la plaque de candidat");
         // Le capitaine : toute réponse convient
         QuestManager.onTalk(player, captain);
         helper.assertTrue(QuestManager.answer(player, 2), "Le capitaine accepte toute réponse");
@@ -86,7 +128,7 @@ public final class QuestTests {
         QuestManager.onTalk(player, cook);
         helper.assertTrue(d.step() == idx("register"), "Le cuisinier de Zaban fait descendre au hall");
         QuestManager.onTalk(player, beans);
-        helper.assertTrue(player.getInventory().contains(ModItems.EXAM_BADGE.get().getDefaultInstance()), "Plaque de candidat reçue");
+        helper.assertTrue(d.step() == idx("satotz"), "Inscription auprès de Beans");
         QuestManager.onTalk(player, satotz);
         helper.assertTrue(d.step() == idx("marathon"), "Étape du marathon attendue");
         // Marathon puis marais de Numele : rester près de Satotz
@@ -149,33 +191,47 @@ public final class QuestTests {
         NpcEntity satotz = npc(helper, "satotz", 1);
         QuestData d = QuestManager.data(player);
         String exam = QuestRegistry.HUNTER_EXAM.toString();
+        com.evandouard.hxh.quest.TrialPlan.forcedForTests = java.util.List.of("zaban", "biska", "menchi", "zevil");
         QuestManager.onTalk(player, navigator);
-        helper.assertTrue(d.isRunning(exam), "Le Navigateur lance l'examen");
-        while (d.step() < idx("marathon")) QuestManager.advance(player);
-        helper.assertTrue(d.step() == idx("marathon"), "Étape du marathon attendue");
+        helper.assertTrue(d.isRunning(exam), "Le guide lance l'examen");
+        helper.assertTrue(d.examInstance("hall") == 0, "Premier essai : premier exemplaire du hall");
+        while (!QuestManager.currentStep(d).id().equals("marathon")) QuestManager.advance(player);
         player.moveTo(satotz.getX(), satotz.getY(), satotz.getZ());
         for (int i = 0; i < 40; i++) QuestManager.tick(player);
-        helper.assertTrue(d.isRunning(exam), "Tant qu'on suit, l'examen continue");
-        // Distancé trop longtemps : échec
+        helper.assertTrue(QuestManager.currentStep(d).id().equals("marathon"), "Tant qu'on suit, l'épreuve continue");
+        // Distancé trop longtemps : échec, retour à « trouver un guide » avec un nouveau tirage
         player.moveTo(satotz.getX() + 60, satotz.getY(), satotz.getZ());
         int limit = com.evandouard.hxh.HxHConfig.EXAM_LOST_SECONDS.get() * 20;
         for (int i = 0; i < limit - 2; i++) QuestManager.tick(player);
-        helper.assertTrue(d.isRunning(exam), "Un court retard est toléré");
+        helper.assertTrue(QuestManager.currentStep(d).id().equals("marathon"), "Un court retard est toléré");
+        com.evandouard.hxh.quest.TrialPlan.forcedForTests = java.util.List.of("dolle", "zaban", "biska", "zevil");
         for (int i = 0; i < 4; i++) QuestManager.tick(player);
-        helper.assertTrue(!d.isRunning(exam) && !d.isCompleted(exam), "Distancé trop longtemps : examen raté");
-        helper.assertTrue(d.examRetryAt() > helper.getLevel().getGameTime(), "Il faut attendre avant de retenter");
-        helper.assertTrue(d.examFailedCenter() == navigator.home().asLong(), "Le centre qui a recalé est retenu");
+        helper.assertTrue(d.isRunning(exam) && QuestManager.currentStep(d).id().equals("guide"), "Échec : il faut retrouver un guide");
+        helper.assertTrue(d.examInstance("hall") == 1 && d.examInstance("zaban") == 1, "Le tunnel déjà vu est remplacé par un autre exemplaire");
+        helper.assertTrue(d.examInstance("boat") == 0, "Un lieu jamais vu : premier exemplaire");
+        // Le guide reprend le candidat tout de suite, vers les nouvelles épreuves
+        QuestManager.onTalk(player, navigator);
+        helper.assertTrue(QuestManager.currentStep(d).id().equals("captain"), "Nouveau parcours : le bateau pour Dolle");
+        helper.succeed();
+    }
 
-        // Trop tôt : le Navigateur refuse
+    @GameTest(template = "empty")
+    public static void wrongAnswerAtTheExamEliminates(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        NpcEntity navigator = npc(helper, "navigator", 0);
+        NpcEntity captain = npc(helper, "captain", 1);
+        NpcEntity granny = npc(helper, "quiz_granny", 2);
+        QuestData d = QuestManager.data(player);
+        com.evandouard.hxh.quest.TrialPlan.forcedForTests = java.util.List.of("dolle", "zaban", "biska", "zevil");
         QuestManager.onTalk(player, navigator);
-        helper.assertTrue(!d.isRunning(exam), "Pas de nouvel examen avant un jour Minecraft");
-        // Un jour plus tard, le même centre refuse toujours, un autre accepte
-        d.setExamRetryAt(0);
-        QuestManager.onTalk(player, navigator);
-        helper.assertTrue(!d.isRunning(exam), "Le même centre ne te reprend pas");
-        NpcEntity otherCenter = npc(helper, "navigator", 3);
-        QuestManager.onTalk(player, otherCenter);
-        helper.assertTrue(d.isRunning(exam), "Un autre centre d'examen accepte");
+        QuestManager.onTalk(player, captain);
+        QuestManager.answer(player, 3);
+        while (!QuestManager.currentStep(d).id().equals("granny")) QuestManager.advance(player);
+        QuestManager.onTalk(player, granny);
+        helper.assertTrue(!QuestManager.answer(player, 1), "Répondre à la Mamie est une erreur");
+        helper.assertTrue(QuestManager.currentStep(d).id().equals("guide"), "Éliminé : retour au guide");
+        helper.assertTrue(d.examInstance("boat") == 1 || !d.planTrials(QuestRegistry.HUNTER_EXAM.toString()).contains("dolle"),
+                "Un autre bateau si Dolle revient au tirage");
         helper.succeed();
     }
 
@@ -189,6 +245,7 @@ public final class QuestTests {
         satotz.setHome(satotz.blockPosition());
         satotz.setRoute(java.util.List.of(helper.absolutePos(new BlockPos(3, 2, 1)), helper.absolutePos(new BlockPos(3, 2, 4))));
         QuestData d = QuestManager.data(player);
+        com.evandouard.hxh.quest.TrialPlan.forcedForTests = ALL_TRIALS;
         QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
         while (d.step() < idx("marathon")) QuestManager.advance(player);
         int marathon = idx("marathon");

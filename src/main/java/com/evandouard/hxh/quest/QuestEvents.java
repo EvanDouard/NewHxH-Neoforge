@@ -12,7 +12,10 @@ public final class QuestEvents {
 
     public static void register(IEventBus bus) {
         bus.addListener(PlayerEvent.PlayerLoggedInEvent.class, e -> {
-            if (e.getEntity() instanceof ServerPlayer p) QuestManager.sync(p);
+            if (e.getEntity() instanceof ServerPlayer p) {
+                QuestManager.startFirstQuest(p);
+                QuestManager.sync(p);
+            }
         });
         bus.addListener(PlayerEvent.PlayerRespawnEvent.class, e -> {
             if (e.getEntity() instanceof ServerPlayer p) QuestManager.sync(p);

@@ -113,16 +113,16 @@ public final class ProfileText {
         List<String> running = d.runningQuests();
         lines.add(Component.translatable("profile.hxh.quests.tracked").withStyle(ChatFormatting.GOLD));
         Quest tracked = d.active().isEmpty() ? null : QuestRegistry.get(ResourceLocation.parse(d.active()));
-        if (tracked == null || d.step() >= tracked.steps().size()) {
+        if (tracked == null || d.step() >= QuestManager.steps(d, tracked).size()) {
             lines.add(Component.translatable("profile.hxh.quests.none").withStyle(ChatFormatting.GRAY));
         } else {
             lines.add(tracked.title(player).copy().withStyle(ChatFormatting.YELLOW));
             lines.add(objective(player, d, tracked, d.step(), d.progress()));
-            Quest.Step cur = tracked.steps().get(d.step());
+            Quest.Step cur = QuestManager.steps(d, tracked).get(d.step());
             if (cur.type().equals("custom") && !cur.note().isEmpty()) {
                 lines.add(Component.translatable("profile.hxh.quests.custom_note", cur.note()).withStyle(ChatFormatting.DARK_GRAY));
             }
-            lines.add(Component.translatable("profile.hxh.quests.step", d.step() + 1, tracked.steps().size()).withStyle(ChatFormatting.GRAY));
+            lines.add(Component.translatable("profile.hxh.quests.step", d.step() + 1, QuestManager.steps(d, tracked).size()).withStyle(ChatFormatting.GRAY));
         }
         lines.add(Component.empty());
         lines.add(Component.translatable("profile.hxh.quests.running").withStyle(ChatFormatting.GOLD));
@@ -134,7 +134,7 @@ public final class ProfileText {
             any = true;
             int[] st = runningState(d, id);
             lines.add(Component.literal("• ").withStyle(ChatFormatting.AQUA).append(q.title(player).copy().withStyle(ChatFormatting.WHITE)));
-            if (st[0] < q.steps().size()) lines.add(Component.literal("   ").append(objective(player, d, q, st[0], st[1])).withStyle(ChatFormatting.GRAY));
+            if (st[0] < QuestManager.steps(d, q).size()) lines.add(Component.literal("   ").append(objective(player, d, q, st[0], st[1])).withStyle(ChatFormatting.GRAY));
         }
         if (!any) lines.add(Component.translatable("profile.hxh.quests.no_other").withStyle(ChatFormatting.DARK_GRAY));
         lines.add(Component.empty());
@@ -158,7 +158,7 @@ public final class ProfileText {
     }
 
     private static MutableComponent objective(ServerPlayer player, QuestData d, Quest q, int stepIndex, int progressValue) {
-        Quest.Step step = q.steps().get(stepIndex);
+        Quest.Step step = QuestManager.steps(d, q).get(stepIndex);
         String[] pending = com.evandouard.hxh.quest.QuestManager.isArenaQuest(q)
                 ? com.evandouard.hxh.arena.ArenaManager.pendingObjective(d) : null;
         if (pending != null) {
