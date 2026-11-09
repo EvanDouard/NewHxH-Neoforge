@@ -48,6 +48,15 @@ public final class HatsuKits {
             Techniques.ILLUMI_NEEDLE, Techniques.ILLUMI_TRANSFORM);
     public static final HatsuKit LEORIO = playable("leorio", EMITTER, List.of(Passives.DOCTOR),
             Techniques.LEORIO_REMOTE_PUNCH, Techniques.LEORIO_SHOCKWAVE);
+    public static final HatsuKit HISOKA = playable("hisoka", TRANSMUTER, List.of(Passives.HISOKA_THRILL),
+            Techniques.HISOKA_BUNGEE_GUM, Techniques.HISOKA_CARDS, Techniques.HISOKA_TEXTURE_SURPRISE);
+
+    /** Personnages à l'aura hostile, incontrôlée : des flammes même au repos. */
+    private static final java.util.Set<String> WILD_AURA = java.util.Set.of("hisoka");
+
+    public static boolean wildAuraByDefault(String kit) {
+        return kit != null && WILD_AURA.contains(kit);
+    }
 
     static {
         // ---------- Idées : personnages du Trello ----------
@@ -62,7 +71,6 @@ public final class HatsuKits {
         idea("tsezguerra", ENHANCER, false, "tsezguerra_leader", "tsezguerra_charged_strike");
         idea("silva", EMITTER, true, "silva_zoldyck", "silva_explosive_orbs");
         idea("zeno", EMITTER, true, "zeno_zoldyck", "zeno_dragon_head", "zeno_dragon_dive");
-        idea("hisoka", TRANSMUTER, true, "hisoka_thrill", "hisoka_bungee_gum", "hisoka_texture_surprise");
         idea("zushi", MANIPULATOR, false, "zushi_diligent", "zushi_ren_punch");
         idea("chrollo", SPECIALIST, true, "chrollo_leader", "chrollo_skill_hunter");
         idea("feitan", TRANSMUTER, true, "feitan_pain", "feitan_rising_sun");

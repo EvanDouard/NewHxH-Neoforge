@@ -70,4 +70,13 @@ public final class Passives {
             if (owner.tickCount % 100 == 0 && owner.getHealth() < owner.getMaxHealth()) owner.heal(1f);
         }
     };
+
+    /** Hisoka — Frisson du combat : plus l'adversaire a de vie max, plus ses coups font mal (+1 % par PV au-delà de 20, max +30 %). */
+    public static final Passive HISOKA_THRILL = new Passive("hisoka_thrill", true) {
+        @Override
+        public float modifyOutgoingMelee(LivingEntity owner, LivingEntity target, float amount) {
+            float bonus = Math.min(0.30f, Math.max(0f, target.getMaxHealth() - 20f) * 0.01f);
+            return amount * (1f + bonus);
+        }
+    };
 }

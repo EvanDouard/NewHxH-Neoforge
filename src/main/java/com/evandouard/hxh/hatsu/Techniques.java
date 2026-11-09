@@ -106,8 +106,27 @@ public final class Techniques {
             List.of(new Effect(MobEffects.DAMAGE_BOOST, 200, 1), new Effect(MobEffects.MOVEMENT_SPEED, 200, 1),
                     new Effect(MobEffects.JUMP, 200, 1)),
             new Look(Style.PUPPET, NenFx.SPECIALIST, 1.4f), SoundEvents.WARDEN_ROAR)).requiresNenLevel(10);
-    public static final Technique PITOU_DOCTOR_BLYTHE = register(new SelfHeal("pitou_doctor_blythe", NenType.SPECIALIST, 50, 400,
-            12f, new Look(Style.FLARE, NenFx.HEAL, 1.1f), SoundEvents.AMETHYST_BLOCK_CHIME));
+    /**
+     * Docteur Blythe : la poupée-chirurgienne apparaît au-dessus du blessé devant Pitou (ou de Pitou s'il n'y a
+     * personne) et le recoud : 16 PV rendus sur 4 s. Pitou reste immobile pendant l'opération.
+     */
+    public static final Technique PITOU_DOCTOR_BLYTHE = register(new DollHeal("pitou_doctor_blythe", NenType.SPECIALIST, 50, 400,
+            16f, 80));
+
+    // =====================================================================
+    // Hisoka (Transmutation)
+    // =====================================================================
+    /**
+     * Bungee Gum : une aura élastique et collante attache la cible (12 blocs). Tant que le lien tient (10 s), elle est
+     * ramenée vers Hisoka dès qu'elle s'éloigne de plus de 5 blocs. Relancer : le lien se contracte d'un coup.
+     */
+    public static final Technique HISOKA_BUNGEE_GUM = register(new BungeeGum("hisoka_bungee_gum", NenType.TRANSMUTER, 20, 30,
+            12, 200));
+    /** Texture Surprise : Hisoka recouvre son corps d'une fausse texture et disparaît 8 s ; les mobs le perdent de vue. */
+    public static final Technique HISOKA_TEXTURE_SURPRISE = register(new TextureSurprise("hisoka_texture_surprise",
+            NenType.TRANSMUTER, 40, 500, 160)).requiresNenLevel(10);
+    /** Cartes renforcées : une carte à jouer lancée comme une lame (18 blocs). */
+    public static final Technique HISOKA_CARDS = register(new CardThrow("hisoka_cards", NenType.TRANSMUTER, 10, 30, 6f));
 
     // =====================================================================
     // Types de techniques réutilisables
@@ -513,6 +532,115 @@ public final class Techniques {
             caster.level().playSound(null, caster.getX(), caster.getY(), caster.getZ(),
                     SoundEvents.BREEZE_WIND_CHARGE_BURST.value(), net.minecraft.sounds.SoundSource.PLAYERS, 1f, 0.8f);
             return true; // l'aura part même sans cible
+        }
+    }
+
+    /** Soin d'un patient par une poupée invoquée (Docteur Blythe). */
+    public static final class DollHeal extends Technique {
+        private final float total;
+        private final int ticks;
+
+        DollHeal(String id, NenType category, int cost, int cooldown, float total, int ticks) {
+            super(id, category, cost, cooldown);
+            this.total = total;
+            this.ticks = ticks;
+        }
+
+        @Override
+        public boolean isHeal() {
+            return true;
+        }
+
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            LivingEntity patient = com.evandouard.hxh.nen.Targeting.inFront(caster, 6, 0.8);
+            if (patient == null) patient = caster;
+            LingeringNen.startDoll(caster, patient, ticks, total * power);
+            caster.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 6,
+                    false, false, false));
+            sound(caster, SoundEvents.AMETHYST_BLOCK_CHIME);
+            return true;
+        }
+    }
+
+    /** Bungee Gum d'Hisoka : attacher, puis contracter. */
+    public static final class BungeeGum extends Technique {
+        private final double range;
+        private final int ticks;
+
+        BungeeGum(String id, NenType category, int cost, int cooldown, double range, int ticks) {
+            super(id, category, cost, cooldown);
+            this.range = range;
+            this.ticks = ticks;
+        }
+
+        @Override
+        public net.minecraft.network.chat.Component conditions() {
+            return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.gum", (int) range);
+        }
+
+        @Override
+        public double aiRange() {
+            return range * 0.8;
+        }
+
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            if (LingeringNen.snapGum(caster, power)) {
+                sound(caster, SoundEvents.SLIME_JUMP);
+                return true;
+            }
+            LivingEntity target = com.evandouard.hxh.nen.Targeting.inFront(caster, range, 0.9);
+            if (target == null) return false;
+            LingeringNen.attachGum(caster, target, ticks);
+            sound(caster, SoundEvents.SLIME_SQUISH);
+            return true;
+        }
+    }
+
+    /** Texture Surprise : camouflage. */
+    public static final class TextureSurprise extends Technique {
+        private final int ticks;
+
+        TextureSurprise(String id, NenType category, int cost, int cooldown, int ticks) {
+            super(id, category, cost, cooldown);
+            this.ticks = ticks;
+        }
+
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            caster.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.INVISIBILITY, ticks, 0,
+                    false, false, false));
+            for (net.minecraft.world.entity.Mob mob : caster.level().getEntitiesOfClass(net.minecraft.world.entity.Mob.class,
+                    caster.getBoundingBox().inflate(24), m -> m.getTarget() == caster)) {
+                mob.setTarget(null);
+            }
+            NenFx.cardBurst(caster);
+            sound(caster, SoundEvents.BOOK_PAGE_TURN);
+            return true;
+        }
+    }
+
+    /** Carte à jouer renforcée lancée comme une lame. */
+    public static final class CardThrow extends Technique {
+        private final float damage;
+
+        CardThrow(String id, NenType category, int cost, int cooldown, float damage) {
+            super(id, category, cost, cooldown);
+            this.damage = damage;
+        }
+
+        @Override
+        public net.minecraft.network.chat.Component conditions() {
+            return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.projectile",
+                    (int) NenProjectile.CARD_RANGE);
+        }
+
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            NenProjectile.launch(caster, NenProjectile.CARD, power, damage * power, NenFx.HISOKA);
+            sound(caster, SoundEvents.PLAYER_ATTACK_SWEEP);
+            return true;
         }
     }
 

@@ -35,6 +35,7 @@ public final class NenFxClient {
         return HxHMod.id("textures/fx/" + name + ".png");
     }
 
+    static final ResourceLocation CARD = tex("card");
     static final ResourceLocation IMPACT = tex("impact"), SLASH = tex("slash"), RING = tex("ring"), ORB = tex("orb"),
             GLOW = tex("glow"), CHAIN = tex("chain_link"), CROSS = tex("cross"), CLAW = tex("claw"),
             NEEDLE = tex("needle"), WHITE = tex("white");
@@ -86,7 +87,8 @@ public final class NenFxClient {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
         if (p.kindEnum() == NenFx.Kind.CLEAR) {
-            ACTIVE.removeIf(f -> f.source == p.source() && f.kind == NenFx.Kind.CHARGE_ORB);
+            ACTIVE.removeIf(f -> f.source == p.source()
+                    && (f.kind == NenFx.Kind.CHARGE_ORB || f.kind == NenFx.Kind.GUM_LINK));
             return;
         }
         if (p.kindEnum() == NenFx.Kind.IMPACT_FRAME) {
@@ -177,6 +179,9 @@ public final class NenFxClient {
             case WARP_FIST -> warpFist(c, f, age);
             case NEEDLE_CROWN -> needleCrown(c, f, age);
             case PUPPET_STRINGS -> puppetStrings(c, f, age);
+            case GUM_LINK -> gumLink(c, f, age);
+            case DOLL -> doll(c, f, age);
+            case CARD_BURST -> cardBurst(c, f, t);
             case CLEAR, IMPACT_FRAME -> {}
         }
     }
@@ -846,5 +851,140 @@ public final class NenFxClient {
         Vec3 fwd = new Vec3(-side.z, 0, side.x);
         ribbon(c, RenderType.entityTranslucent(WHITE), bar.add(fwd.scale(-0.45)), bar.add(fwd.scale(0.45)), 0.09f, INK, fade);
         billboard(c, RenderType.eyes(GLOW), bar, 0.5f, 0, f.color, fade * 0.7f);
+    }
+
+    /**
+     * Bungee Gum : une bande rose collante, épaisse et cernée de noir, entre la main d'Hisoka et la cible. Détendue elle
+     * pend en arc ; tendue (cible loin) elle devient droite et plus fine. Une tache de gomme reste collée sur la cible.
+     */
+    private static void gumLink(Ctx c, Fx f, float age) {
+        Entity src = entity(f.source), tgt = entity(f.target);
+        if (src == null || tgt == null) return;
+        Vec3 a = hand(src, c.pt);
+        Vec3 b = center(tgt, c.pt);
+        double dist = a.distanceTo(b);
+        float tension = (float) Mth.clamp((dist - 2) / (com.evandouard.hxh.hatsu.LingeringNen.GUM_SLACK + 1), 0, 1);
+        float sag = (float) (dist * 0.18 * (1 - tension));
+        float width = 0.11f - 0.05f * tension;
+        int segs = 14;
+        Vec3 prev = a;
+        for (int i = 1; i <= segs; i++) {
+            float t = (float) i / segs;
+            Vec3 p = a.lerp(b, t).add(0, -sag * 4 * t * (1 - t) + Mth.sin(age * 0.4f + t * 6) * 0.03 * (1 - tension), 0);
+            ribbon(c, RenderType.entityTranslucent(WHITE), prev, p, width + 0.035f, INK, 1f);
+            ribbon(c, RenderType.entityTranslucent(WHITE), prev, p, width, f.color, 1f);
+            prev = p;
+        }
+        // reflet clair au milieu de la bande
+        ribbon(c, RenderType.eyes(WHITE), a, b.lerp(a, 0.1), 0.02f, 0xFFFFFFFF, 0.25f);
+        // tache de gomme sur la cible
+        billboard(c, RenderType.entityTranslucent(ORB), b, 0.28f + 0.03f * Mth.sin(age * 0.5f), 0, f.color, 0.95f);
+    }
+
+    /** Pavé coloré, aligné sur {@code yaw}, avec arêtes encrées. */
+    private static void box(Ctx c, Vec3 center, float sx, float sy, float sz, float yaw, int color, float alpha) {
+        Vec3 ax = new Vec3(Mth.cos(yaw), 0, Mth.sin(yaw)).scale(sx / 2), ay = new Vec3(0, sy / 2, 0);
+        Vec3 az = new Vec3(-Mth.sin(yaw), 0, Mth.cos(yaw)).scale(sz / 2);
+        Vec3[] v = new Vec3[8];
+        for (int i = 0; i < 8; i++) {
+            v[i] = center.add(ax.scale((i & 1) == 0 ? -1 : 1)).add(ay.scale((i & 2) == 0 ? -1 : 1)).add(az.scale((i & 4) == 0 ? -1 : 1));
+        }
+        int[][] faces = {{0, 1, 3, 2}, {4, 6, 7, 5}, {0, 4, 5, 1}, {2, 3, 7, 6}, {0, 2, 6, 4}, {1, 5, 7, 3}};
+        float[] shade = {0.9f, 0.9f, 0.7f, 1f, 0.8f, 0.8f};
+        for (int k = 0; k < 6; k++) {
+            int col = shadeColor(color, shade[k]);
+            int[] q = faces[k];
+            quad(c, RenderType.entityTranslucent(WHITE), v[q[0]], v[q[1]], v[q[2]], v[q[3]], col, alpha);
+        }
+        int[][] edges = {{0, 1}, {2, 3}, {4, 5}, {6, 7}, {0, 2}, {1, 3}, {4, 6}, {5, 7}, {0, 4}, {1, 5}, {2, 6}, {3, 7}};
+        for (int[] e : edges) ribbon(c, RenderType.entityTranslucent(WHITE), v[e[0]], v[e[1]], 0.018f, INK, alpha);
+    }
+
+    private static int shadeColor(int argb, float k) {
+        int r = (int) (((argb >> 16) & 255) * k), g = (int) (((argb >> 8) & 255) * k), b = (int) ((argb & 255) * k);
+        return 0xFF000000 | (r << 16) | (g << 8) | b;
+    }
+
+    /**
+     * Docteur Blythe (prototype en attendant le vrai modèle) : une poupée-infirmière faite de blocs flotte au-dessus du
+     * patient — tête ronde pâle avec coiffe, gros yeux, blouse blanche, bras tendus — reliée à Pitou par un cordon
+     * ombilical d'aura. De ses doigts partent des fils jusqu'au patient, et des aiguilles recousent en piquant.
+     */
+    private static void doll(Ctx c, Fx f, float age) {
+        Entity caster = entity(f.source), patient = entity(f.target);
+        if (patient == null) return;
+        float fade = age > f.duration - 8 ? (f.duration - age) / 8f : Math.min(1f, age / 6f);
+        float pop = ease(Math.min(1f, age / 6f));
+        Vec3 p = patient.getPosition(c.pt);
+        float yaw = (patient instanceof LivingEntity l ? Mth.lerp(c.pt, l.yBodyRotO, l.yBodyRot) : patient.getYRot()) * Mth.DEG_TO_RAD;
+        float bob = Mth.sin(age * 0.15f) * 0.06f;
+        Vec3 body = p.add(0, patient.getBbHeight() + 0.75 + bob, 0);
+        float s = 0.9f * pop;
+        if (s < 0.05f) return;
+        box(c, body, 0.42f * s, 0.5f * s, 0.3f * s, yaw, 0xFFF4F1EA, fade);                       // blouse
+        Vec3 head = body.add(0, 0.45 * s, 0);
+        box(c, head, 0.44f * s, 0.4f * s, 0.4f * s, yaw, 0xFFF2D6C9, fade);                        // tête
+        box(c, head.add(0, 0.25 * s, 0), 0.36f * s, 0.12f * s, 0.32f * s, yaw, 0xFFFFFFFF, fade);   // coiffe
+        Vec3 fwd = new Vec3(-Mth.sin(yaw), 0, Mth.cos(yaw));
+        Vec3 side = new Vec3(Mth.cos(yaw), 0, Mth.sin(yaw));
+        // croix de la coiffe et gros yeux ronds (le regard vide de la poupée)
+        Vec3 capFront = head.add(0, 0.25 * s, 0).add(fwd.scale(0.165 * s));
+        ribbon(c, RenderType.entityTranslucent(WHITE), capFront.add(side.scale(-0.06 * s)), capFront.add(side.scale(0.06 * s)), 0.025f * s, 0xFFE0303A, fade);
+        ribbon(c, RenderType.entityTranslucent(WHITE), capFront.add(0, -0.05 * s, 0), capFront.add(0, 0.05 * s, 0), 0.025f * s, 0xFFE0303A, fade);
+        for (int k = -1; k <= 1; k += 2) {
+            Vec3 eye = head.add(fwd.scale(0.225 * s)).add(side.scale(k * 0.1 * s)).add(0, 0.02 * s, 0);
+            billboard(c, RenderType.entityTranslucent(ORB), eye, 0.07f * s, 0, 0xFF111111, fade);
+        }
+        // bras tendus vers le bas et doigts → fils vers le patient
+        Vec3 target = p.add(0, patient.getBbHeight() * 0.6, 0);
+        for (int k = -1; k <= 1; k += 2) {
+            Vec3 shoulder = body.add(side.scale(k * 0.28 * s)).add(0, 0.15 * s, 0);
+            Vec3 hand = shoulder.add(side.scale(k * 0.15 * s)).add(fwd.scale(0.25 * s)).add(0, -0.3 * s, 0);
+            ribbon(c, RenderType.entityTranslucent(WHITE), shoulder, hand, 0.05f * s, 0xFFF4F1EA, fade);
+            for (int j = 0; j < 3; j++) {
+                Vec3 spot = target.add(side.scale(k * (0.1 + 0.08 * j))).add(fwd.scale((j - 1) * 0.1));
+                ribbon(c, RenderType.eyes(WHITE), hand, spot, 0.012f, f.color, fade * 0.9f);
+            }
+            // aiguille qui pique et remonte
+            float stitch = (Mth.sin(age * 0.6f + k) * 0.5f + 0.5f);
+            Vec3 tip = target.add(side.scale(k * 0.15)).add(0, 0.05 + 0.25 * stitch, 0);
+            Vec3 tail = tip.add(0, 0.3, 0);
+            for (Vec3 n : normals(new Vec3(0, 1, 0))) {
+                Vec3 w = n.scale(0.03);
+                quad(c, RenderType.entityTranslucent(NEEDLE), tail.subtract(w), tip.subtract(w), tip.add(w), tail.add(w), 0xFFFFFFFF, fade);
+            }
+        }
+        // points de suture lumineux sur le patient
+        for (int j = 0; j < 4; j++) {
+            float ph = (age * 0.1f + j * 0.25f) % 1f;
+            billboard(c, RenderType.eyes(GLOW), target.add(side.scale((j - 1.5) * 0.12)), 0.12f, 0, NenFx.HEAL, fade * (1 - ph));
+        }
+        // cordon d'aura qui relie la poupée à Pitou
+        if (caster != null && caster != patient) {
+            Vec3 from = center(caster, c.pt).add(0, 0.3, 0);
+            Vec3 prev = from;
+            for (int i = 1; i <= 10; i++) {
+                float t = i / 10f;
+                Vec3 q = from.lerp(body, t).add(0, Math.sin(t * Math.PI) * 0.6 + Mth.sin(age * 0.3f + t * 8) * 0.05, 0);
+                ribbon(c, RenderType.eyes(WHITE), prev, q, 0.05f, f.color, fade * 0.8f);
+                prev = q;
+            }
+        }
+    }
+
+    /** Texture Surprise : une gerbe de cartes à jouer qui tournoient et s'envolent autour d'Hisoka. */
+    private static void cardBurst(Ctx c, Fx f, float t) {
+        for (int i = 0; i < 14; i++) {
+            float ang = i * 2.39996f;
+            float speed = 1.2f + 1.3f * hash(f.seed, i);
+            float rise = 0.8f * hash(f.seed, i + 20) + 0.6f * t;
+            Vec3 at = f.at.add(Mth.cos(ang) * speed * ease(t), (hash(f.seed, i + 40) - 0.4f) + rise * ease(t), Mth.sin(ang) * speed * ease(t));
+            float spin = t * 12f + i;
+            Vec3 u = new Vec3(Mth.cos(spin), Mth.sin(spin * 0.7f) * 0.4, Mth.sin(spin)).normalize().scale(0.16);
+            Vec3 v = new Vec3(0, 0.22, 0);
+            quad(c, RenderType.entityTranslucent(CARD), at.subtract(u).subtract(v), at.add(u).subtract(v),
+                    at.add(u).add(v), at.subtract(u).add(v), 0xFFFFFFFF, 1f - t * t);
+        }
+        if (t < 0.3f) billboard(c, RenderType.eyes(GLOW), f.at, 1.4f, 0, f.color, 1f - t / 0.3f);
     }
 }

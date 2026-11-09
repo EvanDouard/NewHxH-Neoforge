@@ -33,6 +33,15 @@ public class NenProjectileRenderer extends EntityRenderer<NenProjectile> {
             quad(pose, buffers.getBuffer(RenderType.entityTranslucent(NenFxClient.IMPACT)), r * 1.5f, age * 0.25f, color, 170);
             float pulse = 1f + 0.06f * Mth.sin(age * 0.9f);
             quad(pose, buffers.getBuffer(RenderType.entityTranslucent(NenFxClient.ORB)), r * pulse, 0, color, 255);
+        } else if (e.kind() == NenProjectile.CARD) {
+            // Carte à jouer qui tournoie à plat, avec une traînée rose
+            pose.mulPose(Axis.YP.rotationDegrees(-e.getYRot()));
+            pose.mulPose(Axis.XP.rotationDegrees(90 + e.getXRot()));
+            quad(pose, buffers.getBuffer(RenderType.eyes(NenFxClient.GLOW)), 0.6f, 0, color, 140);
+            pose.pushPose();
+            pose.mulPose(Axis.ZP.rotationDegrees(age * 40f));
+            cardQuad(pose, buffers.getBuffer(RenderType.entityTranslucent(NenFxClient.CARD)));
+            pose.popPose();
         } else {
             // Croissant à plat, pointe vers l'avant, légèrement incliné
             pose.mulPose(Axis.YP.rotationDegrees(-e.getYRot()));
@@ -43,6 +52,20 @@ public class NenProjectileRenderer extends EntityRenderer<NenProjectile> {
         }
         pose.popPose();
         super.render(e, yaw, pt, pose, buffers, light);
+    }
+
+    /** Carte : rectangle 0,3 × 0,4, double face. */
+    private static void cardQuad(PoseStack pose, VertexConsumer vc) {
+        Matrix4f m = pose.last().pose();
+        float w = 0.3f, h = 0.4f;
+        float[][] c = {{-w, -h, 0, 1}, {w, -h, 1, 1}, {w, h, 1, 0}, {-w, h, 0, 0}};
+        for (int side = 0; side < 2; side++) {
+            for (int i = 0; i < 4; i++) {
+                float[] p = c[side == 0 ? i : 3 - i];
+                vc.addVertex(m, p[0], p[1], 0).setColor(255, 255, 255, 255).setUv(p[2], p[3])
+                        .setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose.last(), 0, 0, 1);
+            }
+        }
     }
 
     private static void quad(PoseStack pose, VertexConsumer vc, float half, float angle, int color, int alpha) {

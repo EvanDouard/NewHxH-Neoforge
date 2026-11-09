@@ -63,11 +63,12 @@ public final class AuraClient {
         int color = (d.healing() ? 0x7CFF8A : d.auraColor()) & 0xFFFFFF;
         boolean fists = d.ryuAttack() >= RYU_FISTS_FROM && d.mode() != NenMode.IN;
         float body = fists ? 0.3f : 1f;
+        boolean wild = d.wildAura() || com.evandouard.hxh.hatsu.HatsuKits.wildAuraByDefault(d.kit());
         return switch (d.mode()) {
             case REN -> new Look(true, 1f, color, body, fists);
             case KEN -> new Look(true, 0.6f, color, body, fists);
-            case TEN -> d.wildAura() ? new Look(true, 0.35f, color, body, fists) : new Look(false, 0.8f, color, body, fists);
-            default -> d.wildAura() ? new Look(true, 0.25f, color, body, fists) : new Look(false, 0.45f, color, body, fists);
+            case TEN -> wild ? new Look(true, 0.35f, color, body, fists) : new Look(false, 0.8f, color, body, fists);
+            default -> wild ? new Look(true, 0.25f, color, body, fists) : new Look(false, 0.45f, color, body, fists);
         };
     }
 

@@ -118,7 +118,7 @@ public final class HatsuTests {
 
     @GameTest(template = "empty")
     public static void ideaCharactersAreListedButNotChoosable(GameTestHelper helper) {
-        helper.assertTrue(HatsuKits.playable().size() == 6, "6 personnages jouables attendus");
+        helper.assertTrue(HatsuKits.playable().size() == 7, "7 personnages jouables attendus");
         helper.assertTrue(HatsuKits.all().size() > 30, "La liste d'idées doit être chargée");
         Zombie z = husk(helper, 1);
         hunter(z, NenType.ENHANCER, null);
@@ -261,5 +261,50 @@ public final class HatsuTests {
             helper.assertTrue(a.getDeltaMovement().x > 0.5, "Projetée dans la direction du regard");
             helper.succeed();
         });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void bungeeGumAttachesThenSnaps(GameTestHelper helper) {
+        Zombie hisoka = husk(helper, 0);
+        hunter(hisoka, NenType.TRANSMUTER, "hisoka");
+        Zombie target = husk(helper, 2);
+        helper.runAfterDelay(3, () -> {
+            helper.assertTrue(Techniques.HISOKA_BUNGEE_GUM.perform(hisoka, 1f), "Le Bungee Gum colle la cible devant");
+            helper.assertTrue(com.evandouard.hxh.hatsu.LingeringNen.gumTarget(hisoka) == target, "Lien actif sur la cible");
+            helper.assertTrue(Techniques.HISOKA_BUNGEE_GUM.perform(hisoka, 1f), "Relance : contraction");
+            helper.assertTrue(com.evandouard.hxh.hatsu.LingeringNen.gumTarget(hisoka) == null, "Le lien est consommé");
+            helper.assertTrue(target.getDeltaMovement().x < -0.1, "La cible est projetée vers Hisoka");
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 120)
+    public static void doctorBlytheHealsPatientOverTime(GameTestHelper helper) {
+        Zombie pitou = husk(helper, 0);
+        hunter(pitou, NenType.SPECIALIST, "neferpitou");
+        Zombie patient = husk(helper, 2);
+        helper.runAfterDelay(3, () -> {
+            patient.setHealth(4f);
+            Techniques.PITOU_DOCTOR_BLYTHE.perform(pitou, 1f);
+            helper.assertTrue(com.evandouard.hxh.hatsu.LingeringNen.isOperating(pitou), "La poupée opère");
+            helper.assertTrue(patient.getHealth() <= 4.01f, "Le soin n'est pas instantané");
+            helper.runAfterDelay(85, () -> {
+                helper.assertTrue(patient.getHealth() >= 15f, "Le patient a récupéré ~16 PV, a " + patient.getHealth());
+                helper.assertFalse(com.evandouard.hxh.hatsu.LingeringNen.isOperating(pitou), "Opération terminée");
+                helper.succeed();
+            });
+        });
+    }
+
+    @GameTest(template = "empty")
+    public static void hisokaThrillScalesWithTargetHealth(GameTestHelper helper) {
+        Zombie hisoka = husk(helper, 0);
+        Zombie weak = husk(helper, 2);
+        float base = com.evandouard.hxh.hatsu.Passives.HISOKA_THRILL.modifyOutgoingMelee(hisoka, weak, 10f);
+        weak.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100);
+        float strong = com.evandouard.hxh.hatsu.Passives.HISOKA_THRILL.modifyOutgoingMelee(hisoka, weak, 10f);
+        helper.assertTrue(base == 10f, "Cible à 20 PV : pas de bonus");
+        helper.assertTrue(Math.abs(strong - 13f) < 1e-3, "Cible très robuste : +30 % max");
+        helper.succeed();
     }
 }

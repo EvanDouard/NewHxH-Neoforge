@@ -55,7 +55,13 @@ public final class NenFx {
         /** Illumi se transforme : aiguilles plantées dans sa propre tête, aura sombre qui palpite (toute la durée). */
         NEEDLE_CROWN,
         /** Terpsichora de Pitou : des fils d'aura tirent le corps d'en haut, comme une marionnette (toute la durée). */
-        PUPPET_STRINGS
+        PUPPET_STRINGS,
+        /** Bungee Gum : bande élastique rose entre Hisoka (source) et sa cible, toute la durée du lien. */
+        GUM_LINK,
+        /** Docteur Blythe : la poupée-chirurgienne flotte au-dessus du patient (cible) et recoud, reliée à Pitou. */
+        DOLL,
+        /** Texture Surprise : une gerbe de cartes à jouer s'envole autour d'Hisoka quand il disparaît. */
+        CARD_BURST
     }
 
     /**
@@ -105,7 +111,8 @@ public final class NenFx {
     // ---------- Couleurs (aura par type) ----------
     public static final int ENHANCER = 0xFFFF8A3C, TRANSMUTER = 0xFF7FD8FF, EMITTER = 0xFFFF5FA8,
             CONJURER = 0xFFC9D4E6, MANIPULATOR = 0xFFB06BFF, SPECIALIST = 0xFF8A3CFF,
-            WHITE = 0xFFFFFFFF, GOLD = 0xFFFFD23F, HEAL = 0xFF52D273, DARK = 0xFF5A2A7A;
+            WHITE = 0xFFFFFFFF, GOLD = 0xFFFFD23F, HEAL = 0xFF52D273, DARK = 0xFF5A2A7A,
+            HISOKA = 0xFFFF6FB5;
 
     /** Envoie l'effet aux joueurs proches. */
     public static void send(ServerLevel level, Kind kind, Entity source, Entity target, Vec3 at, float size, int color,
@@ -196,6 +203,20 @@ public final class NenFx {
 
     public static void puppetStrings(LivingEntity entity, int color, int duration) {
         if (entity.level() instanceof ServerLevel s) send(s, Kind.PUPPET_STRINGS, entity, null, entity.position(), 1f, color, duration);
+    }
+
+    public static void gumLink(LivingEntity owner, LivingEntity target, int duration) {
+        if (owner.level() instanceof ServerLevel s) send(s, Kind.GUM_LINK, owner, target, target.position(), 1f, HISOKA, duration);
+    }
+
+    public static void doll(LivingEntity caster, LivingEntity patient, int duration) {
+        if (caster.level() instanceof ServerLevel s) send(s, Kind.DOLL, caster, patient, patient.position(), 1f, SPECIALIST, duration);
+    }
+
+    public static void cardBurst(LivingEntity caster) {
+        if (caster.level() instanceof ServerLevel s) {
+            send(s, Kind.CARD_BURST, caster, null, caster.getBoundingBox().getCenter(), 1f, HISOKA, 24);
+        }
     }
 
     public static void palmWave(LivingEntity caster, double length, int color) {

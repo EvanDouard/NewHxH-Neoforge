@@ -32,14 +32,14 @@ import java.util.UUID;
  * </ul>
  */
 public class NenProjectile extends Entity {
-    public static final int ORB = 0, BLADE = 1;
+    public static final int ORB = 0, BLADE = 1, CARD = 2;
 
     private static final EntityDataAccessor<Integer> KIND = SynchedEntityData.defineId(NenProjectile.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Float> POWER = SynchedEntityData.defineId(NenProjectile.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Integer> COLOR = SynchedEntityData.defineId(NenProjectile.class, EntityDataSerializers.INT);
 
     /** Vitesse (blocs par tick) et portée (blocs). */
-    static final double ORB_SPEED = 0.9, ORB_RANGE = 20, BLADE_SPEED = 1.3, BLADE_RANGE = 14;
+    static final double ORB_SPEED = 0.9, ORB_RANGE = 20, BLADE_SPEED = 1.3, BLADE_RANGE = 14, CARD_RANGE = 18;
     /** Temps pendant lequel la boule emporte sa cible avant d'exploser. */
     static final int CARRY_TICKS = 20;
 
@@ -158,7 +158,7 @@ public class NenProjectile extends Entity {
         }
         setPos(next);
         traveled += v.length();
-        double range = kind() == ORB ? ORB_RANGE : BLADE_RANGE;
+        double range = kind() == ORB ? ORB_RANGE : kind() == CARD ? CARD_RANGE : BLADE_RANGE;
         if (traveled >= range) {
             if (kind() == ORB) explode(level, caster);
             else discard(); // la lame s'épuise

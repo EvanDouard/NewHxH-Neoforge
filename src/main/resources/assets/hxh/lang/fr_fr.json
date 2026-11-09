@@ -191,11 +191,11 @@
   "kit.hxh.hisoka": "Hisoka Morow",
   "kit.hxh.hisoka.desc": "Magicien imprévisible, amoureux des combats.",
   "passive.hxh.hisoka_thrill": "Frisson du combat",
-  "passive.hxh.hisoka_thrill.desc": "IDÉE : plus l'ennemi est fort (vie max), plus tes dégâts augmentent.",
+  "passive.hxh.hisoka_thrill.desc": "Plus l'adversaire est robuste (vie max), plus tes coups font mal : +1 % par PV au-delà de 20, jusqu'à +30 %.",
   "technique.hxh.hisoka_bungee_gum": "Bungee Gum",
-  "technique.hxh.hisoka_bungee_gum.desc": "IDÉE : colle de l'aura élastique sur la cible : la tirer vers soi ou se projeter vers elle.",
+  "technique.hxh.hisoka_bungee_gum.desc": "Colle une aura élastique sur la cible devant toi. Tant que le lien tient (10 s), elle est ramenée vers toi dès qu'elle s'éloigne. Relance la technique : l'élastique se contracte d'un coup et la projette contre toi.",
   "technique.hxh.hisoka_texture_surprise": "Texture surprise",
-  "technique.hxh.hisoka_texture_surprise.desc": "IDÉE : se camoufle (invisibilité courte) ou dissimule l'aura d'un piège.",
+  "technique.hxh.hisoka_texture_surprise.desc": "Tu recouvres ton corps d'une fausse texture : tu disparais 8 s dans une gerbe de cartes, et les monstres te perdent de vue.",
   "kit.hxh.zushi": "Zushi",
   "kit.hxh.zushi.desc": "Élève de Wing à la Tour Céleste.",
   "passive.hxh.zushi_diligent": "Élève assidu",
@@ -384,7 +384,7 @@
   "technique.hxh.kurapika_chain_jail.desc": "La chaîne immobilise la cible (lenteur VII) et l'affaiblit pendant 5 s.",
   "technique.hxh.kurapika_holy_chain.desc": "La chaîne du pouce soigne 8 PV.",
   "technique.hxh.pitou_terpsichora.desc": "Le corps manipulé comme une marionnette : force II, vitesse II et saut II pendant 10 s.",
-  "technique.hxh.pitou_doctor_blythe.desc": "Le chirurgien d'aura soigne 12 PV.",
+  "technique.hxh.pitou_doctor_blythe.desc": "La poupée-chirurgienne apparaît au-dessus du blessé devant toi (ou de toi-même) et le recoud : 16 PV en 4 s. Tu restes immobile pendant l'opération.",
   "technique.hxh.illumi_needle.desc": "Une aiguille qui dérègle le corps : lenteur III et nausée pendant 5 s.",
   "technique.hxh.illumi_transform.desc": "Se plante des aiguilles pour remodeler son corps : résistance et force pendant 15 s.",
   "technique.hxh.leorio_remote_punch.desc": "Le poing frappe le sol et ressort sous la cible, jusqu'à 12 blocs.",
@@ -730,5 +730,8 @@
   "technique.hxh.gon_rock_epic.desc": "Gon met tout dans le poing : la boule enfle jusqu'à deux fois sa taille, puis se recondense, minuscule et aveuglante. Ceux qui la regardent sont éblouis. Coûte deux fois plus d'aura, frappe bien plus fort et creuse un cratère énorme.",
   "technique.hxh.cond.cone": "tout ce qui est devant toi, jusqu'à %s blocs, dans un cône de %s°",
   "command.hxh.aura.wild": "Aura sauvage : des flammes même au repos.",
-  "command.hxh.aura.calm": "Aura calme : vapeur au repos, flammes au Ren et au Ken."
+  "command.hxh.aura.calm": "Aura calme : vapeur au repos, flammes au Ren et au Ken.",
+  "technique.hxh.hisoka_cards": "Cartes renforcées",
+  "technique.hxh.hisoka_cards.desc": "Une carte à jouer renforcée par le Nen, lancée comme une lame. Elle tranche tout ce qu'elle touche.",
+  "technique.hxh.cond.gum": "une cible devant toi, jusqu'à %s blocs"
 }

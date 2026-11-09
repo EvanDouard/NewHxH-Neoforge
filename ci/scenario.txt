@@ -454,6 +454,43 @@ cmd hunter nen refill
 cmd hunter hatsu cast
 wait 15
 shot 22k_pitou_terpsichora_fils
+cmd hunter hatsu next
+cmd hunter nen refill
+cmd hunter hatsu cast
+wait 20
+shot 22l_docteur_blythe_poupee
+wait 70
+cmd effect clear @s
+cmd hunter hatsu set hisoka
+look 0 0
+camera back
+cmd summon minecraft:villager ~ ~ ~5 {PersistenceRequired:1b,Silent:1b,Tags:["hxh_gum"]}
+wait 15
+cmd hunter nen refill
+cmd hunter hatsu cast
+wait 8
+shot 22m_bungee_gum_colle
+cmd tp @e[tag=hxh_gum] ~ ~ ~9
+wait 3
+shot 22n_bungee_gum_tendu
+wait 25
+cmd hunter hatsu cast
+wait 4
+shot 22o_bungee_gum_contraction
+wait 10
+cmd kill @e[tag=hxh_gum]
+cmd hunter hatsu next
+cmd hunter nen refill
+cmd hunter hatsu cast
+wait 4
+shot 22p_carte_hisoka
+cmd hunter hatsu next
+camera front
+cmd hunter hatsu cast
+wait 6
+shot 22q_texture_surprise_cartes
+wait 10
+cmd effect clear @s
 camera first
 cmd kill @e[type=minecraft:husk]
 cmd tp @s ~-300 -60 ~
