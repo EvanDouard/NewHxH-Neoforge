@@ -759,7 +759,12 @@ public final class NenFxClient {
         float open = Math.min(1f, age / 3f);
         float close = age > f.duration - 4 ? (f.duration - age) / 4f : 1f;
         float r = 0.55f * ease(open) * close;
-        if (src != null) portal(c, hand(src, c.pt).add(dir.scale(0.3)), dir, r, f.color, close, age * 0.2f);
+        // portail de départ : petit et décalé à la première personne pour ne pas boucher la vue
+        if (src != null) {
+            boolean self = firstPerson(src);
+            portal(c, hand(src, c.pt).add(dir.scale(self ? 1.2 : 0.3)), dir, self ? r * 0.35f : r, f.color,
+                    self ? close * 0.6f : close, age * 0.2f);
+        }
         Vec3 hit = tgt != null ? center(tgt, c.pt) : f.at;
         Vec3 exit = hit.subtract(dir.scale(1.3));
         portal(c, exit, dir, r * 1.4f, f.color, close, -age * 0.2f);
@@ -798,7 +803,8 @@ public final class NenFxClient {
         billboard(c, RenderType.entityTranslucent(GLOW), head, 0.75f + 0.1f * pulse, 0, f.color, 0.45f * fade);
         for (int i = 0; i < 7; i++) {
             float t = (i - 3) / 3f;                      // -1 .. 1 de gauche à droite
-            Vec3 out = back.scale(0.6).add(side.scale(t * 0.8)).add(0, 0.9 - Math.abs(t) * 0.4, 0).normalize();
+            // en éventail au-dessus et sur les côtés du crâne : visibles de face comme de dos
+            Vec3 out = back.scale(0.15).add(side.scale(t * 0.9)).add(0, 1.0 - Math.abs(t) * 0.45, 0).normalize();
             Vec3 root = head.add(out.scale(0.22));
             Vec3 tip = root.add(out.scale(0.42 + 0.06 * hash(i, 3)));
             Vec3[] n = normals(out);
