@@ -136,6 +136,7 @@ public final class HunterCommand {
                         .then(Commands.literal("reset").executes(ctx -> {
                             net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
                             com.evandouard.hxh.quest.QuestManager.data(p).reset();
+                            com.evandouard.hxh.exam.ExamTournament.reset(p);
                             com.evandouard.hxh.quest.QuestManager.sync(p);
                             ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.quest_reset"), false);
                             return 1;

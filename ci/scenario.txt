@@ -768,6 +768,8 @@ cmd give @s hxh:target_plate
 wait 60
 shot 34e_hotel_de_l_association
 goto netero
+wait 20
+goto netero
 clearchat
 talkto netero
 wait 60
