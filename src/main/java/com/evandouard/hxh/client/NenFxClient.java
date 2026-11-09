@@ -796,7 +796,7 @@ public final class NenFxClient {
         Entity src = entity(f.source);
         if (src == null || firstPerson(src)) return;
         float fade = age > f.duration - 10 ? (f.duration - age) / 10f : Math.min(1f, age / 6f);
-        Vec3 head = src.getEyePosition(c.pt).add(0, 0.15, 0);
+        Vec3 head = src.getEyePosition(c.pt).add(0, 0.05, 0); // centre du crâne
         float yaw = (src instanceof LivingEntity l ? Mth.lerp(c.pt, l.yHeadRotO, l.yHeadRot) : src.getYRot()) * Mth.DEG_TO_RAD;
         Vec3 back = new Vec3(Mth.sin(yaw), 0, -Mth.cos(yaw)); // derrière la tête
         Vec3 side = new Vec3(Mth.cos(yaw), 0, Mth.sin(yaw));
@@ -806,11 +806,11 @@ public final class NenFxClient {
             float t = (i - 3) / 3f;                      // -1 .. 1 de gauche à droite
             // en éventail au-dessus et sur les côtés du crâne : visibles de face comme de dos
             Vec3 out = back.scale(0.15).add(side.scale(t * 0.9)).add(0, 1.0 - Math.abs(t) * 0.45, 0).normalize();
-            Vec3 root = head.add(out.scale(0.22));
-            Vec3 tip = root.add(out.scale(0.42 + 0.06 * hash(i, 3)));
+            Vec3 root = head.add(out.scale(0.18)); // plantée dans le crâne
+            Vec3 tip = root.add(out.scale(0.6 + 0.1 * hash(i, 3)));
             Vec3[] n = normals(out);
             for (Vec3 sd : n) {
-                Vec3 s2 = sd.scale(0.035);
+                Vec3 s2 = sd.scale(0.06);
                 // la tête ronde de l'aiguille dépasse : texture retournée (tête vers l'extérieur)
                 quad(c, RenderType.entityTranslucent(NEEDLE), tip.subtract(s2), root.subtract(s2), root.add(s2), tip.add(s2),
                         0xFFFFFFFF, fade);
