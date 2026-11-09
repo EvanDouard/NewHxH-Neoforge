@@ -161,16 +161,17 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         return examUses.getOrDefault(siteId, 0);
     }
 
-    /** Nouveau parcours : chaque lieu utilisé reçoit un exemplaire jamais vu par ce joueur. */
+    /** Nouveau parcours : chaque lieu reçoit le premier exemplaire que ce joueur n'a pas encore visité. */
     void setPlan(String questId, java.util.List<String> trials, int[] steps, java.util.Collection<String> sites) {
         plans.put(questId, steps);
         planTrials.put(questId, java.util.List.copyOf(trials));
         examInstances.clear();
-        for (String site : sites) {
-            int n = examUses.getOrDefault(site, 0);
-            examInstances.put(site, n);
-            examUses.put(site, n + 1);
-        }
+        for (String site : sites) examInstances.put(site, examUses.getOrDefault(site, 0));
+    }
+
+    /** Le joueur est allé dans cet exemplaire du lieu : il ne le reverra plus (réussite ou échec). */
+    public void markExamVisited(String siteId, int instance) {
+        examUses.merge(siteId, instance + 1, Math::max);
     }
 
     public long examRetryAt() {

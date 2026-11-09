@@ -525,7 +525,10 @@ public final class QuestManager {
             if (!next.trial().isEmpty() && !next.trial().equals(step.trial())) announceTrial(player, d, q, steps, d.step);
             // L'étape suivante se passe dans un autre lieu de l'Examen : on y est emmené
             com.evandouard.hxh.exam.ExamSite site = com.evandouard.hxh.exam.ExamSite.byId(next.site());
-            if (site != null) com.evandouard.hxh.exam.ExamTrips.sendTo(player, site, d.examInstance(site.id()));
+            if (site != null) {
+                d.markExamVisited(site.id(), d.examInstance(site.id()));
+                com.evandouard.hxh.exam.ExamTrips.sendTo(player, site, d.examInstance(site.id()));
+            }
             com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.new_step"),
                     q.objective(next, player), "!", com.evandouard.hxh.network.Hud.GOLD);
             if (next.type().equals("follow")) {

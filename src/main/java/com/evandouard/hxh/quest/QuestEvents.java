@@ -13,7 +13,8 @@ public final class QuestEvents {
     public static void register(IEventBus bus) {
         bus.addListener(PlayerEvent.PlayerLoggedInEvent.class, e -> {
             if (e.getEntity() instanceof ServerPlayer p) {
-                QuestManager.startFirstQuest(p);
+                // (pas sur le serveur des tests en jeu : ses joueurs factices « se connectent » aussi)
+                if (!(p.server instanceof net.minecraft.gametest.framework.GameTestServer)) QuestManager.startFirstQuest(p);
                 QuestManager.sync(p);
             }
         });

@@ -700,7 +700,7 @@ goto navigator
 talkto navigator
 wait 80
 expect Épreuve 1/6 : Le voyage vers l'île de Dolle
-expect z 800)
+expect z 400)
 shot 34c2_un_autre_bateau_pour_dolle
 cmd hunter quest skip
 wait 80
