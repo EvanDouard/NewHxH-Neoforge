@@ -340,6 +340,13 @@ public final class NenFxClient {
         billboard(c, RenderType.entityTranslucent(ORB), pos, half, age * 0.3f, f.color, 1f);
     }
 
+    /** Mort d'un mob : petite étoile d'encre grise et anneau au sol, à la place de la fumée de Minecraft. */
+    public static void deathPoof(LivingEntity e) {
+        Vec3 c = e.getBoundingBox().getCenter();
+        PENDING.add(localFx(NenFx.Kind.IMPACT, c, Math.max(0.8f, e.getBbHeight() * 0.7f), 0xFFE8E8E8, 10));
+        PENDING.add(localFx(NenFx.Kind.SHOCKWAVE, e.position(), Math.max(1f, e.getBbWidth() * 2f), 0xFFBBBBBB, 12));
+    }
+
     /** Effet ajouté côté client (impact d'arrivée d'une boule…). */
     private static Fx localFx(NenFx.Kind kind, Vec3 at, float size, int color, int duration) {
         Minecraft mc = Minecraft.getInstance();

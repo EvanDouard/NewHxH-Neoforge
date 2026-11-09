@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "HumanoidModelMixin"
+    "HumanoidModelMixin",
+    "EntityMixin",
+    "LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

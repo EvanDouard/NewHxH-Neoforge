@@ -18,6 +18,8 @@ import java.util.Set;
  */
 public final class SensesClient {
     private static final Set<Entity> GLOWING = new HashSet<>();
+    /** Couleur du contour des entités senties (couleur d'aura du joueur local), -1 si aucune. */
+    private static volatile int senseColor = -1;
 
     private SensesClient() {}
 
@@ -27,8 +29,15 @@ public final class SensesClient {
         return mc.player != null && mc.player.getData(ModAttachments.HUNTER).gyo();
     }
 
+    /** Couleur de contour d'une entité sentie par l'En ou le Gyo, ou -1 pour laisser Minecraft décider. */
+    public static int outlineColor(Entity e) {
+        int c = senseColor;
+        return c != -1 && GLOWING.contains(e) ? c : -1;
+    }
+
     public static void tick(Minecraft mc) {
         HunterData me = mc.player.getData(ModAttachments.HUNTER);
+        senseColor = me.auraColor() & 0xFFFFFF;
         Set<Entity> wanted = new HashSet<>();
         double enRadius = me.en() ? NenSenses.enRadius(me) : 0;
         int gyo = me.gyo() ? me.masteryLevel(Mastery.GYO) : -1;

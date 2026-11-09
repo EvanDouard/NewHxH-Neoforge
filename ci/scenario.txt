@@ -201,6 +201,8 @@ shot 13l_image_impact_negatif
 wait 25
 shot 13m_cratere_apres_impact
 cmd kill @e[type=minecraft:husk,distance=..30]
+wait 3
+shot 13n_mort_etoile_d_encre
 cmd tp @s ~200 -60 ~
 wait 30
 cmd hunter stat strength set 30
