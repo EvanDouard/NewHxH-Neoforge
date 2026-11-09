@@ -728,5 +728,7 @@
   "impact.hxh.devastating": "dévastateur",
   "technique.hxh.gon_rock_epic": "Jajanken : Pierre sans retenue",
   "technique.hxh.gon_rock_epic.desc": "Gon met tout dans le poing : la boule enfle jusqu'à deux fois sa taille, puis se recondense, minuscule et aveuglante. Ceux qui la regardent sont éblouis. Coûte deux fois plus d'aura, frappe bien plus fort et creuse un cratère énorme.",
-  "technique.hxh.cond.cone": "tout ce qui est devant toi, jusqu'à %s blocs, dans un cône de %s°"
+  "technique.hxh.cond.cone": "tout ce qui est devant toi, jusqu'à %s blocs, dans un cône de %s°",
+  "command.hxh.aura.wild": "Aura sauvage : des flammes même au repos.",
+  "command.hxh.aura.calm": "Aura calme : vapeur au repos, flammes au Ren et au Ken."
 }

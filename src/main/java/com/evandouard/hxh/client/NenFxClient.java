@@ -79,6 +79,7 @@ public final class NenFxClient {
         NeoForge.EVENT_BUS.addListener(ClientPlayerNetworkEvent.LoggingOut.class, e -> ACTIVE.clear());
         ImpactFrameClient.register();
         EnDomeClient.register();
+        AuraClient.register();
     }
 
     private static void add(NenFx.Payload p) {

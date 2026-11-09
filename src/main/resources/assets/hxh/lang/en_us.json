@@ -728,5 +728,7 @@
   "impact.hxh.devastating": "devastating",
   "technique.hxh.gon_rock_epic": "Jajanken: Rock, all out",
   "technique.hxh.gon_rock_epic.desc": "Gon puts everything into his fist: the orb swells to twice his size, then condenses into a tiny, blinding star. Anyone looking at it is dazzled. Costs twice the aura, hits much harder and digs a huge crater.",
-  "technique.hxh.cond.cone": "everything in front of you, up to %s blocks, in a %s° cone"
+  "technique.hxh.cond.cone": "everything in front of you, up to %s blocks, in a %s° cone",
+  "command.hxh.aura.wild": "Wild aura: flames even at rest.",
+  "command.hxh.aura.calm": "Calm aura: vapour at rest, flames with Ren and Ken."
 }

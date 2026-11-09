@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.PlayerSkin;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
@@ -23,20 +22,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 /**
- * Aura visible autour de toute entité qui maîtrise le Nen, façon « lueur d'enchantement » :
- * le modèle est redessiné légèrement agrandi avec une texture tourbillonnante, en mélange additif
- * et pleine luminosité, donc il brille même dans le noir.
+ * Lueur d'aura collée au corps : le modèle redessiné un peu agrandi, en lumière additive, sans texture.
+ * C'est la base des deux styles (voir {@link AuraClient}) :
  * <ul>
- *     <li>Neutre : aura douce et constante</li>
- *     <li>Ten : plus nette, collée au corps</li>
- *     <li>Ren : intense, plus large, elle pulse</li>
- *     <li>Zetsu : aucune aura</li>
- *     <li>Soin : l'aura vire au vert</li>
+ *     <li>vapeur (aura calme, au repos / Ten) : deux couches très douces ;</li>
+ *     <li>flammes (Ren, Ken, aura sauvage) : une couche plus vive et plus serrée, les flammes font le reste.</li>
  * </ul>
+ * Ryu poussé vers l'attaque : la lueur du corps s'efface (l'aura part dans les poings).
  */
 public class AuraLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
-    private static final ResourceLocation SWIRL =
-            ResourceLocation.fromNamespaceAndPath("hxh", "textures/entity/aura_swirl.png");
     /** Centre approximatif du corps dans l'espace du modèle (axe Y vers le bas, pieds à 1,5). */
     private static final float BODY_CENTER_Y = 0.75f;
 
@@ -48,36 +42,33 @@ public class AuraLayer<T extends LivingEntity, M extends EntityModel<T>> extends
     public void render(PoseStack poseStack, MultiBufferSource buffers, int packedLight, T entity,
                        float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks,
                        float netHeadYaw, float headPitch) {
-        if (entity.isInvisible() || !entity.hasData(ModAttachments.HUNTER)) return;
+        AuraClient.Look look = AuraClient.look(entity);
+        if (look == null) return;
         HunterData data = entity.getData(ModAttachments.HUNTER);
-        if (!data.nenUnlocked() || data.mode() == NenMode.ZETSU) return;
-        // In : l'aura est dissimulée, seul le Gyo du joueur qui regarde la révèle
-        if (data.mode() == NenMode.IN && !SensesClient.localGyo()) return;
-
-        float pulse = Mth.sin(ageInTicks * 0.25f) * 0.5f + 0.5f;
-        float intensity;
-        float scale;
-        switch (data.mode()) {
-            case TEN -> { intensity = 0.8f; scale = 1.04f; }
-            case REN -> { intensity = 0.9f + 0.1f * pulse; scale = 1.12f + 0.03f * pulse; }
-            case KEN -> { intensity = 1.0f; scale = 1.09f; }
-            default -> { intensity = 0.6f; scale = 1.06f; }
+        float pulse = Mth.sin(ageInTicks * 0.15f) * 0.5f + 0.5f;
+        float body = look.bodyVisibility();
+        if (look.flames()) {
+            shell(poseStack, buffers, look.color(), (0.55f + 0.15f * pulse) * look.strength() * body, 1.05f);
+            shell(poseStack, buffers, look.color(), 0.25f * look.strength() * body, 1.12f + 0.02f * pulse);
+        } else {
+            float k = data.mode() == NenMode.TEN ? 1f : 0.6f;
+            shell(poseStack, buffers, look.color(), (0.32f + 0.08f * pulse) * k * body, 1.05f);
+            shell(poseStack, buffers, look.color(), (0.16f + 0.05f * pulse) * k * body, 1.14f + 0.02f * pulse);
         }
+    }
 
-        int rgb = data.healing() ? 0x7CFF8A : data.auraColor();
+    private void shell(PoseStack poseStack, MultiBufferSource buffers, int rgb, float intensity, float scale) {
+        if (intensity <= 0.01f) return;
         int r = (int) (((rgb >> 16) & 0xFF) * intensity);
         int g = (int) (((rgb >> 8) & 0xFF) * intensity);
         int b = (int) ((rgb & 0xFF) * intensity);
-        int color = FastColor.ARGB32.color(255, r, g, b);
-
-        float scroll = ageInTicks * 0.01f;
-        VertexConsumer consumer = buffers.getBuffer(RenderType.energySwirl(SWIRL, scroll % 1f, (scroll * 0.7f) % 1f));
-
+        VertexConsumer consumer = buffers.getBuffer(RenderType.eyes(NenFxClient.WHITE));
         poseStack.pushPose();
         poseStack.translate(0, BODY_CENTER_Y, 0);
         poseStack.scale(scale, scale, scale);
         poseStack.translate(0, -BODY_CENTER_Y, 0);
-        getParentModel().renderToBuffer(poseStack, consumer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, color);
+        getParentModel().renderToBuffer(poseStack, consumer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,
+                FastColor.ARGB32.color(255, r, g, b));
         poseStack.popPose();
     }
 

@@ -1,5 +1,5 @@
 {
   "entity": "minecraft:vindicator",
   "stats": { "all": 45, "speed": 55 },
-  "nen": { "level": 40, "kit": "killua", "mastery": 30 }
+  "nen": { "level": 40, "kit": "killua", "mastery": 30, "aura": "wild" }
 }

@@ -43,6 +43,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private final java.util.Set<String> learned = new java.util.LinkedHashSet<>();
     /** Part du bonus de Vitesse utilisée (réglable dans le carnet) : 1 = tout. */
     private float speedCap = 1f;
+    /** Aura sauvage (hostile, incontrôlée) : des flammes même au repos. Par défaut, aura calme (vapeur). */
+    private boolean wildAura;
 
     private float aura = 0;
     private int auraMax = 100;
@@ -186,6 +188,15 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
 
     public float speedCap() {
         return speedCap;
+    }
+
+    public boolean wildAura() {
+        return wildAura;
+    }
+
+    public void setWildAura(boolean wild) {
+        wildAura = wild;
+        dirty.add(NEN);
     }
 
     public void setSpeedCap(float cap) {
@@ -487,6 +498,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             if (nenType != null) nen.putString("type", nenType.id());
             if (talent != null) nen.putString("talent", talent.id());
             nen.putFloat("speed_cap", speedCap);
+            nen.putBoolean("wild_aura", wildAura);
             net.minecraft.nbt.ListTag list = new net.minecraft.nbt.ListTag();
             for (String a : learned) list.add(net.minecraft.nbt.StringTag.valueOf(a));
             nen.put("learned", list);
@@ -620,6 +632,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             learned.clear();
             for (net.minecraft.nbt.Tag t : nen.getList("learned", net.minecraft.nbt.Tag.TAG_STRING)) learned.add(t.getAsString());
             speedCap = nen.contains("speed_cap") ? Math.max(0f, Math.min(1f, nen.getFloat("speed_cap"))) : 1f;
+            wildAura = nen.getBoolean("wild_aura");
         }
         if (in.contains(AURA)) {
             CompoundTag a = in.getCompound(AURA);

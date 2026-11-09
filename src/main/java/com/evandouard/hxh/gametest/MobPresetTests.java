@@ -80,4 +80,13 @@ public class MobPresetTests {
         npc.discard();
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void auraTemperFromPreset(GameTestHelper helper) {
+        LivingEntity wild = spawn(helper, "vindicateur_transmuteur", 0);
+        LivingEntity calm = spawn(helper, "zombie_renforceur", 2);
+        helper.assertTrue(com.evandouard.hxh.stats.HunterStats.get(wild).wildAura(), "Le vindicateur a une aura sauvage");
+        helper.assertFalse(com.evandouard.hxh.stats.HunterStats.get(calm).wildAura(), "Aura calme par défaut");
+        helper.succeed();
+    }
 }

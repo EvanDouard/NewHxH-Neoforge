@@ -143,6 +143,10 @@ public final class HunterCommand {
                                                 .executes(ctx -> spawnPreset(ctx.getSource(), StringArgumentType.getString(ctx, "preset"),
                                                         net.minecraft.commands.arguments.coordinates.Vec3Argument.getVec3(ctx, "pos"),
                                                         IntegerArgumentType.getInteger(ctx, "count")))))))
+                // Tempérament de l'aura : calme (vapeur au repos) ou sauvage (flammes même au repos)
+                .then(Commands.literal("aura").requires(s -> s.hasPermission(2))
+                        .then(Commands.literal("calm").executes(ctx -> setTemper(ctx.getSource(), false)))
+                        .then(Commands.literal("wild").executes(ctx -> setTemper(ctx.getSource(), true))))
                 // Frappe chargée immédiate avec une valeur de barre donnée (tests des paliers d'impact)
                 .then(Commands.literal("strike").requires(s -> s.hasPermission(2))
                         .then(Commands.argument("value", com.mojang.brigadier.arguments.FloatArgumentType.floatArg(0f, 1f))
@@ -346,7 +350,12 @@ public final class HunterCommand {
                                     }
                                     return apply(ctx, List.of(ctx.getSource().getEntityOrException()),
                                             e -> HunterStats.get(e).setAuraColor(rgb));
-                                })));
+                                })))
+                // Part du Ryu en attaque (0 à 100 %), sans passer par l'écran du Ryu
+                .then(Commands.literal("ryu")
+                        .then(Commands.argument("attack", IntegerArgumentType.integer(0, 100))
+                                .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()),
+                                        e -> HunterStats.get(e).setRyuAttack(IntegerArgumentType.getInteger(ctx, "attack"))))))
     }
 
     /** Administration du Hatsu : forcer un personnage (y compris sur un mob), effacer, faire lancer. */
@@ -606,6 +615,13 @@ public final class HunterCommand {
             lines.add(Component.translatable("command.hxh.show.nen_admin", nenType).withStyle(ChatFormatting.DARK_GRAY));
         }
         for (Component line : lines) source.sendSuccess(() -> line, false);
+        return 1;
+    }
+
+    private static int setTemper(CommandSourceStack source, boolean wild) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        if (!(source.getEntityOrException() instanceof LivingEntity living)) return 0;
+        HunterStats.get(living).setWildAura(wild);
+        source.sendSuccess(() -> Component.translatable(wild ? "command.hxh.aura.wild" : "command.hxh.aura.calm"), false);
         return 1;
     }
 }

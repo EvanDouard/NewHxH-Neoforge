@@ -38,7 +38,9 @@ import java.util.Map;
  * {
  *   "entity": "minecraft:zombie",
  *   "stats": { "all": 10, "strength": 50 },           // niveaux 0 à 90 ; "all" = valeur par défaut
- *   "nen": { "level": 30, "kit": "gon", "mastery": 20, "mode": "ten" },   // optionnel ; "type" si pas de kit
+ *   "nen": { "level": 30, "kit": "gon", "mastery": 20, "mode": "ten", "aura": "calm" },   // optionnel ;
+ *                                                      // "type" si pas de kit ; "aura": "wild" = aura hostile
+ *                                                      // (flammes même au repos)
  *   "equipment": { "mainhand": "minecraft:iron_sword", "head": "minecraft:iron_helmet" },   // optionnel
  *   "no_ai": false, "knockback_resistance": 0.0, "persistent": true,
  *   "dummy": false                                     // mannequin : ne meurt pas, se régénère, retiré par
@@ -50,7 +52,8 @@ import java.util.Map;
 public record MobPreset(ResourceLocation id, ResourceLocation entity, Map<Stat, Integer> stats,
                         int nenLevel, @Nullable String kit, @Nullable NenType nenType, int mastery,
                         @Nullable NenMode mode, Map<EquipmentSlot, ResourceLocation> equipment,
-                        boolean noAi, double knockbackResistance, boolean persistent, boolean dummy) {
+                        boolean noAi, double knockbackResistance, boolean persistent, boolean dummy,
+                        boolean wildAura) {
 
     /** Étiquette des mannequins : ils encaissent (on voit les dégâts) mais ne meurent pas. */
     public static final String DUMMY_TAG = "hxh_dummy";
@@ -73,6 +76,7 @@ public record MobPreset(ResourceLocation id, ResourceLocation entity, Map<Stat, 
         String kit = null;
         NenType type = null;
         NenMode mode = null;
+        boolean wild = false;
         if (json.has("nen")) {
             JsonObject n = GsonHelper.getAsJsonObject(json, "nen");
             nenLevel = clamp(GsonHelper.getAsInt(n, "level", 1));
@@ -83,6 +87,7 @@ public record MobPreset(ResourceLocation id, ResourceLocation entity, Map<Stat, 
             mastery = clamp(GsonHelper.getAsInt(n, "mastery", nenLevel / 2));
             String m = GsonHelper.getAsString(n, "mode", null);
             mode = m == null ? null : NenMode.byId(m);
+            wild = "wild".equals(GsonHelper.getAsString(n, "aura", "calm"));
         }
 
         Map<EquipmentSlot, ResourceLocation> equipment = new LinkedHashMap<>();
@@ -97,7 +102,7 @@ public record MobPreset(ResourceLocation id, ResourceLocation entity, Map<Stat, 
                 GsonHelper.getAsBoolean(json, "no_ai", false),
                 GsonHelper.getAsDouble(json, "knockback_resistance", 0.0),
                 GsonHelper.getAsBoolean(json, "persistent", true),
-                GsonHelper.getAsBoolean(json, "dummy", false));
+                GsonHelper.getAsBoolean(json, "dummy", false), wild);
     }
 
     private static int clamp(int level) {
@@ -131,6 +136,7 @@ public record MobPreset(ResourceLocation id, ResourceLocation entity, Map<Stat, 
             data.setAuraMax(NenModes.computeAuraMax(data));
             data.setAura(data.auraMax());
             if (mode != null) data.setMode(mode);
+            data.setWildAura(wildAura);
         }
         HunterStats.applyAttributes(living);
         AttributeInstance kb = living.getAttribute(Attributes.KNOCKBACK_RESISTANCE);

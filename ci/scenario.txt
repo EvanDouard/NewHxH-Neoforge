@@ -100,6 +100,22 @@ key key.hxh.zetsu
 cmd hunter nen color FF8A3D
 wait 30
 shot 12_aura_orange
+key key.hxh.ken
+wait 30
+shot 12b_ken_flammes
+key key.hxh.ken
+cmd hunter aura wild
+key key.hxh.ten
+wait 30
+shot 12c_aura_sauvage_au_ten
+key key.hxh.ten
+cmd hunter aura calm
+cmd hunter nen ryu 100
+key key.hxh.ren
+wait 30
+shot 12d_ryu_poings
+key key.hxh.ren
+cmd hunter nen ryu 50
 camera first
 
 # --- Soin par le Nen ---
