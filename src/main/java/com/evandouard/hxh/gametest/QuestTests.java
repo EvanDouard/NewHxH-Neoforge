@@ -117,10 +117,7 @@ public final class QuestTests {
         helper.assertTrue(d.step() == idx("storm"), "Puis la tempête");
         for (int i = 0; i < 40 * 20 && d.step() == idx("storm"); i++) QuestManager.tick(player);
         helper.assertTrue(d.step() == idx("granny"), "La tempête passée, la Mamie de Dolle");
-        // La Mamie : répondre, c'est perdre ; se taire 5 s, c'est gagner
-        QuestManager.onTalk(player, granny);
-        helper.assertTrue(!QuestManager.answer(player, 1), "Choisir sa mère est une mauvaise réponse");
-        helper.assertTrue(d.step() == idx("granny"), "Toujours chez la Mamie");
+        // La Mamie : se taire 5 s, c'est gagner (répondre élimine : voir wrongAnswerAtTheExamEliminates)
         QuestManager.onTalk(player, granny);
         for (int i = 0; i < 6 * 20 && d.step() == idx("granny"); i++) QuestManager.tick(player);
         helper.assertTrue(d.step() == idx("cook"), "Le silence était la bonne réponse");
