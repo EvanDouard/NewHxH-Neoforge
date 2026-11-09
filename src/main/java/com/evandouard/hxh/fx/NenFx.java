@@ -148,6 +148,11 @@ public final class NenFx {
     }
 
     /** Efface la boule en charge du lanceur (relâchée ou annulée). */
+    /** Retire tous les effets accrochés au lanceur (changement de kit). */
+    public static void clearAll(Entity caster) {
+        if (caster.level() instanceof ServerLevel s) send(s, Kind.CLEAR, caster, null, caster.position(), 2f, 0, 1);
+    }
+
     public static void clear(LivingEntity caster) {
         if (caster.level() instanceof ServerLevel s) send(s, Kind.CLEAR, caster, null, caster.position(), 1f, 0, 1);
     }

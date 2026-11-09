@@ -87,8 +87,11 @@ public final class NenFxClient {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
         if (p.kindEnum() == NenFx.Kind.CLEAR) {
+            // taille 2 : tout ce qui est accroché au lanceur (changement de kit)
+            boolean all = p.size() > 1.5f;
             ACTIVE.removeIf(f -> f.source == p.source()
-                    && (f.kind == NenFx.Kind.CHARGE_ORB || f.kind == NenFx.Kind.GUM_LINK));
+                    && (all ? attachedToBody(f.kind) || f.kind == NenFx.Kind.CHARGE_ORB || f.kind == NenFx.Kind.GUM_LINK
+                    : f.kind == NenFx.Kind.CHARGE_ORB || f.kind == NenFx.Kind.GUM_LINK));
             return;
         }
         if (p.kindEnum() == NenFx.Kind.IMPACT_FRAME) {
@@ -162,6 +165,11 @@ public final class NenFxClient {
 
     private static void draw(Ctx c, Fx f, float age) {
         float t = age / f.duration;
+        // Effets accrochés au corps : invisibles quand le lanceur l'est (Texture Surprise, Zetsu…)
+        if (attachedToBody(f.kind)) {
+            Entity src = entity(f.source);
+            if (src != null && src.isInvisible()) return;
+        }
         switch (f.kind) {
             case IMPACT -> impact(c, f.at, f.size, f.color, t, f.seed, IMPACT);
             case SLASH -> impact(c, f.at, f.size, f.color, t, f.seed, SLASH);
@@ -347,6 +355,13 @@ public final class NenFxClient {
         Vec3 pos = from.lerp(to, p);
         billboard(c, RenderType.eyes(GLOW), pos, half * 2.2f, 0, f.color, 0.8f);
         billboard(c, RenderType.entityTranslucent(ORB), pos, half, age * 0.3f, f.color, 1f);
+    }
+
+    private static boolean attachedToBody(NenFx.Kind kind) {
+        return switch (kind) {
+            case NEEDLE_CROWN, PUPPET_STRINGS, CRACKLE, HOLY_CHAIN, FLARE -> true;
+            default -> false;
+        };
     }
 
     /** Mort d'un mob : petite étoile d'encre grise et anneau au sol, à la place de la fumée de Minecraft. */
@@ -918,7 +933,7 @@ public final class NenFxClient {
         Vec3 p = patient.getPosition(c.pt);
         float yaw = (patient instanceof LivingEntity l ? Mth.lerp(c.pt, l.yBodyRotO, l.yBodyRot) : patient.getYRot()) * Mth.DEG_TO_RAD;
         float bob = Mth.sin(age * 0.15f) * 0.06f;
-        Vec3 body = p.add(0, patient.getBbHeight() + 0.75 + bob, 0);
+        Vec3 body = p.add(0, patient.getBbHeight() + 0.45 + bob, 0);
         float s = 0.9f * pop;
         if (s < 0.05f) return;
         box(c, body, 0.42f * s, 0.5f * s, 0.3f * s, yaw, 0xFFF4F1EA, fade);                       // blouse

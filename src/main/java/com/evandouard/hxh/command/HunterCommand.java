@@ -390,6 +390,7 @@ public final class HunterCommand {
         if (kit == null) throw UNKNOWN_KIT.create(id);
         return apply(ctx, targets, e -> {
             HunterData d = HunterStats.get(e);
+            com.evandouard.hxh.fx.NenFx.clearAll(e);
             d.setNenType(kit.type());
             if (!d.nenUnlocked()) NenModes.unlock(e);
             d.setNenRevealed(true);
