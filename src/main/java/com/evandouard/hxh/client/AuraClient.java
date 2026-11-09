@@ -110,7 +110,7 @@ public final class AuraClient {
             float phase = ((time / life) + i * 0.618f) % 1f;
             float ang = i * 2.39996f + Mth.sin(time * 0.05f + i) * 0.3f;
             float rad = w * (0.45f + 0.15f * look.strength());
-            float y = feet.y() + h * (0.05f + 0.75f * phase);
+            float y = (float) (feet.y() + h * (0.05f + 0.75f * phase));
             float size = maxTongue * Mth.sin(Mth.PI * Math.min(1f, phase * 1.3f)) * (0.7f + 0.3f * hash(i));
             if (size < 0.05f) continue;
             float flick = 1f + 0.18f * Mth.sin(time * 1.3f + i * 2.1f);
@@ -125,7 +125,7 @@ public final class AuraClient {
                 float phase = ((time / life) + i * 0.618f) % 1f;
                 float ang = i * 2.39996f + Mth.sin(time * 0.05f + i) * 0.3f;
                 float rad = w * (0.45f + 0.15f * look.strength());
-                float y = feet.y() + h * (0.05f + 0.75f * phase);
+                float y = (float) (feet.y() + h * (0.05f + 0.75f * phase));
                 float size = maxTongue * Mth.sin(Mth.PI * Math.min(1f, phase * 1.3f)) * (0.7f + 0.3f * hash(i)) * 0.7f;
                 if (size < 0.05f) continue;
                 Vec3 base = new Vec3(feet.x() + Mth.cos(ang) * rad, y, feet.z() + Mth.sin(ang) * rad);
@@ -148,7 +148,7 @@ public final class AuraClient {
             float ang = i * 2.39996f;
             float rad = w * 0.55f + phase * 0.25f;
             float drift = Mth.sin(time * 0.04f + i * 1.7f) * 0.25f;
-            float y = feet.y() + h * (0.15f + 0.6f * hash(i)) + phase * h * 0.7f;
+            float y = (float) (feet.y() + h * (0.15f + 0.6f * hash(i)) + phase * h * 0.7f);
             Vec3 at = new Vec3(feet.x() + Mth.cos(ang) * rad + drift, y, feet.z() + Mth.sin(ang) * rad - drift);
             float size = (0.25f + 0.35f * phase) * (0.6f + 0.6f * look.strength());
             float a = Mth.sin(Mth.PI * phase) * 0.55f * body;
