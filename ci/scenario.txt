@@ -456,13 +456,15 @@ wait 15
 shot 22k_pitou_terpsichora_fils
 cmd hunter hatsu next
 cmd hunter nen refill
+look 0 0
 camera back
-look 0 -20
+cmd summon minecraft:villager ~ ~ ~3 {NoAI:1b,PersistenceRequired:1b,Silent:1b,Tags:["hxh_patient"]}
+wait 10
 cmd hunter hatsu cast
 wait 20
 shot 22l_docteur_blythe_poupee
-look 0 0
 wait 70
+cmd kill @e[tag=hxh_patient]
 cmd effect clear @s
 cmd hunter hatsu set hisoka
 look 0 0
