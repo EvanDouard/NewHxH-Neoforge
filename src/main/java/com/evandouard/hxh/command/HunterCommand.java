@@ -143,6 +143,12 @@ public final class HunterCommand {
                                                 .executes(ctx -> spawnPreset(ctx.getSource(), StringArgumentType.getString(ctx, "preset"),
                                                         net.minecraft.commands.arguments.coordinates.Vec3Argument.getVec3(ctx, "pos"),
                                                         IntegerArgumentType.getInteger(ctx, "count")))))))
+                // Jenny du carnet (tests des boutiques)
+                .then(Commands.literal("jenny").requires(s -> s.hasPermission(2))
+                        .then(Commands.literal("add").then(Commands.argument("amount", IntegerArgumentType.integer())
+                                .executes(ctx -> jenny(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "amount"), false))))
+                        .then(Commands.literal("set").then(Commands.argument("amount", IntegerArgumentType.integer(0))
+                                .executes(ctx -> jenny(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "amount"), true)))))
                 // Tempérament de l'aura : calme (vapeur au repos) ou sauvage (flammes même au repos)
                 .then(Commands.literal("aura").requires(s -> s.hasPermission(2))
                         .then(Commands.literal("calm").executes(ctx -> setTemper(ctx.getSource(), false)))
@@ -623,6 +629,15 @@ public final class HunterCommand {
         if (!(source.getEntityOrException() instanceof LivingEntity living)) return 0;
         HunterStats.get(living).setWildAura(wild);
         source.sendSuccess(() -> Component.translatable(wild ? "command.hxh.aura.wild" : "command.hxh.aura.calm"), false);
+        return 1;
+    }
+
+    private static int jenny(CommandSourceStack source, int amount, boolean set) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        net.minecraft.server.level.ServerPlayer player = source.getPlayerOrException();
+        com.evandouard.hxh.quest.QuestData d = com.evandouard.hxh.quest.QuestManager.data(player);
+        d.addJenny(set ? amount - d.jenny() : amount);
+        int now = d.jenny();
+        source.sendSuccess(() -> Component.translatable("command.hxh.jenny", now), false);
         return 1;
     }
 }

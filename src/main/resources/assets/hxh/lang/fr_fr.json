@@ -622,7 +622,7 @@
   "tooltip.hxh.treadmill.mode": "Clic droit : mode Vitesse (sprint) ou Endurance (marche)",
   "tooltip.hxh.training.source_1": "Gamme I · fabricable",
   "tooltip.hxh.training.source_2": "Gamme II · amélioration de la gamme I",
-  "tooltip.hxh.training.source_3": "Gamme III · vendue par les marchands (bientôt)",
+  "tooltip.hxh.training.source_3": "Gamme III · vendue par le marchand de la Tour Céleste",
   "tooltip.hxh.training.source_4": "Gamme IV · rare, aux enchères (bientôt)",
   "item.hxh.dumbbell_1": "Haltères I",
   "block.hxh.treadmill_1": "Tapis de course I",
@@ -733,5 +733,17 @@
   "command.hxh.aura.calm": "Aura calme : vapeur au repos, flammes au Ren et au Ken.",
   "technique.hxh.hisoka_cards": "Cartes renforcées",
   "technique.hxh.hisoka_cards.desc": "Une carte à jouer renforcée par le Nen, lancée comme une lame. Elle tranche tout ce qu'elle touche.",
-  "technique.hxh.cond.gum": "une cible devant toi, jusqu'à %s blocs"
+  "technique.hxh.cond.gum": "une cible devant toi, jusqu'à %s blocs",
+  "npc.hxh.merchant": "Marchand de la Tour",
+  "shop.hxh.buy": "Acheter",
+  "shop.hxh.sell": "Vendre",
+  "shop.hxh.sell_all": "Tout",
+  "shop.hxh.jenny": "%s J",
+  "shop.hxh.price": "%s Jenny",
+  "shop.hxh.unit": "%s J/u · tu en as %s",
+  "shop.hxh.sells": "Il vend",
+  "shop.hxh.buys": "Il rachète",
+  "shop.hxh.empty": "Rien à vendre pour l'instant.",
+  "shop.hxh.not_enough": "Il te manque %s Jenny.",
+  "command.hxh.jenny": "Jenny : %s"
 }

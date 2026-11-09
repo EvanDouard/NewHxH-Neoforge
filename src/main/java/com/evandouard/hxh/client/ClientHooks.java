@@ -15,4 +15,11 @@ public final class ClientHooks {
     public static void openElevator(com.evandouard.hxh.network.OpenElevatorPayload payload) {
         Minecraft.getInstance().setScreen(new ElevatorScreen(payload.brackets(), payload.current(), payload.room()));
     }
+
+    public static void openShop(com.evandouard.hxh.network.OpenShopPayload payload) {
+        Minecraft mc = Minecraft.getInstance();
+        // Écran déjà ouvert sur cette boutique : on le met à jour sans le refermer
+        if (mc.screen instanceof ShopScreen open && open.shopId().equals(payload.shop())) open.update(payload);
+        else mc.setScreen(new ShopScreen(payload));
+    }
 }

@@ -185,6 +185,9 @@ public final class ArenaWorld {
         if (!layout.receptionists().isEmpty()) {
             BlockPos spot = standSpot(level, layout.receptionists().get(0));
             if (spot != null) ensureNpcs(level, "wing", ENTRY, List.of(spot));
+            // Le marchand (gamme III, rachat des butins) : une autre place libre près de l'hôtesse
+            BlockPos shop = standSpotExcept(level, layout.receptionists().get(0), spot);
+            if (shop != null) ensureNpcs(level, "merchant", ENTRY, List.of(shop));
         }
         LAYOUTS.put(ENTRY, layout);
         return layout;
@@ -426,6 +429,21 @@ public final class ArenaWorld {
             for (int[] d : new int[][]{{r, 0}, {-r, 0}, {0, r}, {0, -r}, {r, r}, {-r, r}, {r, -r}, {-r, -r}}) {
                 for (int dy = -1; dy <= 1; dy++) {
                     BlockPos p = base.offset(d[0], dy, d[1]);
+                    if (level.getBlockState(p).isAir() && level.getBlockState(p.above()).isAir()
+                            && level.getBlockState(p.below()).isFaceSturdy(level, p.below(), net.minecraft.core.Direction.UP)) return p;
+                }
+            }
+        }
+        return null;
+    }
+
+    /** Comme {@link #standSpot}, mais pas sur {@code taken} ni juste à côté. */
+    static BlockPos standSpotExcept(ServerLevel level, BlockPos base, BlockPos taken) {
+        for (int r = 3; r <= 7; r++) {
+            for (int[] d : new int[][]{{-r, 0}, {0, -r}, {r, 0}, {0, r}, {-r, -r}, {r, -r}, {-r, r}, {r, r}}) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    BlockPos p = base.offset(d[0], dy, d[1]);
+                    if (taken != null && p.distManhattan(taken) < 3) continue;
                     if (level.getBlockState(p).isAir() && level.getBlockState(p.above()).isAir()
                             && level.getBlockState(p.below()).isFaceSturdy(level, p.below(), net.minecraft.core.Direction.UP)) return p;
                 }

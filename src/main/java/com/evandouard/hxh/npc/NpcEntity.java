@@ -111,7 +111,10 @@ public class NpcEntity extends PathfinderMob {
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND && player instanceof ServerPlayer serverPlayer) {
-            QuestManager.onTalk(serverPlayer, this);
+            // Un marchand ouvre sa boutique (accroupi : on lui parle quand même, pour ses quêtes)
+            com.evandouard.hxh.shop.Shop shop = com.evandouard.hxh.shop.ShopRegistry.forNpc(npcId());
+            if (shop != null && !player.isShiftKeyDown()) com.evandouard.hxh.shop.Shops.open(serverPlayer, shop);
+            else QuestManager.onTalk(serverPlayer, this);
         }
         return InteractionResult.sidedSuccess(level().isClientSide());
     }

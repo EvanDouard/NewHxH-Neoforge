@@ -622,7 +622,7 @@
   "tooltip.hxh.treadmill.mode": "Right-click: Speed mode (sprint) or Endurance mode (walk)",
   "tooltip.hxh.training.source_1": "Tier I · craftable",
   "tooltip.hxh.training.source_2": "Tier II · upgraded from tier I",
-  "tooltip.hxh.training.source_3": "Tier III · sold by merchants (coming soon)",
+  "tooltip.hxh.training.source_3": "Tier III · sold by the Heavens Arena merchant",
   "tooltip.hxh.training.source_4": "Tier IV · rare, at auctions (coming soon)",
   "item.hxh.dumbbell_1": "Dumbbells I",
   "block.hxh.treadmill_1": "Treadmill I",
@@ -733,5 +733,17 @@
   "command.hxh.aura.calm": "Calm aura: vapour at rest, flames with Ren and Ken.",
   "technique.hxh.hisoka_cards": "Reinforced cards",
   "technique.hxh.hisoka_cards.desc": "A playing card reinforced with Nen, thrown like a blade. It cuts through whatever it hits.",
-  "technique.hxh.cond.gum": "a target in front of you, up to %s blocks"
+  "technique.hxh.cond.gum": "a target in front of you, up to %s blocks",
+  "npc.hxh.merchant": "Tower merchant",
+  "shop.hxh.buy": "Buy",
+  "shop.hxh.sell": "Sell",
+  "shop.hxh.sell_all": "All",
+  "shop.hxh.jenny": "%s J",
+  "shop.hxh.price": "%s Jenny",
+  "shop.hxh.unit": "%s J each · you have %s",
+  "shop.hxh.sells": "Sells",
+  "shop.hxh.buys": "Buys",
+  "shop.hxh.empty": "Nothing for sale yet.",
+  "shop.hxh.not_enough": "You are %s Jenny short.",
+  "command.hxh.jenny": "Jenny: %s"
 }
