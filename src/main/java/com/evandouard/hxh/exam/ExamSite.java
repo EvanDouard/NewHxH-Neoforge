@@ -1,0 +1,37 @@
+package com.evandouard.hxh.exam;
+
+import com.evandouard.hxh.HxHMod;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Locale;
+
+/** Les lieux de l'Examen Hunter, dans l'ordre du parcours. */
+public enum ExamSite {
+    ZABAN("zaban_restaurant"),
+    HALL("hall_inscription"),
+    BISKA("biska"),
+    HOTEL("hotel");
+
+    private final String file;
+
+    ExamSite(String file) {
+        this.file = file;
+    }
+
+    /** Identifiant court utilisé dans les quêtes ({@code "site": "zaban"}). */
+    public String id() {
+        return name().toLowerCase(Locale.ROOT);
+    }
+
+    /** Structure d'Evan, si elle existe : {@code hxh:exam/<fichier>}. */
+    public ResourceLocation template() {
+        return HxHMod.id("exam/" + file);
+    }
+
+    @Nullable
+    public static ExamSite byId(String id) {
+        for (ExamSite s : values()) if (s.id().equals(id) || s.file.equals(id)) return s;
+        return null;
+    }
+}

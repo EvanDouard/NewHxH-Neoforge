@@ -113,6 +113,7 @@ public final class QuestManager {
         player.sendSystemMessage(Component.translatable("message.hxh.exam_failed").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
         player.sendSystemMessage(Component.translatable("message.hxh.exam_failed_detail").withStyle(ChatFormatting.GRAY));
         d.refocus();
+        com.evandouard.hxh.exam.ExamTrips.returnHome(player);
         sync(player);
     }
 
@@ -368,10 +369,15 @@ public final class QuestManager {
             d.step = 0;
             player.sendSystemMessage(Component.translatable("message.hxh.quest_completed",
                     q.title(player)).withStyle(ChatFormatting.GOLD));
+            // Fin d'un voyage (Examen) : retour là d'où l'on était parti
+            com.evandouard.hxh.exam.ExamTrips.returnHome(player);
             com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.quest_done"),
                     q.title(player), "★", com.evandouard.hxh.network.Hud.GOLD);
         } else {
             Quest.Step next = q.steps().get(d.step);
+            // L'étape suivante se passe dans un autre lieu de l'Examen : on y est emmené
+            com.evandouard.hxh.exam.ExamSite site = com.evandouard.hxh.exam.ExamSite.byId(next.site());
+            if (site != null) com.evandouard.hxh.exam.ExamTrips.sendTo(player, site);
             com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.new_step"),
                     q.objective(next, player), "!", com.evandouard.hxh.network.Hud.GOLD);
             if (next.type().equals("follow")) {

@@ -634,13 +634,17 @@ cmd hunter quest reset
 cmd hunter exam setup
 look 90 5
 wait 40
-shot 33_site_d_examen
+shot 33_navigateur_qui_attend
 clearchat
 goto navigator
 talkto navigator
-wait 20
+wait 80
 expect Nouvelle quête : Examen Hunter
-shot 34_navigateur_et_suivi_de_quete
+shot 34_zaban_gargote
+goto cook
+talkto cook
+wait 80
+shot 34a_hall_souterrain
 goto beans
 talkto beans
 wait 10
@@ -649,10 +653,13 @@ goto satotz
 talkto satotz
 wait 10
 expect Satotz
-cmd tp @s ~80 ~ ~
-wait 160
+wait 40
+shot 34b_tunnel_du_marathon
+# on reste sur place : Satotz s'éloigne, examen raté, retour au point de départ
+wait 300
 expect Retentez l'année prochaine
-shot 34b_examen_rate
+wait 40
+shot 34c_examen_rate_retour
 goto navigator
 clearchat
 talkto navigator
@@ -662,7 +669,10 @@ cmd hunter quest reset
 clearchat
 goto navigator
 talkto navigator
-wait 10
+wait 80
+goto cook
+talkto cook
+wait 80
 goto beans
 talkto beans
 wait 10
@@ -670,18 +680,22 @@ goto satotz
 talkto satotz
 wait 10
 cmd hunter quest skip
+wait 80
+shot 34d_reserve_de_biska
 goto buhara
 talkto buhara
 wait 5
 cmd hunter quest skip
 wait 5
 talkto buhara
-wait 5
+wait 80
+shot 34e_hotel_de_l_association
 goto netero
 clearchat
 talkto netero
 wait 20
 expect Tu es maintenant un Hunter
+wait 60
 shot 35_licence_de_hunter
 
 # --- J7 : Tour Céleste ---

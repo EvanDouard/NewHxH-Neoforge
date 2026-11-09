@@ -38,7 +38,7 @@ public final class QuestTests {
     public static void examQuestIsLoaded(GameTestHelper helper) {
         Quest exam = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
         helper.assertTrue(exam != null, "La quête hxh:hunter_exam doit être chargée depuis le datapack");
-        helper.assertTrue(exam.steps().size() == 8, "8 étapes attendues, obtenu " + exam.steps().size());
+        helper.assertTrue(exam.steps().size() == 9, "9 étapes attendues, obtenu " + exam.steps().size());
         helper.succeed();
     }
 
@@ -50,6 +50,7 @@ public final class QuestTests {
         NpcEntity satotz = npc(helper, "satotz", 2);
         NpcEntity buhara = npc(helper, "buhara", 0);
         NpcEntity netero = npc(helper, "netero", 2);
+        NpcEntity cook = npc(helper, "cook", 1);
         Vec3 near = satotz.position();
         player.moveTo(near.x, near.y, near.z);
         QuestData d = QuestManager.data(player);
@@ -58,24 +59,26 @@ public final class QuestTests {
         helper.assertTrue(d.active().isEmpty(), "Parler à Beans d'abord ne lance rien");
         QuestManager.onTalk(player, navigator);
         helper.assertTrue(!d.active().isEmpty() && d.step() == 1, "Le Navigateur lance l'examen et valide la 1re étape");
+        QuestManager.onTalk(player, cook);
+        helper.assertTrue(d.step() == 2, "Le cuisinier de Zaban fait descendre au hall");
         QuestManager.onTalk(player, beans);
         helper.assertTrue(player.getInventory().contains(ModItems.EXAM_BADGE.get().getDefaultInstance()), "Plaque de candidat reçue");
         QuestManager.onTalk(player, satotz);
-        helper.assertTrue(d.step() == 3, "Étape du marathon attendue");
+        helper.assertTrue(d.step() == 4, "Étape du marathon attendue");
 
         // Marathon : rester près de Satotz pendant 60 s
-        for (int i = 0; i < 60 * 20 && d.step() == 3; i++) {
+        for (int i = 0; i < 60 * 20 && d.step() == 4; i++) {
             player.moveTo(satotz.getX(), satotz.getY(), satotz.getZ());
             QuestManager.tick(player);
         }
-        helper.assertTrue(d.step() == 4, "Le marathon aurait dû être réussi");
+        helper.assertTrue(d.step() == 5, "Le marathon aurait dû être réussi");
 
         QuestManager.onTalk(player, buhara);
         for (int i = 0; i < 2; i++) {
             Pig pig = helper.spawn(EntityType.PIG, new BlockPos(1, 1, 1));
             QuestManager.onKill(player, pig);
         }
-        helper.assertTrue(d.step() == 6, "La chasse aurait dû être validée");
+        helper.assertTrue(d.step() == 7, "La chasse aurait dû être validée");
         QuestManager.onTalk(player, buhara);
         QuestManager.onTalk(player, netero);
         helper.assertTrue(d.isHunter(), "Le joueur doit être Hunter");
@@ -93,8 +96,8 @@ public final class QuestTests {
         String exam = QuestRegistry.HUNTER_EXAM.toString();
         QuestManager.onTalk(player, navigator);
         helper.assertTrue(d.isRunning(exam), "Le Navigateur lance l'examen");
-        for (int i = 0; i < 2; i++) QuestManager.advance(player); // jusqu'au marathon
-        helper.assertTrue(d.step() == 3, "Étape du marathon attendue");
+        for (int i = 0; i < 3; i++) QuestManager.advance(player); // jusqu'au marathon
+        helper.assertTrue(d.step() == 4, "Étape du marathon attendue");
         player.moveTo(satotz.getX(), satotz.getY(), satotz.getZ());
         for (int i = 0; i < 40; i++) QuestManager.tick(player);
         helper.assertTrue(d.isRunning(exam), "Tant qu'on suit, l'examen continue");
@@ -132,14 +135,14 @@ public final class QuestTests {
         satotz.setRoute(java.util.List.of(helper.absolutePos(new BlockPos(3, 2, 1)), helper.absolutePos(new BlockPos(3, 2, 4))));
         QuestData d = QuestManager.data(player);
         QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
-        for (int i = 0; i < 3; i++) QuestManager.advance(player); // marathon
+        for (int i = 0; i < 4; i++) QuestManager.advance(player); // marathon
         helper.onEachTick(() -> {
-            if (d.step() != 3) return;
+            if (d.step() != 4) return;
             player.moveTo(satotz.getX(), satotz.getY(), satotz.getZ());
             QuestManager.tick(player);
         });
         helper.succeedWhen(() -> {
-            helper.assertTrue(d.step() == 4, "Satotz doit atteindre la fin de son parcours (point " + satotz.routeIndex() + ")");
+            helper.assertTrue(d.step() == 5, "Satotz doit atteindre la fin de son parcours (point " + satotz.routeIndex() + ")");
         });
     }
 
@@ -252,6 +255,21 @@ public final class QuestTests {
         } finally {
             com.evandouard.hxh.nen.NenLearning.forceInTests = false;
         }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 200)
+    public static void examSitesAreBuiltWithNpcsAndCourse(GameTestHelper helper) {
+        net.minecraft.server.level.ServerLevel exam = com.evandouard.hxh.exam.ExamWorld.level(helper.getLevel().getServer());
+        helper.assertTrue(exam != null, "La dimension de l'Examen existe");
+        com.evandouard.hxh.exam.ExamWorld.Site hall = com.evandouard.hxh.exam.ExamWorld.ensure(exam, com.evandouard.hxh.exam.ExamSite.HALL);
+        helper.assertTrue(hall.npcs().containsKey("beans") && hall.npcs().containsKey("satotz"), "Beans et Satotz dans le hall");
+        helper.assertTrue(hall.route().size() >= 5, "Parcours du marathon dans le tunnel : " + hall.route().size() + " points");
+        helper.assertTrue(!exam.getBlockState(hall.arrival().below()).isAir(), "On arrive sur un sol");
+        com.evandouard.hxh.exam.ExamWorld.Site biska = com.evandouard.hxh.exam.ExamWorld.ensure(exam, com.evandouard.hxh.exam.ExamSite.BISKA);
+        helper.assertTrue(biska.npcs().containsKey("buhara") && !biska.prey().isEmpty(), "Buhara et des proies à Biska");
+        for (com.evandouard.hxh.exam.ExamSite s : com.evandouard.hxh.exam.ExamSite.values())
+            helper.assertTrue(!com.evandouard.hxh.exam.ExamWorld.ensure(exam, s).npcs().isEmpty(), "PNJ présents : " + s.id());
         helper.succeed();
     }
 }

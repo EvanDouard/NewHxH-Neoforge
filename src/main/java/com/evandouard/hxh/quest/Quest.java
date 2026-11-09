@@ -42,7 +42,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                        double maxDistance, String rewardItem, boolean rewardHunter, int rewardJenny,
                        String item, double[] pos, double radius, String note,
                        Map<String, String> objective, Map<String, String> dialog,
-                       String mode, List<String> rewardLearn) {
+                       String mode, List<String> rewardLearn, String site) {
 
         /** Objectif chiffré de l'étape (pour la progression affichée) : nombre de mobs ou secondes, sinon 0. */
         public int goal() {
@@ -169,7 +169,8 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                     texts(s, "objective"),
                     texts(s, "dialog"),
                     str(s, "mode", ""),
-                    stringList(s, "reward_learn"));
+                    stringList(s, "reward_learn"),
+                    str(s, "site", ""));
             // Vérifications : les erreurs ne bloquent pas, elles s'affichent avec /hunter quest check
             if (!TYPES.contains(type)) problems.add(where + "type inconnu « " + type + " »");
             if (List.of("talk", "follow", "bring").contains(type) && step.npc().isEmpty()) problems.add(where + "il manque \"npc\"");
@@ -185,6 +186,8 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                 problems.add(where + "sens inconnu « " + step.mode() + " » (gyo, en)");
             if (type.equals("nen_flag") && !List.of("unlocked", "revealed", "kit").contains(step.mode()))
                 problems.add(where + "drapeau inconnu « " + step.mode() + " » (unlocked, revealed, kit)");
+            if (!step.site().isEmpty() && com.evandouard.hxh.exam.ExamSite.byId(step.site()) == null)
+                problems.add(where + "lieu d'examen inconnu « " + step.site() + " » (zaban, hall, biska, hotel)");
             for (String a : step.rewardLearn())
                 if (com.evandouard.hxh.nen.NenLearning.Ability.byId(a) == null) problems.add(where + "capacité inconnue « " + a + " »");
             if (!step.rewardItem().isEmpty() && !BuiltInRegistries.ITEM.containsKey(ResourceLocation.tryParse(step.rewardItem())))

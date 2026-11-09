@@ -464,7 +464,7 @@
   "dialog.hxh.satotz.idle": "…",
   "dialog.hxh.buhara.idle": "J'ai faim !",
   "dialog.hxh.netero.idle": "Ho ho ho, continue de t'entraîner.",
-  "dialog.hxh.hunter_exam.navigator": "Tu veux devenir Hunter ? Va voir Beans, il prendra ton inscription.",
+  "dialog.hxh.hunter_exam.navigator": "Tu veux devenir Hunter ? Je t'emmène à Zaban. Entre dans la gargote de la rue Tsubashi et commande le menu du jour au cuisinier.",
   "dialog.hxh.hunter_exam.register": "Bienvenue à l'Examen Hunter. Voici ta plaque de candidat, ne la perds pas.",
   "dialog.hxh.hunter_exam.satotz": "Je suis Satotz, examinateur de la première épreuve. Suivez-moi… et ne vous laissez pas distancer.",
   "dialog.hxh.hunter_exam.buhara": "Deuxième épreuve ! Ramène-moi du porc, j'ai une faim de loup !",
@@ -485,7 +485,7 @@
   "message.hxh.quest_completed": "Quête terminée : %s",
   "message.hxh.quest_left_behind": "Tu te fais distancer ! Rattrape Satotz (%s s)",
   "message.hxh.became_hunter": "Tu es maintenant un Hunter !",
-  "command.hxh.exam_setup": "Site d'examen provisoire installé autour de toi.",
+  "command.hxh.exam_setup": "Un Navigateur attend à côté de toi : parle-lui pour lancer l'Examen.",
   "command.hxh.quest_reset": "Quêtes et licence remises à zéro.",
   "command.hxh.show.hunter": "  Licence de Hunter : %s",
   "command.hxh.yes": "oui",
@@ -751,5 +751,14 @@
   "screen.hxh.computer.hunter": "Hunter licencié",
   "screen.hxh.computer.guest": "Accès invité",
   "screen.hxh.computer.locked": "Fiche verrouillée",
-  "screen.hxh.computer.empty": "Aucune fiche disponible pour l'instant."
+  "screen.hxh.computer.empty": "Aucune fiche disponible pour l'instant.",
+  "dialog.hxh.hunter_exam.cook": "Un menu steak, cuisson à feu doux… Installe-toi dans la salle du fond. (La salle se met à descendre.)",
+  "quest.hxh.hunter_exam.cook": "Commander le menu du jour au cuisinier de Zaban",
+  "exam.hxh.site.zaban": "Zaban, rue Tsubashi",
+  "exam.hxh.site.hall": "Hall souterrain de l'Examen",
+  "exam.hxh.site.biska": "Réserve de Biska",
+  "exam.hxh.site.hotel": "Hôtel de l'Association des Hunters",
+  "command.hxh.exam_where": "Le Navigateur attend les candidats en %s %s %s.",
+  "command.hxh.exam_where_none": "Le Navigateur n'est pas encore placé.",
+  "command.hxh.exam_rebuild": "Les lieux de l'Examen seront reconstruits à la prochaine visite."
 }

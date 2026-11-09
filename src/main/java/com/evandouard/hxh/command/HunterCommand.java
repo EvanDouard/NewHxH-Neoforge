@@ -63,7 +63,30 @@ public final class HunterCommand {
                 .then(nenCommand())
                 .then(hatsuCommand())
                 .then(Commands.literal("exam").requires(src -> src.hasPermission(2))
-                        .then(Commands.literal("setup").executes(ctx -> examSetup(ctx.getSource()))))
+                        .then(Commands.literal("setup").executes(ctx -> examSetup(ctx.getSource())))
+                        .then(Commands.literal("where").executes(ctx -> {
+                            long nav = com.evandouard.hxh.exam.ExamSavedData.get(ctx.getSource().getLevel()).navigator();
+                            if (nav == Long.MIN_VALUE) {
+                                ctx.getSource().sendFailure(Component.translatable("command.hxh.exam_where_none"));
+                                return 0;
+                            }
+                            net.minecraft.core.BlockPos p = net.minecraft.core.BlockPos.of(nav);
+                            ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.exam_where", p.getX(), p.getY(), p.getZ()), false);
+                            return 1;
+                        }))
+                        .then(Commands.literal("rebuild").executes(ctx -> {
+                            net.minecraft.server.level.ServerLevel exam = com.evandouard.hxh.exam.ExamWorld.level(ctx.getSource().getServer());
+                            if (exam != null) com.evandouard.hxh.exam.ExamWorld.forget(exam);
+                            ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.exam_rebuild"), true);
+                            return 1;
+                        }))
+                        .then(Commands.literal("site").then(Commands.argument("site", StringArgumentType.word())
+                                .suggests((c, b) -> SharedSuggestionProvider.suggest(java.util.Arrays.stream(
+                                        com.evandouard.hxh.exam.ExamSite.values()).map(com.evandouard.hxh.exam.ExamSite::id), b))
+                                .executes(ctx -> {
+                                    com.evandouard.hxh.exam.ExamSite site = com.evandouard.hxh.exam.ExamSite.byId(StringArgumentType.getString(ctx, "site"));
+                                    return site != null && com.evandouard.hxh.exam.ExamTrips.sendTo(ctx.getSource().getPlayerOrException(), site) ? 1 : 0;
+                                }))))
                 .then(arenaCommand())
                 .then(structureCommand())
                 .then(Commands.literal("quest").requires(src -> src.hasPermission(2))
@@ -541,38 +564,17 @@ public final class HunterCommand {
     }
 
     /** Fait apparaître autour du joueur le site d'examen provisoire (en attendant les structures). */
+    /** Un Navigateur à côté de soi (tests ; en jeu, il attend près du point d'apparition). */
     private static int examSetup(CommandSourceStack source) throws CommandSyntaxException {
         net.minecraft.server.level.ServerPlayer player = source.getPlayerOrException();
         net.minecraft.server.level.ServerLevel level = player.serverLevel();
-        String[] npcs = {"navigator", "beans", "satotz", "buhara", "netero"};
-        int[][] offsets = {{3, 0}, {6, 2}, {9, 0}, {6, -4}, {-4, 0}};
-        for (int i = 0; i < npcs.length; i++) {
-            com.evandouard.hxh.npc.NpcEntity npc = com.evandouard.hxh.registry.ModEntities.NPC.get().create(level);
-            if (npc == null) continue;
-            net.minecraft.core.BlockPos pos = player.blockPosition().offset(offsets[i][0], 0, offsets[i][1]);
-            npc.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
-            npc.setNpcId(npcs[i]);
-            npc.setHome(pos);
-            if (npcs[i].equals("satotz")) {
-                // Parcours de démonstration : une boucle de 8 points autour du site, qui revient près du départ
-                java.util.List<net.minecraft.core.BlockPos> route = new java.util.ArrayList<>();
-                for (int k = 1; k <= 8; k++) {
-                    double a = k * Math.PI / 4;
-                    int x = (int) Math.round(Math.cos(a) * 14), z = (int) Math.round(Math.sin(a) * 14);
-                    net.minecraft.core.BlockPos p = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                            pos.offset(x - 14, 0, z));
-                    route.add(p);
-                }
-                npc.setRoute(route);
-            }
-            level.addFreshEntity(npc);
-        }
-        for (int i = 0; i < 3; i++) {
-            net.minecraft.world.entity.animal.Pig pig = net.minecraft.world.entity.EntityType.PIG.create(level);
-            if (pig == null) continue;
-            pig.moveTo(player.getX() + 10 + i, player.getY(), player.getZ() - 8, 0, 0);
-            level.addFreshEntity(pig);
-        }
+        com.evandouard.hxh.npc.NpcEntity npc = com.evandouard.hxh.registry.ModEntities.NPC.get().create(level);
+        if (npc == null) return 0;
+        net.minecraft.core.BlockPos pos = player.blockPosition().offset(3, 0, 0);
+        npc.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
+        npc.setNpcId("navigator");
+        npc.setHome(pos);
+        level.addFreshEntity(npc);
         source.sendSuccess(() -> Component.translatable("command.hxh.exam_setup"), false);
         return 1;
     }

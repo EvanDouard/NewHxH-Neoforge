@@ -28,6 +28,9 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     String tracked = "";
     final Set<String> completed = new HashSet<>();
     boolean hunter = false;
+    /** D'où l'on est parti pour l'Examen (dimension et position), pour y revenir à la fin. */
+    String examReturnDim = "";
+    long examReturnPos = Long.MIN_VALUE;
     /** Examen Hunter raté : pas de nouvel essai avant ce moment (temps de jeu), ni dans le même centre. */
     long examRetryAt = 0;
     long examFailedCenter = Long.MIN_VALUE;
@@ -139,6 +142,19 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
 
     public long examFailedCenter() {
         return examFailedCenter;
+    }
+
+    public void setExamReturn(String dimension, long pos) {
+        examReturnDim = dimension;
+        examReturnPos = pos;
+    }
+
+    public String examReturnDimension() {
+        return examReturnDim;
+    }
+
+    public long examReturnPos() {
+        return examReturnPos;
     }
 
     public boolean isHunter() {
@@ -263,6 +279,10 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         tag.put("running", quests);
         tag.putString("tracked", tracked);
         tag.putBoolean("hunter", hunter);
+        if (!examReturnDim.isEmpty()) {
+            tag.putString("exam_return_dim", examReturnDim);
+            tag.putLong("exam_return_pos", examReturnPos);
+        }
         tag.putLong("exam_retry_at", examRetryAt);
         tag.putLong("exam_failed_center", examFailedCenter);
         tag.putLong("exam_center", examCenter);
@@ -303,6 +323,8 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         active = "";
         refocus();
         hunter = tag.getBoolean("hunter");
+        examReturnDim = tag.getString("exam_return_dim");
+        examReturnPos = tag.contains("exam_return_pos") ? tag.getLong("exam_return_pos") : Long.MIN_VALUE;
         examRetryAt = tag.getLong("exam_retry_at");
         examFailedCenter = tag.contains("exam_failed_center") ? tag.getLong("exam_failed_center") : Long.MIN_VALUE;
         examCenter = tag.contains("exam_center") ? tag.getLong("exam_center") : Long.MIN_VALUE;

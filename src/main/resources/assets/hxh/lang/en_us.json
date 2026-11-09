@@ -464,7 +464,7 @@
   "dialog.hxh.satotz.idle": "…",
   "dialog.hxh.buhara.idle": "I'm hungry!",
   "dialog.hxh.netero.idle": "Ho ho ho, keep training.",
-  "dialog.hxh.hunter_exam.navigator": "You want to become a Hunter? Go see Beans, he'll register you.",
+  "dialog.hxh.hunter_exam.navigator": "You want to become a Hunter? I'll take you to Zaban. Go into the diner on Tsubashi street and order the daily special from the cook.",
   "dialog.hxh.hunter_exam.register": "Welcome to the Hunter Exam. Here's your applicant badge, don't lose it.",
   "dialog.hxh.hunter_exam.satotz": "I am Satotz, examiner of the first phase. Follow me… and don't fall behind.",
   "dialog.hxh.hunter_exam.buhara": "Second phase! Bring me some pork, I'm starving!",
@@ -485,7 +485,7 @@
   "message.hxh.quest_completed": "Quest completed: %s",
   "message.hxh.quest_left_behind": "You're falling behind! Catch up with Satotz (%s s)",
   "message.hxh.became_hunter": "You are now a Hunter!",
-  "command.hxh.exam_setup": "Temporary exam site set up around you.",
+  "command.hxh.exam_setup": "A Navigator is waiting next to you: talk to them to start the Exam.",
   "command.hxh.quest_reset": "Quests and license reset.",
   "command.hxh.show.hunter": "  Hunter license: %s",
   "command.hxh.yes": "yes",
@@ -751,5 +751,14 @@
   "screen.hxh.computer.hunter": "Licensed Hunter",
   "screen.hxh.computer.guest": "Guest access",
   "screen.hxh.computer.locked": "Locked entry",
-  "screen.hxh.computer.empty": "No entry available yet."
+  "screen.hxh.computer.empty": "No entry available yet.",
+  "dialog.hxh.hunter_exam.cook": "One steak combo, grilled over a low flame… Take a seat in the back room. (The room starts going down.)",
+  "quest.hxh.hunter_exam.cook": "Order the daily special from the Zaban cook",
+  "exam.hxh.site.zaban": "Zaban, Tsubashi street",
+  "exam.hxh.site.hall": "Underground exam hall",
+  "exam.hxh.site.biska": "Biska forest reserve",
+  "exam.hxh.site.hotel": "Hunter Association hotel",
+  "command.hxh.exam_where": "The Navigator is waiting for candidates at %s %s %s.",
+  "command.hxh.exam_where_none": "The Navigator hasn't been placed yet.",
+  "command.hxh.exam_rebuild": "Exam sites will be rebuilt on the next visit."
 }
