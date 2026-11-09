@@ -377,7 +377,7 @@ shot 22d_holy_chain
 cmd hunter hatsu set killua
 cmd hunter nen refill
 cmd hunter hatsu cast
-wait 1
+wait 3
 shot 22e_eclair_killua
 wait 10
 cmd hunter hatsu next
@@ -430,7 +430,7 @@ shot 22f8_pierre_sans_retenue_explosion
 cmd hunter hatsu set leorio
 cmd hunter nen refill
 cmd hunter hatsu cast
-wait 2
+wait 5
 shot 22g_poing_a_distance
 wait 20
 cmd hunter hatsu next
@@ -440,6 +440,16 @@ wait 4
 shot 22h_onde_de_choc
 cmd hunter hatsu set illumi
 cmd hunter nen refill
+cmd hunter hatsu cast
+wait 5
+shot 22i_aiguille_illumi
+cmd hunter hatsu next
+cmd hunter nen refill
+cmd hunter hatsu cast
+camera front
+wait 15
+shot 22j_illumi_transformation_aiguilles
+camera first
 cmd kill @e[type=minecraft:husk]
 cmd tp @s ~-300 -60 ~
 wait 40

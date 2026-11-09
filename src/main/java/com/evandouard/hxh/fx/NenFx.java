@@ -49,7 +49,11 @@ public final class NenFx {
         /** Image d'impact plein écran (éclair, lignes de vitesse) pour les joueurs proches de la cible. */
         IMPACT_FRAME,
         /** Papier : vague d'aura en cône qui part de la paume. Point = bout du cône, taille = longueur. */
-        PALM_WAVE
+        PALM_WAVE,
+        /** Poing de Leorio : il frappe dans un portail près de sa main, le poing ressort d'un portail à côté de la cible. */
+        WARP_FIST,
+        /** Illumi se transforme : aiguilles plantées dans sa propre tête, aura sombre qui palpite (toute la durée). */
+        NEEDLE_CROWN
     }
 
     /**
@@ -178,6 +182,14 @@ public final class NenFx {
 
     public static void needle(LivingEntity source, LivingEntity target, Vec3 at, int duration) {
         if (source.level() instanceof ServerLevel s) send(s, Kind.NEEDLE, source, target, at, 1f, WHITE, duration);
+    }
+
+    public static void warpFist(LivingEntity source, LivingEntity target, Vec3 at, float size, int color) {
+        if (source.level() instanceof ServerLevel s) send(s, Kind.WARP_FIST, source, target, at, size, color, 16);
+    }
+
+    public static void needleCrown(LivingEntity entity, int color, int duration) {
+        if (entity.level() instanceof ServerLevel s) send(s, Kind.NEEDLE_CROWN, entity, null, entity.position(), 1f, color, duration);
     }
 
     public static void palmWave(LivingEntity caster, double length, int color) {

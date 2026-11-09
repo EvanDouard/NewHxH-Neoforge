@@ -174,6 +174,8 @@ public final class NenFxClient {
             case CHARGE_ORB -> chargeOrb(c, f, age);
             case QUAKE -> quake(c, f, age);
             case PALM_WAVE -> palmWave(c, f, t);
+            case WARP_FIST -> warpFist(c, f, age);
+            case NEEDLE_CROWN -> needleCrown(c, f, age);
             case CLEAR, IMPACT_FRAME -> {}
         }
     }
@@ -725,6 +727,87 @@ public final class NenFxClient {
         for (float d = 0.3f; d < reach; d += 0.6f) {
             float a = (1f - t) * (1f - d / (len + 1f));
             billboard(c, RenderType.eyes(GLOW), o.add(dir.scale(d)), 0.35f + d * spread * 0.5f, 0, f.color, a * 0.7f);
+        }
+    }
+
+    /** Portail d'émission : anneau encré face à {@code dir}, rayon r. */
+    private static void portal(Ctx c, Vec3 at, Vec3 dir, float r, int color, float alpha, float spin) {
+        Vec3[] n = normals(dir);
+        float cs = Mth.cos(spin), sn = Mth.sin(spin);
+        Vec3 u = n[0].scale(cs).add(n[1].scale(sn)).scale(r), v = n[1].scale(cs).subtract(n[0].scale(sn)).scale(r);
+        quad(c, RenderType.entityTranslucent(RING), at.subtract(u).subtract(v), at.add(u).subtract(v),
+                at.add(u).add(v), at.subtract(u).add(v), color, alpha);
+        Vec3 g = u.scale(0.8), h = v.scale(0.8);
+        quad(c, RenderType.eyes(GLOW), at.subtract(g).subtract(h), at.add(g).subtract(h),
+                at.add(g).add(h), at.subtract(g).add(h), color, alpha * 0.6f);
+    }
+
+    /**
+     * Poing de Leorio : il frappe dans un portail qui s'ouvre devant sa main ; un second portail s'ouvre à côté de la
+     * cible et le coup en jaillit (grande étoile d'impact et traits de vitesse), puis les deux portails se referment.
+     */
+    private static void warpFist(Ctx c, Fx f, float age) {
+        Entity src = entity(f.source);
+        Entity tgt = entity(f.target);
+        if (f.dir == null) {
+            Vec3 from = src != null ? hand(src, c.pt) : f.at;
+            Vec3 aim = tgt != null ? center(tgt, c.pt) : f.at;
+            Vec3 d = aim.subtract(from);
+            f.dir = d.lengthSqr() < 1e-6 ? new Vec3(0, 0, 1) : d.normalize();
+        }
+        Vec3 dir = f.dir;
+        float open = Math.min(1f, age / 3f);
+        float close = age > f.duration - 4 ? (f.duration - age) / 4f : 1f;
+        float r = 0.55f * ease(open) * close;
+        if (src != null) portal(c, hand(src, c.pt).add(dir.scale(0.3)), dir, r, f.color, close, age * 0.2f);
+        Vec3 hit = tgt != null ? center(tgt, c.pt) : f.at;
+        Vec3 exit = hit.subtract(dir.scale(1.3));
+        portal(c, exit, dir, r * 1.4f, f.color, close, -age * 0.2f);
+        if (age >= 2) {
+            float k = Math.min(1f, (age - 2) / 3f);
+            Vec3 fist = exit.lerp(hit, ease(k));
+            // traits de vitesse du portail vers la cible
+            Vec3[] n = normals(dir);
+            for (int i = 0; i < 6; i++) {
+                float a = i / 6f * Mth.TWO_PI;
+                Vec3 off = n[0].scale(Mth.cos(a) * 0.5).add(n[1].scale(Mth.sin(a) * 0.5));
+                ribbon(c, RenderType.entityTranslucent(WHITE), exit.add(off), fist.add(off.scale(0.4)), 0.03f, INK, close);
+                ribbon(c, RenderType.eyes(WHITE), exit.add(off.scale(0.8)), fist.add(off.scale(0.3)), 0.08f, f.color, close * 0.7f);
+            }
+            billboard(c, RenderType.entityTranslucent(IMPACT), fist, f.size * (0.4f + 0.6f * k), age * 0.1f, f.color, close);
+        }
+        if (!f.impactDone && age >= 5 && tgt != null) {
+            f.impactDone = true;
+            PENDING.add(localFx(NenFx.Kind.IMPACT, hit, f.size * 1.2f, f.color, 8));
+        }
+    }
+
+    /**
+     * Transformation d'Illumi : une demi-couronne d'aiguilles plantées dans le crâne (on voit les têtes rondes qui
+     * dépassent) et un halo sombre qui palpite autour de la tête, pendant toute la durée du renforcement.
+     */
+    private static void needleCrown(Ctx c, Fx f, float age) {
+        Entity src = entity(f.source);
+        if (src == null || firstPerson(src)) return;
+        float fade = age > f.duration - 10 ? (f.duration - age) / 10f : Math.min(1f, age / 6f);
+        Vec3 head = src.getEyePosition(c.pt).add(0, 0.15, 0);
+        float yaw = (src instanceof LivingEntity l ? Mth.lerp(c.pt, l.yHeadRotO, l.yHeadRot) : src.getYRot()) * Mth.DEG_TO_RAD;
+        Vec3 back = new Vec3(Mth.sin(yaw), 0, -Mth.cos(yaw)); // derrière la tête
+        Vec3 side = new Vec3(Mth.cos(yaw), 0, Mth.sin(yaw));
+        float pulse = 0.5f + 0.5f * Mth.sin(age * 0.3f);
+        billboard(c, RenderType.entityTranslucent(GLOW), head, 0.75f + 0.1f * pulse, 0, f.color, 0.45f * fade);
+        for (int i = 0; i < 7; i++) {
+            float t = (i - 3) / 3f;                      // -1 .. 1 de gauche à droite
+            Vec3 out = back.scale(0.6).add(side.scale(t * 0.8)).add(0, 0.9 - Math.abs(t) * 0.4, 0).normalize();
+            Vec3 root = head.add(out.scale(0.22));
+            Vec3 tip = root.add(out.scale(0.42 + 0.06 * hash(i, 3)));
+            Vec3[] n = normals(out);
+            for (Vec3 sd : n) {
+                Vec3 s2 = sd.scale(0.035);
+                // la tête ronde de l'aiguille dépasse : texture retournée (tête vers l'extérieur)
+                quad(c, RenderType.entityTranslucent(NEEDLE), tip.subtract(s2), root.subtract(s2), root.add(s2), tip.add(s2),
+                        0xFFFFFFFF, fade);
+            }
         }
     }
 }

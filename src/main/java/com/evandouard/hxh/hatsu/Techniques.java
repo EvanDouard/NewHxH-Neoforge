@@ -89,7 +89,7 @@ public final class Techniques {
 
     // ---------- Leorio : émission ----------
     public static final Technique LEORIO_REMOTE_PUNCH = register(new Strike("leorio_remote_punch", NenType.EMITTER, 30, 120,
-            12, 0.97, 7f, 1.0f, List.of(), new Look(Style.ORB, NenFx.EMITTER, 1.8f), SoundEvents.PLAYER_ATTACK_KNOCKBACK));
+            12, 0.97, 7f, 1.0f, List.of(), new Look(Style.WARP_FIST, NenFx.EMITTER, 1.8f), SoundEvents.PLAYER_ATTACK_KNOCKBACK));
     public static final Technique LEORIO_SHOCKWAVE = register(new Blast("leorio_shockwave", NenType.EMITTER, 40, 200,
             4, 4f, 1.2f, new Look(Style.SHOCKWAVE, NenFx.EMITTER, 1f), SoundEvents.GENERIC_EXPLODE.value())).requiresNenLevel(5);
 
@@ -99,7 +99,7 @@ public final class Techniques {
             new Look(Style.NEEDLE, NenFx.MANIPULATOR, 1f), SoundEvents.ARROW_HIT));
     public static final Technique ILLUMI_TRANSFORM = register(new SelfBuff("illumi_transform", NenType.MANIPULATOR, 50, 600,
             List.of(new Effect(MobEffects.DAMAGE_RESISTANCE, 300, 0), new Effect(MobEffects.DAMAGE_BOOST, 300, 0)),
-            new Look(Style.FLARE, NenFx.DARK, 1f), SoundEvents.ZOMBIE_VILLAGER_CURE)).requiresNenLevel(10);
+            new Look(Style.NEEDLE_CROWN, NenFx.DARK, 1f), SoundEvents.ZOMBIE_VILLAGER_CURE)).requiresNenLevel(10);
 
     // ---------- Neferpitou : spécialiste ----------
     public static final Technique PITOU_TERPSICHORA = register(new SelfBuff("pitou_terpsichora", NenType.SPECIALIST, 60, 600,
@@ -127,7 +127,7 @@ public final class Techniques {
     }
 
     /** Allure d'une technique (direction artistique : formes dessinées, pas de particules de Minecraft). */
-    public enum Style { IMPACT, SLASH, ORB, BOLT, CHAIN, NEEDLE, SHOCKWAVE, FLARE, CRACKLE, HOLY_CHAIN }
+    public enum Style { IMPACT, SLASH, ORB, BOLT, CHAIN, NEEDLE, SHOCKWAVE, FLARE, CRACKLE, HOLY_CHAIN, WARP_FIST, NEEDLE_CROWN }
 
     /** Allure : style, couleur d'aura, taille. */
     public record Look(Style style, int color, float size) {}
@@ -146,6 +146,7 @@ public final class Techniques {
             }
             case SLASH -> NenFx.slash(caster, at, look.size(), look.color());
             case ORB -> NenFx.orb(caster, target, end, look.size(), look.color());
+            case WARP_FIST -> NenFx.warpFist(caster, target, end, look.size(), look.color());
             case BOLT -> {
                 NenFx.bolt(caster, target, end, look.color());
                 // La cible reste parcourue d'arcs le temps de la paralysie
@@ -168,6 +169,10 @@ public final class Techniques {
                 NenFx.crackle(caster, look.color(), holdTicks);
             }
             case HOLY_CHAIN -> NenFx.holyChain(caster, look.color(), 50);
+            case NEEDLE_CROWN -> {
+                NenFx.flare(caster, look.size(), look.color());
+                NenFx.needleCrown(caster, look.color(), holdTicks);
+            }
             default -> NenFx.flare(caster, look.size(), look.color());
         }
     }
