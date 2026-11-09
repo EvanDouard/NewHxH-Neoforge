@@ -35,6 +35,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
 
     /** Types d'étapes connus. */
     public static final Set<String> TYPES = Set.of("talk", "kill", "follow", "bring", "reach", "custom",
+            "quiz", "survive", "points",
             "nen_mode", "nen_sense", "nen_flag",
             "arena_win", "arena_floor", "arena_register_200");
 
@@ -42,14 +43,17 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                        double maxDistance, String rewardItem, boolean rewardHunter, int rewardJenny,
                        String item, double[] pos, double radius, String note,
                        Map<String, String> objective, Map<String, String> dialog,
-                       String mode, List<String> rewardLearn, String site) {
+                       String mode, List<String> rewardLearn, String site,
+                       Map<String, String> question, List<Map<String, String>> options, String answer, String hazard) {
 
         /** Objectif chiffré de l'étape (pour la progression affichée) : nombre de mobs ou secondes, sinon 0. */
         public int goal() {
             return switch (type) {
                 case "kill", "arena_win", "arena_floor" -> count;
                 case "bring" -> count;
-                case "follow", "nen_mode", "nen_sense" -> seconds;
+                case "follow", "nen_mode", "nen_sense", "survive" -> seconds;
+                case "quiz" -> "silence".equals(answer) ? seconds : 0;
+                case "points" -> count;
                 default -> 0;
             };
         }
@@ -75,6 +79,14 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
 
     public Component objective(Step step, ServerPlayer player) {
         return text(stepKey(step), step.objective(), player);
+    }
+
+    public Component question(Step step, ServerPlayer player) {
+        return text(dialogKey(step) + ".question", step.question(), player);
+    }
+
+    public Component option(Step step, int index, ServerPlayer player) {
+        return text(dialogKey(step) + ".option" + (index + 1), step.options().get(index), player);
     }
 
     public Component dialog(Step step, ServerPlayer player) {
@@ -125,6 +137,18 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
         return map;
     }
 
+    /** Choix d'un quiz : liste de textes (chaîne simple ou {"fr": …, "en": …}). */
+    static List<Map<String, String>> optionList(JsonObject o) {
+        List<Map<String, String>> out = new ArrayList<>();
+        if (!o.has("options")) return out;
+        for (JsonElement e : o.getAsJsonArray("options")) {
+            JsonObject wrap = new JsonObject();
+            wrap.add("t", e);
+            out.add(texts(wrap, "t"));
+        }
+        return List.copyOf(out);
+    }
+
     /** Une chaîne ou une liste de chaînes. */
     static List<String> stringList(JsonObject o, String key) {
         List<String> out = new ArrayList<>();
@@ -170,7 +194,11 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                     texts(s, "dialog"),
                     str(s, "mode", ""),
                     stringList(s, "reward_learn"),
-                    str(s, "site", ""));
+                    str(s, "site", ""),
+                    texts(s, "question"),
+                    optionList(s),
+                    str(s, "answer", "any"),
+                    str(s, "hazard", ""));
             // Vérifications : les erreurs ne bloquent pas, elles s'affichent avec /hunter quest check
             if (!TYPES.contains(type)) problems.add(where + "type inconnu « " + type + " »");
             if (List.of("talk", "follow", "bring").contains(type) && step.npc().isEmpty()) problems.add(where + "il manque \"npc\"");
@@ -186,6 +214,17 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                 problems.add(where + "sens inconnu « " + step.mode() + " » (gyo, en)");
             if (type.equals("nen_flag") && !List.of("unlocked", "revealed", "kit").contains(step.mode()))
                 problems.add(where + "drapeau inconnu « " + step.mode() + " » (unlocked, revealed, kit)");
+            if (type.equals("quiz") && step.question().isEmpty()) problems.add(where + "il manque \"question\"");
+            if (type.equals("quiz") && !step.answer().equals("silence") && !step.answer().equals("any")) {
+                try {
+                    int a = Integer.parseInt(step.answer());
+                    if (a < 1 || a > step.options().size()) problems.add(where + "réponse hors des choix : " + a);
+                } catch (NumberFormatException ex) {
+                    problems.add(where + "\"answer\" doit être un numéro de choix, \"any\" ou \"silence\"");
+                }
+            }
+            if (!step.hazard().isEmpty() && !List.of("storm", "fog").contains(step.hazard()))
+                problems.add(where + "danger inconnu « " + step.hazard() + " » (storm, fog)");
             if (!step.site().isEmpty() && com.evandouard.hxh.exam.ExamSite.byId(step.site()) == null)
                 problems.add(where + "lieu d'examen inconnu « " + step.site() + " » (zaban, hall, biska, hotel)");
             for (String a : step.rewardLearn())

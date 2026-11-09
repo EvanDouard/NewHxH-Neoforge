@@ -28,6 +28,11 @@ final class ExamPlaceholders {
             case HALL -> hall(level, c, place);
             case BISKA -> biska(level, c, place);
             case HOTEL -> hotel(level, c, place);
+            case BOAT -> boat(level, c, place);
+            case DOLLE -> dolle(level, c, place);
+            case NUMELE -> numele(level, c, place);
+            case MOUNT_SPLIT -> mountSplit(level, c, place);
+            case ZEVIL -> zevil(level, c, place);
         };
     }
 
@@ -136,10 +141,17 @@ final class ExamPlaceholders {
             set(level, c.offset(-2, 0, -9), Blocks.CAMPFIRE);
             set(level, c.offset(2, 0, -9), Blocks.SMOKER);
             set(level, c.offset(0, 0, -9), Blocks.CAULDRON);
+            // étang : les poissons du sushi de Menchi
+            for (int x = 8; x <= 14; x++) for (int z = -10; z <= -5; z++) {
+                set(level, c.offset(x, -1, z), Blocks.WATER);
+                set(level, c.offset(x, -2, z), Blocks.WATER);
+                set(level, c.offset(x, -3, z), Blocks.CLAY);
+            }
         }
         Map<String, BlockPos> npcs = new LinkedHashMap<>();
         npcs.put("buhara", c.offset(-3, 0, -6));
         npcs.put("menchi", c.offset(3, 0, -6));
+        npcs.put("netero", c.offset(0, 0, -12));
         List<BlockPos> prey = List.of(c.offset(-12, 0, 6), c.offset(12, 0, 6), c.offset(0, 0, 14));
         return new ExamWorld.Site(c.offset(0, 0, 4), 180f, npcs, List.of(), prey);
     }
@@ -167,5 +179,143 @@ final class ExamPlaceholders {
         Map<String, BlockPos> npcs = new LinkedHashMap<>();
         npcs.put("netero", c.offset(0, 0, -4));
         return new ExamWorld.Site(c.offset(0, 0, 4), 180f, npcs, List.of(), List.of());
+    }
+
+    // ------------------------------------------------------------------ Mer (bateau, Zevil)
+
+    /** Mer carrée de demi-côté {@code r} : 3 blocs d'eau sur du sable. */
+    private static void sea(ServerLevel level, BlockPos c, int r) {
+        for (int x = -r; x <= r; x++) for (int z = -r; z <= r; z++) {
+            for (int y = -4; y <= -2; y++) set(level, c.offset(x, y, z), Blocks.WATER);
+            set(level, c.offset(x, -5, z), Blocks.SAND);
+        }
+    }
+
+    /** Bateau de pêche vers Dolle : pont de 7 × 21, mât et voile ; le capitaine à la poupe. */
+    private static ExamWorld.Site boat(ServerLevel level, BlockPos c, boolean place) {
+        if (place) {
+            sea(level, c, 32);
+            for (int x = -3; x <= 3; x++) for (int z = -10; z <= 10; z++) {
+                boolean edge = Math.abs(x) == 3 || Math.abs(z) == 10;
+                set(level, c.offset(x, -1, z), Blocks.OAK_PLANKS);
+                set(level, c.offset(x, -2, z), Blocks.SPRUCE_PLANKS);
+                if (edge) set(level, c.offset(x, 0, z), Blocks.SPRUCE_FENCE);
+            }
+            for (int y = 0; y < 9; y++) set(level, c.offset(0, y, -2), Blocks.SPRUCE_LOG);
+            for (int x = -3; x <= 3; x++) for (int y = 3; y < 8; y++) set(level, c.offset(x, y, -1), Blocks.WHITE_WOOL);
+            set(level, c.offset(0, 0, 8), Blocks.BARREL);
+            set(level, c.offset(2, 0, 8), Blocks.LANTERN);
+        }
+        Map<String, BlockPos> npcs = new LinkedHashMap<>();
+        npcs.put("captain", c.offset(0, 0, 7));
+        return new ExamWorld.Site(c.offset(0, 0, 3), 0f, npcs, List.of(), List.of());
+    }
+
+    /** Île de Zevil : plage, forêt au centre, ponton d'arrivée ; des candidats rôdent avec leur plaque. */
+    private static ExamWorld.Site zevil(ServerLevel level, BlockPos c, boolean place) {
+        int r = 30;
+        if (place) {
+            sea(level, c, r + 12);
+            for (int x = -r; x <= r; x++) for (int z = -r; z <= r; z++) {
+                int d2 = x * x + z * z;
+                if (d2 > r * r) continue;
+                for (int y = -4; y <= -2; y++) set(level, c.offset(x, y, z), d2 > (r - 5) * (r - 5) ? Blocks.SAND : Blocks.DIRT);
+                set(level, c.offset(x, -1, z), d2 > (r - 5) * (r - 5) ? Blocks.SAND : Blocks.GRASS_BLOCK);
+            }
+            for (int k = 0; k < 14; k++) {
+                double a = k * 2.3;
+                double rr = 6 + (k % 4) * 4;
+                tree(level, c.offset((int) Math.round(Math.cos(a) * rr), 0, (int) Math.round(Math.sin(a) * rr)));
+            }
+            // ponton
+            for (int z = r - 2; z <= r + 8; z++) for (int x = -1; x <= 1; x++) set(level, c.offset(x, -1, z), Blocks.OAK_PLANKS);
+        }
+        Map<String, BlockPos> npcs = new LinkedHashMap<>();
+        npcs.put("lippo", c.offset(2, 0, r + 6));
+        List<BlockPos> spots = List.of(c.offset(-15, 0, -8), c.offset(14, 0, -10), c.offset(-6, 0, 16), c.offset(12, 0, 12));
+        return new ExamWorld.Site(c.offset(0, 0, r + 4), 180f, npcs, List.of(), spots);
+    }
+
+    // ------------------------------------------------------------------ Dolle
+
+    /** Rue de Dolle et maison de la Mamie au quiz. */
+    private static ExamWorld.Site dolle(ServerLevel level, BlockPos c, boolean place) {
+        if (place) {
+            for (int x = -12; x <= 12; x++) for (int z = -12; z <= 12; z++) set(level, c.offset(x, -1, z), Blocks.GRASS_BLOCK);
+            for (int z = -12; z <= 12; z++) for (int x = -1; x <= 1; x++) set(level, c.offset(x, -1, z), Blocks.COBBLESTONE);
+            BlockPos h = c.offset(0, 0, -8);
+            room(level, h, 4, 3, 4, Blocks.SPRUCE_PLANKS, Blocks.WHITE_TERRACOTTA, Blocks.DARK_OAK_PLANKS);
+            for (int y = 0; y < 2; y++) set(level, h.offset(0, y, 3), Blocks.AIR);
+            set(level, h.offset(-3, 0, -2), Blocks.BOOKSHELF);
+            set(level, h.offset(3, 0, -2), Blocks.LANTERN);
+        }
+        Map<String, BlockPos> npcs = new LinkedHashMap<>();
+        npcs.put("quiz_granny", c.offset(0, 0, -9));
+        return new ExamWorld.Site(c.offset(0, 0, 4), 180f, npcs, List.of(), List.of());
+    }
+
+    // ------------------------------------------------------------------ Numele
+
+    /** Marais de Numele : boue, flaques, arbres morts ; un chemin sinueux que Satotz suit dans le brouillard. */
+    private static ExamWorld.Site numele(ServerLevel level, BlockPos c, boolean place) {
+        int len = 80;
+        if (place) {
+            for (int x = -16; x <= 16; x++) for (int z = -6; z <= len + 6; z++) {
+                int h = (x * 31 + z * 17) & 7;
+                set(level, c.offset(x, -1, -z), h == 0 ? Blocks.WATER : h < 3 ? Blocks.MUD : Blocks.GRASS_BLOCK);
+                set(level, c.offset(x, -2, -z), Blocks.MUD);
+                if (h == 0 && ((x + z) & 3) == 0) set(level, c.offset(x, 0, -z), Blocks.LILY_PAD);
+            }
+            for (int k = 0; k < 18; k++) {
+                int x = (k % 2 == 0 ? -1 : 1) * (6 + (k * 7) % 9);
+                int z = 4 + k * 4;
+                for (int y = 0; y < 4 + k % 3; y++) set(level, c.offset(x, y, -z), Blocks.STRIPPED_DARK_OAK_LOG);
+            }
+            // chemin praticable (le joueur doit le suivre pour ne pas s'enliser)
+            for (int i = 0; i <= len; i++) {
+                int x = (int) Math.round(Math.sin(i / 9.0) * 5);
+                for (int dx = -1; dx <= 1; dx++) set(level, c.offset(x + dx, -1, -i), Blocks.PACKED_MUD);
+            }
+        }
+        Map<String, BlockPos> npcs = new LinkedHashMap<>();
+        npcs.put("satotz", c.offset(0, 0, -2));
+        // l'homme-singe qui se fait passer pour Satotz, à l'écart du chemin
+        npcs.put("fake_satotz", c.offset(9, 0, -14));
+        List<BlockPos> route = new ArrayList<>();
+        for (int i = 10; i <= len; i += 10) route.add(c.offset((int) Math.round(Math.sin(i / 9.0) * 5), 0, -i));
+        return new ExamWorld.Site(c.offset(0, 0, 3), 180f, npcs, route, List.of());
+    }
+
+    // ------------------------------------------------------------------ Mont Split
+
+    /** Profondeur de la faille du mont Split et hauteur des nids sous le bord. */
+    static final int RAVINE_DEPTH = 36, NEST_DEPTH = 12, RAVINE_HALF = 3;
+
+    /**
+     * Mont Split : deux falaises et une faille de 7 blocs de large ; des œufs d'aigle-araignée pendent sur des fils à
+     * 12 blocs sous le bord. Un courant d'air remonte celui qui tient un œuf ; une rivière au fond.
+     */
+    private static ExamWorld.Site mountSplit(ServerLevel level, BlockPos c, boolean place) {
+        if (place) {
+            for (int z = -14; z <= 14; z++) {
+                for (int x = -14; x <= 14; x++) {
+                    boolean gap = Math.abs(x) <= RAVINE_HALF;
+                    for (int y = -RAVINE_DEPTH; y <= -1; y++) {
+                        Block b = gap ? (y <= -RAVINE_DEPTH + 3 ? Blocks.WATER : Blocks.AIR) : (y == -1 ? Blocks.GRASS_BLOCK : Blocks.STONE);
+                        set(level, c.offset(x, y, z), b);
+                    }
+                    set(level, c.offset(x, -RAVINE_DEPTH - 1, z), Blocks.STONE);
+                }
+            }
+            // fils tendus d'une paroi à l'autre au niveau des nids
+            for (int z = -10; z <= 10; z += 5) for (int dz = -1; dz <= 1; dz++) for (int x = -RAVINE_HALF; x <= RAVINE_HALF; x++)
+                set(level, c.offset(x, -NEST_DEPTH, z + dz), Blocks.COBWEB);
+            for (int z = -14; z <= 14; z += 7) set(level, c.offset(-6, 0, z), Blocks.SPRUCE_FENCE);
+        }
+        Map<String, BlockPos> npcs = new LinkedHashMap<>();
+        npcs.put("menchi", c.offset(-7, 0, 2));
+        List<BlockPos> nests = new ArrayList<>();
+        for (int z = -10; z <= 10; z += 5) nests.add(c.offset(0, -NEST_DEPTH + 1, z));
+        return new ExamWorld.Site(c.offset(-6, 0, 0), -90f, npcs, List.of(), nests);
     }
 }

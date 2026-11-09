@@ -11,7 +11,17 @@ public enum ExamSite {
     ZABAN("zaban_restaurant"),
     HALL("hall_inscription"),
     BISKA("biska"),
-    HOTEL("hotel");
+    HOTEL("hotel"),
+    /** Bateau vers l'île de Dolle, pris dans la tempête (épreuve du capitaine). */
+    BOAT("bateau"),
+    /** Île de Dolle : la maison de la Mamie au quiz, sur le chemin de Zaban. */
+    DOLLE("dolle"),
+    /** Marais de Numele, à la sortie du tunnel : brouillard, il faut suivre Satotz. */
+    NUMELE("numele"),
+    /** Mont Split : sauter dans la faille pour cueillir un œuf d'aigle-araignée. */
+    MOUNT_SPLIT("mont_split"),
+    /** Île de Zevil, où l'on débarque en bateau : chasse aux plaques. */
+    ZEVIL("zevil");
 
     private final String file;
 

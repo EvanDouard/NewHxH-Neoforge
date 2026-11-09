@@ -123,6 +123,10 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         return step;
     }
 
+    public void setProgress(int value) {
+        progress = value;
+    }
+
     public int progress() {
         return progress;
     }

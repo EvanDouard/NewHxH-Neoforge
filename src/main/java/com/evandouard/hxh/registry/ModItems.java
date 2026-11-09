@@ -16,6 +16,14 @@ public final class ModItems {
     /** Plaque numérotée reçue à l'inscription de l'Examen Hunter. */
     public static final DeferredItem<Item> EXAM_BADGE =
             ITEMS.registerSimpleItem("exam_badge", new Item.Properties().stacksTo(1));
+    /** Zevil : plaque d'un autre candidat (1 point) et plaque de sa cible (3 points). */
+    public static final DeferredItem<Item> EXAM_PLATE =
+            ITEMS.registerSimpleItem("exam_plate", new Item.Properties().stacksTo(16));
+    public static final DeferredItem<Item> TARGET_PLATE =
+            ITEMS.registerSimpleItem("target_plate", new Item.Properties().stacksTo(1));
+    /** Mont Split : œuf d'aigle-araignée (Menchi le veut cuit, mais on le lui rapporte tel quel). */
+    public static final DeferredItem<Item> SPIDER_EAGLE_EGG =
+            ITEMS.registerSimpleItem("spider_eagle_egg", new Item.Properties().stacksTo(4));
 
     public static final DeferredItem<BlockItem> HUNTER_COMPUTER =
             ITEMS.registerSimpleBlockItem("hunter_computer", ModBlocks.HUNTER_COMPUTER);

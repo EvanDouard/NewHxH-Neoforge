@@ -46,7 +46,7 @@ import java.util.TreeMap;
 public final class ExamWorld {
     public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, HxHMod.id("hunter_exam"));
     public static final int FLOOR_Y = 64;
-    private static final int SPACING = 400;
+    public static final int SPACING = 400;
 
     /** Ce qu'il y a dans un lieu une fois posé. */
     public record Site(BlockPos arrival, float yaw, Map<String, BlockPos> npcs, List<BlockPos> route, List<BlockPos> prey) {}
@@ -79,7 +79,8 @@ public final class ExamWorld {
                 .orElseGet(() -> ExamPlaceholders.build(level, site, center(site), !data.built.contains(site.id())));
         if (!data.built.contains(site.id())) {
             spawnNpcs(level, built);
-            spawnPrey(level, built);
+            if (site == ExamSite.BISKA || site.ordinal() < ExamSite.BOAT.ordinal()) spawnPrey(level, built);
+            ExamHazards.populate(level, site, built);
             data.built.add(site.id());
             data.setDirty();
         }
@@ -149,6 +150,10 @@ public final class ExamWorld {
     }
 
     /** Des porcs à chasser sur chaque repère de proie (deux par repère). */
+    public static Site cached(ExamSite site) {
+        return SITES.get(site);
+    }
+
     static void spawnPrey(ServerLevel level, Site site) {
         for (BlockPos p : site.prey()) {
             for (int i = 0; i < 2; i++) {

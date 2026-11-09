@@ -1,13 +1,30 @@
 {
   "steps": [
     { "id": "navigator", "type": "talk", "npc": "navigator" },
+    { "id": "captain", "type": "quiz", "npc": "captain", "site": "bateau", "answer": "any",
+      "options": [
+        { "fr": "Pour retrouver mon père", "en": "To find my father" },
+        { "fr": "Pour l'argent", "en": "For the money" },
+        { "fr": "Ça ne vous regarde pas", "en": "That's none of your business" }
+      ] },
+    { "id": "storm", "type": "survive", "seconds": 40, "hazard": "storm" },
+    { "id": "granny", "type": "quiz", "npc": "quiz_granny", "site": "dolle", "answer": "silence", "seconds": 5,
+      "options": [
+        { "fr": "Ma mère", "en": "My mother" },
+        { "fr": "Ma bien-aimée", "en": "My beloved" }
+      ] },
     { "id": "cook", "type": "talk", "npc": "cook", "site": "zaban" },
     { "id": "register", "type": "talk", "npc": "beans", "site": "hall", "reward_item": "hxh:exam_badge" },
     { "id": "satotz", "type": "talk", "npc": "satotz" },
     { "id": "marathon", "type": "follow", "npc": "satotz", "seconds": 60, "max_distance": 16 },
+    { "id": "numele", "type": "follow", "npc": "satotz", "site": "numele", "seconds": 60, "max_distance": 10, "hazard": "fog" },
     { "id": "buhara", "type": "talk", "npc": "buhara", "site": "biska" },
     { "id": "hunt", "type": "kill", "entity": "minecraft:pig", "count": 2 },
     { "id": "buhara_done", "type": "talk", "npc": "buhara" },
+    { "id": "sushi", "type": "bring", "npc": "menchi", "item": "minecraft:salmon", "count": 1 },
+    { "id": "netero_split", "type": "talk", "npc": "netero" },
+    { "id": "egg", "type": "bring", "npc": "menchi", "site": "mont_split", "item": "hxh:spider_eagle_egg", "count": 1 },
+    { "id": "zevil", "type": "points", "count": 6, "site": "zevil" },
     { "id": "netero", "type": "talk", "npc": "netero", "site": "hotel", "reward_item": "hxh:hunter_card", "reward_hunter": true }
   ]
 }

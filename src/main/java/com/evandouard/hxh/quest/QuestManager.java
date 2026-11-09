@@ -81,6 +81,68 @@ public final class QuestManager {
                 QuestRegistry.npcName(npc.npcId()).copy().withStyle(ChatFormatting.YELLOW), line));
     }
 
+    /** Quiz posé et en attente de réponse : joueur → « quête#étape ». */
+    private static final java.util.Map<java.util.UUID, String> QUIZ_ASKED = new java.util.HashMap<>();
+
+    private static String quizKey(QuestData d) {
+        return d.active + "#" + d.step;
+    }
+
+    /** Pose la question d'un quiz : réplique du PNJ et choix cliquables dans le chat. */
+    private static void askQuiz(ServerPlayer player, NpcEntity npc, Quest q, Quest.Step step, QuestData d) {
+        say(player, npc, q.question(step, player));
+        for (int i = 0; i < step.options().size(); i++) {
+            int n = i + 1;
+            Component choice = Component.literal("  [" + n + "] ").withStyle(ChatFormatting.GOLD)
+                    .append(q.option(step, i, player).copy().withStyle(ChatFormatting.WHITE))
+                    .withStyle(st -> st.withClickEvent(new net.minecraft.network.chat.ClickEvent(
+                                    net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND, "/hunter exam answer " + n))
+                            .withHoverEvent(new net.minecraft.network.chat.HoverEvent(
+                                    net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT, Component.translatable("quest.hxh.quiz.click"))));
+            player.sendSystemMessage(choice);
+        }
+        QUIZ_ASKED.put(player.getUUID(), quizKey(d));
+        d.progress = 0;
+        sync(player);
+    }
+
+    /**
+     * Réponse au quiz en cours (choix n° {@code n}, à partir de 1). Une question « silence » se réussit en ne
+     * répondant pas : toute réponse est fausse. Mauvaise réponse : il faut reparler au PNJ.
+     */
+    public static boolean answer(ServerPlayer player, int n) {
+        QuestData d = data(player);
+        for (String id : new java.util.ArrayList<>(d.runningQuests())) {
+            d.focus(id);
+            Quest q = activeQuest(d);
+            Quest.Step step = currentStep(d);
+            if (q == null || step == null || !step.type().equals("quiz")) continue;
+            if (!quizKey(d).equals(QUIZ_ASKED.get(player.getUUID()))) continue;
+            QUIZ_ASKED.remove(player.getUUID());
+            boolean right = step.answer().equals("any") || step.answer().equals(String.valueOf(n));
+            if (right) {
+                player.sendSystemMessage(Component.translatable("dialog.hxh.format",
+                        QuestRegistry.npcName(step.npc()).copy().withStyle(ChatFormatting.YELLOW), q.dialog(step, player)));
+                advance(player);
+            } else {
+                player.sendSystemMessage(Component.translatable("quest.hxh.quiz.wrong").withStyle(ChatFormatting.RED));
+                d.progress = 0;
+                sync(player);
+            }
+            d.refocus();
+            return right;
+        }
+        d.refocus();
+        return false;
+    }
+
+    /** Un message dans le chat pendant un quiz « silence » : c'est une réponse, donc une mauvaise. */
+    public static void onChat(ServerPlayer player) {
+        if (!QUIZ_ASKED.containsKey(player.getUUID())) return;
+        Quest.Step step = currentStep(data(player));
+        if (step != null && step.type().equals("quiz") && step.answer().equals("silence")) answer(player, 0);
+    }
+
     /** Ticks passés trop loin du PNJ à suivre (par joueur). */
     private static final java.util.Map<java.util.UUID, Integer> LOST_TICKS = new java.util.HashMap<>();
 
@@ -151,6 +213,11 @@ public final class QuestManager {
             d.focus(id);
             Quest q = activeQuest(d);
             Quest.Step step = currentStep(d);
+            if (q != null && step != null && step.type().equals("quiz") && step.npc().equals(npc.npcId())) {
+                askQuiz(player, npc, q, step, d);
+                d.refocus();
+                return;
+            }
             if (q != null && step != null && step.type().equals("talk") && step.npc().equals(npc.npcId())) {
                 say(player, npc, q.dialog(step, player));
                 advance(player);
@@ -250,6 +317,33 @@ public final class QuestManager {
     private static void tickStep(ServerPlayer player, QuestData d) {
         Quest.Step step = currentStep(d);
         if (step == null) return;
+        // Dangers des lieux de l'Examen (tempête, brouillard…)
+        if (com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level())) com.evandouard.hxh.exam.ExamHazards.tick(player, step, d);
+        // Quiz « silence » : la bonne réponse est de ne rien dire pendant le temps donné
+        if (step.type().equals("quiz") && step.answer().equals("silence") && quizKey(d).equals(QUIZ_ASKED.get(player.getUUID()))) {
+            d.progress++;
+            if (d.progress >= Math.max(1, step.seconds()) * 20) {
+                QUIZ_ASKED.remove(player.getUUID());
+                player.sendSystemMessage(Component.translatable("dialog.hxh.format",
+                        QuestRegistry.npcName(step.npc()).copy().withStyle(ChatFormatting.YELLOW), activeQuest(d).dialog(step, player)));
+                advance(player);
+            } else if (player.tickCount % 20 == 0) sync(player);
+            return;
+        }
+        // Tenir bon (tempête sur le pont…) : le compteur avance tant qu'on reste debout dans le lieu
+        if (step.type().equals("survive")) {
+            d.progress++;
+            if (d.progress >= step.seconds() * 20) advance(player);
+            else if (player.tickCount % 20 == 0) sync(player);
+            return;
+        }
+        // Plaques de l'île de Zevil : 3 points pour sa plaque et celle de sa cible, 1 pour les autres
+        if (step.type().equals("points") && player.tickCount % 20 == 0) {
+            d.progress = com.evandouard.hxh.exam.ExamHazards.platePoints(player);
+            if (d.progress >= step.count()) advance(player);
+            else sync(player);
+            return;
+        }
         if (step.type().equals("arena_floor") && player.tickCount % 20 == 0 && d.arenaFloor >= step.count()) {
             advance(player);
             return;
@@ -434,7 +528,8 @@ public final class QuestManager {
             return;
         }
         int progress = switch (step.type()) {
-            case "follow" -> st[1] / 20;
+            case "follow", "survive" -> st[1] / 20;
+            case "quiz" -> step.answer().equals("silence") ? st[1] / 20 : 0;
             case "arena_floor" -> Math.min(d.arenaFloor, step.count());
             case "bring" -> Math.min(step.count(), player.getInventory().countItem(
                     net.minecraft.core.registries.BuiltInRegistries.ITEM.get(ResourceLocation.parse(step.item()))));

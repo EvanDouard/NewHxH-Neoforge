@@ -34,11 +34,18 @@ public final class QuestTests {
         return npc;
     }
 
+    /** Rang d'une étape de l'Examen (les épreuves s'ajoutent au fil du temps : on ne compte pas en dur). */
+    private static int idx(String id) {
+        java.util.List<Quest.Step> steps = QuestRegistry.get(QuestRegistry.HUNTER_EXAM).steps();
+        for (int i = 0; i < steps.size(); i++) if (steps.get(i).id().equals(id)) return i;
+        throw new IllegalStateException("Étape inconnue : " + id);
+    }
+
     @GameTest(template = "empty")
     public static void examQuestIsLoaded(GameTestHelper helper) {
         Quest exam = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
         helper.assertTrue(exam != null, "La quête hxh:hunter_exam doit être chargée depuis le datapack");
-        helper.assertTrue(exam.steps().size() == 9, "9 étapes attendues, obtenu " + exam.steps().size());
+        helper.assertTrue(exam.steps().size() == 17, "17 étapes attendues, obtenu " + exam.steps().size());
         helper.succeed();
     }
 
@@ -51,6 +58,9 @@ public final class QuestTests {
         NpcEntity buhara = npc(helper, "buhara", 0);
         NpcEntity netero = npc(helper, "netero", 2);
         NpcEntity cook = npc(helper, "cook", 1);
+        NpcEntity captain = npc(helper, "captain", 0);
+        NpcEntity granny = npc(helper, "quiz_granny", 1);
+        NpcEntity menchi = npc(helper, "menchi", 2);
         Vec3 near = satotz.position();
         player.moveTo(near.x, near.y, near.z);
         QuestData d = QuestManager.data(player);
@@ -58,32 +68,77 @@ public final class QuestTests {
         QuestManager.onTalk(player, beans);
         helper.assertTrue(d.active().isEmpty(), "Parler à Beans d'abord ne lance rien");
         QuestManager.onTalk(player, navigator);
-        helper.assertTrue(!d.active().isEmpty() && d.step() == 1, "Le Navigateur lance l'examen et valide la 1re étape");
+        helper.assertTrue(!d.active().isEmpty() && d.step() == idx("captain"), "Le Navigateur envoie au bateau");
+        // Le capitaine : toute réponse convient
+        QuestManager.onTalk(player, captain);
+        helper.assertTrue(QuestManager.answer(player, 2), "Le capitaine accepte toute réponse");
+        helper.assertTrue(d.step() == idx("storm"), "Puis la tempête");
+        for (int i = 0; i < 40 * 20 && d.step() == idx("storm"); i++) QuestManager.tick(player);
+        helper.assertTrue(d.step() == idx("granny"), "La tempête passée, la Mamie de Dolle");
+        // La Mamie : répondre, c'est perdre ; se taire 5 s, c'est gagner
+        QuestManager.onTalk(player, granny);
+        helper.assertTrue(!QuestManager.answer(player, 1), "Choisir sa mère est une mauvaise réponse");
+        helper.assertTrue(d.step() == idx("granny"), "Toujours chez la Mamie");
+        QuestManager.onTalk(player, granny);
+        for (int i = 0; i < 6 * 20 && d.step() == idx("granny"); i++) QuestManager.tick(player);
+        helper.assertTrue(d.step() == idx("cook"), "Le silence était la bonne réponse");
+
         QuestManager.onTalk(player, cook);
-        helper.assertTrue(d.step() == 2, "Le cuisinier de Zaban fait descendre au hall");
+        helper.assertTrue(d.step() == idx("register"), "Le cuisinier de Zaban fait descendre au hall");
         QuestManager.onTalk(player, beans);
         helper.assertTrue(player.getInventory().contains(ModItems.EXAM_BADGE.get().getDefaultInstance()), "Plaque de candidat reçue");
         QuestManager.onTalk(player, satotz);
-        helper.assertTrue(d.step() == 4, "Étape du marathon attendue");
-
-        // Marathon : rester près de Satotz pendant 60 s
-        for (int i = 0; i < 60 * 20 && d.step() == 4; i++) {
-            player.moveTo(satotz.getX(), satotz.getY(), satotz.getZ());
-            QuestManager.tick(player);
+        helper.assertTrue(d.step() == idx("marathon"), "Étape du marathon attendue");
+        // Marathon puis marais de Numele : rester près de Satotz
+        for (String leg : java.util.List.of("marathon", "numele")) {
+            for (int i = 0; i < 60 * 20 && d.step() == idx(leg); i++) {
+                player.moveTo(satotz.getX(), satotz.getY(), satotz.getZ());
+                QuestManager.tick(player);
+            }
+            helper.assertTrue(d.step() == idx(leg) + 1, "Étape réussie : " + leg);
         }
-        helper.assertTrue(d.step() == 5, "Le marathon aurait dû être réussi");
 
         QuestManager.onTalk(player, buhara);
         for (int i = 0; i < 2; i++) {
             Pig pig = helper.spawn(EntityType.PIG, new BlockPos(1, 1, 1));
             QuestManager.onKill(player, pig);
         }
-        helper.assertTrue(d.step() == 7, "La chasse aurait dû être validée");
+        helper.assertTrue(d.step() == idx("buhara_done"), "La chasse aurait dû être validée");
         QuestManager.onTalk(player, buhara);
+        // Menchi : le sushi est refusé (pour tout le monde), Netero propose le mont Split
+        player.getInventory().add(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.SALMON));
+        QuestManager.onTalk(player, menchi);
+        helper.assertTrue(d.step() == idx("netero_split"), "Sushi apporté à Menchi");
+        QuestManager.onTalk(player, netero);
+        player.getInventory().add(new net.minecraft.world.item.ItemStack(ModItems.SPIDER_EAGLE_EGG.get()));
+        QuestManager.onTalk(player, menchi);
+        helper.assertTrue(d.step() == idx("zevil"), "Œuf d'aigle-araignée accepté");
+        // Zevil : sa plaque (3) + celle de sa cible (3)
+        player.getInventory().add(new net.minecraft.world.item.ItemStack(ModItems.TARGET_PLATE.get()));
+        player.tickCount = 0;
+        QuestManager.tick(player);
+        helper.assertTrue(d.step() == idx("netero"), "6 points de plaques");
         QuestManager.onTalk(player, netero);
         helper.assertTrue(d.isHunter(), "Le joueur doit être Hunter");
         helper.assertTrue(d.isCompleted(QuestRegistry.HUNTER_EXAM.toString()) && d.active().isEmpty(), "Examen terminé");
         helper.assertTrue(player.getInventory().contains(ModItems.HUNTER_CARD.get().getDefaultInstance()), "Carte Hunter reçue");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void platePointsCountLikeOnZevil(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        var inv = player.getInventory();
+        inv.add(new net.minecraft.world.item.ItemStack(ModItems.EXAM_PLATE.get(), 2));
+        helper.assertTrue(com.evandouard.hxh.exam.ExamHazards.platePoints(player) == 2, "Deux plaques ordinaires : 2 points");
+        inv.add(new net.minecraft.world.item.ItemStack(ModItems.EXAM_BADGE.get()));
+        inv.add(new net.minecraft.world.item.ItemStack(ModItems.TARGET_PLATE.get()));
+        helper.assertTrue(com.evandouard.hxh.exam.ExamHazards.platePoints(player) == 8, "Sa plaque et celle de sa cible valent 3");
+        // Un candidat de Zevil lâche sa plaque à coup sûr
+        var v = com.evandouard.hxh.exam.ExamHazards.candidateForTests(helper.getLevel(), helper.absolutePos(new BlockPos(1, 1, 1)), true);
+        helper.assertTrue(v != null && v.getOffhandItem().is(ModItems.TARGET_PLATE.get()) && v.getTags().contains("hxh_target"),
+                "La cible tient la plaque de cible");
+        v.discard();
         helper.succeed();
     }
 
@@ -96,8 +151,8 @@ public final class QuestTests {
         String exam = QuestRegistry.HUNTER_EXAM.toString();
         QuestManager.onTalk(player, navigator);
         helper.assertTrue(d.isRunning(exam), "Le Navigateur lance l'examen");
-        for (int i = 0; i < 3; i++) QuestManager.advance(player); // jusqu'au marathon
-        helper.assertTrue(d.step() == 4, "Étape du marathon attendue");
+        while (d.step() < idx("marathon")) QuestManager.advance(player);
+        helper.assertTrue(d.step() == idx("marathon"), "Étape du marathon attendue");
         player.moveTo(satotz.getX(), satotz.getY(), satotz.getZ());
         for (int i = 0; i < 40; i++) QuestManager.tick(player);
         helper.assertTrue(d.isRunning(exam), "Tant qu'on suit, l'examen continue");
@@ -135,14 +190,15 @@ public final class QuestTests {
         satotz.setRoute(java.util.List.of(helper.absolutePos(new BlockPos(3, 2, 1)), helper.absolutePos(new BlockPos(3, 2, 4))));
         QuestData d = QuestManager.data(player);
         QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
-        for (int i = 0; i < 4; i++) QuestManager.advance(player); // marathon
+        while (d.step() < idx("marathon")) QuestManager.advance(player);
+        int marathon = idx("marathon");
         helper.onEachTick(() -> {
-            if (d.step() != 4) return;
+            if (d.step() != marathon) return;
             player.moveTo(satotz.getX(), satotz.getY(), satotz.getZ());
             QuestManager.tick(player);
         });
         helper.succeedWhen(() -> {
-            helper.assertTrue(d.step() == 5, "Satotz doit atteindre la fin de son parcours (point " + satotz.routeIndex() + ")");
+            helper.assertTrue(d.step() == marathon + 1, "Satotz doit atteindre la fin de son parcours (point " + satotz.routeIndex() + ")");
         });
     }
 
@@ -271,6 +327,11 @@ public final class QuestTests {
         helper.assertTrue(biska.npcs().containsKey("buhara") && !biska.prey().isEmpty(), "Buhara et des proies à Biska");
         for (com.evandouard.hxh.exam.ExamSite s : com.evandouard.hxh.exam.ExamSite.values())
             helper.assertTrue(!com.evandouard.hxh.exam.ExamWorld.ensure(exam, s).npcs().isEmpty(), "PNJ présents : " + s.id());
+        com.evandouard.hxh.exam.ExamWorld.Site split = com.evandouard.hxh.exam.ExamWorld.ensure(exam, com.evandouard.hxh.exam.ExamSite.MOUNT_SPLIT);
+        helper.assertTrue(split.prey().size() >= 3, "Des nids d'œufs dans la faille du mont Split");
+        helper.assertTrue(exam.getBlockState(split.prey().get(0).below()).is(net.minecraft.world.level.block.Blocks.COBWEB), "Les œufs pendent sur des fils");
+        com.evandouard.hxh.exam.ExamWorld.Site zevil = com.evandouard.hxh.exam.ExamWorld.ensure(exam, com.evandouard.hxh.exam.ExamSite.ZEVIL);
+        helper.assertTrue(zevil.prey().size() >= 3, "Des candidats à traquer sur Zevil");
         helper.succeed();
     }
 }

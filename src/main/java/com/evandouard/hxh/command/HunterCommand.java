@@ -62,9 +62,13 @@ public final class HunterCommand {
                 .then(targeted("max", HunterCommand::maxAll).requires(s -> s.hasPermission(2)))
                 .then(nenCommand())
                 .then(hatsuCommand())
-                .then(Commands.literal("exam").requires(src -> src.hasPermission(2))
-                        .then(Commands.literal("setup").executes(ctx -> examSetup(ctx.getSource())))
-                        .then(Commands.literal("where").executes(ctx -> {
+                .then(Commands.literal("exam")
+                        // Réponse à un quiz de l'Examen (lien cliquable du chat) : ouvert à tous
+                        .then(Commands.literal("answer").then(Commands.argument("n", IntegerArgumentType.integer(0, 9))
+                                .executes(ctx -> com.evandouard.hxh.quest.QuestManager.answer(ctx.getSource().getPlayerOrException(),
+                                        IntegerArgumentType.getInteger(ctx, "n")) ? 1 : 0)))
+                        .then(Commands.literal("setup").requires(src -> src.hasPermission(2)).executes(ctx -> examSetup(ctx.getSource())))
+                        .then(Commands.literal("where").requires(src -> src.hasPermission(2)).executes(ctx -> {
                             long nav = com.evandouard.hxh.exam.ExamSavedData.get(ctx.getSource().getLevel()).navigator();
                             if (nav == Long.MIN_VALUE) {
                                 ctx.getSource().sendFailure(Component.translatable("command.hxh.exam_where_none"));
@@ -74,13 +78,13 @@ public final class HunterCommand {
                             ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.exam_where", p.getX(), p.getY(), p.getZ()), false);
                             return 1;
                         }))
-                        .then(Commands.literal("rebuild").executes(ctx -> {
+                        .then(Commands.literal("rebuild").requires(src -> src.hasPermission(2)).executes(ctx -> {
                             net.minecraft.server.level.ServerLevel exam = com.evandouard.hxh.exam.ExamWorld.level(ctx.getSource().getServer());
                             if (exam != null) com.evandouard.hxh.exam.ExamWorld.forget(exam);
                             ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.exam_rebuild"), true);
                             return 1;
                         }))
-                        .then(Commands.literal("site").then(Commands.argument("site", StringArgumentType.word())
+                        .then(Commands.literal("site").requires(src -> src.hasPermission(2)).then(Commands.argument("site", StringArgumentType.word())
                                 .suggests((c, b) -> SharedSuggestionProvider.suggest(java.util.Arrays.stream(
                                         com.evandouard.hxh.exam.ExamSite.values()).map(com.evandouard.hxh.exam.ExamSite::id), b))
                                 .executes(ctx -> {

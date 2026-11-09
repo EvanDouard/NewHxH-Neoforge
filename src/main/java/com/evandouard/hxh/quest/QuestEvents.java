@@ -20,6 +20,8 @@ public final class QuestEvents {
         bus.addListener(PlayerTickEvent.Post.class, e -> {
             if (e.getEntity() instanceof ServerPlayer p) QuestManager.tick(p);
         });
+        // Quiz de la Mamie : parler dans le chat, c'est répondre (et c'est faux)
+        bus.addListener(net.neoforged.neoforge.event.ServerChatEvent.class, e -> QuestManager.onChat(e.getPlayer()));
         bus.addListener(LivingDeathEvent.class, e -> {
             if (e.getSource().getEntity() instanceof ServerPlayer p) QuestManager.onKill(p, e.getEntity());
         });

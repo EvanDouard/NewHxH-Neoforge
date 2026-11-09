@@ -640,6 +640,31 @@ goto navigator
 talkto navigator
 wait 80
 expect Nouvelle quête : Examen Hunter
+shot 34_bateau_pour_dolle
+goto captain
+clearchat
+talkto captain
+wait 10
+expect pourquoi veux-tu devenir Hunter
+shot 34_quiz_du_capitaine
+cmd hunter exam answer 1
+wait 10
+expect Tu as du cran
+wait 80
+expect La tempête éclate
+shot 34_tempete_sur_le_pont
+cmd hunter quest skip
+wait 80
+shot 34_dolle_maison_mamie
+goto quiz_granny
+clearchat
+talkto quiz_granny
+wait 10
+expect Tu as cinq secondes
+shot 34_quiz_de_la_mamie
+wait 140
+expect se taire était la seule
+wait 60
 shot 34_zaban_gargote
 goto cook
 talkto cook
@@ -670,6 +695,12 @@ clearchat
 goto navigator
 talkto navigator
 wait 80
+cmd hunter quest skip
+wait 80
+cmd hunter quest skip
+wait 5
+cmd hunter quest skip
+wait 80
 goto cook
 talkto cook
 wait 80
@@ -681,6 +712,10 @@ talkto satotz
 wait 10
 cmd hunter quest skip
 wait 80
+expect [hud] Brouillard de Numele
+shot 34d_marais_de_numele_brouillard
+cmd hunter quest skip
+wait 80
 shot 34d_reserve_de_biska
 goto buhara
 talkto buhara
@@ -688,7 +723,27 @@ wait 5
 cmd hunter quest skip
 wait 5
 talkto buhara
+wait 10
+cmd give @s minecraft:salmon
+goto menchi
+clearchat
+talkto menchi
+wait 10
+expect Raté pour tout le monde
+goto netero
+talkto netero
 wait 80
+look 90 40
+shot 34e_mont_split_faille_aux_oeufs
+cmd give @s hxh:spider_eagle_egg
+goto menchi
+talkto menchi
+wait 80
+expect Tu passes
+look 180 10
+shot 34f_ile_de_zevil
+cmd give @s hxh:target_plate
+wait 60
 shot 34e_hotel_de_l_association
 goto netero
 clearchat
