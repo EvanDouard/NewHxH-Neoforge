@@ -2,6 +2,7 @@
   "steps": [
     { "id": "navigator", "type": "talk", "npc": "navigator" },
     { "id": "captain", "type": "quiz", "npc": "captain", "site": "bateau", "answer": "any",
+      "question": { "fr": "Avant d'aller plus loin : pourquoi veux-tu devenir Hunter ?", "en": "Before we go any further: why do you want to become a Hunter?" },
       "options": [
         { "fr": "Pour retrouver mon père", "en": "To find my father" },
         { "fr": "Pour l'argent", "en": "For the money" },
@@ -9,6 +10,7 @@
       ] },
     { "id": "storm", "type": "survive", "seconds": 40, "hazard": "storm" },
     { "id": "granny", "type": "quiz", "npc": "quiz_granny", "site": "dolle", "answer": "silence", "seconds": 5,
+      "question": { "fr": "Ta mère et ta bien-aimée sont prises par des bandits ; tu ne peux en sauver qu'une. Laquelle ? Tu as cinq secondes.", "en": "Bandits have taken your mother and your beloved; you can only save one. Which? You have five seconds." },
       "options": [
         { "fr": "Ma mère", "en": "My mother" },
         { "fr": "Ma bien-aimée", "en": "My beloved" }

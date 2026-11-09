@@ -35,7 +35,7 @@ public final class ExamFogClient {
         e.setCanceled(true);
         if (!logged) {
             logged = true;
-            com.evandouard.hxh.HxHMod.LOGGER.info("[hud] Brouillard de Numele");
+            MangaHud.listener.accept("[hud] Brouillard de Numele");
         }
     }
 

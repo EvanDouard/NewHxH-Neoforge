@@ -733,7 +733,7 @@ expect Raté pour tout le monde
 goto netero
 talkto netero
 wait 80
-look 90 40
+look -90 40
 shot 34e_mont_split_faille_aux_oeufs
 cmd give @s hxh:spider_eagle_egg
 goto menchi
