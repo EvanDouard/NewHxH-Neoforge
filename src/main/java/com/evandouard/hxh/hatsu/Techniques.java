@@ -105,7 +105,7 @@ public final class Techniques {
     public static final Technique PITOU_TERPSICHORA = register(new SelfBuff("pitou_terpsichora", NenType.SPECIALIST, 60, 600,
             List.of(new Effect(MobEffects.DAMAGE_BOOST, 200, 1), new Effect(MobEffects.MOVEMENT_SPEED, 200, 1),
                     new Effect(MobEffects.JUMP, 200, 1)),
-            new Look(Style.FLARE, NenFx.SPECIALIST, 1.4f), SoundEvents.WARDEN_ROAR)).requiresNenLevel(10);
+            new Look(Style.PUPPET, NenFx.SPECIALIST, 1.4f), SoundEvents.WARDEN_ROAR)).requiresNenLevel(10);
     public static final Technique PITOU_DOCTOR_BLYTHE = register(new SelfHeal("pitou_doctor_blythe", NenType.SPECIALIST, 50, 400,
             12f, new Look(Style.FLARE, NenFx.HEAL, 1.1f), SoundEvents.AMETHYST_BLOCK_CHIME));
 
@@ -127,7 +127,7 @@ public final class Techniques {
     }
 
     /** Allure d'une technique (direction artistique : formes dessinées, pas de particules de Minecraft). */
-    public enum Style { IMPACT, SLASH, ORB, BOLT, CHAIN, NEEDLE, SHOCKWAVE, FLARE, CRACKLE, HOLY_CHAIN, WARP_FIST, NEEDLE_CROWN }
+    public enum Style { IMPACT, SLASH, ORB, BOLT, CHAIN, NEEDLE, SHOCKWAVE, FLARE, CRACKLE, HOLY_CHAIN, WARP_FIST, NEEDLE_CROWN, PUPPET }
 
     /** Allure : style, couleur d'aura, taille. */
     public record Look(Style style, int color, float size) {}
@@ -169,6 +169,10 @@ public final class Techniques {
                 NenFx.crackle(caster, look.color(), holdTicks);
             }
             case HOLY_CHAIN -> NenFx.holyChain(caster, look.color(), 50);
+            case PUPPET -> {
+                NenFx.flare(caster, look.size(), look.color());
+                NenFx.puppetStrings(caster, look.color(), holdTicks);
+            }
             case NEEDLE_CROWN -> {
                 NenFx.flare(caster, look.size(), look.color());
                 NenFx.needleCrown(caster, look.color(), holdTicks);

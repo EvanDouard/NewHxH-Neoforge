@@ -53,7 +53,9 @@ public final class NenFx {
         /** Poing de Leorio : il frappe dans un portail près de sa main, le poing ressort d'un portail à côté de la cible. */
         WARP_FIST,
         /** Illumi se transforme : aiguilles plantées dans sa propre tête, aura sombre qui palpite (toute la durée). */
-        NEEDLE_CROWN
+        NEEDLE_CROWN,
+        /** Terpsichora de Pitou : des fils d'aura tirent le corps d'en haut, comme une marionnette (toute la durée). */
+        PUPPET_STRINGS
     }
 
     /**
@@ -190,6 +192,10 @@ public final class NenFx {
 
     public static void needleCrown(LivingEntity entity, int color, int duration) {
         if (entity.level() instanceof ServerLevel s) send(s, Kind.NEEDLE_CROWN, entity, null, entity.position(), 1f, color, duration);
+    }
+
+    public static void puppetStrings(LivingEntity entity, int color, int duration) {
+        if (entity.level() instanceof ServerLevel s) send(s, Kind.PUPPET_STRINGS, entity, null, entity.position(), 1f, color, duration);
     }
 
     public static void palmWave(LivingEntity caster, double length, int color) {

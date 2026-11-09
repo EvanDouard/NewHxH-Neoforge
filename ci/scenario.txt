@@ -449,6 +449,11 @@ cmd hunter hatsu cast
 camera front
 wait 15
 shot 22j_illumi_transformation_aiguilles
+cmd hunter hatsu set pitou
+cmd hunter nen refill
+cmd hunter hatsu cast
+wait 15
+shot 22k_pitou_terpsichora_fils
 camera first
 cmd kill @e[type=minecraft:husk]
 cmd tp @s ~-300 -60 ~

@@ -176,6 +176,7 @@ public final class NenFxClient {
             case PALM_WAVE -> palmWave(c, f, t);
             case WARP_FIST -> warpFist(c, f, age);
             case NEEDLE_CROWN -> needleCrown(c, f, age);
+            case PUPPET_STRINGS -> puppetStrings(c, f, age);
             case CLEAR, IMPACT_FRAME -> {}
         }
     }
@@ -815,5 +816,35 @@ public final class NenFxClient {
                         0xFFFFFFFF, fade);
             }
         }
+    }
+
+    /**
+     * Terpsichora : cinq fils d'aura descendent de haut (tête, mains, pieds) et tirent le corps comme une marionnette.
+     * Les fils se balancent doucement ; au-dessus, ils se rejoignent sur une croix de manipulation encrée.
+     */
+    private static void puppetStrings(Ctx c, Fx f, float age) {
+        Entity src = entity(f.source);
+        if (src == null || firstPerson(src)) return;
+        float fade = age > f.duration - 10 ? (f.duration - age) / 10f : Math.min(1f, age / 6f);
+        Vec3 base = src.getPosition(c.pt);
+        float h = src.getBbHeight(), w = Math.max(0.6f, src.getBbWidth());
+        float yaw = (src instanceof LivingEntity l ? Mth.lerp(c.pt, l.yBodyRotO, l.yBodyRot) : src.getYRot()) * Mth.DEG_TO_RAD;
+        Vec3 side = new Vec3(Mth.cos(yaw), 0, Mth.sin(yaw));
+        Vec3 sway = new Vec3(Mth.sin(age * 0.08f) * 0.25, 0, Mth.cos(age * 0.06f) * 0.25);
+        Vec3 bar = base.add(0, h + 2.4, 0).add(sway);
+        Vec3[] joints = {
+                base.add(0, h, 0),
+                base.add(side.scale(w * 0.75)).add(0, h * 0.45, 0), base.add(side.scale(-w * 0.75)).add(0, h * 0.45, 0),
+                base.add(side.scale(w * 0.25)).add(0, 0.1, 0), base.add(side.scale(-w * 0.25)).add(0, 0.1, 0)};
+        Vec3[] anchors = {bar, bar.add(side.scale(0.7)), bar.add(side.scale(-0.7)), bar.add(side.scale(0.35)), bar.add(side.scale(-0.35))};
+        for (int i = 0; i < joints.length; i++) {
+            ribbon(c, RenderType.eyes(WHITE), anchors[i], joints[i], 0.06f, f.color, fade * 0.8f);
+            ribbon(c, RenderType.entityTranslucent(WHITE), anchors[i], joints[i], 0.018f, INK, fade);
+        }
+        // croix de manipulation
+        ribbon(c, RenderType.entityTranslucent(WHITE), bar.add(side.scale(-0.8)), bar.add(side.scale(0.8)), 0.09f, INK, fade);
+        Vec3 fwd = new Vec3(-side.z, 0, side.x);
+        ribbon(c, RenderType.entityTranslucent(WHITE), bar.add(fwd.scale(-0.45)), bar.add(fwd.scale(0.45)), 0.09f, INK, fade);
+        billboard(c, RenderType.eyes(GLOW), bar, 0.5f, 0, f.color, fade * 0.7f);
     }
 }
