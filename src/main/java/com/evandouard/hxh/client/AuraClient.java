@@ -104,7 +104,7 @@ public final class AuraClient {
         int n = Math.round(8 + 22 * look.strength());
         float life = 14f - 4f * look.strength();
         float maxTongue = h * (0.25f + 0.55f * look.strength());
-        float alphaBody = look.fists() ? 0.25f : 1f;
+        float alphaBody = look.fists() ? 0.1f : 1f;
         VertexConsumer outer = buffers.getBuffer(RenderType.entityTranslucent(FLAME));
         for (int i = 0; i < n; i++) {
             float phase = ((time / life) + hash(i + 17)) % 1f;
@@ -115,7 +115,7 @@ public final class AuraClient {
             if (size < 0.05f) continue;
             float flick = 1f + 0.18f * Mth.sin(time * 1.3f + i * 2.1f);
             Vec3 base = new Vec3(feet.x() + Mth.cos(ang) * rad, y, feet.z() + Mth.sin(ang) * rad);
-            float a = alphaBody * Math.min(1f, (1f - phase) * 2.5f);
+            float a = alphaBody * Math.min(1f, (1f - phase) * 2.5f) * front(cam, feet, ang);
             tongue(outer, pose, cam, base, size * 0.45f, size * flick, look.color(), a);
         }
         // cœur blanc additif (Ren surtout)
@@ -129,7 +129,7 @@ public final class AuraClient {
                 float size = maxTongue * Mth.sin(Mth.PI * Math.min(1f, phase * 1.3f)) * (0.7f + 0.3f * hash(i)) * 0.7f;
                 if (size < 0.05f) continue;
                 Vec3 base = new Vec3(feet.x() + Mth.cos(ang) * rad, y, feet.z() + Mth.sin(ang) * rad);
-                float a = alphaBody * Math.min(1f, (1f - phase) * 2.5f) * 0.8f;
+                float a = alphaBody * Math.min(1f, (1f - phase) * 2.5f) * 0.8f * front(cam, feet, ang);
                 tongue(core, pose, cam, base, size * 0.45f, size, dim(mixWhite(look.color(), 0.6f), a), a);
             }
         }
@@ -176,6 +176,15 @@ public final class AuraClient {
                 tongue(outer, pose, cam, base, size * 0.5f, size, look.color(), 1f - phase * 0.6f);
             }
         }
+    }
+
+    /** Les flammes devant le corps (face à la caméra) sont presque effacées : on voit le personnage, pas un mur de feu. */
+    private static float front(Vec3 cam, Vec3 feet, float ang) {
+        Vec3 to = new Vec3(cam.x - feet.x, 0, cam.z - feet.z);
+        if (to.lengthSqr() < 1e-4) return 1f;
+        to = to.normalize();
+        double facing = Mth.cos(ang) * to.x + Mth.sin(ang) * to.z; // 1 = pile devant
+        return facing > 0.35 ? 0.15f : 1f;
     }
 
     private static float hash(int i) {
