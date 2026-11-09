@@ -114,6 +114,8 @@ cmd hunter aura calm
 cmd hunter nen ryu 100
 key key.hxh.ren
 wait 30
+clearchat
+wait 2
 shot 12d_ryu_poings
 key key.hxh.ren
 cmd hunter nen ryu 50

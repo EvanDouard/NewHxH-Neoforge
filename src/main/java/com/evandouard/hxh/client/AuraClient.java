@@ -107,7 +107,7 @@ public final class AuraClient {
         float alphaBody = look.fists() ? 0.25f : 1f;
         VertexConsumer outer = buffers.getBuffer(RenderType.entityTranslucent(FLAME));
         for (int i = 0; i < n; i++) {
-            float phase = ((time / life) + i * 0.618f) % 1f;
+            float phase = ((time / life) + hash(i + 17)) % 1f;
             float ang = i * 2.39996f + Mth.sin(time * 0.05f + i) * 0.3f;
             float rad = w * (0.45f + 0.15f * look.strength());
             float y = (float) (feet.y() + h * (0.05f + 0.75f * phase));
@@ -122,7 +122,7 @@ public final class AuraClient {
         if (look.strength() >= 0.6f) {
             VertexConsumer core = buffers.getBuffer(RenderType.eyes(FLAME_CORE));
             for (int i = 0; i < n; i += 2) {
-                float phase = ((time / life) + i * 0.618f) % 1f;
+                float phase = ((time / life) + hash(i + 17)) % 1f;
                 float ang = i * 2.39996f + Mth.sin(time * 0.05f + i) * 0.3f;
                 float rad = w * (0.45f + 0.15f * look.strength());
                 float y = (float) (feet.y() + h * (0.05f + 0.75f * phase));
@@ -144,14 +144,14 @@ public final class AuraClient {
         VertexConsumer vc = buffers.getBuffer(RenderType.eyes(NenFxClient.GLOW));
         float body = look.bodyVisibility();
         for (int i = 0; i < n; i++) {
-            float phase = ((time / life) + i * 0.618f) % 1f;
+            float phase = ((time / life) + hash(i + 17)) % 1f;
             float ang = i * 2.39996f;
             float rad = w * 0.55f + phase * 0.25f;
             float drift = Mth.sin(time * 0.04f + i * 1.7f) * 0.25f;
             float y = (float) (feet.y() + h * (0.15f + 0.6f * hash(i)) + phase * h * 0.7f);
             Vec3 at = new Vec3(feet.x() + Mth.cos(ang) * rad + drift, y, feet.z() + Mth.sin(ang) * rad - drift);
-            float size = (0.25f + 0.35f * phase) * (0.6f + 0.6f * look.strength());
-            float a = Mth.sin(Mth.PI * phase) * 0.55f * body;
+            float size = (0.3f + 0.45f * phase) * (0.6f + 0.6f * look.strength());
+            float a = Mth.sin(Mth.PI * phase) * 0.9f * body;
             billboard(vc, pose, cam, at, size, dim(mixWhite(look.color(), 0.35f), a), a);
         }
     }
