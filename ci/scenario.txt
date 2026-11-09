@@ -449,7 +449,7 @@ cmd hunter hatsu cast
 camera front
 wait 15
 shot 22j_illumi_transformation_aiguilles
-cmd hunter hatsu set pitou
+cmd hunter hatsu set neferpitou
 cmd hunter nen refill
 cmd hunter hatsu cast
 wait 15
