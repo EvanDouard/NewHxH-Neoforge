@@ -89,4 +89,12 @@ public class MobPresetTests {
         helper.assertFalse(com.evandouard.hxh.stats.HunterStats.get(calm).wildAura(), "Aura calme par défaut");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void wildAuraByCharacter(GameTestHelper helper) {
+        helper.assertTrue(com.evandouard.hxh.hatsu.HatsuKits.wildAuraByDefault("illumi")
+                && com.evandouard.hxh.hatsu.HatsuKits.wildAuraByDefault("meruem"), "Illumi et Meruem : aura sauvage");
+        helper.assertFalse(com.evandouard.hxh.hatsu.HatsuKits.wildAuraByDefault("gon"), "Gon : aura calme");
+        helper.succeed();
+    }
 }

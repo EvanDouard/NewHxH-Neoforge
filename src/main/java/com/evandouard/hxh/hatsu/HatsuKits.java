@@ -51,8 +51,20 @@ public final class HatsuKits {
     public static final HatsuKit HISOKA = playable("hisoka", TRANSMUTER, List.of(Passives.HISOKA_THRILL),
             Techniques.HISOKA_BUNGEE_GUM, Techniques.HISOKA_CARDS, Techniques.HISOKA_TEXTURE_SURPRISE);
 
-    /** Personnages à l'aura hostile, incontrôlée : des flammes même au repos. */
-    private static final java.util.Set<String> WILD_AURA = java.util.Set.of("hisoka");
+    /**
+     * Personnages à l'aura hostile, incontrôlée : des flammes même au repos. Hypothèses tirées de l'histoire, à revoir :
+     * <ul>
+     *     <li>hisoka : soif de combat, aura malsaine dès sa première apparition ;</li>
+     *     <li>illumi : aura glaçante, meurtrière (Killua en tremble) ;</li>
+     *     <li>meruem, neferpitou, youpi : Gardes royaux et Roi, aura monstrueuse (Pitou fait fuir Kaito d'un regard,
+     *         Youpi est fait de colère) ;</li>
+     *     <li>feitan, uvogin, phinks : membres de la Brigade les plus brutaux ;</li>
+     *     <li>genthru : le Bombardier, hostile et sans pitié.</li>
+     * </ul>
+     * Les autres (Gon, Killua, Kurapika, Leorio, Netero, Chrollo, Shaiapouf…) ont une aura calme et maîtrisée.
+     */
+    private static final java.util.Set<String> WILD_AURA = java.util.Set.of("hisoka", "illumi", "meruem", "neferpitou",
+            "youpi", "feitan", "uvogin", "phinks", "genthru");
 
     public static boolean wildAuraByDefault(String kit) {
         return kit != null && WILD_AURA.contains(kit);
