@@ -866,7 +866,7 @@ cmd hunter arena enter
 wait 40
 # --- Marchand de la Tour : gamme III et rachat des butins, payés en Jenny ---
 clearchat
-cmd hunter jenny add 1000
+cmd hunter jenny set 1000
 cmd give @s minecraft:bone 12
 goto merchant
 wait 10
@@ -880,6 +880,10 @@ wait 10
 shot 47c_boutique_apres_achat
 closescreen
 wait 10
+clearchat
+cmd hunter jenny add 0
+wait 5
+expect Jenny : 224
 clearchat
 cmd execute if entity @e[type=hxh:npc,distance=..30,nbt={npc:"receptionist"}]
 wait 5

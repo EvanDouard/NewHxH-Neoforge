@@ -740,7 +740,7 @@
   "shop.hxh.sell_all": "Tout",
   "shop.hxh.jenny": "%s J",
   "shop.hxh.price": "%s Jenny",
-  "shop.hxh.unit": "%s J/u · tu en as %s",
+  "shop.hxh.unit": "%s J/u · ×%s",
   "shop.hxh.sells": "Il vend",
   "shop.hxh.buys": "Il rachète",
   "shop.hxh.empty": "Rien à vendre pour l'instant.",
