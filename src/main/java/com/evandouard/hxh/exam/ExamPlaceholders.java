@@ -34,6 +34,7 @@ final class ExamPlaceholders {
             case MOUNT_SPLIT -> mountSplit(level, c, place);
             case ZEVIL -> zevil(level, c, place);
             case AIRSHIP -> airship(level, c, place);
+            case TOWER -> trickTower(level, c, place);
         };
     }
 
@@ -335,5 +336,69 @@ final class ExamPlaceholders {
         Map<String, BlockPos> npcs = new LinkedHashMap<>();
         npcs.put("netero", c.offset(0, 0, -3));
         return new ExamWorld.Site(c.offset(0, 0, 4), 180f, npcs, List.of(), List.of());
+    }
+
+    // ------------------------------------------------------------------ Tour de Trick
+
+    /** Hauteurs (au-dessus du sol) : toit, plancher du 1er étage, plate-forme du 2e. */
+    static final int TOWER_ROOF = 40, TOWER_F1 = 28, TOWER_F2 = 12, TOWER_HALF = 7;
+    /** Trappes du toit (x, z) ; une seule, différente selon l'exemplaire, s'ouvre sur le vide. */
+    static final int[][] TOWER_TRAPDOORS = {{-4, -4}, {4, -4}, {0, 0}, {-4, 3}, {4, 3}};
+
+    /**
+     * Tour de Trick provisoire : tour carrée de 15 × 15 et 40 de haut. Toit à trappes (une seule vraie, au-dessus
+     * d'un bassin du 1er étage), 1er étage avec Tonpa (vote de la majorité), plate-forme du 2e (combat contre un
+     * prisonnier) et escalier le long du mur nord jusqu'à la sortie ouest.
+     */
+    private static ExamWorld.Site trickTower(ServerLevel level, BlockPos c, boolean place) {
+        int h = TOWER_HALF;
+        int real = Math.floorMod(c.getZ() / 400, TOWER_TRAPDOORS.length);
+        if (place) {
+            for (int x = -16; x <= 16; x++) for (int z = -16; z <= 16; z++) set(level, c.offset(x, -1, z), Blocks.COARSE_DIRT);
+            for (int x = -h; x <= h; x++) for (int z = -h; z <= h; z++) {
+                boolean wall = Math.abs(x) == h || Math.abs(z) == h;
+                for (int y = -1; y <= TOWER_ROOF + 1; y++)
+                    set(level, c.offset(x, y, z), wall ? Blocks.STONE_BRICKS : Blocks.AIR);
+                if (wall) continue;
+                set(level, c.offset(x, -1, z), Blocks.POLISHED_ANDESITE);
+                set(level, c.offset(x, TOWER_F1 - 1, z), Blocks.STONE_BRICKS);
+                set(level, c.offset(x, TOWER_ROOF - 1, z), Blocks.CHISELED_STONE_BRICKS);
+                if (z >= -4) set(level, c.offset(x, TOWER_F2 - 1, z), Blocks.SMOOTH_STONE);
+            }
+            // toit : créneaux et trappes
+            for (int x = -h; x <= h; x += 2) {
+                set(level, c.offset(x, TOWER_ROOF + 1, -h), Blocks.AIR);
+                set(level, c.offset(x, TOWER_ROOF + 1, h), Blocks.AIR);
+            }
+            for (int i = 0; i < TOWER_TRAPDOORS.length; i++) {
+                int[] t = TOWER_TRAPDOORS[i];
+                set(level, c.offset(t[0], TOWER_ROOF - 1, t[1]), Blocks.SPRUCE_TRAPDOOR.defaultBlockState()
+                        .setValue(net.minecraft.world.level.block.TrapDoorBlock.HALF, net.minecraft.world.level.block.state.properties.Half.TOP));
+                if (i != real) set(level, c.offset(t[0], TOWER_ROOF - 2, t[1]), Blocks.STONE_BRICKS);
+            }
+            // bassin sous la vraie trappe
+            int[] r = TOWER_TRAPDOORS[real];
+            for (int dx = -1; dx <= 1; dx++) for (int dz = -1; dz <= 1; dz++) {
+                set(level, c.offset(r[0] + dx, TOWER_F1 - 1, r[1] + dz), Blocks.WATER);
+                set(level, c.offset(r[0] + dx, TOWER_F1 - 2, r[1] + dz), Blocks.WATER);
+                set(level, c.offset(r[0] + dx, TOWER_F1 - 3, r[1] + dz), Blocks.STONE_BRICKS);
+            }
+            // 1er étage : deux portes (O et X) sur le mur sud
+            set(level, c.offset(-3, TOWER_F1, h), Blocks.WHITE_WOOL);
+            set(level, c.offset(3, TOWER_F1, h), Blocks.BLACK_WOOL);
+            for (int x : new int[]{-3, 3}) for (int y = 0; y < 2; y++) set(level, c.offset(x, TOWER_F1 + y, h - 1), Blocks.IRON_BARS);
+            for (int x = -6; x <= 6; x += 4) set(level, c.offset(x, TOWER_F1 + 3, -6), Blocks.LANTERN);
+            // escalier du 2e étage jusqu'au sol, le long du mur nord, puis sortie à l'ouest
+            for (int k = 0; k <= TOWER_F2 - 2; k++) for (int z = -6; z <= -5; z++)
+                set(level, c.offset(6 - k, TOWER_F2 - 2 - k, z), Blocks.STONE_BRICKS);
+            for (int y = 0; y < 2; y++) set(level, c.offset(-h, y, -5), Blocks.AIR);
+            for (int x = -6; x <= 6; x += 6) set(level, c.offset(x, TOWER_F2 + 2, 6), Blocks.LANTERN);
+        }
+        Map<String, BlockPos> npcs = new LinkedHashMap<>();
+        npcs.put("lippo", c.offset(0, TOWER_ROOF, -5));
+        npcs.put("tonpa", c.offset(2, TOWER_F1, 3));
+        int[] r = TOWER_TRAPDOORS[real];
+        List<BlockPos> route = List.of(c.offset(r[0], TOWER_F1 - 1, r[1]), c.offset(0, TOWER_F2, 2), c.offset(-h + 1, 0, -5));
+        return new ExamWorld.Site(c.offset(0, TOWER_ROOF, 4), 180f, npcs, route, List.of());
     }
 }

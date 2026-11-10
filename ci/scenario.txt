@@ -636,16 +636,16 @@ look 90 5
 wait 40
 shot 33_navigateur_qui_attend
 clearchat
-cmd hunter exam plan dolle zaban numele biska menchi balle zevil tournoi
+cmd hunter exam plan dolle zaban numele biska menchi balle tour zevil tournoi
 wait 10
 expect Nouvelle quête : Examen Hunter
 cmd hunter exam plan
-expect dolle → zaban → numele → biska → menchi → balle → zevil → tournoi
+expect dolle → zaban → numele → biska → menchi → balle → tour → zevil → tournoi
 goto navigator
 clearchat
 talkto navigator
 wait 20
-expect Épreuve 1/8 : Le voyage vers l'île de Dolle
+expect Épreuve 1/9 : Le voyage vers l'île de Dolle
 expect Ton dirigeable t'attend
 shot 34_guide_donne_le_dirigeable
 cmd hunter exam go
@@ -684,7 +684,7 @@ expect Tu as cinq secondes
 shot 34_quiz_de_la_mamie
 wait 140
 expect se taire était la seule
-expect Épreuve 2/8 : Zaban
+expect Épreuve 2/9 : Zaban
 expect Ton dirigeable t'attend
 wait 40
 shot 34_retour_au_dirigeable_apres_dolle
@@ -719,7 +719,7 @@ wait 40
 shot 34c_examen_rate_retour_au_dirigeable
 # Nouvel essai : nouveaux exemplaires de chaque lieu (un lieu passé ne revient jamais)
 clearchat
-cmd hunter exam plan dolle zaban numele biska menchi balle zevil tournoi
+cmd hunter exam plan dolle zaban numele biska menchi balle tour zevil tournoi
 cmd hunter exam plan
 expect boat#1
 goto navigator
@@ -832,6 +832,39 @@ goto netero
 cmd execute as @s at @s run tp @s ^ ^ ^-3
 wait 10
 shot 34e3_jeu_de_la_balle_de_netero
+cmd hunter quest skip
+wait 10
+cmd hunter exam go
+wait 40
+clearchat
+talkto passeur
+wait 10
+expect [Embarquer]
+cmd hunter exam board
+wait 80
+look 180 30
+shot 34h_tour_de_trick_toit_trappes
+goto lippo
+talkto lippo
+wait 10
+cmd hunter quest skip
+wait 10
+goto tonpa
+clearchat
+talkto tonpa
+wait 10
+expect Porte O ou porte X
+cmd hunter exam answer 1
+wait 20
+expect Vote :
+wait 40
+expect Majitani entre en lice
+look 180 5
+shot 34h2_tour_de_trick_prisonnier
+cmd hunter quest skip
+wait 20
+look 0 40
+shot 34h3_tour_de_trick_escalier
 cmd hunter quest skip
 wait 10
 cmd hunter exam go

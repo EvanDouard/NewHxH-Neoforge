@@ -48,7 +48,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
 
     /** Types d'étapes connus. */
     public static final Set<String> TYPES = Set.of("talk", "kill", "follow", "bring", "reach", "custom",
-            "quiz", "survive", "points", "duel", "ball",
+            "quiz", "survive", "points", "duel", "ball", "reach",
             "nen_mode", "nen_sense", "nen_flag",
             "arena_win", "arena_floor", "arena_register_200");
 
@@ -65,7 +65,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
             return switch (type) {
                 case "kill", "arena_win", "arena_floor" -> count;
                 case "bring" -> count;
-                case "follow", "nen_mode", "nen_sense", "survive" -> seconds;
+                case "follow", "nen_mode", "nen_sense", "survive", "reach" -> seconds;
                 case "quiz" -> "silence".equals(answer) ? seconds : 0;
                 case "points", "duel", "ball" -> count;
                 default -> 0;
@@ -230,12 +230,12 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
             if (type.equals("nen_flag") && !List.of("unlocked", "revealed", "kit").contains(step.mode()))
                 problems.add(where + "drapeau inconnu « " + step.mode() + " » (unlocked, revealed, kit)");
             if (type.equals("quiz") && step.question().isEmpty()) problems.add(where + "il manque \"question\"");
-            if (type.equals("quiz") && !step.answer().equals("silence") && !step.answer().equals("any")) {
+            if (type.equals("quiz") && !List.of("silence", "any", "majority").contains(step.answer())) {
                 try {
                     int a = Integer.parseInt(step.answer());
                     if (a < 1 || a > step.options().size()) problems.add(where + "réponse hors des choix : " + a);
                 } catch (NumberFormatException ex) {
-                    problems.add(where + "\"answer\" doit être un numéro de choix, \"any\" ou \"silence\"");
+                    problems.add(where + "\"answer\" doit être un numéro de choix, \"any\", \"silence\" ou \"majority\"");
                 }
             }
             if (type.equals("ball") && (step.count() < 1 || step.seconds() < 1))

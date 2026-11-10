@@ -52,7 +52,8 @@ public final class ExamTournament {
     /** Chaque seconde pendant un duel : un adversaire doit être en face du joueur. */
     public static void tick(ServerPlayer player, Quest.Step step, QuestData d) {
         if (player.tickCount % 20 != 0) return;
-        if (opponent(player) == null) spawnOpponent(player, d.progress());
+        // Un adversaire nommé par l'étape (prisonnier de la Tour de Trick…), sinon un candidat du tournoi
+        if (opponent(player) == null) spawnOpponent(player, d.progress(), step.entity());
     }
 
     public static Vindicator opponent(ServerPlayer player) {
@@ -63,6 +64,10 @@ public final class ExamTournament {
 
     /** Fait entrer l'adversaire n° {@code round} face au joueur. */
     public static Vindicator spawnOpponent(ServerPlayer player, int round) {
+        return spawnOpponent(player, round, "");
+    }
+
+    public static Vindicator spawnOpponent(ServerPlayer player, int round, String forcedName) {
         ServerLevel level = player.serverLevel();
         Vindicator v = EntityType.VINDICATOR.create(level);
         if (v == null) return null;
@@ -75,7 +80,8 @@ public final class ExamTournament {
         var hp = v.getAttribute(Attributes.MAX_HEALTH);
         if (hp != null) hp.setBaseValue(30 + 10 * round);
         v.setHealth(v.getMaxHealth());
-        String name = OPPONENTS[(round + Math.abs(player.getUUID().hashCode())) % OPPONENTS.length];
+        String name = !forcedName.isEmpty() ? forcedName
+                : OPPONENTS[(round + Math.abs(player.getUUID().hashCode())) % OPPONENTS.length];
         v.setCustomName(Component.literal(name));
         v.setCustomNameVisible(true);
         v.setPersistenceRequired();

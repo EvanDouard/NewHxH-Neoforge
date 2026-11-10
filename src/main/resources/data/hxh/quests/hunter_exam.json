@@ -31,6 +31,9 @@
     },
     "balle": {
       "phase": 3
+    },
+    "tour": {
+      "phase": 3
     }
   },
   "steps": [
@@ -191,6 +194,54 @@
       "count": 3,
       "seconds": 60,
       "trial": "balle"
+    },
+    {
+      "id": "tower_intro",
+      "type": "talk",
+      "npc": "lippo",
+      "site": "tour_de_trick",
+      "trial": "tour"
+    },
+    {
+      "id": "tower_roof",
+      "type": "reach",
+      "count": 0,
+      "trial": "tour"
+    },
+    {
+      "id": "tower_vote",
+      "type": "quiz",
+      "npc": "tonpa",
+      "answer": "majority",
+      "trial": "tour",
+      "question": {
+        "fr": "Le chemin de la majorité : on vote tous les cinq. Porte O ou porte X ?",
+        "en": "The path of the majority: all five of us vote. Door O or door X?"
+      },
+      "options": [
+        {
+          "fr": "O",
+          "en": "O"
+        },
+        {
+          "fr": "X",
+          "en": "X"
+        }
+      ]
+    },
+    {
+      "id": "tower_fight",
+      "type": "duel",
+      "count": 1,
+      "entity": "Majitani",
+      "trial": "tour"
+    },
+    {
+      "id": "tower_exit",
+      "type": "reach",
+      "count": 2,
+      "seconds": 120,
+      "trial": "tour"
     },
     {
       "id": "zevil",

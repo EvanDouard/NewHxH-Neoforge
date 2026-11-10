@@ -45,13 +45,13 @@ public final class QuestTests {
     public static void examQuestIsLoaded(GameTestHelper helper) {
         Quest exam = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
         helper.assertTrue(exam != null, "La quête hxh:hunter_exam doit être chargée depuis le datapack");
-        helper.assertTrue(exam.steps().size() == 21, "21 étapes attendues, obtenu " + exam.steps().size());
-        helper.assertTrue(exam.trials().size() == 8 && exam.minTrials() == 4 && exam.maxTrials() == 6, "8 épreuves, 4 à 6 tirées");
+        helper.assertTrue(exam.steps().size() == 26, "26 étapes attendues, obtenu " + exam.steps().size());
+        helper.assertTrue(exam.trials().size() == 9 && exam.minTrials() == 4 && exam.maxTrials() == 6, "9 épreuves, 4 à 6 tirées");
         helper.succeed();
     }
 
     /** Toutes les épreuves, dans l'ordre du fichier (le parcours est alors identique au fichier). */
-    private static final java.util.List<String> ALL_TRIALS = java.util.List.of("dolle", "zaban", "numele", "biska", "menchi", "balle", "zevil", "tournoi");
+    private static final java.util.List<String> ALL_TRIALS = java.util.List.of("dolle", "zaban", "numele", "biska", "menchi", "balle", "tour", "zevil", "tournoi");
 
     @GameTest(template = "empty")
     public static void trialDrawsStayCoherent(GameTestHelper helper) {
@@ -162,6 +162,20 @@ public final class QuestTests {
         for (int i = 0; i < 3; i++) com.evandouard.hxh.exam.NeteroBall.touch(player, netero, false);
         helper.assertTrue(d.step() == idx("zevil") && d.jenny() == jenny + 500, "Trois touches : prime de Netero");
         helper.assertTrue(player.getInventory().contains(ModItems.NETERO_BALL.get().getDefaultInstance()), "La balle en souvenir");
+        // Tour de Trick : Lippo, la trappe, le vote de la majorité, un prisonnier, la sortie
+        helper.assertTrue(d.step() == idx("tower_intro"), "Puis la Tour de Trick");
+        NpcEntity lippo = npc(helper, "lippo", 0);
+        NpcEntity tonpa = npc(helper, "tonpa", 1);
+        QuestManager.onTalk(player, lippo);
+        helper.assertTrue(d.step() == idx("tower_roof"), "Lippo annonce l'épreuve");
+        QuestManager.advance(player); // la trappe (atteindre l'étage : voir trickTowerHasOneRealTrapdoor)
+        QuestManager.onTalk(player, tonpa);
+        helper.assertTrue(QuestManager.answer(player, 1), "Le vote est toujours accepté");
+        helper.assertTrue(d.step() == idx("tower_fight"), "Puis le prisonnier");
+        QuestManager.duelWon(player);
+        helper.assertTrue(d.step() == idx("tower_exit"), "Prisonnier vaincu");
+        QuestManager.advance(player);
+        helper.assertTrue(d.step() == idx("zevil"), "Sortie de la tour");
         // Zevil : sa plaque (3) + celle de sa cible (3)
         player.getInventory().add(new net.minecraft.world.item.ItemStack(ModItems.TARGET_PLATE.get()));
         player.tickCount = 0;
@@ -279,6 +293,29 @@ public final class QuestTests {
         while (!QuestManager.currentStep(d).id().equals("ball")) QuestManager.advance(player);
         for (int i = 0; i < 61 * 20 && QuestManager.currentStep(d).id().equals("ball"); i++) QuestManager.tick(player);
         helper.assertTrue(QuestManager.currentStep(d).id().equals("zevil"), "Temps écoulé : on continue sans élimination");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void trickTowerHasOneRealTrapdoor(GameTestHelper helper) {
+        net.minecraft.server.level.ServerLevel exam = com.evandouard.hxh.exam.ExamWorld.level(helper.getLevel().getServer());
+        if (exam == null) exam = helper.getLevel();
+        com.evandouard.hxh.exam.ExamWorld.Site tower = com.evandouard.hxh.exam.ExamWorld.ensure(exam, com.evandouard.hxh.exam.ExamSite.TOWER);
+        helper.assertTrue(tower.npcs().containsKey("lippo") && tower.npcs().containsKey("tonpa") && tower.route().size() == 3,
+                "Lippo, Tonpa, et trois points (étage, 2e étage, sortie)");
+        net.minecraft.core.BlockPos c = com.evandouard.hxh.exam.ExamWorld.center(com.evandouard.hxh.exam.ExamSite.TOWER);
+        int open = 0;
+        for (int[] t : new int[][]{{-4, -4}, {4, -4}, {0, 0}, {-4, 3}, {4, 3}}) {
+            net.minecraft.core.BlockPos trap = c.offset(t[0], 39, t[1]);
+            helper.assertTrue(exam.getBlockState(trap).getBlock() instanceof net.minecraft.world.level.block.TrapDoorBlock, "Trappe au toit");
+            if (exam.getBlockState(trap.below()).isAir()) open++;
+        }
+        helper.assertTrue(open == 1, "Une seule trappe s'ouvre sur le vide : " + open);
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        net.minecraft.core.BlockPos pool = tower.route().get(0);
+        player.moveTo(pool.getX() + 0.5, pool.getY(), pool.getZ() + 0.5);
+        if (player.level() == exam) helper.assertTrue(com.evandouard.hxh.exam.TrickTower.reached(player, 0), "Le bassin sous la trappe compte");
+        helper.assertTrue(!com.evandouard.hxh.exam.TrickTower.reached(player, 2) || player.level() != exam, "La sortie est ailleurs");
         helper.succeed();
     }
 

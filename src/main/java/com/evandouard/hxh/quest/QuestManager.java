@@ -215,6 +215,13 @@ public final class QuestManager {
             if (q == null || step == null || !step.type().equals("quiz")) continue;
             if (!quizKey(d).equals(QUIZ_ASKED.get(player.getUUID()))) continue;
             QUIZ_ASKED.remove(player.getUUID());
+            if (step.answer().equals("majority")) {
+                // Tour de Trick, chemin de la majorité : les cinq votent, la majorité ouvre la porte
+                com.evandouard.hxh.exam.TrickTower.vote(player, n);
+                advance(player);
+                d.refocus();
+                return true;
+            }
             boolean right = step.answer().equals("any") || step.answer().equals(String.valueOf(n));
             if (right) {
                 player.sendSystemMessage(Component.translatable("dialog.hxh.format",
@@ -432,6 +439,17 @@ public final class QuestManager {
                         QuestRegistry.npcName(step.npc()).copy().withStyle(ChatFormatting.YELLOW), activeQuest(d).dialog(step, player)));
                 advance(player);
             } else if (player.tickCount % 20 == 0) sync(player);
+            return;
+        }
+        // Atteindre un point du lieu (Tour de Trick : trappe, sortie) ; avec « seconds », c'est un compte à rebours
+        if (step.type().equals("reach")) {
+            d.progress++;
+            if (com.evandouard.hxh.exam.TrickTower.reached(player, step.count())) {
+                advance(player);
+            } else if (step.seconds() > 0 && d.progress >= step.seconds() * 20) {
+                player.sendSystemMessage(Component.translatable("exam.hxh.tower_time").withStyle(ChatFormatting.RED));
+                failExam(player);
+            } else if (d.progress % 20 == 0) sync(player);
             return;
         }
         // Jeu de la balle de Netero : le temps est compté

@@ -23,7 +23,9 @@ public enum ExamSite {
     /** Île de Zevil, où l'on débarque en bateau : chasse aux plaques. */
     ZEVIL("zevil"),
     /** Salle du dirigeable de l'Association : le jeu de la balle de Netero. */
-    AIRSHIP("dirigeable");
+    AIRSHIP("dirigeable"),
+    /** Tour de Trick (Phase 3) : descendre du toit à la sortie. */
+    TOWER("tour_de_trick");
 
     private final String file;
 

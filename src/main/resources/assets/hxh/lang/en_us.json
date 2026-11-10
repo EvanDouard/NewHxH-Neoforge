@@ -837,5 +837,22 @@
   "exam.hxh.ball_touch": "Netero had to use it! (%s/%s)",
   "exam.hxh.ball_time": "Ho ho ho, the ball stays mine. It was only a game: the exam goes on.",
   "exam.hxh.ball_won": "Ho ho! You made me use my right hand and my leg. Keep the ball as a souvenir, and here are %s jenny for your trouble.",
-  "item.hxh.netero_ball": "Netero's ball"
+  "item.hxh.netero_ball": "Netero's ball",
+  "npc.hxh.tonpa": "Tonpa",
+  "dialog.hxh.tonpa.idle": "Heh heh, a newcomer! You can count on me, I'm here to help rookies…",
+  "exam.hxh.site.tower": "Trick Tower",
+  "exam.hxh.trial.tour": "Trick Tower",
+  "dialog.hxh.hunter_exam.tower_intro": "Welcome to the top of Trick Tower. Third phase: get to the bottom, alive, within the time limit. Finding the way is up to you.",
+  "quest.hxh.hunter_exam.tower_intro": "Listen to Lippo, the prison warden",
+  "quest.hxh.hunter_exam.tower_roof": "Find the trapdoor leading inside the tower",
+  "quest.hxh.hunter_exam.tower_vote": "Vote with the other applicants (the path of the majority)",
+  "quest.hxh.hunter_exam.tower_fight": "Beat the prisoner blocking your way (make him give up)",
+  "quest.hxh.hunter_exam.tower_exit": "Get down to the exit before time runs out",
+  "dialog.hxh.hunter_exam.tower_vote": "Heh heh… the majority has spoken.",
+  "exam.hxh.tower_vote": "Vote: %s for O, %s for X. Chosen door: %s.",
+  "exam.hxh.tower_o": "O",
+  "exam.hxh.tower_x": "X",
+  "exam.hxh.tower_vote_won": "The majority followed you: the short path.",
+  "exam.hxh.tower_vote_lost": "The majority voted against you (Tonpa, no doubt): the path will be longer.",
+  "exam.hxh.tower_time": "Time is up: you remain a prisoner of the tower."
 }

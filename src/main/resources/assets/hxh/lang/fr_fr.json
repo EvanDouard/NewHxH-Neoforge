@@ -837,5 +837,22 @@
   "exam.hxh.ball_touch": "Netero a dû s'en servir ! (%s/%s)",
   "exam.hxh.ball_time": "Ho ho ho, la balle reste à moi. Ce n'était qu'un jeu : l'Examen continue.",
   "exam.hxh.ball_won": "Ho ho ! Tu m'as forcé à me servir de ma main droite et de ma jambe. Garde la balle en souvenir, et voici %s jennys pour la peine.",
-  "item.hxh.netero_ball": "Balle de Netero"
+  "item.hxh.netero_ball": "Balle de Netero",
+  "npc.hxh.tonpa": "Tonpa",
+  "dialog.hxh.tonpa.idle": "Hé hé, un nouveau ! Tu peux compter sur moi, je suis là pour aider les débutants…",
+  "exam.hxh.site.tower": "Tour de Trick",
+  "exam.hxh.trial.tour": "La Tour de Trick",
+  "dialog.hxh.hunter_exam.tower_intro": "Bienvenue en haut de la Tour de Trick. Troisième épreuve : descendre jusqu'en bas, vivant, dans le temps imparti. À vous de trouver le chemin.",
+  "quest.hxh.hunter_exam.tower_intro": "Écouter Lippo, le directeur de la prison",
+  "quest.hxh.hunter_exam.tower_roof": "Trouver la trappe qui mène à l'intérieur de la tour",
+  "quest.hxh.hunter_exam.tower_vote": "Voter avec les autres candidats (le chemin de la majorité)",
+  "quest.hxh.hunter_exam.tower_fight": "Vaincre le prisonnier qui te barre la route (le faire abandonner)",
+  "quest.hxh.hunter_exam.tower_exit": "Descendre jusqu'à la sortie avant la fin du temps",
+  "dialog.hxh.hunter_exam.tower_vote": "Hé hé… la majorité a parlé.",
+  "exam.hxh.tower_vote": "Vote : %s pour O, %s pour X. Porte choisie : %s.",
+  "exam.hxh.tower_o": "O",
+  "exam.hxh.tower_x": "X",
+  "exam.hxh.tower_vote_won": "La majorité t'a suivi : le chemin court.",
+  "exam.hxh.tower_vote_lost": "La majorité a voté contre toi (Tonpa, sans doute) : le chemin sera plus long.",
+  "exam.hxh.tower_time": "Le temps est écoulé : tu es resté prisonnier de la tour."
 }
