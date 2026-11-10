@@ -33,6 +33,8 @@ public final class HunterStats {
 
     /** Ajoute de l'XP brute (avant multiplicateur de config) et gère les montées de niveau. */
     public static void addXp(LivingEntity entity, Stat stat, double rawAmount) {
+        // Zushi (passif « Assidu ») : +25 % d'expérience à l'entraînement
+        if ("zushi".equals(get(entity).kit())) rawAmount *= 1.25;
         int amount = (int) Math.round(rawAmount * HxHConfig.XP_MULTIPLIER.get());
         if (amount <= 0) return;
         HunterData data = get(entity);

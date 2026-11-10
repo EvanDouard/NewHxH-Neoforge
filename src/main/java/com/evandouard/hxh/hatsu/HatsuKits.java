@@ -53,6 +53,36 @@ public final class HatsuKits {
     public static final HatsuKit HISOKA = playable("hisoka", TRANSMUTER, List.of(Passives.HISOKA_THRILL),
             Techniques.HISOKA_BUNGEE_GUM, Techniques.HISOKA_CARDS, Techniques.HISOKA_TEXTURE_SURPRISE);
 
+
+    // ---------- Personnages de la fiche docs/kits-personnages.md (première version jouable) ----------
+    public static final HatsuKit PARISTON = playable("pariston", SPECIALIST, List.of(Characters.PARISTON_CHARISMA), Characters.PARISTON_LOVE_DEBT);
+    public static final HatsuKit GING = playable("ging", EMITTER, List.of(Characters.GING_ARCHAEOLOGIST), Characters.GING_EMISSION_PUNCH, Characters.GING_COPY);
+    public static final HatsuKit CHEADLE = playable("cheadle", MANIPULATOR, List.of(Characters.CHEADLE_SECRETARY), Characters.CHEADLE_RULES);
+    public static final HatsuKit BOTOBAI = playable("botobai", ENHANCER, List.of(Characters.BOTOBAI_VETERAN), Characters.BOTOBAI_PRESSURE);
+    public static final HatsuKit MENCHI = playable("menchi", TRANSMUTER, List.of(Characters.MENCHI_GASTRONOME), Characters.MENCHI_GOURMET_MEAL);
+    public static final HatsuKit BUSHIDORA = playable("bushidora", ENHANCER, List.of(Characters.BUSHIDORA_SWORDSMAN), Characters.BUSHIDORA_AURA_BLADE);
+    public static final HatsuKit TSEZGUERRA = playable("tsezguerra", ENHANCER, List.of(Characters.TSEZGUERRA_LEADER), Characters.TSEZGUERRA_CHARGED_STRIKE);
+    public static final HatsuKit SILVA = playable("silva", EMITTER, List.of(Passives.ZOLDYCK_BODY), Characters.SILVA_EXPLOSIVE_ORBS);
+    public static final HatsuKit ZENO = playable("zeno", EMITTER, List.of(Passives.ZOLDYCK_BODY), Characters.ZENO_DRAGON_HEAD, Characters.ZENO_DRAGON_DIVE);
+    public static final HatsuKit KALLUTO = playable("kalluto", MANIPULATOR, List.of(Passives.ZOLDYCK_BODY), Characters.KALLUTO_PAPER_DANCE);
+    public static final HatsuKit NOBUNAGA = playable("nobunaga", ENHANCER, List.of(Characters.NOBUNAGA_EN), Characters.NOBUNAGA_IAI);
+    public static final HatsuKit UVOGIN = playable("uvogin", ENHANCER, List.of(Characters.UVOGIN_IRON_BODY), Characters.UVOGIN_BIG_BANG_IMPACT);
+    public static final HatsuKit FRANKLIN = playable("franklin", EMITTER, List.of(Characters.FRANKLIN_STURDY), Characters.FRANKLIN_DOUBLE_MACHINE_GUN);
+    public static final HatsuKit MACHI = playable("machi", TRANSMUTER, List.of(Characters.MACHI_SUTURE), Characters.MACHI_NEN_THREADS);
+    public static final HatsuKit SHIZUKU = playable("shizuku", CONJURER, List.of(Characters.SHIZUKU_CLEANER), Characters.SHIZUKU_BLINKY);
+    public static final HatsuKit PAKUNODA = playable("pakunoda", SPECIALIST, List.of(Characters.PAKUNODA_MIND_READER), Characters.PAKUNODA_MEMORY_BOMB);
+    public static final HatsuKit NEON = playable("neon", SPECIALIST, List.of(Characters.NEON_FORTUNE), Characters.NEON_LOVELY_GHOSTWRITER);
+    public static final HatsuKit RAZOR = playable("razor", EMITTER, List.of(Characters.RAZOR_GAME_MASTER), Characters.RAZOR_AURA_BALL, Characters.RAZOR_FOURTEEN_DEVILS);
+    public static final HatsuKit GENTHRU = playable("genthru", CONJURER, List.of(Characters.GENTHRU_BOMBER), Characters.GENTHRU_LITTLE_FLOWER, Characters.GENTHRU_COUNTDOWN);
+    public static final HatsuKit KITE = playable("kite", CONJURER, List.of(Characters.KITE_HUNTER), Characters.KITE_CRAZY_SLOTS);
+    public static final HatsuKit MOREL = playable("morel", MANIPULATOR, List.of(Characters.MOREL_SMOKE), Characters.MOREL_DEEP_PURPLE);
+    public static final HatsuKit PALM = playable("palm", ENHANCER, List.of(Characters.PALM_WINK_BLUE), Characters.PALM_BLACK_WIDOW);
+    public static final HatsuKit MERUEM = playable("meruem", EMITTER, List.of(Characters.MERUEM_KING), Characters.MERUEM_RAGE_BLAST, Characters.MERUEM_PHOTON);
+    public static final HatsuKit YOUPI = playable("youpi", TRANSMUTER, List.of(Characters.YOUPI_VITALITY), Characters.YOUPI_METAMORPHOSIS, Characters.YOUPI_RAGE_BLAST);
+    public static final HatsuKit ZUSHI = playable("zushi", MANIPULATOR, List.of(Characters.ZUSHI_DILIGENT), Characters.ZUSHI_REN_PUNCH);
+    public static final HatsuKit SENRITSU = playable("senritsu", EMITTER, List.of(Characters.SENRITSU_HEART_SOUND), Characters.SENRITSU_MELODY);
+    public static final HatsuKit WING = playable("wing", ENHANCER, List.of(Characters.WING_TEACHER), Characters.WING_SHINGEN_RYU);
+
     /**
      * Personnages à l'aura hostile, incontrôlée : des flammes même au repos. Hypothèses tirées de l'histoire, à revoir :
      * <ul>
@@ -74,43 +104,16 @@ public final class HatsuKits {
 
     static {
         // ---------- Idées : personnages du Trello ----------
-        idea("pariston", SPECIALIST, false, "pariston_charisma", "pariston_love_debt");
-        idea("ging", EMITTER, false, "ging_archaeologist", "ging_copy", "ging_emission_punch");
-        idea("cheadle", MANIPULATOR, false, "cheadle_secretary", "cheadle_rules");
-        idea("botobai", ENHANCER, false, "botobai_veteran", "botobai_pressure");
         idea("biscuit", TRANSMUTER, true, "biscuit_gem_expert", "biscuit_esthetician", "biscuit_true_form");
-        idea("menchi", TRANSMUTER, false, "menchi_gastronome", "menchi_gourmet_meal");
-        idea("bushidora", ENHANCER, false, "bushidora_swordsman", "bushidora_aura_blade");
-        idea("tsezguerra", ENHANCER, false, "tsezguerra_leader", "tsezguerra_charged_strike");
-        idea("silva", EMITTER, true, "silva_zoldyck", "silva_explosive_orbs");
-        idea("zeno", EMITTER, true, "zeno_zoldyck", "zeno_dragon_head", "zeno_dragon_dive");
-        idea("zushi", MANIPULATOR, false, "zushi_diligent", "zushi_ren_punch");
         idea("chrollo", SPECIALIST, true, "chrollo_leader", "chrollo_skill_hunter");
         idea("feitan", TRANSMUTER, true, "feitan_pain", "feitan_rising_sun");
-        idea("nobunaga", ENHANCER, true, "nobunaga_en", "nobunaga_iai");
         idea("phinks", ENHANCER, true, "phinks_brawler", "phinks_ripper_cyclotron");
-        idea("neon", SPECIALIST, true, "neon_fortune", "neon_lovely_ghostwriter");
-        idea("razor", EMITTER, true, "razor_game_master", "razor_aura_ball", "razor_fourteen_devils");
-        idea("kite", CONJURER, true, "kite_hunter", "kite_crazy_slots");
         idea("knov", EMITTER, true, "knov_strategist", "knov_hide_and_seek");
         idea("knuckle", CONJURER, true, "knuckle_tough", "knuckle_hakoware");
-        idea("morel", MANIPULATOR, true, "morel_smoke", "morel_deep_purple");
-        idea("meruem", EMITTER, true, "meruem_king", "meruem_rage_blast", "meruem_photon");
         idea("shaiapouf", MANIPULATOR, true, "pouf_wings", "pouf_spiritual_message", "pouf_beelzebub");
-        idea("youpi", TRANSMUTER, true, "youpi_vitality", "youpi_metamorphosis", "youpi_rage_blast");
 
         // ---------- Idées : ajouts proposés ----------
-        idea("uvogin", ENHANCER, true, "uvogin_iron_body", "uvogin_big_bang_impact");
-        idea("franklin", EMITTER, true, "franklin_sturdy", "franklin_double_machine_gun");
         idea("shalnark", MANIPULATOR, true, "shalnark_tech", "shalnark_black_voice", "shalnark_autopilot");
-        idea("machi", TRANSMUTER, true, "machi_suture", "machi_nen_threads");
-        idea("shizuku", CONJURER, true, "shizuku_cleaner", "shizuku_blinky");
-        idea("pakunoda", SPECIALIST, true, "pakunoda_mind_reader", "pakunoda_memory_bomb");
-        idea("kalluto", MANIPULATOR, true, "kalluto_zoldyck", "kalluto_paper_dance");
-        idea("genthru", CONJURER, true, "genthru_bomber", "genthru_little_flower", "genthru_countdown");
-        idea("senritsu", EMITTER, true, "senritsu_heart_sound", "senritsu_melody");
-        idea("palm", ENHANCER, true, "palm_wink_blue", "palm_black_widow");
-        idea("wing", ENHANCER, true, "wing_teacher", "wing_shingen_ryu");
     }
 
     @Nullable

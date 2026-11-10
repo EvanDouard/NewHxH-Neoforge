@@ -44,6 +44,8 @@ public final class HxHMod {
         com.evandouard.hxh.world.NenWildlife.register(NeoForge.EVENT_BUS);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.world.WorldEvents::register);
         NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.tick.ServerTickEvent.Post.class,
+                e -> com.evandouard.hxh.hatsu.NenTasks.tick(e.getServer()));
+        NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.tick.ServerTickEvent.Post.class,
                 e -> com.evandouard.hxh.world.WorldEvents.tick(e.getServer()));
         NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.tick.ServerTickEvent.Post.class,
                 e -> com.evandouard.hxh.hatsu.NenCharge.tickAll());
@@ -57,6 +59,7 @@ public final class HxHMod {
         com.evandouard.hxh.quest.QuestEvents.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.exam.ExamTournament.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.exam.Exam288.register(NeoForge.EVENT_BUS);
+        com.evandouard.hxh.hatsu.CharacterEvents.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.arena.ArenaManager.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.training.TrainingEvents.register(NeoForge.EVENT_BUS);
         modEventBus.addListener(HxHNetwork::register);

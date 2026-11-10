@@ -165,7 +165,10 @@ public final class Hatsu {
         boolean hit = technique.perform(entity, power(data, technique));
         data.setAura(data.aura() - technique.auraCost());
         if (technique.resource() != null) data.addKitValue(technique.resource(), -technique.resourceCost(), Float.MAX_VALUE);
-        data.setReadyAt(technique.id(), now + technique.cooldownFor(data));
+        int cooldown = technique.cooldownFor(data);
+        if ("cheadle".equals(data.kit())) cooldown = Math.round(cooldown * 0.9f); // Secrétaire : recharges −10 %
+        data.setReadyAt(technique.id(), now + cooldown);
+        Characters.observe(entity, technique); // Ging retient ce qu'il voit
         com.evandouard.hxh.nen.NenProgress.addNenXp(entity, Math.max(1, technique.auraCost() / 5));
         return hit ? null : "message.hxh.hatsu_missed";
     }

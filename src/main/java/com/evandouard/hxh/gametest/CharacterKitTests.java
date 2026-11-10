@@ -63,9 +63,48 @@ public final class CharacterKitTests {
         float out = Hatsu.modifyOutgoingMelee(netero, target, 10f);
         helper.assertTrue(out >= 15.9f, "Coups ×1,6 avec les poings de Kannon : " + out);
         // Main zéro : seulement prière pleine
+        d.setAura(d.auraMax());
         helper.assertTrue("message.hxh.no_prayer".equals(Hatsu.castRefusal(d, Netero.ZERO_HAND, now)), "Main zéro : prière pleine requise");
         d.setKitValue(KitBars.PRAYER, KitBars.PRAYER_MAX);
         helper.assertTrue(Hatsu.castRefusal(d, Netero.ZERO_HAND, now) == null, "Prière pleine : Main zéro prête");
+        helper.succeed();
+    }
+
+    /** Chaque technique de chaque personnage jouable part sans erreur, lancée par un mob sur une cible devant lui. */
+    @GameTest(template = "empty", timeoutTicks = 200)
+    public static void everyTechniqueOfEveryKitRuns(GameTestHelper helper) {
+        Zombie caster = husk(helper, 0);
+        Zombie target = husk(helper, 2);
+        StringBuilder failures = new StringBuilder();
+        int cast = 0;
+        for (var kit : com.evandouard.hxh.hatsu.HatsuKits.playable()) {
+            HunterData d = hunter(caster, kit.type(), kit.id());
+            for (String id : kit.techniques()) {
+                var t = com.evandouard.hxh.hatsu.Techniques.get(id);
+                if (t == null) {
+                    failures.append(kit.id()).append(": technique inconnue ").append(id).append("; ");
+                    continue;
+                }
+                if (!t.implemented()) {
+                    failures.append(kit.id()).append(": technique non jouable ").append(id).append("; ");
+                    continue;
+                }
+                if (t.isCharged()) continue;
+                d.setAura(d.auraMax());
+                for (var bar : KitBars.of(kit.id())) d.setKitValue(bar.key(), bar.max());
+                target.setHealth(target.getMaxHealth());
+                try {
+                    t.perform(caster, 1f);
+                    com.evandouard.hxh.hatsu.NenTasks.flushForTests();
+                    cast++;
+                } catch (RuntimeException e) {
+                    failures.append(kit.id()).append("/").append(id).append(" : ").append(e).append("; ");
+                }
+            }
+            for (var p : kit.passives()) if (!p.implemented()) failures.append(kit.id()).append(": passif non jouable ").append(p.id()).append("; ");
+        }
+        helper.assertTrue(failures.length() == 0, failures.toString());
+        helper.assertTrue(cast > 50, "Techniques lancées : " + cast);
         helper.succeed();
     }
 }
