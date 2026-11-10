@@ -137,8 +137,8 @@ public final class ExamHazards {
             if (level.getBlockState(player.blockPosition()).is(Blocks.COBWEB)) player.teleportTo(player.getX(), y + 1.2, player.getZ());
             player.resetFallDistance();
             player.hurtMarked = true;
-            if (player.tickCount % 10 == 0) level.sendParticles(net.minecraft.core.particles.ParticleTypes.CLOUD,
-                    player.getX(), y - 0.5, player.getZ(), 3, 0.4, 0.2, 0.4, 0.02);
+            // le courant d'air : traits de vent sous le candidat (pas de particules vanilla)
+            if (player.tickCount % 10 == 0) com.evandouard.hxh.fx.NenFx.slashAt(level, player.position().add(0, -0.6, 0), 1.0f, 0xDDEEFF);
             return;
         }
         if (y < ExamWorld.FLOOR_Y - ExamPlaceholders.RAVINE_DEPTH + 4) {

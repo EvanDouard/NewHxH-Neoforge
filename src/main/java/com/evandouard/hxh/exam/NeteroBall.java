@@ -5,7 +5,6 @@ import com.evandouard.hxh.quest.Quest;
 import com.evandouard.hxh.quest.QuestData;
 import com.evandouard.hxh.quest.QuestManager;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -61,7 +60,8 @@ public final class NeteroBall {
     /** Netero passe derrière le candidat, d'un pas que l'œil ne suit pas. */
     private static void blink(ServerPlayer player, NpcEntity netero) {
         if (!(netero.level() instanceof ServerLevel level)) return;
-        level.sendParticles(ParticleTypes.POOF, netero.getX(), netero.getY() + 1, netero.getZ(), 6, 0.3, 0.5, 0.3, 0.01);
+        // trait de vitesse façon manga là où il était (pas de particules vanilla)
+        com.evandouard.hxh.fx.NenFx.slashAt(level, netero.position().add(0, 1, 0), 1.4f, 0xFFFFFF);
         Vec3 back = player.position().subtract(player.getLookAngle().multiply(1, 0, 1).normalize().scale(3));
         if (level.noCollision(netero, netero.getBoundingBox().move(back.subtract(netero.position()))))
             netero.teleportTo(back.x, player.getY(), back.z);
