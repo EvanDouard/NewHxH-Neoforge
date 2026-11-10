@@ -29,7 +29,9 @@ public enum ExamSite {
     /** Forêt des Kiriko (en route pour Zaban) : démasquer la bête qui a pris l'apparence du mari. */
     KIRIKO("foret_kiriko"),
     /** Île-hôtel (hors-série de l'anime de 1999) : payer sa chambre avec le trésor d'une épave, survivre à la vague. */
-    ISLAND_HOTEL("ile_hotel");
+    ISLAND_HOTEL("ile_hotel"),
+    /** Plaine d'ouverture du 288e Examen (OVA) : assommer tous les candidats. */
+    OPENING_288("ouverture_288");
 
     private final String file;
 

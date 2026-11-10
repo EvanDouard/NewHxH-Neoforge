@@ -80,6 +80,23 @@ public final class QuestManager {
         return hits;
     }
 
+    /** Un candidat assommé au 288e Examen. */
+    public static void knockedOut(ServerPlayer player) {
+        QuestData d = data(player);
+        String exam = QuestRegistry.HUNTER_EXAM.toString();
+        if (!d.running.containsKey(exam)) return;
+        d.focus(exam);
+        Quest.Step step = currentStep(d);
+        if (step != null && step.type().equals("knockout")) {
+            d.progress++;
+            if (d.progress >= step.count()) {
+                player.sendSystemMessage(Component.translatable("exam.hxh.ko_done").withStyle(ChatFormatting.GREEN));
+                advance(player);
+            } else sync(player);
+        }
+        d.refocus();
+    }
+
     /** Un adversaire du tournoi final a abandonné. */
     public static void duelWon(ServerPlayer player) {
         QuestData d = data(player);
@@ -300,6 +317,7 @@ public final class QuestManager {
         QUIZ_ASKED.remove(player.getUUID());
         com.evandouard.hxh.exam.ExamTournament.reset(player);
         com.evandouard.hxh.exam.TrickTower.stopClock(player);
+        com.evandouard.hxh.exam.Exam288.reset(player);
         player.sendSystemMessage(Component.translatable("message.hxh.exam_failed").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
         player.sendSystemMessage(Component.translatable("message.hxh.exam_failed_detail").withStyle(ChatFormatting.GRAY));
         d.refocus();
@@ -474,6 +492,11 @@ public final class QuestManager {
             } else if (d.progress % 20 == 0) sync(player);
             return;
         }
+        // 288e Examen : assommer toute la meute avant la fin du temps
+        if (step.type().equals("knockout")) {
+            com.evandouard.hxh.exam.Exam288.tick(player, step, d);
+            return;
+        }
         // Jeu de la balle de Netero : le temps est compté
         if (step.type().equals("ball")) {
             com.evandouard.hxh.exam.NeteroBall.tick(player, step);
@@ -610,6 +633,7 @@ public final class QuestManager {
         giveRewards(player, d, step);
         if (step.type().equals("duel")) com.evandouard.hxh.exam.ExamTournament.reset(player);
         if (step.type().equals("ball")) com.evandouard.hxh.exam.NeteroBall.drop(player);
+        if (step.type().equals("knockout")) com.evandouard.hxh.exam.Exam288.reset(player);
         if (step.trial().equals("tour") && step.npc().equals("lippo")) com.evandouard.hxh.exam.TrickTower.startClock(player);
         d.step++;
         d.progress = 0;

@@ -895,5 +895,13 @@
   "quest.hxh.hunter_exam.island_wave": "Withstand the giant wave and the cannonballs (crouch against the wave)",
   "quest.hxh.hunter_exam.island_done": "Go back to the hotel manager",
   "exam.hxh.wave": "A giant wave crashes in!",
-  "exam.hxh.wave_swept": "The wave swept you away! You get back onto the beach… start over."
+  "exam.hxh.wave_swept": "The wave swept you away! You get back onto the beach… start over.",
+  "exam.hxh.site.opening_288": "288th Exam esplanade",
+  "exam.hxh.trial.ko288": "The 288th Exam",
+  "dialog.hxh.hunter_exam.ko_intro": "Welcome to the 288th Hunter Exam! First phase… um… They say an applicant last year knocked everyone out with a single move. Let's see what you're worth. Careful, here they come!",
+  "quest.hxh.hunter_exam.ko_intro": "Listen to Beans on the opening esplanade",
+  "quest.hxh.hunter_exam.ko": "Knock out every applicant before time runs out",
+  "exam.hxh.ko_start": "%s applicants rush at you! Knock them all out in %s seconds.",
+  "exam.hxh.ko_time": "Time is up: some applicants are still standing.",
+  "exam.hxh.ko_done": "Nobody left standing. Just like Killua at the 288th Exam!"
 }

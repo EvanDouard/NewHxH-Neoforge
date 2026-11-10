@@ -18,6 +18,9 @@
       "phase": 1,
       "follows": "zaban"
     },
+    "ko288": {
+      "phase": 1
+    },
     "biska": {
       "phase": 2
     },
@@ -171,6 +174,20 @@
       "max_distance": 10,
       "hazard": "fog",
       "trial": "numele"
+    },
+    {
+      "id": "ko_intro",
+      "type": "talk",
+      "npc": "beans",
+      "site": "ouverture_288",
+      "trial": "ko288"
+    },
+    {
+      "id": "ko",
+      "type": "knockout",
+      "count": 10,
+      "seconds": 60,
+      "trial": "ko288"
     },
     {
       "id": "buhara",

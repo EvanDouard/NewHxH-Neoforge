@@ -895,5 +895,13 @@
   "quest.hxh.hunter_exam.island_wave": "Tenir face à la vague géante et aux boulets (accroupi contre la vague)",
   "quest.hxh.hunter_exam.island_done": "Retourner voir le gérant de l'hôtel",
   "exam.hxh.wave": "Une lame géante déferle !",
-  "exam.hxh.wave_swept": "La vague t'a emporté ! Tu reprends pied sur la plage… il faut tout recommencer."
+  "exam.hxh.wave_swept": "La vague t'a emporté ! Tu reprends pied sur la plage… il faut tout recommencer.",
+  "exam.hxh.site.opening_288": "Esplanade du 288e Examen",
+  "exam.hxh.trial.ko288": "Le 288e Examen",
+  "dialog.hxh.hunter_exam.ko_intro": "Bienvenue au 288e Examen Hunter ! Première phase… euh… Il paraît qu'un candidat l'an dernier a assommé tout le monde d'un seul geste. Voyons ce que tu vaux. Attention, ils arrivent !",
+  "quest.hxh.hunter_exam.ko_intro": "Écouter Beans sur l'esplanade d'ouverture",
+  "quest.hxh.hunter_exam.ko": "Assommer tous les candidats avant la fin du temps",
+  "exam.hxh.ko_start": "%s candidats se ruent sur toi ! Assomme-les tous en %s secondes.",
+  "exam.hxh.ko_time": "Le temps est écoulé : des candidats tiennent encore debout.",
+  "exam.hxh.ko_done": "Plus personne debout. Comme Killua au 288e Examen !"
 }

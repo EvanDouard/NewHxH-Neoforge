@@ -45,13 +45,13 @@ public final class QuestTests {
     public static void examQuestIsLoaded(GameTestHelper helper) {
         Quest exam = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
         helper.assertTrue(exam != null, "La quête hxh:hunter_exam doit être chargée depuis le datapack");
-        helper.assertTrue(exam.steps().size() == 32, "32 étapes attendues, obtenu " + exam.steps().size());
-        helper.assertTrue(exam.trials().size() == 11 && exam.minTrials() == 4 && exam.maxTrials() == 6, "11 épreuves, 4 à 6 tirées");
+        helper.assertTrue(exam.steps().size() == 34, "34 étapes attendues, obtenu " + exam.steps().size());
+        helper.assertTrue(exam.trials().size() == 12 && exam.minTrials() == 4 && exam.maxTrials() == 6, "12 épreuves, 4 à 6 tirées");
         helper.succeed();
     }
 
     /** Toutes les épreuves, dans l'ordre du fichier (le parcours est alors identique au fichier). */
-    private static final java.util.List<String> ALL_TRIALS = java.util.List.of("dolle", "kiriko", "zaban", "numele", "biska", "menchi", "balle", "tour", "ile", "zevil", "tournoi");
+    private static final java.util.List<String> ALL_TRIALS = java.util.List.of("dolle", "kiriko", "zaban", "numele", "ko288", "biska", "menchi", "balle", "tour", "ile", "zevil", "tournoi");
 
     @GameTest(template = "empty")
     public static void trialDrawsStayCoherent(GameTestHelper helper) {
@@ -149,6 +149,11 @@ public final class QuestTests {
             }
             helper.assertTrue(d.step() == idx(leg) + 1, "Étape réussie : " + leg);
         }
+        // 288e Examen : Beans, puis assommer les dix candidats
+        QuestManager.onTalk(player, beans);
+        helper.assertTrue(d.step() == idx("ko"), "La meute arrive");
+        for (int i = 0; i < 10; i++) QuestManager.knockedOut(player);
+        helper.assertTrue(d.step() == idx("buhara"), "Plus personne debout");
 
         QuestManager.onTalk(player, buhara);
         for (int i = 0; i < 2; i++) {
@@ -382,6 +387,26 @@ public final class QuestTests {
         int real = 3 - com.evandouard.hxh.exam.KirikoForest.fakeIndex(player);
         helper.assertTrue(!QuestManager.answer(player, real), "Désigner le vrai mari est une erreur");
         helper.assertTrue(QuestManager.currentStep(d).id().equals("guide"), "Éliminé : retour au guide");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void exam288PackMustAllFallInTime(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        player.moveTo(helper.absoluteVec(new Vec3(1.5, 1, 1.5)));
+        QuestData d = QuestManager.data(player);
+        com.evandouard.hxh.quest.TrialPlan.forcedForTests = java.util.List.of("ko288", "zevil", "tournoi");
+        QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
+        while (!QuestManager.currentStep(d).id().equals("ko")) QuestManager.advance(player);
+        QuestManager.tick(player);
+        helper.assertTrue(com.evandouard.hxh.exam.Exam288.remaining(player) == 10, "Dix candidats entrent");
+        var one = player.serverLevel().getEntitiesOfClass(net.minecraft.world.entity.monster.Vindicator.class,
+                player.getBoundingBox().inflate(16), v -> v.getTags().contains(com.evandouard.hxh.exam.Exam288.TAG)).get(0);
+        com.evandouard.hxh.exam.Exam288.knockOut(player, one);
+        helper.assertTrue(d.progress() == 1 && com.evandouard.hxh.exam.Exam288.remaining(player) == 9, "Un assommé (pas tué)");
+        for (int i = 0; i < 61 * 20 && QuestManager.currentStep(d).id().equals("ko"); i++) QuestManager.tick(player);
+        helper.assertTrue(QuestManager.currentStep(d).id().equals("guide"), "Temps écoulé : éliminé");
+        helper.assertTrue(com.evandouard.hxh.exam.Exam288.remaining(player) == 0, "La meute est repartie");
         helper.succeed();
     }
 

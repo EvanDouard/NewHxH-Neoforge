@@ -51,6 +51,7 @@ public final class HxHMod {
                 e -> com.evandouard.hxh.arena.TowerPlacer.ensurePlaced(e.getServer()));
         com.evandouard.hxh.quest.QuestEvents.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.exam.ExamTournament.register(NeoForge.EVENT_BUS);
+        com.evandouard.hxh.exam.Exam288.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.arena.ArenaManager.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.training.TrainingEvents.register(NeoForge.EVENT_BUS);
         modEventBus.addListener(HxHNetwork::register);

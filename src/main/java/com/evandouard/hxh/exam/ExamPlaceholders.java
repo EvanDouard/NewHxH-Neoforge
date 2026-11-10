@@ -37,6 +37,7 @@ final class ExamPlaceholders {
             case TOWER -> trickTower(level, c, place);
             case KIRIKO -> kirikoForest(level, c, place);
             case ISLAND_HOTEL -> islandHotel(level, c, place);
+            case OPENING_288 -> opening288(level, c, place);
         };
     }
 
@@ -543,5 +544,24 @@ final class ExamPlaceholders {
         npcs.put("hotel_manager", c.offset(0, 0, -7));
         List<BlockPos> coins = List.of(wreck.offset(-2, 0, 4), wreck.offset(2, 0, -2), wreck.offset(0, 0, 6), wreck.offset(-1, 0, -5));
         return new ExamWorld.Site(c.offset(0, 0, 4), 180f, npcs, List.of(), coins);
+    }
+
+    // ------------------------------------------------------------------ 288e Examen (OVA)
+
+    /** Esplanade d'ouverture : dalles, barrières tout autour, une estrade pour Beans. */
+    private static ExamWorld.Site opening288(ServerLevel level, BlockPos c, boolean place) {
+        int r = 16;
+        if (place) {
+            for (int x = -r; x <= r; x++) for (int z = -r; z <= r; z++) {
+                set(level, c.offset(x, -1, z), ((x + z) & 1) == 0 ? Blocks.SMOOTH_STONE : Blocks.POLISHED_ANDESITE);
+                for (int y = 0; y < 4; y++) set(level, c.offset(x, y, z), Blocks.AIR);
+                if (Math.abs(x) == r || Math.abs(z) == r) set(level, c.offset(x, 0, z), Blocks.IRON_BARS);
+            }
+            for (int x = -2; x <= 2; x++) for (int z = -r + 1; z <= -r + 3; z++) set(level, c.offset(x, 0, z), Blocks.STONE_BRICK_SLAB);
+            for (int x = -r; x <= r; x += 8) set(level, c.offset(x, 1, -r), Blocks.LANTERN);
+        }
+        Map<String, BlockPos> npcs = new LinkedHashMap<>();
+        npcs.put("beans", c.offset(0, 1, -r + 2));
+        return new ExamWorld.Site(c.offset(0, 0, 4), 180f, npcs, List.of(), List.of());
     }
 }
