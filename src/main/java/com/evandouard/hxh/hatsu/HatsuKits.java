@@ -81,6 +81,14 @@ public final class HatsuKits {
     public static final HatsuKit YOUPI = playable("youpi", TRANSMUTER, List.of(Characters.YOUPI_VITALITY), Characters.YOUPI_METAMORPHOSIS, Characters.YOUPI_RAGE_BLAST);
     public static final HatsuKit ZUSHI = playable("zushi", MANIPULATOR, List.of(Characters.ZUSHI_DILIGENT), Characters.ZUSHI_REN_PUNCH);
     public static final HatsuKit SENRITSU = playable("senritsu", EMITTER, List.of(Characters.SENRITSU_HEART_SOUND), Characters.SENRITSU_MELODY);
+    public static final HatsuKit BISCUIT = playable("biscuit", TRANSMUTER, List.of(Specials.BISCUIT_TWO_FORMS), Specials.BISCUIT_SWITCH_FORM, Specials.BISCUIT_ESTHETICIAN);
+    public static final HatsuKit CHROLLO = playable("chrollo", SPECIALIST, List.of(Specials.CHROLLO_HEAD), Specials.CHROLLO_SKILL_HUNTER);
+    public static final HatsuKit FEITAN = playable("feitan", TRANSMUTER, List.of(Specials.FEITAN_PAIN), Specials.FEITAN_RISING_SUN);
+    public static final HatsuKit PHINKS = playable("phinks", ENHANCER, List.of(Specials.PHINKS_BRAWLER), Specials.PHINKS_RIPPER_CYCLOTRON);
+    public static final HatsuKit SHALNARK = playable("shalnark", MANIPULATOR, List.of(Specials.SHALNARK_TECH), Specials.SHALNARK_BLACK_VOICE, Specials.SHALNARK_AUTOPILOT);
+    public static final HatsuKit KNOV = playable("knov", EMITTER, List.of(Specials.KNOV_STRATEGIST), Specials.KNOV_MARK_DOOR, Specials.KNOV_HIDE_AND_SEEK);
+    public static final HatsuKit KNUCKLE = playable("knuckle", CONJURER, List.of(Specials.KNUCKLE_HAKOWARE), Specials.KNUCKLE_POT_CLEAN, Specials.KNUCKLE_CANCEL);
+    public static final HatsuKit SHAIAPOUF = playable("shaiapouf", MANIPULATOR, List.of(Specials.POUF_WINGS), Specials.POUF_SPIRITUAL_MESSAGE, Specials.POUF_BEELZEBUB);
     public static final HatsuKit WING = playable("wing", ENHANCER, List.of(Characters.WING_TEACHER), Characters.WING_SHINGEN_RYU);
 
     /**
@@ -104,16 +112,8 @@ public final class HatsuKits {
 
     static {
         // ---------- Idées : personnages du Trello ----------
-        idea("biscuit", TRANSMUTER, true, "biscuit_gem_expert", "biscuit_esthetician", "biscuit_true_form");
-        idea("chrollo", SPECIALIST, true, "chrollo_leader", "chrollo_skill_hunter");
-        idea("feitan", TRANSMUTER, true, "feitan_pain", "feitan_rising_sun");
-        idea("phinks", ENHANCER, true, "phinks_brawler", "phinks_ripper_cyclotron");
-        idea("knov", EMITTER, true, "knov_strategist", "knov_hide_and_seek");
-        idea("knuckle", CONJURER, true, "knuckle_tough", "knuckle_hakoware");
-        idea("shaiapouf", MANIPULATOR, true, "pouf_wings", "pouf_spiritual_message", "pouf_beelzebub");
 
         // ---------- Idées : ajouts proposés ----------
-        idea("shalnark", MANIPULATOR, true, "shalnark_tech", "shalnark_black_voice", "shalnark_autopilot");
     }
 
     @Nullable

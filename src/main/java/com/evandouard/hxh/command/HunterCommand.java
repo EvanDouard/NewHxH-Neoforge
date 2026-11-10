@@ -75,6 +75,10 @@ public final class HunterCommand {
                                     }
                                     return com.evandouard.hxh.world.WorldEvents.trigger(ev, ctx.getSource().getPlayerOrException()).size();
                                 })))
+                // Knov : sortir du refuge par une porte marquée (liens cliquables) — ouvert à tous
+                .then(Commands.literal("knov").then(Commands.literal("exit").then(Commands.argument("n", IntegerArgumentType.integer(0, 9))
+                        .executes(ctx -> com.evandouard.hxh.hatsu.Specials.exitRefuge(ctx.getSource().getPlayerOrException(),
+                                IntegerArgumentType.getInteger(ctx, "n")) ? 1 : 0))))
                 .then(Commands.literal("exam")
                         // Réponse à un quiz de l'Examen (lien cliquable du chat) : ouvert à tous
                         // Embarquer à bord de son dirigeable (lien cliquable de l'hôtesse) : ouvert à tous

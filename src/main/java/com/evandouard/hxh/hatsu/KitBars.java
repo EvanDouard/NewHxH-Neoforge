@@ -18,7 +18,9 @@ public final class KitBars {
 
     private static final Map<String, List<Bar>> BY_KIT = Map.of(
             "netero", List.of(new Bar(PRAYER, PRAYER_MAX, 0xFFFFD23F, "hud.hxh.bar.prayer")),
-            "feitan", List.of(new Bar(PAIN, PAIN_MAX, 0xFFE0402A, "hud.hxh.bar.pain")));
+            "feitan", List.of(new Bar(PAIN, PAIN_MAX, 0xFFE0402A, "hud.hxh.bar.pain")),
+            "phinks", List.of(new Bar("turns", 10f, 0xFFFF8A3C, "hud.hxh.bar.turns")),
+            "knuckle", List.of(new Bar("debt", 100f, 0xFFB0E0FF, "hud.hxh.bar.debt")));
 
     public static List<Bar> of(String kit) {
         return kit == null ? List.of() : BY_KIT.getOrDefault(kit, List.of());

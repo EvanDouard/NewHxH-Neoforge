@@ -118,12 +118,12 @@ public final class HatsuTests {
 
     @GameTest(template = "empty")
     public static void ideaCharactersAreListedButNotChoosable(GameTestHelper helper) {
-        helper.assertTrue(HatsuKits.playable().size() == 35, "35 personnages jouables attendus : " + HatsuKits.playable().size());
-        helper.assertTrue(HatsuKits.all().size() > 30, "La liste d'idées doit être chargée");
+        // Tous les personnages de la fiche sont maintenant jouables
+        helper.assertTrue(HatsuKits.playable().size() == 43, "43 personnages jouables attendus : " + HatsuKits.playable().size());
+        helper.assertTrue(HatsuKits.all().size() == 43, "Plus aucun personnage à l'état d'idée");
         Zombie z = husk(helper, 1);
         hunter(z, NenType.TRANSMUTER, null);
-        helper.assertTrue("message.hxh.hatsu_not_available".equals(Hatsu.choose(z, "biscuit")),
-                "Biscuit (idée) ne doit pas être choisissable");
+        helper.assertTrue(Hatsu.choose(z, "personnage_inconnu") != null, "Un personnage inconnu n'est pas choisissable");
         helper.succeed();
     }
 

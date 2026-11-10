@@ -40,6 +40,8 @@ public final class NenModes {
     public static String trySetMode(LivingEntity entity, NenMode mode) {
         HunterData data = HunterStats.get(entity);
         if (!data.nenUnlocked()) return "message.hxh.nen_locked";
+        // Banqueroute (Hakoware de Knuckle) : Zetsu forcé
+        if (mode != NenMode.ZETSU && com.evandouard.hxh.hatsu.Specials.bankrupt(entity)) return "message.hxh.bankrupt";
         NenLearning.Ability ability = NenLearning.forMode(mode);
         if (ability != null && NenLearning.refusal(entity, ability) != null) return NenLearning.refusal(entity, ability);
         if ((mode == NenMode.REN || mode == NenMode.KEN) && data.aura() < 1) return "message.hxh.no_aura";

@@ -74,7 +74,15 @@ public final class NenFx {
         /** Statue de Kannon aux mille mains, derrière Netero. */
         KANNON,
         /** Mains dorées de Kannon autour des poings de Netero. */
-        KANNON_HANDS
+        KANNON_HANDS,
+        /** Soleil de feu au-dessus de Feitan (Soleil levant). */
+        SUN,
+        /** Pot-Clean, le petit génie de Knuckle, au-dessus de sa cible. */
+        POT_CLEAN,
+        /** Marque de Knov sur une porte (vue au Gyo). */
+        DOOR_MARK,
+        /** Ailes de papillon de Shaiapouf, dans son dos en vol. */
+        WINGS
     }
 
     /**

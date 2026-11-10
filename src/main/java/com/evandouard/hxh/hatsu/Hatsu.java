@@ -94,6 +94,7 @@ public final class Hatsu {
     }
 
     public static void tickPassives(LivingEntity entity) {
+        Specials.cleanup(entity);
         for (Passive p : activePassives(entity)) p.tick(entity);
     }
 
@@ -169,6 +170,7 @@ public final class Hatsu {
         if ("cheadle".equals(data.kit())) cooldown = Math.round(cooldown * 0.9f); // Secrétaire : recharges −10 %
         data.setReadyAt(technique.id(), now + cooldown);
         Characters.observe(entity, technique); // Ging retient ce qu'il voit
+        entity.getPersistentData().putString(Specials.LAST_TECHNIQUE, technique.id()); // Chrollo peut la voler
         com.evandouard.hxh.nen.NenProgress.addNenXp(entity, Math.max(1, technique.auraCost() / 5));
         return hit ? null : "message.hxh.hatsu_missed";
     }

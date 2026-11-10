@@ -473,6 +473,32 @@ cmd hunter hatsu cast
 wait 8
 shot 22m4_netero_main_zero
 camera first
+# --- Nouveaux personnages : quelques rendus ---
+cmd hunter hatsu set biscuit
+cmd hunter nen refill
+cmd hunter hatsu cast
+camera front
+wait 25
+shot 22n_biscuit_grande_forme
+cmd hunter hatsu cast
+cmd hunter hatsu set feitan
+cmd hunter nen refill
+camera back
+cmd hunter hatsu cast
+wait 20
+shot 22n2_feitan_soleil_levant
+cmd hunter hatsu set meruem
+cmd hunter nen refill
+cmd hunter hatsu cast
+wait 6
+shot 22n3_meruem_rafale_de_rage
+cmd hunter hatsu set zeno
+cmd hunter nen refill
+cmd hunter hatsu next
+cmd hunter hatsu cast
+wait 20
+shot 22n4_zeno_plongee_du_dragon
+camera first
 cmd hunter hatsu set neferpitou
 cmd hunter nen refill
 cmd hunter hatsu cast

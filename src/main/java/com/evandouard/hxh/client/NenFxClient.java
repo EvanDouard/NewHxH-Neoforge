@@ -760,6 +760,33 @@ public final class NenFxClient {
                 quad(c, RenderType.entityTranslucent(tex), p0, p1, p2, p3, 0xFFFFFFFF, alpha * 0.85f);
                 quad(c, RenderType.eyes(tex), p0, p1, p2, p3, f.color, alpha * 0.35f);
             }
+            case SUN -> {
+                Vec3 at = (src != null ? src.position() : f.at).add(0, (src != null ? src.getBbHeight() : 2) + 2.2, 0);
+                float spin = (c.now + c.pt) * 0.05f;
+                billboard(c, RenderType.eyes(GLOW), at, f.size * 1.3f * scale, 0, f.color, alpha * 0.7f);
+                billboard(c, RenderType.entityTranslucent(tex), at, f.size * 0.8f * scale, spin, 0xFFFFFFFF, alpha);
+            }
+            case POT_CLEAN -> {
+                Vec3 at = (src != null ? src.position() : f.at).add(0, (src != null ? src.getBbHeight() : 1.8) + 0.9, 0);
+                float bob = Mth.sin((c.now + c.pt) * 0.2f) * 0.08f;
+                billboard(c, RenderType.entityTranslucent(tex), at.add(0, bob, 0), f.size * 0.6f * scale, 0, 0xFFFFFFFF, alpha);
+            }
+            case DOOR_MARK -> {
+                billboard(c, RenderType.eyes(tex), f.at, f.size * 0.5f, 0, f.color, alpha);
+                billboard(c, RenderType.eyes(GLOW), f.at, f.size * 0.7f, 0, f.color, alpha * 0.4f);
+            }
+            case WINGS -> {
+                if (src == null) return;
+                float yaw = src instanceof LivingEntity le ? Mth.lerp(c.pt, le.yBodyRotO, le.yBodyRot) : src.getYRot();
+                Vec3 fwd = Vec3.directionFromRotation(0, yaw), side = fwd.cross(new Vec3(0, 1, 0)).normalize();
+                Vec3 base = src.getPosition(c.pt).add(0, src.getBbHeight() * 0.35, 0).subtract(fwd.scale(0.35));
+                float flap = 0.75f + 0.25f * Mth.sin((c.now + c.pt) * 0.6f);
+                float h = f.size * 0.75f, w = f.size * flap;
+                Vec3 back = fwd.scale(-0.25 * (1 - flap));
+                Vec3 p0 = base.add(side.scale(-w)).add(back), p1 = base.add(side.scale(w)).add(back);
+                quad(c, RenderType.entityTranslucent(tex), p0, p1, p1.add(0, h, 0), p0.add(0, h, 0), 0xFFFFFFFF, alpha * 0.85f);
+                quad(c, RenderType.eyes(tex), p0, p1, p1.add(0, h, 0), p0.add(0, h, 0), f.color, alpha * 0.3f);
+            }
             case KANNON_HANDS -> {
                 Vec3 at = src != null ? hand(src, c.pt) : f.at;
                 billboard(c, RenderType.entityTranslucent(tex), at, f.size * 0.5f * scale, 0, 0xFFFFFFFF, alpha);

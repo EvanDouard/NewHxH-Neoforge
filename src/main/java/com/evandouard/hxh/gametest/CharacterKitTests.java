@@ -107,4 +107,64 @@ public final class CharacterKitTests {
         helper.assertTrue(cast > 50, "Techniques lancées : " + cast);
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void specialMechanicsWork(GameTestHelper helper) {
+        Zombie a = husk(helper, 0);
+        Zombie b = husk(helper, 2);
+        long now = helper.getLevel().getGameTime();
+        // Biscuit : deux formes, la taille suit, et disparaît quand on change de personnage
+        HunterData d = hunter(a, NenType.TRANSMUTER, "biscuit");
+        float small = com.evandouard.hxh.hatsu.Hatsu.modifyOutgoingMelee(a, b, 10f);
+        com.evandouard.hxh.hatsu.Specials.BISCUIT_SWITCH_FORM.perform(a, 1f);
+        a.tickCount = 20;
+        com.evandouard.hxh.hatsu.Hatsu.tickPassives(a);
+        float big = com.evandouard.hxh.hatsu.Hatsu.modifyOutgoingMelee(a, b, 10f);
+        helper.assertTrue(small < 10f && big > 14.9f, "Petite forme ×0,8, grande ×1,5 : " + small + " / " + big);
+        helper.assertTrue(a.getScale() > 1.3f, "Grande forme : plus grande (" + a.getScale() + ")");
+        d.setKit("gon");
+        com.evandouard.hxh.hatsu.Hatsu.tickPassives(a);
+        helper.assertTrue(Math.abs(a.getScale() - 1f) < 0.01f, "Autre personnage : taille normale (" + a.getScale() + ")");
+        // Phinks : tours limités par le Nen
+        d = hunter(a, NenType.ENHANCER, "phinks");
+        d.setNenLevel(25);
+        int ok = 0;
+        for (int i = 0; i < 4; i++) if (com.evandouard.hxh.hatsu.Specials.PHINKS_RIPPER_CYCLOTRON.perform(a, 1f)) ok++;
+        helper.assertTrue(ok == 2, "Nen 25 : 2 tours au plus (obtenu " + ok + ")");
+        float punch = com.evandouard.hxh.hatsu.Hatsu.modifyOutgoingMelee(a, b, 4f);
+        helper.assertTrue(Math.abs(punch - 9f) < 0.01f, "Le coup libère les tours : 4 + 2 × 2,5 = 9 (" + punch + ")");
+        // Feitan : la douleur monte avec les coups reçus
+        d = hunter(a, NenType.TRANSMUTER, "feitan");
+        a.hurt(helper.getLevel().damageSources().generic(), 4f);
+        helper.assertTrue(d.kitValue(KitBars.PAIN) >= 19f, "4 PV perdus : douleur 20 (" + d.kitValue(KitBars.PAIN) + ")");
+        helper.assertTrue("message.hxh.no_pain".equals(Hatsu.castRefusal(d, com.evandouard.hxh.hatsu.Specials.FEITAN_RISING_SUN, now)),
+                "Soleil levant : douleur pleine requise");
+        // Shalnark : pas de contrôle au-delà de 10 niveaux d'écart
+        d = hunter(a, NenType.MANIPULATOR, "shalnark");
+        d.setNenLevel(20);
+        HunterStats.get(b).setNenLevel(35);
+        helper.assertTrue(!com.evandouard.hxh.hatsu.Specials.canControl(a, b), "Écart de 15 : l'antenne ne prend pas");
+        HunterStats.get(b).setNenLevel(28);
+        helper.assertTrue(com.evandouard.hxh.hatsu.Specials.canControl(a, b), "Écart de 8 : contrôle possible");
+        // Knuckle : 12 dégâts = 6 de dette ; banqueroute = Zetsu forcé
+        d = hunter(a, NenType.CONJURER, "knuckle");
+        HunterData bd = hunter(b, NenType.ENHANCER, null);
+        helper.assertTrue(com.evandouard.hxh.hatsu.Specials.KNUCKLE_POT_CLEAN.perform(a, 1f), "Pot-Clean s'attache");
+        com.evandouard.hxh.hatsu.Hatsu.modifyOutgoingMelee(a, b, 12f);
+        float debt = b.getPersistentData().getFloat(com.evandouard.hxh.hatsu.Specials.HAKO_DEBT);
+        helper.assertTrue(Math.abs(debt - 6f) < 0.01f, "12 dégâts → dette 6 (" + debt + ")");
+        b.getPersistentData().putFloat(com.evandouard.hxh.hatsu.Specials.HAKO_DEBT, bd.auraMax() - 1);
+        com.evandouard.hxh.hatsu.Hatsu.modifyOutgoingMelee(a, b, 4f);
+        helper.assertTrue(bd.mode() == com.evandouard.hxh.data.NenMode.ZETSU, "Banqueroute : Zetsu");
+        helper.assertTrue("message.hxh.bankrupt".equals(com.evandouard.hxh.nen.NenModes.trySetMode(b, com.evandouard.hxh.data.NenMode.REN)),
+                "Impossible de quitter le Zetsu en banqueroute");
+        // Chrollo : vole puis utilise
+        d = hunter(a, NenType.SPECIALIST, "chrollo");
+        b.getPersistentData().putString(com.evandouard.hxh.hatsu.Specials.LAST_TECHNIQUE, "leorio_shockwave");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Specials.CHROLLO_SKILL_HUNTER.perform(a, 1f), "Le livre vole la technique");
+        helper.assertTrue("leorio_shockwave".equals(a.getPersistentData().getString(com.evandouard.hxh.hatsu.Specials.BOOK)), "Page remplie");
+        com.evandouard.hxh.hatsu.Specials.CHROLLO_SKILL_HUNTER.perform(a, 1f);
+        helper.assertTrue(a.getPersistentData().getString(com.evandouard.hxh.hatsu.Specials.BOOK).isEmpty(), "Page utilisée puis effacée");
+        helper.succeed();
+    }
 }
