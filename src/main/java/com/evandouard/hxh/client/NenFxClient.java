@@ -751,8 +751,7 @@ public final class NenFxClient {
                 float h = f.size * scale, w = h;
                 Vec3 base = f.offset.subtract(fwd.scale(2.6)).add(0, -0.6 + (1f - scale) * 0.5, 0);
                 // caméra derrière la statue (vue de dos) : elle se fait presque transparente, sans halo
-                double side = c.cam.subtract(base).dot(fwd);
-                boolean behind = side < 0.5;
+                boolean behind = c.cam.subtract(base).dot(fwd) < 0.5;
                 if (behind) alpha *= 0.12f;
                 Vec3 p0 = base.add(side.scale(-w / 2)), p1 = base.add(side.scale(w / 2));
                 Vec3 p2 = p1.add(0, h, 0), p3 = p0.add(0, h, 0);
