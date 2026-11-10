@@ -750,16 +750,17 @@ public final class NenFxClient {
                 Vec3 side = fwd.cross(new Vec3(0, 1, 0)).normalize();
                 float h = f.size * scale, w = h;
                 Vec3 base = f.offset.subtract(fwd.scale(2.6)).add(0, -0.6 + (1f - scale) * 0.5, 0);
-                // caméra dans la statue (vue de dos) : elle s'efface pour ne pas boucher l'écran
-                double camDist = c.cam.distanceTo(base.add(0, h * 0.5, 0));
-                alpha *= (float) Mth.clamp((camDist - h * 0.25) / (h * 0.35), 0.15, 1.0);
+                // caméra derrière la statue (vue de dos) : elle se fait presque transparente, sans halo
+                double side = c.cam.subtract(base).dot(fwd);
+                boolean behind = side < 0.5;
+                if (behind) alpha *= 0.12f;
                 Vec3 p0 = base.add(side.scale(-w / 2)), p1 = base.add(side.scale(w / 2));
                 Vec3 p2 = p1.add(0, h, 0), p3 = p0.add(0, h, 0);
                 // halo doré derrière, puis la statue (contour encré, aplats translucides)
                 Vec3 mid = base.add(0, h * 0.55, 0).subtract(fwd.scale(0.05));
                 Vec3 gs = side.scale(w * 0.75), gu = new Vec3(0, h * 0.75, 0);
-                quad(c, RenderType.eyes(GLOW), mid.subtract(gs).subtract(gu), mid.add(gs).subtract(gu),
-                        mid.add(gs).add(gu), mid.subtract(gs).add(gu), f.color, alpha * 0.55f);
+                if (!behind) quad(c, RenderType.eyes(GLOW), mid.subtract(gs).subtract(gu), mid.add(gs).subtract(gu),
+                        mid.add(gs).add(gu), mid.subtract(gs).add(gu), f.color, alpha * 0.35f);
                 quad(c, RenderType.entityTranslucent(tex), p0, p1, p2, p3, 0xFFFFFFFF, alpha * 0.85f);
                 quad(c, RenderType.eyes(tex), p0, p1, p2, p3, f.color, alpha * 0.35f);
             }

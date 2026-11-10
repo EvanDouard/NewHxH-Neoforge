@@ -464,9 +464,11 @@ wait 15
 shot 22m2_netero_poings_de_kannon
 cmd hunter hatsu next
 cmd hunter nen refill
+camera front
 cmd hunter hatsu cast
 wait 10
 shot 22m3_netero_kannon_statue
+camera back
 cmd hunter hatsu next
 cmd hunter nen refill
 cmd hunter hatsu cast
