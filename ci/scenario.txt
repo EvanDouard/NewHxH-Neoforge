@@ -829,6 +829,7 @@ wait 10
 expect Un petit jeu
 wait 30
 goto netero
+cmd execute as @s at @s run tp @s ^ ^ ^-3
 wait 10
 shot 34e3_jeu_de_la_balle_de_netero
 cmd hunter quest skip
