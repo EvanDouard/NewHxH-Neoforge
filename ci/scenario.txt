@@ -878,7 +878,8 @@ wait 80
 look 180 10
 shot 34f_ile_de_zevil
 cmd give @s hxh:target_plate
-wait 40
+wait 80
+expect Ton dirigeable t'attend
 wait 10
 cmd hunter exam go
 wait 40

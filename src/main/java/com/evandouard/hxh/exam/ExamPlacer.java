@@ -19,7 +19,7 @@ public final class ExamPlacer {
         ExamSavedData d = ExamSavedData.get(overworld);
         if (d.navigator != Long.MIN_VALUE) return;
         BlockPos spawn = overworld.getSharedSpawnPos();
-        BlockPos pos = overworld.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, spawn.offset(6, 0, 4));
+        BlockPos pos = overworld.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, spawn.offset(-14, 0, 6));
         NpcEntity npc = ModEntities.NPC.get().create(overworld);
         if (npc == null) return;
         npc.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
