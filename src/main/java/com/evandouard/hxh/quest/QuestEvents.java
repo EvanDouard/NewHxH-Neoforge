@@ -29,6 +29,14 @@ public final class QuestEvents {
         });
         // Quiz de la Mamie : parler dans le chat, c'est répondre (et c'est faux)
         bus.addListener(net.neoforged.neoforge.event.ServerChatEvent.class, e -> QuestManager.onChat(e.getPlayer()));
+        // Jeu de la balle : frapper Netero, c'est tenter de lui prendre la balle
+        bus.addListener(net.neoforged.neoforge.event.entity.player.AttackEntityEvent.class, e -> {
+            if (e.getEntity() instanceof ServerPlayer p && e.getTarget() instanceof com.evandouard.hxh.npc.NpcEntity npc
+                    && npc.npcId().equals("netero") && com.evandouard.hxh.exam.NeteroBall.inBall(p)) {
+                e.setCanceled(true);
+                com.evandouard.hxh.exam.NeteroBall.attempt(p, npc);
+            }
+        });
         bus.addListener(LivingDeathEvent.class, e -> {
             if (e.getSource().getEntity() instanceof ServerPlayer p) QuestManager.onKill(p, e.getEntity());
         });

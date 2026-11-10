@@ -21,7 +21,9 @@ public enum ExamSite {
     /** Mont Split : sauter dans la faille pour cueillir un œuf d'aigle-araignée. */
     MOUNT_SPLIT("mont_split"),
     /** Île de Zevil, où l'on débarque en bateau : chasse aux plaques. */
-    ZEVIL("zevil");
+    ZEVIL("zevil"),
+    /** Salle du dirigeable de l'Association : le jeu de la balle de Netero. */
+    AIRSHIP("dirigeable");
 
     private final String file;
 

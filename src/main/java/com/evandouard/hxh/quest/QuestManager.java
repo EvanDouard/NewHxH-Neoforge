@@ -61,6 +61,25 @@ public final class QuestManager {
         start(player, QuestRegistry.HUNTER_EXAM);
     }
 
+    /** Une touche sur Netero au jeu de la balle ; renvoie le nombre de touches. */
+    public static int ballHit(ServerPlayer player) {
+        QuestData d = data(player);
+        String exam = QuestRegistry.HUNTER_EXAM.toString();
+        if (!d.running.containsKey(exam)) return 0;
+        d.focus(exam);
+        Quest.Step step = currentStep(d);
+        int hits = 0;
+        if (step != null && step.type().equals("ball")) {
+            hits = ++d.progress;
+            if (hits >= step.count()) {
+                com.evandouard.hxh.exam.NeteroBall.won(player);
+                advance(player);
+            } else sync(player);
+        }
+        d.refocus();
+        return hits;
+    }
+
     /** Un adversaire du tournoi final a abandonné. */
     public static void duelWon(ServerPlayer player) {
         QuestData d = data(player);
@@ -279,7 +298,7 @@ public final class QuestManager {
         }
         // Le passeur d'un point de départ embarque le candidat pour son épreuve
         if (npc.npcId().equals("passeur")) {
-            com.evandouard.hxh.exam.ExamDeparture.board(player, npc);
+            com.evandouard.hxh.exam.ExamDeparture.talk(player, npc);
             return;
         }
         // L'arbitre du hall d'une tranche de la Tour Céleste lance les combats
@@ -413,6 +432,11 @@ public final class QuestManager {
                         QuestRegistry.npcName(step.npc()).copy().withStyle(ChatFormatting.YELLOW), activeQuest(d).dialog(step, player)));
                 advance(player);
             } else if (player.tickCount % 20 == 0) sync(player);
+            return;
+        }
+        // Jeu de la balle de Netero : le temps est compté
+        if (step.type().equals("ball")) {
+            com.evandouard.hxh.exam.NeteroBall.tick(player, step);
             return;
         }
         // Tournoi final : un adversaire après l'autre
@@ -561,21 +585,21 @@ public final class QuestManager {
                     q.title(player), "★", com.evandouard.hxh.network.Hud.GOLD);
         } else {
             Quest.Step next = steps.get(d.step);
-            // Nouvelle épreuve : le guide (ou l'examinateur) annonce où elle a lieu
-            if (!next.trial().isEmpty() && !next.trial().equals(step.trial())) announceTrial(player, d, q, steps, d.step);
-            // L'étape suivante se passe dans un autre lieu de l'Examen : on y est emmené
+            // Nouvelle épreuve : annoncée, et on y va par son dirigeable (à pied jusqu'à lui)
+            boolean newTrial = !next.trial().isEmpty() && !next.trial().equals(step.trial());
+            if (newTrial) announceTrial(player, d, q, steps, d.step);
             com.evandouard.hxh.exam.ExamSite site = com.evandouard.hxh.exam.ExamSite.byId(next.site());
-            if (site != null) {
-                if (com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level()) || !com.evandouard.hxh.exam.ExamTrips.enabled(player)) {
-                    // Dans l'Examen (ou en test), on passe d'un lieu à l'autre par les transports de l'épreuve (bateau, ascenseur…)
-                    d.markExamVisited(site.id(), d.examInstance(site.id()));
-                    com.evandouard.hxh.exam.ExamTrips.sendTo(player, site, d.examInstance(site.id()));
-                } else {
-                    // Depuis le monde : le guide donne un point de départ, il faut s'y rendre
-                    BlockPos dep = com.evandouard.hxh.exam.ExamDeparture.create(player, player.blockPosition());
-                    if (dep != null) player.sendSystemMessage(Component.translatable("exam.hxh.departure", dep.getX(), dep.getZ(),
-                            (int) Math.sqrt(dep.distSqr(player.blockPosition()))).withStyle(ChatFormatting.GOLD));
-                }
+            boolean real = com.evandouard.hxh.exam.ExamTrips.enabled(player);
+            if (real && newTrial) {
+                // Épreuve réussie : retour au dirigeable d'où l'on était parti, puis coordonnées du suivant
+                com.evandouard.hxh.exam.ExamTrips.returnHome(player);
+                BlockPos dep = com.evandouard.hxh.exam.ExamDeparture.create(player, player.blockPosition());
+                if (dep != null) player.sendSystemMessage(Component.translatable("exam.hxh.departure", dep.getX(), dep.getZ(),
+                        (int) Math.sqrt(dep.distSqr(player.blockPosition()))).withStyle(ChatFormatting.GOLD));
+            } else if (site != null) {
+                // Dans une même épreuve, on passe d'un lieu à l'autre par ses transports (bateau, ascenseur…)
+                d.markExamVisited(site.id(), d.examInstance(site.id()));
+                com.evandouard.hxh.exam.ExamTrips.sendTo(player, site, d.examInstance(site.id()));
             }
             com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.new_step"),
                     q.objective(next, player), "!", com.evandouard.hxh.network.Hud.GOLD);
@@ -657,6 +681,16 @@ public final class QuestManager {
                     net.minecraft.core.registries.BuiltInRegistries.ITEM.get(ResourceLocation.parse(step.item()))));
             default -> st[1];
         };
+        // Examen : trouver un guide (on dit où il attend)
+        if (q.id().equals(QuestRegistry.HUNTER_EXAM) && step.npc().equals("navigator") && step.type().equals("talk")) {
+            long nav = com.evandouard.hxh.exam.ExamSavedData.get(player.server.overworld()).navigator();
+            if (nav != Long.MIN_VALUE) {
+                BlockPos g = BlockPos.of(nav);
+                com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.title(player),
+                        Component.translatable("exam.hxh.guide_objective", g.getX(), g.getZ()), 0, 0));
+                return;
+            }
+        }
         // Examen : point de départ donné par le guide, pas encore rejoint
         if (q.id().equals(QuestRegistry.HUNTER_EXAM) && d.examDeparture() != Long.MIN_VALUE
                 && !com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level())) {
@@ -665,7 +699,7 @@ public final class QuestManager {
                     Component.translatable("exam.hxh.departure_objective", dep.getX(), dep.getZ()), 0, 0));
             return;
         }
-                // Inscription en attente : même objectif que le refus de l'arbitre
+        // Inscription en attente : même objectif que le refus de l'arbitre
         String[] pending = isArenaQuest(q) ? com.evandouard.hxh.arena.ArenaManager.pendingObjective(d) : null;
         if (pending != null) {
             Component pend = pending[1].isEmpty() ? Component.translatable(pending[0]) : Component.translatable(pending[0], pending[1]);

@@ -16,10 +16,12 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import java.util.List;
 
 /**
- * Point de départ de l'Examen dans le monde : le guide ne téléporte pas, il donne des coordonnées. Le candidat s'y
- * rend à pied (ou comme il veut) ; le passeur qui l'y attend l'embarque pour le lieu de l'épreuve (dimension de
- * l'Examen). Chaque départ est posé pour un joueur, à {@link #MIN_DISTANCE}–{@link #MAX_DISTANCE} blocs du guide.
- * Une structure d'Evan {@code hxh:exam/depart} (avec un repère PNJ « passeur ») remplacera le ponton provisoire.
+ * Dirigeables de l'Examen dans le monde : le guide (puis l'Association, après chaque épreuve réussie) donne les
+ * coordonnées du dirigeable de la prochaine épreuve. Le candidat s'y rend à pied ; l'hôtesse qui l'attend à bord lui
+ * propose d'embarquer, et le dirigeable l'emmène au lieu de l'épreuve (dimension de l'Examen). L'épreuve finie,
+ * réussie ou ratée, il est ramené à ce dirigeable. Chaque dirigeable est posé pour un joueur, à
+ * {@link #MIN_DISTANCE}–{@link #MAX_DISTANCE} blocs du précédent point de passage, et reste dans le monde.
+ * Une structure d'Evan {@code hxh:exam/dirigeable} remplacera le dirigeable provisoire.
  */
 public final class ExamDeparture {
     private ExamDeparture() {}
@@ -58,38 +60,88 @@ public final class ExamDeparture {
         return npcPos;
     }
 
-    /** Ponton provisoire : plancher 7 × 7, poteaux, lanternes, fanion ; renvoie la place du passeur. */
+    /** Hauteur du pont de la nacelle au-dessus du sol. */
+    static final int DECK = 6;
+
+    /**
+     * Dirigeable provisoire amarré à un mât : nacelle de 11 × 5 à {@link #DECK} blocs du sol (échelle le long du
+     * mât), ballon rayé au-dessus, hélices à l'arrière ; renvoie la place de l'hôtesse sur le pont.
+     */
     private static BlockPos build(ServerLevel level, BlockPos ground) {
         BlockPos c = ground;
-        for (int x = -3; x <= 3; x++) for (int z = -3; z <= 3; z++) {
-            ExamWorld.set(level, c.offset(x, -1, z), Blocks.SPRUCE_PLANKS);
-            for (int y = 0; y < 4; y++) ExamWorld.set(level, c.offset(x, y, z), Blocks.AIR);
+        // mât d'amarrage et échelle
+        for (int y = 0; y <= DECK + 1; y++) {
+            ExamWorld.set(level, c.offset(-7, y, 0), Blocks.SPRUCE_LOG);
+            if (y <= DECK) ExamWorld.set(level, c.offset(-6, y, 0), Blocks.LADDER.defaultBlockState()
+                    .setValue(net.minecraft.world.level.block.LadderBlock.FACING, net.minecraft.core.Direction.EAST));
         }
-        for (int[] k : new int[][]{{-3, -3}, {3, -3}, {-3, 3}, {3, 3}}) {
-            ExamWorld.set(level, c.offset(k[0], 0, k[1]), Blocks.SPRUCE_FENCE);
-            ExamWorld.set(level, c.offset(k[0], 1, k[1]), Blocks.LANTERN);
+        ExamWorld.set(level, c.offset(-7, DECK + 2, 0), Blocks.LANTERN);
+        // nacelle
+        for (int x = -5; x <= 5; x++) for (int z = -2; z <= 2; z++) {
+            ExamWorld.set(level, c.offset(x, DECK - 1, z), Blocks.DARK_OAK_PLANKS);
+            for (int y = 0; y < 3; y++) ExamWorld.set(level, c.offset(x, DECK + y, z), Blocks.AIR);
+            boolean edge = Math.abs(x) == 5 || Math.abs(z) == 2;
+            if (edge && !(x == -5 && z == 0)) ExamWorld.set(level, c.offset(x, DECK, z), Blocks.DARK_OAK_FENCE);
         }
-        for (int y = 0; y < 5; y++) ExamWorld.set(level, c.offset(0, y, -3), Blocks.SPRUCE_LOG);
-        ExamWorld.set(level, c.offset(1, 4, -3), Blocks.RED_WOOL);
-        ExamWorld.set(level, c.offset(2, 4, -3), Blocks.WHITE_WOOL);
-        return c;
+        for (int[] k : new int[][]{{-5, -2}, {5, -2}, {-5, 2}, {5, 2}})
+            for (int y = 1; y <= 3; y++) ExamWorld.set(level, c.offset(k[0], DECK + y, k[1]), Blocks.CHAIN);
+        // ballon : ellipsoïde rayé blanc et rouge
+        int by = DECK + 7;
+        for (int x = -10; x <= 10; x++) for (int y = -3; y <= 3; y++) for (int z = -4; z <= 4; z++) {
+            double e = (x * x) / 100.0 + (y * y) / 9.0 + (z * z) / 16.0;
+            if (e > 1.0) continue;
+            boolean shell = e > 0.6;
+            ExamWorld.set(level, c.offset(x, by + y, z), !shell ? Blocks.AIR
+                    : (Math.floorMod(x, 4) < 2 ? Blocks.WHITE_WOOL : Blocks.RED_WOOL));
+        }
+        // dérives et hélice
+        for (int y = -2; y <= 2; y++) ExamWorld.set(level, c.offset(11, by + y, 0), Blocks.RED_WOOL);
+        for (int z = -2; z <= 2; z++) ExamWorld.set(level, c.offset(11, by, z), Blocks.RED_WOOL);
+        ExamWorld.set(level, c.offset(6, DECK, 0), Blocks.IRON_BARS);
+        ExamWorld.set(level, c.offset(7, DECK, 0), Blocks.IRON_BARS);
+        return c.offset(2, DECK, 0);
     }
 
-    /** Le joueur parle au passeur : s'il est à son point de départ, il part pour le lieu de l'épreuve en cours. */
-    public static boolean board(ServerPlayer player, NpcEntity passeur) {
+    /** Le joueur parle à l'hôtesse : si c'est son dirigeable, elle lui propose d'embarquer (lien cliquable). */
+    public static boolean talk(ServerPlayer player, NpcEntity hostess) {
         QuestData d = QuestManager.data(player);
-        long dep = d.examDeparture();
-        if (dep == Long.MIN_VALUE || BlockPos.of(dep).distSqr(passeur.home()) > MATCH * MATCH) {
-            player.sendSystemMessage(Component.translatable("dialog.hxh.format",
-                    Component.translatable("npc.hxh.passeur").withStyle(ChatFormatting.YELLOW),
-                    Component.translatable("dialog.hxh.passeur.not_yours")));
+        if (!isMine(d, hostess.home())) {
+            say(player, Component.translatable("dialog.hxh.passeur.not_yours"));
             return false;
         }
         ExamSite site = pendingSite(d);
         if (site == null) return false;
+        say(player, Component.translatable("dialog.hxh.passeur.offer", Component.translatable("exam.hxh.site." + site.id())));
+        player.sendSystemMessage(Component.translatable("dialog.hxh.passeur.accept").withStyle(s -> s
+                .withColor(ChatFormatting.GREEN).withUnderlined(true)
+                .withClickEvent(new net.minecraft.network.chat.ClickEvent(net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND, "/hunter exam board"))
+                .withHoverEvent(new net.minecraft.network.chat.HoverEvent(net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT,
+                        Component.translatable("dialog.hxh.passeur.accept_hover")))));
+        return true;
+    }
+
+    private static boolean isMine(QuestData d, BlockPos home) {
+        long dep = d.examDeparture();
+        return dep != Long.MIN_VALUE && BlockPos.of(dep).distSqr(home) <= MATCH * MATCH;
+    }
+
+    private static void say(ServerPlayer player, Component line) {
         player.sendSystemMessage(Component.translatable("dialog.hxh.format",
-                Component.translatable("npc.hxh.passeur").withStyle(ChatFormatting.YELLOW),
-                Component.translatable("dialog.hxh.passeur.board", Component.translatable("exam.hxh.site." + site.id()))));
+                Component.translatable("npc.hxh.passeur").withStyle(ChatFormatting.YELLOW), line));
+    }
+
+    /** « Embarquer » : à bord de son dirigeable, le joueur part pour le lieu de l'épreuve. */
+    public static boolean board(ServerPlayer player) {
+        QuestData d = QuestManager.data(player);
+        long dep = d.examDeparture();
+        if (dep == Long.MIN_VALUE || (ExamTrips.enabled(player)
+                && (ExamWorld.isExamLevel(player.level()) || BlockPos.of(dep).distSqr(player.blockPosition()) > MATCH * MATCH))) {
+            player.sendSystemMessage(Component.translatable("dialog.hxh.passeur.too_far").withStyle(ChatFormatting.RED));
+            return false;
+        }
+        ExamSite site = pendingSite(d);
+        if (site == null) return false;
+        say(player, Component.translatable("dialog.hxh.passeur.board", Component.translatable("exam.hxh.site." + site.id())));
         int instance = d.examInstance(site.id());
         d.markExamVisited(site.id(), instance);
         d.setExamDeparture(Long.MIN_VALUE);

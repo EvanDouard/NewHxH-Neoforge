@@ -1,0 +1,86 @@
+package com.evandouard.hxh.exam;
+
+import com.evandouard.hxh.npc.NpcEntity;
+import com.evandouard.hxh.quest.Quest;
+import com.evandouard.hxh.quest.QuestData;
+import com.evandouard.hxh.quest.QuestManager;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.phys.Vec3;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+/**
+ * Le « mini-examen » du dirigeable : prendre la balle des mains de Netero. On ne l'aura pas (Gon et Killua non plus),
+ * mais chaque coup qui le force à se servir de sa main droite ou de sa jambe gauche compte. Étape
+ * {@code "type": "ball"} : {@code count} touches à réussir en {@code seconds} secondes. Netero esquive la plupart des
+ * tentatives en se déplaçant d'un pas invisible. Pas éliminatoire : le temps écoulé, l'Examen continue ; réussir
+ * rapporte une prime.
+ */
+public final class NeteroBall {
+    private NeteroBall() {}
+
+    /** Chance que Netero esquive une tentative. */
+    static final float DODGE = 0.7f;
+    static final int PRIZE = 500;
+    private static final Map<UUID, Integer> TICKS = new HashMap<>();
+
+    public static boolean inBall(ServerPlayer player) {
+        Quest.Step step = QuestManager.currentStep(QuestManager.data(player));
+        return step != null && step.type().equals("ball");
+    }
+
+    /** Une tentative sur Netero (coup porté) : esquive ou touche. */
+    public static void attempt(ServerPlayer player, NpcEntity netero) {
+        touch(player, netero, player.getRandom().nextFloat() < DODGE);
+    }
+
+    public static void touch(ServerPlayer player, NpcEntity netero, boolean dodged) {
+        QuestData d = QuestManager.data(player);
+        Quest.Step step = QuestManager.currentStep(d);
+        if (step == null || !step.type().equals("ball")) return;
+        if (dodged) {
+            blink(player, netero);
+            return;
+        }
+        int hits = QuestManager.ballHit(player);
+        player.sendSystemMessage(Component.translatable("exam.hxh.ball_touch", hits, step.count()).withStyle(ChatFormatting.AQUA));
+        blink(player, netero);
+    }
+
+    /** Netero passe derrière le candidat, d'un pas que l'œil ne suit pas. */
+    private static void blink(ServerPlayer player, NpcEntity netero) {
+        if (!(netero.level() instanceof ServerLevel level)) return;
+        level.sendParticles(ParticleTypes.POOF, netero.getX(), netero.getY() + 1, netero.getZ(), 6, 0.3, 0.5, 0.3, 0.01);
+        Vec3 back = player.position().subtract(player.getLookAngle().multiply(1, 0, 1).normalize().scale(3));
+        if (level.noCollision(netero, netero.getBoundingBox().move(back.subtract(netero.position()))))
+            netero.teleportTo(back.x, player.getY(), back.z);
+    }
+
+    /** Chaque tick de l'étape : le temps passe ; écoulé, Netero garde sa balle et l'Examen continue. */
+    public static void tick(ServerPlayer player, Quest.Step step) {
+        int t = TICKS.merge(player.getUUID(), 1, Integer::sum);
+        if (t >= step.seconds() * 20) {
+            TICKS.remove(player.getUUID());
+            player.sendSystemMessage(Component.translatable("exam.hxh.ball_time").withStyle(ChatFormatting.GRAY));
+            QuestManager.advance(player);
+        }
+    }
+
+    public static int secondsLeft(ServerPlayer player, Quest.Step step) {
+        return Math.max(0, step.seconds() - TICKS.getOrDefault(player.getUUID(), 0) / 20);
+    }
+
+    /** Assez de touches : Netero rit et paie la prime. */
+    public static void won(ServerPlayer player) {
+        TICKS.remove(player.getUUID());
+        QuestData d = QuestManager.data(player);
+        d.addJenny(PRIZE);
+        player.sendSystemMessage(Component.translatable("exam.hxh.ball_won", PRIZE).withStyle(ChatFormatting.GOLD));
+    }
+}

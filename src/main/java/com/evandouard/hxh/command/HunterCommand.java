@@ -64,6 +64,9 @@ public final class HunterCommand {
                 .then(hatsuCommand())
                 .then(Commands.literal("exam")
                         // Réponse à un quiz de l'Examen (lien cliquable du chat) : ouvert à tous
+                        // Embarquer à bord de son dirigeable (lien cliquable de l'hôtesse) : ouvert à tous
+                        .then(Commands.literal("board").executes(ctx ->
+                                com.evandouard.hxh.exam.ExamDeparture.board(ctx.getSource().getPlayerOrException()) ? 1 : 0))
                         .then(Commands.literal("answer").then(Commands.argument("n", IntegerArgumentType.integer(0, 9))
                                 .executes(ctx -> com.evandouard.hxh.quest.QuestManager.answer(ctx.getSource().getPlayerOrException(),
                                         IntegerArgumentType.getInteger(ctx, "n")) ? 1 : 0)))
@@ -77,7 +80,7 @@ public final class HunterCommand {
                                 return 0;
                             }
                             net.minecraft.core.BlockPos b = net.minecraft.core.BlockPos.of(dep);
-                            p.teleportTo(p.server.overworld(), b.getX() - 1.5, b.getY(), b.getZ() + 0.5, -90f, 10f);
+                            p.teleportTo(p.server.overworld(), b.getX() - 1.5, b.getY(), b.getZ() + 0.5, -90f, 10f); // sur le pont, face à l'hôtesse
                             return 1;
                         }))
                         // Épreuves tirées : les afficher, ou imposer le prochain tirage (tests, essais)

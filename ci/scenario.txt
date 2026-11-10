@@ -628,7 +628,7 @@ wait 15
 shot 32_chiffres_de_soin_verts
 camera first
 
-# --- J6/J8 : Examen Hunter (guide, épreuves tirées au sort ; tirage imposé ici pour la CI) ---
+# --- J6/J8 : Examen Hunter (guide, dirigeables, épreuves tirées au sort ; tirage imposé ici pour la CI) ---
 cmd effect clear @s
 cmd hunter quest reset
 cmd hunter exam setup
@@ -636,25 +636,30 @@ look 90 5
 wait 40
 shot 33_navigateur_qui_attend
 clearchat
-cmd hunter exam plan dolle zaban numele biska menchi zevil tournoi
+cmd hunter exam plan dolle zaban numele biska menchi balle zevil tournoi
 wait 10
 expect Nouvelle quête : Examen Hunter
 cmd hunter exam plan
-expect dolle → zaban → numele → biska → menchi → zevil → tournoi
+expect dolle → zaban → numele → biska → menchi → balle → zevil → tournoi
 goto navigator
 clearchat
 talkto navigator
 wait 20
-expect Épreuve 1/7 : Le voyage vers l'île de Dolle
-expect Point de départ de l'Examen
-shot 34_guide_donne_le_depart
+expect Épreuve 1/8 : Le voyage vers l'île de Dolle
+expect Ton dirigeable t'attend
+shot 34_guide_donne_le_dirigeable
 cmd hunter exam go
 wait 60
-shot 34_point_de_depart_passeur
+look 90 -5
+shot 34_dirigeable_et_hotesse
 clearchat
 talkto passeur
+wait 10
+expect bienvenue à bord
+expect [Embarquer]
+cmd hunter exam board
 wait 80
-expect En route
+expect Décollage
 shot 34_bateau_pour_dolle
 goto captain
 clearchat
@@ -679,8 +684,19 @@ expect Tu as cinq secondes
 shot 34_quiz_de_la_mamie
 wait 140
 expect se taire était la seule
-expect Épreuve 2/7 : Zaban
-wait 60
+expect Épreuve 2/8 : Zaban
+expect Ton dirigeable t'attend
+wait 40
+shot 34_retour_au_dirigeable_apres_dolle
+wait 10
+cmd hunter exam go
+wait 40
+clearchat
+talkto passeur
+wait 10
+expect [Embarquer]
+cmd hunter exam board
+wait 80
 shot 34_zaban_gargote
 goto cook
 talkto cook
@@ -695,25 +711,27 @@ wait 10
 expect Satotz
 wait 40
 shot 34b_tunnel_du_marathon
-# on reste sur place : Satotz s'éloigne, épreuve ratée, retour au point de départ et nouveau tirage
+# on reste sur place : Satotz s'éloigne, épreuve ratée, retour au dirigeable et nouveau tirage
 wait 300
 expect Retentez l'année prochaine
 expect Retrouve un guide
 wait 40
-shot 34c_examen_rate_retour
+shot 34c_examen_rate_retour_au_dirigeable
 # Nouvel essai : nouveaux exemplaires de chaque lieu (un lieu passé ne revient jamais)
 clearchat
-cmd hunter exam plan dolle zaban numele biska menchi zevil tournoi
-clearchat
-cmd hunter exam plan dolle zaban numele biska menchi zevil tournoi
+cmd hunter exam plan dolle zaban numele biska menchi balle zevil tournoi
 cmd hunter exam plan
 expect boat#1
 goto navigator
 talkto navigator
-wait 20
+wait 10
 cmd hunter exam go
-wait 60
+wait 40
+clearchat
 talkto passeur
+wait 10
+expect [Embarquer]
+cmd hunter exam board
 wait 80
 shot 34c2_un_autre_bateau_pour_dolle
 cmd hunter quest skip
@@ -721,6 +739,14 @@ wait 80
 cmd hunter quest skip
 wait 5
 cmd hunter quest skip
+wait 10
+cmd hunter exam go
+wait 40
+clearchat
+talkto passeur
+wait 10
+expect [Embarquer]
+cmd hunter exam board
 wait 80
 goto cook
 talkto cook
@@ -732,10 +758,26 @@ goto satotz
 talkto satotz
 wait 10
 cmd hunter quest skip
+wait 10
+cmd hunter exam go
+wait 40
+clearchat
+talkto passeur
+wait 10
+expect [Embarquer]
+cmd hunter exam board
 wait 80
 expect [hud] Brouillard de Numele
 shot 34d_marais_de_numele_brouillard
 cmd hunter quest skip
+wait 10
+cmd hunter exam go
+wait 40
+clearchat
+talkto passeur
+wait 10
+expect [Embarquer]
+cmd hunter exam board
 wait 80
 shot 34d_reserve_de_biska
 goto buhara
@@ -745,6 +787,14 @@ cmd hunter quest skip
 wait 5
 talkto buhara
 wait 10
+cmd hunter exam go
+wait 40
+clearchat
+talkto passeur
+wait 10
+expect [Embarquer]
+cmd hunter exam board
+wait 80
 cmd give @s minecraft:salmon
 goto menchi
 clearchat
@@ -760,12 +810,48 @@ shot 34e_mont_split_faille_aux_oeufs
 cmd give @s hxh:spider_eagle_egg
 goto menchi
 talkto menchi
-wait 80
+wait 20
 expect Tu passes
+wait 10
+cmd hunter exam go
+wait 40
+clearchat
+talkto passeur
+wait 10
+expect [Embarquer]
+cmd hunter exam board
+wait 80
+shot 34e2_salle_du_dirigeable
+goto netero
+clearchat
+talkto netero
+wait 10
+expect Un petit jeu
+look 180 5
+shot 34e3_jeu_de_la_balle_de_netero
+cmd hunter quest skip
+wait 10
+cmd hunter exam go
+wait 40
+clearchat
+talkto passeur
+wait 10
+expect [Embarquer]
+cmd hunter exam board
+wait 80
 look 180 10
 shot 34f_ile_de_zevil
 cmd give @s hxh:target_plate
-wait 60
+wait 40
+wait 10
+cmd hunter exam go
+wait 40
+clearchat
+talkto passeur
+wait 10
+expect [Embarquer]
+cmd hunter exam board
+wait 80
 shot 34e_hotel_de_l_association
 goto netero
 wait 20

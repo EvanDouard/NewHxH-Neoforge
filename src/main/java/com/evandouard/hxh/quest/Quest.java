@@ -48,7 +48,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
 
     /** Types d'étapes connus. */
     public static final Set<String> TYPES = Set.of("talk", "kill", "follow", "bring", "reach", "custom",
-            "quiz", "survive", "points", "duel",
+            "quiz", "survive", "points", "duel", "ball",
             "nen_mode", "nen_sense", "nen_flag",
             "arena_win", "arena_floor", "arena_register_200");
 
@@ -67,7 +67,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                 case "bring" -> count;
                 case "follow", "nen_mode", "nen_sense", "survive" -> seconds;
                 case "quiz" -> "silence".equals(answer) ? seconds : 0;
-                case "points", "duel" -> count;
+                case "points", "duel", "ball" -> count;
                 default -> 0;
             };
         }
@@ -238,6 +238,8 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                     problems.add(where + "\"answer\" doit être un numéro de choix, \"any\" ou \"silence\"");
                 }
             }
+            if (type.equals("ball") && (step.count() < 1 || step.seconds() < 1))
+                problems.add(where + "\"count\" (touches) et \"seconds\" (durée) requis");
             if (type.equals("duel") && step.count() < 1) problems.add(where + "\"count\" : nombre de victoires (au moins 1)");
             if (!step.hazard().isEmpty() && !List.of("storm", "fog").contains(step.hazard()))
                 problems.add(where + "danger inconnu « " + step.hazard() + " » (storm, fog)");

@@ -45,13 +45,13 @@ public final class QuestTests {
     public static void examQuestIsLoaded(GameTestHelper helper) {
         Quest exam = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
         helper.assertTrue(exam != null, "La quête hxh:hunter_exam doit être chargée depuis le datapack");
-        helper.assertTrue(exam.steps().size() == 19, "19 étapes attendues, obtenu " + exam.steps().size());
-        helper.assertTrue(exam.trials().size() == 7 && exam.minTrials() == 4 && exam.maxTrials() == 6, "7 épreuves, 4 à 6 tirées");
+        helper.assertTrue(exam.steps().size() == 21, "21 étapes attendues, obtenu " + exam.steps().size());
+        helper.assertTrue(exam.trials().size() == 8 && exam.minTrials() == 4 && exam.maxTrials() == 6, "8 épreuves, 4 à 6 tirées");
         helper.succeed();
     }
 
     /** Toutes les épreuves, dans l'ordre du fichier (le parcours est alors identique au fichier). */
-    private static final java.util.List<String> ALL_TRIALS = java.util.List.of("dolle", "zaban", "numele", "biska", "menchi", "zevil", "tournoi");
+    private static final java.util.List<String> ALL_TRIALS = java.util.List.of("dolle", "zaban", "numele", "biska", "menchi", "balle", "zevil", "tournoi");
 
     @GameTest(template = "empty")
     public static void trialDrawsStayCoherent(GameTestHelper helper) {
@@ -153,7 +153,14 @@ public final class QuestTests {
         QuestManager.onTalk(player, netero);
         player.getInventory().add(new net.minecraft.world.item.ItemStack(ModItems.SPIDER_EAGLE_EGG.get()));
         QuestManager.onTalk(player, menchi);
-        helper.assertTrue(d.step() == idx("zevil"), "Œuf d'aigle-araignée accepté");
+        helper.assertTrue(d.step() == idx("ball_intro"), "Œuf d'aigle-araignée accepté");
+        // Jeu de la balle dans le dirigeable : Netero esquive, puis on le touche trois fois
+        QuestManager.onTalk(player, netero);
+        int jenny = d.jenny();
+        com.evandouard.hxh.exam.NeteroBall.touch(player, netero, true);
+        helper.assertTrue(d.progress() == 0, "Une esquive ne compte pas");
+        for (int i = 0; i < 3; i++) com.evandouard.hxh.exam.NeteroBall.touch(player, netero, false);
+        helper.assertTrue(d.step() == idx("zevil") && d.jenny() == jenny + 500, "Trois touches : prime de Netero");
         // Zevil : sa plaque (3) + celle de sa cible (3)
         player.getInventory().add(new net.minecraft.world.item.ItemStack(ModItems.TARGET_PLATE.get()));
         player.tickCount = 0;
@@ -255,9 +262,22 @@ public final class QuestTests {
         NpcEntity far = npc(helper, "passeur", 2);
         far.setHome(far.blockPosition().offset(100, 0, 0));
         d.setExamDeparture(near.home().asLong());
-        helper.assertTrue(!com.evandouard.hxh.exam.ExamDeparture.board(player, far), "Un autre passeur ne t'embarque pas");
-        helper.assertTrue(com.evandouard.hxh.exam.ExamDeparture.board(player, near), "Ton passeur t'embarque");
+        helper.assertTrue(!com.evandouard.hxh.exam.ExamDeparture.talk(player, far), "Une autre hôtesse ne t'attend pas");
+        helper.assertTrue(com.evandouard.hxh.exam.ExamDeparture.talk(player, near), "Ton hôtesse te propose d'embarquer");
+        helper.assertTrue(com.evandouard.hxh.exam.ExamDeparture.board(player), "Embarquement accepté");
         helper.assertTrue(d.examDeparture() == Long.MIN_VALUE && d.examUses("boat") == 1, "Départ utilisé, bateau visité");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void neteroBallIsNotEliminatory(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(player);
+        com.evandouard.hxh.quest.TrialPlan.forcedForTests = java.util.List.of("balle", "zevil", "tournoi");
+        QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
+        while (!QuestManager.currentStep(d).id().equals("ball")) QuestManager.advance(player);
+        for (int i = 0; i < 61 * 20 && QuestManager.currentStep(d).id().equals("ball"); i++) QuestManager.tick(player);
+        helper.assertTrue(QuestManager.currentStep(d).id().equals("zevil"), "Temps écoulé : on continue sans élimination");
         helper.succeed();
     }
 

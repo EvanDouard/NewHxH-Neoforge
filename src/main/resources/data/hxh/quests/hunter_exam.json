@@ -28,6 +28,9 @@
     "tournoi": {
       "phase": 5,
       "always": true
+    },
+    "balle": {
+      "phase": 3
     }
   },
   "steps": [
@@ -157,7 +160,8 @@
       "npc": "menchi",
       "item": "minecraft:salmon",
       "count": 1,
-      "trial": "menchi"
+      "trial": "menchi",
+      "site": "biska"
     },
     {
       "id": "netero_split",
@@ -173,6 +177,20 @@
       "item": "hxh:spider_eagle_egg",
       "count": 1,
       "trial": "menchi"
+    },
+    {
+      "id": "ball_intro",
+      "type": "talk",
+      "npc": "netero",
+      "site": "dirigeable",
+      "trial": "balle"
+    },
+    {
+      "id": "ball",
+      "type": "ball",
+      "count": 3,
+      "seconds": 60,
+      "trial": "balle"
     },
     {
       "id": "zevil",

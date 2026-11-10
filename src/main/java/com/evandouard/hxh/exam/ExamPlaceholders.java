@@ -33,6 +33,7 @@ final class ExamPlaceholders {
             case NUMELE -> numele(level, c, place);
             case MOUNT_SPLIT -> mountSplit(level, c, place);
             case ZEVIL -> zevil(level, c, place);
+            case AIRSHIP -> airship(level, c, place);
         };
     }
 
@@ -317,5 +318,22 @@ final class ExamPlaceholders {
         List<BlockPos> nests = new ArrayList<>();
         for (int z = -10; z <= 10; z += 5) nests.add(c.offset(0, -NEST_DEPTH + 1, z));
         return new ExamWorld.Site(c.offset(-6, 0, 0), -90f, npcs, List.of(), nests);
+    }
+
+    // ------------------------------------------------------------------ Dirigeable de l'Association
+
+    /** Salle de détente du dirigeable (jeu de la balle) : parquet, hublots sur le ciel, Netero au fond. */
+    private static ExamWorld.Site airship(ServerLevel level, BlockPos c, boolean place) {
+        if (place) {
+            room(level, c, 9, 5, 6, Blocks.DARK_OAK_PLANKS, Blocks.SPRUCE_PLANKS, Blocks.WHITE_CONCRETE);
+            for (int x = -7; x <= 7; x += 3) {
+                set(level, c.offset(x, 2, -5), Blocks.GLASS);
+                set(level, c.offset(x, 2, 5), Blocks.GLASS);
+            }
+            for (int x = -8; x <= 8; x += 4) set(level, c.offset(x, 4, 0), Blocks.LANTERN);
+        }
+        Map<String, BlockPos> npcs = new LinkedHashMap<>();
+        npcs.put("netero", c.offset(0, 0, -3));
+        return new ExamWorld.Site(c.offset(0, 0, 4), 180f, npcs, List.of(), List.of());
     }
 }
