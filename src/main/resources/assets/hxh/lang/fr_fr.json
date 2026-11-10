@@ -836,5 +836,6 @@
   "quest.hxh.hunter_exam.ball": "Prendre la balle de Netero (le toucher malgré ses esquives)",
   "exam.hxh.ball_touch": "Netero a dû s'en servir ! (%s/%s)",
   "exam.hxh.ball_time": "Ho ho ho, la balle reste à moi. Ce n'était qu'un jeu : l'Examen continue.",
-  "exam.hxh.ball_won": "Ho ho ! Tu m'as forcé à me servir de ma main droite et de ma jambe. Voici %s jennys pour la peine."
+  "exam.hxh.ball_won": "Ho ho ! Tu m'as forcé à me servir de ma main droite et de ma jambe. Garde la balle en souvenir, et voici %s jennys pour la peine.",
+  "item.hxh.netero_ball": "Balle de Netero"
 }

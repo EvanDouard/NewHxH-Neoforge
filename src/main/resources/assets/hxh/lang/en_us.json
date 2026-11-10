@@ -836,5 +836,6 @@
   "quest.hxh.hunter_exam.ball": "Take Netero's ball (touch him despite his dodges)",
   "exam.hxh.ball_touch": "Netero had to use it! (%s/%s)",
   "exam.hxh.ball_time": "Ho ho ho, the ball stays mine. It was only a game: the exam goes on.",
-  "exam.hxh.ball_won": "Ho ho! You made me use my right hand and my leg. Here are %s jenny for your trouble."
+  "exam.hxh.ball_won": "Ho ho! You made me use my right hand and my leg. Keep the ball as a souvenir, and here are %s jenny for your trouble.",
+  "item.hxh.netero_ball": "Netero's ball"
 }

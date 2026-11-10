@@ -553,7 +553,7 @@ public final class QuestManager {
     }
 
     @Nullable
-    private static NpcEntity findNpc(ServerPlayer player, String npcId, double range) {
+    public static NpcEntity findNpc(ServerPlayer player, String npcId, double range) {
         List<NpcEntity> list = player.level().getEntitiesOfClass(NpcEntity.class,
                 player.getBoundingBox().inflate(range), n -> n.npcId().equals(npcId));
         NpcEntity best = null;
@@ -569,6 +569,7 @@ public final class QuestManager {
         if (q == null || step == null) return;
         giveRewards(player, d, step);
         if (step.type().equals("duel")) com.evandouard.hxh.exam.ExamTournament.reset(player);
+        if (step.type().equals("ball")) com.evandouard.hxh.exam.NeteroBall.drop(player);
         d.step++;
         d.progress = 0;
         List<Quest.Step> steps = steps(d, q);

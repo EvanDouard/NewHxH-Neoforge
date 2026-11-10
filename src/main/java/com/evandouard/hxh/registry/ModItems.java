@@ -22,6 +22,9 @@ public final class ModItems {
     public static final DeferredItem<Item> TARGET_PLATE =
             ITEMS.registerSimpleItem("target_plate", new Item.Properties().stacksTo(1));
     /** Mont Split : œuf d'aigle-araignée (Menchi le veut cuit, mais on le lui rapporte tel quel). */
+    /** La balle du jeu de Netero dans le dirigeable (souvenir pour qui l'a fait plier). */
+    public static final DeferredItem<Item> NETERO_BALL =
+            ITEMS.registerSimpleItem("netero_ball", new Item.Properties().stacksTo(1));
     public static final DeferredItem<Item> SPIDER_EAGLE_EGG =
             ITEMS.registerSimpleItem("spider_eagle_egg", new Item.Properties().stacksTo(4));
 

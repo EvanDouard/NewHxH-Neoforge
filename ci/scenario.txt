@@ -827,7 +827,9 @@ clearchat
 talkto netero
 wait 10
 expect Un petit jeu
-look 180 5
+wait 30
+goto netero
+wait 10
 shot 34e3_jeu_de_la_balle_de_netero
 cmd hunter quest skip
 wait 10

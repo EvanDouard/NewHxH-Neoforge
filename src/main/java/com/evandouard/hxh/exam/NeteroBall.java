@@ -10,6 +10,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
+import com.evandouard.hxh.registry.ModItems;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,8 +28,10 @@ import java.util.UUID;
 public final class NeteroBall {
     private NeteroBall() {}
 
-    /** Chance que Netero esquive une tentative. */
-    static final float DODGE = 0.7f;
+    /** Chance que Netero esquive une tentative (moins s'il est pris de vitesse : candidat qui sprinte). */
+    static final float DODGE = 0.7f, DODGE_SPRINT = 0.55f;
+    /** Netero ne laisse personne s'approcher : à moins de ce rayon, il s'éclipse de lui-même. */
+    static final double PERSONAL_SPACE = 2.2;
     static final int PRIZE = 500;
     private static final Map<UUID, Integer> TICKS = new HashMap<>();
 
@@ -37,7 +42,7 @@ public final class NeteroBall {
 
     /** Une tentative sur Netero (coup porté) : esquive ou touche. */
     public static void attempt(ServerPlayer player, NpcEntity netero) {
-        touch(player, netero, player.getRandom().nextFloat() < DODGE);
+        touch(player, netero, player.getRandom().nextFloat() < (player.isSprinting() ? DODGE_SPRINT : DODGE));
     }
 
     public static void touch(ServerPlayer player, NpcEntity netero, boolean dodged) {
@@ -65,11 +70,26 @@ public final class NeteroBall {
     /** Chaque tick de l'étape : le temps passe ; écoulé, Netero garde sa balle et l'Examen continue. */
     public static void tick(ServerPlayer player, Quest.Step step) {
         int t = TICKS.merge(player.getUUID(), 1, Integer::sum);
+        NpcEntity netero = QuestManager.findNpc(player, "netero", 32);
+        if (netero != null) {
+            if (!netero.getMainHandItem().is(ModItems.NETERO_BALL.get()))
+                netero.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ModItems.NETERO_BALL.get()));
+            // Il garde ses distances : s'approcher sans frapper le fait filer
+            if (t % 30 == 0 && netero.distanceTo(player) < PERSONAL_SPACE) blink(player, netero);
+            netero.getLookControl().setLookAt(player);
+        }
         if (t >= step.seconds() * 20) {
             TICKS.remove(player.getUUID());
+            drop(player);
             player.sendSystemMessage(Component.translatable("exam.hxh.ball_time").withStyle(ChatFormatting.GRAY));
             QuestManager.advance(player);
         }
+    }
+
+    /** Fin du jeu (temps, victoire, étape passée) : Netero range sa balle. */
+    public static void drop(ServerPlayer player) {
+        NpcEntity netero = QuestManager.findNpc(player, "netero", 32);
+        if (netero != null) netero.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
     }
 
     public static int secondsLeft(ServerPlayer player, Quest.Step step) {
@@ -79,6 +99,8 @@ public final class NeteroBall {
     /** Assez de touches : Netero rit et paie la prime. */
     public static void won(ServerPlayer player) {
         TICKS.remove(player.getUUID());
+        drop(player);
+        player.getInventory().add(new ItemStack(ModItems.NETERO_BALL.get()));
         QuestData d = QuestManager.data(player);
         d.addJenny(PRIZE);
         player.sendSystemMessage(Component.translatable("exam.hxh.ball_won", PRIZE).withStyle(ChatFormatting.GOLD));

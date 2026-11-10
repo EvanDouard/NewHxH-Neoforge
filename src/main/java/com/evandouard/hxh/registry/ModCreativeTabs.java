@@ -23,6 +23,7 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.EXAM_PLATE.get());
                         output.accept(ModItems.TARGET_PLATE.get());
                         output.accept(ModItems.SPIDER_EAGLE_EGG.get());
+                        output.accept(ModItems.NETERO_BALL.get());
                         ModItems.DUMBBELLS.forEach(i -> output.accept(i.get()));
                         ModItems.TREADMILLS.forEach(i -> output.accept(i.get()));
                         output.accept(ModItems.HEAVENS_ARENA_GATE.get());

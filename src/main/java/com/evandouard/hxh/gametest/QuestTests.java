@@ -161,6 +161,7 @@ public final class QuestTests {
         helper.assertTrue(d.progress() == 0, "Une esquive ne compte pas");
         for (int i = 0; i < 3; i++) com.evandouard.hxh.exam.NeteroBall.touch(player, netero, false);
         helper.assertTrue(d.step() == idx("zevil") && d.jenny() == jenny + 500, "Trois touches : prime de Netero");
+        helper.assertTrue(player.getInventory().contains(ModItems.NETERO_BALL.get().getDefaultInstance()), "La balle en souvenir");
         // Zevil : sa plaque (3) + celle de sa cible (3)
         player.getInventory().add(new net.minecraft.world.item.ItemStack(ModItems.TARGET_PLATE.get()));
         player.tickCount = 0;
