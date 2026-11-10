@@ -70,6 +70,10 @@ public final class ExamHazards {
                 if ("storm".equals(step.hazard()) && player.tickCount % 50 == 0) gust(player);
             }
             case MOUNT_SPLIT -> mountSplit(player, level, c, instance);
+            case ISLAND_HOTEL -> {
+                if (player.tickCount % 200 == 0) restockCoins(level, c, instance);
+                if ("wave".equals(step.hazard())) wave(player, level, c, d);
+            }
             case BISKA -> {
                 if (player.tickCount % 200 == 0) restockSalmon(level, c);
             }
@@ -165,6 +169,53 @@ public final class ExamHazards {
         }
     }
 
+    // ------------------------------------------------------------------ Île-hôtel
+
+    private static void placeCoins(ServerLevel level, ExamWorld.Site site) {
+        for (BlockPos p : site.prey()) {
+            ItemEntity coin = new ItemEntity(level, p.getX() + 0.5, p.getY() + 0.1, p.getZ() + 0.5,
+                    new ItemStack(ModItems.SUNKEN_COIN.get()), 0, 0, 0);
+            coin.setNoGravity(true);
+            coin.setUnlimitedLifetime();
+            level.addFreshEntity(coin);
+        }
+    }
+
+    private static void restockCoins(ServerLevel level, BlockPos c, int instance) {
+        ExamWorld.Site site = ExamWorld.cached(ExamSite.ISLAND_HOTEL, instance);
+        if (site == null) return;
+        int coins = level.getEntitiesOfClass(ItemEntity.class, new AABB(c).inflate(30, 16, 40),
+                e -> e.getItem().is(ModItems.SUNKEN_COIN.get())).size();
+        if (coins < 2) placeCoins(level, site);
+    }
+
+    /**
+     * La vague géante et les canons : toutes les 4 s une lame venue de la mer (sud) pousse vers l'intérieur, sauf qui
+     * s'accroche (accroupi) ; toutes les 2,5 s un boulet tombe près du candidat (onde de choc, dégâts s'il est trop
+     * près). Emporté à la mer : retour sur la plage et le compte repart de zéro.
+     */
+    private static void wave(ServerPlayer player, ServerLevel level, BlockPos c, QuestData d) {
+        if (player.tickCount % 80 == 0) {
+            com.evandouard.hxh.fx.NenFx.shockwaveAt(level, player.position().add(0, 0.2, 3), 5f, 0x66AAFF);
+            player.sendSystemMessage(Component.translatable("exam.hxh.wave").withStyle(ChatFormatting.AQUA));
+            if (!player.isShiftKeyDown()) {
+                player.push((player.getRandom().nextDouble() - 0.5) * 0.4, 0.35, -1.1);
+                player.hurtMarked = true;
+            }
+        }
+        if (player.tickCount % 50 == 25) {
+            double a = player.getRandom().nextDouble() * Math.PI * 2, dist = 1 + player.getRandom().nextDouble() * 4;
+            Vec3 hit = player.position().add(Math.cos(a) * dist, 0, Math.sin(a) * dist);
+            com.evandouard.hxh.fx.NenFx.impactAt(level, hit.add(0, 0.5, 0), 1.6f, 0xFFAA44);
+            com.evandouard.hxh.fx.NenFx.quake(level, hit, 2.5f);
+            if (hit.distanceTo(player.position()) < 2.5) player.hurt(level.damageSources().explosion(null, null), 4f);
+        }
+        if (player.isInWater() && player.getY() < ExamWorld.FLOOR_Y - 1.5) {
+            rescue(player, Vec3.atBottomCenterOf(c.offset(0, 0, 4)), "exam.hxh.wave_swept");
+            d.setProgress(0);
+        }
+    }
+
     // ------------------------------------------------------------------ Zevil
 
     /** Points de plaques : sa propre plaque et celle de sa cible valent 3, les autres 1. */
@@ -227,6 +278,7 @@ public final class ExamHazards {
     static void populate(ServerLevel level, ExamSite site, ExamWorld.Site built, BlockPos center) {
         switch (site) {
             case MOUNT_SPLIT -> placeEggs(level, built);
+            case ISLAND_HOTEL -> placeCoins(level, built);
             case ZEVIL -> {
                 for (int i = 0; i < built.prey().size(); i++) candidate(level, built.prey().get(i), i == 0, i);
             }

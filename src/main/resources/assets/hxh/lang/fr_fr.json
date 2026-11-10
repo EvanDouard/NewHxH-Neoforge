@@ -881,5 +881,19 @@
   "exam.hxh.kiriko.fake.2": "(Il ne jette pas un regard à sa femme.) Ma femme ? Elle s'en remettra. Occupe-toi plutôt de lui.",
   "exam.hxh.kiriko.fake.3": "(Il respire à peine, parfaitement calme.) Je me suis battu comme un lion. Regarde-moi : pas une blessure.",
   "exam.hxh.kiriko.reveal": "Le faux mari se tord et grandit : c'est un Kiriko ! « Bien vu, candidat. Tu mérites d'aller à Zaban. »",
-  "exam.hxh.kiriko.wrong": "Tu as désigné le vrai mari… Le Kiriko éclate de rire et disparaît dans les arbres. Pas de guide pour toi."
+  "exam.hxh.kiriko.wrong": "Tu as désigné le vrai mari… Le Kiriko éclate de rire et disparaît dans les arbres. Pas de guide pour toi.",
+  "item.hxh.sunken_coin": "Pièce d'or de l'épave",
+  "npc.hxh.hotel_manager": "Gérant de l'hôtel",
+  "dialog.hxh.hotel_manager.idle": "Une chambre avec vue sur la baie ? Trois pièces d'or, pas une de moins.",
+  "exam.hxh.site.island_hotel": "Île-hôtel",
+  "exam.hxh.trial.ile": "L'île-hôtel",
+  "dialog.hxh.hunter_exam.island_manager": "Bienvenue, candidat ! Vous passez la nuit ici avant la suite de l'Examen. La chambre coûte trois pièces d'or… Pas d'argent ? Il paraît qu'une épave repose au fond de la baie, au bout du ponton.",
+  "dialog.hxh.hunter_exam.island_dive": "Trois pièces ! Voici votre clé… Mais qu'est-ce que c'est que ce grondement ? Une vague ! Et des pirates qui tirent au canon ! Accrochez-vous !",
+  "dialog.hxh.hunter_exam.island_done": "Vous avez tenu bon ! L'hôtel est sauf, grâce à vous. Le dirigeable vous attend pour la suite.",
+  "quest.hxh.hunter_exam.island_manager": "Parler au gérant de l'île-hôtel",
+  "quest.hxh.hunter_exam.island_dive": "Plonger dans l'épave de la baie et rapporter 3 pièces d'or au gérant",
+  "quest.hxh.hunter_exam.island_wave": "Tenir face à la vague géante et aux boulets (accroupi contre la vague)",
+  "quest.hxh.hunter_exam.island_done": "Retourner voir le gérant de l'hôtel",
+  "exam.hxh.wave": "Une lame géante déferle !",
+  "exam.hxh.wave_swept": "La vague t'a emporté ! Tu reprends pied sur la plage… il faut tout recommencer."
 }

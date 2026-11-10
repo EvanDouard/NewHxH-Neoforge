@@ -27,7 +27,9 @@ public enum ExamSite {
     /** Tour de Trick (Phase 3) : descendre du toit à la sortie. */
     TOWER("tour_de_trick"),
     /** Forêt des Kiriko (en route pour Zaban) : démasquer la bête qui a pris l'apparence du mari. */
-    KIRIKO("foret_kiriko");
+    KIRIKO("foret_kiriko"),
+    /** Île-hôtel (hors-série de l'anime de 1999) : payer sa chambre avec le trésor d'une épave, survivre à la vague. */
+    ISLAND_HOTEL("ile_hotel");
 
     private final String file;
 

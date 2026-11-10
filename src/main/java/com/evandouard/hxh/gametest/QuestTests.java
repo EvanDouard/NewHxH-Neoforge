@@ -45,13 +45,13 @@ public final class QuestTests {
     public static void examQuestIsLoaded(GameTestHelper helper) {
         Quest exam = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
         helper.assertTrue(exam != null, "La quête hxh:hunter_exam doit être chargée depuis le datapack");
-        helper.assertTrue(exam.steps().size() == 28, "28 étapes attendues, obtenu " + exam.steps().size());
-        helper.assertTrue(exam.trials().size() == 10 && exam.minTrials() == 4 && exam.maxTrials() == 6, "10 épreuves, 4 à 6 tirées");
+        helper.assertTrue(exam.steps().size() == 32, "32 étapes attendues, obtenu " + exam.steps().size());
+        helper.assertTrue(exam.trials().size() == 11 && exam.minTrials() == 4 && exam.maxTrials() == 6, "11 épreuves, 4 à 6 tirées");
         helper.succeed();
     }
 
     /** Toutes les épreuves, dans l'ordre du fichier (le parcours est alors identique au fichier). */
-    private static final java.util.List<String> ALL_TRIALS = java.util.List.of("dolle", "kiriko", "zaban", "numele", "biska", "menchi", "balle", "tour", "zevil", "tournoi");
+    private static final java.util.List<String> ALL_TRIALS = java.util.List.of("dolle", "kiriko", "zaban", "numele", "biska", "menchi", "balle", "tour", "ile", "zevil", "tournoi");
 
     @GameTest(template = "empty")
     public static void trialDrawsStayCoherent(GameTestHelper helper) {
@@ -186,7 +186,16 @@ public final class QuestTests {
         QuestManager.duelWon(player);
         helper.assertTrue(d.step() == idx("tower_exit"), "Prisonnier vaincu");
         QuestManager.advance(player);
-        helper.assertTrue(d.step() == idx("zevil"), "Sortie de la tour");
+        helper.assertTrue(d.step() == idx("island_manager"), "Sortie de la tour");
+        // Île-hôtel : payer la chambre avec les pièces de l'épave, tenir face à la vague
+        NpcEntity manager = npc(helper, "hotel_manager", 0);
+        QuestManager.onTalk(player, manager);
+        player.getInventory().add(new net.minecraft.world.item.ItemStack(ModItems.SUNKEN_COIN.get(), 3));
+        QuestManager.onTalk(player, manager);
+        helper.assertTrue(d.step() == idx("island_wave"), "Chambre payée");
+        for (int i = 0; i < 31 * 20 && d.step() == idx("island_wave"); i++) QuestManager.tick(player);
+        QuestManager.onTalk(player, manager);
+        helper.assertTrue(d.step() == idx("zevil"), "La vague passée");
         // Zevil : sa plaque (3) + celle de sa cible (3)
         player.getInventory().add(new net.minecraft.world.item.ItemStack(ModItems.TARGET_PLATE.get()));
         player.tickCount = 0;
@@ -548,6 +557,9 @@ public final class QuestTests {
         com.evandouard.hxh.exam.ExamWorld.Site split = com.evandouard.hxh.exam.ExamWorld.ensure(exam, com.evandouard.hxh.exam.ExamSite.MOUNT_SPLIT);
         helper.assertTrue(split.prey().size() >= 3, "Des nids d'œufs dans la faille du mont Split");
         helper.assertTrue(exam.getBlockState(split.prey().get(0).below()).is(net.minecraft.world.level.block.Blocks.COBWEB), "Les œufs pendent sur des fils");
+        com.evandouard.hxh.exam.ExamWorld.Site island = com.evandouard.hxh.exam.ExamWorld.ensure(exam, com.evandouard.hxh.exam.ExamSite.ISLAND_HOTEL);
+        helper.assertTrue(island.prey().size() >= 3 && island.prey().get(0).getY() < com.evandouard.hxh.exam.ExamWorld.FLOOR_Y - 4,
+                "Des pièces d'or au fond de la baie");
         com.evandouard.hxh.exam.ExamWorld.Site zevil = com.evandouard.hxh.exam.ExamWorld.ensure(exam, com.evandouard.hxh.exam.ExamSite.ZEVIL);
         helper.assertTrue(zevil.prey().size() >= 3, "Des candidats à traquer sur Zevil");
         helper.succeed();

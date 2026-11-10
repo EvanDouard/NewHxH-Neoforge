@@ -36,6 +36,7 @@ final class ExamPlaceholders {
             case AIRSHIP -> airship(level, c, place);
             case TOWER -> trickTower(level, c, place);
             case KIRIKO -> kirikoForest(level, c, place);
+            case ISLAND_HOTEL -> islandHotel(level, c, place);
         };
     }
 
@@ -491,5 +492,56 @@ final class ExamPlaceholders {
         for (int x = -2; x <= 2; x++) for (int z = -2; z <= 2; z++) for (int y = height - 2; y <= height; y++)
             if (Math.abs(x) + Math.abs(z) < 4 && level.getBlockState(base.offset(x, y, z)).isAir())
                 set(level, base.offset(x, y, z), Blocks.DARK_OAK_LEAVES);
+    }
+
+    // ------------------------------------------------------------------ Île-hôtel (hors-série 1999)
+
+    /** Profondeur de la baie où repose l'épave. */
+    static final int BAY_DEPTH = 9;
+
+    /**
+     * Île-hôtel : une île ronde avec l'hôtel (et son gérant) et un ponton ; au sud, une baie profonde où repose une
+     * épave (coque de chêne noir, mât brisé) dont le pont porte des pièces d'or ; deux canons sur la plage.
+     */
+    private static ExamWorld.Site islandHotel(ServerLevel level, BlockPos c, boolean place) {
+        int r = 16;
+        BlockPos wreck = c.offset(0, -BAY_DEPTH + 1, 26);
+        if (place) {
+            for (int x = -40; x <= 40; x++) for (int z = -30; z <= 46; z++) {
+                set(level, c.offset(x, -BAY_DEPTH - 1, z), Blocks.SAND);
+                for (int y = -BAY_DEPTH; y <= -1; y++) set(level, c.offset(x, y, z), Blocks.WATER);
+            }
+            for (int x = -r; x <= r; x++) for (int z = -r; z <= r; z++) {
+                int d2 = x * x + z * z;
+                if (d2 > r * r) continue;
+                for (int y = -BAY_DEPTH; y <= -2; y++) set(level, c.offset(x, y, z), Blocks.SANDSTONE);
+                set(level, c.offset(x, -1, z), d2 > (r - 4) * (r - 4) ? Blocks.SAND : Blocks.GRASS_BLOCK);
+            }
+            BlockPos h = c.offset(0, 0, -5);
+            room(level, h, 6, 4, 4, Blocks.WHITE_TERRACOTTA, Blocks.WHITE_CONCRETE, Blocks.BLUE_TERRACOTTA);
+            for (int y = 0; y < 2; y++) set(level, h.offset(0, y, 4), Blocks.AIR);
+            set(level, h.offset(-3, 0, -2), Blocks.BARREL);
+            set(level, h.offset(3, 0, -2), Blocks.LANTERN);
+            // ponton vers la baie
+            for (int z = r - 2; z <= r + 5; z++) for (int x = -1; x <= 1; x++) set(level, c.offset(x, -1, z), Blocks.OAK_PLANKS);
+            // canons sur la plage (provisoires : enclume sur un bloc de fer)
+            for (int x : new int[]{-8, 8}) {
+                set(level, c.offset(x, 0, r - 4), Blocks.IRON_BLOCK);
+                set(level, c.offset(x, 1, r - 4), Blocks.ANVIL);
+            }
+            // épave : coque, pont, mât brisé
+            for (int x = -3; x <= 3; x++) for (int z = -7; z <= 7; z++) {
+                boolean edge = Math.abs(x) == 3 || Math.abs(z) == 7;
+                set(level, wreck.offset(x, -1, z), Blocks.DARK_OAK_PLANKS);
+                if (edge && ((x + z) & 3) != 0) set(level, wreck.offset(x, 0, z), Blocks.DARK_OAK_FENCE);
+            }
+            for (int y = 0; y < 4; y++) set(level, wreck.offset(0, y, -1), Blocks.STRIPPED_DARK_OAK_LOG);
+            set(level, wreck.offset(1, 0, 3), Blocks.CHEST);
+            set(level, wreck.offset(-2, 0, -4), Blocks.SEAGRASS);
+        }
+        Map<String, BlockPos> npcs = new LinkedHashMap<>();
+        npcs.put("hotel_manager", c.offset(0, 0, -7));
+        List<BlockPos> coins = List.of(wreck.offset(-2, 0, 4), wreck.offset(2, 0, -2), wreck.offset(0, 0, 6), wreck.offset(-1, 0, -5));
+        return new ExamWorld.Site(c.offset(0, 0, 4), 180f, npcs, List.of(), coins);
     }
 }

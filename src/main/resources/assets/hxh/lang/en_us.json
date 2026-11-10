@@ -881,5 +881,19 @@
   "exam.hxh.kiriko.fake.2": "(He doesn't even glance at his wife.) My wife? She'll recover. Deal with him instead.",
   "exam.hxh.kiriko.fake.3": "(Barely breathing, perfectly calm.) I fought like a lion. Look at me: not a single wound.",
   "exam.hxh.kiriko.reveal": "The false husband twists and grows: it's a Kiriko! \"Well spotted, applicant. You deserve to reach Zaban.\"",
-  "exam.hxh.kiriko.wrong": "You pointed at the real husband… The Kiriko bursts out laughing and vanishes into the trees. No guide for you."
+  "exam.hxh.kiriko.wrong": "You pointed at the real husband… The Kiriko bursts out laughing and vanishes into the trees. No guide for you.",
+  "item.hxh.sunken_coin": "Sunken gold coin",
+  "npc.hxh.hotel_manager": "Hotel manager",
+  "dialog.hxh.hotel_manager.idle": "A room with a view of the bay? Three gold coins, not one less.",
+  "exam.hxh.site.island_hotel": "Island hotel",
+  "exam.hxh.trial.ile": "The island hotel",
+  "dialog.hxh.hunter_exam.island_manager": "Welcome, applicant! You'll spend the night here before the rest of the exam. The room costs three gold coins… No money? They say a wreck lies at the bottom of the bay, at the end of the pier.",
+  "dialog.hxh.hunter_exam.island_dive": "Three coins! Here's your key… But what's that rumbling? A wave! And pirates firing cannons! Hold on!",
+  "dialog.hxh.hunter_exam.island_done": "You held on! The hotel is safe, thanks to you. The airship is waiting for the rest.",
+  "quest.hxh.hunter_exam.island_manager": "Talk to the island hotel manager",
+  "quest.hxh.hunter_exam.island_dive": "Dive to the wreck in the bay and bring 3 gold coins to the manager",
+  "quest.hxh.hunter_exam.island_wave": "Withstand the giant wave and the cannonballs (crouch against the wave)",
+  "quest.hxh.hunter_exam.island_done": "Go back to the hotel manager",
+  "exam.hxh.wave": "A giant wave crashes in!",
+  "exam.hxh.wave_swept": "The wave swept you away! You get back onto the beach… start over."
 }

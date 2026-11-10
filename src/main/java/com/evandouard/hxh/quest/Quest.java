@@ -241,7 +241,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
             if (type.equals("ball") && (step.count() < 1 || step.seconds() < 1))
                 problems.add(where + "\"count\" (touches) et \"seconds\" (durée) requis");
             if (type.equals("duel") && step.count() < 1) problems.add(where + "\"count\" : nombre de victoires (au moins 1)");
-            if (!step.hazard().isEmpty() && !List.of("storm", "fog").contains(step.hazard()))
+            if (!step.hazard().isEmpty() && !List.of("storm", "fog", "wave").contains(step.hazard()))
                 problems.add(where + "danger inconnu « " + step.hazard() + " » (storm, fog)");
             if (!step.site().isEmpty() && com.evandouard.hxh.exam.ExamSite.byId(step.site()) == null)
                 problems.add(where + "lieu d'examen inconnu « " + step.site() + " » (zaban, hall, biska, hotel)");

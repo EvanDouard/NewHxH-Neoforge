@@ -636,16 +636,16 @@ look 90 5
 wait 40
 shot 33_navigateur_qui_attend
 clearchat
-cmd hunter exam plan dolle kiriko zaban numele biska menchi balle tour zevil tournoi
+cmd hunter exam plan dolle kiriko zaban numele biska menchi balle tour ile zevil tournoi
 wait 10
 expect Nouvelle quête : Examen Hunter
 cmd hunter exam plan
-expect dolle → kiriko → zaban → numele → biska → menchi → balle → tour → zevil → tournoi
+expect dolle → kiriko → zaban → numele → biska → menchi → balle → tour → ile → zevil → tournoi
 goto navigator
 clearchat
 talkto navigator
 wait 20
-expect Épreuve 1/10 : Le voyage vers l'île de Dolle
+expect Épreuve 1/11 : Le voyage vers l'île de Dolle
 expect Ton dirigeable t'attend
 shot 34_guide_donne_le_dirigeable
 cmd hunter exam go
@@ -684,7 +684,7 @@ expect Tu as cinq secondes
 shot 34_quiz_de_la_mamie
 wait 140
 expect se taire était la seule
-expect Épreuve 2/10 : La forêt des Kiriko
+expect Épreuve 2/11 : La forêt des Kiriko
 expect Ton dirigeable t'attend
 wait 40
 shot 34_retour_au_dirigeable_apres_dolle
@@ -711,7 +711,7 @@ expect Mari ?
 shot 34k2_examiner_un_mari
 cmd hunter quest skip
 wait 20
-expect Épreuve 3/10 : Zaban
+expect Épreuve 3/11 : Zaban
 wait 10
 cmd hunter exam go
 wait 60
@@ -744,7 +744,7 @@ wait 40
 shot 34c_examen_rate_retour_au_dirigeable
 # Nouvel essai : nouveaux exemplaires de chaque lieu (un lieu passé ne revient jamais)
 clearchat
-cmd hunter exam plan dolle kiriko zaban numele biska menchi balle tour zevil tournoi
+cmd hunter exam plan dolle kiriko zaban numele biska menchi balle tour ile zevil tournoi
 cmd hunter exam plan
 expect boat#1
 goto navigator
@@ -919,6 +919,36 @@ cmd execute in hxh:hunter_exam run tp @s 4006.5 76 -3.5 90 45
 wait 20
 shot 34h3_tour_de_trick_escalier_pieges
 cmd hunter quest skip
+wait 10
+cmd hunter exam go
+wait 60
+goto passeur
+clearchat
+talkto passeur
+wait 10
+expect [Embarquer]
+cmd hunter exam board
+wait 80
+shot 34i_ile_hotel
+goto hotel_manager
+talkto hotel_manager
+wait 10
+cmd execute in hxh:hunter_exam run tp @s 4800.5 57 21.5 0 30
+wait 40
+shot 34i2_epave_au_fond_de_la_baie
+cmd give @s hxh:sunken_coin 3
+goto hotel_manager
+clearchat
+talkto hotel_manager
+wait 10
+expect Une vague
+wait 100
+expect Une lame géante déferle
+shot 34i3_vague_et_boulets
+cmd hunter quest skip
+wait 10
+goto hotel_manager
+talkto hotel_manager
 wait 10
 cmd hunter exam go
 wait 60

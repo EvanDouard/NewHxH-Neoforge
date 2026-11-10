@@ -25,6 +25,9 @@ public final class ModItems {
     /** La balle du jeu de Netero dans le dirigeable (souvenir pour qui l'a fait plier). */
     public static final DeferredItem<Item> NETERO_BALL =
             ITEMS.registerSimpleItem("netero_ball", new Item.Properties().stacksTo(1));
+    /** Pièce d'or de l'épave de l'île-hôtel (on paie sa chambre avec). */
+    public static final DeferredItem<Item> SUNKEN_COIN =
+            ITEMS.registerSimpleItem("sunken_coin", new Item.Properties().stacksTo(16));
     public static final DeferredItem<Item> SPIDER_EAGLE_EGG =
             ITEMS.registerSimpleItem("spider_eagle_egg", new Item.Properties().stacksTo(4));
 

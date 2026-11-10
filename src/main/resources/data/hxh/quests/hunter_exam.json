@@ -38,6 +38,9 @@
     },
     "tour": {
       "phase": 3
+    },
+    "ile": {
+      "phase": 3
     }
   },
   "steps": [
@@ -274,6 +277,34 @@
       "count": 2,
       "seconds": 300,
       "trial": "tour"
+    },
+    {
+      "id": "island_manager",
+      "type": "talk",
+      "npc": "hotel_manager",
+      "site": "ile_hotel",
+      "trial": "ile"
+    },
+    {
+      "id": "island_dive",
+      "type": "bring",
+      "npc": "hotel_manager",
+      "item": "hxh:sunken_coin",
+      "count": 3,
+      "trial": "ile"
+    },
+    {
+      "id": "island_wave",
+      "type": "survive",
+      "seconds": 30,
+      "hazard": "wave",
+      "trial": "ile"
+    },
+    {
+      "id": "island_done",
+      "type": "talk",
+      "npc": "hotel_manager",
+      "trial": "ile"
     },
     {
       "id": "zevil",
