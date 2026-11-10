@@ -195,6 +195,13 @@ public final class ExamHazards {
      * près). Emporté à la mer : retour sur la plage et le compte repart de zéro.
      */
     private static void wave(ServerPlayer player, ServerLevel level, BlockPos c, QuestData d) {
+        // au premier instant, tout le monde sur la plage face à la mer (l'hôtel ne protège de rien)
+        if (d.progress() == 0 && !level.canSeeSky(player.blockPosition().above())) {
+            BlockPos beach = c.offset(0, 0, 10);
+            player.teleportTo(beach.getX() + 0.5, beach.getY(), beach.getZ() + 0.5);
+            player.setYRot(0f);
+            player.hurtMarked = true;
+        }
         if (player.tickCount % 80 == 0) {
             com.evandouard.hxh.fx.NenFx.shockwaveAt(level, player.position().add(0, 0.2, 3), 5f, 0x66AAFF);
             player.sendSystemMessage(Component.translatable("exam.hxh.wave").withStyle(ChatFormatting.AQUA));
