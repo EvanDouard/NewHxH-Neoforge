@@ -301,8 +301,10 @@ public final class QuestTests {
         net.minecraft.server.level.ServerLevel exam = com.evandouard.hxh.exam.ExamWorld.level(helper.getLevel().getServer());
         if (exam == null) exam = helper.getLevel();
         com.evandouard.hxh.exam.ExamWorld.Site tower = com.evandouard.hxh.exam.ExamWorld.ensure(exam, com.evandouard.hxh.exam.ExamSite.TOWER);
-        helper.assertTrue(tower.npcs().containsKey("lippo") && tower.npcs().containsKey("tonpa") && tower.route().size() == 3,
-                "Lippo, Tonpa, et trois points (étage, 2e étage, sortie)");
+        helper.assertTrue(tower.npcs().containsKey("lippo") && tower.npcs().containsKey("tonpa") && tower.route().size() == 4,
+                "Lippo, Tonpa, et quatre points (étage, 2e étage, sortie, long chemin)");
+        net.minecraft.core.BlockPos longStart = tower.route().get(3);
+        helper.assertTrue(exam.getBlockState(longStart).isAir() && !exam.getBlockState(longStart.below()).isAir(), "Le long chemin est praticable");
         net.minecraft.core.BlockPos c = com.evandouard.hxh.exam.ExamWorld.center(com.evandouard.hxh.exam.ExamSite.TOWER);
         int open = 0;
         for (int[] t : new int[][]{{-4, -4}, {4, -4}, {0, 0}, {-4, 3}, {4, 3}}) {
@@ -316,6 +318,35 @@ public final class QuestTests {
         player.moveTo(pool.getX() + 0.5, pool.getY(), pool.getZ() + 0.5);
         if (player.level() == exam) helper.assertTrue(com.evandouard.hxh.exam.TrickTower.reached(player, 0), "Le bassin sous la trappe compte");
         helper.assertTrue(!com.evandouard.hxh.exam.TrickTower.reached(player, 2) || player.level() != exam, "La sortie est ailleurs");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void lerouteBetsTimeInsteadOfFighting(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(player);
+        com.evandouard.hxh.quest.TrialPlan.forcedForTests = java.util.List.of("tour", "zevil", "tournoi");
+        QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
+        while (!QuestManager.currentStep(d).id().equals("tower_roof")) QuestManager.advance(player);
+        helper.assertTrue(com.evandouard.hxh.exam.TrickTower.elapsedTicks(player) >= 0, "L'horloge de la tour tourne depuis Lippo");
+        while (!QuestManager.currentStep(d).id().equals("tower_fight")) QuestManager.advance(player);
+        com.evandouard.hxh.exam.TrickTower.forcedForTests = com.evandouard.hxh.exam.TrickTower.Prisoner.LEROUTE;
+        try {
+            player.tickCount = 0;
+            QuestManager.tick(player);
+            helper.assertTrue(com.evandouard.hxh.exam.ExamTournament.opponent(player) == null, "Leroute ne se bat pas");
+            for (int i = 0; i < 3; i++) {
+                helper.assertTrue(QuestManager.currentStep(d).id().equals("tower_fight"), "Pari " + (i + 1));
+                player.tickCount = 0;
+                QuestManager.tick(player);
+                com.evandouard.hxh.exam.TrickTower.bet(player, 1);
+            }
+            int lost = com.evandouard.hxh.exam.TrickTower.penaltySeconds(player);
+            helper.assertTrue(QuestManager.currentStep(d).id().equals("tower_exit"), "Trois paris : Leroute laisse passer");
+            helper.assertTrue(lost % 25 == 0 && lost <= 75, "Chaque pari perdu coûte 25 s : " + lost);
+        } finally {
+            com.evandouard.hxh.exam.TrickTower.forcedForTests = null;
+        }
         helper.succeed();
     }
 

@@ -857,14 +857,22 @@ expect Porte O ou porte X
 cmd hunter exam answer 1
 wait 20
 expect Vote :
+wait 20
+shot 34h1_tour_de_trick_apres_le_vote
+# le long chemin (porte X) : galerie extérieure qui descend autour de la tour
+cmd execute in hxh:hunter_exam run tp @s 4009.5 92 -4.5 180 10
 wait 40
+shot 34h1b_tour_de_trick_long_chemin
+cmd execute in hxh:hunter_exam run tp @s 4000.5 76 2.5 180 5
+wait 60
 expect Majitani entre en lice
 look 180 5
 shot 34h2_tour_de_trick_prisonnier
 cmd hunter quest skip
 wait 20
-look 0 40
-shot 34h3_tour_de_trick_escalier
+cmd execute in hxh:hunter_exam run tp @s 4006.5 76 -3.5 90 45
+wait 20
+shot 34h3_tour_de_trick_escalier_pieges
 cmd hunter quest skip
 wait 10
 cmd hunter exam go

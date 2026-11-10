@@ -340,6 +340,25 @@ final class ExamPlaceholders {
 
     // ------------------------------------------------------------------ Tour de Trick
 
+    /**
+     * Le long chemin : à l'extérieur de la tour, côté est (du nord au sud), puis sud (d'est en ouest), puis ouest
+     * jusqu'à l'entrée du 2e étage ; il descend régulièrement du 1er au 2e étage.
+     */
+    static List<BlockPos> towerLongPath(BlockPos c) {
+        List<int[]> xz = new ArrayList<>();
+        for (int z = -6; z <= 9; z++) xz.add(new int[]{9, z});
+        for (int x = 8; x >= -9; x--) xz.add(new int[]{x, 9});
+        for (int z = 8; z >= 2; z--) xz.add(new int[]{-9, z});
+        xz.add(new int[]{-8, 2});
+        List<BlockPos> out = new ArrayList<>();
+        int n = xz.size();
+        for (int i = 0; i < n; i++) {
+            int y = TOWER_F1 - Math.round((TOWER_F1 - TOWER_F2) * i / (float) (n - 1));
+            out.add(c.offset(xz.get(i)[0], y, xz.get(i)[1]));
+        }
+        return out;
+    }
+
     /** Hauteurs (au-dessus du sol) : toit, plancher du 1er étage, plate-forme du 2e. */
     static final int TOWER_ROOF = 40, TOWER_F1 = 28, TOWER_F2 = 12, TOWER_HALF = 7;
     /** Trappes du toit (x, z) ; une seule, différente selon l'exemplaire, s'ouvre sur le vide. */
@@ -392,6 +411,35 @@ final class ExamPlaceholders {
             for (int k = 0; k <= TOWER_F2 - 2; k++) for (int z = -6; z <= -5; z++)
                 set(level, c.offset(6 - k, TOWER_F2 - 2 - k, z), Blocks.STONE_BRICKS);
             for (int y = 0; y < 2; y++) set(level, c.offset(-h, y, -5), Blocks.AIR);
+            // pièges de l'escalier : plaques de pression sur certaines marches, distributeurs de flèches dans le mur
+            for (int k = 2; k <= TOWER_F2 - 2; k += 3) {
+                BlockPos step = c.offset(6 - k, TOWER_F2 - 2 - k, -6);
+                set(level, step.above(), Blocks.STONE_PRESSURE_PLATE);
+                level.setBlock(c.offset(6 - k, TOWER_F2 - 1 - k, -h), Blocks.DISPENSER.defaultBlockState()
+                        .setValue(net.minecraft.world.level.block.DispenserBlock.FACING, net.minecraft.core.Direction.SOUTH), 2);
+                if (level.getBlockEntity(c.offset(6 - k, TOWER_F2 - 1 - k, -h)) instanceof net.minecraft.world.level.block.entity.DispenserBlockEntity disp)
+                    disp.setItem(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ARROW, 16));
+            }
+            // le long chemin (vote perdu) : galerie qui fait le tour de la tour par l'extérieur en descendant
+            List<BlockPos> path = towerLongPath(c);
+            java.util.Set<BlockPos> cells = new java.util.HashSet<>();
+            for (BlockPos p : path) cells.add(new BlockPos(p.getX(), 0, p.getZ()));
+            for (int i = 0; i < path.size(); i++) {
+                BlockPos p = path.get(i);
+                set(level, p.below(), Blocks.STONE_BRICKS);
+                for (int y = 0; y < 3; y++) set(level, p.above(y), Blocks.AIR);
+                set(level, p.above(3), Blocks.STONE_BRICKS);
+                for (int[] n : new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}) {
+                    BlockPos side = p.offset(n[0], 0, n[1]);
+                    if (cells.contains(new BlockPos(side.getX(), 0, side.getZ()))) continue;
+                    if (Math.abs(side.getX() - c.getX()) <= h && Math.abs(side.getZ() - c.getZ()) <= h) continue; // mur de la tour
+                    for (int y = -1; y <= 3; y++) set(level, side.above(y), Blocks.STONE_BRICKS);
+                }
+                if (i % 8 == 4) set(level, p.above(2), Blocks.LANTERN);
+            }
+            // entrée au 2e étage par le mur ouest
+            BlockPos end = path.get(path.size() - 1);
+            for (int y = 0; y < 2; y++) set(level, new BlockPos(c.getX() - h, end.getY() + y, end.getZ()), Blocks.AIR);
             // 2e étage éclairé (le combat doit se voir) : lanternes au mur et au plafond
             for (int x = -6; x <= 6; x += 3) {
                 set(level, c.offset(x, TOWER_F2 + 2, 6), Blocks.LANTERN);
@@ -403,7 +451,8 @@ final class ExamPlaceholders {
         npcs.put("lippo", c.offset(0, TOWER_ROOF, -5));
         npcs.put("tonpa", c.offset(2, TOWER_F1, 3));
         int[] r = TOWER_TRAPDOORS[real];
-        List<BlockPos> route = List.of(c.offset(r[0], TOWER_F1 - 1, r[1]), c.offset(0, TOWER_F2, 2), c.offset(-h + 1, 0, -5));
+        List<BlockPos> route = List.of(c.offset(r[0], TOWER_F1 - 1, r[1]), c.offset(0, TOWER_F2, 2), c.offset(-h + 1, 0, -5),
+                towerLongPath(c).get(0));
         return new ExamWorld.Site(c.offset(0, TOWER_ROOF, 4), 180f, npcs, route, List.of());
     }
 }

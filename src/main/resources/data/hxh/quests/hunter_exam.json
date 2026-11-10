@@ -233,14 +233,14 @@
       "id": "tower_fight",
       "type": "duel",
       "count": 1,
-      "entity": "Majitani",
+      "entity": "prisoner",
       "trial": "tour"
     },
     {
       "id": "tower_exit",
       "type": "waypoint",
       "count": 2,
-      "seconds": 120,
+      "seconds": 300,
       "trial": "tour"
     },
     {

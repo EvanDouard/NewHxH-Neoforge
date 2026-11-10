@@ -288,6 +288,7 @@ public final class QuestManager {
         LOST_TICKS.remove(player.getUUID());
         QUIZ_ASKED.remove(player.getUUID());
         com.evandouard.hxh.exam.ExamTournament.reset(player);
+        com.evandouard.hxh.exam.TrickTower.stopClock(player);
         player.sendSystemMessage(Component.translatable("message.hxh.exam_failed").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
         player.sendSystemMessage(Component.translatable("message.hxh.exam_failed_detail").withStyle(ChatFormatting.GRAY));
         d.refocus();
@@ -444,9 +445,14 @@ public final class QuestManager {
         // Atteindre un point de la route du lieu (Tour de Trick : trappe, sortie) ; avec « seconds », compte à rebours
         if (step.type().equals("waypoint")) {
             d.progress++;
+            // l'horloge de la tour court depuis l'annonce de Lippo (paris perdus compris)
+            int tower = com.evandouard.hxh.exam.TrickTower.elapsedTicks(player);
+            if (tower >= 0 && step.seconds() > 0) d.progress = tower;
             if (com.evandouard.hxh.exam.TrickTower.reached(player, step.count())) {
+                if (step.seconds() > 0) com.evandouard.hxh.exam.TrickTower.stopClock(player);
                 advance(player);
             } else if (step.seconds() > 0 && d.progress >= step.seconds() * 20) {
+                com.evandouard.hxh.exam.TrickTower.stopClock(player);
                 player.sendSystemMessage(Component.translatable("exam.hxh.tower_time").withStyle(ChatFormatting.RED));
                 failExam(player);
             } else if (d.progress % 20 == 0) sync(player);
@@ -588,6 +594,7 @@ public final class QuestManager {
         giveRewards(player, d, step);
         if (step.type().equals("duel")) com.evandouard.hxh.exam.ExamTournament.reset(player);
         if (step.type().equals("ball")) com.evandouard.hxh.exam.NeteroBall.drop(player);
+        if (step.trial().equals("tour") && step.npc().equals("lippo")) com.evandouard.hxh.exam.TrickTower.startClock(player);
         d.step++;
         d.progress = 0;
         List<Quest.Step> steps = steps(d, q);

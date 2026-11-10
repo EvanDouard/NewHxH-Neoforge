@@ -52,7 +52,27 @@ public final class ExamTournament {
     /** Chaque seconde pendant un duel : un adversaire doit être en face du joueur. */
     public static void tick(ServerPlayer player, Quest.Step step, QuestData d) {
         if (player.tickCount % 20 != 0) return;
-        // Un adversaire nommé par l'étape (prisonnier de la Tour de Trick…), sinon un candidat du tournoi
+        // Tour de Trick : le prisonnier dépend de l'exemplaire (Leroute ne se bat pas, il parie)
+        if (step.entity().equals("prisoner")) {
+            // il attend au 2e étage (le long chemin y mène aussi)
+            if (ExamTrips.enabled(player) && !TrickTower.onSecondFloor(player)) return;
+            TrickTower.Prisoner p = TrickTower.prisoner(player);
+            if (p == TrickTower.Prisoner.LEROUTE) {
+                TrickTower.gambleTick(player);
+                return;
+            }
+            if (opponent(player) == null) {
+                Vindicator v = spawnOpponent(player, d.progress(), p == TrickTower.Prisoner.JONESS ? "Jo-ness" : "Majitani");
+                if (v != null && p == TrickTower.Prisoner.JONESS) {
+                    var hp = v.getAttribute(Attributes.MAX_HEALTH);
+                    if (hp != null) hp.setBaseValue(60);
+                    v.setHealth(v.getMaxHealth());
+                    v.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DAMAGE_BOOST, 20 * 600, 0));
+                }
+            }
+            return;
+        }
+        // Un adversaire nommé par l'étape, sinon un candidat du tournoi
         if (opponent(player) == null) spawnOpponent(player, d.progress(), step.entity());
     }
 
