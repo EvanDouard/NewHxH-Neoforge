@@ -113,7 +113,7 @@ public final class Netero {
         @Override
         public boolean perform(LivingEntity caster, float power) {
             if (caster.level() instanceof ServerLevel level)
-                NenFx.sprite(level, NenFx.Sprite.KANNON, caster, caster.position(), 7f, NenFx.GOLD, 34);
+                NenFx.sprite(level, NenFx.Sprite.KANNON, caster, caster.position(), 9f, NenFx.GOLD, 34);
             KANNON_PALM.perform(caster, power);
             return true;
         }
@@ -134,7 +134,7 @@ public final class Netero {
         @Override
         public boolean perform(LivingEntity caster, float power) {
             if (!(caster.level() instanceof ServerLevel level)) return false;
-            NenFx.sprite(level, NenFx.Sprite.KANNON, caster, caster.position(), 10f, NenFx.WHITE, 50);
+            NenFx.sprite(level, NenFx.Sprite.KANNON, caster, caster.position(), 12f, NenFx.WHITE, 50);
             Vec3 eye = caster.getEyePosition(), look = caster.getLookAngle();
             List<LivingEntity> hit = beamTargets(caster, eye, look, 24, 2.5);
             for (LivingEntity t : hit) {

@@ -749,7 +749,10 @@ public final class NenFxClient {
                 Vec3 fwd = f.dir;
                 Vec3 side = fwd.cross(new Vec3(0, 1, 0)).normalize();
                 float h = f.size * scale, w = h;
-                Vec3 base = f.offset.subtract(fwd.scale(1.6)).add(0, -0.4 + (1f - scale) * 0.5, 0);
+                Vec3 base = f.offset.subtract(fwd.scale(2.6)).add(0, -0.6 + (1f - scale) * 0.5, 0);
+                // caméra dans la statue (vue de dos) : elle s'efface pour ne pas boucher l'écran
+                double camDist = c.cam.distanceTo(base.add(0, h * 0.5, 0));
+                alpha *= (float) Mth.clamp((camDist - h * 0.25) / (h * 0.35), 0.15, 1.0);
                 Vec3 p0 = base.add(side.scale(-w / 2)), p1 = base.add(side.scale(w / 2));
                 Vec3 p2 = p1.add(0, h, 0), p3 = p0.add(0, h, 0);
                 // halo doré derrière, puis la statue (contour encré, aplats translucides)
