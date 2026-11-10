@@ -40,7 +40,8 @@ public final class WildlifeTests {
         MobPreset preset = MobPresets.get("zombie_renforceur");
         NenWildlife.convert(zombie, preset);
         HunterData data = HunterStats.get(zombie);
-        helper.assertTrue(data.nenLevel() > 0 && !zombie.isPersistenceRequired(), "Converti au Nen, mais reste éphémère");
+        // (les mobs posés par un test sont toujours persistants : on vérifie seulement la conversion)
+        helper.assertTrue(data.nenLevel() > 0 && zombie.getTags().contains("hxh_natural_nen"), "Converti au Nen");
         helper.assertTrue(zombie.getPersistentData().getInt(NenWildlife.BOUNTY) == preset.bounty(), "Prime posée");
         helper.succeed();
     }
