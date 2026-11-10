@@ -1280,5 +1280,13 @@ click Tour Céleste
 wait 5
 shot 51_carnet_tour_celeste
 closescreen
+# --- Monde : événement aléatoire annoncé par l'Association (prime) ---
+cmd difficulty easy
+clearchat
+cmd hunter event manieur_errant
+wait 20
+expect [Association Hunter]
+expect manieur de Nen errant
+shot 52_evenement_prime_association
 cmd difficulty peaceful
 quit
