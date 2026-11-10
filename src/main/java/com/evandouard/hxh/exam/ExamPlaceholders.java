@@ -35,6 +35,7 @@ final class ExamPlaceholders {
             case ZEVIL -> zevil(level, c, place);
             case AIRSHIP -> airship(level, c, place);
             case TOWER -> trickTower(level, c, place);
+            case KIRIKO -> kirikoForest(level, c, place);
         };
     }
 
@@ -454,5 +455,41 @@ final class ExamPlaceholders {
         List<BlockPos> route = List.of(c.offset(r[0], TOWER_F1 - 1, r[1]), c.offset(0, TOWER_F2, 2), c.offset(-h + 1, 0, -5),
                 towerLongPath(c).get(0));
         return new ExamWorld.Site(c.offset(0, TOWER_ROOF, 4), 180f, npcs, route, List.of());
+    }
+
+    // ------------------------------------------------------------------ Forêt des Kiriko
+
+    /** Forêt sombre de chênes noirs, clairière et cabane ; la femme blessée et les deux maris devant la porte. */
+    private static ExamWorld.Site kirikoForest(ServerLevel level, BlockPos c, boolean place) {
+        if (place) {
+            for (int x = -24; x <= 24; x++) for (int z = -24; z <= 24; z++) {
+                set(level, c.offset(x, -1, z), ((x * 7 + z * 13) & 3) == 0 ? Blocks.PODZOL : Blocks.GRASS_BLOCK);
+                set(level, c.offset(x, -2, z), Blocks.DIRT);
+            }
+            for (int x = -22; x <= 22; x += 5) for (int z = -22; z <= 22; z += 5) {
+                int jx = x + ((x * 31 + z * 17) & 3) - 1, jz = z + ((x * 13 + z * 29) & 3) - 1;
+                if (jx * jx + jz * jz < 9 * 9) continue; // clairière
+                darkTree(level, c.offset(jx, 0, jz), 6 + ((x + z) & 3));
+            }
+            // cabane
+            BlockPos h = c.offset(0, 0, -6);
+            room(level, h, 3, 3, 3, Blocks.SPRUCE_PLANKS, Blocks.STRIPPED_SPRUCE_LOG, Blocks.DARK_OAK_PLANKS);
+            for (int y = 0; y < 2; y++) set(level, h.offset(0, y, 3), Blocks.AIR);
+            set(level, c.offset(-2, 0, -1), Blocks.LANTERN);
+            set(level, c.offset(2, 0, -1), Blocks.LANTERN);
+            set(level, c.offset(0, 0, 1), Blocks.RED_CARPET); // sang sur le sol
+        }
+        Map<String, BlockPos> npcs = new LinkedHashMap<>();
+        npcs.put("kiriko_wife", c.offset(0, 0, -2));
+        npcs.put("husband_1", c.offset(-3, 0, 0));
+        npcs.put("husband_2", c.offset(3, 0, 0));
+        return new ExamWorld.Site(c.offset(0, 0, 7), 180f, npcs, List.of(), List.of());
+    }
+
+    private static void darkTree(ServerLevel level, BlockPos base, int height) {
+        for (int y = 0; y < height; y++) set(level, base.above(y), Blocks.DARK_OAK_LOG);
+        for (int x = -2; x <= 2; x++) for (int z = -2; z <= 2; z++) for (int y = height - 2; y <= height; y++)
+            if (Math.abs(x) + Math.abs(z) < 4 && level.getBlockState(base.offset(x, y, z)).isAir())
+                set(level, base.offset(x, y, z), Blocks.DARK_OAK_LEAVES);
     }
 }

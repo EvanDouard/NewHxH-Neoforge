@@ -16,33 +16,41 @@ public final class ExamFogClient {
     private ExamFogClient() {}
 
     static final float FOG_FAR = 14f;
-    private static boolean logged;
+    private static ExamSite lastLogged;
 
     static void register() {
         NeoForge.EVENT_BUS.addListener(ViewportEvent.RenderFog.class, ExamFogClient::onFog);
         NeoForge.EVENT_BUS.addListener(ViewportEvent.ComputeFogColor.class, ExamFogClient::onColor);
     }
 
-    private static boolean inFog() {
+    /** Lieu brumeux où se trouve le joueur (marais de Numele, forêt des Kiriko), ou null. */
+    private static ExamSite foggy() {
         LocalPlayer p = Minecraft.getInstance().player;
-        return p != null && ExamWorld.isExamLevel(p.level()) && ExamHazards.siteAt(p.blockPosition()) == ExamSite.NUMELE;
+        if (p == null || !ExamWorld.isExamLevel(p.level())) return null;
+        ExamSite s = ExamHazards.siteAt(p.blockPosition());
+        return s == ExamSite.NUMELE || s == ExamSite.KIRIKO ? s : null;
+    }
+
+    private static boolean inFog() {
+        return foggy() != null;
     }
 
     private static void onFog(ViewportEvent.RenderFog e) {
         if (!inFog()) return;
         e.setNearPlaneDistance(0f);
-        e.setFarPlaneDistance(Math.min(e.getFarPlaneDistance(), FOG_FAR));
+        e.setFarPlaneDistance(Math.min(e.getFarPlaneDistance(), foggy() == ExamSite.KIRIKO ? 30f : FOG_FAR));
         e.setCanceled(true);
-        if (!logged) {
-            logged = true;
-            MangaHud.listener.accept("[hud] Brouillard de Numele");
+        if (lastLogged != foggy()) {
+            lastLogged = foggy();
+            MangaHud.listener.accept(foggy() == ExamSite.KIRIKO ? "[hud] Brume de la forêt des Kiriko" : "[hud] Brouillard de Numele");
         }
     }
 
     private static void onColor(ViewportEvent.ComputeFogColor e) {
         if (!inFog()) return;
-        e.setRed(0.62f);
-        e.setGreen(0.66f);
-        e.setBlue(0.6f);
+        boolean forest = foggy() == ExamSite.KIRIKO;
+        e.setRed(forest ? 0.18f : 0.62f);
+        e.setGreen(forest ? 0.24f : 0.66f);
+        e.setBlue(forest ? 0.2f : 0.6f);
     }
 }

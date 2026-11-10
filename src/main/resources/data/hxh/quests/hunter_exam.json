@@ -7,6 +7,10 @@
     "dolle": {
       "phase": 0
     },
+    "kiriko": {
+      "phase": 0,
+      "follows": "dolle"
+    },
     "zaban": {
       "phase": 1
     },
@@ -98,6 +102,34 @@
         }
       ],
       "trial": "dolle"
+    },
+    {
+      "id": "kiriko_intro",
+      "type": "talk",
+      "npc": "kiriko_wife",
+      "site": "foret_kiriko",
+      "trial": "kiriko"
+    },
+    {
+      "id": "kiriko_accuse",
+      "type": "quiz",
+      "npc": "kiriko_wife",
+      "answer": "kiriko",
+      "trial": "kiriko",
+      "question": {
+        "fr": "Lequel des deux n'est pas mon mari ? Désigne la bête… et ne te trompe pas.",
+        "en": "Which of the two is not my husband? Point out the beast… and don't get it wrong."
+      },
+      "options": [
+        {
+          "fr": "Celui de gauche",
+          "en": "The one on the left"
+        },
+        {
+          "fr": "Celui de droite",
+          "en": "The one on the right"
+        }
+      ]
     },
     {
       "id": "cook",

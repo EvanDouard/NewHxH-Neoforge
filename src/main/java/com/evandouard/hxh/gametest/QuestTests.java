@@ -45,13 +45,13 @@ public final class QuestTests {
     public static void examQuestIsLoaded(GameTestHelper helper) {
         Quest exam = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
         helper.assertTrue(exam != null, "La quête hxh:hunter_exam doit être chargée depuis le datapack");
-        helper.assertTrue(exam.steps().size() == 26, "26 étapes attendues, obtenu " + exam.steps().size());
-        helper.assertTrue(exam.trials().size() == 9 && exam.minTrials() == 4 && exam.maxTrials() == 6, "9 épreuves, 4 à 6 tirées");
+        helper.assertTrue(exam.steps().size() == 28, "28 étapes attendues, obtenu " + exam.steps().size());
+        helper.assertTrue(exam.trials().size() == 10 && exam.minTrials() == 4 && exam.maxTrials() == 6, "10 épreuves, 4 à 6 tirées");
         helper.succeed();
     }
 
     /** Toutes les épreuves, dans l'ordre du fichier (le parcours est alors identique au fichier). */
-    private static final java.util.List<String> ALL_TRIALS = java.util.List.of("dolle", "zaban", "numele", "biska", "menchi", "balle", "tour", "zevil", "tournoi");
+    private static final java.util.List<String> ALL_TRIALS = java.util.List.of("dolle", "kiriko", "zaban", "numele", "biska", "menchi", "balle", "tour", "zevil", "tournoi");
 
     @GameTest(template = "empty")
     public static void trialDrawsStayCoherent(GameTestHelper helper) {
@@ -122,7 +122,18 @@ public final class QuestTests {
         // La Mamie : se taire 5 s, c'est gagner (répondre élimine : voir wrongAnswerAtTheExamEliminates)
         QuestManager.onTalk(player, granny);
         for (int i = 0; i < 6 * 20 && d.step() == idx("granny"); i++) QuestManager.tick(player);
-        helper.assertTrue(d.step() == idx("cook"), "Le silence était la bonne réponse");
+        helper.assertTrue(d.step() == idx("kiriko_intro"), "Le silence était la bonne réponse");
+        // Forêt des Kiriko : examiner les deux maris, puis désigner la bête
+        NpcEntity wife = npc(helper, "kiriko_wife", 0);
+        NpcEntity husband1 = npc(helper, "husband_1", 1);
+        NpcEntity husband2 = npc(helper, "husband_2", 2);
+        QuestManager.onTalk(player, wife);
+        QuestManager.onTalk(player, husband1);
+        QuestManager.onTalk(player, husband2);
+        helper.assertTrue(d.step() == idx("kiriko_accuse"), "Parler aux maris ne valide rien : il faut désigner");
+        QuestManager.onTalk(player, wife);
+        helper.assertTrue(QuestManager.answer(player, com.evandouard.hxh.exam.KirikoForest.fakeIndex(player)), "Le Kiriko démasqué");
+        helper.assertTrue(d.step() == idx("cook"), "En route pour Zaban");
 
         QuestManager.onTalk(player, cook);
         helper.assertTrue(d.step() == idx("register"), "Le cuisinier de Zaban fait descendre au hall");
@@ -347,6 +358,21 @@ public final class QuestTests {
         } finally {
             com.evandouard.hxh.exam.TrickTower.forcedForTests = null;
         }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void accusingTheRealHusbandEliminates(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(player);
+        NpcEntity wife = npc(helper, "kiriko_wife", 0);
+        com.evandouard.hxh.quest.TrialPlan.forcedForTests = java.util.List.of("dolle", "kiriko", "zevil", "tournoi");
+        QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
+        while (!QuestManager.currentStep(d).id().equals("kiriko_accuse")) QuestManager.advance(player);
+        QuestManager.onTalk(player, wife);
+        int real = 3 - com.evandouard.hxh.exam.KirikoForest.fakeIndex(player);
+        helper.assertTrue(!QuestManager.answer(player, real), "Désigner le vrai mari est une erreur");
+        helper.assertTrue(QuestManager.currentStep(d).id().equals("guide"), "Éliminé : retour au guide");
         helper.succeed();
     }
 

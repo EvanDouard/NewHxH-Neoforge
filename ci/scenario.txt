@@ -636,16 +636,16 @@ look 90 5
 wait 40
 shot 33_navigateur_qui_attend
 clearchat
-cmd hunter exam plan dolle zaban numele biska menchi balle tour zevil tournoi
+cmd hunter exam plan dolle kiriko zaban numele biska menchi balle tour zevil tournoi
 wait 10
 expect Nouvelle quête : Examen Hunter
 cmd hunter exam plan
-expect dolle → zaban → numele → biska → menchi → balle → tour → zevil → tournoi
+expect dolle → kiriko → zaban → numele → biska → menchi → balle → tour → zevil → tournoi
 goto navigator
 clearchat
 talkto navigator
 wait 20
-expect Épreuve 1/9 : Le voyage vers l'île de Dolle
+expect Épreuve 1/10 : Le voyage vers l'île de Dolle
 expect Ton dirigeable t'attend
 shot 34_guide_donne_le_dirigeable
 cmd hunter exam go
@@ -684,10 +684,33 @@ expect Tu as cinq secondes
 shot 34_quiz_de_la_mamie
 wait 140
 expect se taire était la seule
-expect Épreuve 2/9 : Zaban
+expect Épreuve 2/10 : La forêt des Kiriko
 expect Ton dirigeable t'attend
 wait 40
 shot 34_retour_au_dirigeable_apres_dolle
+wait 10
+cmd hunter exam go
+wait 40
+clearchat
+talkto passeur
+wait 10
+expect [Embarquer]
+cmd hunter exam board
+wait 80
+expect [hud] Brume de la forêt des Kiriko
+shot 34k_foret_des_kiriko
+goto kiriko_wife
+talkto kiriko_wife
+wait 10
+goto husband_1
+clearchat
+talkto husband_1
+wait 10
+expect Mari ?
+shot 34k2_examiner_un_mari
+cmd hunter quest skip
+wait 20
+expect Épreuve 3/10 : Zaban
 wait 10
 cmd hunter exam go
 wait 40
@@ -719,7 +742,7 @@ wait 40
 shot 34c_examen_rate_retour_au_dirigeable
 # Nouvel essai : nouveaux exemplaires de chaque lieu (un lieu passé ne revient jamais)
 clearchat
-cmd hunter exam plan dolle zaban numele biska menchi balle tour zevil tournoi
+cmd hunter exam plan dolle kiriko zaban numele biska menchi balle tour zevil tournoi
 cmd hunter exam plan
 expect boat#1
 goto navigator
@@ -735,6 +758,18 @@ cmd hunter exam board
 wait 80
 shot 34c2_un_autre_bateau_pour_dolle
 cmd hunter quest skip
+wait 80
+cmd hunter quest skip
+wait 5
+cmd hunter quest skip
+wait 10
+cmd hunter exam go
+wait 40
+clearchat
+talkto passeur
+wait 10
+expect [Embarquer]
+cmd hunter exam board
 wait 80
 cmd hunter quest skip
 wait 5

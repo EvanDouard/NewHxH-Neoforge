@@ -215,6 +215,17 @@ public final class QuestManager {
             if (q == null || step == null || !step.type().equals("quiz")) continue;
             if (!quizKey(d).equals(QUIZ_ASKED.get(player.getUUID()))) continue;
             QUIZ_ASKED.remove(player.getUUID());
+            if (step.answer().equals("kiriko")) {
+                // Forêt des Kiriko : désigner la bête ; se tromper élimine
+                if (com.evandouard.hxh.exam.KirikoForest.accuse(player, n)) {
+                    advance(player);
+                    d.refocus();
+                    return true;
+                }
+                d.refocus();
+                failExam(player);
+                return false;
+            }
             if (step.answer().equals("majority")) {
                 // Tour de Trick, chemin de la majorité : les cinq votent, la majorité ouvre la porte
                 com.evandouard.hxh.exam.TrickTower.vote(player, n);
@@ -303,6 +314,11 @@ public final class QuestManager {
         if (npc.npcId().equals("navigator") && !d.hunter && !d.running.containsKey(QuestRegistry.HUNTER_EXAM.toString())
                 && !d.completed.contains(QuestRegistry.HUNTER_EXAM.toString())) {
             if (start(player, QuestRegistry.HUNTER_EXAM)) d.examCenter = npc.home().asLong();
+        }
+        // Forêt des Kiriko : examiner un des deux maris
+        if (npc.npcId().startsWith("husband_")) {
+            com.evandouard.hxh.exam.KirikoForest.examine(player, npc);
+            return;
         }
         // Le passeur d'un point de départ embarque le candidat pour son épreuve
         if (npc.npcId().equals("passeur")) {

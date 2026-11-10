@@ -230,7 +230,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
             if (type.equals("nen_flag") && !List.of("unlocked", "revealed", "kit").contains(step.mode()))
                 problems.add(where + "drapeau inconnu « " + step.mode() + " » (unlocked, revealed, kit)");
             if (type.equals("quiz") && step.question().isEmpty()) problems.add(where + "il manque \"question\"");
-            if (type.equals("quiz") && !List.of("silence", "any", "majority").contains(step.answer())) {
+            if (type.equals("quiz") && !List.of("silence", "any", "majority", "kiriko").contains(step.answer())) {
                 try {
                     int a = Integer.parseInt(step.answer());
                     if (a < 1 || a > step.options().size()) problems.add(where + "réponse hors des choix : " + a);

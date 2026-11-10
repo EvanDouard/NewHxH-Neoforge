@@ -25,7 +25,9 @@ public enum ExamSite {
     /** Salle du dirigeable de l'Association : le jeu de la balle de Netero. */
     AIRSHIP("dirigeable"),
     /** Tour de Trick (Phase 3) : descendre du toit à la sortie. */
-    TOWER("tour_de_trick");
+    TOWER("tour_de_trick"),
+    /** Forêt des Kiriko (en route pour Zaban) : démasquer la bête qui a pris l'apparence du mari. */
+    KIRIKO("foret_kiriko");
 
     private final String file;
 
