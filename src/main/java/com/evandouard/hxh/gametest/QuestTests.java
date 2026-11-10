@@ -160,7 +160,7 @@ public final class QuestTests {
         com.evandouard.hxh.exam.NeteroBall.touch(player, netero, true);
         helper.assertTrue(d.progress() == 0, "Une esquive ne compte pas");
         for (int i = 0; i < 3; i++) com.evandouard.hxh.exam.NeteroBall.touch(player, netero, false);
-        helper.assertTrue(d.step() == idx("zevil") && d.jenny() == jenny + 500, "Trois touches : prime de Netero");
+        helper.assertTrue(d.step() == idx("tower_intro") && d.jenny() == jenny + 500, "Trois touches : prime de Netero");
         helper.assertTrue(player.getInventory().contains(ModItems.NETERO_BALL.get().getDefaultInstance()), "La balle en souvenir");
         // Tour de Trick : Lippo, la trappe, le vote de la majorité, un prisonnier, la sortie
         helper.assertTrue(d.step() == idx("tower_intro"), "Puis la Tour de Trick");
