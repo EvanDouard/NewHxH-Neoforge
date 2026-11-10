@@ -690,7 +690,8 @@ wait 40
 shot 34_retour_au_dirigeable_apres_dolle
 wait 10
 cmd hunter exam go
-wait 40
+wait 60
+goto passeur
 clearchat
 talkto passeur
 wait 10
@@ -713,7 +714,8 @@ wait 20
 expect Épreuve 3/10 : Zaban
 wait 10
 cmd hunter exam go
-wait 40
+wait 60
+goto passeur
 clearchat
 talkto passeur
 wait 10
@@ -749,7 +751,8 @@ goto navigator
 talkto navigator
 wait 10
 cmd hunter exam go
-wait 40
+wait 60
+goto passeur
 clearchat
 talkto passeur
 wait 10
@@ -764,7 +767,8 @@ wait 5
 cmd hunter quest skip
 wait 10
 cmd hunter exam go
-wait 40
+wait 60
+goto passeur
 clearchat
 talkto passeur
 wait 10
@@ -776,7 +780,8 @@ wait 5
 cmd hunter quest skip
 wait 10
 cmd hunter exam go
-wait 40
+wait 60
+goto passeur
 clearchat
 talkto passeur
 wait 10
@@ -795,7 +800,8 @@ wait 10
 cmd hunter quest skip
 wait 10
 cmd hunter exam go
-wait 40
+wait 60
+goto passeur
 clearchat
 talkto passeur
 wait 10
@@ -807,7 +813,8 @@ shot 34d_marais_de_numele_brouillard
 cmd hunter quest skip
 wait 10
 cmd hunter exam go
-wait 40
+wait 60
+goto passeur
 clearchat
 talkto passeur
 wait 10
@@ -823,7 +830,8 @@ wait 5
 talkto buhara
 wait 10
 cmd hunter exam go
-wait 40
+wait 60
+goto passeur
 clearchat
 talkto passeur
 wait 10
@@ -849,7 +857,8 @@ wait 20
 expect Tu passes
 wait 10
 cmd hunter exam go
-wait 40
+wait 60
+goto passeur
 clearchat
 talkto passeur
 wait 10
@@ -870,7 +879,8 @@ shot 34e3_jeu_de_la_balle_de_netero
 cmd hunter quest skip
 wait 10
 cmd hunter exam go
-wait 40
+wait 60
+goto passeur
 clearchat
 talkto passeur
 wait 10
@@ -911,7 +921,8 @@ shot 34h3_tour_de_trick_escalier_pieges
 cmd hunter quest skip
 wait 10
 cmd hunter exam go
-wait 40
+wait 60
+goto passeur
 clearchat
 talkto passeur
 wait 10
@@ -925,7 +936,8 @@ wait 80
 expect Ton dirigeable t'attend
 wait 10
 cmd hunter exam go
-wait 40
+wait 60
+goto passeur
 clearchat
 talkto passeur
 wait 10
