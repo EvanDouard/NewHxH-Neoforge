@@ -398,9 +398,9 @@ final class ExamPlaceholders {
             // bassin sous la vraie trappe
             int[] r = TOWER_TRAPDOORS[real];
             for (int dx = -1; dx <= 1; dx++) for (int dz = -1; dz <= 1; dz++) {
+                // une seule couche d'eau (suffit à amortir la chute) posée sur la pierre : rien ne fuit vers le 2e étage
                 set(level, c.offset(r[0] + dx, TOWER_F1 - 1, r[1] + dz), Blocks.WATER);
-                set(level, c.offset(r[0] + dx, TOWER_F1 - 2, r[1] + dz), Blocks.WATER);
-                set(level, c.offset(r[0] + dx, TOWER_F1 - 3, r[1] + dz), Blocks.STONE_BRICKS);
+                set(level, c.offset(r[0] + dx, TOWER_F1 - 2, r[1] + dz), Blocks.STONE_BRICKS);
             }
             // 1er étage : deux portes (O et X) sur le mur sud
             set(level, c.offset(-3, TOWER_F1, h), Blocks.WHITE_WOOL);
