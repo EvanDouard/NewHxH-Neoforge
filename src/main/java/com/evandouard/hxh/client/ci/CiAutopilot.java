@@ -58,7 +58,7 @@ import java.util.List;
  * Le déroulé est écrit dans {@code ci-report.txt} à la racine du dossier de jeu.
  */
 public final class CiAutopilot {
-    private static final long TIMEOUT_MS = 10 * 60 * 1000L;
+    private static final long TIMEOUT_MS = 16 * 60 * 1000L; // le scénario complet (Examen compris) dure ~11 min
 
     private final List<String> lines;
     private final List<String> received = new ArrayList<>();
