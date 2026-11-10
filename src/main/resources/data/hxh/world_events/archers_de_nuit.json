@@ -1,0 +1,10 @@
+{
+  "weight": 2,
+  "preset": "squelette_archer",
+  "count": 3,
+  "bounty": 30,
+  "night_only": true,
+  "min_distance": 30,
+  "max_distance": 60,
+  "lifetime_seconds": 600
+}

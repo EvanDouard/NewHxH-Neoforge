@@ -1,5 +1,17 @@
 {
   "entity": "minecraft:vindicator",
-  "stats": { "all": 45, "speed": 55 },
-  "nen": { "level": 40, "kit": "killua", "mastery": 30, "aura": "wild" }
+  "stats": {
+    "all": 45,
+    "speed": 55
+  },
+  "nen": {
+    "level": 40,
+    "kit": "killua",
+    "mastery": 30,
+    "aura": "wild"
+  },
+  "natural": {
+    "chance": 0.15,
+    "bounty": 60
+  }
 }

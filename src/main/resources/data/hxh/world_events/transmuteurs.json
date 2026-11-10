@@ -1,0 +1,9 @@
+{
+  "weight": 2,
+  "preset": "vindicateur_transmuteur",
+  "count": 2,
+  "bounty": 120,
+  "min_distance": 40,
+  "max_distance": 80,
+  "lifetime_seconds": 900
+}

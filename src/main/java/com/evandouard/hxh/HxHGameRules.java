@@ -21,6 +21,17 @@ public final class HxHGameRules {
     public static final GameRules.Key<GameRules.BooleanValue> NEN_LEARNING =
             GameRules.register("hxhNenLearning", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
 
+    /**
+     * Pourcentage appliqué aux chances des mobs naturels au Nen (champ « natural » des mobs d'exemple) :
+     * 100 = chances du fichier, 0 = aucun.
+     */
+    public static final GameRules.Key<GameRules.IntegerValue> NEN_MOB_CHANCE =
+            GameRules.register("hxhNenMobChance", GameRules.Category.SPAWNING, GameRules.IntegerValue.create(100));
+
+    /** Si vrai, des événements aléatoires (primes de l'Association…) sont annoncés dans le chat. */
+    public static final GameRules.Key<GameRules.BooleanValue> RANDOM_EVENTS =
+            GameRules.register("hxhRandomEvents", GameRules.Category.SPAWNING, GameRules.BooleanValue.create(true));
+
     private HxHGameRules() {}
 
     /** Force le chargement de la classe (et donc l'enregistrement des règles) au démarrage du mod. */

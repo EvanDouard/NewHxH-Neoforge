@@ -62,6 +62,19 @@ public final class HunterCommand {
                 .then(targeted("max", HunterCommand::maxAll).requires(s -> s.hasPermission(2)))
                 .then(nenCommand())
                 .then(hatsuCommand())
+                // Événements aléatoires : en déclencher un (au hasard ou par nom) près de soi
+                .then(Commands.literal("event").requires(src -> src.hasPermission(2))
+                        .then(Commands.argument("id", StringArgumentType.word())
+                                .suggests((ctx, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(
+                                        com.evandouard.hxh.world.WorldEvents.all().keySet().stream().map(net.minecraft.resources.ResourceLocation::getPath), b))
+                                .executes(ctx -> {
+                                    var ev = com.evandouard.hxh.world.WorldEvents.get(StringArgumentType.getString(ctx, "id"));
+                                    if (ev == null) {
+                                        ctx.getSource().sendFailure(Component.translatable("command.hxh.event_unknown", StringArgumentType.getString(ctx, "id")));
+                                        return 0;
+                                    }
+                                    return com.evandouard.hxh.world.WorldEvents.trigger(ev, ctx.getSource().getPlayerOrException()).size();
+                                })))
                 .then(Commands.literal("exam")
                         // Réponse à un quiz de l'Examen (lien cliquable du chat) : ouvert à tous
                         // Embarquer à bord de son dirigeable (lien cliquable de l'hôtesse) : ouvert à tous

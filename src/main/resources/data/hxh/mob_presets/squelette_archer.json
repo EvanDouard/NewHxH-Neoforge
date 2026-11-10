@@ -8,5 +8,9 @@
   "equipment": {
     "mainhand": "minecraft:bow",
     "head": "minecraft:leather_helmet"
+  },
+  "natural": {
+    "chance": 0.04,
+    "bounty": 20
   }
 }

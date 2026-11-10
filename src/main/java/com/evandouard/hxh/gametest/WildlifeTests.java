@@ -1,0 +1,64 @@
+package com.evandouard.hxh.gametest;
+
+import com.evandouard.hxh.HxHMod;
+import com.evandouard.hxh.data.HunterData;
+import com.evandouard.hxh.mob.MobPreset;
+import com.evandouard.hxh.mob.MobPresets;
+import com.evandouard.hxh.quest.QuestManager;
+import com.evandouard.hxh.stats.HunterStats;
+import com.evandouard.hxh.world.NenWildlife;
+import com.evandouard.hxh.world.WorldEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Zombie;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+
+import java.util.List;
+
+/** Mobs naturels au Nen et événements aléatoires (primes de l'Association). */
+@GameTestHolder(HxHMod.MODID)
+@PrefixGameTestTemplate(false)
+public final class WildlifeTests {
+
+    @GameTest(template = "empty")
+    public static void someNaturalZombiesMasterNen(GameTestHelper helper) {
+        Zombie zombie = helper.spawn(EntityType.ZOMBIE, new BlockPos(1, 1, 1));
+        RandomSource random = RandomSource.create(7);
+        int picked = 0;
+        for (int i = 0; i < 2000; i++) if (NenWildlife.pick(zombie, random, 100) != null) picked++;
+        // zombies : rapide 5 %, renforceur 3 %, costaud 4 % (tirés l'un après l'autre) ≈ 11,5 %
+        helper.assertTrue(picked > 120 && picked < 360, "Une petite part des zombies maîtrise le Nen : " + picked + "/2000");
+        int none = 0;
+        for (int i = 0; i < 500; i++) if (NenWildlife.pick(zombie, random, 0) != null) none++;
+        helper.assertTrue(none == 0, "Règle à 0 % : aucun");
+        MobPreset preset = MobPresets.get("zombie_renforceur");
+        NenWildlife.convert(zombie, preset);
+        HunterData data = HunterStats.get(zombie);
+        helper.assertTrue(data.nenLevel() > 0 && !zombie.isPersistenceRequired(), "Converti au Nen, mais reste éphémère");
+        helper.assertTrue(zombie.getPersistentData().getInt(NenWildlife.BOUNTY) == preset.bounty(), "Prime posée");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void eventSpawnsBountiesThatPay(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        WorldEvents.WorldEvent event = WorldEvents.get("manieur_errant");
+        helper.assertTrue(event != null && WorldEvents.all().size() >= 4, "Événements chargés");
+        List<LivingEntity> mobs = WorldEvents.trigger(event, player);
+        helper.assertTrue(mobs.size() == 1 && mobs.get(0).getTags().contains("hxh_event"), "Le manieur errant apparaît");
+        LivingEntity mob = mobs.get(0);
+        double d = mob.position().subtract(player.position()).horizontalDistance();
+        helper.assertTrue(d >= event.minDistance() - 2 && d <= event.maxDistance() + 3, "À bonne distance : " + d);
+        int before = QuestManager.data(player).jenny();
+        mob.hurt(player.damageSources().playerAttack(player), 10000f);
+        helper.assertTrue(QuestManager.data(player).jenny() == before + event.bounty(), "La prime est payée au tueur");
+        mob.discard();
+        helper.succeed();
+    }
+}

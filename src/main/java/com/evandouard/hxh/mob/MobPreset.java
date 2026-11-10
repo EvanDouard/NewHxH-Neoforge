@@ -43,8 +43,11 @@ import java.util.Map;
  *                                                      // (flammes même au repos)
  *   "equipment": { "mainhand": "minecraft:iron_sword", "head": "minecraft:iron_helmet" },   // optionnel
  *   "no_ai": false, "knockback_resistance": 0.0, "persistent": true,
- *   "dummy": false                                     // mannequin : ne meurt pas, se régénère, retiré par
+ *   "dummy": false,                                    // mannequin : ne meurt pas, se régénère, retiré par
  *                                                      // accroupi + clic droit main vide (ou /kill)
+ *   "natural": { "chance": 0.04, "bounty": 30 }        // optionnel : une part des mobs de ce type qui
+ *                                                      // apparaissent naturellement maîtrisent le Nen ; prime en
+ *                                                      // Jenny pour qui les abat
  * }
  * </pre>
  * Le nom affiché est la traduction {@code mob_preset.<namespace>.<nom>}.
@@ -53,7 +56,7 @@ public record MobPreset(ResourceLocation id, ResourceLocation entity, Map<Stat, 
                         int nenLevel, @Nullable String kit, @Nullable NenType nenType, int mastery,
                         @Nullable NenMode mode, Map<EquipmentSlot, ResourceLocation> equipment,
                         boolean noAi, double knockbackResistance, boolean persistent, boolean dummy,
-                        boolean wildAura) {
+                        boolean wildAura, float naturalChance, int bounty) {
 
     /** Étiquette des mannequins : ils encaissent (on voit les dégâts) mais ne meurent pas. */
     public static final String DUMMY_TAG = "hxh_dummy";
@@ -102,25 +105,20 @@ public record MobPreset(ResourceLocation id, ResourceLocation entity, Map<Stat, 
                 GsonHelper.getAsBoolean(json, "no_ai", false),
                 GsonHelper.getAsDouble(json, "knockback_resistance", 0.0),
                 GsonHelper.getAsBoolean(json, "persistent", true),
-                GsonHelper.getAsBoolean(json, "dummy", false), wild);
+                GsonHelper.getAsBoolean(json, "dummy", false), wild,
+                json.has("natural") ? GsonHelper.getAsFloat(json.getAsJsonObject("natural"), "chance", 0f) : 0f,
+                json.has("natural") ? GsonHelper.getAsInt(json.getAsJsonObject("natural"), "bounty", 0) : 0);
     }
 
     private static int clamp(int level) {
         return Math.max(0, Math.min(com.evandouard.hxh.nen.NenMobAI.MOB_MAX_LEVEL, level));
     }
 
-    /** Fait apparaître le mob à cette position, regard tourné vers {@code yaw}. */
-    @Nullable
-    public LivingEntity spawn(ServerLevel level, Vec3 pos, float yaw) {
-        EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(entity);
-        Entity created = type.create(level);
-        if (!(created instanceof LivingEntity living)) {
-            if (created != null) created.discard();
-            return null;
-        }
-        living.moveTo(pos.x, pos.y, pos.z, yaw, 0f);
-        living.setYHeadRot(yaw);
-        living.setYBodyRot(yaw);
+    /**
+     * Donne à un mob déjà créé les stats, le Nen, l'équipement et le nom de ce mob d'exemple. {@code natural} : mob
+     * apparu naturellement (il reste éphémère et garde son équipement d'origine là où rien n'est imposé).
+     */
+    public void applyTo(LivingEntity living, boolean natural) {
 
         HunterData data = HunterStats.get(living);
         stats.forEach(data::setLevel);
@@ -145,16 +143,33 @@ public record MobPreset(ResourceLocation id, ResourceLocation entity, Map<Stat, 
         if (living instanceof Mob mob) {
             for (EquipmentSlot slot : EquipmentSlot.values()) {
                 ResourceLocation item = equipment.get(slot);
+                // apparition naturelle : on garde l'équipement tiré par le jeu là où le mob d'exemple n'impose rien
+                if (natural && item == null) continue;
                 mob.setItemSlot(slot, item == null ? ItemStack.EMPTY : new ItemStack(BuiltInRegistries.ITEM.get(item)));
                 mob.setDropChance(slot, 0f);
             }
             if (noAi) mob.setNoAi(true);
-            if (persistent) mob.setPersistenceRequired();
+            if (persistent && !natural) mob.setPersistenceRequired();
         }
         living.setHealth(living.getMaxHealth());
         if (dummy) living.addTag(DUMMY_TAG);
         living.setCustomName(Component.translatable(nameKey()));
         living.setCustomNameVisible(true);
+    }
+
+    /** Fait apparaître le mob à cette position, regard tourné vers {@code yaw}. */
+    @Nullable
+    public LivingEntity spawn(ServerLevel level, Vec3 pos, float yaw) {
+        EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(entity);
+        Entity created = type.create(level);
+        if (!(created instanceof LivingEntity living)) {
+            if (created != null) created.discard();
+            return null;
+        }
+        living.moveTo(pos.x, pos.y, pos.z, yaw, 0f);
+        living.setYHeadRot(yaw);
+        living.setYBodyRot(yaw);
+        applyTo(living, false);
         level.addFreshEntity(living);
         return living;
     }

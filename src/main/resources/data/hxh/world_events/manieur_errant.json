@@ -1,0 +1,9 @@
+{
+  "weight": 2,
+  "preset": "elite_manipulateur",
+  "count": 1,
+  "bounty": 300,
+  "min_distance": 40,
+  "max_distance": 80,
+  "lifetime_seconds": 900
+}

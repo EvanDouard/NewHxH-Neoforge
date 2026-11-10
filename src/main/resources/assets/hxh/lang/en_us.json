@@ -903,5 +903,12 @@
   "quest.hxh.hunter_exam.ko": "Knock out every applicant before time runs out",
   "exam.hxh.ko_start": "%s applicants rush at you! Knock them all out in %s seconds.",
   "exam.hxh.ko_time": "Time is up: some applicants are still standing.",
-  "exam.hxh.ko_done": "Nobody left standing. Just like Killua at the 288th Exam!"
+  "exam.hxh.ko_done": "Nobody left standing. Just like Killua at the 288th Exam!",
+  "event.hxh.header": "[Hunter Association]",
+  "event.hxh.manieur_errant": "A wandering Nen user was spotted near x %s, z %s. Bounty: %s Jenny.",
+  "event.hxh.horde_renforcee": "A horde of Nen-reinforced undead is marching near x %s, z %s. Bounty: %s Jenny each.",
+  "event.hxh.transmuteurs": "Two dangerous transmuters are causing trouble near x %s, z %s. Bounty: %s Jenny each.",
+  "event.hxh.archers_de_nuit": "Skeleton archers firing aura arrows in the night near x %s, z %s. Bounty: %s Jenny each.",
+  "message.hxh.bounty_paid": "Bounty collected: %s defeated, +%s Jenny.",
+  "command.hxh.event_unknown": "Unknown event: %s"
 }

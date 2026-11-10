@@ -903,5 +903,12 @@
   "quest.hxh.hunter_exam.ko": "Assommer tous les candidats avant la fin du temps",
   "exam.hxh.ko_start": "%s candidats se ruent sur toi ! Assomme-les tous en %s secondes.",
   "exam.hxh.ko_time": "Le temps est écoulé : des candidats tiennent encore debout.",
-  "exam.hxh.ko_done": "Plus personne debout. Comme Killua au 288e Examen !"
+  "exam.hxh.ko_done": "Plus personne debout. Comme Killua au 288e Examen !",
+  "event.hxh.header": "[Association Hunter]",
+  "event.hxh.manieur_errant": "Un manieur de Nen errant a été aperçu vers x %s, z %s. Prime : %s Jenny.",
+  "event.hxh.horde_renforcee": "Une horde de morts-vivants renforcés au Nen marche vers x %s, z %s. Prime : %s Jenny par tête.",
+  "event.hxh.transmuteurs": "Deux transmutateurs dangereux sèment le trouble vers x %s, z %s. Prime : %s Jenny chacun.",
+  "event.hxh.archers_de_nuit": "Des archers squelettes tirent à l'aura dans la nuit vers x %s, z %s. Prime : %s Jenny par tête.",
+  "message.hxh.bounty_paid": "Prime touchée : %s abattu, +%s Jenny.",
+  "command.hxh.event_unknown": "Événement inconnu : %s"
 }

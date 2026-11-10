@@ -7,5 +7,9 @@
   },
   "equipment": {
     "head": "minecraft:leather_helmet"
+  },
+  "natural": {
+    "chance": 0.05,
+    "bounty": 15
   }
 }

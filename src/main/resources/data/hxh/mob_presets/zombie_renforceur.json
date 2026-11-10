@@ -10,5 +10,9 @@
   },
   "equipment": {
     "head": "minecraft:golden_helmet"
+  },
+  "natural": {
+    "chance": 0.03,
+    "bounty": 30
   }
 }
