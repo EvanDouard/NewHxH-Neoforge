@@ -819,7 +819,7 @@
   "dialog.hxh.hunter_exam.tournament": "Dernière épreuve : un tournoi. On gagne en faisant dire « J'abandonne » à son adversaire ; un seul candidat échouera.",
   "quest.hxh.hunter_exam.tournament": "Écouter le président Netero",
   "quest.hxh.hunter_exam.duels": "Gagner le tournoi final (faire abandonner tes adversaires)",
-  "exam.hxh.duel_start": "Tournoi : %s entre en lice !",
+  "exam.hxh.duel_start": "Combat : %s entre en lice !",
   "exam.hxh.duel_give_up": "J'abandonne !",
   "exam.hxh.duel_second_chance": "Tu abandonnes… mais tu es repêché : un autre candidat t'attend. Plus le droit à l'erreur.",
   "exam.hxh.duel_out": "Tu abandonnes une seconde fois : tu es le candidat qui échoue cette année.",

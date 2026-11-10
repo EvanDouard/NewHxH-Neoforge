@@ -392,7 +392,12 @@ final class ExamPlaceholders {
             for (int k = 0; k <= TOWER_F2 - 2; k++) for (int z = -6; z <= -5; z++)
                 set(level, c.offset(6 - k, TOWER_F2 - 2 - k, z), Blocks.STONE_BRICKS);
             for (int y = 0; y < 2; y++) set(level, c.offset(-h, y, -5), Blocks.AIR);
-            for (int x = -6; x <= 6; x += 6) set(level, c.offset(x, TOWER_F2 + 2, 6), Blocks.LANTERN);
+            // 2e étage éclairé (le combat doit se voir) : lanternes au mur et au plafond
+            for (int x = -6; x <= 6; x += 3) {
+                set(level, c.offset(x, TOWER_F2 + 2, 6), Blocks.LANTERN);
+                set(level, c.offset(x, TOWER_F2 + 2, -4), Blocks.LANTERN);
+            }
+            for (int x = -6; x <= 6; x += 4) set(level, c.offset(x, TOWER_F1 + 3, 6), Blocks.LANTERN);
         }
         Map<String, BlockPos> npcs = new LinkedHashMap<>();
         npcs.put("lippo", c.offset(0, TOWER_ROOF, -5));

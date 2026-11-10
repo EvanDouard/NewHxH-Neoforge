@@ -819,7 +819,7 @@
   "dialog.hxh.hunter_exam.tournament": "Final trial: a tournament. You win by making your opponent say \"I give up\"; only one applicant will fail.",
   "quest.hxh.hunter_exam.tournament": "Listen to Chairman Netero",
   "quest.hxh.hunter_exam.duels": "Win the final tournament (make your opponents give up)",
-  "exam.hxh.duel_start": "Tournament: %s steps up!",
+  "exam.hxh.duel_start": "Fight: %s steps up!",
   "exam.hxh.duel_give_up": "I give up!",
   "exam.hxh.duel_second_chance": "You give up… but you get another chance: another applicant awaits. No more mistakes.",
   "exam.hxh.duel_out": "You give up a second time: you are the one applicant who fails this year.",
