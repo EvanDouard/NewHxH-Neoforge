@@ -196,7 +196,7 @@ public final class MangaHud {
         boolean ko = data.koUntil() > mc.level.getGameTime();
         Component state = ko ? Component.translatable("hud.hxh.ko")
                 : data.healing() ? Component.translatable("hud.hxh.healing")
-                : data.meditating() ? Component.translatable("hud.hxh.meditation")
+                : data.meditating() ? Component.translatable("netero".equals(data.kit()) ? "hud.hxh.prayer" : "hud.hxh.meditation")
                 : Component.translatable(data.mode().translationKey());
         String stateText = state.getString().toUpperCase(Locale.ROOT);
         if (!stateText.equals(lastState)) {
@@ -214,7 +214,30 @@ public final class MangaHud {
         if (nenRight + 6 + font.width(value) <= x + barW + 4) {
             outlined(g, value, x + barW - font.width(value), tabY + 2, PAPER, 1f);
         }
+        renderKitBars(g, data, x, tabY - 4, barW);
         g.pose().popPose();
+    }
+
+    /** Jauges propres au personnage (Prière de Netero, Douleur de Feitan…), empilées au-dessus de l'onglet. */
+    private static void renderKitBars(GuiGraphics g, HunterData data, int x, int top, int barW) {
+        var bars = com.evandouard.hxh.hatsu.KitBars.of(data.kit());
+        int y = top;
+        for (var bar : bars) {
+            float ratio = Mth.clamp(data.kitValue(bar.key()) / bar.max(), 0f, 1f);
+            int h = 5, w = Math.round(barW * 0.8f);
+            int by = y - h;
+            g.pose().pushPose();
+            shear(g, x, y, -0.35f);
+            g.fill(x - 1, by - 1, x + w + 1, y + 1, INK);
+            g.fill(x, by, x + w, y, 0xFF3A3A3A);
+            g.fill(x, by, x + Math.round(w * ratio), y, bar.color());
+            if (ratio >= 1f && (ticks / 5) % 2 == 0) g.fill(x, by, x + w, y, 0x55FFFFFF);
+            for (int i = 1; i < 4; i++) g.fill(x + w * i / 4, by, x + w * i / 4 + 1, y, INK);
+            g.pose().popPose();
+            Component label = manga(Component.translatable(bar.label()).getString().toUpperCase(Locale.ROOT));
+            outlined(g, label, x + w + 6, by - 2, bar.color(), 0.75f);
+            y = by - 5;
+        }
     }
 
     /** Onglet noir penché avec un texte blanc ; renvoie sa largeur. */

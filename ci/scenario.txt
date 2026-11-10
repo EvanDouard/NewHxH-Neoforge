@@ -449,6 +449,30 @@ cmd hunter hatsu cast
 camera front
 wait 15
 shot 22j_illumi_transformation_aiguilles
+# --- Netero : Prière et Kannon ---
+cmd hunter hatsu set netero
+camera front
+key key.hxh.profile
+wait 10
+click Prière
+wait 120
+shot 22m_netero_priere_jauge
+camera back
+cmd hunter nen refill
+cmd hunter hatsu cast
+wait 15
+shot 22m2_netero_poings_de_kannon
+cmd hunter hatsu next
+cmd hunter nen refill
+cmd hunter hatsu cast
+wait 10
+shot 22m3_netero_kannon_statue
+cmd hunter hatsu next
+cmd hunter nen refill
+cmd hunter hatsu cast
+wait 8
+shot 22m4_netero_main_zero
+camera first
 cmd hunter hatsu set neferpitou
 cmd hunter nen refill
 cmd hunter hatsu cast

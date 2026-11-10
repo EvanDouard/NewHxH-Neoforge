@@ -16,6 +16,9 @@ public abstract class Technique {
     private final int auraCost;
     private final int cooldownTicks;
     private int minNenLevel = 0;
+    /** Ressource propre au personnage consommée en plus de l'aura (Prière de Netero…), et sa quantité. */
+    private String resource = null;
+    private float resourceCost = 0f;
 
     protected Technique(String id, NenType category, int auraCost, int cooldownTicks) {
         this.id = id;
@@ -48,6 +51,27 @@ public abstract class Technique {
     public Technique requiresNenLevel(int level) {
         this.minNenLevel = level;
         return this;
+    }
+
+    /** La technique coûte aussi {@code amount} de la ressource du personnage {@code key} (voir {@link KitBars}). */
+    public Technique costs(String key, float amount) {
+        this.resource = key;
+        this.resourceCost = amount;
+        return this;
+    }
+
+    public String resource() {
+        return resource;
+    }
+
+    public float resourceCost() {
+        return resourceCost;
+    }
+
+    /** Refus propre à la technique (au-delà de l'aura, de la recharge…), ou null. */
+    public String extraRefusal(com.evandouard.hxh.data.HunterData data) {
+        if (resource != null && data.kitValue(resource) + 1e-3f < resourceCost) return "message.hxh.no_" + resource;
+        return null;
     }
 
     public String translationKey() {

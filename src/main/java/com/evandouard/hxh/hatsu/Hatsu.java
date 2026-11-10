@@ -132,7 +132,7 @@ public final class Hatsu {
         if (data.nenLevel() < technique.minNenLevel()) return "message.hxh.hatsu_nen_level";
         if (gameTime < data.readyAt(technique.id())) return "message.hxh.hatsu_cooldown";
         if (data.aura() < technique.auraCost()) return "message.hxh.no_aura";
-        return null;
+        return technique.extraRefusal(data);
     }
 
     /** Lance la technique sélectionnée. @return null si lancée, sinon la clé du refus */
@@ -164,6 +164,7 @@ public final class Hatsu {
         // Raté ou pas, l'aura et la recharge partent : lancer dans le vide a un prix
         boolean hit = technique.perform(entity, power(data, technique));
         data.setAura(data.aura() - technique.auraCost());
+        if (technique.resource() != null) data.addKitValue(technique.resource(), -technique.resourceCost(), Float.MAX_VALUE);
         data.setReadyAt(technique.id(), now + technique.cooldownFor(data));
         com.evandouard.hxh.nen.NenProgress.addNenXp(entity, Math.max(1, technique.auraCost() / 5));
         return hit ? null : "message.hxh.hatsu_missed";

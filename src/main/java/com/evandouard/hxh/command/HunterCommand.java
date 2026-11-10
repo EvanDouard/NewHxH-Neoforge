@@ -381,6 +381,8 @@ public final class HunterCommand {
                 .then(targeted("refill", e -> {
                     HunterData d = HunterStats.get(e);
                     d.setAura(d.auraMax());
+                    // et les jauges du personnage (Prière de Netero…)
+                    for (var bar : com.evandouard.hxh.hatsu.KitBars.of(d.kit())) d.setKitValue(bar.key(), bar.max());
                 }))
                 .then(Commands.literal("talent")
                         .then(Commands.argument("talent", StringArgumentType.word())

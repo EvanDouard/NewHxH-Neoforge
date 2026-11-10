@@ -59,7 +59,7 @@ public class ProfileScreen extends Screen {
             com.evandouard.hxh.data.HunterData hunter = mc.player.getData(com.evandouard.hxh.data.ModAttachments.HUNTER);
             addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.hatsu"), b -> NenClient.openHatsuMenu(mc))
                     .bounds(left, ay, aw, 20).build());
-            addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.meditate"), b -> {
+            addRenderableWidget(Button.builder(Component.translatable("netero".equals(hunter.kit()) ? "screen.hxh.profile.pray" : "screen.hxh.profile.meditate"), b -> {
                 onClose();
                 NenClient.meditate();
             }).bounds(left + aw + 4, ay, aw, 20).build());

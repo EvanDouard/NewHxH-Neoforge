@@ -96,9 +96,11 @@ public final class NenAwakening {
             stopMeditation(entity, "message.hxh.meditation_stop");
         } else {
             data.setMeditating(true);
+            if (data.nenUnlocked()) data.setMeditationTicks(0);
             MEDITATION_START.put(entity, entity.position());
             if (entity instanceof Player player) {
-                player.displayClientMessage(Component.translatable("message.hxh.meditation_start"), true);
+                player.displayClientMessage(Component.translatable(com.evandouard.hxh.hatsu.Netero.isNetero(entity)
+                        ? "message.hxh.prayer_start" : "message.hxh.meditation_start"), true);
             }
         }
     }
@@ -132,7 +134,13 @@ public final class NenAwakening {
                 player.displayClientMessage(Component.translatable("message.hxh.meditation_progress",
                         data.meditationTicks() * 100 / needed), true);
             }
-        } else if (entity.tickCount % 200 == 0) {
+        } else {
+            data.setMeditationTicks(data.meditationTicks() + 1);
+            // Netero prie : sa jauge de Prière monte
+            if (com.evandouard.hxh.hatsu.Netero.isNetero(entity))
+                com.evandouard.hxh.hatsu.Netero.prayTick(entity, data.meditationTicks());
+        }
+        if (data.nenUnlocked() && entity.tickCount % 200 == 0) {
             // Déjà éveillé : la méditation entraîne la Volonté et le Nen
             HunterStats.addXp(entity, Stat.WILLPOWER, 1);
             NenProgress.addNenXp(entity, 1);

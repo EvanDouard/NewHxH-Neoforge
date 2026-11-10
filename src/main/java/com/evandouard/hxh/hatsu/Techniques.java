@@ -42,7 +42,7 @@ public final class Techniques {
         return ALL;
     }
 
-    private static <T extends Technique> T register(T technique) {
+    static <T extends Technique> T register(T technique) {
         ALL.put(technique.id(), technique);
         return technique;
     }
@@ -139,7 +139,7 @@ public final class Techniques {
         }
     }
 
-    static DamageSource damageFrom(LivingEntity caster) {
+    public static DamageSource damageFrom(LivingEntity caster) {
         return caster instanceof Player player
                 ? caster.damageSources().playerAttack(player)
                 : caster.damageSources().mobAttack(caster);

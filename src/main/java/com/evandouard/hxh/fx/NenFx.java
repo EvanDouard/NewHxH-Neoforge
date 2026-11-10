@@ -61,7 +61,20 @@ public final class NenFx {
         /** Docteur Blythe : la poupée-chirurgienne flotte au-dessus du patient (cible) et recoud, reliée à Pitou. */
         DOLL,
         /** Texture Surprise : une gerbe de cartes à jouer s'envole autour d'Hisoka quand il disparaît. */
-        CARD_BURST
+        CARD_BURST,
+        /**
+         * Image dessinée ({@link Sprite}, numéro passé dans « cible ») : derrière le lanceur (statue de Kannon), au
+         * point visé, ou au-dessus d'une tête ; apparaît puis s'efface. Taille = hauteur en blocs.
+         */
+        SPRITE
+    }
+
+    /** Images dessinées des techniques (textures {@code textures/fx/sprite_<nom>.png}). Ajouter à la fin seulement. */
+    public enum Sprite {
+        /** Statue de Kannon aux mille mains, derrière Netero. */
+        KANNON,
+        /** Mains dorées de Kannon autour des poings de Netero. */
+        KANNON_HANDS
     }
 
     /**
@@ -126,6 +139,17 @@ public final class NenFx {
     }
 
     // ---------- Raccourcis ----------
+
+    /**
+     * Image dessinée {@code sprite}. Accrochée à {@code anchor} (suit l'entité) si non nul, sinon posée en {@code at}.
+     */
+    public static void sprite(ServerLevel level, Sprite sprite, Entity anchor, Vec3 at, float size, int color, int duration) {
+        Payload p = new Payload(Kind.SPRITE.ordinal(), anchor == null ? -1 : anchor.getId(), sprite.ordinal(),
+                at.x, at.y, at.z, size, color, duration);
+        for (net.minecraft.server.level.ServerPlayer player : level.players()) {
+            if (player.distanceToSqr(at) <= VIEW_RANGE * VIEW_RANGE) com.evandouard.hxh.network.HxHNetwork.sendTo(player, p);
+        }
+    }
 
     public static void impactAt(ServerLevel level, Vec3 at, float size, int color) {
         send(level, Kind.IMPACT, null, null, at, size, color, 9);

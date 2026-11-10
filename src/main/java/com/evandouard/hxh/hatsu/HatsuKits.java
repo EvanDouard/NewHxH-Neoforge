@@ -48,6 +48,8 @@ public final class HatsuKits {
             Techniques.ILLUMI_NEEDLE, Techniques.ILLUMI_TRANSFORM);
     public static final HatsuKit LEORIO = playable("leorio", EMITTER, List.of(Passives.DOCTOR),
             Techniques.LEORIO_REMOTE_PUNCH, Techniques.LEORIO_SHOCKWAVE);
+    public static final HatsuKit NETERO = playable("netero", ENHANCER, List.of(Netero.PRAYER),
+            Netero.KANNON_FISTS, Netero.KANNON, Netero.ZERO_HAND);
     public static final HatsuKit HISOKA = playable("hisoka", TRANSMUTER, List.of(Passives.HISOKA_THRILL),
             Techniques.HISOKA_BUNGEE_GUM, Techniques.HISOKA_CARDS, Techniques.HISOKA_TEXTURE_SURPRISE);
 
@@ -72,7 +74,6 @@ public final class HatsuKits {
 
     static {
         // ---------- Idées : personnages du Trello ----------
-        idea("netero", ENHANCER, true, "netero_prayer", "netero_kannon", "netero_zero_hand");
         idea("pariston", SPECIALIST, false, "pariston_charisma", "pariston_love_debt");
         idea("ging", EMITTER, false, "ging_archaeologist", "ging_copy", "ging_emission_punch");
         idea("cheadle", MANIPULATOR, false, "cheadle_secretary", "cheadle_rules");

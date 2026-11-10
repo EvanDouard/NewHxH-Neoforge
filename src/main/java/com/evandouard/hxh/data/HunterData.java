@@ -25,6 +25,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private static final String MEDITATION = "meditation";
     private static final String HATSU = "hatsu";
     private static final String PROGRESS = "progress";
+    /** Ressources propres à un personnage (Prière de Netero, Douleur de Feitan, forme de Biscuit…). */
+    private static final String KIT_RES = "kit_res";
 
     /** Couleur d'aura par défaut : bleu clair. */
     public static final int DEFAULT_AURA_COLOR = 0x7FC8FF;
@@ -82,6 +84,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private final Map<String, Long> readyAt = new HashMap<>();
 
     private final Set<String> dirty = new HashSet<>();
+    private final Map<String, Float> kitValues = new HashMap<>();
 
     public HunterData() {
         for (Stat s : Stat.values()) {
@@ -315,6 +318,30 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
 
     // ---------- Méditation ----------
 
+    /** Ressource propre au personnage ({@code prayer}, {@code pain}…), 0 si absente. */
+    public float kitValue(String key) {
+        return kitValues.getOrDefault(key, 0f);
+    }
+
+    public void setKitValue(String key, float value) {
+        float old = kitValue(key);
+        if (old == value) return;
+        if (value == 0f) kitValues.remove(key);
+        else kitValues.put(key, value);
+        // n'envoie qu'aux changements visibles (au dixième près)
+        if (Math.round(old * 10) != Math.round(value * 10) || value == 0f) dirty.add(KIT_RES);
+    }
+
+    public void addKitValue(String key, float delta, float max) {
+        setKitValue(key, Math.max(0f, Math.min(max, kitValue(key) + delta)));
+    }
+
+    public void clearKitValues() {
+        if (kitValues.isEmpty()) return;
+        kitValues.clear();
+        dirty.add(KIT_RES);
+    }
+
     public boolean meditating() {
         return meditating;
     }
@@ -459,6 +486,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     }
 
     public void setKit(String kitId) {
+        if (!java.util.Objects.equals(kit, kitId == null ? "" : kitId)) clearKitValues();
         kit = kitId == null ? "" : kitId;
         selected = 0;
         readyAt.clear();
@@ -553,6 +581,12 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             out.put(HATSU, h);
             return;
         }
+        if (key.equals(KIT_RES)) {
+            CompoundTag k = new CompoundTag();
+            kitValues.forEach(k::putFloat);
+            out.put(KIT_RES, k);
+            return;
+        }
         if (key.equals(MEDITATION)) {
             CompoundTag m = new CompoundTag();
             m.putBoolean("active", meditating);
@@ -581,6 +615,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         writeKey(MEDITATION, out);
         writeKey(HATSU, out);
         writeKey(PROGRESS, out);
+        writeKey(KIT_RES, out);
         return out;
     }
 
@@ -605,6 +640,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         dirty.add(MEDITATION);
         dirty.add(HATSU);
         dirty.add(PROGRESS);
+        dirty.add(KIT_RES);
     }
 
     /** Remet tout à zéro (stats et Nen). */
@@ -671,6 +707,11 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             readyAt.clear();
             CompoundTag cd = h.getCompound("readyAt");
             for (String id : cd.getAllKeys()) readyAt.put(id, cd.getLong(id));
+        }
+        if (in.contains(KIT_RES)) {
+            kitValues.clear();
+            CompoundTag k = in.getCompound(KIT_RES);
+            for (String id : k.getAllKeys()) kitValues.put(id, k.getFloat(id));
         }
         if (in.contains(MEDITATION)) {
             CompoundTag m = in.getCompound(MEDITATION);
