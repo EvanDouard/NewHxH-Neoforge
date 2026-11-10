@@ -204,7 +204,7 @@
     },
     {
       "id": "tower_roof",
-      "type": "reach",
+      "type": "waypoint",
       "count": 0,
       "trial": "tour"
     },
@@ -238,7 +238,7 @@
     },
     {
       "id": "tower_exit",
-      "type": "reach",
+      "type": "waypoint",
       "count": 2,
       "seconds": 120,
       "trial": "tour"

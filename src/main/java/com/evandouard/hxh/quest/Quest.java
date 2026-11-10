@@ -48,7 +48,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
 
     /** Types d'étapes connus. */
     public static final Set<String> TYPES = Set.of("talk", "kill", "follow", "bring", "reach", "custom",
-            "quiz", "survive", "points", "duel", "ball", "reach",
+            "quiz", "survive", "points", "duel", "ball", "waypoint",
             "nen_mode", "nen_sense", "nen_flag",
             "arena_win", "arena_floor", "arena_register_200");
 
@@ -65,7 +65,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
             return switch (type) {
                 case "kill", "arena_win", "arena_floor" -> count;
                 case "bring" -> count;
-                case "follow", "nen_mode", "nen_sense", "survive", "reach" -> seconds;
+                case "follow", "nen_mode", "nen_sense", "survive", "waypoint" -> seconds;
                 case "quiz" -> "silence".equals(answer) ? seconds : 0;
                 case "points", "duel", "ball" -> count;
                 default -> 0;

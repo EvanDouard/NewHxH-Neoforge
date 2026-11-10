@@ -441,8 +441,8 @@ public final class QuestManager {
             } else if (player.tickCount % 20 == 0) sync(player);
             return;
         }
-        // Atteindre un point du lieu (Tour de Trick : trappe, sortie) ; avec « seconds », c'est un compte à rebours
-        if (step.type().equals("reach")) {
+        // Atteindre un point de la route du lieu (Tour de Trick : trappe, sortie) ; avec « seconds », compte à rebours
+        if (step.type().equals("waypoint")) {
             d.progress++;
             if (com.evandouard.hxh.exam.TrickTower.reached(player, step.count())) {
                 advance(player);
