@@ -227,8 +227,8 @@ public final class Sprites3D {
      */
     public static void kannon(Mesh3D.Ctx c, Vec3 base, Vec3 fwd, float h, int color, float time, float alpha, boolean halo) {
         int aura = color & 0xFFFFFF;
-        Vec3 f = new Vec3(fwd.x, 0, fwd.z);
-        f = f.lengthSqr() < 1e-6 ? new Vec3(0, 0, 1) : f.normalize();
+        Vec3 flat = new Vec3(fwd.x, 0, fwd.z);
+        final Vec3 f = flat.lengthSqr() < 1e-6 ? new Vec3(0, 0, 1) : flat.normalize();
         Vec3 side = f.cross(new Vec3(0, 1, 0)).normalize();
         float breath = 1f + 0.015f * Mth.sin(time * 0.15f);
         // lotus : pétales en cônes inclinés vers l'extérieur
