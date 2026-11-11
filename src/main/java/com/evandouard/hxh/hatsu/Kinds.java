@@ -215,6 +215,14 @@ public final class Kinds {
         final float damagePer;
         final int color;
         final SoundEvent sound;
+        /** Image qui tombe à chaque impact, et images posées en cercle autour du centre au départ (ou null). */
+        NenFx.Sprite dropSprite, ringSprite;
+
+        Rain withSprites(NenFx.Sprite drop, NenFx.Sprite ring) {
+            this.dropSprite = drop;
+            this.ringSprite = ring;
+            return this;
+        }
 
         Rain(String id, NenType category, int cost, int cooldown, double distance, double radius, int drops,
              int duration, float damagePer, int color, SoundEvent sound) {
@@ -250,10 +258,17 @@ public final class Kinds {
             if (!(caster.level() instanceof ServerLevel level)) return false;
             Vec3 c = center(caster);
             var rnd = caster.getRandom();
+            if (ringSprite != null) for (int k = 0; k < 6; k++) {
+                double a = k * Math.PI / 3;
+                NenFx.sprite(level, ringSprite, null, c.add(Math.cos(a) * (radius + 1), 1.2, Math.sin(a) * (radius + 1)), 2.2f, color, duration + 20);
+            }
+            int fall = dropSprite != null ? 6 : 0;
             for (int i = 0; i < drops; i++) {
                 double a = rnd.nextDouble() * Math.PI * 2, r = Math.sqrt(rnd.nextDouble()) * radius;
                 Vec3 at = c.add(Math.cos(a) * r, 0.2, Math.sin(a) * r);
-                NenTasks.later(i * Math.max(1, duration / Math.max(1, drops)), () -> {
+                int when = i * Math.max(1, duration / Math.max(1, drops));
+                if (dropSprite != null) NenTasks.later(when, () -> NenFx.sprite(level, dropSprite, null, at.add(0, 0.8, 0), 1.8f, color, 10));
+                NenTasks.later(when + fall, () -> {
                     NenFx.impactAt(level, at.add(0, 0.6, 0), 1.3f, color);
                     NenFx.slashAt(level, at.add(0, 1.6, 0), 1.1f, color);
                     for (LivingEntity t : enemiesAround(caster, at.add(0, 0.8, 0), 1.6)) hurt(caster, t, damagePer * power);
@@ -378,6 +393,13 @@ public final class Kinds {
         final List<Techniques.Effect> effects;
         final int color;
         final SoundEvent sound;
+        /** Image posée sur chaque cible à chaque vague (soldats de fumée de Morel…), ou null. */
+        NenFx.Sprite sprite;
+
+        Storm withSprite(NenFx.Sprite s) {
+            this.sprite = s;
+            return this;
+        }
 
         Storm(String id, NenType category, int cost, int cooldown, double reach, double halfAngleDeg, int waves,
               int interval, float damagePer, List<Techniques.Effect> effects, int color, SoundEvent sound) {
@@ -413,6 +435,8 @@ public final class Kinds {
                         hurt(caster, t, damagePer * power);
                         for (Techniques.Effect e : effects) t.addEffect(e.create(power), caster);
                         NenFx.slashAt(level, t.getBoundingBox().getCenter(), 0.9f, color);
+                        if (sprite != null) NenFx.sprite(level, sprite, null,
+                                t.position().add(caster.getLookAngle().scale(-1.2)).add(0, 1, 0), 2f, color, interval + 6);
                     }
                     var rnd = caster.getRandom();
                     Vec3 at = caster.getEyePosition().add(caster.getLookAngle().scale(1.5 + rnd.nextDouble() * reach * 0.7))

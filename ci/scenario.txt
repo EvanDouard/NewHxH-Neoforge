@@ -496,10 +496,33 @@ wait 6
 shot 22n3_meruem_rafale_de_rage
 cmd hunter hatsu set zeno
 cmd hunter nen refill
+cmd hunter hatsu cast
+wait 6
+shot 22n4a_zeno_tete_de_dragon
+cmd hunter hatsu next
+cmd hunter nen refill
+cmd hunter hatsu cast
+wait 12
+shot 22n4_zeno_plongee_du_dragon
+cmd hunter hatsu set biscuit
+cmd hunter nen refill
+cmd hunter hatsu next
+camera front
+cmd hunter hatsu cast
+wait 15
+shot 22n5_biscuit_cookie
+camera back
+cmd hunter hatsu set razor
+cmd hunter nen refill
 cmd hunter hatsu next
 cmd hunter hatsu cast
-wait 20
-shot 22n4_zeno_plongee_du_dragon
+wait 15
+shot 22n6_razor_quatorze_demons
+cmd hunter hatsu set kite
+cmd hunter nen refill
+cmd hunter hatsu cast
+wait 8
+shot 22n7_kite_roulette
 camera first
 cmd hunter hatsu set neferpitou
 cmd hunter nen refill

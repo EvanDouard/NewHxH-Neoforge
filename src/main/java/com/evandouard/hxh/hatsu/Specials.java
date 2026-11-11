@@ -134,9 +134,17 @@ public final class Specials {
         }
     });
 
+    /** Cookie apparaît à côté de Biscuit et soigne (elle et ses alliés à 3 blocs). */
     public static final Technique BISCUIT_ESTHETICIAN = register(new Kinds.AllyBuff("biscuit_esthetician", TRANSMUTER, 30, 400,
             3, 8f, List.of(new Effect(MobEffects.REGENERATION, 160, 1), new Effect(MobEffects.SATURATION, 10, 0)),
-            new Look(Style.FLARE, 0xFFFFB6D9, 1f), SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT));
+            new Look(Style.FLARE, 0xFFFFB6D9, 1f), SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT) {
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            if (caster.level() instanceof ServerLevel level)
+                NenFx.sprite(level, NenFx.Sprite.COOKIE, caster, caster.position(), 1.3f, 0xFFFFB6D9, 80);
+            return super.perform(caster, power);
+        }
+    });
 
     // =====================================================================
     // Chrollo (Spécialisation) — Tête, livre volé
@@ -170,6 +178,7 @@ public final class Specials {
 
         @Override
         public boolean perform(LivingEntity caster, float power) {
+            if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.BOOK, caster, caster.position(), 1.1f, NenFx.DARK, 30);
             String page = caster.getPersistentData().getString(BOOK);
             Technique stolen = page.isEmpty() ? null : Techniques.get(page);
             if (stolen != null) {

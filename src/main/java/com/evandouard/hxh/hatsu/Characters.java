@@ -102,7 +102,7 @@ public final class Characters {
             t.getPersistentData().putLong(LoveDebt.KEY + "_until", caster.level().getGameTime() + Math.round(200 * power));
             t.addEffect(Kinds.quiet(MobEffects.GLOWING, Math.round(200 * power), 0), caster);
             NenFx.impactOn(caster, t, 1f, NenFx.HISOKA);
-            NenFx.flare(t, 0.8f, NenFx.HISOKA);
+            if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.HEART, t, t.position(), 0.9f, NenFx.HISOKA, Math.round(200 * power));
             Kinds.sound(t, SoundEvents.AMETHYST_BLOCK_CHIME);
             return true;
         }
@@ -278,11 +278,38 @@ public final class Characters {
     public static final Technique SILVA_EXPLOSIVE_ORBS = register(new Kinds.Burst("silva_explosive_orbs", EMITTER, 35, 200,
             16, 3, 6, 6f, List.of(), new Look(Style.ORB, 0xFF9A5AE0, 1.2f), SoundEvents.GENERIC_EXPLODE.value()));
 
-    public static final Technique ZENO_DRAGON_HEAD = register(new Techniques.Strike("zeno_dragon_head", EMITTER, 30, 160,
-            14, 0.93, 10f, 1.4f, List.of(), new Look(Style.ORB, NenFx.GOLD, 1.6f), SoundEvents.ENDER_DRAGON_GROWL));
+    /** Tête de dragon : le dragon file de la main de Zeno jusqu'à la cible (14 blocs), puis la frappe. */
+    public static final Technique ZENO_DRAGON_HEAD = register(new Technique("zeno_dragon_head", EMITTER, 30, 160) {
+        @Override
+        public double aiRange() {
+            return 14;
+        }
+
+        @Override
+        public Component conditions() {
+            return Component.translatable("technique.hxh.cond.target", "14.0");
+        }
+
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            if (!(caster.level() instanceof ServerLevel level)) return false;
+            LivingEntity t = Targeting.inFront(caster, 14, 0.93);
+            Vec3 end = t != null ? t.getBoundingBox().getCenter() : caster.getEyePosition().add(caster.getLookAngle().scale(14));
+            NenFx.sprite(level, NenFx.Sprite.DRAGON, caster, end, 2.6f, NenFx.GOLD, 16);
+            Kinds.sound(caster, SoundEvents.ENDER_DRAGON_GROWL);
+            if (t == null) return false;
+            NenTasks.later(8, () -> {
+                if (!t.isAlive()) return;
+                Kinds.hurt(caster, t, 10f * power);
+                t.knockback(1.4 * power, caster.getX() - t.getX(), caster.getZ() - t.getZ());
+                NenFx.impactAt(level, t.getBoundingBox().getCenter(), 1.6f, NenFx.GOLD);
+            });
+            return true;
+        }
+    });
 
     public static final Technique ZENO_DRAGON_DIVE = register(new Kinds.Rain("zeno_dragon_dive", EMITTER, 60, 600,
-            14, 5, 16, 40, 5f, NenFx.GOLD, SoundEvents.ENDER_DRAGON_FLAP)).requiresNenLevel(30);
+            14, 5, 16, 40, 5f, NenFx.GOLD, SoundEvents.ENDER_DRAGON_FLAP).withSprites(NenFx.Sprite.DRAGON_DIVE, null)).requiresNenLevel(30);
 
     public static final Technique KALLUTO_PAPER_DANCE = register(new Kinds.Storm("kalluto_paper_dance", MANIPULATOR, 35, 300,
             7, 45, 6, 6, 2.5f, List.of(), 0xFFF5F0E6, SoundEvents.BOOK_PAGE_TURN));
@@ -389,6 +416,7 @@ public final class Characters {
 
         @Override
         public boolean perform(LivingEntity caster, float power) {
+            if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.BLINKY, caster, caster.position(), 1.6f, 0xFFB0B0FF, 34);
             for (int w = 0; w < 5; w++) {
                 NenTasks.later(w * 6, () -> {
                     if (!caster.isAlive() || !(caster.level() instanceof ServerLevel level)) return;
@@ -486,7 +514,7 @@ public final class Characters {
             18, 0.96, 11f, 2.2f, List.of(), new Look(Style.ORB, 0xFFFF7A3C, 1.5f), SoundEvents.SLIME_JUMP));
 
     public static final Technique RAZOR_FOURTEEN_DEVILS = register(new Kinds.Rain("razor_fourteen_devils", EMITTER, 60, 600,
-            12, 4, 14, 42, 5f, 0xFFB03A3A, SoundEvents.SLIME_JUMP)).requiresNenLevel(30);
+            12, 4, 14, 42, 5f, 0xFFB03A3A, SoundEvents.SLIME_JUMP).withSprites(null, NenFx.Sprite.DEMON)).requiresNenLevel(30);
 
     public static final Technique GENTHRU_LITTLE_FLOWER = register(new Technique("genthru_little_flower", CONJURER, 30, 200) {
         @Override
@@ -561,12 +589,14 @@ public final class Characters {
             if (caster instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.kite_slot", n + 1,
                     Component.translatable("message.hxh.kite_slot." + n)).withStyle(ChatFormatting.LIGHT_PURPLE), true);
             NenFx.flare(caster, 0.8f, 0xFFFF6FB5);
+            if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.CLOWN, caster, caster.position(), 1.3f, 0xFFFF6FB5, 30);
             return slots[n].perform(caster, power);
         }
     });
 
     public static final Technique MOREL_DEEP_PURPLE = register(new Kinds.Storm("morel_deep_purple", MANIPULATOR, 45, 400,
-            8, 50, 8, 10, 3f, List.of(new Effect(MobEffects.BLINDNESS, 40, 0)), 0xFF8A5AB0, SoundEvents.FIRE_EXTINGUISH))
+            8, 50, 8, 10, 3f, List.of(new Effect(MobEffects.BLINDNESS, 40, 0)), 0xFF8A5AB0, SoundEvents.FIRE_EXTINGUISH)
+            .withSprite(NenFx.Sprite.SMOKE_SOLDIER))
             .requiresNenLevel(20);
 
     /** Données persistantes de Palm : la cible espionnée (Wink Blue). */
@@ -661,6 +691,10 @@ public final class Characters {
         public boolean perform(LivingEntity caster, float power) {
             caster.heal(6f * power);
             NenFx.flare(caster, 1f, 0xFFFFB6E1);
+            if (caster.level() instanceof ServerLevel lv) for (int k = 0; k < 5; k++) {
+                double a = k * Math.PI * 2 / 5;
+                NenFx.sprite(lv, NenFx.Sprite.NOTE, null, caster.position().add(Math.cos(a) * 1.5, 1.8, Math.sin(a) * 1.5), 0.8f, 0xFFFFB6E1, 30);
+            }
             for (LivingEntity e : Targeting.around(caster, 8)) {
                 if (Kinds.isAlly(caster, e)) {
                     e.heal(6f * power);

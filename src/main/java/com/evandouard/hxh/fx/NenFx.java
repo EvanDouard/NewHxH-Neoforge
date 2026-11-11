@@ -82,7 +82,27 @@ public final class NenFx {
         /** Marque de Knov sur une porte (vue au Gyo). */
         DOOR_MARK,
         /** Ailes de papillon de Shaiapouf, dans son dos en vol. */
-        WINGS
+        WINGS,
+        /** Dragon d'aura de Zeno qui file du lanceur vers le point visé. */
+        DRAGON,
+        /** Petit dragon qui pique du ciel sur le point (Plongée du dragon). */
+        DRAGON_DIVE,
+        /** Cookie, la masseuse de Biscuit, à côté d'elle. */
+        COOKIE,
+        /** Démon d'aura de Razor, posé au point. */
+        DEMON,
+        /** Soldat de fumée de Morel, posé au point. */
+        SMOKE_SOLDIER,
+        /** Blinky, l'aspirateur de Shizuku, devant elle. */
+        BLINKY,
+        /** Livre de Chrollo, ouvert dans sa main. */
+        BOOK,
+        /** Clown-roulette de Kite, au-dessus de lui. */
+        CLOWN,
+        /** Cœur rose de Pariston, au-dessus de la cible. */
+        HEART,
+        /** Note de musique de Senritsu, au point. */
+        NOTE
     }
 
     /**

@@ -790,12 +790,62 @@ public final class NenFxClient {
                 quad(c, RenderType.entityTranslucent(tex), p0, p1, p1.add(0, h, 0), p0.add(0, h, 0), 0xFFFFFFFF, alpha * 0.85f);
                 quad(c, RenderType.eyes(tex), p0, p1, p1.add(0, h, 0), p0.add(0, h, 0), f.color, alpha * 0.3f);
             }
+            case DRAGON, DEMON, SMOKE_SOLDIER, NOTE, DRAGON_DIVE, COOKIE, BLINKY, BOOK, CLOWN, HEART ->
+                    simpleSprite(c, f, t, sprite, src, tex, alpha, scale);
             case KANNON_HANDS -> {
                 Vec3 at = src != null ? hand(src, c.pt) : f.at;
                 billboard(c, RenderType.entityTranslucent(tex), at, f.size * 0.5f * scale, 0, 0xFFFFFFFF, alpha);
                 billboard(c, RenderType.eyes(GLOW), at, f.size * 0.6f * scale, 0, f.color, alpha * 0.5f);
             }
         }
+    }
+
+    /**
+     * Images simples, face caméra :
+     * DRAGON file du lanceur au point ; DRAGON_DIVE pique du ciel ; DEMON, SMOKE_SOLDIER, NOTE posés au point
+     * (léger balancement) ; COOKIE à côté du lanceur ; BLINKY devant lui ; BOOK dans sa main ; CLOWN et HEART
+     * au-dessus de l'entité d'attache.
+     */
+    private static void simpleSprite(Ctx c, Fx f, float t, NenFx.Sprite sprite, Entity src, ResourceLocation tex,
+                                     float alpha, float scale) {
+        float time = c.now + c.pt;
+        Vec3 at;
+        float size = f.size * scale, spin = 0;
+        switch (sprite) {
+            case DRAGON -> {
+                Vec3 from = src != null ? src.getEyePosition(c.pt) : f.at;
+                float k = ease(Math.min(1f, t * 1.6f));
+                at = from.lerp(f.at, k).add(0, Mth.sin(time * 0.5f) * 0.25f, 0);
+                alpha = Math.min(alpha, 1f);
+            }
+            case DRAGON_DIVE -> {
+                float k = Math.min(1f, t * 1.8f);
+                at = f.at.add(0, 7 * (1 - k * k), 0);
+            }
+            case COOKIE -> {
+                Vec3 base = src != null ? src.getPosition(c.pt) : f.at;
+                float yaw = src != null ? src.getYRot() : 0;
+                Vec3 right = Vec3.directionFromRotation(0, yaw + 90);
+                at = base.add(right.scale(1.1)).add(0, 0.9 + Mth.sin(time * 0.25f) * 0.08f, 0);
+            }
+            case BLINKY -> {
+                at = src != null ? src.getEyePosition(c.pt).add(src.getViewVector(c.pt).scale(1.6)).add(0, -0.5, 0) : f.at;
+                spin = Mth.sin(time * 0.8f) * 0.08f;
+            }
+            case BOOK -> at = src != null ? hand(src, c.pt).add(0, 0.25, 0) : f.at;
+            case CLOWN, HEART -> {
+                Vec3 base = src != null ? src.getPosition(c.pt).add(0, src.getBbHeight() + 0.7, 0) : f.at;
+                at = base.add(0, Mth.sin(time * 0.2f) * 0.07f, 0);
+                if (sprite == NenFx.Sprite.CLOWN) spin = Mth.sin(time * 0.6f) * 0.15f;
+            }
+            default -> {
+                at = f.at.add(0, Mth.sin(time * 0.3f + f.at.x) * 0.06f, 0);
+                if (sprite == NenFx.Sprite.NOTE) at = at.add(0, t * 0.8, 0);
+            }
+        }
+        boolean glow = sprite == NenFx.Sprite.DRAGON || sprite == NenFx.Sprite.DRAGON_DIVE || sprite == NenFx.Sprite.DEMON;
+        if (glow) billboard(c, RenderType.eyes(GLOW), at, size * 1.1f, 0, f.color, alpha * 0.45f);
+        billboard(c, RenderType.entityTranslucent(tex), at, size * 0.5f, spin, 0xFFFFFFFF, alpha * 0.92f);
     }
 
     private static void palmWave(Ctx c, Fx f, float t) {
