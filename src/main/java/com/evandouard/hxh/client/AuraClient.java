@@ -199,9 +199,9 @@ public final class AuraClient {
         float pulse = 0.85f + 0.15f * Mth.sin(time * 0.5f);
         VertexConsumer glow = buffers.getBuffer(RenderType.eyes(NenFxClient.GLOW));
         for (int s = -1; s <= 1; s += 2) {
-            Vec3 at = eye.add(fwd.scale(0.27)).add(side.scale(0.11 * s)).add(0, 0.02, 0);
-            billboard(glow, pose, cam, at, 0.16f * pulse, color, 0.95f);
-            billboard(glow, pose, cam, at, 0.07f, 0xFFFFFF, 0.9f);
+            Vec3 at = eye.add(fwd.scale(0.33)).add(side.scale(0.12 * s)).add(0, 0.02, 0);
+            billboard(glow, pose, cam, at, 0.24f * pulse, color, 1f);
+            billboard(glow, pose, cam, at, 0.1f, 0xFFFFFF, 1f);
         }
     }
 
