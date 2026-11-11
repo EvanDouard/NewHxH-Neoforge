@@ -102,7 +102,17 @@ public final class NenFx {
         /** Cœur rose de Pariston, au-dessus de la cible. */
         HEART,
         /** Note de musique de Senritsu, au point. */
-        NOTE
+        NOTE,
+        /** Feuille de papier de Kalluto, qui virevolte au point. */
+        PAPER,
+        /** Bombe de Genthru collée à la cible, compte à rebours en chiffres (durée = délai). */
+        BOMB,
+        /** Faux de Kite, dans sa main (fauche). */
+        SCYTHE,
+        /** Fusil de Kite, dans sa main. */
+        RIFLE,
+        /** Bâton de Kite, dans sa main. */
+        STAFF
     }
 
     /**

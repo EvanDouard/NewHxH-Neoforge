@@ -312,7 +312,7 @@ public final class Characters {
             14, 5, 16, 40, 5f, NenFx.GOLD, SoundEvents.ENDER_DRAGON_FLAP).withSprites(NenFx.Sprite.DRAGON_DIVE, null)).requiresNenLevel(30);
 
     public static final Technique KALLUTO_PAPER_DANCE = register(new Kinds.Storm("kalluto_paper_dance", MANIPULATOR, 35, 300,
-            7, 45, 6, 6, 2.5f, List.of(), 0xFFF5F0E6, SoundEvents.BOOK_PAGE_TURN));
+            7, 45, 6, 6, 2.5f, List.of(), 0xFFF5F0E6, SoundEvents.BOOK_PAGE_TURN).withSprite(NenFx.Sprite.PAPER));
 
     // =====================================================================
     // Brigade Fantôme : Nobunaga, Uvogin, Franklin, Machi, Shizuku, Pakunoda, Neon
@@ -589,7 +589,12 @@ public final class Characters {
             if (caster instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.kite_slot", n + 1,
                     Component.translatable("message.hxh.kite_slot." + n)).withStyle(ChatFormatting.LIGHT_PURPLE), true);
             NenFx.flare(caster, 0.8f, 0xFFFF6FB5);
-            if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.CLOWN, caster, caster.position(), 1.3f, 0xFFFF6FB5, 30);
+            if (caster.level() instanceof ServerLevel lv) {
+                NenFx.sprite(lv, NenFx.Sprite.CLOWN, caster, caster.position(), 1.3f, 0xFFFF6FB5, 30);
+                // l'arme tirée apparaît dans la main de Kite (le clown, lui, n'a pas d'arme)
+                NenFx.Sprite weapon = n == 0 ? NenFx.Sprite.SCYTHE : n == 1 ? NenFx.Sprite.RIFLE : n == 2 ? NenFx.Sprite.STAFF : null;
+                if (weapon != null) NenFx.sprite(lv, weapon, caster, caster.position(), n == 1 ? 1.5f : 2.2f, 0xFFE0E0E0, 24);
+            }
             return slots[n].perform(caster, power);
         }
     });

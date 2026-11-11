@@ -90,9 +90,13 @@ public final class NenFxClient {
         if (p.kindEnum() == NenFx.Kind.CLEAR) {
             // taille 2 : tout ce qui est accroché au lanceur (changement de kit)
             boolean all = p.size() > 1.5f;
-            ACTIVE.removeIf(f -> f.source == p.source()
+            Vec3 where = new Vec3(p.x(), p.y(), p.z());
+            ACTIVE.removeIf(f -> (f.source == p.source()
                     && (all ? attachedToBody(f.kind) || f.kind == NenFx.Kind.CHARGE_ORB || f.kind == NenFx.Kind.GUM_LINK
-                    : f.kind == NenFx.Kind.CHARGE_ORB || f.kind == NenFx.Kind.GUM_LINK));
+                    || f.kind == NenFx.Kind.SPRITE
+                    : f.kind == NenFx.Kind.CHARGE_ORB || f.kind == NenFx.Kind.GUM_LINK))
+                    // changement de kit : les images posées au sol par ce personnage (démons, soldats…) partent aussi
+                    || (all && f.kind == NenFx.Kind.SPRITE && f.source < 0 && f.at.distanceToSqr(where) < 30 * 30));
             return;
         }
         if (p.kindEnum() == NenFx.Kind.IMPACT_FRAME) {
@@ -255,6 +259,26 @@ public final class NenFxClient {
         vertex(vc, c, p1, color, alpha, 1, 1);
         vertex(vc, c, p2, color, alpha, 1, 0);
         vertex(vc, c, p3, color, alpha, 0, 0);
+    }
+
+    private static final ResourceLocation DIGITS = tex("sprite_digits");
+
+    /** Petit décalage vers la caméra (pour poser une image devant une autre). */
+    private static Vec3 towardCam(Ctx c, Vec3 at, double d) {
+        Vec3 v = c.cam.subtract(at);
+        return v.lengthSqr() < 1e-6 ? Vec3.ZERO : v.normalize().scale(d);
+    }
+
+    /** Image face à la caméra prise dans une bande horizontale de texture (u0 → u1). */
+    private static void billboardUV(Ctx c, RenderType type, Vec3 at, float half, float u0, float u1, int color, float alpha) {
+        Quaternionf q = new Quaternionf(c.camera.rotation());
+        float[][] corners = {{-1, -1}, {1, -1}, {1, 1}, {-1, 1}};
+        float[][] uv = {{u0, 1}, {u1, 1}, {u1, 0}, {u0, 0}};
+        VertexConsumer vc = c.buffers.getBuffer(type);
+        for (int i = 0; i < 4; i++) {
+            Vector3f v = new Vector3f(corners[i][0] * half, corners[i][1] * half, 0).rotate(q);
+            vertex(vc, c, at.add(v.x, v.y, v.z), color, alpha, uv[i][0], uv[i][1]);
+        }
     }
 
     /** Image face à la caméra, tournée de {@code angle}. */
@@ -790,8 +814,20 @@ public final class NenFxClient {
                 quad(c, RenderType.entityTranslucent(tex), p0, p1, p1.add(0, h, 0), p0.add(0, h, 0), 0xFFFFFFFF, alpha * 0.85f);
                 quad(c, RenderType.eyes(tex), p0, p1, p1.add(0, h, 0), p0.add(0, h, 0), f.color, alpha * 0.3f);
             }
-            case DRAGON, DEMON, SMOKE_SOLDIER, NOTE, DRAGON_DIVE, COOKIE, BLINKY, BOOK, CLOWN, HEART ->
-                    simpleSprite(c, f, t, sprite, src, tex, alpha, scale);
+            case DRAGON, DEMON, SMOKE_SOLDIER, NOTE, DRAGON_DIVE, COOKIE, BLINKY, BOOK, CLOWN, HEART, PAPER,
+                 SCYTHE, RIFLE, STAFF -> simpleSprite(c, f, t, sprite, src, tex, alpha, scale);
+            case BOMB -> {
+                // collée au-dessus de la cible ; pas de fondu de sortie (elle explose)
+                Vec3 at = src != null ? src.getPosition(c.pt).add(0, src.getBbHeight() + 0.8, 0) : f.at;
+                float a = Math.min(1f, t / 0.1f);
+                int left = Mth.clamp((int) Math.ceil((1f - t) * f.duration / 20f), 0, 9);
+                float pulse = 1f + 0.12f * Math.max(0f, 1f - ((1f - t) * f.duration % 20f) / 6f);
+                float half = f.size * 0.5f * pulse;
+                billboard(c, RenderType.eyes(GLOW), at, half * 1.5f, 0, f.color, a * 0.35f);
+                billboard(c, RenderType.entityTranslucent(tex), at, half, 0, 0xFFFFFFFF, a);
+                billboardUV(c, RenderType.entityTranslucent(DIGITS), at.add(0, -half * 0.12, 0).add(towardCam(c, at, 0.02)),
+                        half * 0.34f, left / 10f, (left + 1) / 10f, 0xFFFFFFFF, a);
+            }
             case KANNON_HANDS -> {
                 Vec3 at = src != null ? hand(src, c.pt) : f.at;
                 billboard(c, RenderType.entityTranslucent(tex), at, f.size * 0.5f * scale, 0, 0xFFFFFFFF, alpha);
@@ -833,6 +869,19 @@ public final class NenFxClient {
                 spin = Mth.sin(time * 0.8f) * 0.08f;
             }
             case BOOK -> at = src != null ? hand(src, c.pt).add(0, 0.25, 0) : f.at;
+            case SCYTHE, RIFLE, STAFF -> {
+                at = src != null ? hand(src, c.pt).add(0, 0.2, 0) : f.at;
+                // la faux fauche d'un côté à l'autre, le bâton tourne, le fusil recule au tir
+                if (sprite == NenFx.Sprite.SCYTHE) spin = 1.2f - 2.4f * ease(Math.min(1f, t * 2f));
+                else if (sprite == NenFx.Sprite.STAFF) spin = t * 6.28f;
+                else at = at.add(0, Mth.sin(time * 1.5f) * 0.03f, 0);
+            }
+            case PAPER -> {
+                float ph = (float) (f.at.x * 3.1 + f.at.z * 1.7);
+                at = f.at.add(Mth.sin(time * 0.15f + ph) * 0.4f, Mth.sin(time * 0.3f + ph) * 0.15f + t * 0.6f,
+                        Mth.cos(time * 0.13f + ph) * 0.4f);
+                spin = Mth.sin(time * 0.4f + ph) * 0.9f;
+            }
             case CLOWN, HEART -> {
                 Vec3 base = src != null ? src.getPosition(c.pt).add(0, src.getBbHeight() + 0.7, 0) : f.at;
                 at = base.add(0, Mth.sin(time * 0.2f) * 0.07f, 0);

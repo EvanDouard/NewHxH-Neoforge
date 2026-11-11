@@ -435,13 +435,19 @@ public final class Kinds {
                         hurt(caster, t, damagePer * power);
                         for (Techniques.Effect e : effects) t.addEffect(e.create(power), caster);
                         NenFx.slashAt(level, t.getBoundingBox().getCenter(), 0.9f, color);
-                        if (sprite != null) NenFx.sprite(level, sprite, null,
+                        if (sprite != null && sprite != NenFx.Sprite.PAPER) NenFx.sprite(level, sprite, null,
                                 t.position().add(caster.getLookAngle().scale(-1.2)).add(0, 1, 0), 2f, color, interval + 6);
                     }
                     var rnd = caster.getRandom();
                     Vec3 at = caster.getEyePosition().add(caster.getLookAngle().scale(1.5 + rnd.nextDouble() * reach * 0.7))
                             .add(rnd.nextGaussian() * 0.8, rnd.nextGaussian() * 0.5, rnd.nextGaussian() * 0.8);
                     NenFx.slashAt(level, at, 1.2f, color);
+                    // papiers de Kalluto : une nuée de feuilles dans le cône, cible ou pas
+                    if (sprite == NenFx.Sprite.PAPER) for (int i = 0; i < 4; i++) {
+                        Vec3 p = caster.getEyePosition().add(caster.getLookAngle().scale(1.5 + rnd.nextDouble() * reach * 0.8))
+                                .add(rnd.nextGaussian() * 1.2, rnd.nextGaussian() * 0.6, rnd.nextGaussian() * 1.2);
+                        NenFx.sprite(level, sprite, null, p, 0.9f, color, interval * 2 + 10);
+                    }
                     sound(caster, sound);
                 });
             }
@@ -483,6 +489,8 @@ public final class Kinds {
             LivingEntity target = Targeting.inFront(caster, range, 0.92);
             if (target == null) return false;
             NenFx.impactOn(caster, target, 0.8f, color);
+            // bombe dessinée collée à la cible, chiffres du compte à rebours
+            if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.BOMB, target, target.position(), 1.1f, color, delay);
             int seconds = Math.max(1, delay / 20);
             for (int s = seconds; s >= 1; s--) {
                 final int left = s;

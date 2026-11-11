@@ -496,9 +496,13 @@ wait 6
 shot 22n3_meruem_rafale_de_rage
 cmd hunter hatsu set zeno
 cmd hunter nen refill
+look 0 0
+cmd summon minecraft:villager ~ ~ ~10 {NoAI:1b,PersistenceRequired:1b,Silent:1b,Invulnerable:1b,Tags:["hxh_dummy"]}
+wait 10
 cmd hunter hatsu cast
-wait 6
+wait 4
 shot 22n4a_zeno_tete_de_dragon
+cmd kill @e[tag=hxh_dummy]
 cmd hunter hatsu next
 cmd hunter nen refill
 cmd hunter hatsu cast
@@ -523,6 +527,23 @@ cmd hunter nen refill
 cmd hunter hatsu cast
 wait 8
 shot 22n7_kite_roulette
+cmd hunter hatsu set kalluto
+cmd hunter nen refill
+look 0 0
+cmd hunter hatsu cast
+wait 20
+shot 22n8_kalluto_danse_des_papiers
+cmd hunter hatsu set genthru
+cmd hunter nen refill
+cmd hunter hatsu next
+look 0 0
+cmd summon minecraft:villager ~ ~ ~4 {NoAI:1b,PersistenceRequired:1b,Silent:1b,Invulnerable:1b,Tags:["hxh_dummy"]}
+wait 10
+cmd hunter hatsu cast
+wait 15
+shot 22n9_genthru_compte_a_rebours
+wait 60
+cmd kill @e[tag=hxh_dummy]
 camera first
 cmd hunter hatsu set neferpitou
 cmd hunter nen refill
