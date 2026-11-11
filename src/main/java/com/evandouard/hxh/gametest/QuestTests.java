@@ -290,6 +290,22 @@ public final class QuestTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 200)
+    public static void followTrialDoesNotFailBeforeBoarding(GameTestHelper helper) {
+        // Marais de Numele (suivre Satotz) : tant que le candidat marche vers son dirigeable, il n'est pas « distancé »
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(player);
+        com.evandouard.hxh.quest.TrialPlan.forcedForTests = java.util.List.of("numele", "zevil", "tournoi");
+        QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
+        QuestManager.advance(player);
+        helper.assertTrue(d.examDeparture() != Long.MIN_VALUE, "Départ donné par le guide");
+        helper.assertTrue(QuestManager.awaitingDeparture(player, d), "Candidat pas encore embarqué");
+        int limit = com.evandouard.hxh.HxHConfig.EXAM_LOST_SECONDS.get() * 20;
+        for (int i = 0; i < limit + 40; i++) QuestManager.tick(player);
+        helper.assertTrue(d.examDeparture() != Long.MIN_VALUE && d.step() > 0, "Pas d'échec avant d'avoir pris le dirigeable");
+        helper.succeed();
+    }
+
     @GameTest(template = "empty")
     public static void guideGivesADepartureTheFerrymanBoards(GameTestHelper helper) {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();

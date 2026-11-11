@@ -284,6 +284,11 @@ public final class QuestManager {
     private static final java.util.Map<java.util.UUID, Integer> LOST_TICKS = new java.util.HashMap<>();
 
     /** Un tick passé trop loin du guide : avertit, et renvoie true quand la limite est atteinte. */
+    /** Examen : départ donné par le guide mais dirigeable pas encore pris (le candidat est encore hors des lieux). */
+    public static boolean awaitingDeparture(ServerPlayer player, QuestData d) {
+        return d.examDeparture() != Long.MIN_VALUE && !com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level());
+    }
+
     private static boolean fallBehind(ServerPlayer player) {
         int lost = LOST_TICKS.merge(player.getUUID(), 1, Integer::sum);
         int limit = com.evandouard.hxh.HxHConfig.EXAM_LOST_SECONDS.get() * 20;
@@ -568,6 +573,11 @@ public final class QuestManager {
             return;
         }
         if (!step.type().equals("follow")) return;
+        // Pas encore monté dans le dirigeable : l'examinateur n'est pas là, ce n'est pas être distancé
+        if (awaitingDeparture(player, d)) {
+            LOST_TICKS.remove(player.getUUID());
+            return;
+        }
         NpcEntity npc = findNpc(player, step.npc(), 96);
         if (npc == null) {
             // Hors de portée : c'est être distancé
