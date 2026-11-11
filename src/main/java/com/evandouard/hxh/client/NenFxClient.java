@@ -1121,7 +1121,7 @@ public final class NenFxClient {
             path.add(a.lerp(b, t).add(0, -sag * 4 * t * (1 - t) + Mth.sin(age * 0.4f + t * 6) * 0.03 * (1 - tension), 0));
         }
         Mesh3D.Ctx m = mesh(c);
-        Mesh3D.tube(m, Mesh3D.solid(m), path, width * 0.5f, width * 0.5f, f.color & 0xFFFFFF, 1f, 8, true);
+        Mesh3D.tube(m, Mesh3D.solid(m), path, width * 0.9f, width * 0.9f, f.color & 0xFFFFFF, 1f, 10, true);
     }
 
     /** Pavé coloré, aligné sur {@code yaw}, avec arêtes encrées. */
