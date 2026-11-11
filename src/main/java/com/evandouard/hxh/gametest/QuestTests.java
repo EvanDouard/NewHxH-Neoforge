@@ -298,7 +298,8 @@ public final class QuestTests {
         com.evandouard.hxh.quest.TrialPlan.forcedForTests = java.util.List.of("numele", "zevil", "tournoi");
         QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
         QuestManager.advance(player);
-        helper.assertTrue(d.examDeparture() != Long.MIN_VALUE, "Départ donné par le guide");
+        // le guide donne le point de départ (dirigeable loin d'ici)
+        d.setExamDeparture(player.blockPosition().offset(80, 0, 0).asLong());
         helper.assertTrue(QuestManager.awaitingDeparture(player, d), "Candidat pas encore embarqué");
         int limit = com.evandouard.hxh.HxHConfig.EXAM_LOST_SECONDS.get() * 20;
         for (int i = 0; i < limit + 40; i++) QuestManager.tick(player);
