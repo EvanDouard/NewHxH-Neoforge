@@ -826,7 +826,7 @@ public final class NenFxClient {
                 billboard(c, RenderType.eyes(GLOW), at, half * 1.5f, 0, f.color, a * 0.35f);
                 billboard(c, RenderType.entityTranslucent(tex), at, half, 0, 0xFFFFFFFF, a);
                 billboardUV(c, RenderType.entityTranslucent(DIGITS), at.add(0, -half * 0.12, 0).add(towardCam(c, at, 0.02)),
-                        half * 0.38f, left / 10f, (left + 1) / 10f, 0xFFFFFFFF, a);
+                        half * 0.5f, left / 10f, (left + 1) / 10f, 0xFFFFFFFF, a);
             }
             case KANNON_HANDS -> {
                 Vec3 at = src != null ? hand(src, c.pt) : f.at;
@@ -899,7 +899,8 @@ public final class NenFxClient {
         }
         boolean glow = sprite == NenFx.Sprite.DRAGON || sprite == NenFx.Sprite.DRAGON_DIVE || sprite == NenFx.Sprite.DEMON;
         if (glow) billboard(c, RenderType.eyes(GLOW), at, size * 1.1f, 0, f.color, alpha * 0.45f);
-        billboard(c, RenderType.entityTranslucent(tex), at, size * 0.5f, spin, 0xFFFFFFFF, alpha * 0.92f);
+        float k = sprite == NenFx.Sprite.DRAGON ? 0.8f : 0.5f; // le dragon de Zeno est plus massif
+        billboard(c, RenderType.entityTranslucent(tex), at, size * k, spin, 0xFFFFFFFF, alpha * 0.92f);
     }
 
     private static void palmWave(Ctx c, Fx f, float t) {
