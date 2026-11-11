@@ -150,7 +150,7 @@ public final class HunterStatsTests {
         helper.assertTrue(full > base * 2.2, "Vitesse max nettement plus haute (" + full / base + "×)");
         helper.assertTrue(p.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.STEP_HEIGHT) >= 1.0,
                 "Très rapide : monte les blocs comme un cheval");
-        d.setSpeedCap(0.2f);
+        d.setSpeedCap(0.05f);
         HunterStats.applyAttributes(p);
         double capped = p.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
         helper.assertTrue(capped < full && capped > base, "Vitesse bridée par le réglage du carnet");
