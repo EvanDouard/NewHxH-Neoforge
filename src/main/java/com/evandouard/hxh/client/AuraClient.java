@@ -52,6 +52,47 @@ public final class AuraClient {
 
     static void register() {
         NeoForge.EVENT_BUS.addListener(RenderLevelStageEvent.class, AuraClient::onRender);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.client.event.RenderLivingEvent.Post.class, AuraClient::onLivingRender);
+    }
+
+    /**
+     * Gyo : deux lueurs aux yeux, dessinées avec le modèle (repère de l'entité, tourné comme sa tête), donc toujours
+     * collées au visage.
+     */
+    private static void onLivingRender(net.neoforged.neoforge.client.event.RenderLivingEvent.Post<?, ?> event) {
+        LivingEntity e = event.getEntity();
+        if (e.isInvisible() || !e.hasData(ModAttachments.HUNTER) || NenFxClient.firstPerson(e)) return;
+        HunterData d = e.getData(ModAttachments.HUNTER);
+        if (!d.gyo() && !e.hasEffect(com.evandouard.hxh.effect.ModEffects.GYO)) return;
+        float pt = event.getPartialTick();
+        float headYaw = Mth.rotLerp(pt, e.yHeadRotO, e.yHeadRot);
+        float pitch = Mth.lerp(pt, e.xRotO, e.getXRot());
+        Minecraft mc = Minecraft.getInstance();
+        float time = (mc.level == null ? 0 : mc.level.getGameTime()) + pt;
+        float pulse = 0.85f + 0.15f * Mth.sin(time * 0.5f);
+        PoseStack pose = event.getPoseStack();
+        VertexConsumer glow = event.getMultiBufferSource().getBuffer(RenderType.eyes(NenFxClient.GLOW));
+        int color = d.auraColor() & 0xFFFFFF;
+        for (int s = -1; s <= 1; s += 2) {
+            pose.pushPose();
+            pose.translate(0, e.getEyeHeight() + 0.06, 0);
+            pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-headYaw));
+            pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(pitch));
+            pose.translate(0.12 * s, 0.03, 0.27);
+            pose.mulPose(mc.getEntityRenderDispatcher().cameraOrientation());
+            quadLocal(glow, pose, 0.2f * pulse, color, 1f);
+            quadLocal(glow, pose, 0.08f, 0xFFFFFF, 1f);
+            pose.popPose();
+        }
+    }
+
+    private static void quadLocal(VertexConsumer vc, PoseStack pose, float h, int rgb, float alpha) {
+        PoseStack.Pose last = pose.last();
+        int a = Mth.clamp((int) (alpha * 255), 0, 255);
+        float[][] c = {{-h, -h, 0, 1}, {h, -h, 1, 1}, {h, h, 1, 0}, {-h, h, 0, 0}};
+        for (float[] v : c) vc.addVertex(last.pose(), v[0], v[1], 0).setColor((rgb >> 16) & 255, (rgb >> 8) & 255, rgb & 255, a)
+                .setUv(v[2], v[3]).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(LIGHT)
+                .setNormal(last, 0f, 1f, 0f);
     }
 
     /** null : pas d'aura visible (pas de Nen, Zetsu, In sans Gyo, invisible). */
@@ -92,8 +133,6 @@ public final class AuraClient {
             // Son propre corps en vue à la première personne : rien (ça boucherait la vue)
             if (NenFxClient.firstPerson(e)) continue;
             HunterData hd = e.hasData(ModAttachments.HUNTER) ? e.getData(ModAttachments.HUNTER) : null;
-            boolean gyo = hd != null && hd.gyo() || e.hasEffect(com.evandouard.hxh.effect.ModEffects.GYO);
-            if (gyo) { gyoEyes(pose, buffers, cam, e, pt, (hd != null ? hd.auraColor() : 0x9AD7FF) & 0xFFFFFF, mc.level.getGameTime() + pt); drew = true; }
             Look look = look(e);
             if (look == null) continue;
             float time = mc.level.getGameTime() + pt + (e.getId() * 7.31f);
