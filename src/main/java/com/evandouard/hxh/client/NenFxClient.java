@@ -851,7 +851,12 @@ public final class NenFxClient {
             case DRAGON -> {
                 Vec3 from = src != null ? src.getEyePosition(c.pt) : f.at;
                 float k = ease(Math.min(1f, t * 1.6f));
-                at = from.lerp(f.at, k).add(0, Mth.sin(time * 0.5f) * 0.25f, 0);
+                // trajectoire en arc (sur le côté et vers le haut) : il ne se cache pas derrière le lanceur
+                Vec3 path = f.at.subtract(from);
+                Vec3 side = path.cross(new Vec3(0, 1, 0));
+                side = side.lengthSqr() < 1e-6 ? new Vec3(1, 0, 0) : side.normalize();
+                float arc = Mth.sin(k * Mth.PI);
+                at = from.lerp(f.at, k).add(side.scale(arc * 2.6)).add(0, arc * 1.4 + Mth.sin(time * 0.5f) * 0.25f, 0);
                 alpha = Math.min(alpha, 1f);
             }
             case DRAGON_DIVE -> {

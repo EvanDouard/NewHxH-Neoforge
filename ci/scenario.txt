@@ -536,7 +536,7 @@ cmd hunter hatsu set genthru
 cmd hunter nen refill
 cmd hunter hatsu next
 look 0 0
-cmd summon minecraft:villager ~-1.6 ~ ~4 {NoAI:1b,PersistenceRequired:1b,Silent:1b,Invulnerable:1b,Tags:["hxh_dummy"]}
+cmd summon minecraft:villager ~-1 ~ ~5 {NoAI:1b,PersistenceRequired:1b,Silent:1b,Invulnerable:1b,Tags:["hxh_dummy"]}
 wait 10
 cmd hunter hatsu cast
 wait 15
