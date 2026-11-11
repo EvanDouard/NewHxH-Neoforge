@@ -205,9 +205,9 @@ public final class Sprites3D {
     /** Boule de feu en 3D, couronne de rayons coniques qui tourne, halo. */
     public static void sun(Mesh3D.Ctx c, Vec3 at, float r, int color, float spin, float alpha) {
         int rgb = color & 0xFFFFFF;
-        // cœur émissif : un soleil ne doit pas être ombré comme un objet
-        Mesh3D.sphere(c, Mesh3D.glow(c), at, r, 0xE0601A, alpha * 0.7f, 14, 20,
-                d -> 1f + 0.05f * Mth.sin((float) (d.x * 8 + d.y * 6 + spin * 10)), true, false);
+        // cœur opaque non ombré (l'additif seul sature en blanc sur le ciel), puis lueur par-dessus
+        Mesh3D.sphere(c, Mesh3D.solid(c), at, r, 0xFF7A18, alpha, 14, 20,
+                d -> 1f + 0.05f * Mth.sin((float) (d.x * 8 + d.y * 6 + spin * 10)), false, false);
         Mesh3D.sphere(c, Mesh3D.glow(c), at, r * 0.6f, 0xFFE08A, alpha * 0.45f, 8, 12, null, false, false);
         for (int i = 0; i < 16; i++) {
             float a = spin + i * Mth.TWO_PI / 16;
