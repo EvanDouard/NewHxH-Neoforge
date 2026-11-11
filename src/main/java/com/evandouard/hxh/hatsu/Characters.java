@@ -424,7 +424,79 @@ public final class Characters {
                     charge > 0.8f ? com.evandouard.hxh.combat.Impacts.Tier.DEVASTATING
                             : charge > 0.4f ? com.evandouard.hxh.combat.Impacts.Tier.HEAVY : com.evandouard.hxh.combat.Impacts.Tier.MEDIUM, () -> {});
         }
-    });
+    }).requiresNenLevel(20);
+
+    public static final Passive FRANKLIN_STURDY = new Passive("franklin_sturdy", true) {
+        @Override
+        public float modifyIncoming(LivingEntity owner, DamageSource source, float amount) {
+            return amount * 0.85f;
+        }
+    };
+
+    public static final Technique FRANKLIN_DOUBLE_MACHINE_GUN = register(new Kinds.Burst("franklin_double_machine_gun", EMITTER,
+            40, 300, 18, 10, 2, 2.2f, List.of(), new Look(Style.ORB, NenFx.EMITTER, 0.6f), SoundEvents.FIREWORK_ROCKET_BLAST));
+
+    /** Suture : se soigne d'1 PV toutes les 4 s, et ses alliés à 3 blocs aussi. */
+    public static final Passive MACHI_SUTURE = new Passive("machi_suture", true) {
+        @Override
+        public void tick(LivingEntity owner) {
+            if (owner.tickCount % 80 != 0) return;
+            owner.heal(1f);
+            for (LivingEntity e : Targeting.around(owner, 3)) if (Kinds.isAlly(owner, e)) e.heal(1f);
+        }
+    };
+
+    public static final Technique MACHI_NEN_THREADS = register(new Techniques.Strike("machi_nen_threads", TRANSMUTER, 25, 200,
+            10, 0.95, 2f, 0f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 100, 3), new Effect(MobEffects.JUMP, 100, 128)),
+            new Look(Style.CHAIN, 0xFFE6E6F0, 1f), SoundEvents.SPIDER_AMBIENT));
+
+    /** Ménage : attire les objets au sol à 5 blocs. */
+    public static final Passive SHIZUKU_CLEANER = new Passive("shizuku_cleaner", true) {
+        @Override
+        public void tick(LivingEntity owner) {
+            if (!(owner instanceof Player) || owner.tickCount % 5 != 0) return;
+            for (ItemEntity it : owner.level().getEntitiesOfClass(ItemEntity.class, owner.getBoundingBox().inflate(5))) {
+                Vec3 pull = owner.position().subtract(it.position()).normalize().scale(0.25);
+                it.setDeltaMovement(it.getDeltaMovement().add(pull));
+            }
+        }
+    };
+
+    /** Blinky : aspire devant soi les projectiles (détruits), les objets et un peu les ennemis. */
+    public static final Technique SHIZUKU_BLINKY = register(new Technique("shizuku_blinky", CONJURER, 30, 240) {
+        @Override
+        public Component conditions() {
+            return Component.translatable("technique.hxh.cond.cone", "8", "45");
+        }
+
+        @Override
+        public double aiRange() {
+            return 8;
+        }
+
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.BLINKY, caster, caster.position(), 1.6f, 0xFFB0B0FF, 34);
+            for (int w = 0; w < 5; w++) {
+                NenTasks.later(w * 6, () -> {
+                    if (!caster.isAlive() || !(caster.level() instanceof ServerLevel level)) return;
+                    Vec3 mouth = caster.getEyePosition().add(caster.getLookAngle().scale(1.2));
+                    AABB box = caster.getBoundingBox().inflate(8);
+                    for (Projectile pr : level.getEntitiesOfClass(Projectile.class, box,
+                            pr -> pr.getOwner() != caster && pr.position().subtract(caster.getEyePosition()).normalize().dot(caster.getLookAngle()) > 0.7)) {
+                        NenFx.impactAt(level, pr.position(), 0.5f, 0xFFB0B0FF);
+                        pr.discard();
+                    }
+                    for (ItemEntity it : level.getEntitiesOfClass(ItemEntity.class, box))
+                        it.setDeltaMovement(mouth.subtract(it.position()).normalize().scale(0.6));
+                    for (LivingEntity t : Kinds.Sweep.inArc(caster, 8, 45)) {
+                        if (Kinds.isAlly(caster, t)) continue;
+                        t.setDeltaMovement(t.getDeltaMovement().add(mouth.subtract(t.position()).normalize().scale(0.25)));
+                        t.hurtMarked = true;
+                        Kinds.hurt(caster, t, 1.5f * power);
+                    }
+                    NenFx.shockwaveAt(level, mouth, 1.2f, 0xFFB0B0FF);
+                });
             }
             Kinds.sound(caster, SoundEvents.BREEZE_INHALE);
             return true;
