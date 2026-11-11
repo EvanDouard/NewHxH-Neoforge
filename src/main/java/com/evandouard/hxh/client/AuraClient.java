@@ -18,19 +18,21 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Aura autour du corps, en deux styles (choisis par Evan sur la maquette) :
  * <ul>
  *     <li><b>Vapeur</b> — aura calme : au repos, au Ten. Une lueur douce collée au corps ({@link AuraLayer}) et des
  *         volutes qui montent lentement et s'effacent.</li>
- *     <li><b>Flammes</b> — aura agressive : Ren (grandes flammes, cœur blanc), Ken (plus serrées), et toujours pour une
+ *     <li><b>Flammes</b> (langues de feu en volume) — aura agressive : Ren (grandes flammes, cœur blanc), Ken (plus serrées), et toujours pour une
  *         aura « sauvage » (personnages hostiles ou incontrôlés). Des langues de feu cernées de noir naissent au pied,
  *         montent le long du corps et vacillent.</li>
  * </ul>
  * Ryu à 75 % ou plus vers l'attaque : le corps ne garde presque plus d'aura, elle se concentre en flammes aux poings.
  */
 public final class AuraClient {
-    private static final ResourceLocation FLAME = tex("flame"), FLAME_CORE = tex("flame_core");
     private static final int LIGHT = 0xF000F0;
     public static final int RYU_FISTS_FROM = 75;
 
@@ -155,7 +157,7 @@ public final class AuraClient {
         float life = 14f - 4f * look.strength();
         float maxTongue = h * (0.25f + 0.55f * look.strength());
         float alphaBody = look.fists() ? 0.1f : 1f;
-        VertexConsumer outer = buffers.getBuffer(RenderType.entityTranslucent(FLAME));
+        Mesh3D.Ctx m = new Mesh3D.Ctx(pose, buffers, cam);
         for (int i = 0; i < n; i++) {
             float phase = ((time / life) + hash(i + 17)) % 1f;
             float ang = i * 2.39996f + Mth.sin(time * 0.05f + i) * 0.3f;
@@ -166,11 +168,10 @@ public final class AuraClient {
             float flick = 1f + 0.18f * Mth.sin(time * 1.3f + i * 2.1f);
             Vec3 base = new Vec3(feet.x() + Mth.cos(ang) * rad, y, feet.z() + Mth.sin(ang) * rad);
             float a = alphaBody * Math.min(1f, (1f - phase) * 2.5f) * front(cam, feet, ang);
-            tongue(outer, pose, cam, base, size * 0.45f, size * flick, look.color(), a);
+            tongue3d(m, base, size * 0.3f, size * flick, look.color(), a, time, i, false);
         }
         // cœur blanc additif (Ren surtout)
         if (look.strength() >= 0.6f) {
-            VertexConsumer core = buffers.getBuffer(RenderType.eyes(FLAME_CORE));
             for (int i = 0; i < n; i += 2) {
                 float phase = ((time / life) + hash(i + 17)) % 1f;
                 float ang = i * 2.39996f + Mth.sin(time * 0.05f + i) * 0.3f;
@@ -180,7 +181,7 @@ public final class AuraClient {
                 if (size < 0.05f) continue;
                 Vec3 base = new Vec3(feet.x() + Mth.cos(ang) * rad, y, feet.z() + Mth.sin(ang) * rad);
                 float a = alphaBody * Math.min(1f, (1f - phase) * 2.5f) * 0.8f * front(cam, feet, ang);
-                tongue(core, pose, cam, base, size * 0.45f, size, dim(mixWhite(look.color(), 0.6f), a), a);
+                tongue3d(m, base, size * 0.16f, size, dim(mixWhite(look.color(), 0.6f), a), a, time, i, true);
             }
         }
     }
@@ -218,13 +219,14 @@ public final class AuraClient {
             float k = look.bodyVisibility() < 0.02f ? look.strength() : 1f; // Ko : le poing grossit en se chargeant
             billboard(glow, pose, cam, fist, (0.55f + 0.08f * Mth.sin(time * 0.6f)) * k, dim(look.color(), 0.9f), 0.9f);
         }
-        VertexConsumer outer = buffers.getBuffer(RenderType.entityTranslucent(FLAME));
+        Mesh3D.Ctx m = new Mesh3D.Ctx(pose, buffers, cam);
         for (Vec3 fist : new Vec3[]{right, left}) {
             for (int i = 0; i < 4; i++) {
                 float phase = ((time / 8f) + i * 0.25f) % 1f;
                 float size = 0.5f * Mth.sin(Mth.PI * phase);
+                if (size < 0.04f) continue;
                 Vec3 base = fist.add(Mth.cos(i * 1.57f) * 0.12, -0.15 + phase * 0.35, Mth.sin(i * 1.57f) * 0.12);
-                tongue(outer, pose, cam, base, size * 0.5f, size, look.color(), 1f - phase * 0.6f);
+                tongue3d(m, base, size * 0.3f, size, look.color(), 1f - phase * 0.6f, time, i, false);
             }
         }
     }
@@ -273,18 +275,26 @@ public final class AuraClient {
         return (r << 16) | (g << 8) | b;
     }
 
-    /** Quad vertical tourné vers la caméra autour de l'axe Y, pied au point donné (flammes). */
-    private static void tongue(VertexConsumer vc, PoseStack pose, Vec3 cam, Vec3 base, float halfW, float height,
-                               int rgb, float alpha) {
-        Vec3 to = cam.subtract(base);
-        Vec3 side = new Vec3(-to.z, 0, to.x);
-        side = side.lengthSqr() < 1e-6 ? new Vec3(1, 0, 0) : side.normalize().scale(halfW);
-        Vec3 up = new Vec3(0, height, 0);
+    /**
+     * Langue de feu en volume : tube qui monte en ondulant, ventre arrondi en bas et pointe effilée en haut.
+     * Couche externe translucide à bords denses (fresnel), cœur additif plus fin.
+     */
+    private static void tongue3d(Mesh3D.Ctx m, Vec3 base, float halfW, float height, int rgb, float alpha, float time,
+                                 int seed, boolean core) {
+        if (alpha < 0.02f || height < 0.04f) return;
+        float dirA = seed * 2.39996f;
+        Vec3 sway = new Vec3(Mth.cos(dirA), 0, Mth.sin(dirA));
+        List<Vec3> path = new ArrayList<>(6);
         Vec3 b = base.subtract(0, height * 0.08, 0);
-        vertex(vc, pose, cam, b.subtract(side), rgb, alpha, 0, 1);
-        vertex(vc, pose, cam, b.add(side), rgb, alpha, 1, 1);
-        vertex(vc, pose, cam, b.add(side).add(up), rgb, alpha, 1, 0);
-        vertex(vc, pose, cam, b.subtract(side).add(up), rgb, alpha, 0, 0);
+        for (int k = 0; k <= 5; k++) {
+            float t = k / 5f;
+            float wob = Mth.sin(time * 0.45f + seed * 1.3f + t * 3.2f) * halfW * 1.1f * t;
+            path.add(b.add(0, height * t, 0).add(sway.scale(wob)));
+        }
+        Mesh3D.Profile prof = t -> halfW * (t < 0.25f ? Mth.lerp(t / 0.25f, 0.5f, 1f)
+                : (float) Math.pow(Math.max(0f, 1f - (t - 0.25f) / 0.75f), 0.8));
+        if (core) Mesh3D.tube(m, Mesh3D.glow(m), path, prof, rgb, alpha, 5, false);
+        else Mesh3D.tube(m, Mesh3D.solid(m), path, prof, rgb, alpha * 0.9f, 7, false, true);
     }
 
     /** Quad face à la caméra centré sur le point. */

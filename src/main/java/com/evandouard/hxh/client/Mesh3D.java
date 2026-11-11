@@ -159,6 +159,12 @@ public final class Mesh3D {
     /** Tube au profil libre (lame effilée aux deux bouts, aiguille…). */
     public static void tube(Ctx c, VertexConsumer vc, List<Vec3> path, Profile profile, int rgb, float alpha,
                             int sides, boolean lit) {
+        tube(c, vc, path, profile, rgb, alpha, sides, lit, false);
+    }
+
+    /** Tube au profil libre ; en mode {@code fresnel}, bords denses et cœur transparent (langue de flamme). */
+    public static void tube(Ctx c, VertexConsumer vc, List<Vec3> path, Profile profile, int rgb, float alpha,
+                            int sides, boolean lit, boolean fresnel) {
         if (path.size() < 2) return;
         Vec3[] prevRing = null;
         Vec3[] prevNormals = null;
@@ -179,7 +185,7 @@ public final class Mesh3D {
                 for (int k = 0; k < sides; k++) {
                     int k1 = (k + 1) % sides;
                     quadShaded(c, vc, prevRing[k], prevRing[k1], ring[k1], ring[k],
-                            prevNormals[k], prevNormals[k1], normals[k1], normals[k], rgb, alpha, lit, false);
+                            prevNormals[k], prevNormals[k1], normals[k1], normals[k], rgb, alpha, lit, fresnel);
                 }
             }
             prevRing = ring;

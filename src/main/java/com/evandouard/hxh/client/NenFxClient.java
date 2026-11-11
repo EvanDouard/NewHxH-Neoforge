@@ -818,8 +818,8 @@ public final class NenFxClient {
     /**
      * Image dessinée : elle gonfle en apparaissant (15 % du temps) et s'efface à la fin (25 %).
      * <ul>
-     *   <li>KANNON : grande image verticale derrière le lanceur, tournée comme lui (figée au premier dessin), halo doré ;</li>
-     *   <li>KANNON_HANDS : petites mains dorées face caméra sur les poings du lanceur (suivent ses mains).</li>
+     *   <li>KANNON : statue 3D derrière le lanceur, tournée comme lui (figée au premier dessin), auréole et nimbe ;</li>
+     *   <li>KANNON_HANDS : mains dorées 3D sur les poings du lanceur, doigts vers où il regarde.</li>
      * </ul>
      */
     private static void sprite(Ctx c, Fx f, float t) {
@@ -839,21 +839,12 @@ public final class NenFxClient {
                     f.offset = src != null ? src.position() : f.at;
                 }
                 Vec3 fwd = f.dir;
-                Vec3 side = fwd.cross(new Vec3(0, 1, 0)).normalize();
-                float h = f.size * scale, w = h;
-                Vec3 base = f.offset.subtract(fwd.scale(2.6)).add(0, -0.6 + (1f - scale) * 0.5, 0);
+                float h = f.size * scale;
+                Vec3 base = f.offset.subtract(fwd.scale(2.6)).add(0, (1f - scale) * -0.5, 0);
                 // caméra derrière la statue (vue de dos) : elle se fait presque transparente, sans halo
                 boolean behind = c.cam.subtract(base).dot(fwd) < 0.5;
                 if (behind) alpha *= 0.12f;
-                Vec3 p0 = base.add(side.scale(-w / 2)), p1 = base.add(side.scale(w / 2));
-                Vec3 p2 = p1.add(0, h, 0), p3 = p0.add(0, h, 0);
-                // halo doré derrière, puis la statue (contour encré, aplats translucides)
-                Vec3 mid = base.add(0, h * 0.55, 0).subtract(fwd.scale(0.05));
-                Vec3 gs = side.scale(w * 0.75), gu = new Vec3(0, h * 0.75, 0);
-                if (!behind) quad(c, RenderType.eyes(GLOW), mid.subtract(gs).subtract(gu), mid.add(gs).subtract(gu),
-                        mid.add(gs).add(gu), mid.subtract(gs).add(gu), f.color, alpha * 0.35f);
-                quad(c, RenderType.entityTranslucent(tex), p0, p1, p2, p3, 0xFFFFFFFF, alpha * 0.85f);
-                quad(c, RenderType.eyes(tex), p0, p1, p2, p3, f.color, alpha * 0.35f);
+                Sprites3D.kannon(mesh(c), base, fwd, h, f.color, c.now + c.pt, alpha, !behind);
             }
             case SUN -> {
                 Vec3 at = (src != null ? src.position() : f.at).add(0, (src != null ? src.getBbHeight() : 2) + 2.2, 0);
@@ -906,8 +897,8 @@ public final class NenFxClient {
             }
             case KANNON_HANDS -> {
                 Vec3 at = src != null ? hand(src, c.pt) : f.at;
-                billboard(c, RenderType.entityTranslucent(tex), at, f.size * 0.5f * scale, 0, 0xFFFFFFFF, alpha);
-                billboard(c, RenderType.eyes(GLOW), at, f.size * 0.6f * scale, 0, f.color, alpha * 0.5f);
+                Vec3 look = src != null ? src.getViewVector(c.pt) : new Vec3(0, 0, 1);
+                Sprites3D.kannonHand(mesh(c), at, look, f.size * 0.9f * scale, f.color, alpha);
             }
         }
     }

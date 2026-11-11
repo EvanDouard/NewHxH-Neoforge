@@ -14,7 +14,8 @@ import java.util.List;
  * Modèles 3D des images de techniques, construits avec les formes de {@link Mesh3D} : dragon de Zeno (corps de
  * serpent qui ondule, tête à cornes), démons de Razor, Cookie de Biscuit, soldats de fumée de Morel, cœur de
  * Pariston, notes de Senritsu, bombe de Genthru, soleil de Feitan, armes de Kite, goutte de peur…
- * Ce qui est plat par nature (ailes, marque de porte, papier, livre, Kannon) reste dessiné.
+ * statue de Kannon de Netero (mille bras en éventail, mains jointes, auréole) et ses mains dorées.
+ * Ce qui est plat par nature (ailes, marque de porte, papier, livre) reste dessiné.
  */
 public final class Sprites3D {
     private Sprites3D() {}
@@ -215,5 +216,99 @@ public final class Sprites3D {
             Mesh3D.cone(c, Mesh3D.glow(c), at.add(d.scale(r * 0.9f)), at.add(d.scale(r * (1.7f + 0.3f * (i % 2)))), r * 0.18f, rgb, alpha, 6, false);
         }
         Mesh3D.sphere(c, Mesh3D.glow(c), at, r * 1.8f, rgb, alpha * 0.15f, 10, 14, null, false, true);
+    }
+
+    private static final int KANNON_GOLD = 0xE8B44A;
+
+    /**
+     * Statue de Kannon (Hyakushiki Kannon de Netero), debout sur un lotus, face à {@code fwd} : robe évasée, buste,
+     * tête à chignon, mains jointes devant la poitrine, éventail de bras dans le dos, auréole derrière la tête et
+     * grand nimbe autour du corps. Or translucide ombré + enveloppe lumineuse de la couleur de l'aura.
+     */
+    public static void kannon(Mesh3D.Ctx c, Vec3 base, Vec3 fwd, float h, int color, float time, float alpha, boolean halo) {
+        int aura = color & 0xFFFFFF;
+        Vec3 f = new Vec3(fwd.x, 0, fwd.z);
+        f = f.lengthSqr() < 1e-6 ? new Vec3(0, 0, 1) : f.normalize();
+        Vec3 side = f.cross(new Vec3(0, 1, 0)).normalize();
+        float breath = 1f + 0.015f * Mth.sin(time * 0.15f);
+        // lotus : pétales en cônes inclinés vers l'extérieur
+        for (int i = 0; i < 10; i++) {
+            float a = Mth.TWO_PI * i / 10f;
+            Vec3 out = side.scale(Mth.cos(a)).add(f.scale(Mth.sin(a)));
+            Vec3 b0 = base.add(out.scale(h * 0.1));
+            Mesh3D.cone(c, Mesh3D.solid(c), b0, b0.add(out.scale(h * 0.17)).add(0, h * 0.09, 0), h * 0.055f,
+                    0xF0C8D0, alpha * 0.85f, 6, true);
+        }
+        // robe puis buste : un seul tube au profil évasé en bas, serré à la taille, large aux épaules
+        List<Vec3> trunk = new ArrayList<>();
+        for (int i = 0; i <= 8; i++) trunk.add(base.add(0, h * (0.06 + 0.58 * i / 8f), 0));
+        Mesh3D.Profile body = t -> h * breath * (t < 0.55f ? Mth.lerp(t / 0.55f, 0.2f, 0.12f)
+                : Mth.lerp((t - 0.55f) / 0.45f, 0.12f, 0.15f) * (t > 0.92f ? 0.75f : 1f));
+        Mesh3D.tube(c, Mesh3D.solid(c), trunk, body, KANNON_GOLD, alpha * 0.8f, 12, true);
+        Mesh3D.tube(c, Mesh3D.glow(c), trunk, t -> body.radius(t) * 1.12f, aura, alpha * 0.35f, 12, false, true);
+        Vec3 neck = base.add(0, h * 0.66, 0);
+        Vec3 head = neck.add(0, h * 0.075, 0);
+        Mesh3D.sphere(c, Mesh3D.solid(c), head, h * 0.075f, KANNON_GOLD, alpha * 0.85f, 10, 12, null, true, false);
+        Mesh3D.sphere(c, Mesh3D.solid(c), head.add(0, h * 0.08, 0).subtract(f.scale(h * 0.01)), h * 0.035f,
+                KANNON_GOLD, alpha * 0.85f, 6, 8, null, true, false);
+        // yeux mi-clos lumineux
+        for (int sgn = -1; sgn <= 1; sgn += 2) {
+            Vec3 eye = head.add(f.scale(h * 0.07)).add(side.scale(h * 0.025 * sgn)).add(0, h * 0.008, 0);
+            Mesh3D.sphere(c, Mesh3D.glow(c), eye, h * 0.009f, 0xFFF6D8, alpha, 4, 6, null, false, false);
+        }
+        // auréole derrière la tête, grand nimbe autour du corps
+        if (halo) {
+            Mesh3D.torus(c, Mesh3D.glow(c), head.subtract(f.scale(h * 0.09)), f, h * 0.13f, h * 0.012f, aura, alpha * 0.8f,
+                    28, 6, false);
+            Mesh3D.torus(c, Mesh3D.glow(c), base.add(0, h * 0.5, 0).subtract(f.scale(h * 0.2)), f, h * 0.47f, h * 0.008f,
+                    aura, alpha * 0.45f, 40, 5, false);
+        }
+        // mains jointes (gasshô) : deux avant-bras qui se rejoignent devant la poitrine, paumes vers le haut
+        Vec3 chest = base.add(0, h * 0.5, 0).add(f.scale(h * 0.17));
+        for (int sgn = -1; sgn <= 1; sgn += 2) {
+            Vec3 shoulder = base.add(0, h * 0.6, 0).add(side.scale(h * 0.14 * sgn));
+            Vec3 elbow = base.add(0, h * 0.44, 0).add(side.scale(h * 0.15 * sgn)).add(f.scale(h * 0.07));
+            Vec3 wrist = chest.add(side.scale(h * 0.018 * sgn));
+            Mesh3D.tube(c, Mesh3D.solid(c), List.of(shoulder, elbow, wrist), h * 0.04f, h * 0.03f, KANNON_GOLD,
+                    alpha * 0.85f, 8, true);
+            Mesh3D.cone(c, Mesh3D.solid(c), wrist, wrist.add(0, h * 0.1, 0).add(f.scale(h * 0.015)).add(side.scale(-h * 0.012 * sgn)),
+                    h * 0.03f, KANNON_GOLD, alpha * 0.85f, 6, true);
+        }
+        // éventail de bras dans le dos (les « cent bras ») : chacun ondule un peu, main ouverte au bout
+        int arms = 14;
+        Vec3 back = base.add(0, h * 0.56, 0).subtract(f.scale(h * 0.06));
+        for (int i = 0; i < arms; i++) {
+            float u = (i + 0.5f) / arms;                       // 0..1 de gauche à droite
+            float ang = Mth.lerp(u, -2.5f, 2.5f);               // éventail de presque 290°
+            float sway = Mth.sin(time * 0.12f + i * 0.9f) * 0.08f;
+            Vec3 dir = side.scale(Mth.sin(ang + sway)).add(0, Mth.cos(ang + sway), 0).subtract(f.scale(0.25)).normalize();
+            Vec3 mid = back.add(dir.scale(h * 0.2)).add(0, -h * 0.02, 0);
+            Vec3 end = back.add(dir.scale(h * 0.38));
+            Mesh3D.tube(c, Mesh3D.solid(c), List.of(back.add(dir.scale(h * 0.08)), mid, end), h * 0.025f, h * 0.018f,
+                    KANNON_GOLD, alpha * 0.7f, 6, true);
+            Mesh3D.sphere(c, Mesh3D.solid(c), end.add(dir.scale(h * 0.025)), h * 0.03f, KANNON_GOLD, alpha * 0.75f, 5, 7,
+                    d -> 1f - 0.45f * (float) Math.abs(d.dot(f)), true, false);
+            Mesh3D.sphere(c, Mesh3D.glow(c), end.add(dir.scale(h * 0.025)), h * 0.045f, aura, alpha * 0.3f, 5, 7, null, false, true);
+        }
+    }
+
+    /** Main dorée de Kannon (paume, quatre doigts, pouce), doigts vers {@code fwd} : frappe des Kannon. */
+    public static void kannonHand(Mesh3D.Ctx c, Vec3 at, Vec3 fwd, float s, int color, float alpha) {
+        Vec3 f = fwd.lengthSqr() < 1e-6 ? new Vec3(0, 0, 1) : fwd.normalize();
+        Vec3[] b = Mesh3D.basis(f);
+        Vec3 side = b[0], up = b[1];
+        Mesh3D.sphere(c, Mesh3D.solid(c), at, s * 0.32f, KANNON_GOLD, alpha, 8, 10,
+                d -> 1f - 0.55f * (float) Math.abs(d.dot(up)), true, false);
+        for (int i = 0; i < 4; i++) {
+            float off = (i - 1.5f) * 0.14f;
+            Vec3 root = at.add(f.scale(s * 0.25)).add(side.scale(s * off));
+            float len = s * (0.42f - Math.abs(i - 1.5f) * 0.06f);
+            Mesh3D.tube(c, Mesh3D.solid(c), List.of(root, root.add(f.scale(len * 0.55)), root.add(f.scale(len)).add(up.scale(-s * 0.05))),
+                    s * 0.065f, s * 0.05f, KANNON_GOLD, alpha, 6, true);
+        }
+        Vec3 troot = at.add(side.scale(-s * 0.28));
+        Mesh3D.tube(c, Mesh3D.solid(c), List.of(troot, troot.add(side.scale(-s * 0.12)).add(f.scale(s * 0.15)),
+                troot.add(f.scale(s * 0.32)).add(side.scale(-s * 0.08))), s * 0.07f, s * 0.055f, KANNON_GOLD, alpha, 6, true);
+        Mesh3D.sphere(c, Mesh3D.glow(c), at.add(f.scale(s * 0.15)), s * 0.6f, color & 0xFFFFFF, alpha * 0.35f, 8, 10, null, false, true);
     }
 }
