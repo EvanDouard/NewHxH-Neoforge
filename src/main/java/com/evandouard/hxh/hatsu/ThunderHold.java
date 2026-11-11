@@ -3,6 +3,7 @@ package com.evandouard.hxh.hatsu;
 import com.evandouard.hxh.data.HunterData;
 import com.evandouard.hxh.data.NenType;
 import com.evandouard.hxh.fx.NenFx;
+import com.evandouard.hxh.nen.Targeting;
 import com.evandouard.hxh.stats.HunterStats;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
