@@ -496,13 +496,12 @@ wait 6
 shot 22n3_meruem_rafale_de_rage
 cmd hunter hatsu set zeno
 cmd hunter nen refill
-look 0 0
-cmd summon minecraft:villager ~ ~ ~10 {NoAI:1b,PersistenceRequired:1b,Silent:1b,Invulnerable:1b,Tags:["hxh_dummy"]}
-wait 10
+look 0 -30
+wait 5
 cmd hunter hatsu cast
-wait 4
+wait 5
 shot 22n4a_zeno_tete_de_dragon
-cmd kill @e[tag=hxh_dummy]
+look 0 0
 cmd hunter hatsu next
 cmd hunter nen refill
 cmd hunter hatsu cast
@@ -537,7 +536,7 @@ cmd hunter hatsu set genthru
 cmd hunter nen refill
 cmd hunter hatsu next
 look 0 0
-cmd summon minecraft:villager ~ ~ ~4 {NoAI:1b,PersistenceRequired:1b,Silent:1b,Invulnerable:1b,Tags:["hxh_dummy"]}
+cmd summon minecraft:villager ~-1.6 ~ ~4 {NoAI:1b,PersistenceRequired:1b,Silent:1b,Invulnerable:1b,Tags:["hxh_dummy"]}
 wait 10
 cmd hunter hatsu cast
 wait 15
@@ -1255,6 +1254,7 @@ cmd kill @e[type=hxh:arena_fighter]
 wait 40
 expect Victoire
 shot 45c_objets_rendus
+wait 80
 cmd hunter arena floor 250
 cmd hunter arena register
 cmd hunter arena goto 250

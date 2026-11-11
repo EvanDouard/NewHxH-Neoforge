@@ -826,7 +826,7 @@ public final class NenFxClient {
                 billboard(c, RenderType.eyes(GLOW), at, half * 1.5f, 0, f.color, a * 0.35f);
                 billboard(c, RenderType.entityTranslucent(tex), at, half, 0, 0xFFFFFFFF, a);
                 billboardUV(c, RenderType.entityTranslucent(DIGITS), at.add(0, -half * 0.12, 0).add(towardCam(c, at, 0.02)),
-                        half * 0.34f, left / 10f, (left + 1) / 10f, 0xFFFFFFFF, a);
+                        half * 0.38f, left / 10f, (left + 1) / 10f, 0xFFFFFFFF, a);
             }
             case KANNON_HANDS -> {
                 Vec3 at = src != null ? hand(src, c.pt) : f.at;

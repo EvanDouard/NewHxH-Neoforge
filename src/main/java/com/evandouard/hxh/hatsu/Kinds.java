@@ -490,7 +490,7 @@ public final class Kinds {
             if (target == null) return false;
             NenFx.impactOn(caster, target, 0.8f, color);
             // bombe dessinée collée à la cible, chiffres du compte à rebours
-            if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.BOMB, target, target.position(), 1.1f, color, delay);
+            if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.BOMB, target, target.position(), 1.5f, color, delay);
             int seconds = Math.max(1, delay / 20);
             for (int s = seconds; s >= 1; s--) {
                 final int left = s;
