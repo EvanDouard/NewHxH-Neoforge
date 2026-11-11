@@ -493,8 +493,8 @@ wait 25
 shot 22n_biscuit_grande_forme
 cmd hunter hatsu cast
 cmd hunter hatsu set feitan
-cmd hunter nen refill
 camera back
+cmd hunter nen refill
 cmd hunter hatsu cast
 wait 20
 shot 22n2_feitan_soleil_levant
@@ -508,7 +508,7 @@ cmd hunter nen refill
 look 0 -30
 wait 5
 cmd hunter hatsu cast
-wait 5
+wait 7
 shot 22n4a_zeno_tete_de_dragon
 look 0 0
 cmd hunter hatsu next

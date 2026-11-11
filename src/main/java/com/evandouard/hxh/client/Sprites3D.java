@@ -25,8 +25,8 @@ public final class Sprites3D {
         int rgb = color & 0xFFFFFF;
         Vec3 fwd = heading.lengthSqr() < 1e-6 ? new Vec3(0, 0, 1) : heading.normalize();
         switch (sprite) {
-            case DRAGON -> dragon(c, at, fwd, size * 0.45f, NenFx.GOLD & 0xFFFFFF, time, alpha);
-            case DRAGON_DIVE -> dragon(c, at, fwd, size * 0.35f, NenFx.GOLD & 0xFFFFFF, time, alpha);
+            case DRAGON -> dragon(c, at, fwd, size * 0.75f, NenFx.GOLD & 0xFFFFFF, time, alpha);
+            case DRAGON_DIVE -> dragon(c, at, fwd, size * 0.6f, NenFx.GOLD & 0xFFFFFF, time, alpha);
             case DEMON -> demon(c, at, size * 0.5f, rgb, time, alpha);
             case COOKIE -> cookie(c, at, size * 0.5f, time, alpha);
             case SMOKE_SOLDIER -> smokeSoldier(c, at, size * 0.5f, rgb, time, alpha);
@@ -52,12 +52,13 @@ public final class Sprites3D {
         int n = 20;
         for (int i = 0; i <= n; i++) {
             float t = i / (float) n;
-            float wave = Mth.sin(time * 0.5f - t * 7f) * s * 0.35f * t;
-            float wave2 = Mth.cos(time * 0.4f - t * 6f) * s * 0.2f * t;
-            body.add(head.subtract(fwd.scale(t * s * 3.2f)).add(b[0].scale(wave)).add(b[1].scale(wave2)));
+            // corps en S bien marqué sur les côtés : visible même quand le dragon file dans l'axe de la caméra
+            float wave = Mth.sin(time * 0.35f + t * 4.7f) * s * 0.9f * Mth.sin(t * Mth.PI);
+            float wave2 = Mth.cos(time * 0.3f + t * 3.5f) * s * 0.35f * t;
+            body.add(head.subtract(fwd.scale(t * s * 2.6f)).add(b[0].scale(wave)).add(b[1].scale(wave2 + t * s * 0.5f)));
         }
-        Mesh3D.tube(c, Mesh3D.glow(c), body, t -> s * (0.32f - 0.27f * t), rgb, alpha * 0.45f, 8, false);
-        Mesh3D.tube(c, Mesh3D.solid(c), body, t -> s * (0.22f - 0.19f * t), rgb, alpha, 10, true);
+        Mesh3D.tube(c, Mesh3D.glow(c), body, t -> s * (0.36f - 0.28f * t), rgb, alpha * 0.45f, 8, false);
+        Mesh3D.tube(c, Mesh3D.solid(c), body, t -> s * (0.26f - 0.2f * t), rgb, alpha, 10, true);
         // tête : museau (cône) vers l'avant, crâne (sphère)
         Mesh3D.sphere(c, Mesh3D.solid(c), head, s * 0.3f, rgb, alpha, 8, 12, null, true, false);
         Mesh3D.cone(c, Mesh3D.solid(c), head.add(fwd.scale(s * 0.1f)), head.add(fwd.scale(s * 0.62f)), s * 0.2f, rgb, alpha, 10, true);
