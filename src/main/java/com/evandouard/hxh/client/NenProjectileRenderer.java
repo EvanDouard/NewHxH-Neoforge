@@ -41,6 +41,7 @@ public class NenProjectileRenderer extends EntityRenderer<NenProjectile> {
             pose.pushPose();
             pose.mulPose(Axis.ZP.rotationDegrees(age * 40f));
             cardQuad(pose, buffers.getBuffer(RenderType.entityTranslucent(NenFxClient.CARD)));
+            cardEdges(pose, buffers.getBuffer(RenderType.entityTranslucent(NenFxClient.WHITE)));
             pose.popPose();
         } else {
             // Ciseaux : lame d'aura en croissant, en 3D (effilée aux deux bouts), à plat, pointes vers l'avant
@@ -79,6 +80,21 @@ public class NenProjectileRenderer extends EntityRenderer<NenProjectile> {
                         .setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose.last(), 0, 0, 1);
             }
         }
+    }
+
+    /** Tranche de la carte (épaisseur) : elle a du volume quand elle tournoie. */
+    private static void cardEdges(PoseStack pose, VertexConsumer vc) {
+        Matrix4f m = pose.last().pose();
+        float w = 0.3f, h = 0.4f, d = 0.012f;
+        float[][][] edges = {
+                {{-w, -h, -d}, {w, -h, -d}, {w, -h, d}, {-w, -h, d}},
+                {{-w, h, d}, {w, h, d}, {w, h, -d}, {-w, h, -d}},
+                {{-w, -h, d}, {-w, h, d}, {-w, h, -d}, {-w, -h, -d}},
+                {{w, -h, -d}, {w, h, -d}, {w, h, d}, {w, -h, d}}};
+        for (float[][] q : edges)
+            for (float[] p : q)
+                vc.addVertex(m, p[0], p[1], p[2]).setColor(235, 230, 220, 255).setUv(0.5f, 0.5f)
+                        .setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose.last(), 0, 1, 0);
     }
 
     private static void quad(PoseStack pose, VertexConsumer vc, float half, float angle, int color, int alpha) {

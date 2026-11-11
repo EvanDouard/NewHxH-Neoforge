@@ -351,10 +351,38 @@ public final class NenFxClient {
     private static void impact(Ctx c, Vec3 at, float size, int color, float t, int seed, ResourceLocation texture) {
         float s = t < 0.25f ? Mth.lerp(t / 0.25f, 0.3f, 1.15f) : Mth.lerp((t - 0.25f) / 0.75f, 1.15f, 1.0f);
         float alpha = t < 0.6f ? 1f : 1f - (t - 0.6f) / 0.4f;
-        float angle = hash(seed, 1) * Mth.TWO_PI;
         float half = 0.5f * size * s;
-        billboard(c, RenderType.eyes(GLOW), at, half * 1.5f, 0, color, alpha * 0.7f);
-        billboard(c, RenderType.entityTranslucent(texture), at, half, angle, color, alpha);
+        Mesh3D.Ctx m = mesh(c);
+        int rgb = color & 0xFFFFFF, light = AuraOrb3D.mix(rgb, 0xFFFFFF, 0.6f);
+        if (texture == SLASH) {
+            // coupure en 3D : un croissant effilé qui balaie l'espace, avec une traînée lumineuse
+            Vec3 axis = new Vec3(hash(seed, 2) - 0.5, hash(seed, 3) - 0.5, hash(seed, 4) - 0.5);
+            if (axis.lengthSqr() < 1e-4) axis = new Vec3(0, 1, 0);
+            Vec3[] b = Mesh3D.basis(axis);
+            float sweep = ease(Math.min(1f, t * 2.2f));
+            float r = half * 1.3f;
+            java.util.List<Vec3> arc = new java.util.ArrayList<>();
+            int n = 14;
+            for (int i = 0; i <= n; i++) {
+                float a = -1.4f + 2.8f * sweep * i / n;
+                arc.add(at.add(b[0].scale(Mth.cos(a) * r)).add(b[1].scale(Mth.sin(a) * r)));
+            }
+            Mesh3D.tube(m, Mesh3D.glow(m), arc, k -> (0.04f + 0.16f * size * 0.25f) * Mth.sin(k * Mth.PI), rgb, alpha * 0.8f, 6, false);
+            Mesh3D.tube(m, Mesh3D.glow(m), arc, k -> 0.03f * Mth.sin(k * Mth.PI) + 0.005f, light, alpha, 6, false);
+            return;
+        }
+        // impact en 3D : un éclat de pointes qui jaillissent du point, et une bulle de choc qui gonfle
+        VertexConsumer g = Mesh3D.glow(m);
+        int spikes = 7 + (int) (size * 2);
+        for (int i = 0; i < spikes; i++) {
+            Vec3 d = new Vec3(hash(seed, i * 3 + 5) - 0.5, hash(seed, i * 3 + 6) - 0.5, hash(seed, i * 3 + 7) - 0.5);
+            if (d.lengthSqr() < 1e-4) continue;
+            d = d.normalize();
+            float len = half * (0.9f + 0.8f * hash(seed, i + 40)) * s;
+            Mesh3D.cone(m, g, at.add(d.scale(half * 0.15f)), at.add(d.scale(len)), half * 0.13f, i % 2 == 0 ? light : rgb, alpha, 5, false);
+        }
+        Mesh3D.sphere(m, g, at, half * (0.5f + 0.9f * t), rgb, alpha * 0.7f, 8, 12, null, false, true);
+        Mesh3D.sphere(m, g, at, half * 0.3f * (1f - t), light, alpha, 6, 8, null, false, false);
     }
 
     /** Anneau au sol qui s'élargit. */
@@ -363,11 +391,12 @@ public final class NenFxClient {
         Vec3 base = (src != null ? src.getPosition(c.pt) : f.at).add(0, 0.08, 0);
         float radius = Math.max(0.2f, f.size * ease(t * 1.2f));
         float alpha = 1f - t;
-        quad(c, RenderType.entityTranslucent(RING), base.add(-radius, 0, -radius), base.add(radius, 0, -radius),
-                base.add(radius, 0, radius), base.add(-radius, 0, radius), f.color, alpha);
-        float inner = radius * 0.6f;
-        quad(c, RenderType.eyes(GLOW), base.add(-inner, 0.02, -inner), base.add(inner, 0.02, -inner),
-                base.add(inner, 0.02, inner), base.add(-inner, 0.02, inner), f.color, alpha * 0.5f);
+        // onde de choc en 3D : un anneau épais qui roule au sol, et un mur d'énergie bas qui s'élargit
+        Mesh3D.Ctx m = mesh(c);
+        int rgb = f.color & 0xFFFFFF;
+        Mesh3D.torus(m, Mesh3D.glow(m), base, new Vec3(0, 1, 0), radius, 0.07f + 0.05f * f.size * (1 - t), rgb, alpha, 40, 6, false);
+        Mesh3D.tube(m, Mesh3D.glow(m), java.util.List.of(base, base.add(0, 0.35f * (1 - t) + 0.05f, 0)),
+                radius, radius * 1.04f, rgb, alpha * 0.4f, 40, false);
     }
 
     /** Boule d'aura avec traînée ; à l'arrivée, impact. */
@@ -392,8 +421,7 @@ public final class NenFxClient {
             billboard(c, RenderType.eyes(GLOW), from.lerp(to, q), half * (1f - k * 0.13f) * 1.4f, 0, f.color, 0.55f - k * 0.09f);
         }
         Vec3 pos = from.lerp(to, p);
-        billboard(c, RenderType.eyes(GLOW), pos, half * 2.2f, 0, f.color, 0.8f);
-        billboard(c, RenderType.entityTranslucent(ORB), pos, half, age * 0.3f, f.color, 1f);
+        AuraOrb3D.render(mesh(c), pos, half, f.color, age, false);
     }
 
     private static boolean attachedToBody(NenFx.Kind kind) {
@@ -721,8 +749,9 @@ public final class NenFxClient {
             if (tk < 0 || tk > 1) continue;
             Vec3 p = base.add(0, h * ease(tk), 0);
             float r = radius * (1.1f - 0.3f * tk);
-            quad(c, RenderType.entityTranslucent(RING), p.add(-r, 0, -r), p.add(r, 0, -r), p.add(r, 0, r), p.add(-r, 0, r),
-                    f.color, 1f - tk);
+            // anneau d'aura en 3D qui remonte le long du corps
+            Mesh3D.Ctx m = mesh(c);
+            Mesh3D.torus(m, Mesh3D.glow(m), p, new Vec3(0, 1, 0), r * 0.75f, 0.05f, f.color & 0xFFFFFF, 1f - tk, 28, 5, false);
         }
         // Lueur sur le corps, sauf pour soi en vue subjective (elle teinterait tout l'écran)
         if (!firstPerson(src)) billboard(c, RenderType.eyes(GLOW), base.add(0, h * 0.5, 0), h * 0.8f * f.size, 0, f.color, 0.5f * (1f - t));
