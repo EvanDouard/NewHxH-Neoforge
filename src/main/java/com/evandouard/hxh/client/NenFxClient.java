@@ -839,7 +839,7 @@ public final class NenFxClient {
                 if (sprite == NenFx.Sprite.CLOWN) spin = Mth.sin(time * 0.6f) * 0.15f;
             }
             default -> {
-                at = f.at.add(0, Mth.sin(time * 0.3f + f.at.x) * 0.06f, 0);
+                at = f.at.add(0, Mth.sin(time * 0.3f + (float) f.at.x) * 0.06f, 0);
                 if (sprite == NenFx.Sprite.NOTE) at = at.add(0, t * 0.8, 0);
             }
         }
