@@ -206,14 +206,14 @@ public final class Sprites3D {
     public static void sun(Mesh3D.Ctx c, Vec3 at, float r, int color, float spin, float alpha) {
         int rgb = color & 0xFFFFFF;
         // cœur émissif : un soleil ne doit pas être ombré comme un objet
-        Mesh3D.sphere(c, Mesh3D.glow(c), at, r, 0xFF9A30, alpha, 14, 20,
+        Mesh3D.sphere(c, Mesh3D.glow(c), at, r, 0xE0601A, alpha * 0.7f, 14, 20,
                 d -> 1f + 0.05f * Mth.sin((float) (d.x * 8 + d.y * 6 + spin * 10)), true, false);
-        Mesh3D.sphere(c, Mesh3D.glow(c), at, r * 0.75f, 0xFFF4C0, alpha * 0.8f, 8, 12, null, false, false);
+        Mesh3D.sphere(c, Mesh3D.glow(c), at, r * 0.6f, 0xFFE08A, alpha * 0.45f, 8, 12, null, false, false);
         for (int i = 0; i < 16; i++) {
             float a = spin + i * Mth.TWO_PI / 16;
             Vec3 d = new Vec3(Mth.cos(a), 0.25f * Mth.sin(i * 1.7f), Mth.sin(a)).normalize();
             Mesh3D.cone(c, Mesh3D.glow(c), at.add(d.scale(r * 0.9f)), at.add(d.scale(r * (1.7f + 0.3f * (i % 2)))), r * 0.18f, rgb, alpha, 6, false);
         }
-        Mesh3D.sphere(c, Mesh3D.glow(c), at, r * 2.1f, rgb, alpha * 0.3f, 10, 14, null, false, true);
+        Mesh3D.sphere(c, Mesh3D.glow(c), at, r * 1.8f, rgb, alpha * 0.15f, 10, 14, null, false, true);
     }
 }
