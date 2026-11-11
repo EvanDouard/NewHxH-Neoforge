@@ -62,7 +62,7 @@ public final class HatsuKits {
     public static final HatsuKit MENCHI = playable("menchi", TRANSMUTER, List.of(Characters.MENCHI_GASTRONOME), Characters.MENCHI_GOURMET_MEAL);
     public static final HatsuKit BUSHIDORA = playable("bushidora", ENHANCER, List.of(Characters.BUSHIDORA_SWORDSMAN), Characters.BUSHIDORA_AURA_BLADE);
     public static final HatsuKit TSEZGUERRA = playable("tsezguerra", ENHANCER, List.of(Characters.TSEZGUERRA_LEADER), Characters.TSEZGUERRA_CHARGED_STRIKE);
-    public static final HatsuKit SILVA = playable("silva", EMITTER, List.of(Passives.ZOLDYCK_BODY), Characters.SILVA_EXPLOSIVE_ORBS);
+    public static final HatsuKit SILVA = playable("silva", EMITTER, List.of(Passives.ZOLDYCK_BODY), Characters.SILVA_GREAT_ORB, Characters.SILVA_EXPLOSIVE_ORBS);
     public static final HatsuKit ZENO = playable("zeno", EMITTER, List.of(Passives.ZOLDYCK_BODY), Characters.ZENO_DRAGON_HEAD, Characters.ZENO_DRAGON_DIVE);
     public static final HatsuKit KALLUTO = playable("kalluto", MANIPULATOR, List.of(Passives.ZOLDYCK_BODY), Characters.KALLUTO_PAPER_DANCE);
     public static final HatsuKit NOBUNAGA = playable("nobunaga", ENHANCER, List.of(Characters.NOBUNAGA_EN), Characters.NOBUNAGA_IAI);
@@ -148,7 +148,8 @@ public final class HatsuKits {
 
     @Nullable
     public static HatsuKit get(String id) {
-        return ALL.get(id);
+        HatsuKit k = ALL.get(id);
+        return k != null || id == null ? k : MobKits.get(id); // Hatsu propres aux mobs (jamais proposés au joueur)
     }
 
     public static List<HatsuKit> all() {

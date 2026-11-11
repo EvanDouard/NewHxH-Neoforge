@@ -142,7 +142,37 @@ public final class Characters {
             if ("ging".equals(data(e).kit())) e.getPersistentData().putString(GING_SEEN, technique.id());
     }
 
-    public static final Technique GING_COPY = register(new Technique("ging_copy", EMITTER, 30, 300) {
+    /** Valeurs de kit de Ging : technique copiée (code, voir {@link Techniques#code}) et utilisations restantes. */
+    public static final String GING_COPY_TECH = "ging_copy_tech", GING_COPY_USES = "ging_copy_uses";
+
+    /** Utilisations d'une copie selon le niveau de Nen : 1 au début, jusqu'à 5 à haut niveau. */
+    public static int gingMaxUses(int nenLevel) {
+        return nenLevel >= 80 ? 5 : nenLevel >= 60 ? 3 : nenLevel >= 40 ? 2 : 1;
+    }
+
+    /** Technique copiée par Ging encore utilisable, ou null. */
+    public static Technique gingCopied(com.evandouard.hxh.data.HunterData d) {
+        if (!"ging".equals(d.kit()) || d.kitValue(GING_COPY_USES) < 1) return null;
+        return Techniques.byCode(Math.round(d.kitValue(GING_COPY_TECH)));
+    }
+
+    /** Une utilisation de la copie est partie ; plus rien : la copie s'efface de la liste. */
+    public static void gingUsed(LivingEntity caster, Technique t) {
+        var d = data(caster);
+        Technique copied = gingCopied(d);
+        if (copied == null || copied != t) return;
+        d.addKitValue(GING_COPY_USES, -1, 99);
+        if (d.kitValue(GING_COPY_USES) < 1) {
+            d.setKitValue(GING_COPY_TECH, 0);
+            if (caster instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.ging_copy_spent"), true);
+        }
+    }
+
+    /**
+     * Copie : la dernière technique vue (à 16 blocs) entre dans la liste des techniques de Ging, avec un nombre
+     * d'utilisations (1 au début, jusqu'à 5). Recopier la même technique remet le compteur au maximum.
+     */
+    public static final Technique GING_COPY = register(new Technique("ging_copy", EMITTER, 20, 200) {
         @Override
         public Component conditions() {
             return Component.translatable("technique.hxh.cond.copy");
@@ -151,14 +181,18 @@ public final class Characters {
         @Override
         public boolean perform(LivingEntity caster, float power) {
             Technique seen = Techniques.get(caster.getPersistentData().getString(GING_SEEN));
-            if (seen == null || !seen.implemented()) {
+            if (seen == null || !seen.implemented() || seen.isCharged()) {
                 if (caster instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.ging_nothing"), true);
                 return false;
             }
+            var d = data(caster);
+            int uses = gingMaxUses(d.nenLevel());
+            d.setKitValue(GING_COPY_TECH, Techniques.code(seen.id()));
+            d.setKitValue(GING_COPY_USES, uses);
             NenFx.flare(caster, 1f, 0xFF7FB8FF);
             if (caster instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.ging_copied",
-                    Component.translatable(seen.translationKey())), true);
-            return seen.perform(caster, power * 0.7f);
+                    Component.translatable(seen.translationKey()), uses), true);
+            return true;
         }
     }).requiresNenLevel(20);
 
@@ -275,6 +309,10 @@ public final class Characters {
     // =====================================================================
     // Zoldyck : Silva, Zeno, Kalluto
     // =====================================================================
+    /** Grande boule : Silva forme vite (1 s) une grosse boule d'aura et la propulse ; comme la Pierre, sans creuser. */
+    public static final Technique SILVA_GREAT_ORB = register(new Techniques.ChargedOrb("silva_great_orb", EMITTER, 10, 160,
+            4f, 20, 8f, 10f, 0.3f, 0xFF9A5AE0));
+
     public static final Technique SILVA_EXPLOSIVE_ORBS = register(new Kinds.Burst("silva_explosive_orbs", EMITTER, 35, 200,
             16, 3, 6, 6f, List.of(), new Look(Style.ORB, 0xFF9A5AE0, 1.2f), SoundEvents.GENERIC_EXPLODE.value()));
 
@@ -338,7 +376,12 @@ public final class Characters {
         }
     };
 
-    public static final Technique UVOGIN_BIG_BANG_IMPACT = register(new Technique("uvogin_big_bang_impact", ENHANCER, 45, 400) {
+    /**
+     * Big Bang Impact : on charge le poing (jusqu'à 2 s) ; relâché, il frappe le sol devant Uvogin. Selon la charge, le
+     * coup détruit plus ou moins autour de l'impact (cratère de 1 à 6 blocs, si la règle de destruction le permet),
+     * fait plus de dégâts et projette plus loin.
+     */
+    public static final Technique UVOGIN_BIG_BANG_IMPACT = register(new HeldStrike("uvogin_big_bang_impact", ENHANCER, 30, 400, 40, NenFx.ENHANCER) {
         @Override
         public double aiRange() {
             return 4;
@@ -346,97 +389,42 @@ public final class Characters {
 
         @Override
         public Component conditions() {
-            return Component.translatable("technique.hxh.cond.target", "4.0");
+            return Component.translatable("technique.hxh.cond.charge_strike", "4");
         }
 
         @Override
-        public boolean perform(LivingEntity caster, float power) {
+        protected void strike(LivingEntity caster, float power, float charge) {
+            if (!(caster.level() instanceof ServerLevel level)) return;
             LivingEntity t = Targeting.inFront(caster, 4, 0.8);
-            if (caster.level() instanceof ServerLevel level) {
-                Vec3 at = t != null ? t.position() : Kinds.aimPoint(caster, 4);
-                NenFx.quake(level, at, 4f);
-                NenFx.impactAt(level, at.add(0, 0.8, 0), 3f, NenFx.ENHANCER);
-            }
+            Vec3 at = t != null ? t.position() : Kinds.aimPoint(caster, 3.5);
+            float radius = 1f + 5f * charge;
+            NenFx.quake(level, at, 3f + 5f * charge);
+            NenFx.impactAt(level, at.add(0, 0.8, 0), 2f + 3f * charge, NenFx.ENHANCER);
+            NenFx.shockwaveAt(level, at.add(0, 0.2, 0), 2f + 6f * charge, NenFx.ENHANCER);
             Kinds.sound(caster, SoundEvents.GENERIC_EXPLODE.value());
-            if (t == null) return false;
-            Kinds.hurt(caster, t, 20f * power);
-            com.evandouard.hxh.combat.Impacts.land(caster, t, com.evandouard.hxh.combat.Impacts.Tier.DEVASTATING,
-                    () -> t.knockback(2.5 * power, caster.getX() - t.getX(), caster.getZ() - t.getZ()));
-            return true;
-        }
-    }).requiresNenLevel(20);
-
-    public static final Passive FRANKLIN_STURDY = new Passive("franklin_sturdy", true) {
-        @Override
-        public float modifyIncoming(LivingEntity owner, DamageSource source, float amount) {
-            return amount * 0.85f;
-        }
-    };
-
-    public static final Technique FRANKLIN_DOUBLE_MACHINE_GUN = register(new Kinds.Burst("franklin_double_machine_gun", EMITTER,
-            40, 300, 18, 10, 2, 2.2f, List.of(), new Look(Style.ORB, NenFx.EMITTER, 0.6f), SoundEvents.FIREWORK_ROCKET_BLAST));
-
-    /** Suture : se soigne d'1 PV toutes les 4 s, et ses alliés à 3 blocs aussi. */
-    public static final Passive MACHI_SUTURE = new Passive("machi_suture", true) {
-        @Override
-        public void tick(LivingEntity owner) {
-            if (owner.tickCount % 80 != 0) return;
-            owner.heal(1f);
-            for (LivingEntity e : Targeting.around(owner, 3)) if (Kinds.isAlly(owner, e)) e.heal(1f);
-        }
-    };
-
-    public static final Technique MACHI_NEN_THREADS = register(new Techniques.Strike("machi_nen_threads", TRANSMUTER, 25, 200,
-            10, 0.95, 2f, 0f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 100, 3), new Effect(MobEffects.JUMP, 100, 128)),
-            new Look(Style.CHAIN, 0xFFE6E6F0, 1f), SoundEvents.SPIDER_AMBIENT));
-
-    /** Ménage : attire les objets au sol à 5 blocs. */
-    public static final Passive SHIZUKU_CLEANER = new Passive("shizuku_cleaner", true) {
-        @Override
-        public void tick(LivingEntity owner) {
-            if (!(owner instanceof Player) || owner.tickCount % 5 != 0) return;
-            for (ItemEntity it : owner.level().getEntitiesOfClass(ItemEntity.class, owner.getBoundingBox().inflate(5))) {
-                Vec3 pull = owner.position().subtract(it.position()).normalize().scale(0.25);
-                it.setDeltaMovement(it.getDeltaMovement().add(pull));
+            // cratère selon la charge
+            if (com.evandouard.hxh.HxHGameRules.canDestroy(level) && charge > 0.15f) {
+                net.minecraft.core.BlockPos c = net.minecraft.core.BlockPos.containing(at.add(0, -0.5, 0));
+                int ir = (int) Math.ceil(radius);
+                for (net.minecraft.core.BlockPos p : net.minecraft.core.BlockPos.betweenClosed(c.offset(-ir, -ir, -ir), c.offset(ir, ir, ir))) {
+                    double d = Math.sqrt(p.distSqr(c));
+                    if (d > radius || p.getY() > c.getY() + 1 + radius * 0.4) continue;
+                    if (d > radius - 1 && level.random.nextFloat() < 0.4f) continue;
+                    var st = level.getBlockState(p);
+                    if (st.isAir() || level.getBlockEntity(p) != null) continue;
+                    float hard = st.getDestroySpeed(level, p);
+                    if (hard >= 0 && hard <= 50) level.destroyBlock(p, false, caster);
+                }
             }
+            for (LivingEntity e : Kinds.enemiesAround(caster, at, 1.5 + 3 * charge)) {
+                Kinds.hurt(caster, e, (10f + 18f * charge) * power);
+                e.knockback((1 + 2 * charge) * power, caster.getX() - e.getX(), caster.getZ() - e.getZ());
+            }
+            if (t != null) com.evandouard.hxh.combat.Impacts.land(caster, t,
+                    charge > 0.8f ? com.evandouard.hxh.combat.Impacts.Tier.DEVASTATING
+                            : charge > 0.4f ? com.evandouard.hxh.combat.Impacts.Tier.HEAVY : com.evandouard.hxh.combat.Impacts.Tier.MEDIUM, () -> {});
         }
-    };
-
-    /** Blinky : aspire devant soi les projectiles (détruits), les objets et un peu les ennemis. */
-    public static final Technique SHIZUKU_BLINKY = register(new Technique("shizuku_blinky", CONJURER, 30, 240) {
-        @Override
-        public Component conditions() {
-            return Component.translatable("technique.hxh.cond.cone", "8", "45");
-        }
-
-        @Override
-        public double aiRange() {
-            return 8;
-        }
-
-        @Override
-        public boolean perform(LivingEntity caster, float power) {
-            if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.BLINKY, caster, caster.position(), 1.6f, 0xFFB0B0FF, 34);
-            for (int w = 0; w < 5; w++) {
-                NenTasks.later(w * 6, () -> {
-                    if (!caster.isAlive() || !(caster.level() instanceof ServerLevel level)) return;
-                    Vec3 mouth = caster.getEyePosition().add(caster.getLookAngle().scale(1.2));
-                    AABB box = caster.getBoundingBox().inflate(8);
-                    for (Projectile pr : level.getEntitiesOfClass(Projectile.class, box,
-                            pr -> pr.getOwner() != caster && pr.position().subtract(caster.getEyePosition()).normalize().dot(caster.getLookAngle()) > 0.7)) {
-                        NenFx.impactAt(level, pr.position(), 0.5f, 0xFFB0B0FF);
-                        pr.discard();
-                    }
-                    for (ItemEntity it : level.getEntitiesOfClass(ItemEntity.class, box))
-                        it.setDeltaMovement(mouth.subtract(it.position()).normalize().scale(0.6));
-                    for (LivingEntity t : Kinds.Sweep.inArc(caster, 8, 45)) {
-                        if (Kinds.isAlly(caster, t)) continue;
-                        t.setDeltaMovement(t.getDeltaMovement().add(mouth.subtract(t.position()).normalize().scale(0.25)));
-                        t.hurtMarked = true;
-                        Kinds.hurt(caster, t, 1.5f * power);
-                    }
-                    NenFx.shockwaveAt(level, mouth, 1.2f, 0xFFB0B0FF);
-                });
+    });
             }
             Kinds.sound(caster, SoundEvents.BREEZE_INHALE);
             return true;

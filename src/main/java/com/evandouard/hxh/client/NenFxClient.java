@@ -237,6 +237,11 @@ public final class NenFxClient {
         return e.getPosition(pt).add(0, e.getBbHeight() * 0.55, 0).add(right.scale(0.35 * w / 0.6)).add(forward.scale(0.3));
     }
 
+    /** Contexte des formes 3D ({@link Mesh3D}) pour ce dessin. */
+    static Mesh3D.Ctx mesh(Ctx c) {
+        return new Mesh3D.Ctx(c.pose, c.buffers, c.cam);
+    }
+
     // ---------- Primitives ----------
 
     private static int a(int argb) { return argb >>> 24; }
@@ -631,7 +636,10 @@ public final class NenFxClient {
         Entity src = entity(f.source);
         if (src == null) return;
         boolean epic = f.size > 1.5f;
-        int[] colors = {NenFx.ENHANCER, 0xFFFFC23A, 0xFFFFF4C8, 0xFFFFFFFF};
+        // Jajanken : orange → jaune → blanc ; une autre couleur (boule de Silva…) garde la sienne en s'éclaircissant
+        boolean gon = (f.color & 0xFFFFFF) == (NenFx.ENHANCER & 0xFFFFFF) || epic;
+        int[] colors = gon ? new int[]{NenFx.ENHANCER, 0xFFFFC23A, 0xFFFFF4C8, 0xFFFFFFFF}
+                : new int[]{f.color, f.color, 0xFF000000 | AuraOrb3D.mix(f.color, 0xFFFFFF, 0.3f), 0xFF000000 | AuraOrb3D.mix(f.color, 0xFFFFFF, 0.5f)};
         float half, flash = 0f;
         int color;
         boolean blinding = false;
@@ -672,9 +680,8 @@ public final class NenFxClient {
         } else {
             at = center(src, c.pt).add(right.scale(0.5 + half)).add(look.scale(0.3)).add(0, half * 0.5, 0);
         }
-        billboard(c, RenderType.eyes(GLOW), at, half * 2.2f, 0, color, 0.85f);
-        billboard(c, RenderType.entityTranslucent(IMPACT), at, half * 1.5f, age * 0.3f, color, 0.7f);
-        billboard(c, RenderType.entityTranslucent(ORB), at, half * (1f + 0.05f * Mth.sin(age * 1.3f)), 0, color, 1f);
+        // boule d'aura en 3D dans le poing (mêmes couches que la boule lancée)
+        AuraOrb3D.render(mesh(c), at, half, color, age, epic && blinding);
         if (flash > 0) billboard(c, RenderType.eyes(GLOW), at, epic ? 4f : 1.6f, 0, 0xFFFFFFFF, flash);
         if (blinding) {
             // Petite étoile incandescente : grand halo blanc qui palpite, rayons tournants
@@ -1106,19 +1113,15 @@ public final class NenFxClient {
         float tension = (float) Mth.clamp((dist - 2) / (com.evandouard.hxh.hatsu.LingeringNen.GUM_SLACK + 1), 0, 1);
         float sag = (float) (dist * 0.18 * (1 - tension));
         float width = 0.11f - 0.05f * tension;
-        int segs = 14;
-        Vec3 prev = a;
-        for (int i = 1; i <= segs; i++) {
+        // seulement le fil de gomme, en 3D : il pend quand il est lâche, s'affine quand il est tendu
+        int segs = 18;
+        java.util.List<Vec3> path = new java.util.ArrayList<>();
+        for (int i = 0; i <= segs; i++) {
             float t = (float) i / segs;
-            Vec3 p = a.lerp(b, t).add(0, -sag * 4 * t * (1 - t) + Mth.sin(age * 0.4f + t * 6) * 0.03 * (1 - tension), 0);
-            ribbon(c, RenderType.entityTranslucent(WHITE), prev, p, width + 0.035f, INK, 1f);
-            ribbon(c, RenderType.entityTranslucent(WHITE), prev, p, width, f.color, 1f);
-            prev = p;
+            path.add(a.lerp(b, t).add(0, -sag * 4 * t * (1 - t) + Mth.sin(age * 0.4f + t * 6) * 0.03 * (1 - tension), 0));
         }
-        // reflet clair au milieu de la bande
-        ribbon(c, RenderType.eyes(WHITE), a, b.lerp(a, 0.1), 0.02f, 0xFFFFFFFF, 0.25f);
-        // tache de gomme sur la cible
-        billboard(c, RenderType.entityTranslucent(ORB), b, 0.28f + 0.03f * Mth.sin(age * 0.5f), 0, f.color, 0.95f);
+        Mesh3D.Ctx m = mesh(c);
+        Mesh3D.tube(m, Mesh3D.solid(m), path, width * 0.5f, width * 0.5f, f.color & 0xFFFFFF, 1f, 8, true);
     }
 
     /** Pavé coloré, aligné sur {@code yaw}, avec arêtes encrées. */

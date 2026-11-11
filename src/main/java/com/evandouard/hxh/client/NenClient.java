@@ -223,8 +223,12 @@ public final class NenClient {
         if (mc.font.width(name) > maxName) name = mc.font.plainSubstrByWidth(name, maxName - mc.font.width("…")) + "…";
         graphics.drawString(mc.font, Component.literal(name).withStyle(net.minecraft.ChatFormatting.BOLD), x + 10, y + 5, MangaHud.INK, false);
 
-        graphics.drawString(mc.font, Component.translatable("hud.hxh.technique_cost", technique.auraCost()),
-                x + 10, y + 14, 0xFF1F6FA8, false);
+        // Ging : la copie affiche ses utilisations restantes
+        com.evandouard.hxh.hatsu.Technique copied = com.evandouard.hxh.hatsu.Characters.gingCopied(data);
+        Component costLine = Component.translatable("hud.hxh.technique_cost", technique.auraCost());
+        if (copied == technique) costLine = costLine.copy().append(" · ").append(Component.translatable("hud.hxh.copy_uses",
+                Math.round(data.kitValue(com.evandouard.hxh.hatsu.Characters.GING_COPY_USES))));
+        graphics.drawString(mc.font, costLine, x + 10, y + 14, 0xFF1F6FA8, false);
 
         Component state;
         if (refusal == null) {

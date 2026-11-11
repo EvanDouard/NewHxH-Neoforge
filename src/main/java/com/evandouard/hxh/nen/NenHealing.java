@@ -16,9 +16,14 @@ import net.minecraft.world.entity.player.Player;
 public final class NenHealing {
     private NenHealing() {}
 
+    /** PV rendus par seconde : lent au début, très rapide au niveau maximal (courbe). */
     public static double healPerSecond(int level) {
-        return HxHConfig.HEAL_BASE_PER_SECOND.get() + level * HxHConfig.HEAL_PER_LEVEL.get();
+        return HxHConfig.HEAL_BASE_PER_SECOND.get() + level * HxHConfig.HEAL_PER_LEVEL.get()
+                + level * (double) level * HxHConfig.HEAL_CURVE.get();
     }
+
+    /** XP de soin pas encore entière (chaque cœur soigné en donne un peu). */
+    private static final java.util.Map<LivingEntity, Float> XP_FRACTION = new java.util.WeakHashMap<>();
 
     public static double auraPerHealth(int level) {
         return Math.max(HxHConfig.HEAL_MIN_COST.get(),
@@ -83,10 +88,13 @@ public final class NenHealing {
         data.setAura(data.aura() - cost);
         entity.heal(amount);
 
-        // Maîtrise : XP chaque seconde de soin effectif, un peu plus vite à haut niveau
-        if (entity.tickCount % 20 == 0) {
-            NenProgress.addNenXp(entity, 1);
-            int gained = data.addHealXp(2 + level / 10);
+        // XP de soin : un peu pour chaque cœur rendu (très peu : monter coûte cher, surtout au début)
+        float frac = XP_FRACTION.getOrDefault(entity, 0f) + (float) (amount * HxHConfig.HEAL_XP_PER_HEALTH.get());
+        int whole = (int) frac;
+        XP_FRACTION.put(entity, frac - whole);
+        if (entity.tickCount % 20 == 0) NenProgress.addNenXp(entity, 1);
+        if (whole > 0) {
+            int gained = data.addHealXp(whole);
             if (gained > 0 && entity instanceof Player player) {
                 com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.heal"),
                         Component.translatable("hud.hxh.toast.level", data.healLevel()), "+1", com.evandouard.hxh.network.Hud.GREEN);

@@ -51,6 +51,7 @@ public final class HxHMod {
                 e -> {
                     com.evandouard.hxh.hatsu.NenCharge.tickAll();
                     com.evandouard.hxh.hatsu.ThunderHold.tickAll();
+                    com.evandouard.hxh.hatsu.HeldStrike.tickAll();
                 });
         NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.tick.ServerTickEvent.Post.class,
                 e -> com.evandouard.hxh.combat.Impacts.tickAll());
@@ -63,6 +64,13 @@ public final class HxHMod {
         com.evandouard.hxh.exam.ExamTournament.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.exam.Exam288.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.exam.ExamProtection.register(NeoForge.EVENT_BUS);
+        // Zombies de Nen (Hatsu du zombie) : ni butin ni expérience
+        NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.entity.living.LivingDropsEvent.class, e -> {
+            if (e.getEntity().getTags().contains(com.evandouard.hxh.hatsu.MobTechniques.NEN_CLONE)) e.setCanceled(true);
+        });
+        NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent.class, e -> {
+            if (e.getEntity().getTags().contains(com.evandouard.hxh.hatsu.MobTechniques.NEN_CLONE)) e.setCanceled(true);
+        });
         NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.tick.ServerTickEvent.Post.class,
                 e -> HxHGameRules.refresh(e.getServer()));
         NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.server.ServerStoppedEvent.class, e -> {

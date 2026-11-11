@@ -98,6 +98,17 @@ public final class NenMobAI {
     public static void tick(Mob mob) {
         HunterData data = HunterStats.get(mob);
         if (!data.nenUnlocked()) return;
+        // Sans personnage : le Hatsu de son espèce (zombies de Nen, flèches d'aura, mines du creeper…)
+        if (data.kit().isEmpty() && !mob.getTags().contains(com.evandouard.hxh.hatsu.MobTechniques.NEN_CLONE)) {
+            String own = com.evandouard.hxh.hatsu.MobKits.idFor(mob);
+            if (own != null) {
+                var k = com.evandouard.hxh.hatsu.MobKits.get(own);
+                if (data.nenType() == null && k != null) data.setNenType(k.type());
+                data.setKit(own);
+            }
+        }
+        // Un creeper qui maîtrise le Nen n'explose plus lui-même : ses mines le font pour lui
+        if (mob instanceof net.minecraft.world.entity.monster.Creeper creeper && data.kit().equals("mob_creeper")) creeper.setSwellDir(-1);
         LivingEntity target = mob.getTarget();
         boolean fighting = target != null && target.isAlive();
         if (fighting && data.mode() == NenMode.NONE && NenModes.trySetMode(mob, NenMode.TEN) == null) AUTO_TEN.add(mob);
@@ -134,6 +145,8 @@ public final class NenMobAI {
             int index = (data.selected() + i) % n;
             Technique t = Techniques.get(kit.techniques().get(index));
             if (t == null || !t.implemented() || Hatsu.castRefusal(data, t, now) != null) continue;
+            // le Jajanken ultime reste au joueur : un mob n'y a jamais accès
+            if (t instanceof Techniques.ChargedOrb orb && orb.isEpic()) continue;
             boolean useful = t.isHeal() ? mob.getHealth() < mob.getMaxHealth() * 0.7f : distance <= t.aiRange();
             if (!useful) continue;
             data.setSelected(index);
@@ -222,6 +235,71 @@ public final class NenMobAI {
             if (--castDelay <= 0) {
                 castDelay = tryCast(mob, target) ? 30 : 10;
             }
+            tactics(target);
         }
+
+        private int dashCooldown = 40;
+
+        /**
+         * Déplacements de combat au Nen : esquive des projectiles et des coups, recul pour se replacer (tireurs),
+         * dash pour coller la cible (corps à corps). Les dashs partent dans toutes les directions.
+         */
+        private void tactics(LivingEntity target) {
+            if (--dashCooldown > 0 || !mob.onGround()) return;
+            HunterData data = HunterStats.get(mob);
+            if (data.aura() < DASH_COST) return;
+            double dist = mob.distanceTo(target);
+            Vec3 to = target.position().subtract(mob.position()).multiply(1, 0, 1);
+            if (to.lengthSqr() < 1e-4) return;
+            to = to.normalize();
+            Vec3 side = new Vec3(-to.z, 0, to.x).scale(mob.getRandom().nextBoolean() ? 1 : -1);
+            Vec3 dir = null;
+            // 1. un projectile arrive droit sur lui : pas de côté
+            if (incomingProjectile()) dir = side;
+            // 2. la cible frappe de près : esquive de côté ou en arrière
+            else if (dist < 3.5 && target.swinging && mob.getRandom().nextFloat() < 0.5f)
+                dir = mob.getRandom().nextBoolean() ? side : side.add(to.scale(-1)).normalize();
+            // 3. tireur trop près : il recule (en biais) pour se replacer
+            else if (ranged(mob) && dist < 7) dir = to.scale(-1).add(side.scale(0.5)).normalize();
+            // 4. combattant au corps à corps à mi-distance : il fonce pour réduire l'écart
+            else if (!ranged(mob) && dist > 4.5 && dist < 11 && mob.getRandom().nextFloat() < 0.6f) dir = to.add(side.scale(0.25)).normalize();
+            if (dir == null) {
+                dashCooldown = 5;
+                return;
+            }
+            dash(mob, dir, dir.dot(to) > 0.5 ? 1.25 : 1.0);
+            data.setAura(data.aura() - DASH_COST);
+            dashCooldown = 35 + mob.getRandom().nextInt(30);
+        }
+
+        private boolean incomingProjectile() {
+            for (net.minecraft.world.entity.projectile.Projectile p : mob.level().getEntitiesOfClass(
+                    net.minecraft.world.entity.projectile.Projectile.class, mob.getBoundingBox().inflate(7))) {
+                if (p.getOwner() == mob || p.onGround()) continue;
+                Vec3 v = p.getDeltaMovement();
+                if (v.lengthSqr() < 0.04) continue;
+                Vec3 toMe = mob.getBoundingBox().getCenter().subtract(p.position());
+                if (toMe.normalize().dot(v.normalize()) > 0.9) return true;
+            }
+            return false;
+        }
+    }
+
+    /** Aura dépensée par un dash de mob. */
+    static final float DASH_COST = 4f;
+
+    /** Tireur (arc, arbalète, sortilèges à distance) : il garde ses distances. */
+    static boolean ranged(Mob mob) {
+        return mob instanceof net.minecraft.world.entity.monster.RangedAttackMob
+                || mob.getMainHandItem().getItem() instanceof net.minecraft.world.item.ProjectileWeaponItem;
+    }
+
+    /** Dash : un bond rasant dans la direction donnée, avec des traits de vitesse là où il était. */
+    public static void dash(Mob mob, Vec3 dir, double strength) {
+        mob.setDeltaMovement(dir.x * strength, 0.25, dir.z * strength);
+        mob.hurtMarked = true;
+        mob.getNavigation().stop();
+        if (mob.level() instanceof net.minecraft.server.level.ServerLevel level)
+            com.evandouard.hxh.fx.NenFx.slashAt(level, mob.position().add(0, mob.getBbHeight() * 0.5, 0), 1.1f, 0xFFFFFFFF);
     }
 }

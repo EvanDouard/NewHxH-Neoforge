@@ -27,12 +27,12 @@ public class NenProjectileRenderer extends EntityRenderer<NenProjectile> {
         pose.pushPose();
         pose.translate(0, e.getBbHeight() / 2, 0);
         if (e.kind() == NenProjectile.ORB) {
-            pose.mulPose(entityRenderDispatcher.cameraOrientation());
-            // halo, boule pulsante, et une étoile d'énergie qui tourne derrière
-            quad(pose, buffers.getBuffer(RenderType.eyes(NenFxClient.GLOW)), r * 2.4f, 0, color, 200);
-            quad(pose, buffers.getBuffer(RenderType.entityTranslucent(NenFxClient.IMPACT)), r * 1.5f, age * 0.25f, color, 170);
-            float pulse = 1f + 0.06f * Mth.sin(age * 0.9f);
-            quad(pose, buffers.getBuffer(RenderType.entityTranslucent(NenFxClient.ORB)), r * pulse, 0, color, 255);
+            // boule d'aura en 3D (noyau, sphère interne, enveloppe, anneaux, ondes)
+            net.minecraft.world.phys.Vec3 eye = entityRenderDispatcher.camera.getPosition()
+                    .subtract(e.getPosition(pt).add(0, e.getBbHeight() / 2, 0));
+            Mesh3D.Ctx ctx = new Mesh3D.Ctx(pose, buffers, net.minecraft.world.phys.Vec3.ZERO, eye);
+            boolean white = (color & 0xFFFFFF) == 0xFFFFFF;
+            AuraOrb3D.render(ctx, net.minecraft.world.phys.Vec3.ZERO, r, white ? 0xFFF4C0 : color, age, white);
         } else if (e.kind() == NenProjectile.CARD) {
             // Carte à jouer qui tournoie à plat, avec une traînée rose
             pose.mulPose(Axis.YP.rotationDegrees(-e.getYRot()));

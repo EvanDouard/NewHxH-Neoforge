@@ -34,6 +34,19 @@ public final class Techniques {
         return ALL.get(id);
     }
 
+    /** Code numérique stable d'une technique (tient dans un float exact) : pour la synchroniser comme valeur de kit. */
+    public static int code(String id) {
+        return 1 + Math.floorMod(id.hashCode(), 1 << 22);
+    }
+
+    /** Technique dont le code est {@code code}, ou null. */
+    public static Technique byCode(int code) {
+        if (code <= 0) return null;
+        MobTechniques.init();
+        for (Technique t : ALL.values()) if (code(t.id()) == code) return t;
+        return null;
+    }
+
     public static java.util.Collection<String> allIds() {
         return ALL.keySet();
     }

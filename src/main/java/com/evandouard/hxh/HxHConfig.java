@@ -101,8 +101,16 @@ public final class HxHConfig {
             .defineInRange("heal.basePerSecond", 1.0, 0.0, 100.0);
 
     public static final ModConfigSpec.DoubleValue HEAL_PER_LEVEL = BUILDER
-            .comment("Soin par le Nen : PV/s ajoutés par niveau de maîtrise")
-            .defineInRange("heal.perLevel", 0.09, 0.0, 10.0);
+            .comment("Soin par le Nen : PV/s ajoutés par niveau de soin (part linéaire)")
+            .defineInRange("heal.perLevelLinear", 0.05, 0.0, 10.0);
+
+    public static final ModConfigSpec.DoubleValue HEAL_CURVE = BUILDER
+            .comment("Soin par le Nen : part qui grandit avec le carré du niveau (0.0019 → environ 25 PV/s au niveau 100)")
+            .defineInRange("heal.curve", 0.0019, 0.0, 1.0);
+
+    public static final ModConfigSpec.DoubleValue HEAL_XP_PER_HEALTH = BUILDER
+            .comment("Soin par le Nen : XP de soin par PV rendu (0.5 = 1 XP par cœur)")
+            .defineInRange("heal.xpPerHealth", 0.5, 0.0, 100.0);
 
     public static final ModConfigSpec.DoubleValue HEAL_BASE_COST = BUILDER
             .comment("Soin par le Nen : aura consommée par PV rendu au niveau 0")
