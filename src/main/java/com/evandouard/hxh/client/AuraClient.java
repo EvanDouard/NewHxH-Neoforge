@@ -92,7 +92,8 @@ public final class AuraClient {
             // Son propre corps en vue à la première personne : rien (ça boucherait la vue)
             if (NenFxClient.firstPerson(e)) continue;
             HunterData hd = e.hasData(ModAttachments.HUNTER) ? e.getData(ModAttachments.HUNTER) : null;
-            if (hd != null && hd.gyo()) { gyoEyes(pose, buffers, cam, e, pt, hd.auraColor() & 0xFFFFFF, mc.level.getGameTime() + pt); drew = true; }
+            boolean gyo = hd != null && hd.gyo() || e.hasEffect(com.evandouard.hxh.effect.ModEffects.GYO);
+            if (gyo) { gyoEyes(pose, buffers, cam, e, pt, (hd != null ? hd.auraColor() : 0x9AD7FF) & 0xFFFFFF, mc.level.getGameTime() + pt); drew = true; }
             Look look = look(e);
             if (look == null) continue;
             float time = mc.level.getGameTime() + pt + (e.getId() * 7.31f);
@@ -199,7 +200,7 @@ public final class AuraClient {
         float pulse = 0.85f + 0.15f * Mth.sin(time * 0.5f);
         VertexConsumer glow = buffers.getBuffer(RenderType.eyes(NenFxClient.GLOW));
         for (int s = -1; s <= 1; s += 2) {
-            Vec3 at = eye.add(fwd.scale(0.33)).add(side.scale(0.12 * s)).add(0, 0.02, 0);
+            Vec3 at = eye.add(fwd.scale(0.36)).add(side.scale(0.12 * s)).add(0, 0.08, 0);
             billboard(glow, pose, cam, at, 0.24f * pulse, color, 1f);
             billboard(glow, pose, cam, at, 0.1f, 0xFFFFFF, 1f);
         }
