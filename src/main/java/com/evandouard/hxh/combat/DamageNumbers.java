@@ -13,14 +13,17 @@ import java.util.Locale;
 public final class DamageNumbers {
     private DamageNumbers() {}
 
+    /** Au-delà, ce n'est pas un coup mais un /kill ou le vide : pas de chiffre. */
+    static final float MAX_SHOWN = 100000f;
+
     public static void send(LivingEntity entity, float amount, boolean heal) {
-        if (entity.level().isClientSide() || amount < 0.05f) return;
+        if (entity.level().isClientSide() || amount < 0.05f || amount > MAX_SHOWN) return;
         com.evandouard.hxh.network.HxHNetwork.sendToTrackingAndSelf(entity, new DamageNumberPayload(entity.getId(), amount, heal, 0f, 0f));
     }
 
     /** Dégâts reçus : part physique (rouge), part du Nen (bleu), et ce que la défense a encaissé. */
     public static void sendHit(LivingEntity entity, float physical, float nen, float blocked) {
-        if (entity.level().isClientSide() || physical + nen < 0.05f && blocked < 0.5f) return;
+        if (entity.level().isClientSide() || physical + nen < 0.05f && blocked < 0.5f || physical + nen > MAX_SHOWN) return;
         com.evandouard.hxh.network.HxHNetwork.sendToTrackingAndSelf(entity,
                 new DamageNumberPayload(entity.getId(), physical, false, nen, blocked));
     }
