@@ -121,7 +121,7 @@ public final class QuestTests {
         helper.assertTrue(d.step() == idx("granny"), "La tempête passée, la Mamie de Dolle");
         // La Mamie : se taire 5 s, c'est gagner (répondre élimine : voir wrongAnswerAtTheExamEliminates)
         QuestManager.onTalk(player, granny);
-        for (int i = 0; i < 6 * 20 && d.step() == idx("granny"); i++) QuestManager.tick(player);
+        for (int i = 0; i < 14 * 20 && d.step() == idx("granny"); i++) QuestManager.tick(player);
         helper.assertTrue(d.step() == idx("kiriko_intro"), "Le silence était la bonne réponse");
         // Forêt des Kiriko : examiner les deux maris, puis désigner la bête
         NpcEntity wife = npc(helper, "kiriko_wife", 0);
@@ -177,7 +177,7 @@ public final class QuestTests {
         helper.assertTrue(d.progress() == 0, "Une esquive ne compte pas");
         for (int i = 0; i < 3; i++) com.evandouard.hxh.exam.NeteroBall.touch(player, netero, false);
         helper.assertTrue(d.step() == idx("tower_intro") && d.jenny() == jenny + 500, "Trois touches : prime de Netero");
-        helper.assertTrue(player.getInventory().contains(ModItems.NETERO_BALL.get().getDefaultInstance()), "La balle en souvenir");
+        helper.assertTrue(!player.getInventory().contains(ModItems.NETERO_BALL.get().getDefaultInstance()), "La balle reste à Netero");
         // Tour de Trick : Lippo, la trappe, le vote de la majorité, un prisonnier, la sortie
         helper.assertTrue(d.step() == idx("tower_intro"), "Puis la Tour de Trick");
         NpcEntity lippo = npc(helper, "lippo", 0);
@@ -316,7 +316,7 @@ public final class QuestTests {
         com.evandouard.hxh.quest.TrialPlan.forcedForTests = java.util.List.of("balle", "zevil", "tournoi");
         QuestManager.start(player, QuestRegistry.HUNTER_EXAM);
         while (!QuestManager.currentStep(d).id().equals("ball")) QuestManager.advance(player);
-        for (int i = 0; i < 61 * 20 && QuestManager.currentStep(d).id().equals("ball"); i++) QuestManager.tick(player);
+        for (int i = 0; i < 36 * 20 && QuestManager.currentStep(d).id().equals("ball"); i++) QuestManager.tick(player);
         helper.assertTrue(QuestManager.currentStep(d).id().equals("zevil"), "Temps écoulé : on continue sans élimination");
         helper.succeed();
     }
@@ -400,7 +400,7 @@ public final class QuestTests {
         while (!QuestManager.currentStep(d).id().equals("ko")) QuestManager.advance(player);
         QuestManager.tick(player);
         helper.assertTrue(com.evandouard.hxh.exam.Exam288.remaining(player) == 10, "Dix candidats entrent");
-        var one = player.serverLevel().getEntitiesOfClass(net.minecraft.world.entity.monster.Vindicator.class,
+        var one = player.serverLevel().getEntitiesOfClass(com.evandouard.hxh.exam.ExamCandidate.class,
                 player.getBoundingBox().inflate(16), v -> v.getTags().contains(com.evandouard.hxh.exam.Exam288.TAG)).get(0);
         com.evandouard.hxh.exam.Exam288.knockOut(player, one);
         helper.assertTrue(d.progress() == 1 && com.evandouard.hxh.exam.Exam288.remaining(player) == 9, "Un assommé (pas tué)");

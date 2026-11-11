@@ -92,10 +92,10 @@
       "npc": "quiz_granny",
       "site": "dolle",
       "answer": "silence",
-      "seconds": 5,
+      "seconds": 12,
       "question": {
-        "fr": "Ta mère et ta bien-aimée sont prises par des bandits ; tu ne peux en sauver qu'une. Laquelle ? Tu as cinq secondes.",
-        "en": "Bandits have taken your mother and your beloved; you can only save one. Which? You have five seconds."
+        "fr": "Ta mère et ta bien-aimée sont prises par des bandits ; tu ne peux en sauver qu'une. Laquelle ? Réfléchis bien avant de répondre.",
+        "en": "Bandits have taken your mother and your beloved; you can only save one. Which? Think carefully before you answer."
       },
       "options": [
         {
@@ -244,7 +244,7 @@
       "id": "ball",
       "type": "ball",
       "count": 3,
-      "seconds": 60,
+      "seconds": 35,
       "trial": "balle"
     },
     {

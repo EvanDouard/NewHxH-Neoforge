@@ -228,4 +228,29 @@ public final class ExamWorld {
     static String npcOf(MarkerBlockEntity be) {
         return be.npc();
     }
+
+    /**
+     * Point libre pour faire apparaître quelqu'un près de {@code origin}, à environ {@code dist} blocs dans la
+     * direction {@code angle} (radians) : sol solide dessous, deux blocs d'air, jamais dans un mur ni au-dessus du vide.
+     * On essaie d'autres angles puis des distances plus courtes ; à défaut, le point d'origine.
+     */
+    public static net.minecraft.world.phys.Vec3 safeSpot(net.minecraft.server.level.ServerLevel level,
+                                                         net.minecraft.world.phys.Vec3 origin, double angle, double dist) {
+        for (double d = dist; d >= 1.5; d -= 1.5) {
+            for (int k = 0; k < 8; k++) {
+                double a = angle + (k % 2 == 0 ? 1 : -1) * ((k + 1) / 2) * Math.PI / 6;
+                double x = origin.x + Math.cos(a) * d, z = origin.z + Math.sin(a) * d;
+                int baseY = (int) Math.floor(origin.y);
+                for (int dy = 2; dy >= -4; dy--) {
+                    net.minecraft.core.BlockPos feet = net.minecraft.core.BlockPos.containing(x, baseY + dy, z);
+                    if (level.getBlockState(feet.below()).isFaceSturdy(level, feet.below(), net.minecraft.core.Direction.UP)
+                            && level.getBlockState(feet).getCollisionShape(level, feet).isEmpty()
+                            && level.getBlockState(feet.above()).getCollisionShape(level, feet.above()).isEmpty()
+                            && level.getFluidState(feet).isEmpty())
+                        return new net.minecraft.world.phys.Vec3(feet.getX() + 0.5, feet.getY(), feet.getZ() + 0.5);
+                }
+            }
+        }
+        return origin;
+    }
 }

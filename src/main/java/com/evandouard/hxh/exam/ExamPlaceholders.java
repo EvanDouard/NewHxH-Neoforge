@@ -65,10 +65,36 @@ final class ExamPlaceholders {
             set(level, c.offset(5, 0, -4), Blocks.BARREL);
             for (int x = -4; x <= 4; x += 4) set(level, c.offset(x, 3, 0), Blocks.LANTERN);
             set(level, c.offset(0, 3, -3), Blocks.LANTERN);
+            // la « salle » qui descend : une plateforme de 3 × 3 avec deux sièges, au-dessus d'un puits fermé
+            zabanLift(level, c, 0);
+            for (int y = -ZABAN_SHAFT - 1; y <= -2; y++) for (int x = -2; x <= 2; x++) for (int z = ZABAN_LIFT_Z - 2; z <= ZABAN_LIFT_Z + 2; z++) {
+                boolean wall = Math.abs(x) == 2 || Math.abs(z - ZABAN_LIFT_Z) == 2 || y == -ZABAN_SHAFT - 1;
+                set(level, c.offset(x, y, z), wall ? Blocks.STONE_BRICKS : Blocks.AIR);
+            }
         }
         Map<String, BlockPos> npcs = new LinkedHashMap<>();
         npcs.put("cook", c.offset(0, 0, -3));
         return new ExamWorld.Site(c.offset(0, 0, 3), 180f, npcs, List.of(), List.of());
+    }
+
+    /** Plateforme de la salle qui descend (Zaban) : centre en z, profondeur du puits. */
+    public static final int ZABAN_LIFT_Z = 2, ZABAN_SHAFT = 12;
+
+    /**
+     * Pose la plateforme de Zaban {@code depth} blocs sous le sol (et efface celle d'au-dessus) : plancher de 3 × 3
+     * et deux sièges.
+     */
+    public static void zabanLift(ServerLevel level, BlockPos c, int depth) {
+        for (int x = -1; x <= 1; x++) for (int z = ZABAN_LIFT_Z - 1; z <= ZABAN_LIFT_Z + 1; z++) {
+            if (depth > 0) {
+                set(level, c.offset(x, -depth, z), Blocks.AIR);
+                set(level, c.offset(x, 1 - depth, z), Blocks.AIR);
+            }
+            set(level, c.offset(x, -1 - depth, z), Blocks.DARK_OAK_PLANKS);
+        }
+        for (int x : new int[]{-1, 1})
+            set(level, c.offset(x, -depth, ZABAN_LIFT_Z), Blocks.OAK_STAIRS.defaultBlockState()
+                    .setValue(net.minecraft.world.level.block.StairBlock.FACING, net.minecraft.core.Direction.SOUTH));
     }
 
     // ------------------------------------------------------------------ Hall + tunnel
@@ -194,31 +220,60 @@ final class ExamPlaceholders {
             for (int y = -4; y <= -2; y++) set(level, c.offset(x, y, z), Blocks.WATER);
             set(level, c.offset(x, -5, z), Blocks.SAND);
         }
+        seal(level, c, -r, r, -r, r, -5, -1);
     }
 
-    /** Bateau de pêche vers Dolle : pont de 7 × 21, mât et voile ; le capitaine à la poupe. */
+    /**
+     * Ferme un bassin posé dans le vide : de la pierre sous le fond (le sable ne tombe plus) et des murs de barrière
+     * tout autour (l'eau ne coule plus par les bords, ce qui faisait laguer à l'arrivée).
+     */
+    static void seal(ServerLevel level, BlockPos c, int x0, int x1, int z0, int z1, int yBottom, int yTop) {
+        for (int x = x0 - 1; x <= x1 + 1; x++) for (int z = z0 - 1; z <= z1 + 1; z++) {
+            set(level, c.offset(x, yBottom - 1, z), Blocks.STONE);
+            boolean edge = x < x0 || x > x1 || z < z0 || z > z1;
+            if (edge) for (int y = yBottom; y <= yTop; y++) set(level, c.offset(x, y, z), Blocks.BARRIER);
+        }
+    }
+
+    /** Abris du pont du bateau (sous la voile, dans la cabine, à la proue) : décalages depuis le centre. */
+    static final int[][] BOAT_SHELTERS = {{0, 0, -4}, {-2, 0, 11}, {-3, 0, -12}, {3, 0, 4}};
+
+    /**
+     * Bateau de pêche vers Dolle : pont de 9 × 31, mât et voile, cabine du capitaine à la poupe, caisses ; les abris
+     * (où se mettre quand la grosse vague arrive) sont {@link #BOAT_SHELTERS}.
+     */
     private static ExamWorld.Site boat(ServerLevel level, BlockPos c, boolean place) {
         if (place) {
-            sea(level, c, 32);
-            for (int x = -3; x <= 3; x++) for (int z = -10; z <= 10; z++) {
-                boolean edge = Math.abs(x) == 3 || Math.abs(z) == 10;
+            sea(level, c, 40);
+            for (int x = -4; x <= 4; x++) for (int z = -15; z <= 15; z++) {
+                boolean edge = Math.abs(x) == 4 || Math.abs(z) == 15;
                 set(level, c.offset(x, -1, z), Blocks.OAK_PLANKS);
                 set(level, c.offset(x, -2, z), Blocks.SPRUCE_PLANKS);
                 if (edge) set(level, c.offset(x, 0, z), Blocks.SPRUCE_FENCE);
             }
-            for (int y = 0; y < 9; y++) set(level, c.offset(0, y, -2), Blocks.SPRUCE_LOG);
-            for (int x = -3; x <= 3; x++) for (int y = 3; y < 8; y++) set(level, c.offset(x, y, -1), Blocks.WHITE_WOOL);
-            set(level, c.offset(0, 0, 8), Blocks.BARREL);
-            set(level, c.offset(2, 0, 8), Blocks.LANTERN);
+            // mât et voile
+            for (int y = 0; y < 10; y++) set(level, c.offset(0, y, -2), Blocks.SPRUCE_LOG);
+            for (int x = -4; x <= 4; x++) for (int y = 3; y < 9; y++) set(level, c.offset(x, y, -1), Blocks.WHITE_WOOL);
+            // cabine du capitaine (poupe), ouverte vers l'avant
+            for (int x = -3; x <= 3; x++) for (int z = 9; z <= 14; z++) for (int y = 0; y <= 3; y++) {
+                boolean wall = Math.abs(x) == 3 || z == 14 || (z == 9 && Math.abs(x) > 1);
+                if (y == 3) set(level, c.offset(x, y, z), Blocks.SPRUCE_SLAB);
+                else if (wall) set(level, c.offset(x, y, z), Blocks.SPRUCE_PLANKS);
+            }
+            set(level, c.offset(2, 0, 13), Blocks.BARREL);
+            set(level, c.offset(-2, 2, 13), Blocks.LANTERN);
+            // caisses à la proue et sur le pont (abris)
+            for (int[] b : new int[][]{{-3, 0, -13}, {-2, 0, -13}, {-3, 1, -13}, {3, 0, 3}, {3, 0, 5}, {3, 1, 3}})
+                set(level, c.offset(b[0], b[1], b[2]), Blocks.BARREL);
         }
         Map<String, BlockPos> npcs = new LinkedHashMap<>();
-        npcs.put("captain", c.offset(0, 0, 7));
+        npcs.put("captain", c.offset(0, 0, 11));
         return new ExamWorld.Site(c.offset(0, 0, 3), 0f, npcs, List.of(), List.of());
     }
 
     /** Île de Zevil : plage, forêt au centre, ponton d'arrivée ; des candidats rôdent avec leur plaque. */
     private static ExamWorld.Site zevil(ServerLevel level, BlockPos c, boolean place) {
-        int r = 30;
+        int r = 44;
         if (place) {
             sea(level, c, r + 12);
             for (int x = -r; x <= r; x++) for (int z = -r; z <= r; z++) {
@@ -227,9 +282,9 @@ final class ExamPlaceholders {
                 for (int y = -4; y <= -2; y++) set(level, c.offset(x, y, z), d2 > (r - 5) * (r - 5) ? Blocks.SAND : Blocks.DIRT);
                 set(level, c.offset(x, -1, z), d2 > (r - 5) * (r - 5) ? Blocks.SAND : Blocks.GRASS_BLOCK);
             }
-            for (int k = 0; k < 14; k++) {
+            for (int k = 0; k < 30; k++) {
                 double a = k * 2.3;
-                double rr = 6 + (k % 4) * 4;
+                double rr = 6 + (k % 7) * 4.5;
                 tree(level, c.offset((int) Math.round(Math.cos(a) * rr), 0, (int) Math.round(Math.sin(a) * rr)));
             }
             // ponton
@@ -237,7 +292,9 @@ final class ExamPlaceholders {
         }
         Map<String, BlockPos> npcs = new LinkedHashMap<>();
         npcs.put("lippo", c.offset(2, 0, r + 6));
-        List<BlockPos> spots = List.of(c.offset(-15, 0, -8), c.offset(14, 0, -10), c.offset(-6, 0, 16), c.offset(12, 0, 12));
+        // candidats : en jeu, les repères « apparition de proies » (G) de la structure d'Evan remplacent ces points
+        List<BlockPos> spots = List.of(c.offset(-15, 0, -8), c.offset(14, 0, -10), c.offset(-6, 0, 16), c.offset(12, 0, 12),
+                c.offset(-28, 0, 10), c.offset(26, 0, -22), c.offset(4, 0, -32), c.offset(-20, 0, -26));
         return new ExamWorld.Site(c.offset(0, 0, r + 4), 180f, npcs, List.of(), spots);
     }
 
@@ -512,6 +569,7 @@ final class ExamPlaceholders {
                 set(level, c.offset(x, -BAY_DEPTH - 1, z), Blocks.SAND);
                 for (int y = -BAY_DEPTH; y <= -1; y++) set(level, c.offset(x, y, z), Blocks.WATER);
             }
+            seal(level, c, -40, 40, -30, 46, -BAY_DEPTH - 1, -1);
             for (int x = -r; x <= r; x++) for (int z = -r; z <= r; z++) {
                 int d2 = x * x + z * z;
                 if (d2 > r * r) continue;

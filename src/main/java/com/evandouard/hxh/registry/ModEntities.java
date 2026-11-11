@@ -25,10 +25,16 @@ public final class ModEntities {
             ENTITIES.register("arena_fighter", () -> EntityType.Builder.of(com.evandouard.hxh.arena.ArenaFighterEntity::new,
                     MobCategory.MONSTER).sized(0.6f, 1.8f).clientTrackingRange(10).build("arena_fighter"));
 
+    /** Candidats humains de l'Examen (Zevil, 288e Examen, tournoi, prisonniers de la Tour). */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.exam.ExamCandidate>> EXAM_CANDIDATE =
+            ENTITIES.register("exam_candidate", () -> EntityType.Builder.of(com.evandouard.hxh.exam.ExamCandidate::new,
+                    MobCategory.MONSTER).sized(0.6f, 1.8f).clientTrackingRange(10).build("exam_candidate"));
+
     private ModEntities() {}
 
     public static void onAttributes(EntityAttributeCreationEvent event) {
         event.put(NPC.get(), NpcEntity.createAttributes().build());
         event.put(ARENA_FIGHTER.get(), com.evandouard.hxh.arena.ArenaFighterEntity.createAttributes().build());
+        event.put(EXAM_CANDIDATE.get(), com.evandouard.hxh.exam.ExamCandidate.createAttributes().build());
     }
 }

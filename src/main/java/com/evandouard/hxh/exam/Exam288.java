@@ -9,7 +9,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.EventPriority;
@@ -43,7 +42,7 @@ public final class Exam288 {
 
     public static int remaining(ServerPlayer player) {
         String tag = owner(player.getUUID());
-        return player.serverLevel().getEntitiesOfClass(Vindicator.class, new AABB(player.blockPosition()).inflate(48),
+        return player.serverLevel().getEntitiesOfClass(ExamCandidate.class, new AABB(player.blockPosition()).inflate(48),
                 v -> v.getTags().contains(tag) && v.isAlive()).size();
     }
 
@@ -72,11 +71,11 @@ public final class Exam288 {
     public static void spawnPack(ServerPlayer player, int n) {
         ServerLevel level = player.serverLevel();
         for (int i = 0; i < n; i++) {
-            Vindicator v = EntityType.VINDICATOR.create(level);
+            ExamCandidate v = com.evandouard.hxh.registry.ModEntities.EXAM_CANDIDATE.get().create(level);
             if (v == null) continue;
             double a = i * Math.PI * 2 / n;
-            Vec3 at = player.position().add(Math.cos(a) * 7, 0, Math.sin(a) * 7);
-            v.moveTo(at.x, player.getY(), at.z, (float) Math.toDegrees(a) + 90f, 0);
+            Vec3 at = ExamWorld.safeSpot(level, player.position(), a, 7); // jamais au-dessus du vide
+            v.moveTo(at.x, at.y, at.z, (float) Math.toDegrees(a) + 90f, 0);
             var hp = v.getAttribute(Attributes.MAX_HEALTH);
             if (hp != null) hp.setBaseValue(12);
             v.setHealth(v.getMaxHealth());
@@ -90,7 +89,7 @@ public final class Exam288 {
     }
 
     private static void onDamage(LivingIncomingDamageEvent e) {
-        if (!(e.getEntity() instanceof Vindicator v) || !v.getTags().contains(TAG) || v.level().isClientSide) return;
+        if (!(e.getEntity() instanceof ExamCandidate v) || !v.getTags().contains(TAG) || v.level().isClientSide) return;
         if (v.getHealth() - e.getAmount() > v.getMaxHealth() * 0.25f) return;
         e.setCanceled(true);
         ServerPlayer owner = null;
@@ -100,7 +99,7 @@ public final class Exam288 {
     }
 
     /** Un candidat s'effondre : il quitte l'arène, une de plus au compteur. */
-    public static void knockOut(ServerPlayer player, Vindicator v) {
+    public static void knockOut(ServerPlayer player, ExamCandidate v) {
         if (v.level() instanceof ServerLevel level)
             com.evandouard.hxh.fx.NenFx.impactAt(level, v.position().add(0, 1, 0), 1.2f, 0xFFFFFF);
         v.discard();
@@ -112,7 +111,7 @@ public final class Exam288 {
         TICKS.remove(player.getUUID());
         SPAWNED.remove(player.getUUID());
         String tag = owner(player.getUUID());
-        for (Vindicator v : player.serverLevel().getEntitiesOfClass(Vindicator.class, new AABB(player.blockPosition()).inflate(64),
+        for (ExamCandidate v : player.serverLevel().getEntitiesOfClass(ExamCandidate.class, new AABB(player.blockPosition()).inflate(64),
                 v -> v.getTags().contains(tag))) v.discard();
     }
 }

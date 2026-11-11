@@ -740,7 +740,6 @@ goto navigator
 clearchat
 talkto navigator
 wait 20
-expect Épreuve 1/12 : Le voyage vers l'île de Dolle
 expect Ton dirigeable t'attend
 shot 34_guide_donne_le_dirigeable
 cmd hunter exam go
@@ -755,6 +754,7 @@ expect [Embarquer]
 cmd hunter exam board
 wait 80
 expect Décollage
+expect Épreuve 1/11 : Le voyage vers l'île de Dolle
 shot 34_bateau_pour_dolle
 goto captain
 clearchat
@@ -768,6 +768,10 @@ expect Tu as du cran
 wait 80
 expect La tempête éclate
 shot 34_tempete_sur_le_pont
+cmd effect give @s minecraft:resistance 60 4 true
+wait 150
+expect énorme vague
+shot 34_grosse_vague_abri
 cmd hunter quest skip
 wait 80
 shot 34_dolle_maison_mamie
@@ -775,11 +779,10 @@ goto quiz_granny
 clearchat
 talkto quiz_granny
 wait 10
-expect Tu as cinq secondes
+expect Réfléchis bien
 shot 34_quiz_de_la_mamie
-wait 140
+wait 270
 expect se taire était la seule
-expect Épreuve 2/12 : La forêt des Kiriko
 expect Ton dirigeable t'attend
 wait 40
 shot 34_retour_au_dirigeable_apres_dolle
@@ -793,6 +796,7 @@ wait 10
 expect [Embarquer]
 cmd hunter exam board
 wait 80
+expect Épreuve 2/11 : La forêt des Kiriko
 expect [hud] Brume de la forêt des Kiriko
 shot 34k_foret_des_kiriko
 goto kiriko_wife
@@ -805,9 +809,7 @@ wait 10
 expect Mari ?
 shot 34k2_examiner_un_mari
 cmd hunter quest skip
-wait 20
-expect Épreuve 3/12 : Zaban
-wait 10
+wait 30
 cmd hunter exam go
 wait 60
 goto passeur
@@ -817,10 +819,15 @@ wait 10
 expect [Embarquer]
 cmd hunter exam board
 wait 80
+expect Épreuve 3/11 : Zaban
 shot 34_zaban_gargote
 goto cook
 talkto cook
-wait 80
+wait 20
+cmd execute at @e[type=hxh:npc,limit=1,sort=nearest] run tp @s ~ ~ ~5
+wait 30
+shot 34a0_zaban_salle_qui_descend
+wait 100
 shot 34a_hall_souterrain
 goto beans
 talkto beans

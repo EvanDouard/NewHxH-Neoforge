@@ -59,6 +59,7 @@ public final class HxHMod {
         com.evandouard.hxh.quest.QuestEvents.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.exam.ExamTournament.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.exam.Exam288.register(NeoForge.EVENT_BUS);
+        com.evandouard.hxh.exam.ExamProtection.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.hatsu.CharacterEvents.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.arena.ArenaManager.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.training.TrainingEvents.register(NeoForge.EVENT_BUS);

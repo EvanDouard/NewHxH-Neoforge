@@ -165,8 +165,9 @@ public final class HxHConfig {
             .defineInRange("combat.strongFromStrength", 30, 0, 100);
 
     public static final ModConfigSpec.DoubleValue EXAM_MARATHON_SPEED = BUILDER
-            .comment("Examen Hunter : vitesse de Satotz au marathon (joueur qui marche = 0.10, qui sprinte = 0.13 ; 0.12 ≈ Vitesse I)")
-            .defineInRange("exam.marathonSpeed", 0.12, 0.05, 0.3);
+            .comment("Examen Hunter : vitesse de Satotz au marathon (joueur qui marche = 0.10, qui sprinte = 0.13,"
+                    + " qui sprinte en sautant ≈ 0.165)")
+            .defineInRange("exam.satotzSpeed", 0.165, 0.05, 0.4);
 
     public static final ModConfigSpec.IntValue EXAM_LOST_SECONDS = BUILDER
             .comment("Examen Hunter : secondes passées trop loin de Satotz avant d'échouer")

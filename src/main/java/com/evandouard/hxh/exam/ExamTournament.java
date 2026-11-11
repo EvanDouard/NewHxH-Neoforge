@@ -12,7 +12,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
@@ -62,7 +61,7 @@ public final class ExamTournament {
                 return;
             }
             if (opponent(player) == null) {
-                Vindicator v = spawnOpponent(player, d.progress(), p == TrickTower.Prisoner.JONESS ? "Jo-ness" : "Majitani");
+                ExamCandidate v = spawnOpponent(player, d.progress(), p == TrickTower.Prisoner.JONESS ? "Jo-ness" : "Majitani");
                 if (v != null && p == TrickTower.Prisoner.JONESS) {
                     var hp = v.getAttribute(Attributes.MAX_HEALTH);
                     if (hp != null) hp.setBaseValue(60);
@@ -76,27 +75,28 @@ public final class ExamTournament {
         if (opponent(player) == null) spawnOpponent(player, d.progress(), step.entity());
     }
 
-    public static Vindicator opponent(ServerPlayer player) {
+    public static ExamCandidate opponent(ServerPlayer player) {
         String tag = ownerTag(player.getUUID());
-        return player.serverLevel().getEntitiesOfClass(Vindicator.class, new AABB(player.blockPosition()).inflate(48),
+        return player.serverLevel().getEntitiesOfClass(ExamCandidate.class, new AABB(player.blockPosition()).inflate(48),
                 v -> v.getTags().contains(tag) && v.isAlive()).stream().findFirst().orElse(null);
     }
 
     /** Fait entrer l'adversaire n° {@code round} face au joueur. */
-    public static Vindicator spawnOpponent(ServerPlayer player, int round) {
+    public static ExamCandidate spawnOpponent(ServerPlayer player, int round) {
         return spawnOpponent(player, round, "");
     }
 
-    public static Vindicator spawnOpponent(ServerPlayer player, int round, String forcedName) {
+    public static ExamCandidate spawnOpponent(ServerPlayer player, int round, String forcedName) {
         ServerLevel level = player.serverLevel();
-        Vindicator v = EntityType.VINDICATOR.create(level);
+        ExamCandidate v = com.evandouard.hxh.registry.ModEntities.EXAM_CANDIDATE.get().create(level);
         if (v == null) return null;
         Vec3 look = player.getLookAngle().multiply(1, 0, 1).normalize();
         if (look.lengthSqr() < 0.01) look = new Vec3(0, 0, -1);
-        Vec3 at = player.position().add(look.scale(5));
-        v.moveTo(at.x, player.getY(), at.z, player.getYRot() + 180f, 0);
-        v.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(round % 2 == 0 ? Items.IRON_AXE : Items.STONE_SWORD));
-        v.setDropChance(net.minecraft.world.entity.EquipmentSlot.MAINHAND, 0f);
+        // devant le joueur, mais jamais dans un mur (Todo apparaissait dans la paroi de l'arène)
+        Vec3 at = ExamWorld.safeSpot(level, player.position(), Math.atan2(look.z, look.x), 5);
+        v.moveTo(at.x, at.y, at.z, player.getYRot() + 180f, 0);
+        var dmg = v.getAttribute(Attributes.ATTACK_DAMAGE); // à mains nues : plus fort à chaque tour
+        if (dmg != null) dmg.setBaseValue(3 + round);
         var hp = v.getAttribute(Attributes.MAX_HEALTH);
         if (hp != null) hp.setBaseValue(30 + 10 * round);
         v.setHealth(v.getMaxHealth());
@@ -117,7 +117,7 @@ public final class ExamTournament {
         LivingEntity victim = e.getEntity();
         if (victim.level().isClientSide) return;
         // L'adversaire va tomber trop bas : il abandonne
-        if (victim instanceof Vindicator v && v.getTags().contains(DUEL_TAG)) {
+        if (victim instanceof ExamCandidate v && v.getTags().contains(DUEL_TAG)) {
             if (v.getHealth() - e.getAmount() > v.getMaxHealth() * GIVE_UP_AT) return;
             ServerPlayer owner = ownerOf(v);
             e.setCanceled(true);
@@ -132,7 +132,7 @@ public final class ExamTournament {
         }
     }
 
-    private static ServerPlayer ownerOf(Vindicator v) {
+    private static ServerPlayer ownerOf(ExamCandidate v) {
         if (!(v.level() instanceof ServerLevel level)) return null;
         for (ServerPlayer p : level.players()) if (v.getTags().contains(ownerTag(p.getUUID()))) return p;
         return null;
@@ -148,7 +148,7 @@ public final class ExamTournament {
     }
 
     /** « J'abandonne ! » : une victoire de plus pour le joueur. */
-    public static void opponentGivesUp(ServerPlayer player, Vindicator v) {
+    public static void opponentGivesUp(ServerPlayer player, ExamCandidate v) {
         player.sendSystemMessage(Component.translatable("dialog.hxh.format",
                 v.getCustomName() == null ? Component.literal("?") : v.getCustomName().copy().withStyle(ChatFormatting.YELLOW),
                 Component.translatable("exam.hxh.duel_give_up")));
@@ -158,7 +158,7 @@ public final class ExamTournament {
 
     /** Le joueur abandonne : repêché la première fois, éliminé la seconde. */
     public static void playerGivesUp(ServerPlayer player) {
-        Vindicator v = opponent(player);
+        ExamCandidate v = opponent(player);
         if (v != null) v.discard();
         player.setHealth(player.getMaxHealth());
         int n = GAVE_UP.merge(player.getUUID(), 1, Integer::sum);
@@ -174,7 +174,7 @@ public final class ExamTournament {
     /** Fin du tournoi (réussi ou raté) : on oublie les abandons. */
     public static void reset(ServerPlayer player) {
         GAVE_UP.remove(player.getUUID());
-        Vindicator v = opponent(player);
+        ExamCandidate v = opponent(player);
         if (v != null) v.discard();
     }
 }

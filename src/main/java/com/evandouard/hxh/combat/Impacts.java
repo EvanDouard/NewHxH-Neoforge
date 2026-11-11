@@ -87,8 +87,7 @@ public final class Impacts {
 
     /** La règle de destruction est active et on n'est pas dans la Tour Céleste. */
     public static boolean destructive(ServerLevel level) {
-        return level.getGameRules().getBoolean(HxHGameRules.NEN_DESTRUCTION)
-                && !level.dimension().equals(com.evandouard.hxh.arena.ArenaWorld.DIMENSION);
+        return HxHGameRules.canDestroy(level);
     }
 
     /**

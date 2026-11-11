@@ -114,7 +114,7 @@ public final class ExamDeparture {
         say(player, Component.translatable("dialog.hxh.passeur.offer", Component.translatable("exam.hxh.site." + site.id())));
         player.sendSystemMessage(Component.translatable("dialog.hxh.passeur.accept").withStyle(s -> s
                 .withColor(ChatFormatting.GREEN).withUnderlined(true)
-                .withClickEvent(new net.minecraft.network.chat.ClickEvent(net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND, "/hunter exam board"))
+                .withClickEvent(new net.minecraft.network.chat.ClickEvent(net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND, "/hunter exam board " + d.examDeparture()))
                 .withHoverEvent(new net.minecraft.network.chat.HoverEvent(net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT,
                         Component.translatable("dialog.hxh.passeur.accept_hover")))));
         return true;
@@ -132,9 +132,21 @@ public final class ExamDeparture {
 
     /** « Embarquer » : à bord de son dirigeable, le joueur part pour le lieu de l'épreuve. */
     public static boolean board(ServerPlayer player) {
+        return board(player, Long.MIN_VALUE);
+    }
+
+    /**
+     * {@code ticket} = le dirigeable du lien cliqué ; un lien d'une épreuve passée (déjà réalisée ou tentée)
+     * ne correspond plus au dirigeable qui attend le joueur.
+     */
+    public static boolean board(ServerPlayer player, long ticket) {
         QuestData d = QuestManager.data(player);
         long dep = d.examDeparture();
-        if (dep == Long.MIN_VALUE || (ExamTrips.enabled(player)
+        if (dep == Long.MIN_VALUE || (ticket != Long.MIN_VALUE && ticket != dep)) {
+            player.sendSystemMessage(Component.translatable("dialog.hxh.passeur.gone").withStyle(ChatFormatting.RED));
+            return false;
+        }
+        if ((ExamTrips.enabled(player)
                 && (ExamWorld.isExamLevel(player.level()) || BlockPos.of(dep).distSqr(player.blockPosition()) > MATCH * MATCH))) {
             player.sendSystemMessage(Component.translatable("dialog.hxh.passeur.too_far").withStyle(ChatFormatting.RED));
             return false;
@@ -146,6 +158,7 @@ public final class ExamDeparture {
         d.markExamVisited(site.id(), instance);
         d.setExamDeparture(Long.MIN_VALUE);
         ExamTrips.sendTo(player, site, instance);
+        QuestManager.announceCurrentTrial(player);
         QuestManager.sync(player);
         return true;
     }

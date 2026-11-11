@@ -22,8 +22,8 @@ Les repères de la Tour Céleste (H, R, J, A) restent valables là-bas.
 
 - Satotz part de **sa place** (repère PNJ réglé sur Satotz), puis passe par les points de parcours n°1, n°2, n°3…
   dans l'ordre, jusqu'au plus grand numéro, qui est l'arrivée.
-- Il va à peu près à la vitesse d'un joueur sous Vitesse I : un joueur qui marche décroche, il faut sprinter.
-  La vitesse est réglable dans la config serveur (`exam.marathonSpeed`).
+- Il va aussi vite qu'un joueur qui sprinte en sautant : il faut tout donner pour le suivre.
+  La vitesse est réglable dans la config serveur (`exam.satotzSpeed`).
 - Rester plus de 5 secondes trop loin de lui (`exam.lostSeconds`) = **examen raté** : « Retentez l'année
   prochaine ! ». Le joueur doit attendre un jour Minecraft (`exam.retryTicks`) **et** trouver un autre centre
   d'examen : le Navigateur du centre qui l'a recalé refuse de le reprendre.
@@ -46,7 +46,8 @@ Les noms de fichier sont des propositions ; garde le préfixe `hxh:exam/`.
 | 5 | Réserve de Biska | `hxh:exam/biska` | E, P = Buhara, P = Menchi, G (plusieurs) | Clairière, cuisine en plein air, grand portail, zone de chasse avec les proies. |
 | 6 | Salle de la licence | `hxh:exam/hotel` | E, P = Netero | Salle de l'hôtel de l'Association où Netero remet la licence. |
 | plus tard | Marais de Numele | `hxh:exam/numele` | E, points de parcours | Sortie du tunnel, brouillard, mobs pièges. |
-| plus tard | Mont Split, dirigeable, Tour de Trick, île de Zevil | `hxh:exam/…` | selon l'épreuve | Voir la page « Structures à construire » du schéma. |
+| plus tard | Île de Zevil | `hxh:exam/ile_zevil` | E, P = Lippo, G (autant que tu veux) | Grande île : chaque repère G est un point d'apparition des candidats (jusqu'à 8 en même temps). Pense à fermer l'eau sur les bords (murs, ou barrière) et à mettre un fond solide sous le sable. |
+| plus tard | Mont Split, dirigeable, Tour de Trick | `hxh:exam/…` | selon l'épreuve | Voir la page « Structures à construire » du schéma. |
 
 ## Sauvegarder et envoyer
 

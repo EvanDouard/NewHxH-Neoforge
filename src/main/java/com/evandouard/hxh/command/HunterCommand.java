@@ -83,7 +83,10 @@ public final class HunterCommand {
                         // Réponse à un quiz de l'Examen (lien cliquable du chat) : ouvert à tous
                         // Embarquer à bord de son dirigeable (lien cliquable de l'hôtesse) : ouvert à tous
                         .then(Commands.literal("board").executes(ctx ->
-                                com.evandouard.hxh.exam.ExamDeparture.board(ctx.getSource().getPlayerOrException()) ? 1 : 0))
+                                        com.evandouard.hxh.exam.ExamDeparture.board(ctx.getSource().getPlayerOrException()) ? 1 : 0)
+                                .then(Commands.argument("ticket", com.mojang.brigadier.arguments.LongArgumentType.longArg())
+                                        .executes(ctx -> com.evandouard.hxh.exam.ExamDeparture.board(ctx.getSource().getPlayerOrException(),
+                                                com.mojang.brigadier.arguments.LongArgumentType.getLong(ctx, "ticket")) ? 1 : 0)))
                         // Pari contre Leroute (Tour de Trick) : 1 = pile, 2 = face
                         .then(Commands.literal("bet").then(Commands.argument("n", IntegerArgumentType.integer(1, 2))
                                 .executes(ctx -> com.evandouard.hxh.exam.TrickTower.bet(ctx.getSource().getPlayerOrException(),

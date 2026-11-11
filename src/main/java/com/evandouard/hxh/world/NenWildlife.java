@@ -74,7 +74,11 @@ public final class NenWildlife {
     private static void onDeath(LivingDeathEvent e) {
         LivingEntity dead = e.getEntity();
         if (dead.level().isClientSide() || !dead.getPersistentData().contains(BOUNTY)) return;
-        if (!(e.getSource().getEntity() instanceof ServerPlayer killer)) return;
+        // le tueur : l'auteur du coup, sinon celui que le jeu crédite (mort au soleil, en tombant, d'un saignement…)
+        ServerPlayer killer = e.getSource().getEntity() instanceof ServerPlayer p ? p
+                : dead.getKillCredit() instanceof ServerPlayer p2 ? p2
+                : dead.getLastHurtByMob() instanceof ServerPlayer p3 ? p3 : null;
+        if (killer == null) return;
         int bounty = dead.getPersistentData().getInt(BOUNTY);
         dead.getPersistentData().remove(BOUNTY);
         pay(killer, dead, bounty);

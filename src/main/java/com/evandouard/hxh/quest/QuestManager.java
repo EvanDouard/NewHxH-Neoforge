@@ -318,6 +318,7 @@ public final class QuestManager {
         com.evandouard.hxh.exam.ExamTournament.reset(player);
         com.evandouard.hxh.exam.TrickTower.stopClock(player);
         com.evandouard.hxh.exam.Exam288.reset(player);
+        clearTrialItems(player);
         player.sendSystemMessage(Component.translatable("message.hxh.exam_failed").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
         player.sendSystemMessage(Component.translatable("message.hxh.exam_failed_detail").withStyle(ChatFormatting.GRAY));
         d.refocus();
@@ -643,6 +644,7 @@ public final class QuestManager {
             d.running.remove(d.active);
             d.active = "";
             d.step = 0;
+            if (!step.trial().isEmpty()) clearTrialItems(player);
             player.sendSystemMessage(Component.translatable("message.hxh.quest_completed",
                     q.title(player)).withStyle(ChatFormatting.GOLD));
             // Fin d'un voyage (Examen) : retour là d'où l'on était parti
@@ -653,21 +655,28 @@ public final class QuestManager {
             Quest.Step next = steps.get(d.step);
             // Nouvelle épreuve : annoncée, et on y va par son dirigeable (à pied jusqu'à lui)
             boolean newTrial = !next.trial().isEmpty() && !next.trial().equals(step.trial());
-            if (newTrial) announceTrial(player, d, q, steps, d.step);
+            if (newTrial || (!step.trial().isEmpty() && !next.trial().equals(step.trial()))) clearTrialItems(player);
             com.evandouard.hxh.exam.ExamSite site = com.evandouard.hxh.exam.ExamSite.byId(next.site());
             boolean real = com.evandouard.hxh.exam.ExamTrips.enabled(player);
+            // En vrai jeu, l'épreuve n'est annoncée qu'à l'embarquement (avant, l'objectif est d'aller au dirigeable)
+            boolean deferred = real && newTrial;
+            if (newTrial && !deferred) announceTrial(player, d, q, steps, d.step);
             if (real && newTrial) {
                 // Épreuve réussie : retour au dirigeable d'où l'on était parti, puis coordonnées du suivant
                 com.evandouard.hxh.exam.ExamTrips.returnHome(player);
                 BlockPos dep = com.evandouard.hxh.exam.ExamDeparture.create(player, player.blockPosition());
                 if (dep != null) player.sendSystemMessage(Component.translatable("exam.hxh.departure", dep.getX(), dep.getZ(),
                         (int) Math.sqrt(dep.distSqr(player.blockPosition()))).withStyle(ChatFormatting.GOLD));
+            } else if (site == com.evandouard.hxh.exam.ExamSite.HALL && step.site().equals("zaban")
+                    && com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level())
+                    && com.evandouard.hxh.exam.ExamHazards.siteAt(player.blockPosition()) == com.evandouard.hxh.exam.ExamSite.ZABAN) {
+                // Zaban : on descend au hall par la salle qui s'enfonce (ExamHazards), pas par téléportation
             } else if (site != null) {
                 // Dans une même épreuve, on passe d'un lieu à l'autre par ses transports (bateau, ascenseur…)
                 d.markExamVisited(site.id(), d.examInstance(site.id()));
                 com.evandouard.hxh.exam.ExamTrips.sendTo(player, site, d.examInstance(site.id()));
             }
-            com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.new_step"),
+            if (!deferred) com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.new_step"),
                     q.objective(next, player), "!", com.evandouard.hxh.network.Hud.GOLD);
             if (next.type().equals("follow")) {
                 NpcEntity guide = findNpc(player, next.npc(), 96);
@@ -678,10 +687,41 @@ public final class QuestManager {
         sync(player);
     }
 
+    /** Épreuve « intermédiaire » (non comptée) : le jeu de la balle de Netero. */
+    public static final String BALL_TRIAL = "balle";
+
+    /** Fin d'une épreuve (réussie, ratée) : on rend ce qui appartient à l'Examen (balle de Netero, or en trop de l'épave). */
+    public static void clearTrialItems(ServerPlayer player) {
+        com.evandouard.hxh.exam.NeteroBall.takeBack(player);
+        var inv = player.getInventory();
+        for (int i = 0; i < inv.getContainerSize(); i++)
+            if (inv.getItem(i).is(com.evandouard.hxh.registry.ModItems.SUNKEN_COIN.get())) inv.setItem(i, ItemStack.EMPTY);
+    }
+
+    /** Embarquement : l'épreuve en cours est annoncée (« Épreuve n/N ») et son objectif affiché. */
+    public static void announceCurrentTrial(ServerPlayer player) {
+        QuestData d = data(player);
+        Quest q = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
+        int[] st = d.stateOf(QuestRegistry.HUNTER_EXAM.toString());
+        if (q == null || st == null) return;
+        List<Quest.Step> steps = steps(d, q);
+        if (st[0] >= steps.size() || steps.get(st[0]).trial().isEmpty()) return;
+        announceTrial(player, d, q, steps, st[0]);
+        com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.new_step"),
+                q.objective(steps.get(st[0]), player), "!", com.evandouard.hxh.network.Hud.GOLD);
+    }
+
     /** « Épreuve n/N : … — lieu (x, z) » au début de chaque épreuve tirée. */
     private static void announceTrial(ServerPlayer player, QuestData d, Quest q, List<Quest.Step> steps, int index) {
         String trial = steps.get(index).trial();
-        List<String> order = d.planTrials(q.id().toString());
+        // Le jeu de la balle de Netero n'est pas une épreuve comptée : une pause dans le dirigeable
+        if (trial.equals(BALL_TRIAL)) {
+            player.sendSystemMessage(Component.translatable("exam.hxh.trial_special",
+                    Component.translatable("exam.hxh.trial." + trial)).withStyle(ChatFormatting.AQUA));
+            return;
+        }
+        List<String> order = new java.util.ArrayList<>(d.planTrials(q.id().toString()));
+        order.remove(BALL_TRIAL);
         int n = order.indexOf(trial) + 1;
         com.evandouard.hxh.exam.ExamSite site = null;
         for (int i = index; i < steps.size() && steps.get(i).trial().equals(trial) && site == null; i++)

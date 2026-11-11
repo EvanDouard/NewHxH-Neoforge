@@ -14,11 +14,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.Salmon;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.HashSet;
@@ -67,11 +67,25 @@ public final class ExamHazards {
                     }
                     rescue(player, Vec3.atBottomCenterOf(c.offset(0, 0, 3)), "exam.hxh.overboard");
                 }
-                if ("storm".equals(step.hazard()) && player.tickCount % 50 == 0) gust(player);
+                if ("storm".equals(step.hazard())) {
+                    if (stormTick(player, level, c)) return true;
+                }
+            }
+            case AIRSHIP -> {
+                // Pause avant le jeu de Netero : on s'y soigne et on y mange
+                if (step.id().equals("ball_intro") && player.tickCount % 40 == 0) {
+                    player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                            net.minecraft.world.effect.MobEffects.REGENERATION, 60, 1, false, false, true));
+                    player.getFoodData().eat(2, 0.6f);
+                }
+            }
+            case ZABAN -> {
+                if (step.id().equals("register") && zabanLift(player, level, c, instance)) return false;
             }
             case MOUNT_SPLIT -> mountSplit(player, level, c, instance);
             case ISLAND_HOTEL -> {
                 if (player.tickCount % 200 == 0) restockCoins(level, c, instance);
+                if (player.tickCount % 4 == 0) pinCoins(level, c);
                 if ("wave".equals(step.hazard())) wave(player, level, c, d);
             }
             case BISKA -> {
@@ -80,7 +94,7 @@ public final class ExamHazards {
             case ZEVIL -> {
                 if (player.tickCount % 200 == 0 && step.type().equals("points")) restockCandidates(level, c, instance);
                 if (player.getY() < ExamWorld.FLOOR_Y - 1.5 && player.isInWater()
-                        && Math.abs(player.getZ() - c.getZ()) > 32) rescue(player, Vec3.atBottomCenterOf(c.offset(0, 0, 34)), "exam.hxh.overboard");
+                        && Math.abs(player.getZ() - c.getZ()) > 46) rescue(player, Vec3.atBottomCenterOf(c.offset(0, 0, 48)), "exam.hxh.overboard");
             }
             default -> {}
         }
@@ -100,10 +114,112 @@ public final class ExamHazards {
             player.sendSystemMessage(Component.translatable("exam.hxh.storm").withStyle(ChatFormatting.AQUA));
         } else {
             STORM.remove(player.getUUID());
+            STORMS.remove(player.getUUID());
             player.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.STOP_RAINING, 0));
             player.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.RAIN_LEVEL_CHANGE, 0f));
             player.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.THUNDER_LEVEL_CHANGE, 0f));
         }
+    }
+
+    /** Salle de Zaban qui descend : profondeur atteinte par joueur (absent = pas encore partie). */
+    private static final java.util.Map<UUID, Integer> LIFT = new java.util.HashMap<>();
+
+    /**
+     * Le bon plat commandé, la « salle » descend : le candidat s'assoit sur la plateforme (ou saute dans le puits), elle
+     * s'enfonce d'un bloc toutes les 4 ticks, et en bas, il arrive au hall souterrain. @return true une fois arrivé
+     */
+    private static boolean zabanLift(ServerPlayer player, ServerLevel level, BlockPos c, int instance) {
+        double dx = player.getX() - (c.getX() + 0.5), dz = player.getZ() - (c.getZ() + ExamPlaceholders.ZABAN_LIFT_Z + 0.5);
+        boolean onLift = Math.abs(dx) <= 1.6 && Math.abs(dz) <= 1.6;
+        Integer depth = LIFT.get(player.getUUID());
+        if (depth == null) {
+            if (!onLift) {
+                if (player.tickCount % 60 == 0) player.displayClientMessage(
+                        Component.translatable("exam.hxh.zaban_lift_hint").withStyle(ChatFormatting.YELLOW), true);
+                return false;
+            }
+            LIFT.put(player.getUUID(), 0);
+            player.sendSystemMessage(Component.translatable("exam.hxh.zaban_lift").withStyle(ChatFormatting.GOLD));
+            return false;
+        }
+        boolean arrived = depth >= ExamPlaceholders.ZABAN_SHAFT - 1 || player.getY() < ExamWorld.FLOOR_Y - ExamPlaceholders.ZABAN_SHAFT + 1;
+        if (!arrived && player.tickCount % 4 == 0) {
+            LIFT.put(player.getUUID(), depth + 1);
+            ExamPlaceholders.zabanLift(level, c, depth + 1);
+        }
+        if (!arrived) return false;
+        LIFT.remove(player.getUUID());
+        ExamPlaceholders.zabanLift(level, c, 0); // la salle remonte pour le suivant
+        for (int y = 1; y < ExamPlaceholders.ZABAN_SHAFT; y++) // efface les planchers laissés en chemin
+            for (int x = -1; x <= 1; x++) for (int z = -1; z <= 1; z++) {
+                BlockPos p = c.offset(x, -1 - y, ExamPlaceholders.ZABAN_LIFT_Z + z);
+                if (y < ExamPlaceholders.ZABAN_SHAFT) level.setBlock(p, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 2);
+            }
+        com.evandouard.hxh.quest.QuestData d = com.evandouard.hxh.quest.QuestManager.data(player);
+        d.markExamVisited(ExamSite.HALL.id(), d.examInstance(ExamSite.HALL.id()));
+        ExamTrips.sendTo(player, ExamSite.HALL, d.examInstance(ExamSite.HALL.id()));
+        return true;
+    }
+
+    /** Tempête par joueur : prochaine rafale, et grosse vague annoncée (tick d'impact, abri à rejoindre). */
+    private static final class Storm {
+        int t, nextGust = 40, waveAt = -1, nextWave = 200, shelter;
+    }
+
+    private static final java.util.Map<UUID, Storm> STORMS = new java.util.HashMap<>();
+    /** Délai pour rejoindre l'abri après l'annonce de la grosse vague (ticks), rayon de l'abri. */
+    static final int WAVE_WARNING = 120;
+    static final double SHELTER_RADIUS = 2.2;
+
+    /**
+     * Pendant la tempête : rafales à intervalles irréguliers (le roulis), et de temps en temps la grosse vague —
+     * « abritez-vous ! », un abri du pont s'allume, il faut y être avant qu'elle frappe, sinon elle balaie le candidat
+     * par-dessus bord. Le pont se soulève en vague à chaque déferlante. @return true si l'épreuve est ratée
+     */
+    private static boolean stormTick(ServerPlayer player, ServerLevel level, BlockPos c) {
+        Storm st = STORMS.computeIfAbsent(player.getUUID(), u -> new Storm());
+        st.t++;
+        var rnd = player.getRandom();
+        if (st.t >= st.nextGust) {
+            gust(player);
+            com.evandouard.hxh.fx.NenFx.quake(level, player.position(), 3f);
+            st.nextGust = st.t + 25 + rnd.nextInt(70); // secousses irrégulières
+        }
+        if (st.waveAt < 0 && st.t >= st.nextWave) {
+            st.shelter = rnd.nextInt(ExamPlaceholders.BOAT_SHELTERS.length);
+            st.waveAt = st.t + WAVE_WARNING;
+            player.sendSystemMessage(Component.translatable("exam.hxh.big_wave").withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD));
+        }
+        if (st.waveAt >= 0) {
+            int[] o = ExamPlaceholders.BOAT_SHELTERS[st.shelter];
+            Vec3 zone = Vec3.atBottomCenterOf(c.offset(o[0], o[1], o[2]));
+            if (st.t % 10 == 0) // l'abri en surbrillance
+                com.evandouard.hxh.fx.NenFx.shockwaveAt(level, zone.add(0, 0.1, 0), (float) SHELTER_RADIUS, 0xFFFFD040);
+            if (st.t % 20 == 0) player.displayClientMessage(Component.translatable("exam.hxh.big_wave_timer",
+                    Math.max(0, (st.waveAt - st.t) / 20)).withStyle(ChatFormatting.YELLOW), true);
+            if (st.t >= st.waveAt) {
+                st.waveAt = -1;
+                st.nextWave = st.t + 300 + rnd.nextInt(200);
+                // la déferlante traverse le pont d'un bord à l'autre
+                for (int k = 0; k <= 4; k++) {
+                    final int row = k;
+                    com.evandouard.hxh.hatsu.NenTasks.later(k * 2, () -> {
+                        for (int z = -14; z <= 14; z += 5)
+                            com.evandouard.hxh.fx.NenFx.quake(level, new Vec3(c.getX() - 4 + row * 2 + 0.5, c.getY(), c.getZ() + z + 0.5), 3.5f);
+                    });
+                }
+                boolean safe = player.position().distanceTo(zone) <= SHELTER_RADIUS + 0.5;
+                if (safe) {
+                    player.sendSystemMessage(Component.translatable("exam.hxh.big_wave_safe").withStyle(ChatFormatting.GREEN));
+                } else {
+                    player.sendSystemMessage(Component.translatable("exam.hxh.big_wave_hit").withStyle(ChatFormatting.RED));
+                    double side = rnd.nextBoolean() ? 1 : -1;
+                    player.push(side * 1.6, 0.6, 0);
+                    player.hurtMarked = true;
+                }
+            }
+        }
+        return false;
     }
 
     /** Une rafale : poussée latérale qu'on encaisse en se baissant (sneak) ; le roulis secoue le pont. */
@@ -177,7 +293,20 @@ public final class ExamHazards {
                     new ItemStack(ModItems.SUNKEN_COIN.get()), 0, 0, 0);
             coin.setNoGravity(true);
             coin.setUnlimitedLifetime();
+            coin.getPersistentData().putLong(COIN_SPOT, p.asLong());
             level.addFreshEntity(coin);
+        }
+    }
+
+    private static final String COIN_SPOT = "hxh_coin_spot";
+
+    /** L'eau fait remonter les objets : les pièces sont tenues sur le pont de l'épave. */
+    private static void pinCoins(ServerLevel level, BlockPos c) {
+        for (ItemEntity e : level.getEntitiesOfClass(ItemEntity.class, new AABB(c).inflate(42, 16, 48),
+                e -> e.getPersistentData().contains(COIN_SPOT))) {
+            BlockPos p = BlockPos.of(e.getPersistentData().getLong(COIN_SPOT));
+            e.setPos(p.getX() + 0.5, p.getY() + 0.05, p.getZ() + 0.5);
+            e.setDeltaMovement(Vec3.ZERO);
         }
     }
 
@@ -202,13 +331,27 @@ public final class ExamHazards {
             player.setYRot(0f);
             player.hurtMarked = true;
         }
-        if (player.tickCount % 80 == 0) {
-            com.evandouard.hxh.fx.NenFx.shockwaveAt(level, player.position().add(0, 0.2, 3), 5f, 0x66AAFF);
+        if (player.tickCount % 100 == 0) {
+            // La lame arrive de la mer (sud) et balaie toute l'île jusqu'au nord : un front de blocs qui se soulèvent
             player.sendSystemMessage(Component.translatable("exam.hxh.wave").withStyle(ChatFormatting.AQUA));
-            if (!player.isShiftKeyDown()) {
-                player.push((player.getRandom().nextDouble() - 0.5) * 0.4, 0.35, -1.1);
-                player.hurtMarked = true;
+            int south = c.getZ() + 22, north = c.getZ() - 18;
+            int rows = (south - north) / 4;
+            int hitRow = Mth.clamp((int) Math.round((south - player.getZ()) / 4.0), 0, rows);
+            for (int k = 0; k <= rows; k++) {
+                final int row = k;
+                double z = south - k * 4 + 0.5;
+                com.evandouard.hxh.hatsu.NenTasks.later(k * 3, () -> {
+                    for (int x = -20; x <= 20; x += 6)
+                        com.evandouard.hxh.fx.NenFx.quake(level, new Vec3(c.getX() + x + 0.5, c.getY(), z), 4.5f);
+                    if (row == 0) com.evandouard.hxh.fx.NenFx.shockwaveAt(level, new Vec3(c.getX() + 0.5, c.getY() + 0.2, z), 8f, 0x66AAFF);
+                });
             }
+            // quand le front passe sur le candidat : il est emporté vers l'intérieur, sauf accroupi
+            com.evandouard.hxh.hatsu.NenTasks.later(hitRow * 3, () -> {
+                if (!player.isAlive() || player.isShiftKeyDown()) return;
+                player.push((player.getRandom().nextDouble() - 0.5) * 0.4, 0.4, -1.2);
+                player.hurtMarked = true;
+            });
         }
         if (player.tickCount % 50 == 25) {
             double a = player.getRandom().nextDouble() * Math.PI * 2, dist = 1 + player.getRandom().nextDouble() * 4;
@@ -236,14 +379,12 @@ public final class ExamHazards {
     private static final int[] NUMBERS = {16, 80, 118, 191, 294, 362, 371, 384};
 
     /** Un candidat de Zevil (vindicateur) qui garde sa plaque en main gauche ; elle tombe à sa défaite. */
-    static Vindicator candidate(ServerLevel level, BlockPos p, boolean target, int n) {
-        Vindicator v = EntityType.VINDICATOR.create(level);
+    static ExamCandidate candidate(ServerLevel level, BlockPos p, boolean target, int n) {
+        ExamCandidate v = com.evandouard.hxh.registry.ModEntities.EXAM_CANDIDATE.get().create(level);
         if (v == null) return null;
         v.moveTo(p.getX() + 0.5, p.getY(), p.getZ() + 0.5, level.getRandom().nextFloat() * 360f, 0);
-        v.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.WOODEN_SWORD));
         v.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(target ? ModItems.TARGET_PLATE.get() : ModItems.EXAM_PLATE.get()));
         v.setDropChance(EquipmentSlot.OFFHAND, 2f);
-        v.setDropChance(EquipmentSlot.MAINHAND, 0f);
         v.setCustomName(Component.translatable(target ? "exam.hxh.candidate_target" : "exam.hxh.candidate", NUMBERS[n % NUMBERS.length]));
         v.setPersistenceRequired();
         v.addTag(CANDIDATE_TAG);
@@ -253,17 +394,18 @@ public final class ExamHazards {
     }
 
     /** Pour les tests : un candidat de Zevil. */
-    public static Vindicator candidateForTests(ServerLevel level, BlockPos p, boolean target) {
+    public static ExamCandidate candidateForTests(ServerLevel level, BlockPos p, boolean target) {
         return candidate(level, p, target, 0);
     }
 
     private static void restockCandidates(ServerLevel level, BlockPos c, int instance) {
         ExamWorld.Site site = ExamWorld.cached(ExamSite.ZEVIL, instance);
         if (site == null) return;
-        var around = level.getEntitiesOfClass(Vindicator.class, new AABB(c).inflate(40), v -> v.getTags().contains(CANDIDATE_TAG));
-        if (around.size() >= 2) return;
+        var around = level.getEntitiesOfClass(ExamCandidate.class, new AABB(c).inflate(56), v -> v.getTags().contains(CANDIDATE_TAG));
+        int max = Math.max(4, Math.min(8, site.prey().size()));
+        if (around.size() >= max / 2) return;
         boolean hasTarget = around.stream().anyMatch(v -> v.getTags().contains(TARGET_TAG));
-        for (int i = 0; i < site.prey().size() && around.size() + i < 4; i++)
+        for (int i = 0; i < site.prey().size() && around.size() + i < max; i++)
             candidate(level, site.prey().get(i), !hasTarget && i == 0, i + level.getRandom().nextInt(4));
     }
 

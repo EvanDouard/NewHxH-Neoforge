@@ -5,6 +5,7 @@
     "vitality": 25,
     "endurance": 25
   },
+  "nen": { "level": 12, "type": "emitter", "mastery": 10, "mode": "ten", "aura": "wild" },
   "equipment": {
     "mainhand": "minecraft:bow",
     "head": "minecraft:leather_helmet"
