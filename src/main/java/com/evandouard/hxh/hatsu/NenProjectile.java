@@ -165,9 +165,16 @@ public class NenProjectile extends Entity {
         }
     }
 
-    /** La règle de destruction est active et on n'est pas dans la Tour Céleste. */
+    /** Jajanken ultime : lui seul creuse sa trace et laisse un vrai cratère (la Pierre classique s'arrête au mur). */
+    private boolean epic;
+
+    public void setEpic(boolean epic) {
+        this.epic = epic;
+    }
+
+    /** La règle de destruction est active, on n'est ni dans la Tour Céleste ni à l'Examen, et c'est l'ultime. */
     private boolean destructive(ServerLevel level) {
-        return HxHGameRules.canDestroy(level);
+        return epic && HxHGameRules.canDestroy(level);
     }
 
     /**
@@ -225,6 +232,8 @@ public class NenProjectile extends Entity {
                 if (!s.isAir() && breakable(level, p, s)) level.destroyBlock(p, false, this);
             }
         }
+        // Pierre classique : les blocs autour sautent mais restent en place
+        if (!destructive(level)) NenFx.quake(level, c, blast);
         NenFx.impactAt(level, c, 2.5f + power / 25f, color());
         NenFx.shockwaveAt(level, c.add(0, -0.5, 0), blast * 1.5f, color());
         level.playSound(null, c.x, c.y, c.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 1.4f, 0.8f);

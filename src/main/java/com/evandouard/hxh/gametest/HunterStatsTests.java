@@ -54,7 +54,7 @@ public final class HunterStatsTests {
         double base = z.getAttributeBaseValue(Attributes.MOVEMENT_SPEED);
         double before = z.getAttributeValue(Attributes.MOVEMENT_SPEED);
         HunterStats.setLevel(z, Stat.SPEED, 100);
-        assertNear(helper, before + base * 100 * HxHConfig.SPEED_PERCENT_PER_LEVEL.get(),
+        assertNear(helper, before + base * HunterStats.speedBonus(100),
                 z.getAttributeValue(Attributes.MOVEMENT_SPEED), "Vitesse avec Vitesse 100");
         helper.succeed();
     }

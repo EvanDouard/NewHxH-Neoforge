@@ -129,9 +129,10 @@ public final class Hatsu {
     public static String castRefusal(HunterData data, Technique technique, long gameTime) {
         if (technique.isBase()) return gameTime < data.readyAt(technique.id()) ? "message.hxh.hatsu_cooldown" : null;
         if (!data.nenUnlocked()) return "message.hxh.nen_locked";
+        // la recharge court toujours, Zetsu compris : on l'affiche en premier
+        if (gameTime < data.readyAt(technique.id())) return "message.hxh.hatsu_cooldown";
         if (data.mode() == NenMode.ZETSU) return "message.hxh.hatsu_zetsu";
         if (data.nenLevel() < technique.minNenLevel()) return "message.hxh.hatsu_nen_level";
-        if (gameTime < data.readyAt(technique.id())) return "message.hxh.hatsu_cooldown";
         if (data.aura() < technique.auraCost()) return "message.hxh.no_aura";
         return technique.extraRefusal(data);
     }
@@ -143,7 +144,8 @@ public final class Hatsu {
         Technique technique = selectedTechnique(data);
         if (technique == null) return "message.hxh.hatsu_none";
         long now = entity.level().getGameTime();
-        if (NenCharge.isCharging(entity) || com.evandouard.hxh.combat.Combat.isCharging(entity)) return null; // déjà en charge
+        if (NenCharge.isCharging(entity) || ThunderHold.isHolding(entity)
+                || com.evandouard.hxh.combat.Combat.isCharging(entity)) return null; // déjà en charge
         if (!technique.isBase() && com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU) != null) {
             return com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU);
         }
@@ -178,6 +180,7 @@ public final class Hatsu {
     /** Touche de technique relâchée : lance une technique en charge. */
     public static void releaseCast(LivingEntity entity) {
         NenCharge.release(entity);
+        ThunderHold.release(entity);
         // Frappe chargée (coup de base) : la recharge part au relâchement
         if (com.evandouard.hxh.combat.Combat.releaseChargedTechnique(entity)) {
             HunterData data = HunterStats.get(entity);

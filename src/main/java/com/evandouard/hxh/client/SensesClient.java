@@ -29,6 +29,16 @@ public final class SensesClient {
         return mc.player != null && mc.player.getData(ModAttachments.HUNTER).gyo();
     }
 
+    /** L'entité est dans l'En du joueur local (contour, nom et niveau affichés). */
+    public static boolean inLocalEn(Entity e) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || e == mc.player) return false;
+        double r = EnDomeClient.effectiveRadius(mc.player);
+        if (r <= 0 || !(e instanceof LivingEntity l)) return false;
+        boolean zetsu = l.hasData(ModAttachments.HUNTER) && l.getData(ModAttachments.HUNTER).mode() == NenMode.ZETSU;
+        return !zetsu && l.distanceTo(mc.player) <= r;
+    }
+
     /** Couleur de contour d'une entité sentie par l'En ou le Gyo, ou -1 pour laisser Minecraft décider. */
     public static int outlineColor(Entity e) {
         int c = senseColor;
@@ -39,7 +49,8 @@ public final class SensesClient {
         HunterData me = mc.player.getData(ModAttachments.HUNTER);
         senseColor = me.auraColor() & 0xFFFFFF;
         Set<Entity> wanted = new HashSet<>();
-        double enRadius = me.en() ? NenSenses.enRadius(me) : 0;
+        EnDomeClient.tick(mc);
+        double enRadius = EnDomeClient.effectiveRadius(mc.player);
         int gyo = me.gyo() ? me.masteryLevel(Mastery.GYO) : -1;
 
         if (gyo >= 0 || enRadius > 0) {
@@ -49,7 +60,7 @@ public final class SensesClient {
                 boolean zetsu = mode == NenMode.ZETSU;
                 if (gyo >= NenSenses.GYO_SEE_INVISIBLE && living.isInvisible()) wanted.add(e);
                 if (gyo >= NenSenses.GYO_SEE_ZETSU && zetsu) wanted.add(e);
-                // L'En sent tout ce qui a une aura dans la sphère (le Zetsu y échappe)
+                // L'En sent tout ce qui vit dans la sphère, mobs ordinaires compris (le Zetsu y échappe)
                 if (enRadius > 0 && !zetsu && living.distanceTo(mc.player) <= enRadius) wanted.add(e);
             }
         }

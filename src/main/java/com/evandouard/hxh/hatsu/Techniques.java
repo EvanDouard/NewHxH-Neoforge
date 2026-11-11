@@ -73,9 +73,8 @@ public final class Techniques {
             8.0, 35.0, 9f, 2.2f, NenFx.EMITTER)).requiresNenLevel(10);
 
     // ---------- Killua : électricité ----------
-    public static final Technique KILLUA_THUNDERBOLT = register(new Strike("killua_thunderbolt", NenType.TRANSMUTER, 30, 120,
-            4, 0.85, 6f, 0.2f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 60, 4)),
-            new Look(Style.BOLT, NenFx.TRANSMUTER, 1f), SoundEvents.LIGHTNING_BOLT_IMPACT));
+    /** Thunderbolt : maintenu, l'électricité frappe en continu ; plus on tient, plus ça coûte (voir {@link ThunderHold}). */
+    public static final Technique KILLUA_THUNDERBOLT = register(new ThunderHold.Technique_("killua_thunderbolt", NenType.TRANSMUTER, 10, 120));
     public static final Technique KILLUA_GODSPEED = register(new SelfBuff("killua_godspeed", NenType.TRANSMUTER, 50, 600,
             List.of(new Effect(MobEffects.MOVEMENT_SPEED, 200, 2), new Effect(MobEffects.DIG_SPEED, 200, 1)),
             new Look(Style.CRACKLE, NenFx.TRANSMUTER, 1f), SoundEvents.LIGHTNING_BOLT_THUNDER)).requiresNenLevel(10);
@@ -140,9 +139,10 @@ public final class Techniques {
     }
 
     public static DamageSource damageFrom(LivingEntity caster) {
-        return caster instanceof Player player
+        DamageSource base = caster instanceof Player player
                 ? caster.damageSources().playerAttack(player)
                 : caster.damageSources().mobAttack(caster);
+        return new NenDamageSource(base.typeHolder(), caster, caster);
     }
 
     /** Allure d'une technique (direction artistique : formes dessinées, pas de particules de Minecraft). */

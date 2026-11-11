@@ -48,7 +48,10 @@ public final class HxHMod {
         NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.tick.ServerTickEvent.Post.class,
                 e -> com.evandouard.hxh.world.WorldEvents.tick(e.getServer()));
         NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.tick.ServerTickEvent.Post.class,
-                e -> com.evandouard.hxh.hatsu.NenCharge.tickAll());
+                e -> {
+                    com.evandouard.hxh.hatsu.NenCharge.tickAll();
+                    com.evandouard.hxh.hatsu.ThunderHold.tickAll();
+                });
         NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.tick.ServerTickEvent.Post.class,
                 e -> com.evandouard.hxh.combat.Impacts.tickAll());
         NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.tick.ServerTickEvent.Post.class,
@@ -60,6 +63,12 @@ public final class HxHMod {
         com.evandouard.hxh.exam.ExamTournament.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.exam.Exam288.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.exam.ExamProtection.register(NeoForge.EVENT_BUS);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.tick.ServerTickEvent.Post.class,
+                e -> HxHGameRules.refresh(e.getServer()));
+        NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.server.ServerStoppedEvent.class, e -> {
+            HxHGameRules.noCooldownsActive = false;
+            HxHGameRules.noAuraCostActive = false;
+        });
         com.evandouard.hxh.hatsu.CharacterEvents.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.arena.ArenaManager.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.training.TrainingEvents.register(NeoForge.EVENT_BUS);

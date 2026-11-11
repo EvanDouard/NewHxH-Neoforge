@@ -53,6 +53,8 @@ public final class NenFxClient {
         final int seed;
         /** Aiguille : décalage du point d'impact sur la cible et direction de vol figés à l'impact. */
         Vec3 offset, dir;
+        /** Godspeed : positions récentes du corps (et leur instant), pour des traînées qui suivent la trajectoire. */
+        java.util.ArrayDeque<double[]> trail;
         boolean impactDone;
 
         Fx(NenFx.Payload p, long start) {
@@ -451,6 +453,10 @@ public final class NenFxClient {
     }
 
     /** Petits arcs électriques autour du corps, renouvelés toutes les deux images. */
+    /** Traînées du Godspeed : durée (ticks) et longueur maximale (blocs). */
+    private static final float TRAIL_TICKS = 6f;
+    private static final double TRAIL_MAX = 2.5;
+
     private static void crackle(Ctx c, Fx f, float age) {
         Entity src = entity(f.source);
         if (src == null || firstPerson(src)) return; // autour de soi : il passerait devant la caméra
@@ -458,15 +464,34 @@ public final class NenFxClient {
         int frame = (int) (age / 2);
         float w = Math.max(0.6f, src.getBbWidth()), h = src.getBbHeight();
         boolean longCharge = f.duration > 60; // Godspeed : corps entièrement électrique
-        // Traînées de vitesse derrière un corps électrique qui file (Godspeed)
-        Vec3 moved = new Vec3(src.getX() - src.xo, 0, src.getZ() - src.zo);
-        double speed = moved.length();
-        if (longCharge && speed > 0.18) {
-            Vec3 back = moved.normalize().scale(-Math.min(4.0, speed * 9));
-            for (int k = 0; k < 5; k++) {
-                Vec3 a = base.add((hash(k, 7) - 0.5) * w, h * (0.15 + 0.17 * k), (hash(k, 8) - 0.5) * w);
-                ribbon(c, RenderType.eyes(WHITE), a, a.add(back.scale(0.6 + 0.4 * hash(frame, k))), 0.12f, f.color, 0.7f);
-                ribbon(c, RenderType.entityTranslucent(WHITE), a, a.add(back.scale(0.5)), 0.03f, INK, 0.8f);
+        // Traînées de vitesse façon Sandevistan (Godspeed) : elles suivent le chemin réellement parcouru (virages
+        // compris), courtes, et s'effacent vers l'arrière
+        if (longCharge) {
+            float now = c.now + c.pt;
+            if (f.trail == null) f.trail = new java.util.ArrayDeque<>();
+            double[] last = f.trail.peekLast();
+            if (last == null || Math.abs(last[0] - base.x) + Math.abs(last[1] - base.y) + Math.abs(last[2] - base.z) > 0.08)
+                f.trail.addLast(new double[]{base.x, base.y, base.z, now});
+            while (!f.trail.isEmpty() && now - f.trail.peekFirst()[3] > TRAIL_TICKS) f.trail.pollFirst();
+            // longueur maximale : on coupe au-delà de TRAIL_MAX blocs
+            double len = 0;
+            java.util.List<double[]> pts = new java.util.ArrayList<>(f.trail);
+            int startIdx = 0;
+            for (int i = pts.size() - 1; i > 0; i--) {
+                double[] a = pts.get(i), b = pts.get(i - 1);
+                len += Math.sqrt((a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]) + (a[2] - b[2]) * (a[2] - b[2]));
+                if (len > TRAIL_MAX) { startIdx = i; break; }
+            }
+            if (pts.size() - startIdx >= 2) {
+                for (int k = 0; k < 4; k++) {
+                    double ox = (hash(k, 7) - 0.5) * w * 0.8, oy = h * (0.2 + 0.2 * k), oz = (hash(k, 8) - 0.5) * w * 0.8;
+                    for (int i = startIdx; i < pts.size() - 1; i++) {
+                        double[] a = pts.get(i), b = pts.get(i + 1);
+                        float fade = (float) (i - startIdx + 1) / (pts.size() - startIdx);
+                        Vec3 pa = new Vec3(a[0] + ox, a[1] + oy, a[2] + oz), pb = new Vec3(b[0] + ox, b[1] + oy, b[2] + oz);
+                        ribbon(c, RenderType.eyes(WHITE), pa, pb, 0.1f * fade, f.color, 0.75f * fade);
+                    }
+                }
             }
         }
         for (int k = 0; k < (longCharge ? 6 : 3); k++) {
@@ -815,7 +840,7 @@ public final class NenFxClient {
                 quad(c, RenderType.eyes(tex), p0, p1, p1.add(0, h, 0), p0.add(0, h, 0), f.color, alpha * 0.3f);
             }
             case DRAGON, DEMON, SMOKE_SOLDIER, NOTE, DRAGON_DIVE, COOKIE, BLINKY, BOOK, CLOWN, HEART, PAPER,
-                 SCYTHE, RIFLE, STAFF -> simpleSprite(c, f, t, sprite, src, tex, alpha, scale);
+                 SCYTHE, RIFLE, STAFF, FEAR -> simpleSprite(c, f, t, sprite, src, tex, alpha, scale);
             case BOMB -> {
                 // collée au-dessus de la cible ; pas de fondu de sortie (elle explose)
                 Vec3 at = src != null ? src.getPosition(c.pt).add(0, src.getBbHeight() + 0.8, 0) : f.at;
@@ -886,6 +911,16 @@ public final class NenFxClient {
                 at = f.at.add(Mth.sin(time * 0.15f + ph) * 0.4f, Mth.sin(time * 0.3f + ph) * 0.15f + t * 0.6f,
                         Mth.cos(time * 0.13f + ph) * 0.4f);
                 spin = Mth.sin(time * 0.4f + ph) * 0.9f;
+            }
+            case FEAR -> {
+                // à côté de la tête, qui tremble d'autant plus que la peur est forte
+                if (src == null) return;
+                Vec3 base = src.getPosition(c.pt).add(0, src.getBbHeight() + 0.25, 0);
+                Vec3 right = Vec3.directionFromRotation(0, (src instanceof LivingEntity le ? le.yHeadRot : src.getYRot()) + 90);
+                float shake = f.size * 0.06f;
+                at = base.add(right.scale(0.45)).add(Mth.sin(time * 2.7f) * shake, Mth.sin(time * 3.1f) * shake * 0.5f, 0);
+                alpha = Math.min(1f, alpha * 1.5f);
+                size = 0.9f + 0.25f * f.size;
             }
             case CLOWN, HEART -> {
                 Vec3 base = src != null ? src.getPosition(c.pt).add(0, src.getBbHeight() + 0.7, 0) : f.at;

@@ -24,7 +24,53 @@ public final class EnDomeClient {
     private static final int LIGHT = 0xF000F0;
     private static final int RINGS = 14, SEGMENTS = 40;
 
+    /** Taille actuelle de l'En de chaque joueur (0 à 1 du rayon), animée : il se déploie, se rétracte. */
+    private static final java.util.Map<java.util.UUID, Float> SCALE = new java.util.HashMap<>();
+    private static final java.util.Map<java.util.UUID, Float> PREVIOUS = new java.util.HashMap<>();
+
     private EnDomeClient() {}
+
+    /**
+     * Taille visée selon le mouvement : parfait à l'arrêt, réduit en marchant, rien en courant. En coupé : rien.
+     */
+    static float targetScale(Player p, HunterData d) {
+        if (!d.en()) return 0f;
+        if (p.isSprinting()) return 0f;
+        double v = p.getDeltaMovement().horizontalDistance();
+        return v > 0.03 ? 0.45f : 1f;
+    }
+
+    /** Une fois par tick : chaque En se déploie depuis le joueur, ou se rétracte (très vite quand on court). */
+    public static void tick(Minecraft mc) {
+        java.util.Set<java.util.UUID> seen = new java.util.HashSet<>();
+        for (Player p : mc.level.players()) {
+            if (!p.hasData(ModAttachments.HUNTER)) continue;
+            HunterData d = p.getData(ModAttachments.HUNTER);
+            float cur = SCALE.getOrDefault(p.getUUID(), 0f);
+            PREVIOUS.put(p.getUUID(), cur);
+            float target = targetScale(p, d);
+            float rate = target > cur ? 0.04f : (p.isSprinting() || !d.en() ? 0.25f : 0.08f);
+            cur = target > cur ? Math.min(target, cur + rate) : Math.max(target, cur - rate);
+            if (cur > 0f || d.en()) {
+                SCALE.put(p.getUUID(), cur);
+                seen.add(p.getUUID());
+            }
+        }
+        SCALE.keySet().retainAll(seen);
+        PREVIOUS.keySet().retainAll(seen);
+    }
+
+    /** Taille de l'En d'un joueur (0 à 1), lissée entre deux ticks. */
+    public static float scale(Player p, float pt) {
+        float cur = SCALE.getOrDefault(p.getUUID(), 0f);
+        return Mth.lerp(pt, PREVIOUS.getOrDefault(p.getUUID(), cur), cur);
+    }
+
+    /** Rayon effectif de l'En du joueur maintenant (ce qu'il sent vraiment). */
+    public static double effectiveRadius(Player p) {
+        if (!p.hasData(ModAttachments.HUNTER)) return 0;
+        return NenSenses.enRadius(p.getData(ModAttachments.HUNTER)) * SCALE.getOrDefault(p.getUUID(), 0f);
+    }
 
     static void register() {
         NeoForge.EVENT_BUS.addListener(RenderLevelStageEvent.class, EnDomeClient::onRender);
@@ -41,9 +87,8 @@ public final class EnDomeClient {
         for (Player p : mc.level.players()) {
             if (!p.hasData(ModAttachments.HUNTER)) continue;
             HunterData d = p.getData(ModAttachments.HUNTER);
-            if (!d.en()) continue;
-            float r = (float) NenSenses.enRadius(d);
-            if (r <= 0.5f) continue;
+            float r = (float) NenSenses.enRadius(d) * scale(p, pt);
+            if (r <= 0.15f) continue;
             dome(event.getPoseStack(), buffers, cam, p.getPosition(pt), r, 0xFF000000 | d.auraColor(),
                     mc.level.getGameTime() + pt);
             drew = true;

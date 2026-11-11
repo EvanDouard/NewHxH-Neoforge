@@ -331,9 +331,13 @@ public final class Combat {
             player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
                     "message.hxh.fear." + amplifier, scary.getDisplayName()).withStyle(net.minecraft.ChatFormatting.DARK_PURPLE), true);
         }
-        // Un mob terrifié n'ose plus attaquer et recule
+        // Visible de tous : goutte de sueur et tremblements au-dessus de la tête (renvoyée chaque seconde)
+        if (entity.level() instanceof net.minecraft.server.level.ServerLevel lv)
+            com.evandouard.hxh.fx.NenFx.sprite(lv, com.evandouard.hxh.fx.NenFx.Sprite.FEAR, entity, entity.position(), amplifier + 1, 0xFF8AC8FF, 24);
+        // Un mob qui a peur n'ose plus attaquer ; terrifié, il recule (mobs ordinaires compris)
+        if (entity instanceof net.minecraft.world.entity.Mob mob && mob.getTarget() == scary
+                && (amplifier >= 1 || mob.getRandom().nextInt(3) > 0)) mob.setTarget(null);
         if (amplifier >= 1 && entity instanceof net.minecraft.world.entity.PathfinderMob mob) {
-            if (mob.getTarget() == scary) mob.setTarget(null);
             Vec3 away = net.minecraft.world.entity.ai.util.DefaultRandomPos.getPosAway(mob, 10, 5, scary.position());
             if (away != null) mob.getNavigation().moveTo(away.x, away.y, away.z, 1.2);
         }

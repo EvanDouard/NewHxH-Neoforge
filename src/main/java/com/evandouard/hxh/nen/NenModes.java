@@ -49,6 +49,17 @@ public final class NenModes {
         return null;
     }
 
+    /** Le plafond gagné en Ren redescend de tant de points d'aura par tick (vitesse fixe). */
+    public static final float REN_SURGE_DECAY = 0.5f;
+
+    /** Le Ken peut être pris maintenant (appris, assez d'aura) : sinon la touche du Ten arrête tout. */
+    static boolean kenAvailable(LivingEntity entity) {
+        HunterData data = HunterStats.get(entity);
+        NenLearning.Ability ability = NenLearning.forMode(NenMode.KEN);
+        if (ability != null && NenLearning.refusal(entity, ability) != null) return false;
+        return data.aura() >= 1;
+    }
+
     /** Le Zetsu complet se débloque en travaillant l'In. */
     public static boolean zetsuUnlocked(HunterData data) {
         return data.masteryLevel(com.evandouard.hxh.data.Mastery.IN) >= HxHConfig.ZETSU_UNLOCK_IN_LEVEL.get();
@@ -64,6 +75,12 @@ public final class NenModes {
     public static void toggle(LivingEntity entity, NenMode mode) {
         HunterData data = HunterStats.get(entity);
         NenMode target = data.mode() == mode ? NenMode.NONE : mode;
+        // Touche du Ten : Ten → Ken (s'il est débloqué) → arrêt
+        if (mode == NenMode.TEN) {
+            if (data.mode() == NenMode.TEN) target = kenAvailable(entity) ? NenMode.KEN : NenMode.NONE;
+            else if (data.mode() == NenMode.KEN) target = NenMode.NONE;
+            else target = NenMode.TEN;
+        }
         // Touche de dissimulation : In tant que le Zetsu n'est pas débloqué, puis seulement le Zetsu
         // (qui le remplace) ; appuyer à nouveau revient au neutre.
         if (mode == NenMode.ZETSU || mode == NenMode.IN) {
@@ -89,7 +106,16 @@ public final class NenModes {
         HunterData data = HunterStats.get(entity);
         if (!data.nenUnlocked()) return;
 
-        data.setAuraMax(computeAuraMax(data));
+        // Ren : le plafond d'aura monte (selon la maîtrise du Ren), sans donner d'aura ; après, il redescend
+        // à vitesse fixe (et l'aura au-dessus du plafond retombe avec lui)
+        int base = computeAuraMax(data);
+        float target = data.mode() == NenMode.REN
+                ? base * (0.25f + data.masteryLevel(com.evandouard.hxh.data.Mastery.REN) * 0.005f) : 0f;
+        float surge = data.renSurge();
+        surge = surge < target ? Math.min(target, surge + Math.max(0.5f, target / 40f)) : Math.max(target, surge - REN_SURGE_DECAY);
+        data.setRenSurge(surge);
+        data.setAuraMax(base + Math.round(surge));
+        NenDefense.tickKo(entity, data);
         float regen = (float) (HxHConfig.AURA_REGEN_PER_SECOND.get() / 20.0);
         if (data.meditating()) regen *= 2; // la méditation recharge l'aura plus vite
 

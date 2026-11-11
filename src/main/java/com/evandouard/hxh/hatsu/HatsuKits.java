@@ -110,6 +110,36 @@ public final class HatsuKits {
         return kit != null && WILD_AURA.contains(kit);
     }
 
+    /** Couleur d'aura de chaque personnage, d'après l'anime (prise au choix du Hatsu ; /hunter nen color la change). */
+    private static final java.util.Map<String, Integer> AURA_COLORS = java.util.Map.ofEntries(
+            java.util.Map.entry("gon", 0xF5D547), java.util.Map.entry("killua", 0x7FD3FF),
+            java.util.Map.entry("kurapika", 0x9AD7FF), java.util.Map.entry("neferpitou", 0x7A2E8C),
+            java.util.Map.entry("illumi", 0x4A3570), java.util.Map.entry("leorio", 0xF2A33A),
+            java.util.Map.entry("netero", 0xFFD966), java.util.Map.entry("hisoka", 0xFF4FA3),
+            java.util.Map.entry("pariston", 0xFF9FC8), java.util.Map.entry("ging", 0xE4E4E4),
+            java.util.Map.entry("cheadle", 0x9BC4FF), java.util.Map.entry("botobai", 0xB8B8B8),
+            java.util.Map.entry("menchi", 0xFF8AA8), java.util.Map.entry("bushidora", 0x8FBF6F),
+            java.util.Map.entry("tsezguerra", 0xE0A040), java.util.Map.entry("silva", 0x8E6CFF),
+            java.util.Map.entry("zeno", 0xFFC34D), java.util.Map.entry("kalluto", 0xD9C9FF),
+            java.util.Map.entry("nobunaga", 0xE8E8FF), java.util.Map.entry("uvogin", 0xFF6A3D),
+            java.util.Map.entry("franklin", 0xD0703A), java.util.Map.entry("machi", 0xFF7FD0),
+            java.util.Map.entry("shizuku", 0xB6A8FF), java.util.Map.entry("pakunoda", 0x9F8FFF),
+            java.util.Map.entry("neon", 0xFFB0E0), java.util.Map.entry("razor", 0xFF7A3C),
+            java.util.Map.entry("genthru", 0xFF5A2A), java.util.Map.entry("kite", 0xE6E6FA),
+            java.util.Map.entry("morel", 0x8A5AB0), java.util.Map.entry("palm", 0x6A3A7A),
+            java.util.Map.entry("meruem", 0x6A2C91), java.util.Map.entry("youpi", 0xFF3B3B),
+            java.util.Map.entry("zushi", 0x9FD4FF), java.util.Map.entry("senritsu", 0xC9A6FF),
+            java.util.Map.entry("biscuit", 0xFFB6E1), java.util.Map.entry("chrollo", 0x5B4B8A),
+            java.util.Map.entry("feitan", 0xFF4500), java.util.Map.entry("phinks", 0xD9A441),
+            java.util.Map.entry("shalnark", 0x7FE0C0), java.util.Map.entry("knov", 0x7AA0D0),
+            java.util.Map.entry("knuckle", 0xF0E060), java.util.Map.entry("shaiapouf", 0xC0A0FF),
+            java.util.Map.entry("wing", 0x9FD0FF));
+
+    /** Couleur d'aura du personnage, ou -1 s'il n'en a pas de connue. */
+    public static int auraColor(String kit) {
+        return kit == null ? -1 : AURA_COLORS.getOrDefault(kit, -1);
+    }
+
     static {
         // ---------- Idées : personnages du Trello ----------
 

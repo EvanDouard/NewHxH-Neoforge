@@ -48,8 +48,9 @@ public class AuraLayer<T extends LivingEntity, M extends EntityModel<T>> extends
         float pulse = Mth.sin(ageInTicks * 0.15f) * 0.5f + 0.5f;
         float body = look.bodyVisibility();
         if (look.flames()) {
-            shell(poseStack, buffers, look.color(), (0.22f + 0.08f * pulse) * look.strength() * body, 1.06f);
-            shell(poseStack, buffers, look.color(), 0.12f * look.strength() * body, 1.14f + 0.02f * pulse);
+            float big = Math.max(0f, look.strength() - 1f); // Ren : enveloppe plus large
+            shell(poseStack, buffers, look.color(), (0.22f + 0.08f * pulse) * Math.min(1f, look.strength()) * body, 1.06f + 0.1f * big);
+            shell(poseStack, buffers, look.color(), 0.12f * Math.min(1f, look.strength()) * body, 1.14f + 0.25f * big + 0.02f * pulse);
         } else {
             float k = data.mode() == NenMode.TEN ? 1f : 0.6f;
             shell(poseStack, buffers, look.color(), (0.10f + 0.04f * pulse) * k * body, 1.08f);

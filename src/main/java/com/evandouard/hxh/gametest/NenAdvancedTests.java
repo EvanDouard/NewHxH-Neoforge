@@ -85,8 +85,14 @@ public final class NenAdvancedTests {
         helper.assertTrue(NenDefense.ko(striker) == null, "Le Ko aurait dû s'activer");
         helper.assertTrue(d.aura() < aura, "Le Ko consomme de l'aura d'un coup");
         helper.assertTrue(NenDefense.nenResistance(striker) == 0f, "Sous Ko, le corps est découvert (0 de résistance)");
+        float fresh = NenDefense.outgoingFactor(striker, false);
+        d.setKoUntil(d.koUntil() - NenDefense.KO_CHARGE_TICKS); // le Ko a eu le temps de se charger
         float charged = NenDefense.outgoingFactor(striker, false);
-        helper.assertTrue(charged >= 2f, "Sous Ko, la prochaine attaque est au moins doublée : " + charged);
+        helper.assertTrue(charged >= 2f && fresh < charged, "Chargé, le Ko au moins double le coup : " + fresh + " → " + charged);
+        helper.assertTrue("message.hxh.ko_cancelled".equals(NenDefense.ko(striker)) && !NenDefense.koActive(striker),
+                "Second appui : le Ko est relâché");
+        d.setAura(d.auraMax());
+        helper.assertTrue(NenDefense.ko(striker) == null, "Le Ko se relance");
 
         // Le coup part : le Ko est dépensé
         Zombie victim = husk(helper, 1);

@@ -15,7 +15,14 @@ public final class DamageNumbers {
 
     public static void send(LivingEntity entity, float amount, boolean heal) {
         if (entity.level().isClientSide() || amount < 0.05f) return;
-        com.evandouard.hxh.network.HxHNetwork.sendToTrackingAndSelf(entity, new DamageNumberPayload(entity.getId(), amount, heal));
+        com.evandouard.hxh.network.HxHNetwork.sendToTrackingAndSelf(entity, new DamageNumberPayload(entity.getId(), amount, heal, 0f, 0f));
+    }
+
+    /** Dégâts reçus : part physique (rouge), part du Nen (bleu), et ce que la défense a encaissé. */
+    public static void sendHit(LivingEntity entity, float physical, float nen, float blocked) {
+        if (entity.level().isClientSide() || physical + nen < 0.05f && blocked < 0.5f) return;
+        com.evandouard.hxh.network.HxHNetwork.sendToTrackingAndSelf(entity,
+                new DamageNumberPayload(entity.getId(), physical, false, nen, blocked));
     }
 
     /** « -10 », « -2.5 », « +1 » : entier au-dessus de 10, sinon une décimale (sans « .0 »). */

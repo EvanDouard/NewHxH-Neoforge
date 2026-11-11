@@ -101,10 +101,12 @@ key key.hxh.zetsu
 cmd hunter nen color FF8A3D
 wait 30
 shot 12_aura_orange
-key key.hxh.ken
+key key.hxh.ten
+wait 3
+key key.hxh.ten
 wait 30
 shot 12b_ken_flammes
-key key.hxh.ken
+key key.hxh.ten
 cmd hunter aura wild
 key key.hxh.ten
 wait 30
@@ -526,6 +528,15 @@ cmd hunter nen refill
 cmd hunter hatsu cast
 wait 8
 shot 22n7_kite_roulette
+cmd hunter hatsu set killua
+cmd hunter nen refill
+camera front
+look 0 0
+key key.hxh.gyo
+wait 10
+shot 22n7b_gyo_aura_aux_yeux
+key key.hxh.gyo
+camera back
 cmd hunter hatsu set kalluto
 cmd hunter nen refill
 look 0 0
@@ -631,7 +642,10 @@ key key.hxh.gyo
 # --- Nen avancé : Ken, Ko, niveau de Nen et résistance ---
 cmd gamemode survival
 clearchat
-key key.hxh.ken
+cmd hunter nen mode none
+key key.hxh.ten
+wait 3
+key key.hxh.ten
 wait 30
 cmd hunter
 wait 10
@@ -644,7 +658,7 @@ camera back
 wait 10
 shot 25_ken_et_ko
 camera first
-key key.hxh.ken
+key key.hxh.ten
 
 # --- Nen avancé 2 : In puis Zetsu, En, Ryu ---
 wait 20
@@ -666,13 +680,19 @@ expect (Zetsu)
 key key.hxh.zetsu
 cmd hunter nen mastery en 40
 wait 10
+cmd summon minecraft:zombie ~2 ~ ~4 {NoAI:1b,PersistenceRequired:1b,Tags:["hxh_en_probe"]}
 key key.hxh.en
-wait 30
-clearchat
+wait 4
 camera back
+shot 26a_en_qui_se_deploie
+wait 40
+clearchat
 wait 10
 shot 26_sphere_d_en
 camera first
+wait 5
+shot 26b_en_nom_et_niveau
+cmd kill @e[tag=hxh_en_probe]
 key key.hxh.en
 key key.hxh.profile
 wait 15
@@ -714,6 +734,15 @@ cmd hunter stat vitality set 80 @e[type=minecraft:husk]
 cmd hunter nen mode ren @e[type=minecraft:husk]
 wait 50
 shot 31_peur_face_a_une_aura_ecrasante
+cmd kill @e[type=!minecraft:player]
+cmd effect clear @s
+cmd hunter nen level 90
+cmd hunter nen mode ren
+cmd summon minecraft:zombie ~ ~ ~4 {NoAI:1b,PersistenceRequired:1b}
+wait 45
+shot 31b_peur_visible_sur_un_mob
+cmd hunter nen mode none
+cmd hunter nen level 40
 cmd kill @e[type=!minecraft:player]
 cmd effect clear @s
 cmd damage @s 8

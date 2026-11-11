@@ -235,6 +235,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     }
 
     public void setAura(float value) {
+        if (com.evandouard.hxh.HxHGameRules.noAuraCostActive && value < aura) return; // règle de test : rien ne coûte
         aura = Math.max(0, Math.min(auraMax, value));
         if ((int) aura != lastWrittenAura) dirty.add(AURA);
     }
@@ -466,6 +467,17 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         dirty.add(PROGRESS);
     }
 
+    /** Plafond d'aura gagné en Ren (temporaire, non sauvegardé). */
+    private float renSurge = 0f;
+
+    public float renSurge() {
+        return renSurge;
+    }
+
+    public void setRenSurge(float value) {
+        renSurge = Math.max(0f, value);
+    }
+
     public long koUntil() {
         return koUntil;
     }
@@ -486,7 +498,12 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     }
 
     public void setKit(String kitId) {
-        if (!java.util.Objects.equals(kit, kitId == null ? "" : kitId)) clearKitValues();
+        if (!java.util.Objects.equals(kit, kitId == null ? "" : kitId)) {
+            clearKitValues();
+            // l'aura prend la couleur du personnage (comme dans l'anime)
+            int color = com.evandouard.hxh.hatsu.HatsuKits.auraColor(kitId);
+            if (color != -1) setAuraColor(color);
+        }
         kit = kitId == null ? "" : kitId;
         selected = 0;
         readyAt.clear();
@@ -504,6 +521,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
 
     /** Tick de jeu à partir duquel la technique est de nouveau prête (0 = prête). */
     public long readyAt(String techniqueId) {
+        if (com.evandouard.hxh.HxHGameRules.noCooldownsActive) return 0L; // règle de test : aucune recharge
         return readyAt.getOrDefault(techniqueId, 0L);
     }
 

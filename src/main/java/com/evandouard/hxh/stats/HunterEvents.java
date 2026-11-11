@@ -44,6 +44,7 @@ public final class HunterEvents {
         gameBus.addListener(HunterEvents::onPlayerTick);
         gameBus.addListener(HunterEvents::onIncomingDamage);
         gameBus.addListener(HunterEvents::onDamageDealt);
+        gameBus.addListener(HunterEvents::onKnockback);
         gameBus.addListener(HunterEvents::onHeal);
         gameBus.addListener(HunterEvents::onStartTracking);
         gameBus.addListener(HunterEvents::onEntityTick);
@@ -143,26 +144,74 @@ public final class HunterEvents {
         Entity attacker = event.getSource().getEntity();
         boolean melee = attacker instanceof LivingEntity && attacker == event.getSource().getDirectEntity();
         float amount = event.getAmount();
+        float physical = com.evandouard.hxh.hatsu.NenDamageSource.isNen(event.getSource()) ? 0f : amount;
         if (melee) {
             amount *= com.evandouard.hxh.combat.Combat.onMeleeHit((LivingEntity) attacker, victim);
             amount *= NenDefense.outgoingFactor((LivingEntity) attacker, true);
             amount *= com.evandouard.hxh.nen.NenSenses.shuDamageFactor((LivingEntity) attacker);
         }
 
+        // Ko porté : un coup destructeur, rendu selon sa force (blocs qui sautent, image d'impact…)
+        Long ko = melee ? NenDefense.KO_LANDED.remove(attacker) : null;
+        if (ko != null && ko == victim.level().getGameTime()) {
+            LivingEntity striker = (LivingEntity) attacker;
+            com.evandouard.hxh.combat.Impacts.Tier tier = amount >= 25 ? com.evandouard.hxh.combat.Impacts.Tier.DEVASTATING
+                    : amount >= 12 ? com.evandouard.hxh.combat.Impacts.Tier.HEAVY : com.evandouard.hxh.combat.Impacts.Tier.MEDIUM;
+            com.evandouard.hxh.combat.Impacts.land(striker, victim, tier,
+                    () -> com.evandouard.hxh.hatsu.NenTasks.later(1, () -> victim.knockback(0.6 + tier.ordinal() * 0.4,
+                            striker.getX() - victim.getX(), striker.getZ() - victim.getZ())));
+        }
+
         amount = Hatsu.modifyIncoming(victim, event.getSource(), amount);
         if (melee) amount = Hatsu.modifyOutgoingMelee((LivingEntity) attacker, victim, amount);
 
+        float beforeDefense = amount;
         if (!event.getSource().is(BYPASSES_NEN) && !event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             amount = Math.max(0f, amount - NenDefense.totalResistance(victim));
         }
         if (amount != event.getAmount()) event.setAmount(amount);
+        // Chiffres : part de la Force et part du Nen (Ren, Ko, Hatsu…), et ce que la défense a encaissé
+        float nenShare = beforeDefense <= 0 ? 0f : Math.max(0f, Math.min(1f, (beforeDefense - Math.min(physical, beforeDefense)) / beforeDefense));
+        SPLIT.put(victim, new float[]{nenShare, beforeDefense - amount});
+        if (amount <= 0f) NO_KNOCKBACK.put(victim, victim.level().getGameTime());
+    }
+
+    /** Dernier coup reçu : part du Nen dans les dégâts, et dégâts encaissés par la défense (pour les chiffres). */
+    private static final java.util.Map<LivingEntity, float[]> SPLIT = new java.util.WeakHashMap<>();
+    /** Coup sans dégâts à ce tick : pas de recul. */
+    private static final java.util.Map<LivingEntity, Long> NO_KNOCKBACK = new java.util.WeakHashMap<>();
+    /** Dernier tick où l'entité a vraiment perdu des PV. */
+    private static final java.util.Map<LivingEntity, Long> LAST_HURT = new java.util.WeakHashMap<>();
+
+    /**
+     * Un coup qui ne fait pas de dégâts ne fait pas reculer : le recul n'est accepté que si la cible vient de perdre
+     * des PV (dans les 2 dernières secondes), et jamais quand son dernier coup a été entièrement encaissé.
+     */
+    private static void onKnockback(net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent event) {
+        LivingEntity e = event.getEntity();
+        if (e.level().isClientSide()) return;
+        long now = e.level().getGameTime();
+        Long hurt = LAST_HURT.get(e);
+        Long none = NO_KNOCKBACK.get(e);
+        // fenêtre large : la projection d'un coup dévastateur part après l'image d'impact
+        boolean recentlyHurt = hurt != null && now - hurt <= 40;
+        boolean blockedNow = none != null && (hurt == null || hurt < none);
+        if (!recentlyHurt || blockedNow) event.setCanceled(true);
     }
 
     /** Force (attaquant au corps à corps) et Endurance (victime) gagnent de l'XP. Joueurs seulement. */
     private static void onDamageDealt(LivingDamageEvent.Post event) {
         float damage = event.getNewDamage();
-        if (damage <= 0 || event.getEntity().level().isClientSide()) return;
-        com.evandouard.hxh.combat.DamageNumbers.send(event.getEntity(), damage, false);
+        if (event.getEntity().level().isClientSide()) return;
+        float[] split = SPLIT.remove(event.getEntity());
+        if (damage <= 0) {
+            if (split != null && split[1] >= 0.5f) com.evandouard.hxh.combat.DamageNumbers.sendHit(event.getEntity(), 0f, 0f, split[1]);
+            return;
+        }
+        LAST_HURT.put(event.getEntity(), event.getEntity().level().getGameTime());
+        float nenShare = split == null ? 0f : split[0];
+        com.evandouard.hxh.combat.DamageNumbers.sendHit(event.getEntity(), damage * (1 - nenShare), damage * nenShare,
+                split == null ? 0f : split[1]);
         Entity attacker = event.getSource().getEntity();
         boolean melee = attacker != null && attacker == event.getSource().getDirectEntity();
         if (melee && attacker instanceof LivingEntity livingAttacker && trains(livingAttacker)) {

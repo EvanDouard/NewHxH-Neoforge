@@ -77,6 +77,11 @@ public final class NenSenses {
     public static void tick(LivingEntity entity) {
         if (!entity.hasData(ModAttachments.HUNTER)) return;
         HunterData data = HunterStats.get(entity);
+        // Courir disperse l'En (il se rétracte d'un coup) ; à l'arrêt il est parfait, en marchant il se réduit
+        if (data.en() && entity instanceof Player p && p.isSprinting()) {
+            data.setEn(false);
+            p.displayClientMessage(Component.translatable("message.hxh.en_run"), true);
+        }
         if (data.gyo() || data.en()) {
             if (!data.nenUnlocked() || data.mode() == NenMode.ZETSU || data.mode() == NenMode.IN) {
                 data.setGyo(false);

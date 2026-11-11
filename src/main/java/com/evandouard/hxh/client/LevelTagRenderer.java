@@ -39,20 +39,23 @@ public final class LevelTagRenderer {
         Minecraft mc = Minecraft.getInstance();
         LivingEntity entity = event.getEntity();
         if (mc.player == null || entity == mc.player || entity.isInvisible() || mc.options.hideGui) return;
-        if (!SensesClient.localGyo()) return; // le niveau d'un adversaire se lit avec le Gyo
-        if (!entity.hasData(ModAttachments.HUNTER)) return;
-        HunterData data = entity.getData(ModAttachments.HUNTER);
-        if (!(entity instanceof Player) && !data.nenUnlocked() && data.hunterLevel() == 0) return;
+        // Dans l'En : tout ce qui vit est senti, avec son nom et son niveau ; sinon le niveau se lit avec le Gyo
+        boolean en = SensesClient.inLocalEn(entity);
+        if (!en && !SensesClient.localGyo()) return;
+        HunterData data = entity.hasData(ModAttachments.HUNTER) ? entity.getData(ModAttachments.HUNTER) : null;
+        if (!en && (data == null || !(entity instanceof Player) && !data.nenUnlocked() && data.hunterLevel() == 0)) return;
         if (entity.distanceToSqr(mc.player) > MAX_DISTANCE * MAX_DISTANCE) return;
 
-        int level = data.hunterLevel();
+        int level = data == null ? 0 : data.hunterLevel();
         int mine = mc.player.getData(ModAttachments.HUNTER).hunterLevel();
-        Component text = Component.translatable("hud.hxh.level_tag", level);
+        Component text = en
+                ? Component.translatable("hud.hxh.en_tag", entity.getDisplayName(), level)
+                : Component.translatable("hud.hxh.level_tag", level);
 
         PoseStack pose = event.getPoseStack();
         pose.pushPose();
         // Au-dessus de la tête, et encore au-dessus si un nom est déjà affiché
-        double y = entity.getBbHeight() + 0.5 + (entity.shouldShowName() ? 0.3 : 0);
+        double y = entity.getBbHeight() + 0.5 + (entity.shouldShowName() && !en ? 0.3 : 0);
         pose.translate(0, y, 0);
         pose.mulPose(mc.getEntityRenderDispatcher().cameraOrientation());
         pose.scale(0.025f, -0.025f, 0.025f);

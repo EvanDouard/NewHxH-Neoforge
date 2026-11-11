@@ -61,11 +61,16 @@ public final class AuraClient {
         if (!d.nenUnlocked() || d.mode() == NenMode.ZETSU) return null;
         if (d.mode() == NenMode.IN && !SensesClient.localGyo()) return null;
         int color = (d.healing() ? 0x7CFF8A : d.auraColor()) & 0xFFFFFF;
+        // Ko : toute l'aura dans le poing, plus rien sur le corps ; la flamme grandit pendant la charge
+        if (e.level() != null && d.koUntil() > e.level().getGameTime()) {
+            float charge = com.evandouard.hxh.nen.NenDefense.koCharge(d, e.level().getGameTime());
+            return new Look(true, 0.5f + 0.9f * charge, color, 0f, true);
+        }
         boolean fists = d.ryuAttack() >= RYU_FISTS_FROM && d.mode() != NenMode.IN;
         float body = fists ? 0.3f : 1f;
         boolean wild = d.wildAura() || com.evandouard.hxh.hatsu.HatsuKits.wildAuraByDefault(d.kit());
         return switch (d.mode()) {
-            case REN -> new Look(true, 1f, color, body, fists);
+            case REN -> new Look(true, 1.6f, color, body, fists); // Ren : aura bien plus grosse et large
             case KEN -> new Look(true, 0.6f, color, body, fists);
             case TEN -> wild ? new Look(true, 0.35f, color, body, fists) : new Look(false, 0.8f, color, body, fists);
             default -> wild ? new Look(true, 0.25f, color, body, fists) : new Look(false, 0.45f, color, body, fists);
@@ -86,12 +91,16 @@ public final class AuraClient {
             if (!(entity instanceof LivingEntity e) || entity.distanceToSqr(cam) > 64 * 64) continue;
             // Son propre corps en vue à la première personne : rien (ça boucherait la vue)
             if (NenFxClient.firstPerson(e)) continue;
+            HunterData hd = e.hasData(ModAttachments.HUNTER) ? e.getData(ModAttachments.HUNTER) : null;
+            if (hd != null && hd.gyo()) { gyoEyes(pose, buffers, cam, e, pt, hd.auraColor() & 0xFFFFFF, mc.level.getGameTime() + pt); drew = true; }
             Look look = look(e);
             if (look == null) continue;
             float time = mc.level.getGameTime() + pt + (e.getId() * 7.31f);
             Vec3 feet = e.getPosition(pt);
-            if (look.flames()) flames(pose, buffers, cam, e, feet, look, time);
-            else vapor(pose, buffers, cam, e, feet, look, time);
+            if (look.bodyVisibility() > 0.02f) {
+                if (look.flames()) flames(pose, buffers, cam, e, feet, look, time);
+                else vapor(pose, buffers, cam, e, feet, look, time);
+            }
             if (look.fists()) fists(pose, buffers, cam, e, pt, look, time);
             drew = true;
         }
@@ -110,7 +119,7 @@ public final class AuraClient {
         for (int i = 0; i < n; i++) {
             float phase = ((time / life) + hash(i + 17)) % 1f;
             float ang = i * 2.39996f + Mth.sin(time * 0.05f + i) * 0.3f;
-            float rad = w * (0.45f + 0.15f * look.strength());
+            float rad = w * (0.45f + 0.3f * Math.max(0f, look.strength() - 0.6f) + 0.15f * Math.min(look.strength(), 1f));
             float y = (float) (feet.y() + h * (0.05f + 0.75f * phase));
             float size = maxTongue * Mth.sin(Mth.PI * Math.min(1f, phase * 1.3f)) * (0.7f + 0.3f * hash(i));
             if (size < 0.05f) continue;
@@ -125,7 +134,7 @@ public final class AuraClient {
             for (int i = 0; i < n; i += 2) {
                 float phase = ((time / life) + hash(i + 17)) % 1f;
                 float ang = i * 2.39996f + Mth.sin(time * 0.05f + i) * 0.3f;
-                float rad = w * (0.45f + 0.15f * look.strength());
+                float rad = w * (0.45f + 0.3f * Math.max(0f, look.strength() - 0.6f) + 0.15f * Math.min(look.strength(), 1f));
                 float y = (float) (feet.y() + h * (0.05f + 0.75f * phase));
                 float size = maxTongue * Mth.sin(Mth.PI * Math.min(1f, phase * 1.3f)) * (0.7f + 0.3f * hash(i)) * 0.7f;
                 if (size < 0.05f) continue;
@@ -166,7 +175,8 @@ public final class AuraClient {
         // Une couche à la fois : demander un autre tampon termine le précédent
         VertexConsumer glow = buffers.getBuffer(RenderType.eyes(NenFxClient.GLOW));
         for (Vec3 fist : new Vec3[]{right, left}) {
-            billboard(glow, pose, cam, fist, 0.55f + 0.08f * Mth.sin(time * 0.6f), dim(look.color(), 0.9f), 0.9f);
+            float k = look.bodyVisibility() < 0.02f ? look.strength() : 1f; // Ko : le poing grossit en se chargeant
+            billboard(glow, pose, cam, fist, (0.55f + 0.08f * Mth.sin(time * 0.6f)) * k, dim(look.color(), 0.9f), 0.9f);
         }
         VertexConsumer outer = buffers.getBuffer(RenderType.entityTranslucent(FLAME));
         for (Vec3 fist : new Vec3[]{right, left}) {
@@ -176,6 +186,22 @@ public final class AuraClient {
                 Vec3 base = fist.add(Mth.cos(i * 1.57f) * 0.12, -0.15 + phase * 0.35, Mth.sin(i * 1.57f) * 0.12);
                 tongue(outer, pose, cam, base, size * 0.5f, size, look.color(), 1f - phase * 0.6f);
             }
+        }
+    }
+
+    /** Gyo : l'aura concentrée dans les yeux, deux petites lueurs qui palpitent. */
+    private static void gyoEyes(PoseStack pose, MultiBufferSource buffers, Vec3 cam, LivingEntity e, float pt, int color, float time) {
+        if (!e.hasData(ModAttachments.HUNTER)) return;
+        Vec3 eye = e.getEyePosition(pt);
+        Vec3 fwd = e.getViewVector(pt);
+        Vec3 side = fwd.cross(new Vec3(0, 1, 0));
+        side = side.lengthSqr() < 1e-6 ? new Vec3(1, 0, 0) : side.normalize();
+        float pulse = 0.85f + 0.15f * Mth.sin(time * 0.5f);
+        VertexConsumer glow = buffers.getBuffer(RenderType.eyes(NenFxClient.GLOW));
+        for (int s = -1; s <= 1; s += 2) {
+            Vec3 at = eye.add(fwd.scale(0.27)).add(side.scale(0.11 * s)).add(0, 0.02, 0);
+            billboard(glow, pose, cam, at, 0.16f * pulse, color, 0.95f);
+            billboard(glow, pose, cam, at, 0.07f, 0xFFFFFF, 0.9f);
         }
     }
 

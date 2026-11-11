@@ -49,6 +49,15 @@ public final class HxHGameRules {
                 && !com.evandouard.hxh.exam.ExamWorld.isExamLevel(level);
     }
 
+    /** Copie des deux règles de test, mise à jour à chaque tick du serveur (lue partout sans accès au monde). */
+    public static volatile boolean noCooldownsActive, noAuraCostActive;
+
+    public static void refresh(net.minecraft.server.MinecraftServer server) {
+        GameRules rules = server.getGameRules();
+        noCooldownsActive = rules.getBoolean(NO_COOLDOWNS);
+        noAuraCostActive = rules.getBoolean(NO_AURA_COST);
+    }
+
     public static boolean noCooldowns(net.minecraft.world.level.Level level) {
         return level.getServer() != null && level.getServer().getGameRules().getBoolean(NO_COOLDOWNS);
     }

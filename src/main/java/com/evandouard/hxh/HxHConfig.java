@@ -17,8 +17,16 @@ public final class HxHConfig {
             .defineInRange("stats.strengthDamagePerLevel", 0.1, 0.0, 10.0);
 
     public static final ModConfigSpec.DoubleValue SPEED_PERCENT_PER_LEVEL = BUILDER
-            .comment("Vitesse de déplacement ajoutée par niveau de Vitesse (0.015 = +1,5 %, soit +150 % au niveau 100)")
-            .defineInRange("stats.speedPercentPerLevel", 0.015, 0.0, 0.1);
+            .comment("Vitesse : part linéaire par niveau (0.02 = +2 % par niveau)")
+            .defineInRange("stats.speedLinearPerLevel", 0.02, 0.0, 0.1);
+
+    public static final ModConfigSpec.DoubleValue SPEED_CURVE = BUILDER
+            .comment("Vitesse : part qui grandit avec le carré du niveau (0.00015 → +137 % au niveau 50, +350 % au niveau 100)")
+            .defineInRange("stats.speedCurve", 0.00015, 0.0, 0.01);
+
+    public static final ModConfigSpec.DoubleValue SWIM_PER_LEVEL = BUILDER
+            .comment("Nage : bonus de vitesse dans l'eau par niveau moyen de Vitesse et de Force (0.015 → +150 % à 100)")
+            .defineInRange("stats.swimPerLevel", 0.015, 0.0, 0.1);
 
     public static final ModConfigSpec.DoubleValue STEP_UP_FROM_SPEED_BONUS = BUILDER
             .comment("Bonus de vitesse à partir duquel on monte les blocs d'un coup, comme un cheval (0.35 = +35 %)")

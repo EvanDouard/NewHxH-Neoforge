@@ -112,7 +112,9 @@ public final class NenFx {
         /** Fusil de Kite, dans sa main. */
         RIFLE,
         /** Bâton de Kite, dans sa main. */
-        STAFF
+        STAFF,
+        /** Peur : goutte de sueur et traits de tremblement au-dessus de la tête (taille = niveau de peur). */
+        FEAR
     }
 
     /**

@@ -37,7 +37,6 @@ public final class NenClient {
     public static final KeyMapping REN = new KeyMapping("key.hxh.ren", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_R, CATEGORY);
     public static final KeyMapping HEAL = new KeyMapping("key.hxh.heal", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, CATEGORY);
 
-    public static final KeyMapping KEN = new KeyMapping("key.hxh.ken", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_N, CATEGORY);
     public static final KeyMapping KO = new KeyMapping("key.hxh.ko", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, CATEGORY);
     public static final KeyMapping GYO = new KeyMapping("key.hxh.gyo", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, CATEGORY);
     public static final KeyMapping EN = new KeyMapping("key.hxh.en", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Y, CATEGORY);
@@ -78,7 +77,6 @@ public final class NenClient {
         event.register(ZETSU);
         event.register(REN);
         event.register(HEAL);
-        event.register(KEN);
         event.register(KO);
         event.register(GYO);
         event.register(EN);
@@ -103,7 +101,6 @@ public final class NenClient {
         while (TEN.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.TEN.id()));
         while (ZETSU.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.ZETSU.id()));
         while (REN.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.REN.id()));
-        while (KEN.consumeClick()) PacketDistributor.sendToServer(new ToggleNenModePayload(NenMode.KEN.id()));
         while (KO.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.KO, true));
         while (GYO.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.GYO, true));
         while (EN.consumeClick()) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.EN, true));

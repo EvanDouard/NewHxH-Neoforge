@@ -113,8 +113,9 @@ public final class NenCharge {
         // Ryu poussé vers l'attaque : la boule est plus grosse et frappe plus fort (×1,5 à 100 %)
         float ryu = com.evandouard.hxh.nen.NenDefense.ryuSpecialFactor(entity);
         float damage = (t.baseDamage + spent * t.damagePerAura) * c.power() * ryu;
-        NenProjectile.launch(entity, NenProjectile.ORB, spent * c.power() * t.blastScale * ryu, damage,
+        NenProjectile orb = NenProjectile.launch(entity, NenProjectile.ORB, spent * c.power() * t.blastScale * ryu, damage,
                 t.epic ? 0xFFFFFFFF : t.color);
+        orb.setEpic(t.epic); // seul le Jajanken ultime creuse et fait des cratères
         Vec3 at = entity.getEyePosition().add(entity.getLookAngle());
         entity.level().playSound(null, at.x, at.y, at.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.8f, 1.4f);
         com.evandouard.hxh.combat.CombatAnimations.play(entity, com.evandouard.hxh.combat.CombatAnim.CHARGED_PUNCH);

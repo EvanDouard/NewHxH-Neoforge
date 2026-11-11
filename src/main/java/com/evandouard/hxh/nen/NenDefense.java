@@ -76,10 +76,13 @@ public final class NenDefense {
         };
         factor *= ryuAttackFactor(data);
         if (koActive(attacker)) {
-            factor *= (float) (HxHConfig.KO_DAMAGE_MULTIPLIER.get() + data.masteryLevel(Mastery.KO) * 0.02);
+            float full = (float) (HxHConfig.KO_DAMAGE_MULTIPLIER.get() + data.masteryLevel(Mastery.KO) * 0.02);
+            float charge = koCharge(data, attacker.level().getGameTime());
+            factor *= 1f + (full - 1f) * (0.4f + 0.6f * charge); // pas encore chargé : moins fort
             if (consumeKo) {
                 data.setKoUntil(0);
                 NenProgress.train(attacker, Mastery.KO, 5);
+                KO_LANDED.put(attacker, attacker.level().getGameTime());
             }
         }
         return factor;
@@ -121,21 +124,57 @@ public final class NenDefense {
      * Ko : concentre toute l'aura dans le poing pour la prochaine attaque (5 s), le corps est découvert.
      * @return null si accepté, sinon la clé du refus
      */
+    /** Durée maximale d'un Ko tenu (ticks), temps de charge jusqu'à sa pleine puissance, aura tenue par seconde. */
+    public static final int KO_MAX_TICKS = 1200, KO_CHARGE_TICKS = 30;
+    public static final float KO_HOLD_PER_SECOND = 4f;
+
+    /** Charge du Ko (0 à 1) : l'aura met un instant à affluer dans le poing. */
+    public static float koCharge(HunterData data, long now) {
+        long start = data.koUntil() - KO_MAX_TICKS;
+        return Math.max(0f, Math.min(1f, (now - start) / (float) KO_CHARGE_TICKS));
+    }
+
+    /** Pendant le Ko : il coûte de l'aura tant qu'on le tient ; plus d'aura, il retombe. */
+    public static void tickKo(LivingEntity entity, HunterData data) {
+        if (!koActive(entity)) return;
+        data.setAura(data.aura() - KO_HOLD_PER_SECOND / 20f);
+        if (data.aura() <= 0) {
+            data.setKoUntil(0);
+            if (entity instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.ko_faded"), true);
+        }
+    }
+
     public static String ko(LivingEntity entity) {
         HunterData data = HunterStats.get(entity);
         if (!data.nenUnlocked()) return "message.hxh.nen_locked";
+        // Second appui : le Ko est relâché (l'aura déjà investie est perdue)
+        if (koActive(entity)) {
+            data.setKoUntil(0);
+            return "message.hxh.ko_cancelled";
+        }
         if (NenLearning.refusal(entity, NenLearning.Ability.KO) != null) return NenLearning.refusal(entity, NenLearning.Ability.KO);
         if (data.mode() == NenMode.ZETSU) return "message.hxh.hatsu_zetsu";
         int cost = koCost(data);
         if (data.aura() < cost) return "message.hxh.no_aura";
         data.setAura(data.aura() - cost);
-        data.setKoUntil(entity.level().getGameTime() + 100);
+        data.setKoUntil(entity.level().getGameTime() + KO_MAX_TICKS);
+        // Le Ko rassemble Ten, Ren, Zetsu et Gyo dans le poing : ils sont coupés, le corps est découvert
+        if (data.mode() != NenMode.NONE) data.setMode(NenMode.NONE);
+        data.setGyo(false);
+        data.setEn(false);
         NenProgress.train(entity, Mastery.KO, 2);
         return null;
     }
 
+    /** Dernier Ko porté (pour le rendu destructeur du coup) : tick de jeu. */
+    public static final java.util.Map<LivingEntity, Long> KO_LANDED = new java.util.WeakHashMap<>();
+
     public static void requestKo(LivingEntity entity) {
         String refusal = ko(entity);
+        if ("message.hxh.ko_cancelled".equals(refusal)) {
+            if (entity instanceof Player player) player.displayClientMessage(Component.translatable(refusal), true);
+            return;
+        }
         if (entity instanceof Player player) {
             player.displayClientMessage(Component.translatable(refusal != null ? refusal : "message.hxh.ko_ready"), true);
         }
