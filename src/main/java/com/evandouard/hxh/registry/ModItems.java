@@ -74,6 +74,8 @@ public final class ModItems {
             ITEMS.registerSimpleBlockItem("marker_npc", ModBlocks.MARKER_NPC_CHOICE);
     public static final DeferredItem<BlockItem> MARKER_WAYPOINT =
             ITEMS.registerSimpleBlockItem("marker_waypoint", ModBlocks.MARKER_WAYPOINT);
+    public static final DeferredItem<BlockItem> ILLUSION_WALL =
+            ITEMS.registerSimpleBlockItem("illusion_wall", ModBlocks.ILLUSION_WALL);
     public static final DeferredItem<BlockItem> MARKER_PREY =
             ITEMS.registerSimpleBlockItem("marker_prey", ModBlocks.MARKER_PREY);
 

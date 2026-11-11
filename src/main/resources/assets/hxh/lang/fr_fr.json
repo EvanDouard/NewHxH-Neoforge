@@ -1,4 +1,5 @@
 {
+  "block.hxh.illusion_wall": "Faux mur (Tour de Trick)",
   "technique.hxh.cond.charge_strike": "Maintenir pour charger (jusqu'à 2 s), relâcher pour frapper (%s blocs)",
   "technique.hxh.silva_great_orb.desc": "Silva forme en une seconde une grosse boule d'aura et la propulse : elle emporte la cible et explose, sans creuser le terrain.",
   "technique.hxh.silva_great_orb": "Grande boule",

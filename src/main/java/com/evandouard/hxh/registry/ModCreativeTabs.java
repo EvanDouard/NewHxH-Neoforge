@@ -37,6 +37,7 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.MARKER_NPC_CHOICE.get());
                         output.accept(ModItems.MARKER_WAYPOINT.get());
                         output.accept(ModItems.MARKER_PREY.get());
+                        output.accept(ModItems.ILLUSION_WALL.get());
                         output.accept(ModItems.MARKER_ARRIVAL.get());
                     })
                     .build());

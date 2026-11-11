@@ -311,11 +311,17 @@ public final class NenFxClient {
     }
 
     /** Maillon de chaîne centré en {@code at}, allongé selon {@code dir}, dans le plan (dir, n). */
+    /** Maillon de chaîne en 3D : un anneau métallique ombré, dans le plan (dir, n). */
     private static void link(Ctx c, Vec3 at, Vec3 dir, Vec3 n, float length, float width, int color, float alpha) {
-        Vec3 h = dir.scale(length / 2);
-        Vec3 w = n.scale(width / 2);
-        quad(c, RenderType.entityTranslucent(CHAIN), at.subtract(h).subtract(w), at.add(h).subtract(w),
-                at.add(h).add(w), at.subtract(h).add(w), color, alpha);
+        Mesh3D.Ctx m = mesh(c);
+        Vec3 axis = dir.cross(n);
+        if (axis.lengthSqr() < 1e-6) return;
+        // maillon allongé : deux demi-anneaux reliés (ici un anneau étiré par deux tores décalés)
+        float major = Math.max(0.04f, width * 0.42f), minor = Math.max(0.012f, width * 0.14f);
+        Vec3 off = dir.scale(Math.max(0f, length * 0.5f - major));
+        int rgb = color & 0xFFFFFF;
+        Mesh3D.torus(m, Mesh3D.solid(m), at.add(off), axis, major, minor, rgb, alpha, 12, 5, true);
+        Mesh3D.torus(m, Mesh3D.solid(m), at.subtract(off), axis, major, minor, rgb, alpha, 12, 5, true);
     }
 
     /** Deux vecteurs perpendiculaires à {@code dir}. */
@@ -609,14 +615,13 @@ public final class NenFxClient {
             pos = hit.subtract(f.dir.scale(0.12)); // plantée : un bout dépasse
         }
         float fade = age > f.duration - 6 ? (f.duration - age) / 6f : 1f;
-        Vec3[] n = normals(f.dir);
-        float len = 0.5f, w = 0.07f;
-        for (Vec3 side : n) {
-            Vec3 h = f.dir.scale(len / 2), s = side.scale(w / 2);
-            // la tête ronde à l'arrière (gauche de la texture), la pointe devant
-            quad(c, RenderType.entityTranslucent(NEEDLE), pos.subtract(h).subtract(s), pos.add(h).subtract(s),
-                    pos.add(h).add(s), pos.subtract(h).add(s), 0xFFFFFFFF, fade);
-        }
+        // aiguille d'Illumi en 3D : tige métallique, pointe effilée, petite tête ronde à l'arrière
+        float len = 0.55f;
+        Mesh3D.Ctx m = mesh(c);
+        Vec3 back = pos.subtract(f.dir.scale(len / 2)), tipBase = pos.add(f.dir.scale(len * 0.3f)), tip = pos.add(f.dir.scale(len / 2));
+        Mesh3D.tube(m, Mesh3D.solid(m), java.util.List.of(back, tipBase), 0.018f, 0.016f, 0xC9CBD6, fade, 6, true);
+        Mesh3D.cone(m, Mesh3D.solid(m), tipBase, tip, 0.016f, 0xE4E6EE, fade, 6, true);
+        Mesh3D.sphere(m, Mesh3D.solid(m), back, 0.032f, 0x8A6CC0, fade, 4, 6, null, true, false);
         if (!f.impactDone && age >= flight && tgt != null) {
             f.impactDone = true;
             PENDING.add(localFx(NenFx.Kind.IMPACT, hit, 0.6f, NenFx.MANIPULATOR, 6));
@@ -968,12 +973,11 @@ public final class NenFxClient {
             float r = 0.35f + d * spread;
             Vec3 at = o.add(dir.scale(d));
             float a = (1f - k) * 0.95f;
-            Vec3 a0 = at.add(u.scale(-r)).add(v.scale(-r)), a1 = at.add(u.scale(r)).add(v.scale(-r));
-            Vec3 a2 = at.add(u.scale(r)).add(v.scale(r)), a3 = at.add(u.scale(-r)).add(v.scale(r));
-            quad(c, RenderType.entityTranslucent(RING), a0, a1, a2, a3, f.color, a);
-            float g = r * 0.75f;
-            quad(c, RenderType.eyes(GLOW), at.add(u.scale(-g)).add(v.scale(-g)), at.add(u.scale(g)).add(v.scale(-g)),
-                    at.add(u.scale(g)).add(v.scale(g)), at.add(u.scale(-g)).add(v.scale(g)), f.color, a * 0.45f);
+            // onde en 3D : un anneau d'énergie épais (tore) et une bande translucide qui s'évase
+            Mesh3D.Ctx m = mesh(c);
+            Mesh3D.torus(m, Mesh3D.glow(m), at, dir, r, 0.06f + r * 0.05f, f.color & 0xFFFFFF, a, 32, 6, false);
+            Mesh3D.tube(m, Mesh3D.glow(m), java.util.List.of(at.subtract(dir.scale(0.35)), at),
+                    r * 0.85f, r, f.color & 0xFFFFFF, a * 0.35f, 28, false);
         }
         // cœur : chapelet de lueurs le long de l'axe
         float reach = len * ease(Math.min(1f, t * 1.8f));

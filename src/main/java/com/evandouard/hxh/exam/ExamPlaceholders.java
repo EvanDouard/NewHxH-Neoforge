@@ -506,6 +506,15 @@ final class ExamPlaceholders {
                 set(level, c.offset(x, TOWER_F2 + 2, -4), Blocks.LANTERN);
             }
             for (int x = -6; x <= 6; x += 4) set(level, c.offset(x, TOWER_F1 + 3, 6), Blocks.LANTERN);
+            // pièce secrète du 2e étage (angle sud-est) : on y entre par un faux mur (clic droit, il s'efface un instant)
+            for (int x = 3; x <= 7; x++) for (int z = 3; z <= 7; z++) for (int y = 0; y <= 3; y++) {
+                boolean edge = x == 3 || x == 7 || z == 3 || z == 7 || y == 3;
+                set(level, c.offset(x, TOWER_F2 + y, z), edge ? Blocks.STONE_BRICKS : Blocks.AIR);
+            }
+            for (int y = 0; y < 2; y++) set(level, c.offset(3, TOWER_F2 + y, 5),
+                    com.evandouard.hxh.registry.ModBlocks.ILLUSION_WALL.get());
+            set(level, c.offset(5, TOWER_F2 + 2, 5), Blocks.LANTERN);
+            set(level, c.offset(6, TOWER_F2, 6), Blocks.BARREL);
         }
         Map<String, BlockPos> npcs = new LinkedHashMap<>();
         npcs.put("lippo", c.offset(0, TOWER_ROOF, -5));

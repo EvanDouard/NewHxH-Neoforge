@@ -43,12 +43,25 @@ public class NenProjectileRenderer extends EntityRenderer<NenProjectile> {
             cardQuad(pose, buffers.getBuffer(RenderType.entityTranslucent(NenFxClient.CARD)));
             pose.popPose();
         } else {
-            // Croissant à plat, pointe vers l'avant, légèrement incliné
-            pose.mulPose(Axis.YP.rotationDegrees(-e.getYRot()));
-            pose.mulPose(Axis.XP.rotationDegrees(90 + e.getXRot()));
-            pose.mulPose(Axis.ZP.rotationDegrees(-45));
-            quad(pose, buffers.getBuffer(RenderType.eyes(NenFxClient.GLOW)), 1.3f, 0, color, 160);
-            quad(pose, buffers.getBuffer(RenderType.entityTranslucent(NenFxClient.SLASH)), 1.0f, 0, color, 255);
+            // Ciseaux : lame d'aura en croissant, en 3D (effilée aux deux bouts), à plat, pointes vers l'avant
+            net.minecraft.world.phys.Vec3 center = e.getPosition(pt).add(0, e.getBbHeight() / 2, 0);
+            net.minecraft.world.phys.Vec3 eye = entityRenderDispatcher.camera.getPosition().subtract(center);
+            Mesh3D.Ctx ctx = new Mesh3D.Ctx(pose, buffers, net.minecraft.world.phys.Vec3.ZERO, eye);
+            net.minecraft.world.phys.Vec3 dir = e.getDeltaMovement().lengthSqr() > 1e-6 ? e.getDeltaMovement().normalize()
+                    : net.minecraft.world.phys.Vec3.directionFromRotation(e.getXRot(), e.getYRot());
+            net.minecraft.world.phys.Vec3[] b = Mesh3D.basis(dir);
+            // plan de la lame légèrement incliné (comme un coup de ciseaux en biais)
+            net.minecraft.world.phys.Vec3 side = b[0].scale(0.85).add(b[1].scale(0.5)).normalize();
+            float R = 0.7f;
+            java.util.List<net.minecraft.world.phys.Vec3> arc = new java.util.ArrayList<>();
+            for (int i = 0; i <= 16; i++) {
+                float a = -1.25f + 2.5f * i / 16f;
+                arc.add(side.scale(Mth.sin(a) * R).add(dir.scale((Mth.cos(a) - 0.6f) * R)));
+            }
+            int rgb = color & 0xFFFFFF;
+            Mesh3D.tube(ctx, Mesh3D.glow(ctx), arc, t -> 0.11f * Mth.sin(t * Mth.PI) + 0.01f, rgb, 0.55f, 8, false);
+            Mesh3D.tube(ctx, Mesh3D.solid(ctx), arc, t -> 0.055f * Mth.sin(t * Mth.PI) + 0.004f,
+                    AuraOrb3D.mix(rgb, 0xFFFFFF, 0.55f), 1f, 8, true);
         }
         pose.popPose();
         super.render(e, yaw, pt, pose, buffers, light);

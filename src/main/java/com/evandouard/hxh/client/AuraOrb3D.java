@@ -25,7 +25,7 @@ public final class AuraOrb3D {
         // sphère interne ombrée (bandes qui tournent)
         VertexConsumer solid = Mesh3D.solid(c);
         float spin = time * 0.25f;
-        Mesh3D.sphere(c, solid, center, r * 0.62f, mix(rgb, 0x000000, 0.1f), 0.95f, 12, 18,
+        Mesh3D.sphere(c, solid, center, r * 0.62f, mix(rgb, 0xFFFFFF, 0.2f), 0.95f, 12, 18,
                 d -> 1f + 0.05f * Mth.sin((float) (Math.atan2(d.z, d.x) * 5 + spin * 6 + d.y * 4)), true, false);
         VertexConsumer glow = Mesh3D.glow(c);
         // noyau

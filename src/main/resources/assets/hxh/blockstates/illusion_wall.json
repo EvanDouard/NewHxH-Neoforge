@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "open=false": {
+      "model": "hxh:block/illusion_wall"
+    },
+    "open=true": {
+      "model": "hxh:block/illusion_wall"
+    }
+  }
+}

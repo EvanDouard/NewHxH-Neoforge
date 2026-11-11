@@ -147,4 +147,19 @@ public final class MobHatsuTests {
         helper.assertTrue(NenHealing.healPerSecond(0) <= 1.5, "Lent au début");
         helper.succeed();
     }
+
+    @GameTest(template = "empty", timeoutTicks = 200)
+    public static void illusionWallOpensThenCloses(GameTestHelper helper) {
+        BlockPos a = new BlockPos(2, 1, 2), b = a.above();
+        helper.setBlock(a, com.evandouard.hxh.registry.ModBlocks.ILLUSION_WALL.get());
+        helper.setBlock(b, com.evandouard.hxh.registry.ModBlocks.ILLUSION_WALL.get());
+        com.evandouard.hxh.block.IllusionWallBlock.open(helper.getLevel(), helper.absolutePos(a), 0);
+        helper.assertTrue(helper.getBlockState(a).getValue(com.evandouard.hxh.block.IllusionWallBlock.OPEN)
+                && helper.getBlockState(b).getValue(com.evandouard.hxh.block.IllusionWallBlock.OPEN), "Le passage s'ouvre d'un clic");
+        helper.assertTrue(helper.getBlockState(a).getCollisionShape(helper.getLevel(), helper.absolutePos(a)).isEmpty(), "On passe au travers");
+        helper.runAfterDelay(com.evandouard.hxh.block.IllusionWallBlock.OPEN_TICKS + 5, () -> {
+            helper.assertTrue(!helper.getBlockState(a).getValue(com.evandouard.hxh.block.IllusionWallBlock.OPEN), "Le mur revient");
+            helper.succeed();
+        });
+    }
 }

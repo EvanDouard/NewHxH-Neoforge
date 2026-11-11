@@ -144,8 +144,20 @@ public final class Mesh3D {
         }
     }
 
+    /** Rayon le long d'un tube : {@code t} va de 0 (début) à 1 (bout). */
+    @FunctionalInterface
+    public interface Profile {
+        float radius(float t);
+    }
+
     /** Tube qui suit des points (fil, gomme, chaîne lisse), rayon constant ou décroissant vers le bout. */
     public static void tube(Ctx c, VertexConsumer vc, List<Vec3> path, float radius, float endRadius, int rgb, float alpha,
+                            int sides, boolean lit) {
+        tube(c, vc, path, t -> Mth.lerp(t, radius, endRadius), rgb, alpha, sides, lit);
+    }
+
+    /** Tube au profil libre (lame effilée aux deux bouts, aiguille…). */
+    public static void tube(Ctx c, VertexConsumer vc, List<Vec3> path, Profile profile, int rgb, float alpha,
                             int sides, boolean lit) {
         if (path.size() < 2) return;
         Vec3[] prevRing = null;
@@ -155,7 +167,7 @@ public final class Mesh3D {
             Vec3 tangent = (i < path.size() - 1 ? path.get(i + 1).subtract(p) : p.subtract(path.get(i - 1)));
             if (tangent.lengthSqr() < 1e-8) tangent = new Vec3(0, 0, 1);
             Vec3[] b = basis(tangent);
-            float r = Mth.lerp((float) i / (path.size() - 1), radius, endRadius);
+            float r = profile.radius((float) i / (path.size() - 1));
             Vec3[] ring = new Vec3[sides];
             Vec3[] normals = new Vec3[sides];
             for (int k = 0; k < sides; k++) {

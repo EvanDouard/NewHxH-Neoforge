@@ -49,6 +49,11 @@ public final class ModBlocks {
     public static final DeferredBlock<com.evandouard.hxh.marker.MarkerBlock> MARKER_WAYPOINT = BLOCKS.register("marker_waypoint",
             () -> new com.evandouard.hxh.marker.MarkerBlock(com.evandouard.hxh.marker.MarkerBlock.Kind.WAYPOINT,
                     BlockBehaviour.Properties.of().strength(0.2f).sound(SoundType.WOOL).noLootTable()));
+    /** Faux mur de la Tour de Trick : clic droit = il s'efface quelques secondes. */
+    public static final DeferredBlock<com.evandouard.hxh.block.IllusionWallBlock> ILLUSION_WALL = BLOCKS.register("illusion_wall",
+            () -> new com.evandouard.hxh.block.IllusionWallBlock(BlockBehaviour.Properties.of()
+                    .strength(1.5f, 6f).sound(SoundType.STONE).noOcclusion()));
+
     /** Point d'apparition des proies d'une épreuve de chasse. */
     public static final DeferredBlock<Block> MARKER_PREY = marker("marker_prey");
 
