@@ -554,6 +554,35 @@ wait 15
 shot 22n9_genthru_compte_a_rebours
 wait 60
 cmd kill @e[tag=hxh_dummy]
+cmd hunter hatsu set uvogin
+cmd hunter nen refill
+look 0 20
+hold key.hxh.cast
+wait 25
+shot 22o1_uvogin_charge
+release key.hxh.cast
+wait 4
+shot 22o2_uvogin_big_bang
+wait 20
+cmd hunter hatsu set silva
+cmd hunter nen refill
+look 0 0
+hold key.hxh.cast
+wait 15
+shot 22o3_silva_grande_boule_charge
+release key.hxh.cast
+wait 6
+shot 22o4_silva_grande_boule
+wait 30
+cmd difficulty easy
+cmd summon minecraft:zombie ~ ~ ~8 {PersistenceRequired:1b,Tags:["hxh_mobnen"]}
+cmd hunter nen unlock @e[tag=hxh_mobnen]
+cmd hunter nen level 50 @e[tag=hxh_mobnen]
+cmd effect give @s minecraft:resistance 30 4 true
+wait 80
+shot 22o5_zombie_horde_de_nen
+cmd kill @e[type=minecraft:zombie]
+cmd effect clear @s
 camera first
 cmd hunter hatsu set neferpitou
 cmd hunter nen refill
