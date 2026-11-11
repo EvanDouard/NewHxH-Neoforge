@@ -476,7 +476,9 @@ public final class NenFxClient {
         Vec3 d = to.subtract(from);
         if (d.lengthSqr() < 1e-6) return;
         Vec3[] n = normals(d.normalize());
-        Vec3 prev = from;
+        // éclair en 3D : un tube brisé, cœur blanc et gaine colorée lumineuse
+        java.util.List<Vec3> path = new java.util.ArrayList<>();
+        path.add(from);
         for (int i = 1; i <= segments; i++) {
             float t = i / (float) segments;
             Vec3 p = from.add(d.scale(t));
@@ -484,11 +486,11 @@ public final class NenFxClient {
                 float j = jitter * (float) Math.sin(Math.PI * t);
                 p = p.add(n[0].scale((hash(seed, i * 2) - 0.5f) * 2 * j)).add(n[1].scale((hash(seed, i * 2 + 1) - 0.5f) * 2 * j));
             }
-            ribbon(c, RenderType.eyes(WHITE), prev, p, width * 2.2f, color, alpha * 0.6f);
-            ribbon(c, RenderType.entityTranslucent(WHITE), prev, p, width * 0.9f, INK, alpha);
-            ribbon(c, RenderType.eyes(WHITE), prev, p, width * 0.45f, 0xFFFFFFFF, alpha);
-            prev = p;
+            path.add(p);
         }
+        Mesh3D.Ctx m = mesh(c);
+        Mesh3D.tube(m, Mesh3D.glow(m), path, width * 1.1f, width * 0.6f, color & 0xFFFFFF, alpha * 0.7f, 6, false);
+        Mesh3D.tube(m, Mesh3D.glow(m), path, width * 0.35f, width * 0.2f, 0xFFFFFF, alpha, 5, false);
     }
 
     /** Petits arcs électriques autour du corps, renouvelés toutes les deux images. */
@@ -856,8 +858,7 @@ public final class NenFxClient {
             case SUN -> {
                 Vec3 at = (src != null ? src.position() : f.at).add(0, (src != null ? src.getBbHeight() : 2) + 2.2, 0);
                 float spin = (c.now + c.pt) * 0.05f;
-                billboard(c, RenderType.eyes(GLOW), at, f.size * 1.3f * scale, 0, f.color, alpha * 0.7f);
-                billboard(c, RenderType.entityTranslucent(tex), at, f.size * 0.8f * scale, spin, 0xFFFFFFFF, alpha);
+                Sprites3D.sun(mesh(c), at, f.size * 0.45f * scale, f.color, spin, alpha);
             }
             case POT_CLEAN -> {
                 Vec3 at = (src != null ? src.position() : f.at).add(0, (src != null ? src.getBbHeight() : 1.8) + 0.9, 0);
@@ -889,10 +890,19 @@ public final class NenFxClient {
                 int left = Mth.clamp((int) Math.ceil((1f - t) * f.duration / 20f), 0, 9);
                 float pulse = 1f + 0.12f * Math.max(0f, 1f - ((1f - t) * f.duration % 20f) / 6f);
                 float half = f.size * 0.5f * pulse;
-                billboard(c, RenderType.eyes(GLOW), at, half * 1.5f, 0, f.color, a * 0.35f);
-                billboard(c, RenderType.entityTranslucent(tex), at, half, 0, 0xFFFFFFFF, a);
-                billboardUV(c, RenderType.entityTranslucent(DIGITS), at.add(0, -half * 0.12, 0).add(towardCam(c, at, 0.02)),
-                        half * 0.5f, left / 10f, (left + 1) / 10f, 0xFFFFFFFF, a);
+                // bombe en 3D : sphère noire, mèche qui crépite, chiffre du compte à rebours face à la caméra
+                Mesh3D.Ctx m = mesh(c);
+                float r = half * 0.62f;
+                Mesh3D.sphere(m, Mesh3D.solid(m), at, r, 0x3A3644, a, 12, 16, null, true, false);
+                Vec3 fuseBase = at.add(0, r * 0.95, 0);
+                Mesh3D.tube(m, Mesh3D.solid(m), java.util.List.of(fuseBase, fuseBase.add(r * 0.15, r * 0.35, 0), fuseBase.add(r * 0.35, r * 0.5, 0)),
+                        r * 0.08f, r * 0.06f, 0x9A6E3C, a, 5, true);
+                float spark = 0.7f + 0.3f * Mth.sin((c.now + c.pt) * 2.1f);
+                Mesh3D.sphere(m, Mesh3D.glow(m), fuseBase.add(r * 0.35, r * 0.5, 0), r * 0.16f * spark, 0xFFB030, a, 5, 6, null, false, false);
+                Mesh3D.sphere(m, Mesh3D.glow(m), at, r * 1.35f, f.color & 0xFFFFFF, a * 0.3f, 8, 10, null, false, true);
+                billboard(c, RenderType.entityTranslucent(WHITE), at.add(towardCam(c, at, r + 0.01)), half * 0.32f, 0, 0xFFFFF0DC, a);
+                billboardUV(c, RenderType.entityTranslucent(DIGITS), at.add(towardCam(c, at, r + 0.03)),
+                        half * 0.3f, left / 10f, (left + 1) / 10f, 0xFFFFFFFF, a);
             }
             case KANNON_HANDS -> {
                 Vec3 at = src != null ? hand(src, c.pt) : f.at;
@@ -973,6 +983,11 @@ public final class NenFxClient {
                 if (sprite == NenFx.Sprite.NOTE) at = at.add(0, t * 0.8, 0);
             }
         }
+        // modèle 3D quand il existe (dragon, démon, Cookie, cœur, note, armes…) ; sinon l'image dessinée
+        Vec3 heading = sprite == NenFx.Sprite.DRAGON ? f.at.subtract(src != null ? src.getEyePosition(c.pt) : f.at.add(0, 0, -1))
+                : sprite == NenFx.Sprite.DRAGON_DIVE ? new Vec3(0, -1, 0.2)
+                : src != null ? src.getViewVector(c.pt) : new Vec3(0, 0, 1);
+        if (Sprites3D.render(mesh(c), sprite, at, size, f.color, time, alpha, heading, spin)) return;
         boolean glow = sprite == NenFx.Sprite.DRAGON || sprite == NenFx.Sprite.DRAGON_DIVE || sprite == NenFx.Sprite.DEMON;
         if (glow) billboard(c, RenderType.eyes(GLOW), at, size * 1.1f, 0, f.color, alpha * 0.45f);
         float k = sprite == NenFx.Sprite.DRAGON ? 0.8f : 0.5f; // le dragon de Zeno est plus massif
