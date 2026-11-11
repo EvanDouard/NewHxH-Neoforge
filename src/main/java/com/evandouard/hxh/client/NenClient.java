@@ -58,6 +58,7 @@ public final class NenClient {
         modBus.addListener(NenClient::onRegisterKeys);
         modBus.addListener(NenClient::onRegisterLayers);
         MangaHud.register(modBus);
+        com.evandouard.hxh.client.look.CharacterLooks.register(modBus);
         modBus.addListener(NenClient::onRegisterBlockColors);
         modBus.addListener(EntityRenderersEvent.AddLayers.class, AuraLayer::addToRenderers);
         modBus.addListener(EntityRenderersEvent.RegisterRenderers.class,

@@ -1,0 +1,29 @@
+{
+  "slim": true,
+  "scale": [
+    0.94,
+    0.95,
+    0.94
+  ],
+  "extras": {
+    "texture": "hxh:textures/entity/npc/menchi_extra.png",
+    "texture_size": [
+      64,
+      64
+    ],
+    "cubes": [
+      {"part": "head", "uv": [0, 0], "uv_size": [1, 3, 1], "from": [-3.6, -10.6, 1.0], "size": [1, 3, 1], "pivot": [-3.1, -8, 1.5], "rotation": [-20, 0, 40], "inflate": 0.0},
+      {"part": "head", "uv": [4, 0], "uv_size": [2, 2, 2], "from": [-3.85, -12.0, 0.75], "size": [1.5, 1.6, 1.5], "pivot": [-3.1, -8, 1.5], "rotation": [-20, 0, 40], "inflate": 0.0},
+      {"part": "head", "uv": [12, 0], "uv_size": [1, 3, 1], "from": [-1.9, -10.6, 1.0], "size": [1, 3, 1], "pivot": [-1.4, -8, 1.5], "rotation": [-32, 0, 18], "inflate": 0.0},
+      {"part": "head", "uv": [16, 0], "uv_size": [2, 2, 2], "from": [-2.15, -12.0, 0.75], "size": [1.5, 1.6, 1.5], "pivot": [-1.4, -8, 1.5], "rotation": [-32, 0, 18], "inflate": 0.0},
+      {"part": "head", "uv": [24, 0], "uv_size": [1, 3, 1], "from": [-0.5, -10.6, 1.0], "size": [1, 3, 1], "pivot": [0.0, -8, 1.5], "rotation": [-40, 0, 0], "inflate": 0.0},
+      {"part": "head", "uv": [28, 0], "uv_size": [2, 2, 2], "from": [-0.75, -12.0, 0.75], "size": [1.5, 1.6, 1.5], "pivot": [0.0, -8, 1.5], "rotation": [-40, 0, 0], "inflate": 0.0},
+      {"part": "head", "uv": [36, 0], "uv_size": [1, 3, 1], "from": [0.9, -10.6, 1.0], "size": [1, 3, 1], "pivot": [1.4, -8, 1.5], "rotation": [-32, 0, -18], "inflate": 0.0},
+      {"part": "head", "uv": [40, 0], "uv_size": [2, 2, 2], "from": [0.65, -12.0, 0.75], "size": [1.5, 1.6, 1.5], "pivot": [1.4, -8, 1.5], "rotation": [-32, 0, -18], "inflate": 0.0},
+      {"part": "head", "uv": [48, 0], "uv_size": [1, 3, 1], "from": [2.6, -10.6, 1.0], "size": [1, 3, 1], "pivot": [3.1, -8, 1.5], "rotation": [-20, 0, -40], "inflate": 0.0},
+      {"part": "head", "uv": [52, 0], "uv_size": [2, 2, 2], "from": [2.35, -12.0, 0.75], "size": [1.5, 1.6, 1.5], "pivot": [3.1, -8, 1.5], "rotation": [-20, 0, -40], "inflate": 0.0},
+      {"part": "head", "uv": [0, 4], "uv_size": [9, 2, 1], "from": [-4.3, -8.4, -4.6], "size": [8.6, 2, 1], "pivot": [0.0, -7.4, -4.1], "rotation": [0, 0, 0], "inflate": 0.0}
+    ]
+  },
+  "skin": "hxh:textures/entity/npc/menchi.png"
+}

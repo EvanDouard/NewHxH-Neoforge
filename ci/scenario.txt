@@ -1461,4 +1461,34 @@ expect [Association Hunter]
 expect manieur de Nen errant
 shot 52_evenement_prime_association
 cmd difficulty peaceful
+# --- Apparences des personnages (skins, tailles, cheveux/barbes en 3D) ---
+cmd kill @e[type=hxh:npc]
+camera first
+cmd tp @s ~ ~ ~ 0 0
+look 0 8
+cmd summon hxh:npc ~-4.2 ~ ~6 {npc:"netero",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd summon hxh:npc ~-2.1 ~ ~6 {npc:"satotz",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd summon hxh:npc ~0 ~ ~6 {npc:"menchi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd summon hxh:npc ~2.1 ~ ~6 {npc:"buhara",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd summon hxh:npc ~4.2 ~ ~6 {npc:"beans",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+wait 30
+clearchat
+shot 53a_apparences_examinateurs
+look -35 12
+wait 5
+shot 53b_apparences_examinateurs_profil
+cmd kill @e[tag=look_ci]
+look 0 8
+cmd summon hxh:npc ~-4.2 ~ ~6 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd summon hxh:npc ~-2.1 ~ ~6 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd summon hxh:npc ~0 ~ ~6 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd summon hxh:npc ~2.1 ~ ~6 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd summon hxh:npc ~4.2 ~ ~6 {npc:"hisoka",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+wait 30
+clearchat
+shot 53c_apparences_heros
+look 35 12
+wait 5
+shot 53d_apparences_heros_profil
+cmd kill @e[tag=look_ci]
 quit

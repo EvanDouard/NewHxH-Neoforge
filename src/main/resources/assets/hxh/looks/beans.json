@@ -1,0 +1,20 @@
+{
+  "slim": false,
+  "scale": [
+    0.74,
+    0.7,
+    0.74
+  ],
+  "extras": {
+    "texture": "hxh:textures/entity/npc/beans_extra.png",
+    "texture_size": [
+      64,
+      64
+    ],
+    "cubes": [
+      {"part": "head", "uv": [0, 0], "uv_size": [7, 3, 7], "from": [-3.5, -11, -3.8], "size": [7, 3, 7], "pivot": [0, -8, 0], "rotation": [-8, 0, 0], "inflate": 0.0},
+      {"part": "head", "uv": [28, 0], "uv_size": [5, 2, 5], "from": [-2.5, -12.4, -2.6], "size": [5, 2, 5], "pivot": [0, -8, 0], "rotation": [-14, 0, 0], "inflate": 0.0}
+    ]
+  },
+  "skin": "hxh:textures/entity/npc/beans.png"
+}

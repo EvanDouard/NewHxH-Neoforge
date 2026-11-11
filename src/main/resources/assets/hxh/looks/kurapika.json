@@ -1,0 +1,21 @@
+{
+  "slim": true,
+  "scale": [
+    0.9,
+    0.9,
+    0.9
+  ],
+  "extras": {
+    "texture": "hxh:textures/entity/npc/kurapika_extra.png",
+    "texture_size": [
+      64,
+      64
+    ],
+    "cubes": [
+      {"part": "body", "uv": [0, 0], "uv_size": [7, 6, 1], "from": [-3.6, 11, -2.6], "size": [7.2, 6, 0.6], "pivot": [0.0, 14.0, -2.3], "rotation": [0, 0, 0], "inflate": 0.0},
+      {"part": "body", "uv": [16, 0], "uv_size": [7, 6, 1], "from": [-3.6, 11, 2.0], "size": [7.2, 6, 0.6], "pivot": [0.0, 14.0, 2.3], "rotation": [0, 0, 0], "inflate": 0.0},
+      {"part": "head", "uv": [32, 0], "uv_size": [1, 2, 1], "from": [-4.8, -4, -1], "size": [0.6, 1.5, 0.6], "pivot": [-4.5, -3.25, -0.7], "rotation": [0, 0, 0], "inflate": 0.0}
+    ]
+  },
+  "skin": "hxh:textures/entity/npc/kurapika.png"
+}

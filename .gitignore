@@ -42,3 +42,4 @@ repo/
 ### CI
 run-ci/
 ci-out/
+__pycache__/
