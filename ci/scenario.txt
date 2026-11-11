@@ -394,12 +394,13 @@ cmd hunter nen refill
 cmd hunter hatsu cast
 wait 15
 shot 22f_pierre_charge_debut
-wait 40
-shot 22f2_pierre_charge_palier
 camera back
 wait 2
 shot 22f2b_pierre_boule_3d
 camera first
+cmd hunter nen refill
+wait 30
+shot 22f2_pierre_charge_palier
 cmd hunter hatsu release
 wait 2
 shot 22f3_pierre_lancee
@@ -560,6 +561,8 @@ wait 15
 shot 22n9_genthru_compte_a_rebours
 wait 60
 cmd kill @e[tag=hxh_dummy]
+cmd tp @s ~60 ~ ~
+wait 20
 cmd hunter hatsu set uvogin
 cmd hunter nen refill
 look 0 20
@@ -588,6 +591,8 @@ cmd effect give @s minecraft:resistance 30 4 true
 wait 80
 shot 22o5_zombie_horde_de_nen
 cmd kill @e[type=minecraft:zombie]
+cmd tp @s ~-60 ~ ~
+wait 20
 cmd effect clear @s
 camera first
 cmd hunter hatsu set neferpitou
