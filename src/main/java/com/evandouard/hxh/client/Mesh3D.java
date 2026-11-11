@@ -47,7 +47,55 @@ public final class Mesh3D {
     }
 
     public static VertexConsumer glow(Ctx c) {
-        return c.buffers().getBuffer(RenderType.eyes(NenFxClient.WHITE));
+        return new Premultiplied(c.buffers().getBuffer(RenderType.eyes(NenFxClient.WHITE)));
+    }
+
+    /**
+     * La couche lumineuse est additive (ONE, ONE) : l'alpha y est ignoré. On multiplie donc la couleur par l'alpha,
+     * sinon fondus, enveloppes « fresnel » et couches faibles brillent à pleine intensité et tout sature en blanc.
+     */
+    private static final class Premultiplied implements VertexConsumer {
+        private final VertexConsumer d;
+
+        Premultiplied(VertexConsumer d) {
+            this.d = d;
+        }
+
+        @Override
+        public VertexConsumer addVertex(float x, float y, float z) {
+            d.addVertex(x, y, z);
+            return this;
+        }
+
+        @Override
+        public VertexConsumer setColor(int r, int g, int b, int a) {
+            d.setColor(r * a / 255, g * a / 255, b * a / 255, 255);
+            return this;
+        }
+
+        @Override
+        public VertexConsumer setUv(float u, float v) {
+            d.setUv(u, v);
+            return this;
+        }
+
+        @Override
+        public VertexConsumer setUv1(int u, int v) {
+            d.setUv1(u, v);
+            return this;
+        }
+
+        @Override
+        public VertexConsumer setUv2(int u, int v) {
+            d.setUv2(u, v);
+            return this;
+        }
+
+        @Override
+        public VertexConsumer setNormal(float x, float y, float z) {
+            d.setNormal(x, y, z);
+            return this;
+        }
     }
 
     /** Couleur ombrée : diffuse + ambiante, et un liseré clair sur les bords vus de la caméra (rim). */
