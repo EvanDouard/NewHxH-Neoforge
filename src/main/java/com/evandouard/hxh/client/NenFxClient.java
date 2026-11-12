@@ -1095,19 +1095,25 @@ public final class NenFxClient {
 
     /** Portail d'émission : anneau encré face à {@code dir}, rayon r. */
     private static void portal(Ctx c, Vec3 at, Vec3 dir, float r, int color, float alpha, float spin) {
+        if (r < 0.02f || alpha < 0.02f) return;
+        Mesh3D.Ctx m = mesh(c);
+        int rgb = color & 0xFFFFFF;
+        // bord en anneau épais, voile lumineux à l'intérieur, et spirale qui tourne
+        Mesh3D.torus(m, Mesh3D.solid(m), at, dir, r, r * 0.12f, rgb, alpha * 0.9f, 28, 8, true);
+        Mesh3D.sphere(m, Mesh3D.glow(m), at, r * 0.9f, rgb, alpha * 0.5f, 8, 14,
+                d -> 0.18f + 0.82f * (float) Math.sqrt(Math.max(0, 1 - d.dot(dir) * d.dot(dir))), false, false);
         Vec3[] n = normals(dir);
-        float cs = Mth.cos(spin), sn = Mth.sin(spin);
-        Vec3 u = n[0].scale(cs).add(n[1].scale(sn)).scale(r), v = n[1].scale(cs).subtract(n[0].scale(sn)).scale(r);
-        quad(c, RenderType.entityTranslucent(RING), at.subtract(u).subtract(v), at.add(u).subtract(v),
-                at.add(u).add(v), at.subtract(u).add(v), color, alpha);
-        Vec3 g = u.scale(0.8), h = v.scale(0.8);
-        quad(c, RenderType.eyes(GLOW), at.subtract(g).subtract(h), at.add(g).subtract(h),
-                at.add(g).add(h), at.subtract(g).add(h), color, alpha * 0.6f);
+        List<Vec3> spiral = new java.util.ArrayList<>();
+        for (int i = 0; i <= 24; i++) {
+            float k = i / 24f, a = spin * 3f + k * Mth.TWO_PI * 1.5f;
+            spiral.add(at.add(n[0].scale(Mth.cos(a) * r * 0.85 * (1 - k * 0.8))).add(n[1].scale(Mth.sin(a) * r * 0.85 * (1 - k * 0.8))));
+        }
+        Mesh3D.tube(m, Mesh3D.glow(m), spiral, r * 0.05f, r * 0.02f, rgb | 0x808080, alpha * 0.8f, 4, false);
     }
 
     /**
      * Poing de Leorio : il frappe dans un portail qui s'ouvre devant sa main ; un second portail s'ouvre à côté de la
-     * cible et le coup en jaillit (grande étoile d'impact et traits de vitesse), puis les deux portails se referment.
+     * cible et un poing d'aura 3D en jaillit (traits de vitesse), puis les deux portails se referment.
      */
     private static void warpFist(Ctx c, Fx f, float age) {
         Entity src = entity(f.source);
@@ -1136,13 +1142,16 @@ public final class NenFxClient {
             Vec3 fist = exit.lerp(hit, ease(k));
             // traits de vitesse du portail vers la cible
             Vec3[] n = normals(dir);
+            Mesh3D.Ctx m = mesh(c);
             for (int i = 0; i < 6; i++) {
                 float a = i / 6f * Mth.TWO_PI;
                 Vec3 off = n[0].scale(Mth.cos(a) * 0.5).add(n[1].scale(Mth.sin(a) * 0.5));
-                ribbon(c, RenderType.entityTranslucent(WHITE), exit.add(off), fist.add(off.scale(0.4)), 0.03f, INK, close);
-                ribbon(c, RenderType.eyes(WHITE), exit.add(off.scale(0.8)), fist.add(off.scale(0.3)), 0.08f, f.color, close * 0.7f);
+                Mesh3D.tube(m, Mesh3D.solid(m), List.of(exit.add(off), fist.add(off.scale(0.4))), 0.02f, 0.005f,
+                        0x111111, close, 4, false);
+                Mesh3D.tube(m, Mesh3D.glow(m), List.of(exit.add(off.scale(0.8)), fist.add(off.scale(0.3))), 0.05f, 0.01f,
+                        f.color & 0xFFFFFF, close * 0.7f, 4, false);
             }
-            billboard(c, RenderType.entityTranslucent(IMPACT), fist, f.size * (0.4f + 0.6f * k), age * 0.1f, f.color, close);
+            Sprites3D.auraFist(m, fist, dir, f.size * (0.55f + 0.45f * k), f.color, close);
         }
         if (!f.impactDone && age >= 5 && tgt != null) {
             f.impactDone = true;

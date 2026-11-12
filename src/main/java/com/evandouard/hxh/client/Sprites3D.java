@@ -311,4 +311,48 @@ public final class Sprites3D {
                 troot.add(f.scale(s * 0.32)).add(side.scale(-s * 0.08))), s * 0.07f, s * 0.055f, KANNON_GOLD, alpha, 6, true);
         Mesh3D.sphere(c, Mesh3D.glow(c), at.add(f.scale(s * 0.15)), s * 0.6f, color & 0xFFFFFF, alpha * 0.35f, 8, 10, null, false, true);
     }
+
+    /**
+     * Poing d'aura fermé (coup de Leorio) qui file vers {@code fwd} : quatre phalanges, dos de la main, pouce replié
+     * dessous, poignet qui s'étire en traînée vers l'arrière, enveloppe lumineuse.
+     */
+    public static void auraFist(Mesh3D.Ctx c, Vec3 at, Vec3 fwd, float s, int color, float alpha) {
+        Vec3 f = fwd.lengthSqr() < 1e-6 ? new Vec3(0, 0, 1) : fwd.normalize();
+        Vec3[] b = Mesh3D.basis(f);
+        Vec3 side = b[0], up = b[1];
+        int rgb = color & 0xFFFFFF;
+        int light = mix(rgb, 0xFFFFFF, 0.45f);
+        // dos de la main : bloc arrondi un peu aplati
+        Vec3 back = at.subtract(f.scale(s * 0.18));
+        Mesh3D.sphere(c, Mesh3D.solid(c), back, s * 0.36f, light, alpha * 0.9f, 10, 12,
+                d -> 1f - 0.3f * (float) Math.abs(d.dot(up)) + 0.12f * (float) Math.abs(d.dot(side)), true, false);
+        // phalanges repliées : quatre bosses alignées à l'avant
+        for (int i = 0; i < 4; i++) {
+            float off = (i - 1.5f) * 0.17f;
+            Vec3 k = at.add(f.scale(s * 0.12)).add(side.scale(s * off)).add(up.scale(s * (0.08f - Math.abs(i - 1.5f) * 0.02f)));
+            Mesh3D.sphere(c, Mesh3D.solid(c), k, s * 0.12f, light, alpha, 6, 8, null, true, false);
+            // doigts repliés sous les phalanges
+            Mesh3D.sphere(c, Mesh3D.solid(c), k.subtract(up.scale(s * 0.16)).subtract(f.scale(s * 0.02)), s * 0.1f, light,
+                    alpha * 0.9f, 6, 8, null, true, false);
+        }
+        // pouce replié en travers, sous l'index
+        Vec3 t0 = back.add(side.scale(-s * 0.3)).subtract(up.scale(s * 0.1));
+        Mesh3D.tube(c, Mesh3D.solid(c), List.of(t0, t0.add(f.scale(s * 0.2)).subtract(up.scale(s * 0.08)),
+                at.add(f.scale(s * 0.05)).subtract(up.scale(s * 0.22)).add(side.scale(-s * 0.05))), s * 0.09f, s * 0.08f,
+                light, alpha, 6, true);
+        // poignet étiré en traînée d'aura
+        Vec3 wrist = back.subtract(f.scale(s * 0.3));
+        Mesh3D.tube(c, Mesh3D.solid(c), List.of(wrist.add(f.scale(s * 0.15)), wrist, wrist.subtract(f.scale(s * 0.9))),
+                s * 0.24f, s * 0.04f, rgb, alpha * 0.75f, 10, true);
+        // enveloppe d'aura autour du poing
+        Mesh3D.sphere(c, Mesh3D.glow(c), back.add(f.scale(s * 0.1)), s * 0.62f, rgb, alpha * 0.55f, 10, 12,
+                d -> 1f + 0.25f * (float) Math.max(0, -d.dot(f)), false, true);
+    }
+
+    private static int mix(int a, int b, float k) {
+        int r = (int) Mth.lerp(k, (a >> 16) & 255, (b >> 16) & 255);
+        int g = (int) Mth.lerp(k, (a >> 8) & 255, (b >> 8) & 255);
+        int bl = (int) Mth.lerp(k, a & 255, b & 255);
+        return (r << 16) | (g << 8) | bl;
+    }
 }
