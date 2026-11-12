@@ -142,7 +142,8 @@ public final class NenAwakening {
         }
         if (data.nenUnlocked() && entity.tickCount % 200 == 0) {
             // Déjà éveillé : la méditation entraîne la Volonté et le Nen
-            HunterStats.addXp(entity, Stat.WILLPOWER, 1);
+            // à côté d'une pierre de méditation (sanctuaire), la Volonté monte bien plus vite
+            HunterStats.addXp(entity, Stat.WILLPOWER, com.evandouard.hxh.meditation.MeditationShrines.willMultiplier(entity));
             NenProgress.addNenXp(entity, 1);
         }
     }

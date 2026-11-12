@@ -42,3 +42,10 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 ## Plats nutritifs (Vitalité) (12 nov)
 - [ ] CI : GameTest `nutritiousDishGivesVitalityXp`.
 - [ ] En jeu : recettes (I = bol + steak cuit + pomme de terre cuite + carotte + pain ; II = plat I + carotte dorée + saumon cuit + miel), le bol revient après le repas, textures I–IV.
+
+## Sanctuaires de méditation (Volonté) (12 nov)
+- [ ] CI : GameTest `meditationShrineMultipliesWillpower`.
+- [ ] En jeu : explorer de nouvelles terres → des sanctuaires apparaissent (niveau 1 ~1 tronçon sur 120 … niveau 5 ~1 sur 4000) ; pas de lag ni de sanctuaire coupé ou dans l'eau.
+- [ ] En jeu : méditer (M) à côté de la pierre : Volonté ×3/×5/×8/×12/×20 selon le niveau.
+- [ ] En jeu : PNJ `archeologue` (repère de PNJ) : liste cliquable niveaux 1–4, coordonnées du plus proche, Jenny débités ; niveau 5 jamais vendu.
+- [ ] En jeu : `/hunter shrine build <1-5>` (admin) pose un sanctuaire devant soi.

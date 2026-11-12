@@ -114,4 +114,23 @@ public final class TrainingTests {
         helper.assertTrue(player.getFoodData().getFoodLevel() > 4, "Et il nourrit");
         helper.succeed();
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void meditationShrineMultipliesWillpower(GameTestHelper helper) {
+        // Sanctuaire de niveau 3 : la pierre est au centre, méditer à côté multiplie la Volonté par 8
+        var level = helper.getLevel();
+        BlockPos centre = helper.absolutePos(new BlockPos(4, 1, 4));
+        BlockPos stone = com.evandouard.hxh.meditation.MeditationShrines.build(level, centre, 3, false);
+        helper.assertTrue(stone != null && level.getBlockState(stone).getBlock() instanceof com.evandouard.hxh.meditation.MeditationStoneBlock,
+                "Pierre posée au centre");
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        player.moveTo(stone.getX() + 1.5, stone.getY(), stone.getZ() + 0.5);
+        helper.assertTrue(com.evandouard.hxh.meditation.MeditationShrines.willMultiplier(player) == 8, "Volonté ×8 près d'une pierre III");
+        player.moveTo(stone.getX() + 12.5, stone.getY(), stone.getZ() + 0.5);
+        helper.assertTrue(com.evandouard.hxh.meditation.MeditationShrines.willMultiplier(player) == 1, "Loin de la pierre : ×1");
+        helper.assertTrue(com.evandouard.hxh.meditation.MeditationShrines.Shrines.get(level).all().stream()
+                .anyMatch(s -> s[0] == stone.asLong() && s[1] == 3), "Sanctuaire inscrit au registre (vendable par l'archéologue)");
+        helper.assertTrue(!com.evandouard.hxh.meditation.MeditationShrines.buy(player, 5), "Niveau 5 jamais vendu");
+        helper.succeed();
+    }
 }

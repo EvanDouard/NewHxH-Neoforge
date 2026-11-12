@@ -83,6 +83,17 @@ public final class HunterCommand {
                 .then(Commands.literal("fly").then(Commands.argument("airport", IntegerArgumentType.integer(1))
                         .executes(ctx -> com.evandouard.hxh.travel.AirTravel.fly(ctx.getSource().getPlayerOrException(),
                                 IntegerArgumentType.getInteger(ctx, "airport")) ? 1 : 0)))
+                // Sanctuaires de méditation : acheter des coordonnées (lien de l'archéologue) ; en bâtir un (admin)
+                .then(Commands.literal("shrine")
+                        .then(Commands.literal("buy").then(Commands.argument("tier", IntegerArgumentType.integer(1, 5))
+                                .executes(ctx -> com.evandouard.hxh.meditation.MeditationShrines.buy(ctx.getSource().getPlayerOrException(),
+                                        IntegerArgumentType.getInteger(ctx, "tier")) ? 1 : 0)))
+                        .then(Commands.literal("build").requires(src -> src.hasPermission(2))
+                                .then(Commands.argument("tier", IntegerArgumentType.integer(1, 5)).executes(ctx -> {
+                                    var p = ctx.getSource().getPlayerOrException();
+                                    return com.evandouard.hxh.meditation.MeditationShrines.build(p.serverLevel(),
+                                            p.blockPosition().offset(0, 0, 6), IntegerArgumentType.getInteger(ctx, "tier"), false) != null ? 1 : 0;
+                                }))))
                 // Renommer l'aéroport le plus proche (admin)
                 .then(Commands.literal("airport").requires(src -> src.hasPermission(2))
                         .then(Commands.literal("name").then(Commands.argument("name", StringArgumentType.greedyString())

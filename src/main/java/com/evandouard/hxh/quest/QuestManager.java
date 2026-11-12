@@ -344,6 +344,11 @@ public final class QuestManager {
             com.evandouard.hxh.exam.KirikoForest.examine(player, npc);
             return;
         }
+        // Archéologue : coordonnées des sanctuaires de méditation
+        if (npc.npcId().equals(com.evandouard.hxh.meditation.MeditationShrines.ARCHAEOLOGIST)) {
+            com.evandouard.hxh.meditation.MeditationShrines.talk(player, npc);
+            return;
+        }
         // Guichetier d'aéroport : la destination s'ouvre, puis les vols cliquables
         if (npc.npcId().equals(com.evandouard.hxh.travel.AirTravel.CLERK)) {
             com.evandouard.hxh.travel.AirTravel.talk(player, npc);

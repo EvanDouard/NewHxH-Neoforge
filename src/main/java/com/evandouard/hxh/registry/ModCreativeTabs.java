@@ -39,6 +39,7 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.MARKER_WAYPOINT.get());
                         output.accept(ModItems.MARKER_PREY.get());
                         output.accept(ModItems.ILLUSION_WALL.get());
+                        ModItems.MEDITATION_STONES.forEach(i -> output.accept(i.get()));
                         output.accept(ModItems.MARKER_ARRIVAL.get());
                     })
                     .build());

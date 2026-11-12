@@ -1,0 +1,67 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "minecraft:block/polished_andesite",
+    "side": "minecraft:block/polished_andesite",
+    "top": "minecraft:block/smooth_stone"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        10,
+        15
+      ],
+      "faces": {
+        "down": {
+          "texture": "#side",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#top"
+        },
+        "north": {
+          "texture": "#side",
+          "uv": [
+            1,
+            6,
+            15,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#side",
+          "uv": [
+            1,
+            6,
+            15,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#side",
+          "uv": [
+            1,
+            6,
+            15,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#side",
+          "uv": [
+            1,
+            6,
+            15,
+            16
+          ]
+        }
+      }
+    }
+  ]
+}

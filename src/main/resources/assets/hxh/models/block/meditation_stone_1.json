@@ -1,0 +1,67 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "minecraft:block/mossy_cobblestone",
+    "side": "minecraft:block/mossy_cobblestone",
+    "top": "minecraft:block/moss_block"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        10,
+        15
+      ],
+      "faces": {
+        "down": {
+          "texture": "#side",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#top"
+        },
+        "north": {
+          "texture": "#side",
+          "uv": [
+            1,
+            6,
+            15,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#side",
+          "uv": [
+            1,
+            6,
+            15,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#side",
+          "uv": [
+            1,
+            6,
+            15,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#side",
+          "uv": [
+            1,
+            6,
+            15,
+            16
+          ]
+        }
+      }
+    }
+  ]
+}

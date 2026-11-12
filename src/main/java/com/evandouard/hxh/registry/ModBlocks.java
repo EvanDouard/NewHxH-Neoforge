@@ -49,6 +49,14 @@ public final class ModBlocks {
     public static final DeferredBlock<com.evandouard.hxh.marker.MarkerBlock> MARKER_WAYPOINT = BLOCKS.register("marker_waypoint",
             () -> new com.evandouard.hxh.marker.MarkerBlock(com.evandouard.hxh.marker.MarkerBlock.Kind.WAYPOINT,
                     BlockBehaviour.Properties.of().strength(0.2f).sound(SoundType.WOOL).noLootTable()));
+    /** Pierres de méditation I à V (sanctuaires de Volonté). */
+    public static final java.util.List<DeferredBlock<com.evandouard.hxh.meditation.MeditationStoneBlock>> MEDITATION_STONES =
+            java.util.stream.IntStream.rangeClosed(1, 5)
+                    .mapToObj(t -> BLOCKS.register("meditation_stone_" + t,
+                            () -> new com.evandouard.hxh.meditation.MeditationStoneBlock(t, BlockBehaviour.Properties.of()
+                                    .strength(-1f, 3600000f).sound(SoundType.STONE).noOcclusion().lightLevel(s -> 3 + t))))
+                    .toList();
+
     /** Faux mur de la Tour de Trick : clic droit = il s'efface quelques secondes. */
     public static final DeferredBlock<com.evandouard.hxh.block.IllusionWallBlock> ILLUSION_WALL = BLOCKS.register("illusion_wall",
             () -> new com.evandouard.hxh.block.IllusionWallBlock(BlockBehaviour.Properties.of()
