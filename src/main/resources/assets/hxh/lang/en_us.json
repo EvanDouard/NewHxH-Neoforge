@@ -1,4 +1,11 @@
 {
+  "item.hxh.nutritious_dish_1": "Nutritious dish I",
+  "item.hxh.nutritious_dish_2": "Nutritious dish II",
+  "item.hxh.nutritious_dish_3": "Nutritious dish III",
+  "item.hxh.nutritious_dish_4": "Nutritious dish IV",
+  "tooltip.hxh.dish": "A real Hunter's meal: +%s Vitality XP",
+  "tooltip.hxh.dish.source_gourmet": "Cooked by Gourmet Hunters (soon)",
+  "message.hxh.training.dish": "Hunter's meal: +%2$s %1$s XP",
   "npc.hxh.guichetier": "Airport clerk",
   "dialog.hxh.guichetier.idle": "Welcome aboard Hunter Airlines!",
   "travel.hxh.default_name": "Airport (%s, %s)",

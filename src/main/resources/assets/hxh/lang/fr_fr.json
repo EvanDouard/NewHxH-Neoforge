@@ -1,4 +1,11 @@
 {
+  "item.hxh.nutritious_dish_1": "Plat nutritif I",
+  "item.hxh.nutritious_dish_2": "Plat nutritif II",
+  "item.hxh.nutritious_dish_3": "Plat nutritif III",
+  "item.hxh.nutritious_dish_4": "Plat nutritif IV",
+  "tooltip.hxh.dish": "Un vrai repas de Hunter : +%s XP de Vitalité",
+  "tooltip.hxh.dish.source_gourmet": "Cuisiné par les Hunters gourmets (bientôt)",
+  "message.hxh.training.dish": "Repas de Hunter : +%2$s XP de %1$s",
   "npc.hxh.guichetier": "Guichetier de l'aéroport",
   "dialog.hxh.guichetier.idle": "Bienvenue à bord de la compagnie Hunter Airlines !",
   "travel.hxh.default_name": "Aéroport (%s, %s)",

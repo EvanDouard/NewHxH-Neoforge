@@ -100,4 +100,18 @@ public final class TrainingTests {
         helper.assertTrue(d.xp(Stat.ENDURANCE) - endurance == (int) block.xpPerSecond(), "1 s de marche : XP d'Endurance");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void nutritiousDishGivesVitalityXp(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        var dish = ModItems.DISHES.get(0).get();
+        HunterData d = HunterStats.get(player);
+        player.getFoodData().setFoodLevel(4);
+        int before = d.xp(Stat.VITALITY);
+        dish.finishUsingItem(new ItemStack(dish), helper.getLevel(), player);
+        helper.assertTrue(d.xp(Stat.VITALITY) > before, "Un plat nutritif rapporte de l'XP de Vitalité");
+        helper.assertTrue(ModItems.DISHES.get(3).get().xpPerDish() > dish.xpPerDish(), "La gamme IV rapporte plus");
+        helper.assertTrue(player.getFoodData().getFoodLevel() > 4, "Et il nourrit");
+        helper.succeed();
+    }
 }

@@ -38,3 +38,7 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 - [ ] CI : GameTest `airportsOpenWhenVisitedAndCostJenny` (aéroport ouvert à la visite, prix 1 Jenny / 10 blocs, min 50, gratuit avec la licence).
 - [ ] En jeu : poser deux PNJ `guichetier` loin l'un de l'autre, parler aux deux, cliquer « ✈ destination » : écran noir « En vol », arrivée devant l'autre guichet, Jenny débités.
 - [ ] En jeu : `/hunter airport name <nom>` renomme l'aéroport le plus proche.
+
+## Plats nutritifs (Vitalité) (12 nov)
+- [ ] CI : GameTest `nutritiousDishGivesVitalityXp`.
+- [ ] En jeu : recettes (I = bol + steak cuit + pomme de terre cuite + carotte + pain ; II = plat I + carotte dorée + saumon cuit + miel), le bol revient après le repas, textures I–IV.

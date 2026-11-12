@@ -63,6 +63,13 @@ public final class ModItems {
                             () -> new com.evandouard.hxh.training.DumbbellItem(t, new Item.Properties())))
                     .toList();
 
+    /** Plats nutritifs I à IV (Vitalité). */
+    public static final java.util.List<DeferredItem<com.evandouard.hxh.training.NutritiousDishItem>> DISHES =
+            java.util.Arrays.stream(com.evandouard.hxh.training.TrainingTier.values())
+                    .map(t -> ITEMS.register("nutritious_dish" + t.suffix(),
+                            () -> new com.evandouard.hxh.training.NutritiousDishItem(t, new Item.Properties())))
+                    .toList();
+
     /** Tapis de course I à IV (Vitesse ou Endurance). */
     public static final java.util.List<DeferredItem<BlockItem>> TREADMILLS = java.util.stream.IntStream
             .range(0, ModBlocks.TREADMILLS.size())
