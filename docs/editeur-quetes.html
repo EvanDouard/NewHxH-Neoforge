@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HxH — Éditeur de quêtes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#111; --paper:#fff; --gold:#FFD23F; --bg:#f4f1ea; --muted:#6b6660; --err:#d6333a; --ok:#2f9e5b; --em:#FF5FA8; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.45 Inter, system-ui, sans-serif; }
+  header { background:var(--ink); color:var(--paper); padding:14px 22px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  header h1 { font:400 34px/1 Bangers, Impact, sans-serif; letter-spacing:1.5px; margin:0; transform:rotate(-1.5deg); color:var(--gold); text-shadow:3px 3px 0 #000; }
+  header p { margin:0; color:#cfc9bf; max-width:640px; }
+  main { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:20px; padding:20px; max-width:1500px; margin:0 auto; }
+  @media (max-width:980px){ main { grid-template-columns:1fr; } }
+  .panel { background:var(--paper); border:3px solid var(--ink); box-shadow:5px 5px 0 var(--ink); padding:16px 18px; margin-bottom:20px; }
+  .panel h2 { font:400 24px/1 Bangers, Impact, sans-serif; letter-spacing:1px; margin:0 0 12px; }
+  label { display:block; font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.4px; margin:10px 0 4px; }
+  label small { text-transform:none; font-weight:400; color:var(--muted); letter-spacing:0; }
+  input, select, textarea { width:100%; font:inherit; padding:7px 9px; border:2px solid var(--ink); background:#fffdf7; border-radius:0; }
+  textarea { min-height:58px; resize:vertical; }
+  input:focus, select:focus, textarea:focus { outline:3px solid var(--gold); outline-offset:0; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .row3 { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  button { font:400 17px/1 Bangers, Impact, sans-serif; letter-spacing:1px; padding:8px 14px; border:3px solid var(--ink); background:var(--gold); color:var(--ink); box-shadow:3px 3px 0 var(--ink); cursor:pointer; transition:transform .08s, box-shadow .08s; }
+  button:hover { transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink); }
+  button:active { transform:translate(2px,2px); box-shadow:1px 1px 0 var(--ink); }
+  button.ghost { background:var(--paper); }
+  button.danger { background:#ffd9db; }
+  button.small { font-size:14px; padding:4px 9px; box-shadow:2px 2px 0 var(--ink); }
+  .bar { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .step { border:3px solid var(--ink); margin:14px 0; background:#fffdf7; animation:pop .18s ease-out; }
+  @keyframes pop { from { transform:scale(.97); opacity:0; } to { transform:none; opacity:1; } }
+  .step-head { display:flex; align-items:center; gap:10px; background:var(--ink); color:var(--paper); padding:6px 10px; }
+  .step-head .num { font:400 22px/1 Bangers, Impact, sans-serif; color:var(--gold); min-width:28px; }
+  .step-head .title { flex:1; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .step-head button { box-shadow:none; border-width:2px; }
+  .step-body { padding:4px 12px 12px; }
+  .help { color:var(--muted); font-size:12.5px; margin:6px 0 0; }
+  .list-item { display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:8px; margin-bottom:6px; }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; }
+  .chip { border:2px solid var(--ink); padding:3px 8px; background:var(--paper); cursor:pointer; user-select:none; font-size:12.5px; }
+  .chip.on { background:var(--gold); font-weight:700; }
+  pre { margin:0; background:#151515; color:#f3efe6; padding:14px; font:12.5px/1.5 ui-monospace, Menlo, Consolas, monospace; overflow:auto; max-height:62vh; border:3px solid var(--ink); }
+  .sticky { position:sticky; top:16px; }
+  .issues { list-style:none; padding:0; margin:0; }
+  .issues li { padding:6px 8px; border-left:5px solid var(--err); background:#fff1f1; margin-bottom:6px; }
+  .issues li.ok { border-color:var(--ok); background:#eef9f1; }
+  .issues li.warn { border-color:#e0a21a; background:#fff8e6; }
+  .toast { position:fixed; right:22px; bottom:22px; background:var(--ink); color:var(--gold); font:400 22px/1 Bangers, Impact, sans-serif; letter-spacing:1px; padding:12px 18px; border:3px solid var(--gold); transform:translateY(140%) rotate(-2deg); transition:transform .25s cubic-bezier(.2,1.4,.4,1); }
+  .toast.show { transform:translateY(0) rotate(-2deg); }
+  .modal { position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; padding:20px; }
+  .modal.show { display:flex; }
+  .modal .panel { width:min(760px,100%); margin:0; }
+  .modal textarea { min-height:300px; font:12.5px/1.45 ui-monospace, Menlo, Consolas, monospace; }
+  .tag { display:inline-block; font-size:11px; font-weight:700; padding:1px 6px; border:2px solid var(--gold); background:var(--paper); color:var(--ink); margin-left:6px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Éditeur de quêtes</h1>
+  <p>Remplis le formulaire, copie le JSON, colle-le dans <code>src/main/resources/data/hxh/quests/&lt;nom&gt;.json</code>. Vérifie ensuite en jeu avec <code>/hunter quest check</code>.</p>
+</header>
+
+<main>
+  <section>
+    <div class="panel">
+      <h2>La quête</h2>
+      <div class="row">
+        <div><label>Nom du fichier <small>(sans .json, minuscules et _)</small></label><input id="file" placeholder="netero_soin"></div>
+        <div><label>PNJ qui la donne <small>(start_npc, optionnel)</small></label><input id="start_npc" placeholder="wing"></div>
+      </div>
+      <div class="row">
+        <div><label>Titre (fr)</label><input id="title_fr"></div>
+        <div><label>Titre (en)</label><input id="title_en"></div>
+      </div>
+      <div class="row">
+        <div><label>Ce que dit le PNJ en la donnant (fr)</label><textarea id="intro_fr"></textarea></div>
+        <div><label>Intro (en)</label><textarea id="intro_en"></textarea></div>
+      </div>
+      <label>Quêtes à finir avant <small>(une par ligne, ex. hxh:hunter_exam)</small></label>
+      <textarea id="requires" placeholder="hxh:hunter_exam"></textarea>
+    </div>
+
+    <div class="panel">
+      <h2>Nouveaux PNJ</h2>
+      <p class="help">Identifiant (utilisé dans les étapes) et nom affiché. Ils apparaissent ensuite dans le cycle du repère de PNJ. Skin : <code>assets/hxh/textures/entity/npc/&lt;id&gt;.png</code>.</p>
+      <div id="npcs"></div>
+      <button class="small ghost" id="addNpc">+ PNJ</button>
+    </div>
+
+    <div class="panel">
+      <div class="bar" style="justify-content:space-between">
+        <h2 style="margin:0">Étapes</h2>
+        <div class="bar">
+          <select id="newType" style="width:auto"></select>
+          <button id="addStep">+ Étape</button>
+        </div>
+      </div>
+      <div id="steps"></div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="sticky">
+      <div class="panel">
+        <div class="bar" style="justify-content:space-between;margin-bottom:10px">
+          <h2 style="margin:0">JSON</h2>
+          <div class="bar">
+            <button id="copy">Copier</button>
+            <button class="ghost" id="import">Importer</button>
+            <button class="ghost danger" id="reset">Vider</button>
+          </div>
+        </div>
+        <pre id="out"></pre>
+      </div>
+      <div class="panel">
+        <h2>Vérifications</h2>
+        <ul class="issues" id="issues"></ul>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<div class="modal" id="modal">
+  <div class="panel">
+    <h2>Importer une quête</h2>
+    <p class="help">Colle le contenu d'un fichier de quête existant pour le modifier ici.</p>
+    <textarea id="importText"></textarea>
+    <div class="bar" style="margin-top:10px;justify-content:flex-end">
+      <button class="ghost" id="importCancel">Annuler</button>
+      <button id="importOk">Importer</button>
+    </div>
+    <p class="help" id="importErr" style="color:var(--err)"></p>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// Types d'étapes connus du mod (Quest.TYPES), avec leurs champs.
+const TYPES = {
+  talk:      { label:"Parler à un PNJ", fields:["npc","dialog"], help:"Validée quand on parle au PNJ ; il dit le dialogue." },
+  bring:     { label:"Apporter des objets", fields:["npc","item","count","dialog"], help:"On parle au PNJ avec les objets : ils sont pris." },
+  kill:      { label:"Tuer des mobs", fields:["entity","count"], help:"Ex. minecraft:zombie, hxh:npc." },
+  reach:     { label:"Aller à un endroit", fields:["pos","radius"], help:"Validée à moins de « rayon » blocs du point." },
+  follow:    { label:"Suivre un PNJ", fields:["npc","seconds","max_distance"], help:"Rester près du PNJ (marathon de Satotz)." },
+  nen_mode:  { label:"Tenir une posture de Nen", fields:["mode:ten,zetsu,in,ren,ken","seconds"], help:"Secondes à tenir la posture." },
+  nen_sense: { label:"Tenir le Gyo ou l'En", fields:["mode:gyo,en","seconds"], help:"" },
+  nen_flag:  { label:"Attendre un état du Nen", fields:["mode:unlocked,revealed,kit"], help:"unlocked = Nen éveillé, revealed = type révélé, kit = Hatsu choisi." },
+  quiz:      { label:"Question à choix", fields:["npc","question","options","answer"], help:"Réponse : numéro du bon choix, any (toutes), silence (se taire), majority." },
+  prayer:    { label:"Prière de gratitude (Netero)", fields:["count"], help:"Coups de base donnés en Ten ou en Ken." },
+  kannon:    { label:"Paumes de Kannon (Netero)", fields:["seconds"], help:"Tenir sous les paumes ; jamais fatal, l'épreuve recommence." },
+  wounded_meditation: { label:"Méditation blessé (Netero)", fields:["seconds"], help:"À moitié de vie ou moins, accroupi, immobile, en Ten." },
+  arena_win:   { label:"Tour Céleste : victoires", fields:["count"], help:"" },
+  arena_floor: { label:"Tour Céleste : étage atteint", fields:["count"], help:"Numéro de l'étage." },
+  arena_register_200: { label:"Tour Céleste : inscription au 200e", fields:[], help:"" },
+  custom:    { label:"Condition à coder plus tard", fields:["note"], help:"Décris la condition ; /hunter quest validate la valide en attendant." },
+};
+const LEARN = ["ten","in","zetsu","ren","ken","gyo","en","ko","ryu","shu","hatsu","heal"];
+const LEARN_LABEL = {heal:"soin"};
+const $ = id => document.getElementById(id);
+let state = blank();
+
+function blank(){ return { file:"", start_npc:"", title:{fr:"",en:""}, intro:{fr:"",en:""}, requires:"", npcs:[], steps:[] }; }
+function newStep(type){
+  return { id:"", type, npc:"", entity:"", item:"", count:1, seconds:10, max_distance:16, radius:4, pos:["","",""], mode:"",
+    note:"", answer:"1", objective:{fr:"",en:""}, dialog:{fr:"",en:""}, question:{fr:"",en:""}, options:[{fr:"",en:""},{fr:"",en:""}],
+    reward_jenny:0, reward_item:"", reward_hunter:false, reward_learn:[], open:true };
+}
+function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function fill(){
+  for (const k of ["file","start_npc"]) $(k).value = state[k];
+  $("title_fr").value = state.title.fr; $("title_en").value = state.title.en;
+  $("intro_fr").value = state.intro.fr; $("intro_en").value = state.intro.en;
+  $("requires").value = state.requires;
+  renderNpcs(); renderSteps(); update();
+}
+
+function renderNpcs(){
+  $("npcs").innerHTML = state.npcs.map((n,i) => `
+    <div class="list-item">
+      <input data-npc="${i}" data-k="id" placeholder="identifiant" value="${esc(n.id)}">
+      <input data-npc="${i}" data-k="fr" placeholder="Nom (fr)" value="${esc(n.fr)}">
+      <input data-npc="${i}" data-k="en" placeholder="Name (en)" value="${esc(n.en)}">
+      <button class="small danger" data-delnpc="${i}">×</button>
+    </div>`).join("");
+}
+
+function field(i, name, s){
+  const [key, choices] = name.split(":");
+  const v = s[key];
+  const inp = (k, val, ph="", type="text") => `<input data-step="${i}" data-k="${k}" type="${type}" placeholder="${ph}" value="${esc(val)}">`;
+  switch(key){
+    case "npc": return `<div><label>PNJ</label>${inp("npc", v, "identifiant du PNJ")}</div>`;
+    case "entity": return `<div><label>Mob</label>${inp("entity", v, "minecraft:zombie")}</div>`;
+    case "item": return `<div><label>Objet</label>${inp("item", v, "minecraft:cod")}</div>`;
+    case "count": return `<div><label>Nombre</label>${inp("count", v, "", "number")}</div>`;
+    case "seconds": return `<div><label>Secondes</label>${inp("seconds", v, "", "number")}</div>`;
+    case "max_distance": return `<div><label>Distance max</label>${inp("max_distance", v, "", "number")}</div>`;
+    case "radius": return `<div><label>Rayon</label>${inp("radius", v, "", "number")}</div>`;
+    case "note": return `<div style="grid-column:1/-1"><label>Condition (note)</label>${inp("note", v, "ex. traverser la tempête sans tomber")}</div>`;
+    case "answer": return `<div><label>Bonne réponse</label>${inp("answer", v, "1, any, silence, majority")}</div>`;
+    case "mode": return `<div><label>Valeur</label><select data-step="${i}" data-k="mode">${choices.split(",").map(c => `<option ${c===v?"selected":""}>${c}</option>`).join("")}</select></div>`;
+    case "pos": return `<div style="grid-column:1/-1"><label>Position x, y, z</label><div class="row3">${[0,1,2].map(j => `<input data-step="${i}" data-pos="${j}" type="number" value="${esc(s.pos[j])}">`).join("")}</div></div>`;
+    case "dialog": return `<div style="grid-column:1/-1"><div class="row"><div><label>Dialogue (fr)</label><textarea data-step="${i}" data-t="dialog" data-l="fr">${esc(s.dialog.fr)}</textarea></div><div><label>Dialogue (en)</label><textarea data-step="${i}" data-t="dialog" data-l="en">${esc(s.dialog.en)}</textarea></div></div></div>`;
+    case "question": return `<div style="grid-column:1/-1"><div class="row"><div><label>Question (fr)</label><textarea data-step="${i}" data-t="question" data-l="fr">${esc(s.question.fr)}</textarea></div><div><label>Question (en)</label><textarea data-step="${i}" data-t="question" data-l="en">${esc(s.question.en)}</textarea></div></div></div>`;
+    case "options": return `<div style="grid-column:1/-1"><label>Choix</label>${s.options.map((o,j) => `<div class="list-item" style="grid-template-columns:auto 1fr 1fr auto"><b style="align-self:center">${j+1}</b><input data-step="${i}" data-opt="${j}" data-l="fr" placeholder="fr" value="${esc(o.fr)}"><input data-step="${i}" data-opt="${j}" data-l="en" placeholder="en" value="${esc(o.en)}"><button class="small danger" data-delopt="${i}:${j}">×</button></div>`).join("")}<button class="small ghost" data-addopt="${i}">+ choix</button></div>`;
+  }
+  return "";
+}
+
+function renderSteps(){
+  $("steps").innerHTML = state.steps.map((s,i) => {
+    const t = TYPES[s.type] || {label:s.type, fields:[], help:"Type avancé (examen) : à régler à la main dans le JSON."};
+    const obj = s.objective.fr || t.label;
+    return `<div class="step">
+      <div class="step-head">
+        <span class="num">${i+1}</span>
+        <span class="title">${esc(obj)}<span class="tag">${esc(s.type)}</span></span>
+        <button class="small ghost" data-up="${i}" title="Monter">▲</button>
+        <button class="small ghost" data-down="${i}" title="Descendre">▼</button>
+        <button class="small ghost" data-toggle="${i}">${s.open ? "Replier" : "Ouvrir"}</button>
+        <button class="small danger" data-del="${i}">×</button>
+      </div>
+      <div class="step-body" style="display:${s.open?"block":"none"}">
+        <p class="help">${esc(t.help)}</p>
+        <div class="row">
+          <div><label>Identifiant de l'étape <small>(optionnel)</small></label><input data-step="${i}" data-k="id" placeholder="step${i}" value="${esc(s.id)}"></div>
+          <div><label>Type</label><select data-step="${i}" data-k="type">${Object.entries(TYPES).map(([k,v]) => `<option value="${k}" ${k===s.type?"selected":""}>${v.label}</option>`).join("")}${TYPES[s.type]?"":`<option selected>${esc(s.type)}</option>`}</select></div>
+        </div>
+        <div class="row">
+          <div><label>Objectif affiché (fr)</label><input data-step="${i}" data-t="objective" data-l="fr" value="${esc(s.objective.fr)}"></div>
+          <div><label>Objectif (en)</label><input data-step="${i}" data-t="objective" data-l="en" value="${esc(s.objective.en)}"></div>
+        </div>
+        <div class="row">${t.fields.map(f => field(i, f, s)).join("")}</div>
+        <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:600">Récompenses de l'étape</summary>
+          <div class="row3">
+            <div><label>Jenny</label><input data-step="${i}" data-k="reward_jenny" type="number" value="${esc(s.reward_jenny)}"></div>
+            <div><label>Objet</label><input data-step="${i}" data-k="reward_item" placeholder="hxh:hunter_card" value="${esc(s.reward_item)}"></div>
+            <div><label>Devient Hunter</label><select data-step="${i}" data-k="reward_hunter"><option value="false" ${!s.reward_hunter?"selected":""}>non</option><option value="true" ${s.reward_hunter?"selected":""}>oui</option></select></div>
+          </div>
+          <label>Capacités apprises</label>
+          <div class="chips">${LEARN.map(a => `<span class="chip ${s.reward_learn.includes(a)?"on":""}" data-learn="${i}:${a}">${LEARN_LABEL[a]||a}</span>`).join("")}</div>
+        </details>
+      </div>
+    </div>`;
+  }).join("") || `<p class="help">Aucune étape. Choisis un type et ajoute la première.</p>`;
+}
+
+function texts(o){ const r = {}; if (o.fr) r.fr = o.fr; if (o.en) r.en = o.en; return r; }
+function num(v, d){ const n = Number(v); return Number.isFinite(n) ? n : d; }
+
+function build(){
+  const q = {};
+  const title = texts(state.title); if (Object.keys(title).length) q.title = title;
+  if (state.start_npc.trim()) q.start_npc = state.start_npc.trim();
+  const intro = texts(state.intro); if (Object.keys(intro).length) q.intro = intro;
+  const npcs = state.npcs.filter(n => n.id.trim());
+  if (npcs.length) { q.npcs = {}; for (const n of npcs) q.npcs[n.id.trim()] = texts(n); }
+  q.steps = state.steps.map((s,i) => {
+    const t = TYPES[s.type]; const o = {};
+    o.id = s.id.trim() || `step${i}`;
+    o.type = s.type;
+    const f = t ? t.fields.map(x => x.split(":")[0]) : [];
+    if (f.includes("npc") && s.npc.trim()) o.npc = s.npc.trim();
+    if (f.includes("entity")) o.entity = s.entity.trim();
+    if (f.includes("item")) o.item = s.item.trim();
+    if (f.includes("count")) o.count = num(s.count, 1);
+    if (f.includes("seconds")) o.seconds = num(s.seconds, 10);
+    if (f.includes("max_distance") && num(s.max_distance,16) !== 16) o.max_distance = num(s.max_distance, 16);
+    if (f.includes("pos")) o.pos = s.pos.map(v => num(v, 0));
+    if (f.includes("radius") && num(s.radius,4) !== 4) o.radius = num(s.radius, 4);
+    if (f.includes("mode")) o.mode = s.mode || t.fields.find(x => x.startsWith("mode:")).split(":")[1].split(",")[0];
+    if (f.includes("note")) o.note = s.note;
+    if (f.includes("question")) o.question = texts(s.question);
+    if (f.includes("options")) o.options = s.options.map(texts);
+    if (f.includes("answer")) o.answer = s.answer.trim() || "1";
+    if (!t && s._raw) Object.assign(o, s._raw, {id:o.id, type:o.type});
+    if (Number(s.reward_jenny) > 0) o.reward_jenny = num(s.reward_jenny, 0);
+    if (s.reward_item.trim()) o.reward_item = s.reward_item.trim();
+    if (s.reward_hunter) o.reward_hunter = true;
+    if (s.reward_learn.length) o.reward_learn = [...s.reward_learn];
+    const obj = texts(s.objective); if (Object.keys(obj).length) o.objective = obj;
+    if (f.includes("dialog")) { const d = texts(s.dialog); if (Object.keys(d).length) o.dialog = d; }
+    return o;
+  });
+  const req = state.requires.split(/\n|,/).map(x => x.trim()).filter(Boolean);
+  if (req.length) q.requires = req;
+  return q;
+}
+
+// Les mêmes vérifications que /hunter quest check, côté formulaire.
+function check(q){
+  const out = [];
+  if (!state.file.trim()) out.push(["warn","Donne un nom de fichier (ex. ma_quete)."]);
+  else if (!/^[a-z0-9_]+$/.test(state.file.trim())) out.push(["err","Nom de fichier : minuscules, chiffres et _ seulement."]);
+  if (!q.title) out.push(["err","Il manque le titre."]);
+  else if (!q.title.en || !q.title.fr) out.push(["warn","Titre : pense au français et à l'anglais."]);
+  if (!q.steps.length) out.push(["err","Aucune étape (\"steps\")."]);
+  const npcIds = new Set(Object.keys(q.npcs || {}));
+  const ids = new Set();
+  q.steps.forEach((s,i) => {
+    const w = `Étape ${i+1} : `;
+    if (ids.has(s.id)) out.push(["err", w+`identifiant « ${s.id} » en double.`]); ids.add(s.id);
+    if (["talk","follow","bring"].includes(s.type) && !s.npc) out.push(["err", w+"il manque le PNJ."]);
+    if (s.npc && !npcIds.has(s.npc)) out.push(["warn", w+`PNJ « ${s.npc} » non déclaré ici (normal s'il existe dans une autre quête).`]);
+    if (s.type==="kill" && !/^[a-z0-9_.-]+:[a-z0-9_/.-]+$/.test(s.entity||"")) out.push(["err", w+"mob invalide (ex. minecraft:zombie)."]);
+    if (s.type==="bring" && !/^[a-z0-9_.-]+:[a-z0-9_/.-]+$/.test(s.item||"")) out.push(["err", w+"objet invalide (ex. minecraft:cod)."]);
+    if (s.type==="custom" && !s.note) out.push(["err", w+"décris la condition dans la note."]);
+    if (s.type==="quiz") {
+      if (!s.question || !Object.keys(s.question).length) out.push(["err", w+"il manque la question."]);
+      if (!["silence","any","majority","kiriko"].includes(s.answer)) {
+        const a = parseInt(s.answer,10);
+        if (!(a >= 1 && a <= (s.options||[]).length)) out.push(["err", w+`réponse hors des choix (${s.answer}).`]);
+      }
+    }
+    if (["seconds"].some(k => k in s) && s.seconds < 1) out.push(["err", w+"au moins 1 seconde."]);
+    if (!s.objective) out.push(["warn", w+"pas d'objectif affiché (le suivi de quête sera vide)."]);
+    else if (!s.objective.en || !s.objective.fr) out.push(["warn", w+"objectif : français et anglais."]);
+  });
+  (q.requires||[]).forEach(r => { if (!/^[a-z0-9_.-]+:[a-z0-9_/.-]+$/.test(r)) out.push(["err", `Quête requise « ${r} » : forme hxh:nom.`]); });
+  if (!out.length) out.push(["ok","Aucun problème repéré. Vérifie quand même en jeu avec /hunter quest check."]);
+  return out;
+}
+
+function update(){
+  const q = build();
+  $("out").textContent = JSON.stringify(q, null, 2);
+  $("issues").innerHTML = check(q).map(([k,m]) => `<li class="${k==="ok"?"ok":k==="warn"?"warn":""}">${esc(m)}</li>`).join("");
+  try { localStorage.setItem("hxh-quest-editor", JSON.stringify(state)); } catch(e) {}
+}
+
+function toast(msg){ const t = $("toast"); t.textContent = msg; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 1600); }
+
+// --- Saisie ---
+for (const k of ["file","start_npc","requires"]) $(k).addEventListener("input", e => { state[k] = e.target.value; update(); });
+for (const [id, a, l] of [["title_fr","title","fr"],["title_en","title","en"],["intro_fr","intro","fr"],["intro_en","intro","en"]])
+  $(id).addEventListener("input", e => { state[a][l] = e.target.value; update(); });
+
+$("npcs").addEventListener("input", e => { const i = e.target.dataset.npc; if (i == null) return; state.npcs[i][e.target.dataset.k] = e.target.value; update(); });
+$("npcs").addEventListener("click", e => { const i = e.target.dataset.delnpc; if (i == null) return; state.npcs.splice(i,1); renderNpcs(); update(); });
+$("addNpc").onclick = () => { state.npcs.push({id:"",fr:"",en:""}); renderNpcs(); update(); };
+
+$("newType").innerHTML = Object.entries(TYPES).map(([k,v]) => `<option value="${k}">${v.label}</option>`).join("");
+$("addStep").onclick = () => { state.steps.push(newStep($("newType").value)); renderSteps(); update(); };
+
+$("steps").addEventListener("input", e => {
+  const d = e.target.dataset, s = state.steps[d.step]; if (!s) return;
+  if (d.t) { s[d.t][d.l] = e.target.value; if (d.t === "objective") { const h = e.target.closest(".step").querySelector(".title"); h.firstChild.textContent = s.objective.fr || TYPES[s.type]?.label || s.type; } }
+  else if (d.pos != null) s.pos[d.pos] = e.target.value;
+  else if (d.opt != null) s.options[d.opt][d.l] = e.target.value;
+  else if (d.k === "reward_hunter") s.reward_hunter = e.target.value === "true";
+  else if (d.k) { s[d.k] = e.target.value; if (d.k === "type") { s.mode = ""; renderSteps(); } }
+  update();
+});
+$("steps").addEventListener("change", e => { if (e.target.tagName === "SELECT") e.target.dispatchEvent(new Event("input", {bubbles:true})); });
+$("steps").addEventListener("click", e => {
+  const d = e.target.dataset; let n;
+  if ((n = d.del) != null) state.steps.splice(n,1);
+  else if ((n = d.up) != null && n > 0) [state.steps[n-1], state.steps[n]] = [state.steps[n], state.steps[n-1]];
+  else if ((n = d.down) != null && n < state.steps.length-1) [state.steps[+n+1], state.steps[n]] = [state.steps[n], state.steps[+n+1]];
+  else if ((n = d.toggle) != null) state.steps[n].open = !state.steps[n].open;
+  else if (d.addopt != null) state.steps[d.addopt].options.push({fr:"",en:""});
+  else if (d.delopt != null) { const [i,j] = d.delopt.split(":"); state.steps[i].options.splice(j,1); }
+  else if (d.learn != null) { const [i,a] = d.learn.split(":"); const l = state.steps[i].reward_learn; l.includes(a) ? l.splice(l.indexOf(a),1) : l.push(a); }
+  else return;
+  renderSteps(); update();
+});
+
+// --- Copier / importer / vider ---
+$("copy").onclick = async () => {
+  try { await navigator.clipboard.writeText($("out").textContent); toast("JSON copié !"); }
+  catch(e) { const r = document.createRange(); r.selectNodeContents($("out")); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); toast("Sélectionné : Ctrl+C"); }
+};
+$("import").onclick = () => { $("importErr").textContent = ""; $("importText").value = ""; $("modal").classList.add("show"); $("importText").focus(); };
+$("importCancel").onclick = () => $("modal").classList.remove("show");
+$("importOk").onclick = () => {
+  try {
+    const q = JSON.parse($("importText").value);
+    const s = blank();
+    s.title = Object.assign({fr:"",en:""}, q.title); s.intro = Object.assign({fr:"",en:""}, q.intro);
+    s.start_npc = q.start_npc || ""; s.requires = (q.requires || []).join("\n");
+    s.npcs = Object.entries(q.npcs || {}).map(([id,n]) => ({id, fr:n.fr||"", en:n.en||""}));
+    s.steps = (q.steps || []).map(st => {
+      const n = Object.assign(newStep(st.type || "talk"), {open:false});
+      for (const k of ["id","npc","entity","item","count","seconds","max_distance","radius","mode","note","answer","reward_jenny","reward_item","reward_hunter"]) if (st[k] != null) n[k] = st[k];
+      if (st.pos) n.pos = st.pos.map(String);
+      for (const k of ["objective","dialog","question"]) if (st[k]) n[k] = Object.assign({fr:"",en:""}, st[k]);
+      if (st.options) n.options = st.options.map(o => Object.assign({fr:"",en:""}, o));
+      if (st.reward_learn) n.reward_learn = [...st.reward_learn];
+      if (!TYPES[n.type]) n._raw = st; // étapes d'examen : gardées telles quelles
+      return n;
+    });
+    state = s; $("modal").classList.remove("show"); fill(); toast("Quête importée");
+  } catch(e) { $("importErr").textContent = "JSON illisible : " + e.message; }
+};
+let armed = false;
+$("reset").onclick = () => {
+  if (!armed) { armed = true; $("reset").textContent = "Sûr ?"; setTimeout(() => { armed = false; $("reset").textContent = "Vider"; }, 2500); return; }
+  armed = false; $("reset").textContent = "Vider"; state = blank(); fill(); toast("Formulaire vidé");
+};
+
+// Brouillon gardé dans ce navigateur, sinon un exemple pour démarrer
+try { const saved = localStorage.getItem("hxh-quest-editor"); if (saved) state = Object.assign(blank(), JSON.parse(saved)); } catch(e) {}
+if (!state.steps.length && !state.title.fr) {
+  state.file = "exemple_pecheur";
+  state.title = {fr:"Le pêcheur affamé", en:"The hungry fisherman"};
+  state.start_npc = "pecheur";
+  state.intro = {fr:"Tu pourrais m'aider ? Je n'ai rien pris de la journée.", en:"Could you help me? I haven't caught anything all day."};
+  state.npcs = [{id:"pecheur", fr:"Pêcheur", en:"Fisherman"}];
+  const a = newStep("bring"); Object.assign(a, {id:"fish", npc:"pecheur", item:"minecraft:cod", count:3, reward_jenny:50, open:true,
+    objective:{fr:"Apporter 3 morues au pêcheur", en:"Bring 3 cod to the fisherman"}, dialog:{fr:"Merci ! Voilà pour ta peine.", en:"Thanks! Here's for your trouble."}});
+  state.steps = [a];
+}
+fill();
+</script>
+</body>
+</html>
