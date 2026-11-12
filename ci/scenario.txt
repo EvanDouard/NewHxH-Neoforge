@@ -987,7 +987,9 @@ cmd hunter exam board
 wait 80
 goto cook
 talkto cook
-wait 80
+wait 20
+cmd execute at @e[type=hxh:npc,limit=1,sort=nearest] run tp @s ~ ~ ~5
+wait 140
 goto beans
 talkto beans
 wait 10
