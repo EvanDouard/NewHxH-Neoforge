@@ -79,6 +79,15 @@ public final class HunterCommand {
                 .then(Commands.literal("knov").then(Commands.literal("exit").then(Commands.argument("n", IntegerArgumentType.integer(0, 9))
                         .executes(ctx -> com.evandouard.hxh.hatsu.Specials.exitRefuge(ctx.getSource().getPlayerOrException(),
                                 IntegerArgumentType.getInteger(ctx, "n")) ? 1 : 0))))
+                // Vol en dirigeable (lien cliquable du guichetier) : ouvert à tous
+                .then(Commands.literal("fly").then(Commands.argument("airport", IntegerArgumentType.integer(1))
+                        .executes(ctx -> com.evandouard.hxh.travel.AirTravel.fly(ctx.getSource().getPlayerOrException(),
+                                IntegerArgumentType.getInteger(ctx, "airport")) ? 1 : 0)))
+                // Renommer l'aéroport le plus proche (admin)
+                .then(Commands.literal("airport").requires(src -> src.hasPermission(2))
+                        .then(Commands.literal("name").then(Commands.argument("name", StringArgumentType.greedyString())
+                                .executes(ctx -> com.evandouard.hxh.travel.AirTravel.rename(ctx.getSource().getPlayerOrException(),
+                                        StringArgumentType.getString(ctx, "name")) ? 1 : 0))))
                 .then(Commands.literal("exam")
                         // Réponse à un quiz de l'Examen (lien cliquable du chat) : ouvert à tous
                         // Embarquer à bord de son dirigeable (lien cliquable de l'hôtesse) : ouvert à tous

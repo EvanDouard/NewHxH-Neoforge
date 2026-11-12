@@ -33,3 +33,8 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 ## Éditeur de quêtes (12 nov)
 - [x] Testé dans un navigateur (formulaire → JSON, vérifications). Lien : https://claude.ai/artifact/SvjkskuBnnVLBEUYbnoV9G
 - [ ] En jeu : une quête générée par l'éditeur passe `/hunter quest check` sans erreur.
+
+## Voyages en dirigeable (12 nov)
+- [ ] CI : GameTest `airportsOpenWhenVisitedAndCostJenny` (aéroport ouvert à la visite, prix 1 Jenny / 10 blocs, min 50, gratuit avec la licence).
+- [ ] En jeu : poser deux PNJ `guichetier` loin l'un de l'autre, parler aux deux, cliquer « ✈ destination » : écran noir « En vol », arrivée devant l'autre guichet, Jenny débités.
+- [ ] En jeu : `/hunter airport name <nom>` renomme l'aéroport le plus proche.

@@ -647,4 +647,23 @@ public final class QuestTests {
         helper.assertTrue(h.healUnlocked(), "Soin par le Nen débloqué par Netero");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void airportsOpenWhenVisitedAndCostJenny(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        var all = com.evandouard.hxh.travel.Airports.get(helper.getLevel().getServer());
+        String dim = helper.getLevel().dimension().location().toString();
+        var a = all.at(dim, new net.minecraft.core.BlockPos(100000, 70, 0), "A");
+        var b = all.at(dim, new net.minecraft.core.BlockPos(102000, 70, 0), "B");
+        helper.assertTrue(all.at(dim, new net.minecraft.core.BlockPos(100001, 70, 1), "X") == a, "Même guichet = même aéroport");
+        helper.assertTrue(all.destinations(player.getUUID(), a).stream().noneMatch(x -> x == b), "B pas encore visité");
+        all.visit(b, player.getUUID());
+        helper.assertTrue(all.destinations(player.getUUID(), a).contains(b), "B visité : destination ouverte");
+        helper.assertTrue(com.evandouard.hxh.travel.AirTravel.price(player, a, b) == 200, "2000 blocs = 200 Jenny");
+        QuestManager.data(player).setHunter(true);
+        helper.assertTrue(com.evandouard.hxh.travel.AirTravel.price(player, a, b) == 0, "Gratuit avec la licence");
+        all.remove(a);
+        all.remove(b);
+        helper.succeed();
+    }
 }

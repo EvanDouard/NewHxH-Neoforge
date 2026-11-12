@@ -344,6 +344,11 @@ public final class QuestManager {
             com.evandouard.hxh.exam.KirikoForest.examine(player, npc);
             return;
         }
+        // Guichetier d'aéroport : la destination s'ouvre, puis les vols cliquables
+        if (npc.npcId().equals(com.evandouard.hxh.travel.AirTravel.CLERK)) {
+            com.evandouard.hxh.travel.AirTravel.talk(player, npc);
+            return;
+        }
         // Le passeur d'un point de départ embarque le candidat pour son épreuve
         if (npc.npcId().equals("passeur")) {
             com.evandouard.hxh.exam.ExamDeparture.talk(player, npc);
