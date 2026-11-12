@@ -314,4 +314,23 @@ public final class ArenaTests {
         helper.assertTrue(d.registeredBracket() == 0, "Nouvelle tranche : pas encore inscrit, il faut voir l'hôtesse");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void hisokaAuraWallNeedsTen(GameTestHelper helper) {
+        // 200e étage : sans Ten, l'aura d'Hisoka repousse ; en Ten (ou inscrit), on passe
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        var d = com.evandouard.hxh.quest.QuestManager.data(player);
+        d.setArenaFloor(200);
+        helper.assertTrue(!com.evandouard.hxh.arena.AuraWall.canPass(player), "Sans Nen : repoussé");
+        com.evandouard.hxh.nen.NenModes.unlock(player);
+        var h = com.evandouard.hxh.stats.HunterStats.get(player);
+        h.setAura(h.auraMax());
+        helper.assertTrue(!com.evandouard.hxh.arena.AuraWall.canPass(player), "Nen sans posture : repoussé");
+        com.evandouard.hxh.nen.NenModes.trySetMode(player, com.evandouard.hxh.data.NenMode.TEN);
+        helper.assertTrue(com.evandouard.hxh.arena.AuraWall.canPass(player), "En Ten : l'aura glisse");
+        com.evandouard.hxh.nen.NenModes.trySetMode(player, com.evandouard.hxh.data.NenMode.NONE);
+        d.setRegistered200(true);
+        helper.assertTrue(com.evandouard.hxh.arena.AuraWall.canPass(player), "Déjà inscrit : passe");
+        helper.succeed();
+    }
 }

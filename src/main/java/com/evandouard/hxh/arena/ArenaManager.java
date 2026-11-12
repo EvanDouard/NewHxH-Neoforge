@@ -503,6 +503,10 @@ public final class ArenaManager {
         ServerLevel level = ArenaWorld.level(server);
         if (level == null) return;
         long now = level.getGameTime();
+        // 200e étage : l'aura d'Hisoka barre le chemin de l'hôtesse à qui ne tient pas le Ten
+        if (now % 10 == 0) {
+            for (ServerPlayer p : level.players()) if (!inFight(p)) AuraWall.tick(level, p);
+        }
 
         for (Fight fight : new ArrayList<>(FIGHTS.values())) {
             ServerPlayer player = server.getPlayerList().getPlayer(fight.player);
