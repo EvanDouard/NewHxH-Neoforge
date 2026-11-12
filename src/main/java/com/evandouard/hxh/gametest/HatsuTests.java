@@ -269,6 +269,11 @@ public final class HatsuTests {
         hunter(hisoka, NenType.TRANSMUTER, "hisoka");
         Zombie target = husk(helper, 2);
         helper.runAfterDelay(3, () -> {
+            // on replace les deux husks juste avant (rien ne doit les avoir bougés entre-temps)
+            hisoka.setYRot(-90f);
+            hisoka.setXRot(0f);
+            target.teleportTo(hisoka.getX() + 2, hisoka.getY(), hisoka.getZ());
+            target.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
             helper.assertTrue(Techniques.HISOKA_BUNGEE_GUM.perform(hisoka, 1f), "Le Bungee Gum colle la cible devant");
             helper.assertTrue(com.evandouard.hxh.hatsu.LingeringNen.gumTarget(hisoka) == target, "Lien actif sur la cible");
             helper.assertTrue(Techniques.HISOKA_BUNGEE_GUM.perform(hisoka, 1f), "Relance : contraction");

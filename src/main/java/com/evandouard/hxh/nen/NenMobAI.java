@@ -97,7 +97,7 @@ public final class NenMobAI {
     /** Ten en combat, retour au neutre ensuite, soin par le Nen quand la vie baisse. */
     public static void tick(Mob mob) {
         HunterData data = HunterStats.get(mob);
-        if (!data.nenUnlocked()) return;
+        if (!data.nenUnlocked() || mob.isNoAi()) return; // un mob figé (sans IA) ne se sert pas de son Nen
         // Sans personnage : le Hatsu de son espèce (zombies de Nen, flèches d'aura, mines du creeper…)
         if (data.kit().isEmpty() && !mob.getTags().contains(com.evandouard.hxh.hatsu.MobTechniques.NEN_CLONE)) {
             String own = com.evandouard.hxh.hatsu.MobKits.idFor(mob);
