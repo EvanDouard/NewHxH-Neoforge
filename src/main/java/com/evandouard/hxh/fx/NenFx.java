@@ -78,7 +78,9 @@ public final class NenFx {
          * Réaction du verre de divination (point = fond du verre, taille = numéro du type de Nen) : l'eau déborde,
          * change de couleur, des cristaux apparaissent, le goût change (bulles), la feuille tourne, ou elle se fane.
          */
-        DIVINATION
+        DIVINATION,
+        /** Éclats du sol arrachés par un coup (remplace les particules de blocs de Minecraft). Taille = nombre, couleur = celle du bloc. */
+        DEBRIS
     }
 
     /** Images dessinées des techniques (textures {@code textures/fx/sprite_<nom>.png}). Ajouter à la fin seulement. */
@@ -330,6 +332,11 @@ public final class NenFx {
         if (!(spotter instanceof net.minecraft.server.level.ServerPlayer player) || target == null) return;
         com.evandouard.hxh.network.HxHNetwork.sendTo(player, new Payload(Kind.MARK.ordinal(), spotter.getId(), target.getId(),
                 target.getX(), target.getY(), target.getZ(), target.getBbHeight(), color, duration));
+    }
+
+    /** Éclats du sol sous un coup : morceaux de la couleur du bloc qui sautent et retombent. */
+    public static void debris(ServerLevel level, Vec3 at, int count, int blockColor) {
+        send(level, Kind.DEBRIS, null, null, at, count, 0xFF000000 | blockColor, 26);
     }
 
     /** Mort d'un mob : giclée d'encre à sa place (le mob est retiré juste avant le nuage de Minecraft). */

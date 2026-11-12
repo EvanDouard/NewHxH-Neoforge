@@ -130,8 +130,9 @@ public final class Impacts {
     private static void debris(ServerLevel level, LivingEntity target, BlockPos ground, int count) {
         BlockState s = level.getBlockState(ground);
         if (s.isAir()) return;
-        level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, s), target.getX(), ground.getY() + 1.05,
-                target.getZ(), count, 0.6, 0.15, 0.6, 0.15);
+        // éclats dessinés par le mod, de la couleur du bloc (pas de particules de Minecraft)
+        int color = s.getMapColor(level, ground).col;
+        NenFx.debris(level, new Vec3(target.getX(), ground.getY() + 1.0, target.getZ()), Math.min(24, count / 2 + 4), color);
     }
 
     /** Sphère de blocs cassés (blocs pas trop durs, sans bloc-entité). */

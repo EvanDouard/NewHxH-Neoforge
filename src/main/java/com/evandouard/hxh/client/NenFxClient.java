@@ -206,6 +206,7 @@ public final class NenFxClient {
             case MARK -> mark(c, f, age);
             case DISSOLVE -> dissolve(c, f, t);
             case DIVINATION -> divination(c, f, age);
+            case DEBRIS -> debris(c, f, age);
             case CLEAR, IMPACT_FRAME -> {}
         }
     }
@@ -327,6 +328,27 @@ public final class NenFxClient {
                 }
             }
             default -> {}
+        }
+    }
+
+    /** Éclats du sol : morceaux anguleux de la couleur du bloc, projetés en gerbe, qui retombent et rebondissent un peu. */
+    private static void debris(Ctx c, Fx f, float age) {
+        Mesh3D.Ctx m = mesh(c);
+        java.util.Random rnd = new java.util.Random(f.seed);
+        int n = Math.max(4, Math.round(f.size));
+        int rgb = f.color & 0xFFFFFF;
+        float fade = Math.min(1f, (f.duration - age) / 8f);
+        for (int i = 0; i < n; i++) {
+            double a = rnd.nextDouble() * Math.PI * 2, sp = 0.06 + rnd.nextDouble() * 0.12, up = 0.18 + rnd.nextDouble() * 0.22;
+            double tt = age;
+            double y = up * tt - 0.02 * tt * tt;
+            if (y < 0) y = Math.abs(Math.sin(tt * 0.5)) * 0.04; // posé au sol, petit rebond
+            Vec3 at = f.at.add(Math.cos(a) * sp * Math.min(tt, up / 0.02 * 1.6), y, Math.sin(a) * sp * Math.min(tt, up / 0.02 * 1.6));
+            float r = 0.05f + rnd.nextFloat() * 0.07f;
+            float spin = (float) (tt * (0.3 + rnd.nextDouble() * 0.4));
+            int shade = blend(rgb, i % 3 == 0 ? 0x000000 : 0xFFFFFF, i % 3 == 0 ? 0.25f : 0.08f);
+            Mesh3D.sphere(m, Mesh3D.solid(m), at, r, shade, fade, 3, 4,
+                    d -> 0.75f + 0.35f * Mth.sin((float) (d.x * 3 + d.y * 5 + d.z * 4) + spin), true, false);
         }
     }
 
