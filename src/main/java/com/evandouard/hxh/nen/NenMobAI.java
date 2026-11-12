@@ -97,7 +97,7 @@ public final class NenMobAI {
     /** Ten en combat, retour au neutre ensuite, soin par le Nen quand la vie baisse. */
     public static void tick(Mob mob) {
         HunterData data = HunterStats.get(mob);
-        if (!data.nenUnlocked() || mob.isNoAi()) return; // un mob figé (sans IA) ne se sert pas de son Nen
+        if (!data.nenUnlocked()) return;
         // Sans personnage : le Hatsu de son espèce (zombies de Nen, flèches d'aura, mines du creeper…)
         if (data.kit().isEmpty() && !mob.getTags().contains(com.evandouard.hxh.hatsu.MobTechniques.NEN_CLONE)) {
             String own = com.evandouard.hxh.hatsu.MobKits.idFor(mob);
@@ -109,6 +109,7 @@ public final class NenMobAI {
         }
         // Un creeper qui maîtrise le Nen n'explose plus lui-même : ses mines le font pour lui
         if (mob instanceof net.minecraft.world.entity.monster.Creeper creeper && data.kit().equals("mob_creeper")) creeper.setSwellDir(-1);
+        if (mob.isNoAi()) return; // un mob figé (sans IA) garde son kit mais ne lance rien
         LivingEntity target = mob.getTarget();
         boolean fighting = target != null && target.isAlive();
         if (fighting && data.mode() == NenMode.NONE && NenModes.trySetMode(mob, NenMode.TEN) == null) AUTO_TEN.add(mob);
