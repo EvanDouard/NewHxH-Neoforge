@@ -179,6 +179,9 @@ public final class ProfileText {
         List<Component> lines = new ArrayList<>();
         lines.add(Component.translatable("profile.hxh.jenny", d.jenny()).withStyle(ChatFormatting.YELLOW));
         lines.add(Component.translatable("profile.hxh.hunter", Component.translatable(d.isHunter() ? "command.hxh.yes" : "command.hxh.no")));
+        var org = com.evandouard.hxh.org.Organizations.get(d.organization());
+        lines.add(Component.translatable("profile.hxh.organization", org == null ? Component.translatable("org.hxh.none_short")
+                : com.evandouard.hxh.org.Organizations.label(org, player)));
         lines.add(Component.empty());
         lines.add(Component.translatable("profile.hxh.arena.title").withStyle(ChatFormatting.GOLD));
         if (!d.arenaRegistered()) {

@@ -29,8 +29,9 @@ public final class Kinds {
     /** Allié : pour un joueur, les autres joueurs et ses bêtes apprivoisées ; pour un mob, ceux de son espèce. */
     public static boolean isAlly(LivingEntity caster, LivingEntity e) {
         if (e == caster) return true;
-        if (caster instanceof Player) {
-            if (e instanceof Player) return true;
+        if (caster instanceof Player cp) {
+            // joueurs : toujours alliés, sauf membres d'organisations ennemies (Brigade Fantôme contre Association…)
+            if (e instanceof Player ep) return !com.evandouard.hxh.org.Organizations.enemies(cp, ep);
             return e instanceof TamableAnimal t && t.isOwnedBy(caster);
         }
         return e.getType() == caster.getType();

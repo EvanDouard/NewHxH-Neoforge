@@ -666,4 +666,27 @@ public final class QuestTests {
         all.remove(b);
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void organizationsMakeEnemiesHittable(GameTestHelper helper) {
+        // Brigade Fantôme contre Association : leurs techniques se touchent ; même organisation : jamais
+        helper.assertTrue(com.evandouard.hxh.org.Organizations.get("ryodan") != null
+                && com.evandouard.hxh.org.Organizations.get("association") != null, "Organisations chargées");
+        for (String q : java.util.List.of("org_association", "org_ryodan", "org_bombers")) {
+            var quest = QuestRegistry.get(HxHMod.id(q));
+            helper.assertTrue(quest != null && quest.problems().isEmpty(), "Quête de recrutement valide : " + q);
+        }
+        ServerPlayer a = helper.makeMockServerPlayerInLevel();
+        ServerPlayer b = helper.makeMockServerPlayerInLevel();
+        helper.assertTrue(com.evandouard.hxh.hatsu.Kinds.isAlly(a, b), "Sans organisation, les joueurs sont alliés");
+        com.evandouard.hxh.org.Organizations.join(a, "association");
+        com.evandouard.hxh.org.Organizations.join(b, "ryodan");
+        helper.assertTrue(QuestManager.data(a).organization().equals("association"), "A a rejoint l'Association");
+        helper.assertTrue(!com.evandouard.hxh.hatsu.Kinds.isAlly(a, b) && !com.evandouard.hxh.hatsu.Kinds.isAlly(b, a), "Ennemis : les techniques touchent");
+        com.evandouard.hxh.org.Organizations.join(b, "zodiaques");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Kinds.isAlly(a, b), "Association et Zodiaques sont alliés");
+        com.evandouard.hxh.org.Organizations.leave(b);
+        helper.assertTrue(QuestManager.data(b).organization().isEmpty(), "B a quitté son organisation");
+        helper.succeed();
+    }
 }

@@ -1,0 +1,72 @@
+{
+  "title": {
+    "fr": "Le pacte des Bombers",
+    "en": "The Bombers' pact"
+  },
+  "start_npc": "genthru",
+  "npcs": {
+    "genthru": {
+      "fr": "Genthru",
+      "en": "Genthru"
+    }
+  },
+  "intro": {
+    "fr": "Tu veux gagner ? Alors joue selon mes règles.",
+    "en": "You want to win? Then play by my rules."
+  },
+  "steps": [
+    {
+      "id": "deal",
+      "type": "talk",
+      "npc": "genthru",
+      "objective": {
+        "fr": "Écouter Genthru",
+        "en": "Listen to Genthru"
+      },
+      "dialog": {
+        "fr": "Montre-moi que tu sais faire sauter les obstacles. Ramène de la poudre, et élimine ces squelettes.",
+        "en": "Show me you can blow obstacles away. Bring powder, and wipe out those skeletons."
+      }
+    },
+    {
+      "id": "powder",
+      "type": "bring",
+      "npc": "genthru",
+      "item": "minecraft:gunpowder",
+      "count": 16,
+      "objective": {
+        "fr": "Rapporter 16 poudres à canon à Genthru",
+        "en": "Bring 16 gunpowder to Genthru"
+      }
+    },
+    {
+      "id": "skeletons",
+      "type": "kill",
+      "entity": "minecraft:skeleton",
+      "count": 20,
+      "objective": {
+        "fr": "Éliminer des squelettes",
+        "en": "Eliminate skeletons"
+      }
+    },
+    {
+      "id": "pact",
+      "type": "talk",
+      "npc": "genthru",
+      "reward_learn": [
+        "join:bombers"
+      ],
+      "objective": {
+        "fr": "Sceller le pacte",
+        "en": "Seal the pact"
+      },
+      "dialog": {
+        "fr": "Bienvenue chez les Bombers. Et ne parle de nous à personne.",
+        "en": "Welcome to the Bombers. And don't tell anyone about us."
+      }
+    }
+  ],
+  "requires": [
+    "hxh:nen_8_ko"
+  ]
+}

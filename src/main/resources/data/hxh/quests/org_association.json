@@ -1,0 +1,56 @@
+{
+  "title": {
+    "fr": "Au service de l'Association",
+    "en": "In the Association's service"
+  },
+  "start_npc": "beans",
+  "intro": {
+    "fr": "Le président cherche des Hunters de confiance. Fais tes preuves sur le terrain.",
+    "en": "The chairman is looking for trustworthy Hunters. Prove yourself in the field."
+  },
+  "steps": [
+    {
+      "id": "brief",
+      "type": "talk",
+      "npc": "beans",
+      "objective": {
+        "fr": "Écouter Beans",
+        "en": "Listen to Beans"
+      },
+      "dialog": {
+        "fr": "Une horde de morts-vivants menace un village. Nettoie la zone, puis reviens me voir.",
+        "en": "A horde of undead threatens a village. Clear the area, then come back to me."
+      }
+    },
+    {
+      "id": "cleanup",
+      "type": "kill",
+      "entity": "minecraft:zombie",
+      "count": 25,
+      "objective": {
+        "fr": "Éliminer des zombies",
+        "en": "Eliminate zombies"
+      }
+    },
+    {
+      "id": "report",
+      "type": "talk",
+      "npc": "beans",
+      "reward_learn": [
+        "join:association"
+      ],
+      "reward_jenny": 500,
+      "objective": {
+        "fr": "Faire ton rapport à Beans",
+        "en": "Report to Beans"
+      },
+      "dialog": {
+        "fr": "Excellent travail. Bienvenue au service de l'Association : la Brigade Fantôme est désormais ton ennemie.",
+        "en": "Excellent work. Welcome to the Association's service: the Phantom Troupe is now your enemy."
+      }
+    }
+  ],
+  "requires": [
+    "hxh:hunter_exam"
+  ]
+}

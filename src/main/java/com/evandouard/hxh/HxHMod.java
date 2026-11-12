@@ -39,6 +39,7 @@ public final class HxHMod {
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.arena.ArenaBrackets::register);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.mob.MobPresets::register);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.shop.ShopRegistry::register);
+        NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.org.Organizations::register);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.computer.HunterComputer::register);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.exam.ExamPlacer::onServerStarted);
         com.evandouard.hxh.mob.MobPresets.registerEvents(NeoForge.EVENT_BUS);

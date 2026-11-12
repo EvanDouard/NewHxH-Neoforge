@@ -788,6 +788,11 @@ public final class QuestManager {
         }
         // Capacités du Nen apprises auprès du maître ; « heal » = le soin par le Nen (quête de Netero)
         for (String a : step.rewardLearn()) {
+            if (a.startsWith("join:")) {
+                // « join:<organisation> » : on rejoint une organisation (Brigade Fantôme, Association…)
+                com.evandouard.hxh.org.Organizations.join(player, a.substring(5));
+                continue;
+            }
             if (a.equals("heal")) {
                 com.evandouard.hxh.stats.HunterStats.get(player).setHealUnlocked(true);
                 com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.learned"),

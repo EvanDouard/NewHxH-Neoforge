@@ -1,0 +1,76 @@
+{
+  "title": {
+    "fr": "L'araignée à douze pattes",
+    "en": "The twelve-legged spider"
+  },
+  "start_npc": "chrollo",
+  "npcs": {
+    "chrollo": {
+      "fr": "Chrollo Lucifer",
+      "en": "Chrollo Lucilfer"
+    }
+  },
+  "intro": {
+    "fr": "Une place s'est libérée dans la Brigade. Prends-la… si tu en es capable.",
+    "en": "A seat has opened in the Troupe. Take it... if you can."
+  },
+  "steps": [
+    {
+      "id": "meet",
+      "type": "talk",
+      "npc": "chrollo",
+      "objective": {
+        "fr": "Écouter Chrollo",
+        "en": "Listen to Chrollo"
+      },
+      "dialog": {
+        "fr": "Chez nous, on ne demande pas : on prend. Rapporte-moi un trésor, et fais taire ceux qui gardent la route.",
+        "en": "We don't ask: we take. Bring me a treasure, and silence those guarding the road."
+      }
+    },
+    {
+      "id": "guards",
+      "type": "kill",
+      "entity": "minecraft:pillager",
+      "count": 15,
+      "objective": {
+        "fr": "Éliminer les gardes (pillards)",
+        "en": "Eliminate the guards (pillagers)"
+      }
+    },
+    {
+      "id": "loot",
+      "type": "bring",
+      "npc": "chrollo",
+      "item": "minecraft:diamond",
+      "count": 8,
+      "objective": {
+        "fr": "Rapporter 8 diamants volés à Chrollo",
+        "en": "Bring 8 stolen diamonds to Chrollo"
+      },
+      "dialog": {
+        "fr": "Joli butin.",
+        "en": "Nice loot."
+      }
+    },
+    {
+      "id": "mark",
+      "type": "talk",
+      "npc": "chrollo",
+      "reward_learn": [
+        "join:ryodan"
+      ],
+      "objective": {
+        "fr": "Recevoir la marque de l'araignée",
+        "en": "Receive the spider mark"
+      },
+      "dialog": {
+        "fr": "Voici ton numéro. Désormais, l'Association est ton ennemie.",
+        "en": "Here is your number. From now on, the Association is your enemy."
+      }
+    }
+  ],
+  "requires": [
+    "hxh:nen_8_ko"
+  ]
+}

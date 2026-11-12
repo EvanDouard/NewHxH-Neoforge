@@ -1,0 +1,17 @@
+{
+  "name": {
+    "fr": "Association des Hunters",
+    "en": "Hunter Association"
+  },
+  "color": "#E8C23A",
+  "allies": [
+    "zodiaques"
+  ],
+  "enemies": [
+    "ryodan"
+  ],
+  "description": {
+    "fr": "L'organisation qui délivre les licences et protège le monde. Présidée par Netero.",
+    "en": "The organization that grants licenses and protects the world. Led by Netero."
+  }
+}

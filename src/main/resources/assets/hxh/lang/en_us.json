@@ -1,4 +1,11 @@
 {
+  "org.hxh.toast.joined": "Organization joined",
+  "org.hxh.left": "You leave: %s",
+  "org.hxh.enemies": "Enemies: %s (your techniques can now hit each other)",
+  "org.hxh.none": "You don't belong to any organization.",
+  "org.hxh.none_short": "none",
+  "profile.hxh.organization": "Organization: %s",
+  "org.hxh.list": "Organizations: %s",
   "block.hxh.meditation_stone_1": "Meditation stone I",
   "block.hxh.meditation_stone_2": "Meditation stone II",
   "block.hxh.meditation_stone_3": "Meditation stone III",

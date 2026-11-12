@@ -1,0 +1,15 @@
+{
+  "name": {
+    "fr": "Groupe de Genthru",
+    "en": "Genthru's Bombers"
+  },
+  "color": "#E8743A",
+  "allies": [],
+  "enemies": [
+    "association"
+  ],
+  "description": {
+    "fr": "Les Bombers de Greed Island : prêts à tout pour finir le jeu.",
+    "en": "The Bombers of Greed Island: ready to do anything to clear the game."
+  }
+}

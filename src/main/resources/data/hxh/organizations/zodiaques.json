@@ -1,0 +1,17 @@
+{
+  "name": {
+    "fr": "Les Zodiaques",
+    "en": "The Zodiacs"
+  },
+  "color": "#7FD3FF",
+  "allies": [
+    "association"
+  ],
+  "enemies": [
+    "ryodan"
+  ],
+  "description": {
+    "fr": "La direction de l'Association : douze Hunters d'élite choisis par Netero.",
+    "en": "The Association's leadership: twelve elite Hunters chosen by Netero."
+  }
+}

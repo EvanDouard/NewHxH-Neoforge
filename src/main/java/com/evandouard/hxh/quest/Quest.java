@@ -247,7 +247,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
             if (!step.site().isEmpty() && com.evandouard.hxh.exam.ExamSite.byId(step.site()) == null)
                 problems.add(where + "lieu d'examen inconnu « " + step.site() + " » (zaban, hall, biska, hotel)");
             for (String a : step.rewardLearn())
-                if (!a.equals("heal") && com.evandouard.hxh.nen.NenLearning.Ability.byId(a) == null) problems.add(where + "capacité inconnue « " + a + " »");
+                if (!a.equals("heal") && !a.startsWith("join:") && com.evandouard.hxh.nen.NenLearning.Ability.byId(a) == null) problems.add(where + "capacité inconnue « " + a + " »");
             if (!step.rewardItem().isEmpty() && !BuiltInRegistries.ITEM.containsKey(ResourceLocation.tryParse(step.rewardItem())))
                 problems.add(where + "récompense inconnue « " + step.rewardItem() + " »");
             steps.add(step);

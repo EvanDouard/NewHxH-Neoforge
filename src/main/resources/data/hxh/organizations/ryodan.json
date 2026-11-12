@@ -1,0 +1,16 @@
+{
+  "name": {
+    "fr": "Brigade Fantôme",
+    "en": "Phantom Troupe"
+  },
+  "color": "#8E44AD",
+  "allies": [],
+  "enemies": [
+    "association",
+    "zodiaques"
+  ],
+  "description": {
+    "fr": "Treize voleurs d'élite marqués d'une araignée. Ils prennent ce qu'ils veulent.",
+    "en": "Thirteen elite thieves marked with a spider. They take what they want."
+  }
+}

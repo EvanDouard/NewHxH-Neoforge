@@ -94,6 +94,21 @@ public final class HunterCommand {
                                     return com.evandouard.hxh.meditation.MeditationShrines.build(p.serverLevel(),
                                             p.blockPosition().offset(0, 0, 6), IntegerArgumentType.getInteger(ctx, "tier"), false) != null ? 1 : 0;
                                 }))))
+                // Organisations : quitter (tous), rejoindre directement (admin), liste
+                .then(Commands.literal("org")
+                        .then(Commands.literal("leave").executes(ctx ->
+                                com.evandouard.hxh.org.Organizations.leave(ctx.getSource().getPlayerOrException()) ? 1 : 0))
+                        .then(Commands.literal("list").executes(ctx -> {
+                            ctx.getSource().sendSuccess(() -> Component.translatable("org.hxh.list",
+                                    String.join(", ", com.evandouard.hxh.org.Organizations.all().keySet())), false);
+                            return 1;
+                        }))
+                        .then(Commands.literal("join").requires(src -> src.hasPermission(2))
+                                .then(Commands.argument("id", StringArgumentType.word()).executes(ctx -> {
+                                    com.evandouard.hxh.org.Organizations.join(ctx.getSource().getPlayerOrException(),
+                                            StringArgumentType.getString(ctx, "id"));
+                                    return 1;
+                                }))))
                 // Renommer l'aéroport le plus proche (admin)
                 .then(Commands.literal("airport").requires(src -> src.hasPermission(2))
                         .then(Commands.literal("name").then(Commands.argument("name", StringArgumentType.greedyString())
