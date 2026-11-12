@@ -102,7 +102,8 @@ public final class AuraClient {
         if (e.isInvisible() || !e.hasData(ModAttachments.HUNTER)) return null;
         HunterData d = e.getData(ModAttachments.HUNTER);
         if (!d.nenUnlocked() || d.mode() == NenMode.ZETSU) return null;
-        if (d.mode() == NenMode.IN && !SensesClient.localGyo()) return null;
+        int viewerGyo = SensesClient.localGyoLevel();
+        if (d.mode() == NenMode.IN && viewerGyo < com.evandouard.hxh.nen.NenSenses.GYO_SEE_IN) return null;
         int color = (d.healing() ? 0x7CFF8A : d.auraColor()) & 0xFFFFFF;
         // Ko : toute l'aura dans le poing, plus rien sur le corps ; la flamme grandit pendant la charge
         if (e.level() != null && d.koUntil() > e.level().getGameTime()) {
@@ -112,6 +113,12 @@ public final class AuraClient {
         boolean fists = d.ryuAttack() >= RYU_FISTS_FROM && d.mode() != NenMode.IN;
         float body = fists ? 0.3f : 1f;
         boolean wild = d.wildAura() || com.evandouard.hxh.hatsu.HatsuKits.wildAuraByDefault(d.kit());
+        if (d.mode() == NenMode.IN) {
+            // In : pâle au palier 25, nette au palier 50
+            float k = Mth.clamp((viewerGyo - com.evandouard.hxh.nen.NenSenses.GYO_SEE_IN)
+                    / (float) (com.evandouard.hxh.nen.NenSenses.GYO_SEE_IN_CLEAR - com.evandouard.hxh.nen.NenSenses.GYO_SEE_IN), 0f, 1f);
+            return new Look(false, 0.45f * (0.3f + 0.7f * k), color, body, false);
+        }
         return switch (d.mode()) {
             case REN -> new Look(true, 1.6f, color, body, fists); // Ren : aura bien plus grosse et large
             case KEN -> new Look(true, 0.6f, color, body, fists);
@@ -144,7 +151,16 @@ public final class AuraClient {
                 else vapor(pose, buffers, cam, e, feet, look, time);
             }
             if (look.fists()) fists(pose, buffers, cam, e, pt, look, time);
+            // Gyo 20 : on voit où l'adversaire concentre son Ryu (le poing chargé brille)
+            if (hd != null && e != mc.player && hd.ryuAttack() >= RYU_REVEAL_FROM
+                    && SensesClient.localGyoLevel() >= com.evandouard.hxh.nen.NenSenses.GYO_SEE_RYU) {
+                ryuReveal(pose, buffers, cam, e, pt, look.color(), hd.ryuAttack(), time);
+            }
             drew = true;
+        }
+        // Gyo 50 : la trajectoire des tirs qui arrivent se dessine devant eux
+        if (SensesClient.localGyoLevel() >= com.evandouard.hxh.nen.NenSenses.GYO_SEE_TRAJECTORY) {
+            drew |= trajectories(pose, buffers, cam, mc, pt);
         }
         if (drew) buffers.endBatch();
     }
@@ -229,6 +245,46 @@ public final class AuraClient {
                 tongue3d(m, base, size * 0.3f, size, look.color(), 1f - phase * 0.6f, time, i, false);
             }
         }
+    }
+
+    /** Ryu offensif à partir duquel le Gyo (palier 20) révèle le poing chargé. */
+    public static final int RYU_REVEAL_FROM = 55;
+
+    private static void ryuReveal(PoseStack pose, MultiBufferSource buffers, Vec3 cam, LivingEntity e, float pt, int color,
+                                  int ryu, float time) {
+        Mesh3D.Ctx m = new Mesh3D.Ctx(pose, buffers, cam);
+        Vec3 fist = NenFxClient.hand(e, pt);
+        float k = (ryu - RYU_REVEAL_FROM) / (float) (100 - RYU_REVEAL_FROM);
+        float r = 0.22f + 0.2f * k + 0.03f * Mth.sin(time * 0.5f);
+        Mesh3D.sphere(m, Mesh3D.glow(m), fist, r, color, 0.9f, 8, 10, null, false, true);
+        Mesh3D.sphere(m, Mesh3D.glow(m), fist, r * 0.45f, 0xFFFFFF, 0.8f, 6, 8, null, false, false);
+        Mesh3D.torus(m, Mesh3D.glow(m), fist, e.getViewVector(pt), r * 1.4f, 0.015f, color, 0.6f, 20, 4, false);
+    }
+
+    /** Traits légers devant les tirs (flèches, tirs d'aura) qui ne viennent pas du joueur local. */
+    private static boolean trajectories(PoseStack pose, MultiBufferSource buffers, Vec3 cam, Minecraft mc, float pt) {
+        Mesh3D.Ctx m = new Mesh3D.Ctx(pose, buffers, cam);
+        boolean any = false;
+        for (Entity entity : mc.level.entitiesForRendering()) {
+            if (!(entity instanceof net.minecraft.world.entity.projectile.Projectile p) || p.getOwner() == mc.player) continue;
+            if (p.onGround() || p.distanceToSqr(cam) > 48 * 48) continue;
+            Vec3 v = p.getDeltaMovement();
+            if (v.lengthSqr() < 0.04) continue;
+            Vec3 start = p.getPosition(pt);
+            List<Vec3> path = new ArrayList<>(8);
+            Vec3 pos = start, vel = v;
+            boolean gravity = !p.isNoGravity();
+            for (int i = 0; i < 8; i++) {
+                path.add(pos);
+                for (int s = 0; s < 2; s++) {
+                    pos = pos.add(vel);
+                    if (gravity) vel = vel.scale(0.99).add(0, -0.05, 0);
+                }
+            }
+            Mesh3D.tube(m, Mesh3D.glow(m), path, 0.025f, 0.005f, 0xFF5A5A, 0.55f, 4, false);
+            any = true;
+        }
+        return any;
     }
 
     /** Gyo : l'aura concentrée dans les yeux, deux petites lueurs qui palpitent. */

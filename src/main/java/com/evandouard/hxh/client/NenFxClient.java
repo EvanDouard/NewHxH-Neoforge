@@ -1321,6 +1321,9 @@ public final class NenFxClient {
     private static void gumLink(Ctx c, Fx f, float age) {
         Entity src = entity(f.source), tgt = entity(f.target);
         if (src == null || tgt == null) return;
+        // Comme dans l'anime, la gomme est invisible sans Gyo (palier 5) ; Hisoka voit toujours la sienne
+        Minecraft mcG = Minecraft.getInstance();
+        if (src != mcG.player && SensesClient.localGyoLevel() < com.evandouard.hxh.nen.NenSenses.GYO_SEE_TRAPS) return;
         Vec3 a = hand(src, c.pt);
         Vec3 b = center(tgt, c.pt);
         double dist = a.distanceTo(b);

@@ -18,14 +18,58 @@ import net.minecraft.world.item.ItemStack;
 /**
  * Gyo, En et Shu.
  * <ul>
- *     <li>Gyo (interrupteur) : voit niveaux, auras cachées par l'In, invisibles (niv. 5), utilisateurs en Zetsu (niv. 10).</li>
+ *     <li>Gyo (interrupteur), selon sa maîtrise : niveaux (0), pièges de Nen (5), invisibles de Minecraft (10),
+ *     Ryu adverse (20), In (25, net à 50), type de Nen (35), invisibilité par le Nen et trajectoires (50),
+ *     utilisateurs en Zetsu (maîtrise maximale).</li>
  *     <li>En (interrupteur) : sphère d'aura ; tout ce qui est dedans brille. Portée selon la maîtrise de l'En.</li>
  *     <li>Shu (automatique) : avec l'aura active, l'outil tenu frappe plus fort, mine plus vite et s'use moins.</li>
  * </ul>
  */
 public final class NenSenses {
-    public static final int GYO_SEE_INVISIBLE = 5;
-    public static final int GYO_SEE_ZETSU = 10;
+    /** Marques et pièges de Nen : portes de Knov, fil du Bungee Gum. */
+    public static final int GYO_SEE_TRAPS = 5;
+    /** Invisibilité de Minecraft (potion). */
+    public static final int GYO_SEE_INVISIBLE = 10;
+    /** Le poing qui porte le Ryu de l'adversaire brille. */
+    public static final int GYO_SEE_RYU = 20;
+    /** L'In commence à se voir (pâle), et se voit nettement à {@link #GYO_SEE_IN_CLEAR}. */
+    public static final int GYO_SEE_IN = 25;
+    public static final int GYO_SEE_IN_CLEAR = 50;
+    /** Type de Nen affiché à côté du niveau. */
+    public static final int GYO_SEE_TYPE = 35;
+    /** Invisibilité par le Nen (Texture Surprise…) et trajectoire des tirs qui arrivent. */
+    public static final int GYO_SEE_NEN_INVISIBLE = 50;
+    public static final int GYO_SEE_TRAJECTORY = 50;
+    /** Utilisateurs en Zetsu : maîtrise maximale seulement. */
+    public static final int GYO_SEE_ZETSU = com.evandouard.hxh.data.Mastery.MAX_LEVEL;
+
+    /** Maîtrise du Gyo actif de l'entité, ou -1 si le Gyo est coupé. */
+    public static int gyoLevel(LivingEntity entity) {
+        if (!entity.hasData(com.evandouard.hxh.data.ModAttachments.HUNTER)) return -1;
+        var d = entity.getData(com.evandouard.hxh.data.ModAttachments.HUNTER);
+        return d.gyo() ? d.masteryLevel(com.evandouard.hxh.data.Mastery.GYO) : -1;
+    }
+
+    /** Invisibilité par le Nen : invisible pour tous, sauf un Gyo de maîtrise {@link #GYO_SEE_NEN_INVISIBLE}. */
+    public static void nenHide(LivingEntity entity, int ticks) {
+        entity.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.INVISIBILITY,
+                ticks, 0, false, false, false));
+        if (entity.hasData(com.evandouard.hxh.data.ModAttachments.HUNTER)) {
+            entity.getData(com.evandouard.hxh.data.ModAttachments.HUNTER).setNenHiddenUntil(entity.level().getGameTime() + ticks);
+        }
+    }
+
+    public static boolean nenHidden(LivingEntity entity) {
+        return entity.isInvisible() && entity.hasData(com.evandouard.hxh.data.ModAttachments.HUNTER)
+                && entity.getData(com.evandouard.hxh.data.ModAttachments.HUNTER).nenHiddenUntil() > entity.level().getGameTime();
+    }
+
+    /** Ce qu'un Gyo de cette maîtrise perce : invisibles (selon leur sorte) et Zetsu. */
+    public static boolean gyoReveals(int gyo, LivingEntity target, boolean zetsu) {
+        if (gyo < 0) return false;
+        if (target.isInvisible()) return gyo >= (nenHidden(target) ? GYO_SEE_NEN_INVISIBLE : GYO_SEE_INVISIBLE);
+        return zetsu && gyo >= GYO_SEE_ZETSU;
+    }
 
     private NenSenses() {}
 

@@ -29,6 +29,12 @@ public final class SensesClient {
         return mc.player != null && mc.player.getData(ModAttachments.HUNTER).gyo();
     }
 
+    /** Maîtrise du Gyo actif du joueur local, ou -1. */
+    public static int localGyoLevel() {
+        Minecraft mc = Minecraft.getInstance();
+        return mc.player == null ? -1 : NenSenses.gyoLevel(mc.player);
+    }
+
     /** L'entité est dans l'En du joueur local (contour, nom et niveau affichés). */
     public static boolean inLocalEn(Entity e) {
         Minecraft mc = Minecraft.getInstance();
@@ -58,8 +64,7 @@ public final class SensesClient {
                 if (e == mc.player || !(e instanceof LivingEntity living)) continue;
                 NenMode mode = living.hasData(ModAttachments.HUNTER) ? living.getData(ModAttachments.HUNTER).mode() : NenMode.NONE;
                 boolean zetsu = mode == NenMode.ZETSU;
-                if (gyo >= NenSenses.GYO_SEE_INVISIBLE && living.isInvisible()) wanted.add(e);
-                if (gyo >= NenSenses.GYO_SEE_ZETSU && zetsu) wanted.add(e);
+                if (NenSenses.gyoReveals(gyo, living, zetsu)) wanted.add(e);
                 // L'En sent tout ce qui vit dans la sphère, mobs ordinaires compris (le Zetsu y échappe)
                 if (enRadius > 0 && !zetsu && living.distanceTo(mc.player) <= enRadius) wanted.add(e);
             }

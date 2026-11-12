@@ -102,4 +102,23 @@ public final class NenSensesTests {
         helper.assertTrue(NenSenses.shuDamageFactor(z) > 1f, "En Ten avec une épée : Shu actif");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void gyoTiersFollowEvansTable(GameTestHelper helper) {
+        // 5 pièges · 10 invisibilité Minecraft · 20 Ryu · 25 In · 35 type · 50 invisibilité par le Nen · max Zetsu
+        helper.assertTrue(NenSenses.GYO_SEE_TRAPS == 5 && NenSenses.GYO_SEE_INVISIBLE == 10 && NenSenses.GYO_SEE_RYU == 20
+                && NenSenses.GYO_SEE_IN == 25 && NenSenses.GYO_SEE_TYPE == 35 && NenSenses.GYO_SEE_NEN_INVISIBLE == 50
+                && NenSenses.GYO_SEE_ZETSU == Mastery.MAX_LEVEL, "Paliers du Gyo");
+        Zombie potion = nenHusk(helper);
+        potion.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.INVISIBILITY, 200));
+        Zombie hidden = nenHusk(helper);
+        NenSenses.nenHide(hidden, 200);
+        Zombie zetsu = nenHusk(helper);
+        helper.assertTrue(!NenSenses.gyoReveals(9, potion, false) && NenSenses.gyoReveals(10, potion, false), "Potion : palier 10");
+        helper.assertTrue(NenSenses.nenHidden(hidden), "Texture Surprise = invisibilité par le Nen");
+        helper.assertTrue(!NenSenses.gyoReveals(49, hidden, false) && NenSenses.gyoReveals(50, hidden, false), "Nen : palier 50");
+        helper.assertTrue(!NenSenses.gyoReveals(99, zetsu, true) && NenSenses.gyoReveals(100, zetsu, true), "Zetsu : maîtrise maximale");
+        helper.assertTrue(!NenSenses.gyoReveals(-1, potion, false), "Sans Gyo, rien");
+        helper.succeed();
+    }
 }

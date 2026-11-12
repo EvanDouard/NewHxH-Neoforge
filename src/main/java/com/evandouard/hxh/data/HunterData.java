@@ -72,6 +72,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private final Map<Mastery, Integer> masteryXp = new EnumMap<>(Mastery.class);
     /** Ko : la prochaine attaque est chargée (et le corps est découvert) jusqu'à ce tick de jeu. */
     private long koUntil = 0;
+    /** Invisibilité par le Nen (Texture Surprise…) : seul un Gyo de haut niveau la perce. Fin en temps de jeu. */
+    private long nenHiddenUntil = 0;
     /** Gyo et En : interrupteurs indépendants de la posture (coupés par le Zetsu et l'In). */
     private boolean gyo = false;
     private boolean en = false;
@@ -487,6 +489,15 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         dirty.add(AURA);
     }
 
+    public long nenHiddenUntil() {
+        return nenHiddenUntil;
+    }
+
+    public void setNenHiddenUntil(long gameTime) {
+        nenHiddenUntil = gameTime;
+        dirty.add(AURA);
+    }
+
     // ---------- Hatsu ----------
 
     public String kit() {
@@ -558,6 +569,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             a.putString("mode", mode.id());
             a.putInt("color", auraColor);
             a.putLong("koUntil", koUntil);
+            a.putLong("nenHidden", nenHiddenUntil);
             a.putBoolean("gyo", gyo);
             a.putBoolean("en", en);
             out.put(AURA, a);
@@ -696,6 +708,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             mode = m == null ? NenMode.NONE : m;
             auraColor = a.contains("color") ? a.getInt("color") : DEFAULT_AURA_COLOR;
             koUntil = a.getLong("koUntil");
+            nenHiddenUntil = a.getLong("nenHidden");
             gyo = a.getBoolean("gyo");
             en = a.getBoolean("en");
         }

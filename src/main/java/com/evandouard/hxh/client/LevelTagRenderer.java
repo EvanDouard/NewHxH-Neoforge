@@ -51,6 +51,11 @@ public final class LevelTagRenderer {
         Component text = en
                 ? Component.translatable("hud.hxh.en_tag", entity.getDisplayName(), level)
                 : Component.translatable("hud.hxh.level_tag", level);
+        // Gyo 35 : le type de Nen de l'adversaire à côté de son niveau
+        if (data != null && data.nenUnlocked() && data.nenType() != null
+                && SensesClient.localGyoLevel() >= com.evandouard.hxh.nen.NenSenses.GYO_SEE_TYPE) {
+            text = text.copy().append(" · ").append(Component.translatable(data.nenType().translationKey()));
+        }
 
         PoseStack pose = event.getPoseStack();
         pose.pushPose();

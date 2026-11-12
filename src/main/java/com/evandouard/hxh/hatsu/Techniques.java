@@ -622,8 +622,7 @@ public final class Techniques {
 
         @Override
         public boolean perform(LivingEntity caster, float power) {
-            caster.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.INVISIBILITY, ticks, 0,
-                    false, false, false));
+            com.evandouard.hxh.nen.NenSenses.nenHide(caster, ticks);
             for (net.minecraft.world.entity.Mob mob : caster.level().getEntitiesOfClass(net.minecraft.world.entity.Mob.class,
                     caster.getBoundingBox().inflate(24), m -> m.getTarget() == caster)) {
                 mob.setTarget(null);

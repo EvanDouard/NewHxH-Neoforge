@@ -621,7 +621,7 @@ public final class Characters {
         @Override
         public float modifyIncoming(LivingEntity owner, DamageSource source, float amount) {
             if (owner.getRandom().nextInt(5) == 0) {
-                owner.addEffect(Kinds.quiet(MobEffects.INVISIBILITY, 40, 0));
+                com.evandouard.hxh.nen.NenSenses.nenHide(owner, 40);
                 NenFx.shockwave(owner, 1.5f, 0xFF8A5AB0);
             }
             return amount;

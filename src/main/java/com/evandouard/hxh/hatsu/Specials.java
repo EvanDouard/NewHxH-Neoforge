@@ -451,7 +451,7 @@ public final class Specials {
         @Override
         public void tick(LivingEntity owner) {
             if (!(owner instanceof ServerPlayer p) || owner.tickCount % 20 != 0) return;
-            if (data(owner).gyo()) {
+            if (com.evandouard.hxh.nen.NenSenses.gyoLevel(owner) >= com.evandouard.hxh.nen.NenSenses.GYO_SEE_TRAPS) {
                 for (CompoundTag d : doors(owner)) {
                     if (!d.getString("dim").equals(owner.level().dimension().location().toString())) continue;
                     BlockPos pos = BlockPos.of(d.getLong("pos"));
@@ -763,7 +763,7 @@ public final class Specials {
     public static final Technique POUF_BEELZEBUB = register(new Technique("pouf_beelzebub", MANIPULATOR, 45, 600) {
         @Override
         public boolean perform(LivingEntity caster, float power) {
-            caster.addEffect(Kinds.quiet(MobEffects.INVISIBILITY, 120, 0), caster);
+            com.evandouard.hxh.nen.NenSenses.nenHide(caster, 120);
             caster.addEffect(Kinds.quiet(MobEffects.MOVEMENT_SPEED, 120, 1), caster);
             for (int i = 0; i < 6; i++) {
                 NenTasks.later(i * 20, () -> {
