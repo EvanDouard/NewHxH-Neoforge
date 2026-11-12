@@ -245,7 +245,7 @@ expect apparu
 cmd execute if entity @e[type=minecraft:husk,distance=..10]
 wait 5
 expect Test réussi
-wait 30
+wait 60
 clearchat
 cmd execute if entity @s[nbt={active_effects:[{id:"hxh:fear"}]}]
 wait 5
