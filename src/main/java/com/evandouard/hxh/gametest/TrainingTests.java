@@ -119,7 +119,8 @@ public final class TrainingTests {
     public static void meditationShrineMultipliesWillpower(GameTestHelper helper) {
         // Sanctuaire de niveau 3 : la pierre est au centre, méditer à côté multiplie la Volonté par 8
         var level = helper.getLevel();
-        BlockPos centre = helper.absolutePos(new BlockPos(4, 1, 4));
+        // loin de la zone des autres tests : le sanctuaire déborde du petit gabarit vide
+        BlockPos centre = helper.absolutePos(new BlockPos(4, 1, 4)).offset(0, 0, 240);
         BlockPos stone = com.evandouard.hxh.meditation.MeditationShrines.build(level, centre, 3, false);
         helper.assertTrue(stone != null && level.getBlockState(stone).getBlock() instanceof com.evandouard.hxh.meditation.MeditationStoneBlock,
                 "Pierre posée au centre");
