@@ -268,6 +268,8 @@ public final class HatsuTests {
         Zombie hisoka = husk(helper, 0);
         hunter(hisoka, NenType.TRANSMUTER, "hisoka");
         Zombie target = husk(helper, 2);
+        // les techniques de zone des tests voisins (qui tournent en même temps) ne doivent pas la tuer
+        target.setInvulnerable(true);
         helper.runAfterDelay(3, () -> {
             // on replace les deux husks juste avant (rien ne doit les avoir bougés entre-temps)
             hisoka.setYRot(-90f);
