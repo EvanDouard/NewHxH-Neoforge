@@ -48,6 +48,14 @@ public abstract class Technique {
         return minNenLevel;
     }
 
+    /** Niveau de Nen requis à partir duquel une technique compte comme ultime. */
+    public static final int ULTIMATE_NEN_LEVEL = 30;
+
+    /** Technique ultime (Jajanken épique, Plongée du dragon, Photon de Meruem…) : jamais pour une copie portée par un mob. */
+    public boolean isUltimate() {
+        return minNenLevel >= ULTIMATE_NEN_LEVEL;
+    }
+
     public Technique requiresNenLevel(int level) {
         this.minNenLevel = level;
         return this;

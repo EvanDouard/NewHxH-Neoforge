@@ -1,0 +1,92 @@
+{
+  "title": {
+    "fr": "La gratitude de Netero",
+    "en": "Netero's gratitude"
+  },
+  "start_npc": "netero_maitre",
+  "intro": {
+    "fr": "Tu veux que ton aura guérisse ton corps ? Alors apprends d'abord à le connaître. Ce sera long, et ça fera mal.",
+    "en": "You want your aura to heal your body? Then first learn to know it. It will be long, and it will hurt."
+  },
+  "npcs": {
+    "netero_maitre": {
+      "fr": "Netero",
+      "en": "Netero"
+    }
+  },
+  "steps": [
+    {
+      "id": "listen",
+      "type": "talk",
+      "npc": "netero_maitre",
+      "objective": {
+        "fr": "Parler à Netero",
+        "en": "Talk to Netero"
+      },
+      "dialog": {
+        "fr": "À ton âge, je remerciais le ciel dix mille fois par jour, un poing après l'autre. Toi, commence par trois cents. En Ten, et chaque coup avec gratitude.",
+        "en": "At your age, I thanked the heavens ten thousand times a day, one fist after another. You, start with three hundred. In Ten, and every strike with gratitude."
+      }
+    },
+    {
+      "id": "prayer",
+      "type": "prayer",
+      "count": 300,
+      "objective": {
+        "fr": "Prière de gratitude : donner des coups de base en Ten ou en Ken",
+        "en": "Prayer of gratitude: throw basic strikes in Ten or Ken"
+      }
+    },
+    {
+      "id": "ready",
+      "type": "talk",
+      "npc": "netero_maitre",
+      "objective": {
+        "fr": "Retourner voir Netero",
+        "en": "Go back to Netero"
+      },
+      "dialog": {
+        "fr": "Bien. Maintenant, voyons ce que ton corps encaisse. Mes paumes tomberont là où tu te tiens : bouge, ou tiens le Ken. Je ne te tuerai pas… mais je recommencerai.",
+        "en": "Good. Now let's see what your body can take. My palms will fall where you stand: move, or hold Ken. I won't kill you... but I will start over."
+      }
+    },
+    {
+      "id": "kannon",
+      "type": "kannon",
+      "seconds": 45,
+      "objective": {
+        "fr": "Tenir sous les paumes de Kannon (cercle doré = la paume va tomber)",
+        "en": "Hold out under Kannon's palms (golden circle = a palm is coming)"
+      }
+    },
+    {
+      "id": "wound",
+      "type": "wounded_meditation",
+      "seconds": 30,
+      "objective": {
+        "fr": "Blessé (moitié de vie ou moins) : méditer accroupi et immobile en Ten",
+        "en": "Wounded (half health or less): meditate crouched and still in Ten"
+      }
+    },
+    {
+      "id": "heal",
+      "type": "talk",
+      "npc": "netero_maitre",
+      "reward_learn": [
+        "heal"
+      ],
+      "objective": {
+        "fr": "Retourner voir Netero",
+        "en": "Go back to Netero"
+      },
+      "dialog": {
+        "fr": "Tu l'as senti ? L'aura qui coule vers la blessure. Guide-la, et elle refermera la chair. Ne remercie pas moi : remercie ton corps.",
+        "en": "Did you feel it? The aura flowing toward the wound. Guide it, and it will close the flesh. Don't thank me: thank your body."
+      }
+    }
+  ],
+  "requires": [
+    "hxh:hunter_exam",
+    "hxh:nen_8_ko"
+  ]
+}

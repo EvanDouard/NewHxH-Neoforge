@@ -117,16 +117,30 @@ public final class Hatsu {
         data.setSelected((data.selected() + 1) % techniqueIds(data).size());
     }
 
-    /** Puissance : affinité de l'hexagone × bonus de Volonté (+1 % par niveau). */
-    /** Puissance pour ce lanceur : un mob au kit de Gon a un Jajanken affaibli (le vrai reste au joueur). */
+    /**
+     * Puissance pour ce lanceur. Un mob de Minecraft qui porte la technique d'un personnage (zombie au Jajanken…)
+     * n'en a qu'une « fausse » version, affaiblie : le vrai personnage, joueur ou entité du mod, reste meilleur.
+     */
     public static float powerFor(LivingEntity entity, HunterData data, Technique technique) {
         float p = power(data, technique);
-        if (!(entity instanceof Player) && "gon".equals(data.kit())) p *= MOB_GON_POWER;
+        if (isCopy(entity, data)) p *= MOB_COPY_POWER;
         return p;
     }
 
-    /** Facteur du Jajanken d'un mob (zombies de Gon…). */
-    public static final float MOB_GON_POWER = 0.6f;
+    /** Facteur des techniques de personnage portées par un mob de Minecraft. */
+    public static final float MOB_COPY_POWER = 0.6f;
+    /** Ancien nom (zombies de Gon). */
+    public static final float MOB_GON_POWER = MOB_COPY_POWER;
+
+    /**
+     * Mob de Minecraft (zombie, squelette…) au kit d'un personnage : version affaiblie et sans ultime. Les kits
+     * propres aux espèces ({@code mob_*}) et les entités du mod (candidats, combattants, futurs personnages) ne sont
+     * pas concernés.
+     */
+    public static boolean isCopy(LivingEntity entity, HunterData data) {
+        if (entity instanceof Player || data.kit().isEmpty() || data.kit().startsWith("mob_")) return false;
+        return "minecraft".equals(net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).getNamespace());
+    }
 
     public static float power(HunterData data, Technique technique) {
         NenType type = data.nenType();
@@ -168,6 +182,7 @@ public final class Hatsu {
                 && !com.evandouard.hxh.arena.ArenaManager.inFight(sp)) return "message.hxh.arena_no_hatsu";
         String refusal = castRefusal(data, technique, now);
         if (refusal != null) return refusal;
+        if (technique.isUltimate() && isCopy(entity, data)) return "message.hxh.copy_no_ultimate";
         if (technique instanceof Techniques.ChargedOrb orb && data.aura() < orb.auraCost() + orb.minSpent) {
             return "message.hxh.no_aura"; // pas de quoi charger un vrai coup
         }
@@ -179,6 +194,9 @@ public final class Hatsu {
         }
         // Raté ou pas, l'aura et la recharge partent : lancer dans le vide a un prix
         boolean hit = technique.perform(entity, powerFor(entity, data, technique));
+        if (technique.isBase() && entity instanceof net.minecraft.server.level.ServerPlayer sp) {
+            com.evandouard.hxh.quest.QuestManager.onBaseStrike(sp);
+        }
         data.setAura(data.aura() - technique.auraCost());
         if (technique.resource() != null) data.addKitValue(technique.resource(), -technique.resourceCost(), Float.MAX_VALUE);
         int cooldown = technique.cooldownFor(data);

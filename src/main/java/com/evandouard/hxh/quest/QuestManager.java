@@ -460,6 +460,15 @@ public final class QuestManager {
         else sync(player);
     }
 
+    /** Coup de base donné (attaque basique, coup de pied) : prière de gratitude de la quête de Netero. */
+    public static void onBaseStrike(ServerPlayer player) {
+        if (data(player).running.isEmpty()) return;
+        forEachQuest(player, d -> {
+            Quest.Step step = currentStep(d);
+            if (step != null && step.type().equals("prayer")) NeteroTraining.prayer(player, step, d);
+        });
+    }
+
     /** Chaque tick : étape « suivre un PNJ » (et vérification de l'étage atteint, chaque seconde). */
     public static void tick(ServerPlayer player) {
         if (data(player).running.isEmpty()) return;
@@ -506,6 +515,15 @@ public final class QuestManager {
         // Jeu de la balle de Netero : le temps est compté
         if (step.type().equals("ball")) {
             com.evandouard.hxh.exam.NeteroBall.tick(player, step);
+            return;
+        }
+        // Quête de Netero (soin) : paumes de Kannon, méditation blessé
+        if (step.type().equals("kannon")) {
+            NeteroTraining.kannon(player, step, d);
+            return;
+        }
+        if (step.type().equals("wounded_meditation")) {
+            if (player.tickCount % 20 == 0) NeteroTraining.woundedMeditation(player, step, d);
             return;
         }
         // Tournoi final : un adversaire après l'autre
@@ -758,8 +776,14 @@ public final class QuestManager {
             player.sendSystemMessage(Component.translatable("message.hxh.jenny_gained", step.rewardJenny(), d.jenny)
                     .withStyle(ChatFormatting.YELLOW));
         }
-        // Capacités du Nen apprises auprès du maître
+        // Capacités du Nen apprises auprès du maître ; « heal » = le soin par le Nen (quête de Netero)
         for (String a : step.rewardLearn()) {
+            if (a.equals("heal")) {
+                com.evandouard.hxh.stats.HunterStats.get(player).setHealUnlocked(true);
+                com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.learned"),
+                        Component.translatable("ability.hxh.heal"), "★", com.evandouard.hxh.network.Hud.BLUE);
+                continue;
+            }
             com.evandouard.hxh.nen.NenLearning.Ability ability = com.evandouard.hxh.nen.NenLearning.Ability.byId(a);
             if (ability != null && com.evandouard.hxh.stats.HunterStats.get(player).learn(a)) {
                 com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.learned"),
@@ -790,7 +814,7 @@ public final class QuestManager {
             return;
         }
         int progress = switch (step.type()) {
-            case "follow", "survive" -> st[1] / 20;
+            case "follow", "survive", "kannon" -> st[1] / 20;
             case "quiz" -> step.answer().equals("silence") ? st[1] / 20 : 0;
             case "arena_floor" -> Math.min(d.arenaFloor, step.count());
             case "bring" -> Math.min(step.count(), player.getInventory().countItem(

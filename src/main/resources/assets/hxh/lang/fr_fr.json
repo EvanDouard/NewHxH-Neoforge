@@ -1,4 +1,10 @@
 {
+  "quest.hxh.netero.prayer_ten": "Netero : « La gratitude se donne en Ten. » (Ten ou Ken pour que le coup compte)",
+  "quest.hxh.netero.kannon_reset": "Netero retient sa paume au dernier moment. « Encore. » L'épreuve recommence.",
+  "quest.hxh.netero.need_wound": "Netero : « Un corps intact n'a rien à t'apprendre. » (moitié de vie ou moins)",
+  "quest.hxh.netero.meditate_hint": "Accroupis-toi, ne bouge plus et tiens le Ten.",
+  "ability.hxh.heal": "Soin par le Nen",
+  "message.hxh.copy_no_ultimate": "Une simple copie ne peut pas lancer d'ultime.",
   "block.hxh.illusion_wall": "Faux mur (Tour de Trick)",
   "technique.hxh.cond.charge_strike": "Maintenir pour charger (jusqu'à 2 s), relâcher pour frapper (%s blocs)",
   "technique.hxh.silva_great_orb.desc": "Silva forme en une seconde une grosse boule d'aura et la propulse : elle emporte la cible et explose, sans creuser le terrain.",

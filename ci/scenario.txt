@@ -1516,4 +1516,23 @@ look 35 12
 wait 5
 shot 53d_apparences_heros_profil
 cmd kill @e[tag=look_ci]
+
+# --- Quête de Netero : paumes de Kannon (épreuve du soin) ---
+cmd kill @e[type=!minecraft:player]
+cmd hunter quest reset
+cmd gamemode survival
+cmd effect give @s minecraft:instant_health 1 5 true
+camera back
+look 0 20
+cmd hunter quest start hxh:netero_soin
+cmd hunter quest skip
+cmd hunter quest skip
+cmd hunter quest skip
+wait 12
+shot 54a_netero_cercle_et_paume_de_kannon
+wait 9
+shot 54b_netero_la_paume_s_abat
+cmd hunter quest reset
+cmd gamemode creative
+camera first
 quit

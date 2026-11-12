@@ -606,4 +606,45 @@ public final class QuestTests {
         helper.assertTrue(zevil.prey().size() >= 3, "Des candidats à traquer sur Zevil");
         helper.succeed();
     }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void neteroQuestUnlocksHealing(GameTestHelper helper) {
+        // Quête de Netero : prière de gratitude (coups de base en Ten), paumes de Kannon (jamais fatales),
+        // méditation blessé, puis le soin par le Nen
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        var h = com.evandouard.hxh.stats.HunterStats.get(player);
+        com.evandouard.hxh.nen.NenModes.unlock(player);
+        h.setNenLevel(60);
+        h.setAura(h.auraMax());
+        helper.assertTrue(QuestRegistry.get(HxHMod.id("netero_soin")) != null, "Quête de Netero chargée");
+        helper.assertTrue(QuestRegistry.get(HxHMod.id("netero_soin")).problems().isEmpty(), "Quête valide");
+        QuestData d = QuestManager.data(player);
+        QuestManager.start(player, HxHMod.id("netero_soin"));
+        QuestManager.advance(player); // a écouté Netero
+        // hors Ten, un coup de base ne compte pas
+        QuestManager.onBaseStrike(player);
+        helper.assertTrue(d.progress() == 0, "Prière seulement en Ten ou Ken");
+        com.evandouard.hxh.nen.NenModes.trySetMode(player, com.evandouard.hxh.data.NenMode.TEN);
+        for (int i = 0; i < 300; i++) QuestManager.onBaseStrike(player);
+        helper.assertTrue(d.step() == 2, "300 coups en Ten : prière finie");
+        QuestManager.advance(player); // Netero : « encaisse »
+        // immobile sous les paumes : touché encore et encore, mais jamais tué, et l'épreuve repart
+        for (int i = 0; i < 260; i++) QuestManager.tick(player);
+        helper.assertTrue(player.isAlive() && player.getHealth() >= 1f, "Netero ne tue pas");
+        helper.assertTrue(d.step() == 3, "Toujours sous les paumes (l'épreuve a recommencé)");
+        QuestManager.advance(player);
+        // méditation : blessé, accroupi, immobile, en Ten
+        player.setHealth(player.getMaxHealth() * 0.4f);
+        player.setShiftKeyDown(true);
+        com.evandouard.hxh.nen.NenModes.trySetMode(player, com.evandouard.hxh.data.NenMode.TEN);
+        helper.assertTrue(!h.healUnlocked(), "Pas encore de soin");
+        for (int i = 0; i < 20 * 32; i++) {
+            player.tickCount++;
+            QuestManager.tick(player);
+        }
+        helper.assertTrue(d.step() == 5, "Méditation finie");
+        QuestManager.advance(player);
+        helper.assertTrue(h.healUnlocked(), "Soin par le Nen débloqué par Netero");
+        helper.succeed();
+    }
 }

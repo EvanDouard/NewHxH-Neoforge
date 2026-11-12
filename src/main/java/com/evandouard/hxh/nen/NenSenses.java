@@ -54,6 +54,7 @@ public final class NenSenses {
     public static void nenHide(LivingEntity entity, int ticks) {
         entity.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.INVISIBILITY,
                 ticks, 0, false, false, false));
+        entity.setInvisible(true); // tout de suite, sans attendre le tick de l'effet
         if (entity.hasData(com.evandouard.hxh.data.ModAttachments.HUNTER)) {
             entity.getData(com.evandouard.hxh.data.ModAttachments.HUNTER).setNenHiddenUntil(entity.level().getGameTime() + ticks);
         }

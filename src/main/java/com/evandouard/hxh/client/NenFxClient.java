@@ -1062,9 +1062,14 @@ public final class NenFxClient {
                         half * 0.3f, left / 10f, (left + 1) / 10f, 0xFFFFFFFF, a);
             }
             case KANNON_HANDS -> {
-                Vec3 at = src != null ? hand(src, c.pt) : f.at;
-                Vec3 look = src != null ? src.getViewVector(c.pt) : new Vec3(0, 0, 1);
-                Sprites3D.kannonHand(mesh(c), at, look, f.size * 0.9f * scale, f.color, alpha);
+                if (src != null) {
+                    Sprites3D.kannonHand(mesh(c), hand(src, c.pt), src.getViewVector(c.pt), f.size * 0.9f * scale, f.color, alpha);
+                } else {
+                    // paume de Kannon qui s'abat du ciel (épreuve de Netero) : elle plane, puis tombe d'un coup
+                    float fall = t < 0.7f ? 0f : ease((t - 0.7f) / 0.3f);
+                    Vec3 at = f.at.add(0, 0.6 * Mth.sin(t * 6f) * (1f - fall) - 3.0 * fall, 0);
+                    Sprites3D.kannonHand(mesh(c), at, new Vec3(0, -1, 0.0001), f.size * 0.9f, f.color, alpha);
+                }
             }
         }
     }

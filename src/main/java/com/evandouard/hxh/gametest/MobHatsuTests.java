@@ -187,4 +187,25 @@ public final class MobHatsuTests {
             helper.succeed();
         });
     }
+
+    @GameTest(template = "empty")
+    public static void vanillaMobsOnlyGetWeakCopiesOfCharacterTechniques(GameTestHelper helper) {
+        // Toute technique de personnage portée par un mob de Minecraft : affaiblie et sans ultime (décision du 12 nov)
+        Zombie z = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(1, 1, 1));
+        HunterData d = awaken(z);
+        d.setNenType(NenType.SPECIALIST);
+        d.setKit("zeno");
+        helper.assertTrue(Hatsu.isCopy(z, d), "Zombie au kit de Zeno = copie");
+        var dive = com.evandouard.hxh.hatsu.Techniques.get("zeno_dragon_dive");
+        helper.assertTrue(dive != null && dive.isUltimate(), "Plongée du dragon = ultime");
+        helper.assertTrue(Hatsu.powerFor(z, d, dive) < Hatsu.power(d, dive), "Copie affaiblie");
+        d.setKit("mob_zombie");
+        helper.assertTrue(!Hatsu.isCopy(z, d), "Le Hatsu de son espèce n'est pas une copie");
+        var player = helper.makeMockServerPlayerInLevel();
+        HunterData pd = HunterStats.get(player);
+        pd.setKit("zeno");
+        helper.assertTrue(!Hatsu.isCopy(player, pd), "Un joueur a le vrai kit");
+        helper.assertTrue(Techniques.GON_ROCK_EPIC.isUltimate() && !Techniques.GON_ROCK.isUltimate(), "Seule la Pierre épique est ultime");
+        helper.succeed();
+    }
 }

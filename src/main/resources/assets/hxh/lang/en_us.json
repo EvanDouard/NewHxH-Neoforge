@@ -1,4 +1,10 @@
 {
+  "quest.hxh.netero.prayer_ten": "Netero: \"Gratitude is given in Ten.\" (Ten or Ken for the strike to count)",
+  "quest.hxh.netero.kannon_reset": "Netero holds back his palm at the last moment. \"Again.\" The trial restarts.",
+  "quest.hxh.netero.need_wound": "Netero: \"An unharmed body has nothing to teach you.\" (half health or less)",
+  "quest.hxh.netero.meditate_hint": "Crouch, stay still and hold Ten.",
+  "ability.hxh.heal": "Nen healing",
+  "message.hxh.copy_no_ultimate": "A mere copy cannot use an ultimate.",
   "block.hxh.illusion_wall": "Illusion Wall (Trick Tower)",
   "technique.hxh.cond.charge_strike": "Hold to charge (up to 2 s), release to strike (%s blocks)",
   "technique.hxh.silva_great_orb.desc": "Silva forms a large aura orb in one second and launches it: it carries the target and explodes without digging.",

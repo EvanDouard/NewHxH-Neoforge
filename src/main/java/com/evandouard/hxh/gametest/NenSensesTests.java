@@ -111,6 +111,7 @@ public final class NenSensesTests {
                 && NenSenses.GYO_SEE_ZETSU == Mastery.MAX_LEVEL, "Paliers du Gyo");
         Zombie potion = nenHusk(helper);
         potion.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.INVISIBILITY, 200));
+        potion.setInvisible(true); // le drapeau suit l'effet au tick suivant
         Zombie hidden = nenHusk(helper);
         NenSenses.nenHide(hidden, 200);
         Zombie zetsu = nenHusk(helper);

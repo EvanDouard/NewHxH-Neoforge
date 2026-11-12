@@ -49,7 +49,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
     /** Types d'étapes connus. */
     public static final Set<String> TYPES = Set.of("talk", "kill", "follow", "bring", "reach", "custom",
             "quiz", "survive", "points", "duel", "ball", "waypoint", "knockout",
-            "nen_mode", "nen_sense", "nen_flag",
+            "nen_mode", "nen_sense", "nen_flag", "prayer", "kannon", "wounded_meditation",
             "arena_win", "arena_floor", "arena_register_200");
 
     public record Step(String id, String type, String npc, String entity, int count, int seconds,
@@ -65,7 +65,8 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
             return switch (type) {
                 case "kill", "arena_win", "arena_floor" -> count;
                 case "bring" -> count;
-                case "follow", "nen_mode", "nen_sense", "survive", "waypoint" -> seconds;
+                case "follow", "nen_mode", "nen_sense", "survive", "waypoint", "kannon", "wounded_meditation" -> seconds;
+                case "prayer" -> count;
                 case "quiz" -> "silence".equals(answer) ? seconds : 0;
                 case "points", "duel", "ball", "knockout" -> count;
                 default -> 0;
@@ -246,7 +247,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
             if (!step.site().isEmpty() && com.evandouard.hxh.exam.ExamSite.byId(step.site()) == null)
                 problems.add(where + "lieu d'examen inconnu « " + step.site() + " » (zaban, hall, biska, hotel)");
             for (String a : step.rewardLearn())
-                if (com.evandouard.hxh.nen.NenLearning.Ability.byId(a) == null) problems.add(where + "capacité inconnue « " + a + " »");
+                if (!a.equals("heal") && com.evandouard.hxh.nen.NenLearning.Ability.byId(a) == null) problems.add(where + "capacité inconnue « " + a + " »");
             if (!step.rewardItem().isEmpty() && !BuiltInRegistries.ITEM.containsKey(ResourceLocation.tryParse(step.rewardItem())))
                 problems.add(where + "récompense inconnue « " + step.rewardItem() + " »");
             steps.add(step);

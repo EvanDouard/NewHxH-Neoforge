@@ -307,6 +307,11 @@ public final class Techniques {
         }
 
         @Override
+        public boolean isUltimate() {
+            return isEpic() || super.isUltimate();
+        }
+
+        @Override
         public boolean isCharged() {
             return true;
         }

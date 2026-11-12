@@ -145,8 +145,8 @@ public final class NenMobAI {
             int index = (data.selected() + i) % n;
             Technique t = Techniques.get(kit.techniques().get(index));
             if (t == null || !t.implemented() || Hatsu.castRefusal(data, t, now) != null) continue;
-            // le Jajanken ultime reste au joueur : un mob n'y a jamais accès
-            if (t instanceof Techniques.ChargedOrb orb && orb.isEpic()) continue;
+            // les ultimes restent aux vrais personnages : une copie portée par un mob de Minecraft n'y a pas accès
+            if (t.isUltimate() && Hatsu.isCopy(mob, data)) continue;
             boolean useful = t.isHeal() ? mob.getHealth() < mob.getMaxHealth() * 0.7f : distance <= t.aiRange();
             if (!useful) continue;
             data.setSelected(index);
