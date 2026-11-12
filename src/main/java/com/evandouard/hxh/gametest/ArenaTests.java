@@ -319,7 +319,6 @@ public final class ArenaTests {
     public static void hisokaAuraWallNeedsTen(GameTestHelper helper) {
         // 200e étage : sans Ten, l'aura d'Hisoka repousse ; en Ten (ou inscrit), on passe
         net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
-        player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL); // le joueur de test est en créatif
         var d = com.evandouard.hxh.quest.QuestManager.data(player);
         d.setArenaFloor(200);
         helper.assertTrue(!com.evandouard.hxh.arena.AuraWall.canPass(player), "Sans Nen : repoussé");

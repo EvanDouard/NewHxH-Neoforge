@@ -33,10 +33,10 @@ public final class AuraWall {
 
     private AuraWall() {}
 
-    /** Le joueur passe-t-il l'aura ? Inscrit au 200e, ou en Ten / Ren / Ken. */
+    /** Le joueur passe-t-il l'aura ? Inscrit au 200e, ou en Ten / Ren / Ken (le créatif passe toujours, voir tick). */
     public static boolean canPass(ServerPlayer player) {
         QuestData d = QuestManager.data(player);
-        if (d.registered200() || player.isCreative() || player.isSpectator()) return true;
+        if (d.registered200()) return true;
         HunterData h = HunterStats.get(player);
         if (!h.nenUnlocked()) return false;
         NenMode m = h.mode();
@@ -50,7 +50,7 @@ public final class AuraWall {
         NpcEntity desk = receptionistNear(level, player);
         if (desk == null) return;
         NpcEntity hisoka = ensureHisoka(level, desk, player);
-        if (canPass(player)) return;
+        if (player.isCreative() || player.isSpectator() || canPass(player)) return;
         Vec3 from = desk.position();
         Vec3 away = player.position().subtract(from).multiply(1, 0, 1);
         away = away.lengthSqr() < 1e-4 ? new Vec3(1, 0, 0) : away.normalize();
