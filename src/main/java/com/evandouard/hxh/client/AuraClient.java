@@ -281,7 +281,8 @@ public final class AuraClient {
                     if (gravity) vel = vel.scale(0.99).add(0, -0.05, 0);
                 }
             }
-            Mesh3D.tube(m, Mesh3D.glow(m), path, 0.025f, 0.005f, 0xFF5A5A, 0.55f, 4, false);
+            // trait rouge translucide (une lueur additive virerait au blanc sur le ciel)
+            Mesh3D.tube(m, Mesh3D.solid(m), path, 0.03f, 0.006f, 0xE02828, 0.6f, 4, false);
             any = true;
         }
         return any;

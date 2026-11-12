@@ -696,6 +696,7 @@ cmd hunter nen mastery gyo 50
 cmd effect give @e[type=minecraft:husk,limit=1,sort=nearest] minecraft:invisibility 30 0 true
 wait 25
 cmd summon minecraft:arrow ~1 ~4 ~16 {Motion:[0.0,0.25,-1.6d],NoGravity:0b}
+clearchat
 wait 3
 shot 24b_gyo_50_type_invisible_et_trajectoire
 cmd effect clear @e[type=minecraft:husk]
