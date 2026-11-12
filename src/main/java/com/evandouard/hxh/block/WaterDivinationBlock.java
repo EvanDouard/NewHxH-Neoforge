@@ -5,9 +5,6 @@ import com.evandouard.hxh.data.NenType;
 import com.evandouard.hxh.stats.HunterStats;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -24,7 +21,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.joml.Vector3f;
 
 /**
  * Verre d'eau avec une feuille : la divination par l'eau révèle le type de Nen.
@@ -91,16 +87,16 @@ public class WaterDivinationBlock extends HorizontalDirectionalBlock {
             }
         }
         if (level instanceof ServerLevel server) {
-            ParticleOptions particle = switch (type) {
-                case ENHANCER -> ParticleTypes.SPLASH;
-                case EMITTER -> new DustParticleOptions(new Vector3f(0.9f, 0.2f, 0.6f), 1.2f);
-                case CONJURER -> ParticleTypes.WHITE_ASH;
-                case TRANSMUTER -> ParticleTypes.ENCHANT;
-                case MANIPULATOR -> ParticleTypes.COMPOSTER;
-                case SPECIALIST -> ParticleTypes.WITCH;
-            };
-            server.sendParticles(particle, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-                    30, 0.15, 0.2, 0.15, 0.02);
+            // réaction dessinée en 3D au-dessus du verre (cinq secondes), sans particules de Minecraft
+            com.evandouard.hxh.fx.NenFx.send(server, com.evandouard.hxh.fx.NenFx.Kind.DIVINATION, null, null,
+                    net.minecraft.world.phys.Vec3.atBottomCenterOf(pos), type.ordinal(), switch (type) {
+                        case ENHANCER -> com.evandouard.hxh.fx.NenFx.ENHANCER;
+                        case TRANSMUTER -> com.evandouard.hxh.fx.NenFx.TRANSMUTER;
+                        case CONJURER -> com.evandouard.hxh.fx.NenFx.CONJURER;
+                        case SPECIALIST -> com.evandouard.hxh.fx.NenFx.SPECIALIST;
+                        case MANIPULATOR -> com.evandouard.hxh.fx.NenFx.MANIPULATOR;
+                        case EMITTER -> com.evandouard.hxh.fx.NenFx.EMITTER;
+                    }, 100);
         }
         level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1f, 1f);
         return type;

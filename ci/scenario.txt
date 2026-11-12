@@ -77,6 +77,15 @@ wait 30
 expect La feuille se met à tourner
 expect Ton type de Nen : Manipulation
 shot 07_divination_manipulation
+cmd hunter nen type enhancer
+useblock 2 0 0
+wait 40
+shot 07b_divination_renforcement_deborde
+cmd hunter nen type specialist
+useblock 2 0 0
+wait 40
+shot 07c_divination_specialisation_fane
+cmd hunter nen type manipulator
 clearchat
 cmd hunter
 wait 10

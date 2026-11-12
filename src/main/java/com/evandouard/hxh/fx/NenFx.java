@@ -73,7 +73,12 @@ public final class NenFx {
          */
         MARK,
         /** Mort d'un mob (remplace le nuage blanc de Minecraft) : giclée d'encre qui se disperse. Taille = hauteur. */
-        DISSOLVE
+        DISSOLVE,
+        /**
+         * Réaction du verre de divination (point = fond du verre, taille = numéro du type de Nen) : l'eau déborde,
+         * change de couleur, des cristaux apparaissent, le goût change (bulles), la feuille tourne, ou elle se fane.
+         */
+        DIVINATION
     }
 
     /** Images dessinées des techniques (textures {@code textures/fx/sprite_<nom>.png}). Ajouter à la fin seulement. */

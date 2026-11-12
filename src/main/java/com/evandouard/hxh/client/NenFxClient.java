@@ -205,6 +205,7 @@ public final class NenFxClient {
             case SPRITE -> sprite(c, f, t);
             case MARK -> mark(c, f, age);
             case DISSOLVE -> dissolve(c, f, t);
+            case DIVINATION -> divination(c, f, age);
             case CLEAR, IMPACT_FRAME -> {}
         }
     }
@@ -240,6 +241,100 @@ public final class NenFxClient {
         double bob = 0.12 * Mth.sin((c.now + c.pt) * 0.2f);
         Vec3 tip = mid.add(0, h + 0.25 + bob, 0);
         Mesh3D.cone(m, Mesh3D.xray(m), tip.add(0, 0.4, 0), tip, r * 5f, rgb, alpha, 4, false);
+    }
+
+    /**
+     * Verre de divination (point = fond du verre, taille = numéro du type) : une réaction par type, comme dans l'anime.
+     * Renforcement : l'eau monte et déborde en coulant le long du verre. Émission : l'eau prend une couleur.
+     * Matérialisation : des cristaux apparaissent dans l'eau. Transformation : le goût change (bulles qui pétillent).
+     * Manipulation : la feuille tourne à la surface. Spécialisation : la feuille se fane et une spirale sombre monte.
+     */
+    private static void divination(Ctx c, Fx f, float age) {
+        Mesh3D.Ctx m = mesh(c);
+        int type = Math.round(f.size);
+        int aura = f.color & 0xFFFFFF;
+        float in = Math.min(1f, age / 15f), out = Math.min(1f, (f.duration - age) / 15f);
+        float k = ease(in) * out;
+        if (k <= 0.01f) return;
+        float r = 0.15f;                          // rayon intérieur du verre (6 px de large)
+        Vec3 bottom = f.at.add(0, 0.04, 0);
+        double surf = 0.36;                       // hauteur de l'eau au repos
+        int water = 0x6FB8FF;
+        java.util.Random rnd = new java.util.Random(f.seed);
+        switch (type) {
+            case 0 -> { // Renforcement : l'eau monte au-dessus du bord et ruisselle
+                double rise = surf + 0.16 * ease(in);
+                Mesh3D.tube(m, Mesh3D.solid(m), List.of(bottom, bottom.add(0, rise, 0)), r, r, water, 0.55f * out, 14, true);
+                Mesh3D.sphere(m, Mesh3D.solid(m), bottom.add(0, rise, 0), r * 1.02f, water, 0.55f * out, 8, 14,
+                        d -> d.y > 0 ? 0.45f + 0.05f * Mth.sin(age * 0.5f + (float) d.x * 9) : 0.02f, true, false);
+                for (int i = 0; i < 6; i++) {
+                    double a = i / 6.0 * Math.PI * 2 + 0.3;
+                    float ph = ((age * 0.04f) + i / 6f) % 1f;
+                    Vec3 rim = bottom.add(Math.cos(a) * (r + 0.03), 0.44, Math.sin(a) * (r + 0.03));
+                    Vec3 drop = rim.add(Math.cos(a) * 0.02, -0.44 * ph, Math.sin(a) * 0.02);
+                    Mesh3D.tube(m, Mesh3D.solid(m), List.of(rim, drop), 0.012f, 0.02f, water, 0.6f * out, 5, true);
+                }
+            }
+            case 5 -> { // Émission : la couleur se diffuse depuis le fond
+                Mesh3D.tube(m, Mesh3D.solid(m), List.of(bottom, bottom.add(0, surf * ease(in), 0)), r * 0.98f, r * 0.98f, aura, 0.7f * out, 14, true);
+                Mesh3D.sphere(m, Mesh3D.glow(m), bottom.add(0, surf * 0.5, 0), r * 1.3f, aura, 0.3f * k, 8, 10, null, false, true);
+            }
+            case 2 -> { // Matérialisation : cristaux qui se forment et flottent
+                for (int i = 0; i < 6; i++) {
+                    double a = rnd.nextDouble() * Math.PI * 2, d = rnd.nextDouble() * r * 0.7;
+                    double y = 0.08 + rnd.nextDouble() * 0.24 + 0.02 * Mth.sin(age * 0.1f + i);
+                    Vec3 at = bottom.add(Math.cos(a) * d, y, Math.sin(a) * d);
+                    Vec3 axis = new Vec3(rnd.nextDouble() - 0.5, 1, rnd.nextDouble() - 0.5).normalize().scale(0.05 * ease(in));
+                    Mesh3D.cone(m, Mesh3D.solid(m), at, at.add(axis), 0.022f * ease(in), 0xE8F2FF, 0.95f * out, 4, true);
+                    Mesh3D.cone(m, Mesh3D.solid(m), at, at.subtract(axis), 0.022f * ease(in), 0xE8F2FF, 0.95f * out, 4, true);
+                }
+                Mesh3D.sphere(m, Mesh3D.glow(m), bottom.add(0, surf * 0.5, 0), r * 1.2f, aura, 0.2f * k, 8, 10, null, false, true);
+            }
+            case 1 -> { // Transformation : le goût change — l'eau pétille de bulles qui montent
+                for (int i = 0; i < 14; i++) {
+                    double a = rnd.nextDouble() * Math.PI * 2, d = rnd.nextDouble() * r * 0.8;
+                    float ph = (age * (0.02f + 0.02f * rnd.nextFloat()) + rnd.nextFloat()) % 1f;
+                    Vec3 at = bottom.add(Math.cos(a) * d, 0.04 + surf * ph, Math.sin(a) * d);
+                    Mesh3D.sphere(m, Mesh3D.glow(m), at, 0.012f + 0.012f * rnd.nextFloat(), aura | 0x404040, k * (1 - ph * 0.5f), 4, 5, null, false, false);
+                }
+                // petites étoiles de goût au-dessus du verre
+                for (int i = 0; i < 3; i++) {
+                    Vec3 at = bottom.add(Mth.cos(age * 0.08f + i * 2.1f) * 0.22, 0.55 + 0.05 * Mth.sin(age * 0.2f + i), Mth.sin(age * 0.08f + i * 2.1f) * 0.22);
+                    Mesh3D.sphere(m, Mesh3D.glow(m), at, 0.03f, aura, k, 4, 6, d -> 0.4f + 0.6f * (float) Math.pow(Math.abs(Math.sin((d.x + d.z) * 6)), 3), false, false);
+                }
+            }
+            case 4, 3 -> { // Manipulation : la feuille tourne ; Spécialisation : elle se fane, spirale sombre
+                boolean spec = type == 3;
+                float spin = spec ? 0 : age * 0.12f;
+                float wilt = spec ? ease(in) : 0f;
+                int leaf = spec ? blend(0x4FA83A, 0x5A3A20, wilt) : 0x4FA83A;
+                Vec3 centre = bottom.add(0, surf + 0.012 - 0.12 * wilt, 0);
+                Vec3 dir = new Vec3(Mth.cos(spin), -0.6 * wilt, Mth.sin(spin)).normalize();
+                Vec3 sideV = new Vec3(-dir.z, 0, dir.x);
+                Mesh3D.sphere(m, Mesh3D.solid(m), centre, 0.11f, leaf, out, 6, 10,
+                        d -> (float) (Math.abs(d.y) > 0.3 ? 0.08 : 1.0) * (1f - 0.55f * (float) Math.abs(d.dot(sideV))), true, false);
+                Mesh3D.tube(m, Mesh3D.solid(m), List.of(centre.subtract(dir.scale(0.12)), centre.subtract(dir.scale(0.2))), 0.008f, 0.006f, 0x3A6A28, out, 4, true);
+                if (spec) {
+                    List<Vec3> spiral = new java.util.ArrayList<>();
+                    for (int i = 0; i <= 30; i++) {
+                        float q = i / 30f, a = q * Mth.TWO_PI * 2.5f + age * 0.2f;
+                        spiral.add(bottom.add(Mth.cos(a) * 0.2 * (1 - q * 0.5), 0.2 + q * 0.7 * ease(in), Mth.sin(a) * 0.2 * (1 - q * 0.5)));
+                    }
+                    Mesh3D.tube(m, Mesh3D.glow(m), spiral, 0.02f, 0.005f, aura, 0.8f * k, 4, false);
+                } else {
+                    // remous à la surface autour de la feuille
+                    Mesh3D.torus(m, Mesh3D.glow(m), bottom.add(0, surf + 0.01, 0), new Vec3(0, 1, 0), r * 0.85f, 0.006f, aura, 0.6f * k, 20, 4, false);
+                }
+            }
+            default -> {}
+        }
+    }
+
+    private static int blend(int a, int b, float t) {
+        int r = (int) Mth.lerp(t, (a >> 16) & 255, (b >> 16) & 255);
+        int g = (int) Mth.lerp(t, (a >> 8) & 255, (b >> 8) & 255);
+        int bl = (int) Mth.lerp(t, a & 255, b & 255);
+        return (r << 16) | (g << 8) | bl;
     }
 
     /**
@@ -1349,7 +1444,7 @@ public final class NenFxClient {
                 cord.add(from.lerp(to, t).add(0, Math.sin(t * Math.PI) * 0.6 + Mth.sin(age * 0.3f + t * 8) * 0.05, 0));
             }
             Mesh3D.tube(m, Mesh3D.solid(m), cord, 0.05f, 0.04f, 0xE8A0C8, fade * 0.9f, 6, true);
-            Mesh3D.tube(m, Mesh3D.glow(m), cord, 0.08f, 0.06f, f.color & 0xFFFFFF, fade * 0.4f, 6, false, true);
+            Mesh3D.tube(m, Mesh3D.glow(m), cord, t -> 0.08f - 0.02f * t, f.color & 0xFFFFFF, fade * 0.4f, 6, false, true);
         }
     }
 
