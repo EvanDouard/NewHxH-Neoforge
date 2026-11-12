@@ -1329,10 +1329,14 @@ goto receptionist
 wait 15
 talkto receptionist
 wait 10
-expect Sans Nen
-shot 44_hall_151_200_refus_sans_nen
+expect Une aura glaciale
+shot 44_hall_151_200_refus_sans_nen_aura_d_hisoka
 cmd hunter nen unlock
+key key.hxh.ten
+wait 10
 clearchat
+goto receptionist
+wait 15
 talkto receptionist
 wait 10
 expect Inscription au 200e étage validée
