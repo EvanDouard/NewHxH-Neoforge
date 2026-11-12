@@ -274,7 +274,9 @@ public final class HatsuTests {
             hisoka.setXRot(0f);
             target.teleportTo(hisoka.getX() + 2, hisoka.getY(), hisoka.getZ());
             target.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
-            helper.assertTrue(Techniques.HISOKA_BUNGEE_GUM.perform(hisoka, 1f), "Le Bungee Gum colle la cible devant");
+            helper.assertTrue(Techniques.HISOKA_BUNGEE_GUM.perform(hisoka, 1f), "Le Bungee Gum colle la cible devant (cible vivante : "
+                    + target.isAlive() + ", retirée : " + target.isRemoved() + ", lanceur vivant : " + hisoka.isAlive()
+                    + ", regard " + hisoka.getLookAngle() + ")");
             helper.assertTrue(com.evandouard.hxh.hatsu.LingeringNen.gumTarget(hisoka) == target, "Lien actif sur la cible");
             helper.assertTrue(Techniques.HISOKA_BUNGEE_GUM.perform(hisoka, 1f), "Relance : contraction");
             helper.assertTrue(com.evandouard.hxh.hatsu.LingeringNen.gumTarget(hisoka) == null, "Le lien est consommé");

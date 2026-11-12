@@ -110,6 +110,8 @@ public final class MeditationShrines {
     /** Nouveau tronçon de l'Overworld : peut-être un sanctuaire (tirage fixé par la graine du monde). */
     public static void onChunkLoad(ChunkEvent.Load event) {
         if (!event.isNewChunk() || !(event.getLevel() instanceof ServerLevel level) || level.dimension() != Level.OVERWORLD) return;
+        // pas sur le serveur des GameTests : un sanctuaire y écraserait la zone d'un test
+        if (level.getServer() instanceof net.minecraft.gametest.framework.GameTestServer) return;
         ChunkPos cp = event.getChunk().getPos();
         Random rnd = new Random(level.getSeed() ^ (cp.toLong() * 0x9E3779B97F4A7C15L) ^ 0x5EED_5A1L);
         double roll = rnd.nextDouble();
