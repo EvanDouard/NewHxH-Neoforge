@@ -1,5 +1,7 @@
 package com.evandouard.hxh.hatsu;
 
+import com.evandouard.hxh.fx.NenFx;
+
 import com.evandouard.hxh.nen.Targeting;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
@@ -44,13 +46,13 @@ public final class Passives {
         }
     };
 
-    /** Kurapika — Chaîne radiesthésique : les monstres à 12 blocs brillent (vus à travers les murs). */
+    /** Kurapika — Chaîne radiesthésique : les monstres à 12 blocs sont repérés (vus à travers les murs). */
     public static final Passive DOWSING_CHAIN = new Passive("dowsing_chain", true) {
         @Override
         public void tick(LivingEntity owner) {
             if (owner.tickCount % 40 != 0) return;
             for (LivingEntity e : Targeting.around(owner, 12)) {
-                if (e instanceof Enemy) e.addEffect(new MobEffectInstance(MobEffects.GLOWING, 60, 0, false, false));
+                if (e instanceof Enemy) NenFx.mark(owner, e, NenFx.CONJURER, 60);
             }
         }
     };

@@ -376,6 +376,12 @@ cmd hunter nen refill
 cmd hunter hatsu cast
 wait 12
 shot 22d_holy_chain
+cmd fill ~-3 ~ ~5 ~3 ~3 ~5 minecraft:stone_bricks
+cmd summon minecraft:zombie ~ ~ ~7 {NoAI:1b,PersistenceRequired:1b,Silent:1b}
+wait 45
+shot 22d2_reperage_a_travers_le_mur
+cmd kill @e[type=minecraft:zombie]
+cmd fill ~-3 ~ ~5 ~3 ~3 ~5 minecraft:air
 cmd hunter hatsu set killua
 cmd hunter nen refill
 cmd hunter hatsu cast
@@ -784,6 +790,8 @@ shot 31b_peur_visible_sur_un_mob
 cmd hunter nen mode none
 cmd hunter nen level 40
 cmd kill @e[type=!minecraft:player]
+wait 22
+shot 31c_mort_giclee_d_encre
 cmd effect clear @s
 cmd damage @s 8
 cmd effect give @s minecraft:regeneration 3 3

@@ -100,7 +100,7 @@ public final class Characters {
             if (t == null) return false;
             t.getPersistentData().putUUID(LoveDebt.KEY, caster.getUUID());
             t.getPersistentData().putLong(LoveDebt.KEY + "_until", caster.level().getGameTime() + Math.round(200 * power));
-            t.addEffect(Kinds.quiet(MobEffects.GLOWING, Math.round(200 * power), 0), caster);
+            NenFx.mark(caster, t, NenFx.HISOKA, Math.round(200 * power));
             NenFx.impactOn(caster, t, 1f, NenFx.HISOKA);
             if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.HEART, t, t.position(), 0.9f, NenFx.HISOKA, Math.round(200 * power));
             Kinds.sound(t, SoundEvents.AMETHYST_BLOCK_CHIME);
@@ -361,7 +361,7 @@ public final class Characters {
         public void tick(LivingEntity owner) {
             if (owner.tickCount % 20 != 0) return;
             for (LivingEntity e : Targeting.around(owner, 4))
-                if (!Kinds.isAlly(owner, e)) e.addEffect(Kinds.quiet(MobEffects.GLOWING, 30, 0), owner);
+                if (!Kinds.isAlly(owner, e)) NenFx.mark(owner, e, NenFx.WHITE, 30);
         }
     };
 
@@ -534,7 +534,7 @@ public final class Characters {
         public boolean perform(LivingEntity caster, float power) {
             List<LivingEntity> danger = caster.level().getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(32),
                     e -> e instanceof Enemy && e.isAlive());
-            for (LivingEntity e : danger) e.addEffect(Kinds.quiet(MobEffects.GLOWING, 200, 0), caster);
+            for (LivingEntity e : danger) NenFx.mark(caster, e, 0xFFE0C8FF, 200);
             NenFx.flare(caster, 1f, 0xFFE0C8FF);
             if (caster instanceof Player p) {
                 if (danger.isEmpty()) p.displayClientMessage(Component.translatable("message.hxh.neon_calm"), false);
@@ -671,7 +671,7 @@ public final class Characters {
     public static final Passive PALM_WINK_BLUE = new Passive("palm_wink_blue", true) {
         @Override
         public float modifyOutgoingMelee(LivingEntity owner, LivingEntity target, float amount) {
-            target.addEffect(Kinds.quiet(MobEffects.GLOWING, 600, 0), owner);
+            NenFx.mark(owner, target, 0xFF6FA8FF, 600);
             return amount;
         }
     };

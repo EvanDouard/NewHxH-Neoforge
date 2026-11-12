@@ -105,6 +105,11 @@ public final class NenFxClient {
             ImpactFrameClient.trigger(new Vec3(p.x(), p.y(), p.z()), p.duration());
             return;
         }
+        if (p.kindEnum() == NenFx.Kind.MARK) {
+            // repérage renouvelé : il remplace l'ancien au lieu de s'empiler
+            ACTIVE.removeIf(f -> f.kind == NenFx.Kind.MARK && f.target == p.target());
+            PENDING.removeIf(f -> f.kind == NenFx.Kind.MARK && f.target == p.target());
+        }
         ACTIVE.add(new Fx(p, mc.level.getGameTime()));
     }
 
@@ -198,8 +203,74 @@ public final class NenFxClient {
             case DOLL -> doll(c, f, age);
             case CARD_BURST -> cardBurst(c, f, t);
             case SPRITE -> sprite(c, f, t);
+            case MARK -> mark(c, f, age);
+            case DISSOLVE -> dissolve(c, f, t);
             case CLEAR, IMPACT_FRAME -> {}
         }
+    }
+
+    /**
+     * Repérage : quatre crochets de visée face caméra autour du corps et une pointe qui flotte au-dessus de la tête,
+     * en lumière vue à travers les murs. Fondu à l'apparition et dans la dernière seconde.
+     */
+    private static void mark(Ctx c, Fx f, float age) {
+        Entity e = entity(f.target);
+        if (!(e instanceof LivingEntity living) || !living.isAlive()) return;
+        float alpha = Math.min(1f, age / 4f) * Math.min(1f, (f.duration - age) / 20f);
+        if (alpha <= 0.02f) return;
+        int rgb = f.color & 0xFFFFFF;
+        Mesh3D.Ctx m = mesh(c);
+        Vec3 mid = center(e, c.pt);
+        Vec3 view = mid.subtract(c.cam);
+        Vec3 right = view.cross(new Vec3(0, 1, 0));
+        right = right.lengthSqr() < 1e-6 ? new Vec3(1, 0, 0) : right.normalize();
+        Vec3 up = new Vec3(0, 1, 0);
+        float pulse = 1f + 0.06f * Mth.sin((c.now + c.pt) * 0.3f);
+        double w = (e.getBbWidth() * 0.5 + 0.25) * pulse, h = (e.getBbHeight() * 0.5 + 0.2) * pulse;
+        double arm = Math.min(w, h) * 0.55;
+        // l'épaisseur suit la distance pour rester lisible de loin
+        float r = (float) Math.max(0.025, view.length() * 0.0035);
+        for (int sx = -1; sx <= 1; sx += 2) {
+            for (int sy = -1; sy <= 1; sy += 2) {
+                Vec3 corner = mid.add(right.scale(sx * w)).add(up.scale(sy * h));
+                Mesh3D.tube(m, Mesh3D.xray(m), List.of(corner.subtract(right.scale(sx * arm)), corner,
+                        corner.subtract(up.scale(sy * arm))), r, r, rgb, alpha, 5, false);
+            }
+        }
+        double bob = 0.12 * Mth.sin((c.now + c.pt) * 0.2f);
+        Vec3 tip = mid.add(0, h + 0.25 + bob, 0);
+        Mesh3D.cone(m, Mesh3D.xray(m), tip.add(0, 0.4, 0), tip, r * 5f, rgb, alpha, 4, false);
+    }
+
+    /**
+     * Mort d'un mob : giclée d'encre (boules sombres qui enflent et s'écartent en se délitant), quelques gouttes qui
+     * retombent, et un mince filet clair qui s'élève.
+     */
+    private static void dissolve(Ctx c, Fx f, float t) {
+        Mesh3D.Ctx m = mesh(c);
+        java.util.Random rnd = new java.util.Random(f.seed);
+        float h = f.size;
+        Vec3 mid = f.at.add(0, h * 0.45, 0);
+        float fade = (float) Math.pow(1f - t, 1.4);
+        float ease = 1f - (1f - t) * (1f - t);
+        int puffs = 7;
+        for (int i = 0; i < puffs; i++) {
+            double a = rnd.nextDouble() * Math.PI * 2, y = rnd.nextDouble() * 2 - 1;
+            Vec3 dir = new Vec3(Math.cos(a), y * 0.6 + 0.25, Math.sin(a)).normalize();
+            Vec3 at = mid.add(dir.scale(h * (0.15 + 0.45 * ease))).add(0, h * 0.15 * t, 0);
+            float rad = h * (0.14f + 0.1f * rnd.nextFloat()) * (0.6f + 0.8f * ease);
+            float ph = rnd.nextFloat() * 10f;
+            Mesh3D.sphere(m, Mesh3D.solid(m), at, rad, f.color & 0xFFFFFF, 0.85f * fade, 8, 10,
+                    d -> 1f + 0.18f * Mth.sin((float) (d.x * 5 + d.y * 4 + ph + t * 6)), true, false);
+        }
+        for (int i = 0; i < 5; i++) {
+            double a = rnd.nextDouble() * Math.PI * 2;
+            double speed = h * (0.5 + rnd.nextDouble() * 0.6);
+            Vec3 at = mid.add(Math.cos(a) * speed * t, h * 0.4 * t - h * 1.4 * t * t, Math.sin(a) * speed * t);
+            Mesh3D.sphere(m, Mesh3D.solid(m), at, h * 0.04f, f.color & 0xFFFFFF, fade, 5, 6, null, true, false);
+        }
+        Vec3 wisp = mid.add(0, h * 0.9 * ease, 0);
+        Mesh3D.sphere(m, Mesh3D.glow(m), wisp, h * 0.12f * (1f - t * 0.5f), 0xDDE6FF, 0.5f * fade, 6, 8, null, false, true);
     }
 
     // ---------- Positions ----------

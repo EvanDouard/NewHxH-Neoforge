@@ -50,6 +50,11 @@ public final class Mesh3D {
         return new Premultiplied(c.buffers().getBuffer(RenderType.eyes(NenFxClient.WHITE)));
     }
 
+    /** Couche lumineuse vue à travers les murs (repérage). */
+    public static VertexConsumer xray(Ctx c) {
+        return new Premultiplied(c.buffers().getBuffer(HxHRenderTypes.xrayGlow()));
+    }
+
     /**
      * La couche lumineuse est additive (ONE, ONE) : l'alpha y est ignoré. On multiplie donc la couleur par l'alpha,
      * sinon fondus, enveloppes « fresnel » et couches faibles brillent à pleine intensité et tout sature en blanc.

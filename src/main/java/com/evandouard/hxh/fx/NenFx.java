@@ -66,7 +66,14 @@ public final class NenFx {
          * Image dessinée ({@link Sprite}, numéro passé dans « cible ») : derrière le lanceur (statue de Kannon), au
          * point visé, ou au-dessus d'une tête ; apparaît puis s'efface. Taille = hauteur en blocs.
          */
-        SPRITE
+        SPRITE,
+        /**
+         * Repérage (remplace la lueur de Minecraft) : crochets de visée et pointe au-dessus de la cible, vus à travers
+         * les murs, envoyés au seul joueur qui a repéré (source). Un nouveau repérage de la même cible remplace l'ancien.
+         */
+        MARK,
+        /** Mort d'un mob (remplace le nuage blanc de Minecraft) : giclée d'encre qui se disperse. Taille = hauteur. */
+        DISSOLVE
     }
 
     /** Images dessinées des techniques (textures {@code textures/fx/sprite_<nom>.png}). Ajouter à la fin seulement. */
@@ -308,5 +315,20 @@ public final class NenFx {
 
     public static void flare(LivingEntity entity, float size, int color) {
         if (entity.level() instanceof ServerLevel s) send(s, Kind.FLARE, entity, null, entity.position(), size, color, 16);
+    }
+
+    /**
+     * Repère {@code target} pour {@code spotter} pendant {@code duration} ticks : seul ce joueur le voit, à travers les
+     * murs (un mob qui repère n'a pas besoin d'image). Remplace l'effet Lueur de Minecraft, visible par tout le monde.
+     */
+    public static void mark(LivingEntity spotter, Entity target, int color, int duration) {
+        if (!(spotter instanceof net.minecraft.server.level.ServerPlayer player) || target == null) return;
+        com.evandouard.hxh.network.HxHNetwork.sendTo(player, new Payload(Kind.MARK.ordinal(), spotter.getId(), target.getId(),
+                target.getX(), target.getY(), target.getZ(), target.getBbHeight(), color, duration));
+    }
+
+    /** Mort d'un mob : giclée d'encre à sa place (le mob est retiré juste avant le nuage de Minecraft). */
+    public static void dissolve(ServerLevel level, LivingEntity dead) {
+        send(level, Kind.DISSOLVE, null, null, dead.position(), Math.max(0.4f, dead.getBbHeight()), 0xFF26262E, 18);
     }
 }

@@ -162,4 +162,29 @@ public final class MobHatsuTests {
             helper.succeed();
         });
     }
+
+    @GameTest(template = "empty")
+    public static void spottingNoLongerUsesVanillaGlow(GameTestHelper helper) {
+        // Chaîne radiesthésique : repérage dessiné pour le seul joueur, plus de Lueur de Minecraft visible par tous
+        var player = helper.makeMockServerPlayerInLevel();
+        Zombie zombie = helper.spawn(EntityType.ZOMBIE, new BlockPos(2, 2, 2));
+        player.tickCount = 40;
+        com.evandouard.hxh.hatsu.Passives.DOWSING_CHAIN.tick(player);
+        helper.assertTrue(!zombie.hasEffect(net.minecraft.world.effect.MobEffects.GLOWING), "Pas de Lueur vanilla");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void deadMobDissolvesBeforeVanillaPoof(GameTestHelper helper) {
+        helper.assertTrue(com.evandouard.hxh.combat.DeathFx.handles(new Zombie(EntityType.ZOMBIE, helper.getLevel())), "Mob géré");
+        helper.assertTrue(!com.evandouard.hxh.combat.DeathFx.handles(helper.makeMockServerPlayerInLevel()), "Joueur jamais retiré");
+        Zombie zombie = helper.spawn(EntityType.ZOMBIE, new BlockPos(2, 2, 2));
+        zombie.kill();
+        // le corps disparaît au 19e tick de chute, avant le nuage de Minecraft (20e)
+        helper.runAfterDelay(com.evandouard.hxh.combat.DeathFx.LAST_DEATH_TICK + 2, () -> {
+            helper.assertTrue(zombie.isRemoved(), "Corps retiré");
+            helper.assertTrue(zombie.deathTime <= com.evandouard.hxh.combat.DeathFx.LAST_DEATH_TICK, "Retiré avant le nuage");
+            helper.succeed();
+        });
+    }
 }
