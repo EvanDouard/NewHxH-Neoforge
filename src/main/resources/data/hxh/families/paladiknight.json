@@ -1,0 +1,16 @@
+{
+  "name": {
+    "fr": "Paladiknight",
+    "en": "Paladiknight"
+  },
+  "color": "#5A7BE0",
+  "weight": 8,
+  "xp_bonus": {
+    "endurance": 0.15,
+    "vitality": 0.15
+  },
+  "description": {
+    "fr": "Famille de Leorio, tournée vers la médecine : Endurance et Vitalité s'entraînent plus vite.",
+    "en": "Leorio's family, devoted to medicine: Endurance and Vitality train faster."
+  }
+}

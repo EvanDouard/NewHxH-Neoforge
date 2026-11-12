@@ -124,6 +124,7 @@ public final class Hatsu {
     public static float powerFor(LivingEntity entity, HunterData data, Technique technique) {
         float p = power(data, technique);
         if (isCopy(entity, data)) p *= MOB_COPY_POWER;
+        p *= com.evandouard.hxh.family.Families.powerMultiplier(entity); // yeux écarlates des Kurta
         return p;
     }
 

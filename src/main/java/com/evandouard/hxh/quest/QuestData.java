@@ -56,6 +56,9 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     boolean registered200 = false;
     /** Organisation rejointe (Brigade Fantôme, Association…), vide si aucune. */
     String organization = "";
+    /** Famille (Zoldyck, Kurta…), vide si aucune ; tirée une seule fois. */
+    String family = "";
+    boolean familyAssigned = false;
     int arenaWins = 0;
     int arenaLosses = 0;
     int jenny = 0;
@@ -244,6 +247,22 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         registeredBracket = value;
     }
 
+    public String family() {
+        return family;
+    }
+
+    public void setFamily(String id) {
+        family = id == null ? "" : id;
+    }
+
+    public boolean familyAssigned() {
+        return familyAssigned;
+    }
+
+    public void setFamilyAssigned(boolean value) {
+        familyAssigned = value;
+    }
+
     public String organization() {
         return organization;
     }
@@ -372,6 +391,8 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         tag.put("exam_instances", inst);
         tag.putLong("exam_departure", examDeparture);
         tag.putString("organization", organization);
+        tag.putString("family", family);
+        tag.putBoolean("family_assigned", familyAssigned);
         ListTag done = new ListTag();
         for (String id : completed) done.add(StringTag.valueOf(id));
         tag.put("completed", done);
@@ -432,6 +453,8 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         for (String k : inst.getAllKeys()) examInstances.put(k, inst.getInt(k));
         examDeparture = tag.contains("exam_departure") ? tag.getLong("exam_departure") : Long.MIN_VALUE;
         organization = tag.getString("organization");
+        family = tag.getString("family");
+        familyAssigned = tag.getBoolean("family_assigned");
         completed.clear();
         for (Tag t : tag.getList("completed", Tag.TAG_STRING)) completed.add(t.getAsString());
         CompoundTag arena = tag.getCompound("arena");

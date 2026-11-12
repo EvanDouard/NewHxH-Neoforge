@@ -689,4 +689,26 @@ public final class QuestTests {
         helper.assertTrue(QuestManager.data(b).organization().isEmpty(), "B a quitté son organisation");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void familiesGiveTheirInheritance(GameTestHelper helper) {
+        // Zoldyck : poison refusé, foudre réduite ; Kurta : yeux écarlates sous 40 % de vie ; Freecss : XP de Force bonus
+        helper.assertTrue(com.evandouard.hxh.family.Families.all().size() >= 5, "Familles chargées");
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.family.Families.set(p, "zoldyck");
+        p.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON, 200));
+        helper.assertTrue(!p.hasEffect(net.minecraft.world.effect.MobEffects.POISON), "Zoldyck : immunisé au poison");
+        com.evandouard.hxh.family.Families.set(p, "kurta");
+        p.setHealth(p.getMaxHealth());
+        helper.assertTrue(com.evandouard.hxh.family.Families.powerMultiplier(p) == 1f, "Kurta en pleine forme : puissance normale");
+        p.setHealth(p.getMaxHealth() * 0.3f);
+        helper.assertTrue(com.evandouard.hxh.family.Families.powerMultiplier(p) > 1.25f, "Kurta blessé : yeux écarlates");
+        com.evandouard.hxh.family.Families.set(p, "freecss");
+        helper.assertTrue(com.evandouard.hxh.family.Families.xpMultiplier(p, com.evandouard.hxh.data.Stat.STRENGTH) > 1.15, "Freecss : Force +20 %");
+        int none = 0;
+        java.util.Random r = new java.util.Random(42);
+        for (int i = 0; i < 1000; i++) if (com.evandouard.hxh.family.Families.draw(r) == null) none++;
+        helper.assertTrue(none > 600 && none < 800, "Environ 70 % sans famille au tirage (" + none + "/1000)");
+        helper.succeed();
+    }
 }

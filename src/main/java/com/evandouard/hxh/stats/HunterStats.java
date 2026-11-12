@@ -42,6 +42,8 @@ public final class HunterStats {
     public static void addXp(LivingEntity entity, Stat stat, double rawAmount) {
         // Zushi (passif « Assidu ») : +25 % d'expérience à l'entraînement
         if ("zushi".equals(get(entity).kit())) rawAmount *= 1.25;
+        // héritage de la famille (Freecss, Zoldyck…)
+        rawAmount *= com.evandouard.hxh.family.Families.xpMultiplier(entity, stat);
         int amount = (int) Math.round(rawAmount * HxHConfig.XP_MULTIPLIER.get());
         if (amount <= 0) return;
         HunterData data = get(entity);

@@ -1,0 +1,17 @@
+{
+  "name": {
+    "fr": "Freecss",
+    "en": "Freecss"
+  },
+  "color": "#4FA83A",
+  "weight": 6,
+  "xp_bonus": {
+    "strength": 0.2,
+    "speed": 0.2,
+    "vitality": 0.2
+  },
+  "description": {
+    "fr": "Le sang de Ging et de Gon : Force, Vitesse et Vitalité s'entraînent 20 % plus vite.",
+    "en": "The blood of Ging and Gon: Strength, Speed and Vitality train 20% faster."
+  }
+}

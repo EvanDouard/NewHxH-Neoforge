@@ -1,4 +1,8 @@
 {
+  "family.hxh.born": "Tu es né dans la famille %s. %s",
+  "family.hxh.none": "aucune",
+  "profile.hxh.family": "Famille : %s",
+  "family.hxh.list": "Familles : %s",
   "org.hxh.toast.joined": "Organisation rejointe",
   "org.hxh.left": "Tu quittes : %s",
   "org.hxh.enemies": "Ennemis : %s (vos techniques peuvent désormais vous toucher)",

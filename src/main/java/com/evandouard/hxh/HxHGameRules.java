@@ -32,6 +32,10 @@ public final class HxHGameRules {
     public static final GameRules.Key<GameRules.BooleanValue> RANDOM_EVENTS =
             GameRules.register("hxhRandomEvents", GameRules.Category.SPAWNING, GameRules.BooleanValue.create(true));
 
+    /** Si vrai, chaque nouveau joueur naît dans une famille tirée au hasard (Zoldyck, Kurta…) ; faux : aucune famille. */
+    public static final GameRules.Key<GameRules.BooleanValue> RANDOM_FAMILY =
+            GameRules.register("randomFamily", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
+
     /** Tests : si vrai, aucune technique ni coup n'a de recharge. */
     public static final GameRules.Key<GameRules.BooleanValue> NO_COOLDOWNS =
             GameRules.register("hxhNoCooldowns", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false));

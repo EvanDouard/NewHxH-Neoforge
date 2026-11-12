@@ -1,0 +1,16 @@
+{
+  "name": {
+    "fr": "Kurta",
+    "en": "Kurta"
+  },
+  "color": "#E0303A",
+  "weight": 8,
+  "low_health_power": 0.3,
+  "xp_bonus": {
+    "willpower": 0.2
+  },
+  "description": {
+    "fr": "Clan aux yeux écarlates : sous 40 % de vie, les techniques gagnent 30 % de puissance ; la Volonté s'entraîne plus vite.",
+    "en": "Clan of the scarlet eyes: under 40% health, techniques gain 30% power; Willpower trains faster."
+  }
+}

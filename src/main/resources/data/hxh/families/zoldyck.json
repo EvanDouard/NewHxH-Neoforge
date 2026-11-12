@@ -1,0 +1,18 @@
+{
+  "name": {
+    "fr": "Zoldyck",
+    "en": "Zoldyck"
+  },
+  "color": "#B9C6D8",
+  "weight": 8,
+  "poison_immune": true,
+  "lightning_resist": 0.5,
+  "xp_bonus": {
+    "speed": 0.25,
+    "endurance": 0.15
+  },
+  "description": {
+    "fr": "Famille d'assassins de la montagne Kukuro : immunisé au poison, la foudre ne fait que la moitié des dégâts, Vitesse et Endurance s'entraînent plus vite.",
+    "en": "Family of assassins from Kukuroo Mountain: immune to poison, lightning deals half damage, faster Speed and Endurance training."
+  }
+}

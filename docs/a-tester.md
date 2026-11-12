@@ -56,3 +56,8 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 - [ ] En jeu : quêtes de recrutement — Beans (Association, après l'examen), PNJ `chrollo` (Brigade Fantôme), PNJ `genthru` (Bombers) à poser.
 - [ ] En jeu : carnet (organisation affichée), `/hunter org leave`, `/hunter org list`, `/hunter org join <id>` (admin).
 - [ ] À décider avec Evan : entre deux joueurs d'organisations ennemies, les techniques se touchent (PvP) — on garde ?
+
+## Familles (12 nov, soir)
+- [ ] CI : GameTest `familiesGiveTheirInheritance` (Zoldyck poison/foudre, Kurta yeux écarlates, Freecss XP, ~70 % sans famille).
+- [ ] En jeu : message de naissance à la première connexion, famille dans le carnet, `/hunter family list`, `/hunter family set <id|none>` (admin), règle `/gamerule randomFamily`.
+- [ ] À valider avec Evan : les effets proposés pour chaque famille et les poids du tirage (data/hxh/families).

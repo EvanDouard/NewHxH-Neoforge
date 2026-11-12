@@ -94,6 +94,19 @@ public final class HunterCommand {
                                     return com.evandouard.hxh.meditation.MeditationShrines.build(p.serverLevel(),
                                             p.blockPosition().offset(0, 0, 6), IntegerArgumentType.getInteger(ctx, "tier"), false) != null ? 1 : 0;
                                 }))))
+                // Familles : liste ; fixer la famille d'un joueur (admin)
+                .then(Commands.literal("family")
+                        .then(Commands.literal("list").executes(ctx -> {
+                            ctx.getSource().sendSuccess(() -> Component.translatable("family.hxh.list",
+                                    String.join(", ", com.evandouard.hxh.family.Families.all().keySet())), false);
+                            return 1;
+                        }))
+                        .then(Commands.literal("set").requires(src -> src.hasPermission(2))
+                                .then(Commands.argument("id", StringArgumentType.word()).executes(ctx -> {
+                                    String id = StringArgumentType.getString(ctx, "id");
+                                    com.evandouard.hxh.family.Families.set(ctx.getSource().getPlayerOrException(), id.equals("none") ? "" : id);
+                                    return 1;
+                                }))))
                 // Organisations : quitter (tous), rejoindre directement (admin), liste
                 .then(Commands.literal("org")
                         .then(Commands.literal("leave").executes(ctx ->
