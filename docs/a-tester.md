@@ -52,7 +52,7 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 - [ ] En jeu : `/hunter shrine build <1-5>` (admin) pose un sanctuaire devant soi.
 
 ## Organisations (12 nov, soir)
-- [ ] CI : GameTest `organizationsMakeEnemiesHittable` (Association, Zodiaques, Brigade Fantôme, Bombers ; ennemis = techniques qui touchent).
+- [x] CI : GameTest `organizationsMakeEnemiesHittable` (Association, Zodiaques, Brigade Fantôme, Bombers ; ennemis = techniques qui touchent).
 - [ ] En jeu : quêtes de recrutement — Beans (Association, après l'examen), PNJ `chrollo` (Brigade Fantôme), PNJ `genthru` (Bombers) à poser.
 - [ ] En jeu : carnet (organisation affichée), `/hunter org leave`, `/hunter org list`, `/hunter org join <id>` (admin).
 - [ ] À décider avec Evan : entre deux joueurs d'organisations ennemies, les techniques se touchent (PvP) — on garde ?
