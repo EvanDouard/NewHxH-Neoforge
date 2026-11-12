@@ -1436,11 +1436,14 @@ public final class NenFxClient {
         }
         // cordon ombilical d'aura, du dos de Pitou au dos de la poupée
         if (caster != null && caster != patient) {
-            Vec3 from = center(caster, c.pt).add(0, 0.3, 0);
+            // le cordon part du dos de Pitou ; en vue subjective il naîtrait dans l'œil de la caméra et boucherait l'écran
+            float yawC = (caster instanceof LivingEntity lc ? Mth.lerp(c.pt, lc.yBodyRotO, lc.yBodyRot) : caster.getYRot()) * Mth.DEG_TO_RAD;
+            Vec3 from = center(caster, c.pt).add(0, 0.2, 0).add(Mth.sin(yawC) * 0.3, 0, -Mth.cos(yawC) * 0.3);
             Vec3 to = body.add(0, 0.1 * s, 0).subtract(fwd.scale(0.25 * s));
+            float start = firstPerson(caster) ? 0.35f : 0f;
             List<Vec3> cord = new java.util.ArrayList<>();
             for (int i = 0; i <= 14; i++) {
-                float t = i / 14f;
+                float t = start + (1f - start) * i / 14f;
                 cord.add(from.lerp(to, t).add(0, Math.sin(t * Math.PI) * 0.6 + Mth.sin(age * 0.3f + t * 8) * 0.05, 0));
             }
             Mesh3D.tube(m, Mesh3D.solid(m), cord, 0.05f, 0.04f, 0xE8A0C8, fade * 0.9f, 6, true);
