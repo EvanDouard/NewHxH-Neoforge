@@ -1757,5 +1757,16 @@ key key.hxh.cast
 wait 6
 shot 67_coup_de_pied_cible_percute_un_mob
 cmd kill @e[type=minecraft:pig]
+# --- Boussole de quête : étape « aller au phare » (0, 70, 0) ---
+cmd hunter quest reset
+cmd hunter quest start hxh:exemple_pecheur
+cmd hunter quest skip
+cmd tp @s 40 ~ 30 135 0
+wait 20
+shot 68_boussole_de_quete
+cmd tp @s 40 ~ 30 -45 0
+wait 20
+shot 69_boussole_de_quete_dos_tourne
+cmd hunter quest reset
 cmd gamemode creative
 quit

@@ -276,6 +276,7 @@ public final class MangaHud {
         if (mc.player == null || mc.options.hideGui || mc.screen != null) return;
         int y = 6;
         float now = ticks + partial(delta);
+        framePartial = partial(delta);
         QuestStatusPayload q = QuestStatusPayload.latest;
         String key = q.isEmpty() ? "" : q.title().getString() + "|" + q.step().getString();
         if (!key.equals(bubbleKey)) {
@@ -320,6 +321,55 @@ public final class MangaHud {
         return bottom;
     }
 
+    /** Partie de tick du rendu en cours (pour que la boussole suive la souris sans à-coups). */
+    private static float framePartial;
+
+    /** Rayon de la boussole de quête. */
+    static final int COMPASS_R = 13;
+
+    /**
+     * Boussole de quête : cercle d'encre avec une flèche qui pointe la cible de l'étape, par rapport à
+     * l'endroit où le joueur regarde (flèche en haut = droit devant), et la distance en dessous.
+     */
+    private static void questCompass(GuiGraphics g, long target, int cx, int cy) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null) return;
+        net.minecraft.core.BlockPos t = net.minecraft.core.BlockPos.of(target);
+        double dx = t.getX() + 0.5 - mc.player.getX();
+        double dz = t.getZ() + 0.5 - mc.player.getZ();
+        float angle = QuestStatusPayload.compassAngle(mc.player.getViewYRot(framePartial), dx, dz);
+        int r = COMPASS_R;
+        // disque : contour d'encre, intérieur papier
+        for (int dy = -r; dy <= r; dy++) {
+            int half = (int) Math.round(Math.sqrt(r * r - dy * dy));
+            g.fill(cx - half, cy + dy, cx + half + 1, cy + dy + 1, INK);
+            int in = r - 2;
+            if (Math.abs(dy) <= in) {
+                int h2 = (int) Math.round(Math.sqrt(in * in - dy * dy));
+                g.fill(cx - h2, cy + dy, cx + h2 + 1, cy + dy + 1, PAPER);
+            }
+        }
+        // repère « devant »
+        g.fill(cx, cy - r + 2, cx + 1, cy - r + 4, INK);
+        g.pose().pushPose();
+        g.pose().translate(cx + 0.5f, cy + 0.5f, 0);
+        g.pose().mulPose(Axis.ZP.rotation(angle));
+        // flèche : tige puis pointe triangulaire en lignes qui rétrécissent
+        g.fill(-1, -2, 1, 7, INK);
+        for (int i = 0; i < 6; i++) g.fill(-5 + i, -2 - i, 5 - i, -1 - i, i % 2 == 0 ? INK : 0xFFC0392B);
+        g.fill(-1, -9, 1, -7, 0xFFC0392B);
+        g.pose().popPose();
+        g.fill(cx - 1, cy - 1, cx + 2, cy + 2, PAPER);
+        // distance
+        Font font = mc.font;
+        int dist = (int) Math.round(Math.sqrt(dx * dx + dz * dz));
+        Component label = manga(dist >= 1000 ? String.format(Locale.ROOT, "%.1f km", dist / 1000f) : dist + " m");
+        int lw = font.width(label);
+        g.fill(cx - lw / 2 - 3, cy + r + 2, cx + lw / 2 + 3, cy + r + 13, INK);
+        g.drawString(font, label, cx - lw / 2, cy + r + 4, PAPER, false);
+    }
+
+
     /** Bulle de BD avec la quête suivie ; renvoie le bas de la bulle (queue comprise). */
     private static int questBubble(GuiGraphics g, QuestStatusPayload q, int x, int y) {
         Font font = Minecraft.getInstance().font;
@@ -355,7 +405,8 @@ public final class MangaHud {
             g.fill(bx + 1, by + 1, bx + 1 + fill, by + 5, INK);
             g.drawString(font, count, bx + bw + 6, by - 1, INK, false);
         }
-        return y + h + 6;
+        if (q.hasTarget()) questCompass(g, q.target(), x + w + COMPASS_R + 6, y + COMPASS_R + 2);
+        return y + Math.max(h, q.hasTarget() ? 2 * COMPASS_R + 15 : h) + 6;
     }
 
     private static void renderToasts(GuiGraphics g, int x, int y, float partial) {

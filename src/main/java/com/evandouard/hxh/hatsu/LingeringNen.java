@@ -21,7 +21,9 @@ public final class LingeringNen {
 
     private record Gum(LivingEntity owner, LivingEntity target, long until) {}
 
-    private record Doll(LivingEntity caster, LivingEntity patient, long until, float perPulse) {}
+    /** {@code drain} > 0 : poupée maintenue (aura par tick, recharge de {@code technique} à la fin). */
+    private record Doll(LivingEntity caster, LivingEntity patient, long until, float perPulse, float drain,
+                        @org.jetbrains.annotations.Nullable Technique technique) {}
 
     private static final List<Gum> GUMS = new ArrayList<>();
     private static final List<Doll> DOLLS = new ArrayList<>();
@@ -71,8 +73,48 @@ public final class LingeringNen {
 
     public static void startDoll(LivingEntity caster, LivingEntity patient, int ticks, float total) {
         DOLLS.removeIf(d -> d.caster == caster);
-        DOLLS.add(new Doll(caster, patient, caster.level().getGameTime() + ticks, total / Math.max(1, ticks / 10)));
+        DOLLS.add(new Doll(caster, patient, caster.level().getGameTime() + ticks, total / Math.max(1, ticks / 10), 0f, null));
         NenFx.doll(caster, patient, ticks);
+    }
+
+    /** Maintien maximal de Docteur Blythe (joueur), et durée pour un mob qui « relâche » tout seul. */
+    public static final int DOLL_MAX_HOLD = 600, DOLL_MOB_HOLD = 80;
+
+    /**
+     * Docteur Blythe maintenu : la poupée opère tant que la touche est tenue (ou {@link #DOLL_MOB_HOLD} ticks pour un
+     * mob), en consommant {@code drain} d'aura par tick ; {@code perPulse} PV rendus toutes les 10 ticks.
+     */
+    public static void startHeldDoll(LivingEntity caster, LivingEntity patient, Technique technique, float perPulse, float drain) {
+        DOLLS.removeIf(d -> d.caster == caster);
+        int ticks = caster instanceof net.minecraft.world.entity.player.Player ? DOLL_MAX_HOLD : DOLL_MOB_HOLD;
+        DOLLS.add(new Doll(caster, patient, caster.level().getGameTime() + ticks, perPulse, drain, technique));
+        NenFx.doll(caster, patient, ticks);
+    }
+
+    public static boolean isHoldingDoll(LivingEntity caster) {
+        for (Doll d : DOLLS) if (d.caster == caster && d.drain > 0) return true;
+        return false;
+    }
+
+    /** Touche relâchée (ou plus d'aura) : la poupée disparaît, la recharge part. */
+    public static void releaseDoll(LivingEntity caster) {
+        Iterator<Doll> it = DOLLS.iterator();
+        while (it.hasNext()) {
+            Doll d = it.next();
+            if (d.caster == caster && d.drain > 0) {
+                it.remove();
+                endHeld(d);
+            }
+        }
+    }
+
+    private static void endHeld(Doll d) {
+        NenFx.clear(d.caster);
+        d.caster.removeEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN);
+        if (d.technique != null) {
+            com.evandouard.hxh.data.HunterData data = com.evandouard.hxh.stats.HunterStats.get(d.caster);
+            data.setReadyAt(d.technique.id(), d.caster.level().getGameTime() + d.technique.cooldownFor(data));
+        }
     }
 
     // ---------------------------------------------------------------- tick
@@ -100,8 +142,15 @@ public final class LingeringNen {
         while (di.hasNext()) {
             Doll d = di.next();
             long now = d.caster.level().getGameTime();
-            if (!d.caster.isAlive() || !d.patient.isAlive() || now >= d.until) {
+            boolean dry = false;
+            if (d.drain > 0) {
+                com.evandouard.hxh.data.HunterData data = com.evandouard.hxh.stats.HunterStats.get(d.caster);
+                if (data.aura() < d.drain) dry = true;
+                else data.setAura(data.aura() - d.drain);
+            }
+            if (!d.caster.isAlive() || !d.patient.isAlive() || now >= d.until || dry) {
                 di.remove();
+                if (d.drain > 0) endHeld(d);
                 continue;
             }
             // Pitou ne bouge pas tant que la poupée opère

@@ -1279,5 +1279,6 @@
   "message.hxh.vow_resumed": "Serment repris",
   "message.hxh.vow_blocked_back": "Serment : pas dans le dos, le coup ne porte pas",
   "message.hxh.vow_blocked_monster": "Serment : seulement les monstres, le coup ne porte pas",
-  "message.hxh.nen_sealed": "Nen scellé (prix du serment)"
+  "message.hxh.nen_sealed": "Nen scellé (prix du serment)",
+  "technique.hxh.cond.hold_doll": "Maintenir : la poupée soigne tant que la touche est tenue (%s d'aura/s)"
 }

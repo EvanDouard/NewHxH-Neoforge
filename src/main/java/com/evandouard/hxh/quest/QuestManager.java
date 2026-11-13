@@ -863,7 +863,7 @@ public final class QuestManager {
             if (nav != Long.MIN_VALUE) {
                 BlockPos g = BlockPos.of(nav);
                 com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.title(player),
-                        Component.translatable("exam.hxh.guide_objective", g.getX(), g.getZ()), 0, 0));
+                        Component.translatable("exam.hxh.guide_objective", g.getX(), g.getZ()), 0, 0, g.asLong()));
                 return;
             }
         }
@@ -872,7 +872,7 @@ public final class QuestManager {
                 && !com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level())) {
             BlockPos dep = BlockPos.of(d.examDeparture());
             com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.title(player),
-                    Component.translatable("exam.hxh.departure_objective", dep.getX(), dep.getZ()), 0, 0));
+                    Component.translatable("exam.hxh.departure_objective", dep.getX(), dep.getZ()), 0, 0, dep.asLong()));
             return;
         }
         // Inscription en attente : même objectif que le refus de l'arbitre
@@ -882,7 +882,20 @@ public final class QuestManager {
             com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.title(player), pend, 0, 0));
             return;
         }
-        com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.title(player), q.objective(step, player), progress, step.goal()));
+        com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.title(player), q.objective(step, player), progress, step.goal(),
+                compassTarget(player, step)));
+    }
+
+    /** Position que la boussole de quête doit pointer pour cette étape, ou {@link QuestStatusPayload#NO_TARGET}. */
+    public static long compassTarget(ServerPlayer player, Quest.Step step) {
+        if (step.type().equals("reach") && step.pos() != null) {
+            return BlockPos.containing(step.pos()[0], step.pos()[1], step.pos()[2]).asLong();
+        }
+        if (step.type().equals("contract_done") || step.type().equals("blacklist_catch")) {
+            BlockPos c = com.evandouard.hxh.contract.Contracts.targetPos(player);
+            if (c != null) return c.asLong();
+        }
+        return QuestStatusPayload.NO_TARGET;
     }
 
     /**

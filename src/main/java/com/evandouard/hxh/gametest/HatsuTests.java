@@ -294,6 +294,9 @@ public final class HatsuTests {
         Zombie pitou = husk(helper, 0);
         hunter(pitou, NenType.SPECIALIST, "neferpitou");
         Zombie patient = husk(helper, 2);
+        HunterData pd = HunterStats.get(pitou);
+        pd.setAuraMax(500);
+        pd.setAura(500);
         helper.runAfterDelay(3, () -> {
             patient.setHealth(4f);
             Techniques.PITOU_DOCTOR_BLYTHE.perform(pitou, 1f);
@@ -302,6 +305,33 @@ public final class HatsuTests {
             helper.runAfterDelay(85, () -> {
                 helper.assertTrue(patient.getHealth() >= 15f, "Le patient a récupéré ~16 PV, a " + patient.getHealth());
                 helper.assertFalse(com.evandouard.hxh.hatsu.LingeringNen.isOperating(pitou), "Opération terminée");
+                helper.succeed();
+            });
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void doctorBlytheIsHeldAndDrainsAura(GameTestHelper helper) {
+        net.minecraft.server.level.ServerPlayer pitou = helper.makeMockServerPlayerInLevel();
+        HunterData d = HunterStats.get(pitou);
+        d.setNenType(NenType.SPECIALIST);
+        d.setAuraMax(500);
+        d.setAura(500);
+        helper.assertTrue(Techniques.PITOU_DOCTOR_BLYTHE.isCharged(), "Docteur Blythe se maintient");
+        pitou.setHealth(4f);
+        Techniques.PITOU_DOCTOR_BLYTHE.perform(pitou, 1f);
+        helper.assertTrue(com.evandouard.hxh.hatsu.LingeringNen.isHoldingDoll(pitou), "La poupée opère tant qu'on tient");
+        helper.runAfterDelay(40, () -> {
+            helper.assertTrue(com.evandouard.hxh.hatsu.LingeringNen.isHoldingDoll(pitou), "Toujours là après 2 s (pas de durée fixe)");
+            helper.assertTrue(d.aura() < 485f, "L'aura baisse en continu : " + d.aura());
+            helper.assertTrue(pitou.getHealth() > 8f, "Pitou se soigne : " + pitou.getHealth());
+            com.evandouard.hxh.hatsu.Hatsu.releaseCast(pitou);
+            helper.assertFalse(com.evandouard.hxh.hatsu.LingeringNen.isHoldingDoll(pitou), "Relâché : la poupée disparaît");
+            helper.assertTrue(d.readyAt(Techniques.PITOU_DOCTOR_BLYTHE.id()) > pitou.level().getGameTime(), "La recharge part au relâchement");
+            float left = d.aura();
+            helper.runAfterDelay(10, () -> {
+                helper.assertTrue(d.aura() >= left - 0.01f, "Plus de consommation après le relâchement");
+                d.setReadyAt(Techniques.PITOU_DOCTOR_BLYTHE.id(), 0);
                 helper.succeed();
             });
         });

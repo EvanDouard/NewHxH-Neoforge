@@ -61,3 +61,17 @@ Valeurs posées par Claude pour avancer. Elles marchent en jeu, mais on les revo
 | Contrats Zoldyck | 200 à 800 J, 15 à 25 min, +50 % pour un Zoldyck |
 | Blacklist et rang Hunter | 400 à 5000 J ; étoiles : 200e étage, 3 captures, Nen 60 ; 1000 J × étoile |
 | Seuils des impacts | faible < 8 PV, moyen 8–15, moyen + 15–25, très fort ≥ 25 |
+
+## Retours du 13 novembre (lots A et B)
+| Quoi | Valeur actuelle |
+|---|---|
+| Sanctuaires | chance par tronçon : niv. 1 1/700, 2 1/1400, 3 1/2800, 4 1/6000, 5 1/25000 ; au moins 400 blocs entre deux |
+| Ko persistant | 10 s à maîtrise 0 → 2 min à maîtrise 100 (linéaire), plus consommé au premier coup |
+| Serments | les stats sont multipliées pour de vrai (au-delà de 100) ; « Tout sacrifier » scelle tout le Nen 240 000 ticks (~10 jours) |
+| PV et armure des cibles | Gyo 40, En 30 |
+| Cratère de la frappe parfaite | demi-sphère de rayon 3,2 |
+| Cible projetée qui percute un mob | 4 dégâts, garde 70 % de sa vitesse |
+| Recharge des coups secrets | −0,5 % par niveau d'Endurance |
+| Docteur Blythe maintenu | 20 d'aura au départ, puis 10 d'aura/s ; 2 PV toutes les 0,5 s ; 30 s au plus ; recharge 20 s au relâchement |
+| Attaques de zone | coups de base dès Force + Vitesse + Endurance ≥ 180 ; Nen dès Volonté + niveau de Nen ≥ 120 ; voisins à 50 % des dégâts ; rayon 1,5 → 4 blocs |
+| Techniques jamais en zone | liste `AreaScaling.SINGLE_TARGET` (aiguilles d'Illumi, chaîne-prison, fils de Machi, Bungee Gum, Hakoware, dettes, vol de Chrollo…) |

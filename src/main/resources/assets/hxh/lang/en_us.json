@@ -1279,5 +1279,6 @@
   "message.hxh.vow_resumed": "Vow resumed",
   "message.hxh.vow_blocked_back": "Vow: never from behind, the blow does nothing",
   "message.hxh.vow_blocked_monster": "Vow: monsters only, the blow does nothing",
-  "message.hxh.nen_sealed": "Nen sealed (price of the vow)"
+  "message.hxh.nen_sealed": "Nen sealed (price of the vow)",
+  "technique.hxh.cond.hold_doll": "Hold: the doll heals while the key is held (%s aura/s)"
 }

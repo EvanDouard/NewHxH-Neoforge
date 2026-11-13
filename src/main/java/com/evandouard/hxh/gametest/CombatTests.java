@@ -224,4 +224,50 @@ public final class CombatTests {
         helper.assertTrue(air >= 3, "Le choc creuse un trou autour de la cible (" + air + " blocs cassés)");
         helper.succeed();
     }
+
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void strongFightersHitInAnArea(GameTestHelper helper) {
+        Zombie fighter = husk(helper, 0);
+        HunterData d = HunterStats.get(fighter);
+        net.minecraft.world.entity.animal.Pig target = helper.spawnWithNoFreeWill(EntityType.PIG, new BlockPos(2, 1, 1));
+        net.minecraft.world.entity.animal.Pig neighbour = helper.spawnWithNoFreeWill(EntityType.PIG, new BlockPos(3, 1, 1));
+        // Trop faible : pas de zone
+        helper.assertTrue(com.evandouard.hxh.combat.AreaScaling.baseRadius(fighter) == 0, "Pas de zone au départ");
+        helper.assertTrue(com.evandouard.hxh.combat.AreaScaling.baseSplash(fighter, target, 6f,
+                fighter.damageSources().mobAttack(fighter)) == 0, "Faible : le voisin n'est pas touché");
+        // Force + Vitesse + Endurance au maximum : les coups de base débordent
+        d.setLevel(Stat.STRENGTH, 100);
+        d.setLevel(Stat.SPEED, 100);
+        d.setLevel(Stat.ENDURANCE, 100);
+        double r = com.evandouard.hxh.combat.AreaScaling.baseRadius(fighter);
+        helper.assertTrue(r >= com.evandouard.hxh.combat.AreaScaling.MAX_RADIUS - 0.01, "Rayon maximal : " + r);
+        float before = neighbour.getHealth();
+        int hit = com.evandouard.hxh.combat.AreaScaling.baseSplash(fighter, target, 6f, fighter.damageSources().mobAttack(fighter));
+        helper.assertTrue(hit == 1 && neighbour.getHealth() < before, "Le voisin prend l'éclat (" + hit + ", " + neighbour.getHealth() + ")");
+        helper.assertTrue(target.getHealth() == target.getMaxHealth(), "La cible elle-même n'est pas comptée deux fois");
+        // Techniques de Nen : Volonté + Nen
+        d.setLevel(Stat.WILLPOWER, 100);
+        d.setNenLevel(100);
+        helper.assertTrue(com.evandouard.hxh.combat.AreaScaling.canSpread(com.evandouard.hxh.hatsu.Techniques.KILLUA_THUNDERBOLT), "Thunderbolt peut déborder");
+        helper.assertFalse(com.evandouard.hxh.combat.AreaScaling.canSpread(com.evandouard.hxh.hatsu.Techniques.PITOU_DOCTOR_BLYTHE), "Soin : cible unique");
+        helper.assertFalse(com.evandouard.hxh.combat.AreaScaling.canSpread(com.evandouard.hxh.hatsu.Techniques.BASIC_ATTACK), "Coup de base : pas par le Nen");
+        helper.runAfterDelay(2, () -> {
+            neighbour.setHealth(neighbour.getMaxHealth());
+            com.evandouard.hxh.combat.AreaScaling.casting(fighter, com.evandouard.hxh.hatsu.Techniques.KILLUA_THUNDERBOLT);
+            target.invulnerableTime = 0;
+            target.hurt(com.evandouard.hxh.hatsu.Techniques.damageFrom(fighter), 4f);
+            helper.assertTrue(neighbour.getHealth() < neighbour.getMaxHealth(), "Technique de Nen en zone : " + neighbour.getHealth());
+            helper.runAfterDelay(2, () -> {
+                neighbour.setHealth(neighbour.getMaxHealth());
+                target.setHealth(target.getMaxHealth());
+                com.evandouard.hxh.combat.AreaScaling.casting(fighter, com.evandouard.hxh.hatsu.Techniques.KILLUA_THUNDERBOLT);
+                d.setLevel(Stat.WILLPOWER, 0);
+                d.setNenLevel(0);
+                target.invulnerableTime = 0;
+                target.hurt(com.evandouard.hxh.hatsu.Techniques.damageFrom(fighter), 4f);
+                helper.assertTrue(neighbour.getHealth() == neighbour.getMaxHealth(), "Sous le seuil de Nen : pas de zone");
+                helper.succeed();
+            });
+        });
+    }
 }

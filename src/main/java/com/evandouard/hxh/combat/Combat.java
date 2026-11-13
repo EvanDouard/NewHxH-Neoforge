@@ -181,6 +181,7 @@ public final class Combat {
         if (target == null) return null; // coup dans le vide : il part quand même
         target.invulnerableTime = 0;
         target.hurt(meleeSource(attacker), baseAttack(attacker) * 0.7f + 1f);
+        AreaScaling.baseSplash(attacker, target, baseAttack(attacker) * 0.7f + 1f, meleeSource(attacker));
         com.evandouard.hxh.fx.NenFx.impactOn(attacker, target, 1.2f, com.evandouard.hxh.fx.NenFx.WHITE);
         if (isStrong(attacker)) {
             // Coup de pied fort : la cible part très loin et creuse les murs qu'elle percute
@@ -204,6 +205,7 @@ public final class Combat {
         if (target == null) return null;
         target.invulnerableTime = 0;
         target.hurt(meleeSource(attacker), baseAttack(attacker));
+        AreaScaling.baseSplash(attacker, target, baseAttack(attacker), meleeSource(attacker));
         com.evandouard.hxh.fx.NenFx.impactOn(attacker, target, 0.8f, com.evandouard.hxh.fx.NenFx.WHITE);
         Impacts.land(attacker, target, Impacts.tierOf(attacker).atMost(Impacts.Tier.MEDIUM),
                 () -> target.knockback(0.3, attacker.getX() - target.getX(), attacker.getZ() - target.getZ()));
@@ -272,6 +274,7 @@ public final class Combat {
         float damage = baseAttack(attacker) * (1f + 2f * value);
         target.invulnerableTime = 0;
         target.hurt(meleeSource(attacker), damage);
+        AreaScaling.baseSplash(attacker, target, damage, meleeSource(attacker));
         // Étoile d'impact : dorée et grosse pour une frappe parfaite, avec onde au sol
         com.evandouard.hxh.fx.NenFx.impactOn(attacker, target, perfect ? 2.4f : 1.6f,
                 perfect ? com.evandouard.hxh.fx.NenFx.GOLD : com.evandouard.hxh.fx.NenFx.WHITE);

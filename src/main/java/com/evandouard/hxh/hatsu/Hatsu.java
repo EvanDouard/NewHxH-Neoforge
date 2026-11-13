@@ -180,7 +180,7 @@ public final class Hatsu {
         if (technique == null) return "message.hxh.hatsu_none";
         long now = entity.level().getGameTime();
         if (NenCharge.isCharging(entity) || ThunderHold.isHolding(entity) || HeldStrike.isHolding(entity)
-                || com.evandouard.hxh.combat.Combat.isCharging(entity)) return null; // déjà en charge
+                || LingeringNen.isHoldingDoll(entity) || com.evandouard.hxh.combat.Combat.isCharging(entity)) return null; // déjà en charge
         if (!technique.needsNoNen() && com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU) != null) {
             return com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU);
         }
@@ -197,6 +197,7 @@ public final class Hatsu {
         if (technique instanceof Techniques.ChargedOrb orb && data.aura() < orb.auraCost() + orb.minSpent) {
             return "message.hxh.no_aura"; // pas de quoi charger un vrai coup
         }
+        com.evandouard.hxh.combat.AreaScaling.casting(entity, technique);
         if (technique.isCharged()) {
             // On commence à charger : la recharge partira au relâchement
             data.setAura(data.aura() - technique.auraCost());
@@ -225,6 +226,7 @@ public final class Hatsu {
         NenCharge.release(entity);
         ThunderHold.release(entity);
         HeldStrike.release(entity);
+        LingeringNen.releaseDoll(entity);
         // Frappe chargée (coup de base) : la recharge part au relâchement
         if (com.evandouard.hxh.combat.Combat.releaseChargedTechnique(entity)) {
             HunterData data = HunterStats.get(entity);

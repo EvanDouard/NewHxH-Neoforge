@@ -119,11 +119,12 @@ public final class Techniques {
                     new Effect(MobEffects.JUMP, 200, 1)),
             new Look(Style.PUPPET, NenFx.SPECIALIST, 1.4f), SoundEvents.WARDEN_ROAR)).requiresNenLevel(10);
     /**
-     * Docteur Blythe : la poupée-chirurgienne apparaît au-dessus du blessé devant Pitou (ou de Pitou s'il n'y a
-     * personne) et le recoud : 16 PV rendus sur 4 s. Pitou reste immobile pendant l'opération.
+     * Docteur Blythe, maintenu : la poupée-chirurgienne apparaît au-dessus du blessé devant Pitou (ou de Pitou s'il
+     * n'y a personne) et le recoud tant que la touche est tenue (2 PV toutes les 0,5 s), en consommant 0,5 d'aura
+     * par tick. Pitou reste immobile pendant l'opération ; la recharge part au relâchement.
      */
-    public static final Technique PITOU_DOCTOR_BLYTHE = register(new DollHeal("pitou_doctor_blythe", NenType.SPECIALIST, 50, 400,
-            16f, 80));
+    public static final Technique PITOU_DOCTOR_BLYTHE = register(new DollHeal("pitou_doctor_blythe", NenType.SPECIALIST, 20, 400,
+            2f, 0.5f));
 
     // =====================================================================
     // Hisoka (Transmutation)
@@ -556,13 +557,17 @@ public final class Techniques {
 
     /** Soin d'un patient par une poupée invoquée (Docteur Blythe). */
     public static final class DollHeal extends Technique {
-        private final float total;
-        private final int ticks;
+        private final float perPulse;
+        private final float drain;
 
-        DollHeal(String id, NenType category, int cost, int cooldown, float total, int ticks) {
+        DollHeal(String id, NenType category, int cost, int cooldown, float perPulse, float drain) {
             super(id, category, cost, cooldown);
-            this.total = total;
-            this.ticks = ticks;
+            this.perPulse = perPulse;
+            this.drain = drain;
+        }
+
+        public float drain() {
+            return drain;
         }
 
         @Override
@@ -570,12 +575,24 @@ public final class Techniques {
             return true;
         }
 
+        /** Maintenu : la recharge part au relâchement. */
+        @Override
+        public boolean isCharged() {
+            return true;
+        }
+
+        @Override
+        public net.minecraft.network.chat.Component conditions() {
+            return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.hold_doll",
+                    String.format(java.util.Locale.ROOT, "%.0f", drain * 20));
+        }
+
         @Override
         public boolean perform(LivingEntity caster, float power) {
             LivingEntity patient = com.evandouard.hxh.nen.Targeting.inFront(caster, 6, 0.8);
             if (patient == null) patient = caster;
-            LingeringNen.startDoll(caster, patient, ticks, total * power);
-            caster.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 6,
+            LingeringNen.startHeldDoll(caster, patient, this, perPulse * power, drain);
+            caster.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, LingeringNen.DOLL_MAX_HOLD, 6,
                     false, false, false));
             sound(caster, SoundEvents.AMETHYST_BLOCK_CHIME);
             return true;

@@ -142,3 +142,17 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 - [x] CI : GameTest `familiesGiveTheirInheritance` (Zoldyck poison/foudre, Kurta yeux écarlates, Freecss XP, ~70 % sans famille).
 - [ ] En jeu : message de naissance à la première connexion, famille dans le carnet, `/hunter family list`, `/hunter family set <id|none>` (admin), règle `/gamerule randomFamily`.
 - [ ] À valider avec Evan : les effets proposés pour chaque famille et les poids du tirage (data/hxh/families).
+
+## Retours du 13 novembre — lot A
+- [x] CI : sanctuaires plus rares et espacés, effets de méditation selon le niveau, `/hunter shrine nearest`.
+- [ ] En jeu : méditer près d'une pierre (niveau 1 à 5) : lueur, onde dès le niveau 3, crépitement au niveau 5 ; message d'XP dans la barre d'action.
+- [x] CI : carnet (O) mis à jour en direct ; Ko persistant (effet « Ko ») ; serments (effet, stats multipliées, pause, coup de dos sans dégâts) ; cratère en demi-sphère ; coup de pied qui envoie la cible sur un autre mob.
+- [ ] En jeu : PV et armure au-dessus des mobs au Gyo 40 / En 30 ; mobs surlignés dans l'En à tout niveau.
+- [ ] En jeu : écran Serments → bouton pause pour « Combat loyal », « Monstres seulement », « Mains nues ».
+
+## Retours du 13 novembre — lot B
+- [x] CI : GameTest `questCompassPointsAtTheStepTarget` + captures 68/69 (boussole de quête à côté de la bulle).
+- [ ] En jeu : boussole pendant un contrat Zoldyck ou une traque de la Blacklist (elle suit la cible qui bouge, mise à jour toutes les 5 s).
+- [x] CI : GameTest `doctorBlytheIsHeldAndDrainsAura` (Docteur Blythe maintenu).
+- [x] CI : GameTest `strongFightersHitInAnArea` (coups de base et Nen en zone selon les stats).
+- [ ] En jeu : sensation des attaques de zone (rayon, onde visible, pas trop fort) ; valider la liste des techniques à cible unique.

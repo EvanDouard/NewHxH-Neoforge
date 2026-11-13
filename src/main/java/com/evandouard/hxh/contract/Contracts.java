@@ -129,6 +129,18 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
         return p.getPersistentData().getCompound(TAG);
     }
 
+    /** Où attend la cible du contrat en cours (pour la boussole de quête), ou null. */
+    @Nullable
+    public static BlockPos targetPos(ServerPlayer p) {
+        if (!hasContract(p)) return null;
+        CompoundTag s = state(p);
+        // Cible chargée : sa vraie position (elle a pu bouger), sinon le point d'apparition
+        if (s.hasUUID("target") && p.serverLevel().getEntity(s.getUUID("target")) instanceof LivingEntity t && t.isAlive()) {
+            return t.blockPosition();
+        }
+        return new BlockPos(s.getInt("x"), p.getBlockY(), s.getInt("z"));
+    }
+
     public static int rewardFor(ServerPlayer p, Contract c) {
         var fam = com.evandouard.hxh.family.Families.of(p);
         return !c.blacklist() && fam != null && fam.id().equals("zoldyck") ? Math.round(c.reward() * ZOLDYCK_BONUS) : c.reward();
@@ -199,6 +211,7 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
         s.putInt("z", (int) Math.floor(at.z));
         s.putInt("reward", reward);
         player.getPersistentData().put(TAG, s);
+        QuestManager.sync(player);
         if (c.blacklist()) {
             player.sendSystemMessage(Component.translatable("message.hxh.blacklist_taken", c.name(lang), s.getInt("x"), s.getInt("z"),
                     c.timeSeconds() / 60, reward).withStyle(ChatFormatting.GOLD));
@@ -305,6 +318,8 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
         for (ServerPlayer p : server.getPlayerList().getPlayers()) {
             expireIfLate(p);
             HunterStars.update(p);
+            // la cible bouge : la boussole de quête suit
+            if (hasContract(p)) QuestManager.sync(p);
         }
     }
 

@@ -44,6 +44,7 @@ public final class HxHMod {
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.org.Organizations::register);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.family.Families::register);
         com.evandouard.hxh.family.Families.registerEvents(NeoForge.EVENT_BUS);
+        com.evandouard.hxh.combat.AreaScaling.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.hatsu.Vows.registerEvents(NeoForge.EVENT_BUS);
         com.evandouard.hxh.nen.Exorcism.registerEvents(NeoForge.EVENT_BUS);
         com.evandouard.hxh.contract.Contracts.registerEvents(NeoForge.EVENT_BUS);

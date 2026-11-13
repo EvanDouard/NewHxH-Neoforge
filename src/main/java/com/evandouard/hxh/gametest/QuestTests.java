@@ -80,6 +80,28 @@ public final class QuestTests {
     }
 
     @GameTest(template = "empty")
+    public static void questCompassPointsAtTheStepTarget(GameTestHelper helper) {
+        // Angle à l'écran selon le regard : 0 = droit devant, π/2 = à droite
+        float south = com.evandouard.hxh.network.QuestStatusPayload.compassAngle(0f, 0, 10);
+        helper.assertTrue(Math.abs(south) < 0.01f, "Regard au sud, cible au sud : flèche en haut (" + south + ")");
+        float right = com.evandouard.hxh.network.QuestStatusPayload.compassAngle(0f, -10, 0);
+        helper.assertTrue(Math.abs(right - Math.PI / 2) < 0.01f, "Regard au sud, cible à l'ouest : flèche à droite (" + right + ")");
+        float behind = com.evandouard.hxh.network.QuestStatusPayload.compassAngle(90f, 10, 0);
+        helper.assertTrue(Math.abs(Math.abs(behind) - Math.PI) < 0.01f, "Regard à l'ouest, cible à l'est : flèche en bas (" + behind + ")");
+        // L'étape « reach » de la quête d'exemple donne sa position à la boussole
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        Quest q = QuestRegistry.get(HxHMod.id("exemple_pecheur"));
+        helper.assertTrue(q != null, "Quête d'exemple chargée");
+        Quest.Step reach = q.steps().stream().filter(st -> st.type().equals("reach")).findFirst().orElseThrow();
+        long target = QuestManager.compassTarget(player, reach);
+        helper.assertTrue(target == new BlockPos(0, 70, 0).asLong(), "Boussole vers le phare : " + BlockPos.of(target));
+        Quest.Step talk = q.steps().get(0);
+        helper.assertTrue(QuestManager.compassTarget(player, talk) == com.evandouard.hxh.network.QuestStatusPayload.NO_TARGET
+                || talk.type().equals("reach"), "Pas de boussole sans coordonnées");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void firstQuestIsBecomingAHunter(GameTestHelper helper) {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
         QuestData d = QuestManager.data(player);
