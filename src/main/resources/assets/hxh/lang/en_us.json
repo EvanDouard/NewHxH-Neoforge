@@ -1256,7 +1256,7 @@
   "item.hxh.great_stamp_spawn_egg": "Great Stamp Spawn Egg",
   "npc.hxh.lutteur": "Arm-Wrestling Champion",
   "armwrestle.hxh.title": "Arm wrestling",
-  "armwrestle.hxh.help": "Hold left click or Space to push: keep your arm (red) in the yellow zone",
+  "armwrestle.hxh.help": "Hold left click or Space to push: keep the red line in the yellow zone",
   "armwrestle.hxh.result_won": "Victory!",
   "armwrestle.hxh.result_lost": "Defeat…",
   "armwrestle.hxh.start": "Arm wrestling! Stake: %s Jenny.",

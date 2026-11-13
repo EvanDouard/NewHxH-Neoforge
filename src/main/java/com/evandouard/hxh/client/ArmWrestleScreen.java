@@ -83,7 +83,7 @@ public class ArmWrestleScreen extends Screen {
     @Override
     public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
         super.render(g, mouseX, mouseY, partialTick);
-        int h = Math.min(180, height - 60), w = 34;
+        int h = Math.min(170, height - 80), w = 34;
         int x = width / 2 - w / 2 - 14, y = height / 2 - h / 2;
         MangaHud.panel(g, x - 8, y - 8, w + 58, h + 16, PAPER, 3);
         g.fill(x, y, x + w, y + h, 0xFF2A2A2A);
@@ -101,11 +101,15 @@ public class ArmWrestleScreen extends Screen {
         g.fill(px, y, px + 12, y + h, 0xFF2A2A2A);
         int ph = Math.round(state.progress() * h);
         g.fill(px + 2, y + h - ph, px + 10, y + h, GREEN);
-        MangaHud.outlined(g, MangaHud.manga(title), width / 2f - font.width(title) * 0.6f, y - 26, 0xFFFFFFFF, 1.2f);
+        MangaHud.outlined(g, MangaHud.manga(title), width / 2f - font.width(title) * 0.6f, y - 24, 0xFFFFFFFF, 1.2f);
         Component help = state.result() == 1 ? Component.translatable("armwrestle.hxh.result_won")
                 : state.result() == 2 ? Component.translatable("armwrestle.hxh.result_lost")
                 : Component.translatable("armwrestle.hxh.help");
-        g.drawCenteredString(font, help, width / 2, y + h + 14, 0xFFFFFF);
+        int ly = y + h + 12;
+        for (var line : font.split(help, Math.min(300, width - 20))) {
+            g.drawCenteredString(font, line, width / 2, ly, 0xFFFFFF);
+            ly += font.lineHeight + 1;
+        }
     }
 
     @Override

@@ -13,8 +13,8 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 
 ## Coup de pied fort et bras de fer (13 nov, soir)
 - [x] CI (capture `64_coup_de_pied_fort_mur_creuse`) : la cible projetée creuse un trou dans le mur, éclats de la couleur des briques.
-- [ ] CI : GameTest `strongKickSendsFarAndDigsWalls`.
-- [ ] CI : GameTest `armWrestlingRewardsSkillAndStrength` (suivre la zone = victoire, ne pas pousser = défaite, la Force élargit la zone, mise prise au départ) ; capture `65_bras_de_fer`.
+- [x] CI : GameTest `strongKickSendsFarAndDigsWalls` (poussée loin de l'attaquant > 2 blocs/tick ; le choc contre un mur creuse un trou autour de la cible).
+- [x] CI : GameTest `armWrestlingRewardsSkillAndStrength` (suivre la zone = victoire, ne pas pousser = défaite, la Force élargit la zone, mise prise au départ) ; capture `65_bras_de_fer`.
 - [ ] En jeu : coup de pied avec Force ≥ 30 : projection très lointaine ; contre un mur, trou autour de la cible puis elle continue (2 murs au plus). Ressenti du son et des effets ?
 - [ ] En jeu : poser le PNJ `lutteur` (repère de PNJ), clic droit : bras de fer à 100 J (clic gauche ou Espace maintenu). Victoire = 200 J et 40 XP de Force. Commande admin : `/hunter armwrestle <force>`.
 

@@ -1256,7 +1256,7 @@
   "item.hxh.great_stamp_spawn_egg": "Œuf d'apparition de Great Stamp",
   "npc.hxh.lutteur": "Champion de bras de fer",
   "armwrestle.hxh.title": "Bras de fer",
-  "armwrestle.hxh.help": "Maintiens clic gauche ou Espace pour pousser : garde ton bras (rouge) dans la zone jaune",
+  "armwrestle.hxh.help": "Maintiens clic gauche ou Espace pour pousser : garde le trait rouge dans la zone jaune",
   "armwrestle.hxh.result_won": "Victoire !",
   "armwrestle.hxh.result_lost": "Défaite…",
   "armwrestle.hxh.start": "Bras de fer ! Mise : %s Jenny.",
