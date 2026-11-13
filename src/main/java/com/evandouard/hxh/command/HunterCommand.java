@@ -587,8 +587,8 @@ public final class HunterCommand {
                             return refusal == null ? 1 : 0;
                         })))
                 .then(Commands.literal("toggle").executes(ctx -> {
-                    ctx.getSource().sendSuccess(() -> Component.translatable(com.evandouard.hxh.hatsu.Vows.toggle(
-                            (LivingEntity) ctx.getSource().getEntityOrException())), false);
+                    String key = com.evandouard.hxh.hatsu.Vows.toggle((LivingEntity) ctx.getSource().getEntityOrException());
+                    ctx.getSource().sendSuccess(() -> Component.translatable(key), false);
                     return 1;
                 }))
                 .then(Commands.literal("renounce").executes(ctx -> {
