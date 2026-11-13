@@ -318,4 +318,51 @@ public final class HatsuTests {
         helper.assertTrue(Math.abs(strong - 13f) < 1e-3, "Cible très robuste : +30 % max");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void vowsStrengthenAndSeal(GameTestHelper helper) {
+        Zombie z = husk(helper, 1);
+        HunterData d = hunter(z, NenType.EMITTER, "leorio");
+        long now = z.level().getGameTime();
+        d.setAura(d.auraMax());
+        var punch = Techniques.get("leorio_remote_punch");
+        float base = Hatsu.powerFor(z, d, punch);
+        // Une seule technique : celle sélectionnée au serment
+        Hatsu.select(z, "leorio_remote_punch");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.take(z, "single_technique") == null, "Serment de technique unique prêté");
+        helper.assertTrue(Math.abs(Hatsu.powerFor(z, d, punch) - base * 1.6f) < 1e-3, "Technique visée ×1,6");
+        helper.assertTrue("message.hxh.vow_single".equals(Hatsu.castRefusal(d, Techniques.get("leorio_shockwave"), now)), "Autre technique refusée");
+        helper.assertTrue(Hatsu.castRefusal(d, Techniques.BASIC_ATTACK, now) == null, "Coups de base toujours permis");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.take(z, "life_price") != null, "Un seul serment à la fois");
+        // Renoncer = rompre : Hatsu scellé
+        com.evandouard.hxh.hatsu.Vows.breakVow(z, "vow.hxh.reason.renounced");
+        helper.assertTrue(d.vow().isEmpty(), "Serment effacé");
+        helper.assertTrue("message.hxh.vow_sealed".equals(Hatsu.castRefusal(d, punch, now)), "Hatsu scellé après la rupture");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.take(z, "life_price") != null, "Pas de nouveau serment pendant le sceau");
+        d.setSealedUntil(0);
+        // Payer de sa vie : 2 PV par technique
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.take(z, "life_price") == null, "Serment de vie prêté");
+        z.setHealth(20f);
+        d.setAura(d.auraMax());
+        Hatsu.cast(z);
+        helper.assertTrue(z.getHealth() <= 18.01f, "La technique a coûté 2 PV (" + z.getHealth() + ")");
+        d.setVow("", "", 0L);
+        // Seulement contre les monstres : toucher un cochon rompt le serment
+        net.minecraft.world.entity.animal.Pig pig = helper.spawnWithNoFreeWill(EntityType.PIG, new BlockPos(4, 1, 1));
+        pig.setNoGravity(true);
+        z.lookAt(net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES, pig.getBoundingBox().getCenter());
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.take(z, "monsters_only") == null, "Serment des monstres prêté");
+        d.setAura(d.auraMax());
+        d.setReadyAt("leorio_remote_punch", 0);
+        helper.assertTrue(Hatsu.cast(z) == null, "Coup à distance lancé sur le cochon");
+        helper.assertTrue(d.vow().isEmpty() && d.sealedUntil() > now, "Toucher un animal rompt le serment");
+        d.setSealedUntil(0);
+        // Tout sacrifier : ×3 pendant 60 s, puis scellé une journée
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.take(z, "ultimate") == null, "Serment ultime prêté");
+        helper.assertTrue(Math.abs(Hatsu.powerFor(z, d, punch) - base * 3f) < 1e-3, "Serment ultime ×3");
+        d.setVow("ultimate", "", z.level().getGameTime() - 1);
+        com.evandouard.hxh.hatsu.Vows.tick(z);
+        helper.assertTrue(d.vow().isEmpty() && d.sealedUntil() - z.level().getGameTime() > 20000, "Après le serment ultime : scellé une journée");
+        helper.succeed();
+    }
 }

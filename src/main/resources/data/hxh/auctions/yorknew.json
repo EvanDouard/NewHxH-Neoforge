@@ -1,0 +1,16 @@
+{
+  "npc": "commissaire_priseur",
+  "lots_per_day": 4,
+  "lots": [
+    { "item": "hxh:dumbbell_4", "start": 2500, "value": 4000, "weight": 10 },
+    { "item": "hxh:treadmill_4", "start": 4000, "value": 6500, "weight": 8 },
+    { "item": "minecraft:enchanted_golden_apple", "start": 1500, "value": 2500, "weight": 6 },
+    { "item": "minecraft:totem_of_undying", "start": 2000, "value": 3500, "weight": 5 },
+    { "item": "minecraft:trident", "start": 1800, "value": 3000, "weight": 4 },
+    { "item": "minecraft:heart_of_the_sea", "start": 800, "value": 1500, "weight": 4 },
+    { "item": "minecraft:netherite_ingot", "start": 1500, "value": 2400, "weight": 4 },
+    { "item": "minecraft:music_disc_pigstep", "start": 500, "value": 1200, "weight": 3 },
+    { "item": "minecraft:nether_star", "start": 4000, "value": 7000, "weight": 2 },
+    { "item": "minecraft:elytra", "start": 6000, "value": 10000, "weight": 2 }
+  ]
+}

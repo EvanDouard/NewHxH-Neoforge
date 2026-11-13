@@ -62,6 +62,7 @@ public final class HunterCommand {
                 .then(targeted("max", HunterCommand::maxAll).requires(s -> s.hasPermission(2)))
                 .then(nenCommand())
                 .then(hatsuCommand())
+                .then(vowCommand())
                 // Événements aléatoires : en déclencher un (au hasard ou par nom) près de soi
                 .then(Commands.literal("event").requires(src -> src.hasPermission(2))
                         .then(Commands.argument("id", StringArgumentType.word())
@@ -510,6 +511,37 @@ public final class HunterCommand {
     }
 
     /** Administration du Hatsu : forcer un personnage (y compris sur un mob), effacer, faire lancer. */
+    /** Serments : prêter (tous), renoncer (= rompre, le Hatsu est scellé), effacer sans pénalité (admin). */
+    private static LiteralArgumentBuilder<CommandSourceStack> vowCommand() {
+        return Commands.literal("vow")
+                .then(Commands.literal("list").executes(ctx -> {
+                    for (var v : com.evandouard.hxh.hatsu.Vows.Vow.values()) {
+                        ctx.getSource().sendSuccess(() -> Component.literal(v.id() + " ×" + v.power + " — ")
+                                .append(Component.translatable(v.translationKey())), false);
+                    }
+                    return 1;
+                }))
+                .then(Commands.literal("take").then(Commands.argument("id", StringArgumentType.word())
+                        .suggests((ctx, b) -> SharedSuggestionProvider.suggest(java.util.Arrays.stream(
+                                com.evandouard.hxh.hatsu.Vows.Vow.values()).map(com.evandouard.hxh.hatsu.Vows.Vow::id), b))
+                        .executes(ctx -> {
+                            LivingEntity e = (LivingEntity) ctx.getSource().getEntityOrException();
+                            String refusal = com.evandouard.hxh.hatsu.Vows.take(e, StringArgumentType.getString(ctx, "id"));
+                            if (refusal != null) ctx.getSource().sendFailure(Component.translatable(refusal));
+                            return refusal == null ? 1 : 0;
+                        })))
+                .then(Commands.literal("renounce").executes(ctx -> {
+                    com.evandouard.hxh.hatsu.Vows.breakVow((LivingEntity) ctx.getSource().getEntityOrException(), "vow.hxh.reason.renounced");
+                    return 1;
+                }))
+                .then(Commands.literal("clear").requires(s -> s.hasPermission(2)).executes(ctx -> {
+                    HunterData d = HunterStats.get((LivingEntity) ctx.getSource().getEntityOrException());
+                    d.setVow("", "", 0L);
+                    d.setSealedUntil(0L);
+                    return 1;
+                }));
+    }
+
     private static LiteralArgumentBuilder<CommandSourceStack> hatsuCommand() {
         return Commands.literal("hatsu").requires(s -> s.hasPermission(2))
                 .then(Commands.literal("set")

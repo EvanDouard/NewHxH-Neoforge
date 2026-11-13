@@ -39,6 +39,8 @@ public class ArenaFighterEntity extends PathfinderMob implements Enemy {
     private static final EntityDataAccessor<Integer> SKIN =
             SynchedEntityData.defineId(ArenaFighterEntity.class, EntityDataSerializers.INT);
     public static final int SKINS = 4;
+    /** Identifiant du combattant nommé (gido, sadaso…), dans les données persistantes. */
+    public static final String CHALLENGER_TAG = "hxh_challenger";
 
     private int floor = 1;
     @Nullable
@@ -106,9 +108,14 @@ public class ArenaFighterEntity extends PathfinderMob implements Enemy {
             data.setLevel(s, Math.max(0, Math.min(com.evandouard.hxh.nen.NenMobAI.MOB_MAX_LEVEL, v)));
         }
         int nen = ArenaRules.opponentNenLevel(floor);
+        // Au-delà du 200e : certains étages ont leur combattant attitré (Gido, Sadaso, Riehlvelt, Kastro)
+        var challenger = com.evandouard.hxh.hatsu.ArenaChallengers.forFloor(floor);
+        if (challenger != null) {
+            for (Stat s : Stat.values()) data.setLevel(s, Math.min(com.evandouard.hxh.nen.NenMobAI.MOB_MAX_LEVEL, stat + 5));
+        }
         if (nen > 0) {
             List<HatsuKit> kits = HatsuKits.playable();
-            HatsuKit kit = kits.get(getRandom().nextInt(kits.size()));
+            HatsuKit kit = challenger != null ? HatsuKits.get(challenger.kit()) : kits.get(getRandom().nextInt(kits.size()));
             data.setNenType(kit.type());
             data.setNenRevealed(true);
             data.setNenLevel(nen);
@@ -122,7 +129,10 @@ public class ArenaFighterEntity extends PathfinderMob implements Enemy {
         var kb = getAttribute(Attributes.KNOCKBACK_RESISTANCE);
         if (kb != null) kb.setBaseValue(ArenaRules.opponentKnockbackResistance(floor));
         setHealth(getMaxHealth());
-        setCustomName(Component.translatable(nen > 0 ? "entity.hxh.arena_fighter.nen" : "entity.hxh.arena_fighter.floor", floor));
+        setCustomName(challenger != null
+                ? Component.translatable("entity.hxh.arena_fighter.named", Component.translatable("arena.hxh.challenger." + challenger.id()), floor)
+                : Component.translatable(nen > 0 ? "entity.hxh.arena_fighter.nen" : "entity.hxh.arena_fighter.floor", floor));
+        if (challenger != null) getPersistentData().putString(CHALLENGER_TAG, challenger.id());
         setCustomNameVisible(true);
     }
 

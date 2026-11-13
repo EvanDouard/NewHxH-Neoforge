@@ -23,6 +23,12 @@ public final class ClientHooks {
         else mc.setScreen(new ShopScreen(payload));
     }
 
+    public static void openAuction(com.evandouard.hxh.network.OpenAuctionPayload payload) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.screen instanceof AuctionScreen open && open.auctionId().equals(payload.auction())) open.update(payload);
+        else mc.setScreen(new AuctionScreen(payload));
+    }
+
     public static void openComputer(com.evandouard.hxh.network.OpenComputerPayload payload) {
         Minecraft.getInstance().setScreen(new HunterComputerScreen(payload));
     }

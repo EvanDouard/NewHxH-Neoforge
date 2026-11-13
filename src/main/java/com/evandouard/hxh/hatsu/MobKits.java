@@ -27,8 +27,14 @@ public final class MobKits {
         for (EntityType<?> t : types) BY_TYPE.put(t, id);
     }
 
+    /** Kit nommé (combattants de la Tour…) : plusieurs techniques, pas d'espèce associée, jamais proposé au joueur. */
+    static void named(String id, NenType type, Technique... techniques) {
+        BY_ID.put(id, new HatsuKit(id, type, true, java.util.Arrays.stream(techniques).map(Technique::id).toList(), List.of(), true));
+    }
+
     static {
         MobTechniques.init();
+        ArenaChallengers.init();
         kit("mob_skeleton", EMITTER, MobTechniques.NEN_ARROWS, EntityType.SKELETON, EntityType.STRAY, EntityType.BOGGED);
         kit("mob_creeper", EMITTER, MobTechniques.AURA_MINES, EntityType.CREEPER);
         kit("mob_zombie", CONJURER, MobTechniques.NEN_HORDE, EntityType.ZOMBIE, EntityType.HUSK, EntityType.DROWNED, EntityType.ZOMBIE_VILLAGER);

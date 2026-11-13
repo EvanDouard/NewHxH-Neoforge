@@ -87,6 +87,11 @@ public class HatsuSelectionScreen extends Screen {
                                 ? "screen.hxh.hatsu.filter_mine" : "screen.hxh.hatsu.filter_all"),
                         b -> { onlyMyType = !onlyMyType; page = 0; rebuildWidgets(); })
                 .bounds(16, bottom, 110, 20).build());
+        // Serments et restrictions (une fois le personnage choisi)
+        Button vows = Button.builder(Component.translatable("screen.hxh.vow.open"), b -> minecraft.setScreen(new VowScreen(this)))
+                .bounds(width - 126, bottom, 110, 20).build();
+        vows.active = data().hasKit();
+        addRenderableWidget(vows);
     }
 
     private static Component reason(HatsuKit kit, String refusal) {

@@ -49,6 +49,12 @@ public class TechniqueListScreen extends Screen {
         buildLines();
         addRenderableWidget(Button.builder(parent != null ? CommonComponents.GUI_BACK : CommonComponents.GUI_DONE,
                 b -> onClose()).bounds(width / 2 - 50, height - 26, 100, 20).build());
+        // Sa propre fiche : accès aux serments et restrictions
+        HunterData mine = Minecraft.getInstance().player.getData(ModAttachments.HUNTER);
+        if (kit.id().equals(mine.kit())) {
+            addRenderableWidget(Button.builder(Component.translatable("screen.hxh.vow.open"),
+                    b -> minecraft.setScreen(new VowScreen(this))).bounds(width - 126, height - 26, 110, 20).build());
+        }
     }
 
     @Override

@@ -100,6 +100,7 @@ public final class Hatsu {
 
     public static void tickPassives(LivingEntity entity) {
         Specials.cleanup(entity);
+        Vows.tick(entity);
         for (Passive p : activePassives(entity)) p.tick(entity);
     }
 
@@ -128,6 +129,7 @@ public final class Hatsu {
         float p = power(data, technique);
         if (isCopy(entity, data)) p *= MOB_COPY_POWER;
         p *= com.evandouard.hxh.family.Families.powerMultiplier(entity); // yeux écarlates des Kurta
+        p *= Vows.powerMultiplier(data, technique); // serment en cours
         return p;
     }
 
@@ -165,6 +167,8 @@ public final class Hatsu {
         if (data.mode() == NenMode.ZETSU) return "message.hxh.hatsu_zetsu";
         if (data.nenLevel() < technique.minNenLevel()) return "message.hxh.hatsu_nen_level";
         if (data.aura() < technique.auraCost()) return "message.hxh.no_aura";
+        String vow = Vows.dataRefusal(data, technique, gameTime);
+        if (vow != null) return vow;
         return technique.extraRefusal(data);
     }
 
@@ -187,6 +191,9 @@ public final class Hatsu {
         String refusal = castRefusal(data, technique, now);
         if (refusal != null) return refusal;
         if (technique.isUltimate() && isCopy(entity, data)) return "message.hxh.copy_no_ultimate";
+        String vowRefusal = Vows.entityRefusal(entity, data, technique);
+        if (vowRefusal != null) return vowRefusal;
+        Vows.pay(entity, data, technique); // serment de vie : le prix part au lancement
         if (technique instanceof Techniques.ChargedOrb orb && data.aura() < orb.auraCost() + orb.minSpent) {
             return "message.hxh.no_aura"; // pas de quoi charger un vrai coup
         }

@@ -1544,6 +1544,8 @@ cmd gamemode creative
 camera first
 # --- Coups secrets de famille ---
 cmd kill @e[type=!minecraft:player]
+# laisse filer les notifications de la quête de Netero
+wait 120
 cmd gamemode survival
 cmd hunter family set zoldyck
 camera first
@@ -1572,4 +1574,43 @@ shot 55b_famille_freecss_instinct_du_chasseur
 cmd kill @e[type=!minecraft:player]
 cmd hunter family set none
 cmd gamemode creative
+# --- Serments et restrictions ---
+cmd hunter hatsu set gon
+cmd hunter vow clear
+camera first
+look 0 10
+key key.hxh.profile
+wait 15
+click Hatsu
+wait 15
+click Serments
+wait 10
+shot 56a_serments_liste
+closescreen
+wait 5
+clearchat
+cmd hunter vow take ultimate
+wait 6
+expect Serment prêté
+shot 56b_serment_ultime_prete
+cmd hunter vow clear
+cmd hunter hatsu set none
+# --- Enchères de York Shin : gamme IV et reliques ---
+cmd kill @e[type=!minecraft:player]
+camera first
+cmd tp @s ~ ~ ~ 0 0
+look 0 10
+cmd summon hxh:npc ~ ~ ~3 {npc:"commissaire_priseur",NoAI:1b,Silent:1b,Rotation:[180f,0f]}
+cmd hunter jenny set 20000
+wait 20
+talkto commissaire_priseur
+wait 20
+shot 57a_encheres_lots_du_jour
+clearchat
+click Enchérir
+wait 15
+shot 57b_encheres_apres_une_mise
+closescreen
+cmd kill @e[type=hxh:npc]
+cmd hunter jenny set 0
 quit

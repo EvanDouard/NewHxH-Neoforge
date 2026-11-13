@@ -333,4 +333,40 @@ public final class ArenaTests {
         helper.assertTrue(com.evandouard.hxh.arena.AuraWall.canPass(player), "Déjà inscrit : passe");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void namedChallengersAbove200(GameTestHelper helper) {
+        var level = helper.getLevel();
+        String[][] expected = {{"200", "arena_gido"}, {"215", "arena_sadaso"}, {"222", "arena_riehlvelt"}, {"230", "arena_kastro"}};
+        for (String[] e : expected) {
+            var f = com.evandouard.hxh.registry.ModEntities.ARENA_FIGHTER.get().create(level);
+            f.moveTo(helper.absoluteVec(new net.minecraft.world.phys.Vec3(2.5, 1, 2.5)));
+            f.configure(Integer.parseInt(e[0]), null);
+            var d = com.evandouard.hxh.stats.HunterStats.get(f);
+            helper.assertTrue(d.kit().equals(e[1]), "Étage " + e[0] + " : " + e[1] + " attendu, " + d.kit() + " obtenu");
+            helper.assertTrue(f.getPersistentData().contains(com.evandouard.hxh.arena.ArenaFighterEntity.CHALLENGER_TAG), "Combattant nommé marqué");
+            for (String id : com.evandouard.hxh.hatsu.Hatsu.kitOf(d).techniques()) {
+                helper.assertTrue(com.evandouard.hxh.hatsu.Techniques.get(id) != null, "Technique enregistrée : " + id);
+            }
+            helper.assertTrue(com.evandouard.hxh.hatsu.Hatsu.choose(helper.makeMockServerPlayerInLevel(), e[1]) != null, "Kit non proposé au joueur");
+        }
+        // Hors de ces étages : adversaire ordinaire au kit de personnage
+        var f = com.evandouard.hxh.registry.ModEntities.ARENA_FIGHTER.get().create(level);
+        f.configure(245, null);
+        helper.assertTrue(!com.evandouard.hxh.stats.HunterStats.get(f).kit().startsWith("arena_"), "245e : adversaire ordinaire");
+        // Gido lance ses toupies sur une cible proche
+        var gido = com.evandouard.hxh.registry.ModEntities.ARENA_FIGHTER.get().create(level);
+        gido.moveTo(helper.absoluteVec(new net.minecraft.world.phys.Vec3(1.5, 1, 1.5)));
+        gido.configure(200, null);
+        gido.setNoAi(true);
+        level.addFreshEntity(gido);
+        var pig = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.PIG, new net.minecraft.core.BlockPos(3, 1, 1));
+        var gd = com.evandouard.hxh.stats.HunterStats.get(gido);
+        gd.setAura(gd.auraMax());
+        com.evandouard.hxh.hatsu.Hatsu.select(gido, "arena_gido_tops");
+        float before = pig.getHealth();
+        helper.assertTrue(com.evandouard.hxh.hatsu.Hatsu.cast(gido) == null, "Toupies tourbillon lancées");
+        helper.assertTrue(pig.getHealth() < before, "Les toupies touchent le cochon");
+        helper.succeed();
+    }
 }

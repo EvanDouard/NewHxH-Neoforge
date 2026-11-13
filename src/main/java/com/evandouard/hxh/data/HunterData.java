@@ -85,6 +85,12 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private int selected = 0;
     /** Coup secret de la famille (technique sans Nen ajoutée au menu), vide sans famille. */
     private String familyMove = "";
+    /** Serment en cours (voir Vows), technique visée par un serment de technique unique, fin du serment ultime. */
+    private String vow = "";
+    private String vowTechnique = "";
+    private long vowUntil = 0;
+    /** Hatsu scellé jusqu'à ce tick (serment rompu, fin du serment ultime). */
+    private long sealedUntil = 0;
     private final Map<String, Long> readyAt = new HashMap<>();
 
     private final Set<String> dirty = new HashSet<>();
@@ -517,6 +523,34 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         dirty.add(HATSU);
     }
 
+    public String vow() {
+        return vow;
+    }
+
+    public String vowTechnique() {
+        return vowTechnique;
+    }
+
+    public long vowUntil() {
+        return vowUntil;
+    }
+
+    public long sealedUntil() {
+        return sealedUntil;
+    }
+
+    public void setVow(String id, String technique, long until) {
+        vow = id == null ? "" : id;
+        vowTechnique = technique == null ? "" : technique;
+        vowUntil = until;
+        dirty.add(HATSU);
+    }
+
+    public void setSealedUntil(long gameTime) {
+        sealedUntil = gameTime;
+        dirty.add(HATSU);
+    }
+
     public boolean hasKit() {
         return !kit.isEmpty();
     }
@@ -619,6 +653,10 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             h.putString("kit", kit);
             h.putInt("selected", selected);
             h.putString("familyMove", familyMove);
+            h.putString("vow", vow);
+            h.putString("vowTech", vowTechnique);
+            h.putLong("vowUntil", vowUntil);
+            h.putLong("sealedUntil", sealedUntil);
             CompoundTag cd = new CompoundTag();
             readyAt.forEach(cd::putLong);
             h.put("readyAt", cd);
@@ -750,6 +788,10 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             kit = h.getString("kit");
             selected = Math.max(0, h.getInt("selected"));
             familyMove = h.getString("familyMove");
+            vow = h.getString("vow");
+            vowTechnique = h.getString("vowTech");
+            vowUntil = h.getLong("vowUntil");
+            sealedUntil = h.getLong("sealedUntil");
             readyAt.clear();
             CompoundTag cd = h.getCompound("readyAt");
             for (String id : cd.getAllKeys()) readyAt.put(id, cd.getLong(id));

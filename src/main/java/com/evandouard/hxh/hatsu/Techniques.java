@@ -720,5 +720,6 @@ public final class Techniques {
     // Coups secrets de famille (enregistrés après tout le reste)
     static {
         FamilyMoves.init();
+        ArenaChallengers.init();
     }
 }

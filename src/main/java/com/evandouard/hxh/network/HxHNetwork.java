@@ -25,12 +25,15 @@ public final class HxHNetwork {
         registrar.playToClient(OpenElevatorPayload.TYPE, OpenElevatorPayload.STREAM_CODEC, OpenElevatorPayload::handle);
         registrar.playToServer(ElevatorGoPayload.TYPE, ElevatorGoPayload.STREAM_CODEC, ElevatorGoPayload::handle);
         registrar.playToServer(SetRyuPayload.TYPE, SetRyuPayload.STREAM_CODEC, SetRyuPayload::handle);
+        registrar.playToServer(VowPayload.TYPE, VowPayload.STREAM_CODEC, VowPayload::handle);
         registrar.playToServer(ChooseKitPayload.TYPE, ChooseKitPayload.STREAM_CODEC, ChooseKitPayload::handle);
         registrar.playToServer(NenActionPayload.TYPE, NenActionPayload.STREAM_CODEC, NenActionPayload::handle);
         registrar.playToClient(CombatAnimPayload.TYPE, CombatAnimPayload.STREAM_CODEC, CombatAnimPayload::handle);
         registrar.playToServer(PunchPayload.TYPE, PunchPayload.STREAM_CODEC, PunchPayload::handle);
         registrar.playToServer(ToggleNenModePayload.TYPE, ToggleNenModePayload.STREAM_CODEC, ToggleNenModePayload::handle);
         registrar.playToClient(OpenShopPayload.TYPE, OpenShopPayload.STREAM_CODEC, OpenShopPayload::handle);
+        registrar.playToClient(OpenAuctionPayload.TYPE, OpenAuctionPayload.STREAM_CODEC, OpenAuctionPayload::handle);
+        registrar.playToServer(AuctionBidPayload.TYPE, AuctionBidPayload.STREAM_CODEC, AuctionBidPayload::handle);
         registrar.playToClient(OpenComputerPayload.TYPE, OpenComputerPayload.STREAM_CODEC, OpenComputerPayload::handle);
         registrar.playToServer(ShopActionPayload.TYPE, ShopActionPayload.STREAM_CODEC, ShopActionPayload::handle);
     }

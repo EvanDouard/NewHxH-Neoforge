@@ -221,7 +221,12 @@ public final class NenClient {
         // Nom tronqué avec « … » s'il déborde sur le compteur
         String name = Component.translatable(technique.translationKey()).getString();
         int maxName = w - 10 - counterWidth - 10;
-        if (mc.font.width(name) > maxName) name = mc.font.plainSubstrByWidth(name, maxName - mc.font.width("…")) + "…";
+        // Le gras ajoute un pixel par lettre : on mesure le texte tel qu'il est dessiné
+        java.util.function.ToIntFunction<String> bold = t -> mc.font.width(Component.literal(t).withStyle(net.minecraft.ChatFormatting.BOLD));
+        if (bold.applyAsInt(name) > maxName) {
+            while (name.length() > 1 && bold.applyAsInt(name + "…") > maxName) name = name.substring(0, name.length() - 1);
+            name = name.stripTrailing() + "…";
+        }
         graphics.drawString(mc.font, Component.literal(name).withStyle(net.minecraft.ChatFormatting.BOLD), x + 10, y + 5, MangaHud.INK, false);
 
         // Ging : la copie affiche ses utilisations restantes
