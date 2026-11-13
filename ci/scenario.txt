@@ -1967,6 +1967,8 @@ cmd kill @e[type=hxh:spider_eagle]
 # ===== Tests en jeu faits par Claude (lot T2) =====
 # --- Hisoka au 235e étage ---
 cmd gamemode survival
+cmd hunter arena enter
+wait 60
 cmd hunter arena floor 235
 cmd hunter arena register
 cmd hunter arena goto 235
