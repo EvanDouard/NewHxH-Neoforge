@@ -1821,7 +1821,9 @@ expect Contrat :
 shot 73_contrat_zoldyck_bulle_et_boussole
 cmd kill @e[type=hxh:npc]
 cmd hunter contract goto
-wait 40
+wait 120
+cmd hunter contract goto
+wait 20
 shot 74_contrat_zoldyck_cible_proche
 clearchat
 cmd damage @e[tag=hxh_contract,limit=1,sort=nearest] 1000 minecraft:player_attack by @s
@@ -1957,5 +1959,78 @@ cmd summon hxh:spider_eagle ~ ~1 ~5 {NoAI:1b,PersistenceRequired:1b}
 wait 10
 shot 83_aigle_araignee
 cmd kill @e[type=hxh:spider_eagle]
+# ===== Tests en jeu faits par Claude (lot T2) =====
+# --- Hisoka au 235e étage ---
+cmd gamemode survival
+cmd hunter arena floor 235
+cmd hunter arena register
+cmd hunter arena goto 235
+wait 100
+clearchat
+goto referee
+wait 15
+talkto referee
+wait 80
+expect Hisoka
+shot 84_hisoka_235e
+cmd kill @e[type=hxh:arena_fighter]
+wait 60
+cmd hunter arena leave
+wait 60
+# --- Bestiaire : Great Stamp, renard-ours et son petit ---
+cmd tp @s ~50 -60 ~ 0 10
+wait 20
+cmd summon hxh:great_stamp ~-3 ~ ~7 {NoAI:1b,PersistenceRequired:1b}
+cmd summon hxh:foxbear ~3 ~ ~7 {NoAI:1b,PersistenceRequired:1b}
+cmd summon hxh:foxbear ~5 ~ ~6 {NoAI:1b,PersistenceRequired:1b,Age:-24000}
+wait 10
+clearchat
+shot 85_great_stamp_et_renard_ours
+cmd kill @e[type=!minecraft:player]
+# --- Famille Zoldyck : carnet et Main-griffe ---
+cmd hunter family set zoldyck
+key key.hxh.profile
+wait 10
+click Quêtes
+wait 5
+click Personnage
+wait 5
+shot 86_carnet_famille_zoldyck
+closescreen
+cmd summon minecraft:pig ~ ~ ~6 {NoAI:1b}
+cmd hunter hatsu select family_zoldyck_claw
+look 0 15
+key key.hxh.cast
+wait 4
+shot 87_main_griffe
+wait 20
+cmd kill @e[type=minecraft:pig]
+cmd hunter family set none
+# --- Serment de Kurapika dans l'écran des serments ---
+cmd hunter hatsu set kurapika
+key key.hxh.profile
+wait 10
+click Quêtes
+wait 5
+click Personnage
+wait 5
+click Hatsu
+wait 10
+click Serments
+wait 10
+shot 88_serment_de_kurapika
+closescreen
+cmd hunter hatsu set none
+# --- Organisation : la Brigade dans le carnet ---
+cmd hunter org join ryodan
+key key.hxh.profile
+wait 10
+click Quêtes
+wait 5
+click Personnage
+wait 5
+shot 89_carnet_organisation_brigade
+closescreen
+cmd hunter org leave
 cmd gamemode creative
 quit
