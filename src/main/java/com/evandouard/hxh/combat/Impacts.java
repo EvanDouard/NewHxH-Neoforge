@@ -119,6 +119,28 @@ public final class Impacts {
                 level.getGameTime() + FREEZE_TICKS, projection));
     }
 
+    /** Seuils de dégâts (un seul coup, avant défense) d'une technique ratée qui frappe le décor. */
+    public static final float MISS_DEBRIS = 8f, MISS_CRACK = 15f, MISS_CRATER = 25f;
+
+    /**
+     * Une technique ratée part quand même : si elle percute un bloc sur sa trajectoire, le décor encaisse selon ses
+     * dégâts. Éclats dès 8, petit trou (rayon 1) dès 15, cratère dès 25 ; la casse demande la règle
+     * hxhNenDestruction (jamais dans la Tour Céleste). @return blocs cassés
+     */
+    public static int missedStrike(LivingEntity caster, double range, float damage) {
+        if (!(caster.level() instanceof ServerLevel level) || damage < MISS_DEBRIS) return 0;
+        Vec3 eye = caster.getEyePosition();
+        Vec3 end = eye.add(caster.getLookAngle().scale(range));
+        var hit = level.clip(new net.minecraft.world.level.ClipContext(eye, end, net.minecraft.world.level.ClipContext.Block.COLLIDER,
+                net.minecraft.world.level.ClipContext.Fluid.NONE, caster));
+        if (hit.getType() != net.minecraft.world.phys.HitResult.Type.BLOCK) return 0;
+        BlockPos pos = hit.getBlockPos();
+        BlockState s = level.getBlockState(pos);
+        NenFx.debris(level, hit.getLocation(), damage >= MISS_CRACK ? 18 : 10, s.getMapColor(level, pos).col);
+        if (damage < MISS_CRACK || !destructive(level)) return 0;
+        return crater(level, Vec3.atCenterOf(pos), damage >= MISS_CRATER ? CRATER_RADIUS : 1.0f, caster);
+    }
+
     /** Bloc plein sous les pieds de la cible (jusqu'à 3 blocs plus bas). */
     private static BlockPos groundUnder(ServerLevel level, LivingEntity target) {
         BlockPos p = BlockPos.containing(target.getX(), target.getY() - 0.2, target.getZ());

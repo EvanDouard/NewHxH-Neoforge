@@ -81,4 +81,23 @@ public final class ImpactTests {
         helper.assertFalse(Impacts.isFrozen(v), "Force faible : pas d'image d'impact");
         helper.succeed();
     }
+
+    @net.minecraft.gametest.framework.GameTest(template = "empty")
+    public static void missedTechniquesDamageScenery(net.minecraft.gametest.framework.GameTestHelper helper) {
+        var level = helper.getLevel();
+        var rule = level.getGameRules().getRule(com.evandouard.hxh.HxHGameRules.NEN_DESTRUCTION);
+        boolean before = rule.get();
+        rule.set(true, level.getServer());
+        net.minecraft.core.BlockPos wall = new net.minecraft.core.BlockPos(4, 2, 1);
+        helper.setBlock(wall, net.minecraft.world.level.block.Blocks.STONE);
+        var husk = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.HUSK, new net.minecraft.core.BlockPos(1, 1, 1));
+        husk.setNoGravity(true);
+        husk.lookAt(net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES, net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(wall)));
+        helper.assertTrue(com.evandouard.hxh.combat.Impacts.missedStrike(husk, 8, 5f) == 0
+                && !level.getBlockState(helper.absolutePos(wall)).isAir(), "Un petit raté ne casse rien");
+        int broken = com.evandouard.hxh.combat.Impacts.missedStrike(husk, 8, 20f);
+        helper.assertTrue(broken >= 1 && level.getBlockState(helper.absolutePos(wall)).isAir(), "Un gros raté troue le mur (" + broken + " blocs)");
+        rule.set(before, level.getServer());
+        helper.succeed();
+    }
 }

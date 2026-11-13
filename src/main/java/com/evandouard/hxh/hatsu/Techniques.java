@@ -423,8 +423,9 @@ public final class Techniques {
         public boolean perform(LivingEntity caster, float power) {
             LivingEntity target = Targeting.inFront(caster, range, minDot);
             if (target == null) {
-                // Raté : la technique part quand même vers le point visé (plus tard : dégâts aux blocs à l'impact)
+                // Raté : la technique part quand même vers le point visé et abîme le décor qu'elle percute
                 Vec3 end = caster.getEyePosition().add(caster.getLookAngle().scale(range));
+                com.evandouard.hxh.combat.Impacts.missedStrike(caster, range, damage * power);
                 showStrike(look, caster, null, end, 0);
                 caster.level().playSound(null, end.x, end.y, end.z, sound, SoundSource.PLAYERS, 0.8f, 1f);
                 return false;

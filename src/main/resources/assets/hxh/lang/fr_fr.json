@@ -1251,5 +1251,7 @@
   "item.hxh.gourmet_recipe": "Carnet de recettes du Hunter gourmet",
   "tooltip.hxh.gourmet_recipe": "Plats III et IV à l'établi (le carnet n'est pas consommé)",
   "shop.hxh.locked": "Il ne te vend pas encore ça : fais d'abord sa quête",
-  "shop.hxh.locked_short": "Après sa quête"
+  "shop.hxh.locked_short": "Après sa quête",
+  "entity.hxh.great_stamp": "Great Stamp",
+  "item.hxh.great_stamp_spawn_egg": "Œuf d'apparition de Great Stamp"
 }

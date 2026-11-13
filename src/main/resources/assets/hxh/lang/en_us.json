@@ -1251,5 +1251,7 @@
   "item.hxh.gourmet_recipe": "Gourmet Hunter's Recipe Book",
   "tooltip.hxh.gourmet_recipe": "Level III and IV dishes at the crafting table (the book is not used up)",
   "shop.hxh.locked": "He won't sell you that yet: do his quest first",
-  "shop.hxh.locked_short": "After his quest"
+  "shop.hxh.locked_short": "After his quest",
+  "entity.hxh.great_stamp": "Great Stamp",
+  "item.hxh.great_stamp_spawn_egg": "Great Stamp Spawn Egg"
 }

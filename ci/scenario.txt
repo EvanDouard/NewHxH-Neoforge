@@ -1689,4 +1689,12 @@ wait 20
 clearchat
 shot 62_renard_ours
 cmd kill @e[type=hxh:foxbear]
+# --- Bestiaire : Great Stamp ---
+cmd kill @e[type=!minecraft:player]
+cmd summon hxh:great_stamp ~-3 ~ ~7 {NoAI:1b,Rotation:[180f,0f]}
+cmd summon hxh:great_stamp ~3 ~ ~8 {NoAI:1b,Rotation:[150f,0f]}
+wait 20
+clearchat
+shot 63_great_stamp
+cmd kill @e[type=hxh:great_stamp]
 quit

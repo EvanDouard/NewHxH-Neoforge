@@ -76,4 +76,26 @@ public final class WildlifeTests {
         bear.discard();
         helper.succeed();
     }
+
+    @net.minecraft.gametest.framework.GameTest(template = "empty")
+    public static void greatStampHasAnArmoredSnout(net.minecraft.gametest.framework.GameTestHelper helper) {
+        var pig = helper.spawnWithNoFreeWill(com.evandouard.hxh.registry.ModEntities.GREAT_STAMP.get(), new net.minecraft.core.BlockPos(3, 1, 3));
+        pig.setYRot(-90f); // regarde vers +X
+        pig.setYBodyRot(-90f);
+        pig.setYHeadRot(-90f);
+        helper.assertTrue(!pig.isConverting(), "Jamais de zoglin dans le monde normal");
+        var front = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.HUSK, new net.minecraft.core.BlockPos(5, 1, 3));
+        var back = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.HUSK, new net.minecraft.core.BlockPos(1, 1, 3));
+        helper.assertTrue(pig.hitOnSnout(front) && !pig.hitOnSnout(back), "Devant = museau, derrière = non");
+        float h0 = pig.getHealth();
+        pig.hurt(pig.damageSources().mobAttack(front), 10f);
+        float frontLoss = h0 - pig.getHealth();
+        pig.invulnerableTime = 0;
+        float h1 = pig.getHealth();
+        pig.hurt(pig.damageSources().mobAttack(back), 10f);
+        float backLoss = h1 - pig.getHealth();
+        helper.assertTrue(frontLoss < backLoss * 0.5f, "Le museau blindé encaisse : face " + frontLoss + ", dos " + backLoss);
+        helper.assertTrue(pig.getMaxHealth() >= 50f, "50 PV");
+        helper.succeed();
+    }
 }
