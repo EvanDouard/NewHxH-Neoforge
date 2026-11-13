@@ -834,4 +834,31 @@ public final class QuestTests {
         h.setNenLevel(0);
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void organizationQuestsFollowMembership(GameTestHelper helper) {
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(p);
+        for (String id : new String[]{"org_association_traque", "org_zodiaques", "org_ryodan_encheres", "org_bombers_masadora"}) {
+            helper.assertTrue(QuestRegistry.get(net.minecraft.resources.ResourceLocation.parse("hxh:" + id)) != null, "Quête chargée : " + id);
+        }
+        // Prérequis « org: » : il faut être membre
+        d.setOrganization("");
+        helper.assertTrue(!QuestManager.requirementMet(d, "org:association"), "Pas membre : prérequis non rempli");
+        d.setOrganization("association");
+        helper.assertTrue(QuestManager.requirementMet(d, "org:association"), "Membre : prérequis rempli");
+        helper.assertTrue(!QuestManager.requirementMet(d, "org:ryodan"), "Une autre organisation ne compte pas");
+        // Étape « blacklist_catch » : chaque capture compte
+        String q = "hxh:org_association_traque";
+        QuestManager.start(p, net.minecraft.resources.ResourceLocation.parse(q));
+        d.setQuestStep(q, 1);
+        QuestManager.onHuntDone(p, false);
+        helper.assertTrue(d.stateOf(q)[0] == 1 && d.stateOf(q)[1] == 0, "Un contrat Zoldyck ne compte pas pour la Blacklist");
+        QuestManager.onHuntDone(p, true);
+        helper.assertTrue(d.stateOf(q)[1] == 1, "Première capture comptée");
+        QuestManager.onHuntDone(p, true);
+        helper.assertTrue(d.stateOf(q)[0] == 2, "Deux captures : étape suivante (rapport à Beans)");
+        d.setOrganization("");
+        helper.succeed();
+    }
 }

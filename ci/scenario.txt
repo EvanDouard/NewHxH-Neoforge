@@ -1653,6 +1653,8 @@ expect Contrat :
 shot 59_contrat_zoldyck
 cmd kill @e[type=!minecraft:player]
 # --- Rang Hunter et Blacklist ---
+cmd hunter license give
+wait 120
 clearchat
 cmd hunter blacklist
 wait 10

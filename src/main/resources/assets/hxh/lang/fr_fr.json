@@ -1238,5 +1238,6 @@
   "message.hxh.blacklist_unknown": "Traque inconnue",
   "message.hxh.blacklist_license": "La Blacklist est réservée aux titulaires de la licence Hunter",
   "message.hxh.blacklist_stars": "Ton rang Hunter n'est pas assez élevé pour cette traque",
-  "message.hxh.blacklist_busy": "Tu as déjà une traque ou un contrat en cours"
+  "message.hxh.blacklist_busy": "Tu as déjà une traque ou un contrat en cours",
+  "command.hxh.license": "Licence Hunter : %s"
 }

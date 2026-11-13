@@ -63,6 +63,22 @@ public final class HunterCommand {
                 .then(nenCommand())
                 .then(hatsuCommand())
                 .then(vowCommand())
+                // Licence Hunter (admin, tests) : donner ou retirer
+                .then(Commands.literal("license").requires(src -> src.hasPermission(2))
+                        .then(Commands.literal("give").executes(ctx -> {
+                            var p = ctx.getSource().getPlayerOrException();
+                            com.evandouard.hxh.quest.QuestManager.data(p).setHunter(true);
+                            com.evandouard.hxh.quest.QuestManager.sync(p);
+                            ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.license", Component.translatable("command.hxh.yes")), false);
+                            return 1;
+                        }))
+                        .then(Commands.literal("remove").executes(ctx -> {
+                            var p = ctx.getSource().getPlayerOrException();
+                            com.evandouard.hxh.quest.QuestManager.data(p).setHunter(false);
+                            com.evandouard.hxh.quest.QuestManager.sync(p);
+                            ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.license", Component.translatable("command.hxh.no")), false);
+                            return 1;
+                        })))
                 .then(Commands.literal("blacklist")
                         .executes(ctx -> {
                             com.evandouard.hxh.contract.Contracts.showBlacklist(ctx.getSource().getPlayerOrException());

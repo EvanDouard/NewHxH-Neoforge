@@ -1,0 +1,69 @@
+{
+  "title": {
+    "fr": "Le coup de Masadora",
+    "en": "The Masadora job"
+  },
+  "start_npc": "genthru",
+  "requires": [
+    "hxh:org_bombers",
+    "org:bombers"
+  ],
+  "intro": {
+    "fr": "Les gardiens de Masadora nous gênent. Faisons-les sauter.",
+    "en": "Masadora's guardians are in our way. Let's blow them up."
+  },
+  "steps": [
+    {
+      "id": "plan",
+      "type": "talk",
+      "npc": "genthru",
+      "objective": {
+        "fr": "Écouter Genthru",
+        "en": "Listen to Genthru"
+      },
+      "dialog": {
+        "fr": "Il me faut de quoi tout faire sauter, et que ses gardiens tombent.",
+        "en": "I need enough to blow it all up, and its guardians down."
+      }
+    },
+    {
+      "id": "tnt",
+      "type": "bring",
+      "npc": "genthru",
+      "item": "minecraft:tnt",
+      "count": 16,
+      "objective": {
+        "fr": "Rapporter 16 TNT à Genthru",
+        "en": "Bring 16 TNT to Genthru"
+      },
+      "dialog": {
+        "fr": "Parfait. Maintenant, les gardiens.",
+        "en": "Perfect. Now, the guardians."
+      }
+    },
+    {
+      "id": "golems",
+      "type": "kill",
+      "entity": "minecraft:iron_golem",
+      "count": 3,
+      "objective": {
+        "fr": "Abattre 3 gardiens de fer (golems)",
+        "en": "Take down 3 iron guardians (golems)"
+      }
+    },
+    {
+      "id": "pay",
+      "type": "talk",
+      "npc": "genthru",
+      "reward_jenny": 2000,
+      "objective": {
+        "fr": "Retourner voir Genthru",
+        "en": "Return to Genthru"
+      },
+      "dialog": {
+        "fr": "Boum. Voilà ta part.",
+        "en": "Boom. Here's your cut."
+      }
+    }
+  ]
+}

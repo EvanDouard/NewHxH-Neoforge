@@ -1238,5 +1238,6 @@
   "message.hxh.blacklist_unknown": "Unknown hunt",
   "message.hxh.blacklist_license": "The Blacklist is reserved for Hunter license holders",
   "message.hxh.blacklist_stars": "Your Hunter rank is too low for this hunt",
-  "message.hxh.blacklist_busy": "You already have a hunt or a contract in progress"
+  "message.hxh.blacklist_busy": "You already have a hunt or a contract in progress",
+  "command.hxh.license": "Hunter license: %s"
 }

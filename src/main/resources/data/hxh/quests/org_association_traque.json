@@ -1,0 +1,53 @@
+{
+  "title": {
+    "fr": "Mission de l'Association : la Blacklist",
+    "en": "Association mission: the Blacklist"
+  },
+  "start_npc": "beans",
+  "requires": [
+    "hxh:org_association",
+    "org:association"
+  ],
+  "intro": {
+    "fr": "Le président a une mission pour vous. Des criminels courent toujours.",
+    "en": "The chairman has a mission for you. Criminals are still at large."
+  },
+  "steps": [
+    {
+      "id": "brief",
+      "type": "talk",
+      "npc": "beans",
+      "objective": {
+        "fr": "Écouter Beans",
+        "en": "Listen to Beans"
+      },
+      "dialog": {
+        "fr": "Ouvrez la Blacklist depuis un ordinateur Hunter et capturez deux criminels. L'Association compte sur vous.",
+        "en": "Open the Blacklist from a Hunter computer and catch two criminals. The Association is counting on you."
+      }
+    },
+    {
+      "id": "hunt",
+      "type": "blacklist_catch",
+      "count": 2,
+      "objective": {
+        "fr": "Capturer 2 criminels de la Blacklist",
+        "en": "Catch 2 Blacklist criminals"
+      }
+    },
+    {
+      "id": "report",
+      "type": "talk",
+      "npc": "beans",
+      "reward_jenny": 1500,
+      "objective": {
+        "fr": "Faire votre rapport à Beans",
+        "en": "Report to Beans"
+      },
+      "dialog": {
+        "fr": "Excellent travail. Le président sera ravi.",
+        "en": "Excellent work. The chairman will be delighted."
+      }
+    }
+  ]
+}

@@ -24,6 +24,7 @@ import java.util.Set;
  * {@code bring} (apporter {@code count} {@code item} au PNJ), {@code reach} (aller à {@code pos}, à {@code radius}
  * blocs près), {@code custom} (condition décrite dans {@code note}, à coder plus tard ; validée par
  * {@code /hunter quest validate}). Tour Céleste : {@code arena_win}, {@code arena_floor}, {@code arena_register_200}.
+ * Traques : {@code blacklist_catch} (criminels de la Blacklist), {@code contract_done} (contrats Zoldyck).
  * <p>
  * Textes : soit des clés de traduction ({@code quest.<ns>.<nom>}, {@code quest.<ns>.<nom>.<étape>},
  * {@code dialog.<ns>.<nom>.<étape>} dans les fichiers de langue), soit directement dans le JSON :
@@ -50,7 +51,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
     public static final Set<String> TYPES = Set.of("talk", "kill", "follow", "bring", "reach", "custom",
             "quiz", "survive", "points", "duel", "ball", "waypoint", "knockout",
             "nen_mode", "nen_sense", "nen_flag", "prayer", "kannon", "wounded_meditation",
-            "arena_win", "arena_floor", "arena_register_200");
+            "arena_win", "arena_floor", "arena_register_200", "blacklist_catch", "contract_done");
 
     public record Step(String id, String type, String npc, String entity, int count, int seconds,
                        double maxDistance, String rewardItem, boolean rewardHunter, int rewardJenny,
@@ -63,7 +64,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
         /** Objectif chiffré de l'étape (pour la progression affichée) : nombre de mobs ou secondes, sinon 0. */
         public int goal() {
             return switch (type) {
-                case "kill", "arena_win", "arena_floor" -> count;
+                case "kill", "arena_win", "arena_floor", "blacklist_catch", "contract_done" -> count;
                 case "bring" -> count;
                 case "follow", "nen_mode", "nen_sense", "survive", "waypoint", "kannon", "wounded_meditation" -> seconds;
                 case "prayer" -> count;

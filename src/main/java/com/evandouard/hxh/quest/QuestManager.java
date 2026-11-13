@@ -25,6 +25,15 @@ import java.util.List;
 public final class QuestManager {
     private QuestManager() {}
 
+    /**
+     * Prérequis d'une quête : une quête terminée ({@code hxh:nen_8_ko}), ou l'appartenance à une organisation
+     * ({@code org:ryodan}).
+     */
+    public static boolean requirementMet(QuestData d, String r) {
+        if (r.startsWith("org:")) return d.organization().equals(r.substring(4));
+        return d.completed.contains(ResourceLocation.parse(r).toString());
+    }
+
     public static QuestData data(ServerPlayer player) {
         return player.getData(ModAttachments.QUESTS);
     }
@@ -415,7 +424,7 @@ public final class QuestManager {
         for (Quest q : QuestRegistry.all()) {
             String id = q.id().toString();
             if (!q.startNpc().equals(npc.npcId()) || d.running.containsKey(id) || d.completed.contains(id)) continue;
-            if (!q.requires().stream().allMatch(r -> d.completed.contains(ResourceLocation.parse(r).toString()))) continue;
+            if (!q.requires().stream().allMatch(r -> requirementMet(d, r))) continue;
             say(player, npc, q.introDialog(player));
             start(player, q.id());
             return;
@@ -445,6 +454,18 @@ public final class QuestManager {
     }
 
     /** Résultat d'un combat de la Tour Céleste (étapes « gagner N combats »). */
+    /** Traque ou contrat rempli : étapes « blacklist_catch » / « contract_done ». */
+    public static void onHuntDone(ServerPlayer player, boolean blacklist) {
+        String type = blacklist ? "blacklist_catch" : "contract_done";
+        forEachQuest(player, d -> {
+            Quest.Step step = currentStep(d);
+            if (step == null || !step.type().equals(type)) return;
+            d.progress++;
+            if (d.progress >= step.count()) advance(player);
+            else sync(player);
+        });
+    }
+
     public static void onArenaResult(ServerPlayer player, boolean win) {
         forEachQuest(player, d -> arenaStep(player, d, win));
     }

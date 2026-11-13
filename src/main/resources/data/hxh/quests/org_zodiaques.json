@@ -1,0 +1,71 @@
+{
+  "title": {
+    "fr": "Les douze Zodiaques",
+    "en": "The twelve Zodiacs"
+  },
+  "start_npc": "cheadle",
+  "requires": [
+    "hxh:org_association_traque",
+    "org:association"
+  ],
+  "npcs": {
+    "cheadle": {
+      "fr": "Cheadle Yorkshire",
+      "en": "Cheadle Yorkshire"
+    }
+  },
+  "intro": {
+    "fr": "Un siège de Zodiaque est vacant. Le règlement exige des preuves.",
+    "en": "A Zodiac seat is vacant. The rules demand proof."
+  },
+  "steps": [
+    {
+      "id": "rules",
+      "type": "talk",
+      "npc": "cheadle",
+      "objective": {
+        "fr": "Écouter Cheadle",
+        "en": "Listen to Cheadle"
+      },
+      "dialog": {
+        "fr": "Article 1 : atteindre le 230e étage de la Tour Céleste. Article 2 : capturer un criminel de plus. Article 3 : revenir me voir.",
+        "en": "Article 1: reach the 230th floor of Heavens Arena. Article 2: catch one more criminal. Article 3: come back to me."
+      }
+    },
+    {
+      "id": "floor",
+      "type": "arena_floor",
+      "count": 230,
+      "objective": {
+        "fr": "Atteindre le 230e étage de la Tour Céleste",
+        "en": "Reach the 230th floor of Heavens Arena"
+      }
+    },
+    {
+      "id": "hunt",
+      "type": "blacklist_catch",
+      "count": 1,
+      "objective": {
+        "fr": "Capturer 1 criminel de la Blacklist",
+        "en": "Catch 1 Blacklist criminal"
+      }
+    },
+    {
+      "id": "seat",
+      "type": "talk",
+      "npc": "cheadle",
+      "reward_learn": [
+        "join:zodiaques"
+      ],
+      "reward_jenny": 3000,
+      "objective": {
+        "fr": "Prendre son siège de Zodiaque",
+        "en": "Take your Zodiac seat"
+      },
+      "dialog": {
+        "fr": "Conforme au règlement. Bienvenue parmi les Zodiaques.",
+        "en": "In accordance with the rules. Welcome among the Zodiacs."
+      }
+    }
+  ]
+}

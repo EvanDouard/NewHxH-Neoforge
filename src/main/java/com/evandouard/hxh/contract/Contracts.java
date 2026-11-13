@@ -236,6 +236,7 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
         if (blacklist) QuestManager.data(p).addBlacklistCaught();
         else QuestManager.data(p).addContractDone();
         HunterStars.update(p);
+        QuestManager.onHuntDone(p, blacklist);
         QuestManager.data(p).addJenny(reward);
         QuestManager.sync(p);
         p.sendSystemMessage(Component.translatable("message.hxh.contract_done", reward).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));

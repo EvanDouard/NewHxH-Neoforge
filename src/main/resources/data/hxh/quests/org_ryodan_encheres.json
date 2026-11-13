@@ -1,0 +1,56 @@
+{
+  "title": {
+    "fr": "Le requiem de York Shin",
+    "en": "The York Shin requiem"
+  },
+  "start_npc": "chrollo",
+  "requires": [
+    "hxh:org_ryodan",
+    "org:ryodan"
+  ],
+  "intro": {
+    "fr": "Les enchères de York Shin. Nous prendrons tout.",
+    "en": "The York Shin auction. We will take everything."
+  },
+  "steps": [
+    {
+      "id": "plan",
+      "type": "talk",
+      "npc": "chrollo",
+      "objective": {
+        "fr": "Écouter Chrollo",
+        "en": "Listen to Chrollo"
+      },
+      "dialog": {
+        "fr": "La mafia garde la salle. Élimine ses gardes, puis rapporte-moi l'étoile du Nether mise en vente.",
+        "en": "The mafia guards the hall. Eliminate its guards, then bring me the Nether Star up for sale."
+      }
+    },
+    {
+      "id": "guards",
+      "type": "kill",
+      "entity": "minecraft:vindicator",
+      "count": 10,
+      "objective": {
+        "fr": "Éliminer 10 gardes de la mafia (vindicateurs)",
+        "en": "Eliminate 10 mafia guards (vindicators)"
+      }
+    },
+    {
+      "id": "star",
+      "type": "bring",
+      "npc": "chrollo",
+      "item": "minecraft:nether_star",
+      "count": 1,
+      "reward_jenny": 3000,
+      "objective": {
+        "fr": "Rapporter une étoile du Nether à Chrollo (enchères de York Shin)",
+        "en": "Bring a Nether Star to Chrollo (York Shin auction)"
+      },
+      "dialog": {
+        "fr": "Un requiem pour la mafia. Bien joué.",
+        "en": "A requiem for the mafia. Well done."
+      }
+    }
+  ]
+}

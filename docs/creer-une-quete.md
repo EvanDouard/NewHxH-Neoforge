@@ -26,7 +26,7 @@ Exemple complet à copier : `data/hxh/quests/exemple_pecheur.json`.
 |---|---|
 | `title` | Nom de la quête (bulle, carnet, notifications). |
 | `start_npc` | *(optionnel)* PNJ qui donne la quête quand on lui parle. Sans lui : `/hunter quest start hxh:<nom>`, ou du code. |
-| `requires` | *(optionnel)* quêtes à avoir terminées avant. |
+| `requires` | *(optionnel)* quêtes à avoir terminées avant ; `"org:ryodan"` = être membre de cette organisation. |
 | `intro` | *(optionnel)* ce que dit le PNJ en donnant la quête. |
 | `npcs` | *(optionnel)* nouveaux PNJ : identifiant → nom. Ils apparaissent ensuite dans le cycle du **repère de PNJ** (clic droit). Skin : `assets/hxh/textures/entity/npc/<id>.png` (sinon apparence par défaut). |
 | `steps` | Les étapes, dans l'ordre. |
@@ -46,6 +46,7 @@ Si une clé existe dans les fichiers de langue (`quest.hxh.<nom>`, `quest.hxh.<n
 | `follow` | `npc`, `seconds`, `max_distance` | on reste près du PNJ (marathon de Satotz). |
 | `custom` | `note` | **condition pas encore codée** : `note` la décrit, `/hunter quest validate` la valide en attendant. |
 | `arena_win`, `arena_floor`, `arena_register_200` | `count` | Tour Céleste (victoires, étage atteint, inscription au 200e). |
+| `blacklist_catch`, `contract_done` | `count` | criminels de la Blacklist capturés, contrats Zoldyck remplis (depuis le début de l'étape). |
 
 **Récompenses** (sur n'importe quelle étape, données quand elle se valide) :
 `"reward_jenny": 500`, `"reward_item": "minecraft:diamond"`, `"reward_hunter": true` (licence).
