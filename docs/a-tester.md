@@ -1,12 +1,24 @@
 # À tester (ajouts non vérifiés)
 
 La CI a été bloquée (facturation) le 12 novembre ; le dépôt est public depuis le soir et elle tourne de nouveau.
+Run vert du 13 nov fin d'après-midi (c291c3d) : 144 GameTests, rang Hunter, Blacklist, quêtes d'organisation.
 Run vert du 13 nov après-midi (08c021d) : 142 GameTests, paris, exorcisme, contrats.
 Run vert du 13 nov (89b5221) : 139 GameTests et le scénario passent (coups secrets, serments, enchères, combattants du 200e).
 Run vert du 12 nov au soir (08913eb) : compilation, tous les GameTests et le scénario passent. Les lignes « CI » sont cochées ;
 les lignes « En jeu » restent à regarder à la main.
 
 Légende : **CI** = vérifié par les GameTests ou une capture du scénario · **En jeu** = à regarder à la main.
+
+## Rang Hunter et Blacklist (13 nov, fin d'après-midi)
+- [x] CI : GameTest `hunterStarsAndBlacklist` (licence exigée, une étoile par domaine : 200e étage, 3 captures, Nen 60 ; 1000 J × étoile ; étoiles jamais perdues ; traques réservées selon le rang ; une traque à la fois).
+- [x] CI : capture `60_blacklist_et_rang` (liste cliquable [Traquer] dans le chat, traques d'un rang supérieur grisées).
+- [ ] En jeu : ouvrir l'ordinateur Hunter avec la licence → la Blacklist s'affiche dans le chat ; prendre une traque, rejoindre la cible, la capturer.
+- [ ] En jeu : carnet, ligne « Rang Hunter : ★☆☆ · Blacklist · Contrats ».
+- Nouvelle commande admin pour tes tests : `/hunter license give|remove`.
+
+## Quêtes propres aux organisations (13 nov, fin d'après-midi)
+- [x] CI : GameTest `organizationQuestsFollowMembership` (prérequis `org:`, l'étape `blacklist_catch` compte les captures, pas les contrats).
+- [ ] En jeu : après le recrutement, reparler au recruteur : Beans (2 captures de la Blacklist), Chrollo (10 gardes + une étoile du Nether des enchères), Genthru (16 TNT + 3 golems) ; Cheadle (PNJ `cheadle`, à poser) ouvre les Zodiaques après la mission de Beans (230e étage + 1 capture).
 
 ## Paris sur les combats de la Tour (13 nov, après-midi)
 - [x] CI : GameTest `betsPayWinnersAtFightEnd` (cote bornée, pas de pari contre soi, mise prise tout de suite, fermeture après 20 s, gain versé, pari perdu).

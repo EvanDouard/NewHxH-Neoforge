@@ -278,8 +278,9 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
             p.sendSystemMessage(Component.translatable("message.hxh.blacklist_license").withStyle(ChatFormatting.GRAY));
             return;
         }
-        for (Contract c : CONTRACTS.values()) {
-            if (!c.blacklist()) continue;
+        java.util.List<Contract> list = CONTRACTS.values().stream().filter(Contract::blacklist)
+                .sorted(java.util.Comparator.comparingInt(Contract::minStars).thenComparingInt(Contract::reward)).toList();
+        for (Contract c : list) {
             boolean ok = q.hunterStars() >= c.minStars();
             var line = Component.literal(" • " + c.name(lang) + " — " + c.reward() + " J ").withStyle(ok ? ChatFormatting.WHITE : ChatFormatting.DARK_GRAY);
             if (ok) {
