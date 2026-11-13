@@ -1641,7 +1641,8 @@ shot 58b_exorcisme
 cmd kill @e[type=hxh:npc]
 cmd hunter jenny set 0
 cmd gamemode creative
-# --- Contrats Zoldyck ---
+# --- Contrats Zoldyck (pas en Paisible : la cible est un mob hostile) ---
+cmd difficulty easy
 cmd kill @e[type=!minecraft:player]
 camera first
 cmd tp @s ~ ~ ~ 0 0
@@ -1654,6 +1655,7 @@ wait 15
 expect Contrat :
 shot 59_contrat_zoldyck
 cmd kill @e[type=!minecraft:player]
+cmd difficulty peaceful
 # --- Rang Hunter et Blacklist ---
 cmd hunter license give
 wait 120
