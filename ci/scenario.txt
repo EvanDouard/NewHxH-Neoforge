@@ -2069,5 +2069,57 @@ expect Billet payé
 shot 92_arrivee_a_alpha
 cmd kill @e[type=hxh:npc]
 cmd hunter license give
+# ===== Tests en jeu faits par Claude (lot T4) =====
+# --- Blacklist : prendre une traque, rejoindre la cible, la capturer ---
+cmd difficulty easy
+cmd hunter contract cancel
+cmd tp @s ~80 -60 ~ 0 10
+wait 20
+clearchat
+cmd hunter blacklist take bl_trafiquant
+wait 10
+expect Traque ouverte
+clearchat
+cmd hunter contract goto
+wait 3
+shot 93_traque_blacklist
+cmd damage @e[tag=hxh_contract,limit=1,sort=nearest] 1000 minecraft:player_attack by @s
+wait 10
+expect Contrat rempli
+# --- Hunter gourmet : sa quête jusqu'au bout, puis les plats débloqués en boutique ---
+cmd kill @e[type=!minecraft:player]
+cmd tp @s ~40 -60 ~ -90 10
+wait 20
+cmd summon hxh:npc ~2 ~ ~ {npc:"hunter_gourmet",NoAI:1b}
+wait 5
+hold key.sneak
+wait 5
+clearchat
+talkto hunter_gourmet
+wait 10
+release key.sneak
+cmd give @s minecraft:golden_carrot 16
+cmd give @s minecraft:cooked_salmon 16
+cmd give @s minecraft:enchanted_golden_apple 1
+hold key.sneak
+wait 5
+talkto hunter_gourmet
+wait 10
+talkto hunter_gourmet
+wait 10
+talkto hunter_gourmet
+wait 10
+talkto hunter_gourmet
+wait 10
+release key.sneak
+expect Quête terminée
+shot 94_quete_du_gourmet_terminee
+wait 10
+talkto hunter_gourmet
+wait 10
+shot 95_boutique_gourmet_debloquee
+closescreen
+cmd kill @e[type=hxh:npc]
+cmd difficulty peaceful
 cmd gamemode creative
 quit

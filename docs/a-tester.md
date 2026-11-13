@@ -118,8 +118,8 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 
 ## Voyages en dirigeable (12 nov)
 - [x] CI : GameTest `airportsOpenWhenVisitedAndCostJenny` (aéroport ouvert à la visite, prix 1 Jenny / 10 blocs, min 50, gratuit avec la licence).
-- [ ] En jeu : poser deux PNJ `guichetier` loin l'un de l'autre, parler aux deux, cliquer « ✈ destination » : écran noir « En vol », arrivée devant l'autre guichet, Jenny débités.
-- [ ] En jeu : `/hunter airport name <nom>` renomme l'aéroport le plus proche.
+- [x] Testé par Claude en CI (captures 90–92) : deux guichets à 600 blocs, destination listée (60 J), « En vol », arrivée, Jenny débités. Bug corrigé : un guichetier posé par /summon n'avait pas de place (aéroport en 0, 0).
+- [x] Testé par Claude en CI : `/hunter airport name Alpha` puis vol vers « Alpha ».
 
 ## Plats nutritifs (Vitalité) (12 nov)
 - [x] CI : GameTest `nutritiousDishGivesVitalityXp`.
