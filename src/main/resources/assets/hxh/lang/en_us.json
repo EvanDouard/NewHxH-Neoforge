@@ -1330,5 +1330,19 @@
   "vow.hxh.overtime.desc": "You work nights: everything ×1.3 at night (stats, aura, techniques), but everything ×0.7 by day. Without a day/night cycle (Heavens Arena), it counts as day. Can't be taken together with “Day shift”.",
   "vow.hxh.day_shift": "Day shift",
   "vow.hxh.day_shift.desc": "The opposite of “Overtime”: everything ×1.3 by day, but everything ×0.7 at night. The two can't be taken together.",
-  "message.hxh.vow_timed_switch": "%s: the sun turns, power %s"
+  "message.hxh.vow_timed_switch": "%s: the sun turns, power %s",
+  "dialog.hxh.gon.idle": "Hi! Want to come fishing with me?",
+  "dialog.hxh.killua.idle": "… Got any chocolate on you?",
+  "dialog.hxh.kurapika.idle": "I'm looking for information on the Phantom Troupe.",
+  "dialog.hxh.leorio.idle": "One day I'll be a doctor. For free, for those who have nothing.",
+  "dialog.hxh.hisoka.idle": "You're not ripe yet… ♠",
+  "dialog.hxh.merchant.idle": "Take a look at my wares, Hunter.",
+  "dialog.hxh.husband_1.idle": "My wife… please, believe me.",
+  "dialog.hxh.husband_2.idle": "He's the impostor, not me!",
+  "dialog.hxh.commissaire_priseur.idle": "The York Shin auction resumes every day. Come back for the lots.",
+  "dialog.hxh.exorciste.idle": "A foreign aura clinging to someone? I'll deal with it.",
+  "dialog.hxh.majordome_zoldyck.idle": "The Zoldyck family takes every contract. For a price.",
+  "dialog.hxh.hunter_gourmet.idle": "A dish is nothing without good ingredients. Come back once you're a Hunter, I'll let you taste.",
+  "dialog.hxh.cheadle.idle": "Rules first. Everything else after.",
+  "dialog.hxh.lutteur.idle": "Arm wrestling? Put your elbow down, if you dare."
 }

@@ -112,6 +112,34 @@ public final class QuestTests {
     }
 
     @GameTest(template = "empty")
+    public static void everyNpcSpeaksAndEveryTextIsTranslated(GameTestHelper helper) {
+        com.google.gson.JsonObject fr, en;
+        try (var a = QuestTests.class.getResourceAsStream("/assets/hxh/lang/fr_fr.json");
+             var b = QuestTests.class.getResourceAsStream("/assets/hxh/lang/en_us.json")) {
+            fr = com.google.gson.JsonParser.parseReader(new java.io.InputStreamReader(a, java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+            en = com.google.gson.JsonParser.parseReader(new java.io.InputStreamReader(b, java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+        } catch (Exception e) {
+            throw new net.minecraft.gametest.framework.GameTestAssertException("Fichiers de langue illisibles : " + e);
+        }
+        java.util.List<String> mute = new java.util.ArrayList<>(), untranslated = new java.util.ArrayList<>();
+        for (String k : fr.keySet()) {
+            if (k.startsWith("npc.hxh.") && k.chars().filter(c -> c == '.').count() == 2
+                    && !fr.has("dialog.hxh." + k.substring(8) + ".idle")) mute.add(k.substring(8));
+            if (!en.has(k)) untranslated.add(k);
+        }
+        helper.assertTrue(mute.isEmpty(), "PNJ sans réplique par défaut : " + mute);
+        helper.assertTrue(untranslated.isEmpty(), "Textes sans traduction anglaise : " + untranslated);
+        // La licence de Hunter vaut l'Examen réussi (quêtes qui le demandent)
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(p);
+        helper.assertFalse(QuestManager.requirementMet(d, "hxh:hunter_exam"), "Sans licence : Examen pas fait");
+        d.setHunter(true);
+        helper.assertTrue(QuestManager.requirementMet(d, "hxh:hunter_exam"), "Avec la licence : Examen réussi");
+        d.setHunter(false);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void firstQuestIsBecomingAHunter(GameTestHelper helper) {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
         QuestData d = QuestManager.data(player);

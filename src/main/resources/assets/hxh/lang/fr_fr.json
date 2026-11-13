@@ -1330,5 +1330,19 @@
   "vow.hxh.overtime.desc": "Tu travailles la nuit : tout ×1,3 la nuit (stats, aura, techniques), mais tout ×0,7 le jour. Sans cycle jour/nuit (Tour Céleste), c'est le jour. Ne peut pas être pris en même temps que « Service de jour ».",
   "vow.hxh.day_shift": "Service de jour",
   "vow.hxh.day_shift.desc": "L'inverse d'« Heure supplémentaire » : tout ×1,3 le jour, mais tout ×0,7 la nuit. Les deux ne peuvent pas être pris ensemble.",
-  "message.hxh.vow_timed_switch": "%s : le soleil tourne, puissance %s"
+  "message.hxh.vow_timed_switch": "%s : le soleil tourne, puissance %s",
+  "dialog.hxh.gon.idle": "Salut ! Tu veux venir pêcher avec moi ?",
+  "dialog.hxh.killua.idle": "… T'as pas des chocolats sur toi ?",
+  "dialog.hxh.kurapika.idle": "Je cherche des informations sur la Brigade Fantôme.",
+  "dialog.hxh.leorio.idle": "Un jour, je serai médecin. Gratuitement, pour ceux qui n'ont rien.",
+  "dialog.hxh.hisoka.idle": "Tu n'es pas encore mûr… ♠",
+  "dialog.hxh.merchant.idle": "Jette un œil à mes articles, Hunter.",
+  "dialog.hxh.husband_1.idle": "Ma femme… je vous en prie, croyez-moi.",
+  "dialog.hxh.husband_2.idle": "C'est lui l'imposteur, pas moi !",
+  "dialog.hxh.commissaire_priseur.idle": "Les enchères de York Shin reprennent chaque jour. Revenez voir les lots.",
+  "dialog.hxh.exorciste.idle": "Une aura étrangère s'accroche à quelqu'un ? Je m'en occupe.",
+  "dialog.hxh.majordome_zoldyck.idle": "La famille Zoldyck accepte tous les contrats. Pour un prix.",
+  "dialog.hxh.hunter_gourmet.idle": "Un plat n'est rien sans de bons ingrédients. Reviens quand tu seras Hunter, je te ferai goûter.",
+  "dialog.hxh.cheadle.idle": "Le règlement d'abord. Tout le reste ensuite.",
+  "dialog.hxh.lutteur.idle": "Un bras de fer ? Pose ton coude, si tu l'oses."
 }

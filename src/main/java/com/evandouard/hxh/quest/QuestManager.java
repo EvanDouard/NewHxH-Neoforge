@@ -31,7 +31,10 @@ public final class QuestManager {
      */
     public static boolean requirementMet(QuestData d, String r) {
         if (r.startsWith("org:")) return d.organization().equals(r.substring(4));
-        return d.completed.contains(ResourceLocation.parse(r).toString());
+        String id = ResourceLocation.parse(r).toString();
+        // La licence de Hunter vaut l'Examen réussi (licence donnée par un admin, monde repris…)
+        if (id.equals(QuestRegistry.HUNTER_EXAM.toString()) && d.isHunter()) return true;
+        return d.completed.contains(id);
     }
 
     public static QuestData data(ServerPlayer player) {
