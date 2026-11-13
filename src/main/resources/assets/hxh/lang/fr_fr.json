@@ -1322,5 +1322,7 @@
   "item.hxh.spider_eagle_spawn_egg": "Œuf d'apparition d'aigle-araignée",
   "command.hxh.contract_none": "Aucun contrat en cours",
   "command.hxh.contract_goto_seen": "Près de la cible du contrat",
-  "command.hxh.contract_goto_spawn": "Au point d'apparition de la cible (elle n'est pas encore chargée)"
+  "command.hxh.contract_goto_spawn": "Au point d'apparition de la cible (elle n'est pas encore chargée)",
+  "dialog.hxh.majordome.peaceful": "Le monde est trop paisible en ce moment : aucune cible ne survivrait jusqu'à votre arrivée. Revenez quand il y aura du danger.",
+  "message.hxh.contract_peaceful": "Pas de traque en difficulté Paisible : la cible disparaîtrait"
 }

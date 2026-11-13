@@ -1804,6 +1804,7 @@ wait 20
 shot 69_boussole_de_quete_dos_tourne
 cmd hunter quest reset
 # ===== Tests en jeu faits par Claude (lot T1) =====
+cmd difficulty easy
 cmd kill @e[type=!minecraft:player]
 cmd gamemode survival
 cmd tp @s ~200 -60 ~ 0 10

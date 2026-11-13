@@ -63,7 +63,7 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 ## Contrats Zoldyck (13 nov, après-midi)
 - [x] CI : GameTest `zoldyckContractsPayTheHolder` (cible nommée, récompense au seul titulaire, délai dépassé = cible partie, +50 % pour un Zoldyck).
 - [x] CI : capture `59_contrat_zoldyck` (contrat, coordonnées, délai, récompense dans le chat).
-- [ ] En jeu : poser le PNJ `majordome_zoldyck`, prendre un contrat, rejoindre les coordonnées (100 à 300 blocs), éliminer la cible avant la fin.
+- [x] Testé par Claude en CI (captures 73–74) : contrat pris, bulle + boussole, cible rejointe et éliminée. Corrigé : la cible brûlait au soleil ; en Paisible, contrats refusés (la cible disparaissait).
 
 ## Coups secrets de famille (13 nov)
 - [x] CI : GameTest `familySecretMovesWork` (coup donné avec la famille, juste avant les coups de base, sans Nen, recharge, change avec la famille).

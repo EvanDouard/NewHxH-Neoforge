@@ -129,6 +129,11 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
         return p.getPersistentData().getCompound(TAG);
     }
 
+    /** Difficulté « Paisible » : les cibles (mobs hostiles) disparaîtraient, les contrats sont refusés. */
+    public static boolean peaceful(ServerPlayer p) {
+        return p.level().getDifficulty() == net.minecraft.world.Difficulty.PEACEFUL;
+    }
+
     /** Nom de la cible du contrat en cours, ou null. */
     @Nullable
     public static String activeName(ServerPlayer p) {
@@ -165,6 +170,11 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
             CompoundTag s = state(player);
             long left = Math.max(0, (s.getLong("deadline") - player.level().getGameTime()) / 20);
             say(player, Component.translatable("dialog.hxh.majordome.reminder", s.getString("name"), s.getInt("x"), s.getInt("z"), left / 60, left % 60));
+            return;
+        }
+        if (peaceful(player)) {
+            // En paisible, la cible (un mob hostile) disparaîtrait aussitôt : pas de contrat
+            say(player, Component.translatable("dialog.hxh.majordome.peaceful"));
             return;
         }
         Contract c = pick(player.getRandom().nextLong());
@@ -279,6 +289,7 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
         if (!QuestManager.data(p).isHunter()) return "message.hxh.blacklist_license";
         if (QuestManager.data(p).hunterStars() < c.minStars()) return "message.hxh.blacklist_stars";
         if (hasContract(p)) return "message.hxh.blacklist_busy";
+        if (peaceful(p)) return "message.hxh.contract_peaceful";
         return null;
     }
 

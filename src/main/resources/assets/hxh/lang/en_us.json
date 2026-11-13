@@ -1322,5 +1322,7 @@
   "item.hxh.spider_eagle_spawn_egg": "Spider Eagle Spawn Egg",
   "command.hxh.contract_none": "No contract in progress",
   "command.hxh.contract_goto_seen": "Next to the contract target",
-  "command.hxh.contract_goto_spawn": "At the target's spawn point (not loaded yet)"
+  "command.hxh.contract_goto_spawn": "At the target's spawn point (not loaded yet)",
+  "dialog.hxh.majordome.peaceful": "The world is too peaceful right now: no target would survive until you arrive. Come back when there is danger.",
+  "message.hxh.contract_peaceful": "No hunts in Peaceful difficulty: the target would vanish"
 }
