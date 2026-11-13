@@ -34,8 +34,8 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 - [x] CI : GameTest `namedChallengersAbove200` étendu : Hisoka (son vrai kit) aux 235–240e étages.
 - [x] CI : GameTest `foxbearIsAToughPredator` (60 PV, 9 dégâts, petits renards-ours, butin) ; capture `62_renard_ours`.
 - [ ] En jeu : poser le PNJ `hunter_gourmet` ; clic droit = boutique, accroupi + clic droit = sa quête « Le plat légendaire » (16 carottes dorées, 16 saumons cuits, une pomme d'or enchantée → plat IV).
-- [ ] En jeu : renards-ours dans les forêts (nouveaux tronçons), agressifs, la mère défend ses petits. Modèle et texture à faire (provisoire : ours polaire agrandi).
-- [ ] En jeu : combattre Hisoka au 235e étage.
+- [x] Testé par Claude en CI (capture 85) : renard-ours et son petit, Great Stamp. Modèles et textures à faire (provisoires).
+- [x] Testé par Claude en CI (capture 84) : l'arbitre annonce Hisoka au 235e, cote et paris ouverts, combat lancé. Reste à toi : la difficulté.
 
 ## Rang Hunter et Blacklist (13 nov, fin d'après-midi)
 - [x] CI : GameTest `hunterStarsAndBlacklist` (licence exigée, une étoile par domaine : 200e étage, 3 captures, Nen 60 ; 1000 J × étoile ; étoiles jamais perdues ; traques réservées selon le rang ; une traque à la fois).
@@ -145,21 +145,21 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 
 ## Retours du 13 novembre — lot A
 - [x] CI : sanctuaires plus rares et espacés, effets de méditation selon le niveau, `/hunter shrine nearest`.
-- [ ] En jeu : méditer près d'une pierre (niveau 1 à 5) : lueur, onde dès le niveau 3, crépitement au niveau 5 ; message d'XP dans la barre d'action.
+- [x] Testé par Claude en CI (captures 66 et 79) : niveaux 4 et 5, lueur, anneau doré, « +1 Volonté ».
 - [x] CI : carnet (O) mis à jour en direct ; Ko persistant (effet « Ko ») ; serments (effet, stats multipliées, pause, coup de dos sans dégâts) ; cratère en demi-sphère ; coup de pied qui envoie la cible sur un autre mob.
-- [ ] En jeu : PV et armure au-dessus des mobs au Gyo 40 / En 30 ; mobs surlignés dans l'En à tout niveau.
-- [ ] En jeu : écran Serments → bouton pause pour « Combat loyal », « Monstres seulement », « Mains nues ».
+- [x] Testé par Claude en CI (capture 76) : « PV · Armure » au-dessus d'un mob ordinaire au Gyo 40 (bug corrigé : ne marchait que sur les mobs à Nen).
+- [x] Testé par Claude en CI (capture 78) : serment prêté, mis en pause, écran des serments.
 
 ## Retours du 13 novembre — lot B
 - [x] CI : GameTest `questCompassPointsAtTheStepTarget` + captures 68/69 (boussole de quête à côté de la bulle).
-- [ ] En jeu : boussole pendant un contrat Zoldyck ou une traque de la Blacklist (elle suit la cible qui bouge, mise à jour toutes les 5 s).
+- [x] Testé par Claude en CI (captures 73–74) : bulle du contrat + boussole, cible rejointe et éliminée, « Contrat rempli ».
 - [x] CI : GameTest `doctorBlytheIsHeldAndDrainsAura` (Docteur Blythe maintenu).
 - [x] CI : GameTest `strongFightersHitInAnArea` (coups de base et Nen en zone selon les stats).
 - [ ] En jeu : sensation des attaques de zone (rayon, onde visible, pas trop fort) ; valider la liste des techniques à cible unique.
 
 ## Retours du 13 novembre — lot C (formes de l'En)
 - [x] CI : GameTest `enShapesKeepTheSameVolume` (volume gardé, formes impossibles refusées, détection, déblocage à 50) + captures 70 (cube), 71 (cylindre), 72 (écran).
-- [ ] En jeu : carnet (O) → onglet Personnage → « Forme de l'En » ; essayer les 4 formes, vérifier que les mobs surlignés correspondent à la forme.
+- [x] Testé par Claude en CI (captures 70–72) : cube, cylindre, écran de la forme.
 - [ ] À juger : les parois sont discrètes avec une aura claire (arêtes et cercles encrés bien visibles) — plus marquées ?
 
 ## Tests en jeu faits par Claude en CI (lot T1, 13 nov)
