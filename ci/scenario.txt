@@ -1557,6 +1557,10 @@ cmd kill @e[type=!minecraft:player]
 wait 120
 cmd gamemode survival
 cmd hunter family set zoldyck
+clearchat
+cmd hunter
+wait 5
+expect Famille : Zoldyck
 camera first
 cmd tp @s ~ ~ ~ 0 0
 look 0 10
@@ -2026,6 +2030,10 @@ closescreen
 cmd hunter hatsu set none
 # --- Organisation : la Brigade dans le carnet ---
 cmd hunter org join ryodan
+clearchat
+cmd hunter
+wait 5
+expect Brigade Fantôme
 key key.hxh.profile
 wait 10
 click Quêtes

@@ -160,8 +160,13 @@ public class ProfileScreen extends Screen {
         return out;
     }
 
+    /** Bas du panneau de texte : au-dessus du curseur « Vitesse max » sur l'onglet Personnage. */
+    private int panelBottom() {
+        return tab == 0 ? height - 106 : height - 82;
+    }
+
     private int visibleRows() {
-        return Math.max(1, (height - 60 - 84) / 11);
+        return Math.max(1, (panelBottom() - 56) / 11);
     }
 
     @Override
@@ -177,7 +182,7 @@ public class ProfileScreen extends Screen {
         int w = panelW();
         int left = width / 2 - w / 2;
         g.drawCenteredString(font, title, width / 2, 12, 0xFFD27F);
-        int top = 56, bottom = height - 82;
+        int top = 56, bottom = panelBottom();
         g.fill(left, top - 4, left + w, bottom, 0xAA000000);
         List<FormattedCharSequence> rows = wrapped();
         int y = top;

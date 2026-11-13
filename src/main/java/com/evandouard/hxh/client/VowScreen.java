@@ -136,9 +136,13 @@ public class VowScreen extends Screen {
             if (over) hovered = i;
             boolean mine = Vows.of(d) == v;
             g.fill(left, y, left + 300, y + ROW - 2, mine ? 0x80604010 : over ? 0x60303050 : 0x40000000);
-            g.drawString(font, Vows.name(d, v).copy().withStyle(mine ? ChatFormatting.GOLD : ChatFormatting.WHITE),
+            // nom coupé avant la colonne du multiplicateur (le survol affiche la description en entier)
+            String name = Vows.name(d, v).getString();
+            int maxW = 172;
+            if (font.width(name) > maxW) name = font.plainSubstrByWidth(name, maxW - font.width("…")).stripTrailing() + "…";
+            g.drawString(font, Component.literal(name).withStyle(mine ? ChatFormatting.GOLD : ChatFormatting.WHITE),
                     left + 6, y + 6, 0xFFFFFF);
-            g.drawString(font, Component.literal("×" + power(d, v)).withStyle(ChatFormatting.AQUA), left + 176, y + 6, 0xFFFFFF);
+            g.drawString(font, Component.literal("×" + power(d, v)).withStyle(ChatFormatting.AQUA), left + 182, y + 6, 0xFFFFFF);
         }
         if (hovered >= 0) {
             List<FormattedCharSequence> lines = font.split(description(d, vows[hovered]).copy().withStyle(ChatFormatting.GRAY), 300);
