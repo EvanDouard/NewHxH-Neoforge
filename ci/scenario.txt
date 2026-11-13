@@ -1557,10 +1557,6 @@ cmd kill @e[type=!minecraft:player]
 wait 120
 cmd gamemode survival
 cmd hunter family set zoldyck
-clearchat
-cmd hunter
-wait 5
-expect Famille : Zoldyck
 camera first
 cmd tp @s ~ ~ ~ 0 0
 look 0 10
@@ -1824,12 +1820,10 @@ wait 20
 expect Contrat :
 shot 73_contrat_zoldyck_bulle_et_boussole
 cmd kill @e[type=hxh:npc]
-cmd hunter contract goto
-wait 120
-cmd hunter contract goto
-wait 20
-shot 74_contrat_zoldyck_cible_proche
 clearchat
+cmd hunter contract goto
+wait 3
+shot 74_contrat_zoldyck_cible_proche
 cmd damage @e[tag=hxh_contract,limit=1,sort=nearest] 1000 minecraft:player_attack by @s
 wait 10
 expect Contrat rempli
@@ -2032,10 +2026,6 @@ closescreen
 cmd hunter hatsu set none
 # --- Organisation : la Brigade dans le carnet ---
 cmd hunter org join ryodan
-clearchat
-cmd hunter
-wait 5
-expect Brigade Fantôme
 key key.hxh.profile
 wait 10
 click Quêtes
