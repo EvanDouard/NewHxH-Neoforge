@@ -43,7 +43,10 @@ public final class LevelTagRenderer {
         boolean en = SensesClient.inLocalEn(entity);
         if (!en && !SensesClient.localGyo()) return;
         HunterData data = entity.hasData(ModAttachments.HUNTER) ? entity.getData(ModAttachments.HUNTER) : null;
-        if (!en && (data == null || !(entity instanceof Player) && !data.nenUnlocked() && data.hunterLevel() == 0)) return;
+        boolean gyoHealth = SensesClient.localGyoLevel() >= com.evandouard.hxh.nen.NenSenses.GYO_SEE_HEALTH;
+        // Sans Nen ni niveau, rien à lire au Gyo… sauf sa vie et son armure à partir du Gyo 40
+        boolean noLevel = !en && (data == null || !(entity instanceof Player) && !data.nenUnlocked() && data.hunterLevel() == 0);
+        if (noLevel && !gyoHealth) return;
         if (entity.distanceToSqr(mc.player) > MAX_DISTANCE * MAX_DISTANCE) return;
 
         int level = data == null ? 0 : data.hunterLevel();
@@ -74,15 +77,18 @@ public final class LevelTagRenderer {
         Font font = mc.font;
         float x = -font.width(text) / 2f;
         int background = (int) (mc.options.getBackgroundOpacity(0.25f) * 255f) << 24;
-        font.drawInBatch(text, x, 0, colorFor(level, mine), false, matrix, event.getMultiBufferSource(),
-                Font.DisplayMode.SEE_THROUGH, background, event.getPackedLight());
-        font.drawInBatch(text, x, 0, colorFor(level, mine), false, matrix, event.getMultiBufferSource(),
-                Font.DisplayMode.NORMAL, 0, event.getPackedLight());
+        if (!noLevel) {
+            font.drawInBatch(text, x, 0, colorFor(level, mine), false, matrix, event.getMultiBufferSource(),
+                    Font.DisplayMode.SEE_THROUGH, background, event.getPackedLight());
+            font.drawInBatch(text, x, 0, colorFor(level, mine), false, matrix, event.getMultiBufferSource(),
+                    Font.DisplayMode.NORMAL, 0, event.getPackedLight());
+        }
         if (health != null) {
             float hx = -font.width(health) / 2f;
-            font.drawInBatch(health, hx, 10, 0xFFFF6B6B, false, matrix, event.getMultiBufferSource(),
+            int hy = noLevel ? 0 : 10;
+            font.drawInBatch(health, hx, hy, 0xFFFF6B6B, false, matrix, event.getMultiBufferSource(),
                     Font.DisplayMode.SEE_THROUGH, background, event.getPackedLight());
-            font.drawInBatch(health, hx, 10, 0xFFFF6B6B, false, matrix, event.getMultiBufferSource(),
+            font.drawInBatch(health, hx, hy, 0xFFFF6B6B, false, matrix, event.getMultiBufferSource(),
                     Font.DisplayMode.NORMAL, 0, event.getPackedLight());
         }
         pose.popPose();
