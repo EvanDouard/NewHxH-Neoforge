@@ -36,6 +36,14 @@ Valeurs posées par Claude pour avancer. Elles marchent en jeu, mais on les revo
 |---|---|
 | Seuils (dégâts d'un coup) | éclats ≥ 8, trou de rayon 1 ≥ 15, cratère de rayon 1,8 ≥ 25 |
 
+## Coup de pied fort et bras de fer
+| Quoi | Valeur actuelle |
+|---|---|
+| Seuil « fort » | Force ≥ 30 (config `combat.strongFromStrength`) |
+| Poussée du coup de pied fort | (2,6 + Force × 0,02) × (1 − résistance au recul), légère montée 0,25 |
+| Trou dans les murs | rayon 1,6, 2 murs au plus, la cible garde 70 % de sa vitesse entre deux |
+| Bras de fer | mise 100 J (gain ×2), 40 XP de Force ; champion = Force du joueur + 10 ; zone 0,2 + 0,003 × écart de Force |
+
 ## Tour Céleste
 | Quoi | Valeur actuelle |
 |---|---|

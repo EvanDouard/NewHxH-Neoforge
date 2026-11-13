@@ -260,7 +260,7 @@ public final class Impacts {
      * La cible percute un mur : trou autour d'elle (règle hxhNenDestruction), éclats de la couleur du bloc, étoile
      * d'impact, onde de choc, son d'explosion sourd, et dégâts de choc.
      */
-    static void wallHit(ServerLevel level, LivingEntity t, Vec3 dir, float radius) {
+    public static void wallHit(ServerLevel level, LivingEntity t, Vec3 dir, float radius) {
         Vec3 at = t.getBoundingBox().getCenter().add(dir.scale(0.6));
         BlockPos wall = BlockPos.containing(t.getBoundingBox().getCenter().add(dir.scale(1.0)));
         BlockState s = level.getBlockState(wall);
