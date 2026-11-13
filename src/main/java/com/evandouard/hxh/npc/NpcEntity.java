@@ -75,6 +75,13 @@ public class NpcEntity extends PathfinderMob {
         home = pos;
     }
 
+    /** PNJ posé sans place (par /summon) : sa place est l'endroit où il est apparu (guichets d'aéroport…). */
+    @Override
+    public void tick() {
+        super.tick();
+        if (!level().isClientSide() && home.equals(BlockPos.ZERO) && tickCount > 1) home = blockPosition();
+    }
+
     /** Parcours à suivre (marathon de Satotz) : points dans l'ordre, le dernier est l'arrivée. */
     private java.util.List<BlockPos> route = java.util.List.of();
     private int routeIndex = 0;
