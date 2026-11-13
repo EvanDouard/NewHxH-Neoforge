@@ -1,6 +1,7 @@
 # À tester (ajouts non vérifiés)
 
 La CI a été bloquée (facturation) le 12 novembre ; le dépôt est public depuis le soir et elle tourne de nouveau.
+Run vert du 13 nov soir (faf9745) : 148 GameTests, gourmet revu, Great Stamp, ratés destructeurs.
 Run vert du 13 nov soir (c4cc6d8) : 145 GameTests, Hunter gourmet, Hisoka.
 Run vert du 13 nov fin d'après-midi (c291c3d) : 144 GameTests, rang Hunter, Blacklist, quêtes d'organisation.
 Run vert du 13 nov après-midi (08c021d) : 142 GameTests, paris, exorcisme, contrats.
@@ -9,6 +10,17 @@ Run vert du 12 nov au soir (08913eb) : compilation, tous les GameTests et le sc�
 les lignes « En jeu » restent à regarder à la main.
 
 Légende : **CI** = vérifié par les GameTests ou une capture du scénario · **En jeu** = à regarder à la main.
+
+## Retours d'Evan du 13 nov (soir) : gourmet, renard-ours ; Great Stamp, ratés destructeurs
+- [x] CI : boutique du gourmet : plats II/III/IV verrouillés « Après sa quête » (capture `61_boutique_hunter_gourmet`), achetables ensuite (GameTest `gourmetSellsDishThreeAndQuestGivesFour`).
+- [x] CI : quête finale « La recette secrète » valide (renards-ours, viande cuite, pommes d'or, plats III, cœur de la mer → carnet de recettes) ; le carnet n'est pas consommé à l'établi.
+- [x] CI : renard-ours neutre comme l'ours polaire (GameTest `foxbearActsLikeAPolarBear`), donne de la viande de renard-ours.
+- [x] CI : GameTest `greatStampHasAnArmoredSnout` (coups de face ÷3, jamais de zoglin) ; capture `63_great_stamp`.
+- [x] CI : GameTest `missedTechniquesDamageScenery` (un raté ≥ 15 de dégâts troue le mur, < 8 ne fait rien).
+- [ ] En jeu : faire les deux quêtes du gourmet ; cuisiner plats III et IV à l'établi avec le carnet ; cuire la viande de renard-ours (four, fumoir, feu de camp).
+- [ ] En jeu : Great Stamp dans les forêts : il charge ; le frapper de côté, de dos ou d'en haut.
+- [ ] En jeu : une technique ratée contre un mur (règle hxhNenDestruction) : éclats, trou ou cratère selon les dégâts.
+- Valeurs à revoir ensemble : `docs/equilibrage-final.md`.
 
 ## Hunter gourmet, Hisoka, renard-ours (13 nov, soir)
 - [x] CI : GameTest `gourmetSellsDishThreeAndQuestGivesFour` (plat III en boutique à 900 J, plat IV jamais en boutique mais dans la quête et aux enchères) ; capture `61_boutique_hunter_gourmet`.

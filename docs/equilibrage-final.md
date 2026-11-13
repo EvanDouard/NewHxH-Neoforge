@@ -23,6 +23,19 @@ Valeurs posées par Claude pour avancer. Elles marchent en jeu, mais on les revo
 | Butin | 2 à 4 viandes crues, 1 à 3 cuirs |
 | Comportement | celui de l'ours polaire (neutre, la mère défend ses petits) : décidé par Evan, pas d'apprivoisement |
 
+## Great Stamp
+| Quoi | Valeur actuelle |
+|---|---|
+| Vie, dégâts, recul | 50 PV, 7, projection 1,2, résistance au recul 0,7 |
+| Museau blindé | coups de face × 0,3 |
+| Apparition | forêts (chênes, bouleaux, forêt noire), poids 4, 2 à 3 |
+| Butin | 4 à 7 côtelettes de porc, 1 à 2 cuirs |
+
+## Techniques ratées
+| Quoi | Valeur actuelle |
+|---|---|
+| Seuils (dégâts d'un coup) | éclats ≥ 8, trou de rayon 1 ≥ 15, cratère de rayon 1,8 ≥ 25 |
+
 ## Tour Céleste
 | Quoi | Valeur actuelle |
 |---|---|
