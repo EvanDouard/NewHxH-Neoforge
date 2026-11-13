@@ -1812,6 +1812,7 @@ cmd gamemode survival
 cmd tp @s ~200 -60 ~ 0 10
 wait 20
 cmd hunter quest reset
+cmd hunter contract cancel
 cmd hunter jenny set 20000
 cmd hunter license give
 # --- Contrat Zoldyck : bulle du contrat + boussole, puis contrat rempli ---

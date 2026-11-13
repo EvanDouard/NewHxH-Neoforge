@@ -144,6 +144,14 @@ public final class HunterCommand {
                                                         com.mojang.brigadier.arguments.FloatArgumentType.getFloat(ctx, "b"))))))))
                 // Contrat en cours : aller jusqu'à la cible (admin, pour tester)
                 .then(Commands.literal("contract").requires(s -> s.hasPermission(2))
+                        .then(Commands.literal("cancel").executes(ctx -> {
+                            net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
+                            if (!com.evandouard.hxh.contract.Contracts.cancel(p)) {
+                                ctx.getSource().sendFailure(Component.translatable("command.hxh.contract_none"));
+                                return 0;
+                            }
+                            return 1;
+                        }))
                         .then(Commands.literal("goto").executes(ctx -> {
                             net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
                             net.minecraft.core.BlockPos at = com.evandouard.hxh.contract.Contracts.targetPos(p);

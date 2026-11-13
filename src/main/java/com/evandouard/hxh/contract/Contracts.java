@@ -333,6 +333,18 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
         }
     }
 
+    /** Annule le contrat en cours (commande admin) : la cible s'en va. @return false s'il n'y en avait pas */
+    public static boolean cancel(ServerPlayer p) {
+        if (!hasContract(p)) return false;
+        CompoundTag s = state(p);
+        for (ServerLevel level : p.server.getAllLevels()) {
+            var e = s.hasUUID("target") ? level.getEntity(s.getUUID("target")) : null;
+            if (e != null) e.discard();
+        }
+        fail(p, "command.hxh.contract_cancelled");
+        return true;
+    }
+
     static void fail(ServerPlayer p, String key) {
         p.getPersistentData().remove(TAG);
         QuestManager.sync(p); // la bulle du contrat disparaît

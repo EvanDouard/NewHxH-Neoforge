@@ -1324,5 +1324,6 @@
   "command.hxh.contract_goto_seen": "Près de la cible du contrat",
   "command.hxh.contract_goto_spawn": "Au point d'apparition de la cible (elle n'est pas encore chargée)",
   "dialog.hxh.majordome.peaceful": "Le monde est trop paisible en ce moment : aucune cible ne survivrait jusqu'à votre arrivée. Revenez quand il y aura du danger.",
-  "message.hxh.contract_peaceful": "Pas de traque en difficulté Paisible : la cible disparaîtrait"
+  "message.hxh.contract_peaceful": "Pas de traque en difficulté Paisible : la cible disparaîtrait",
+  "command.hxh.contract_cancelled": "Contrat annulé"
 }

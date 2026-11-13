@@ -64,7 +64,7 @@ public final class LevelTagRenderer {
         boolean seeHealth = (en && SensesClient.localEnLevel() >= com.evandouard.hxh.nen.NenSenses.EN_SEE_HEALTH)
                 || SensesClient.localGyoLevel() >= com.evandouard.hxh.nen.NenSenses.GYO_SEE_HEALTH;
         Component health = seeHealth ? Component.translatable("hud.hxh.health_tag",
-                (int) Math.ceil(entity.getHealth()), (int) Math.ceil(entity.getMaxHealth()), entity.getArmorValue()) : null;
+                (int) Math.ceil(entity.getHealth()), (int) Math.ceil(Math.max(entity.getHealth(), entity.getMaxHealth())), entity.getArmorValue()) : null;
 
         PoseStack pose = event.getPoseStack();
         pose.pushPose();
