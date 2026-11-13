@@ -29,6 +29,13 @@ public final class ClientHooks {
         else mc.setScreen(new AuctionScreen(payload));
     }
 
+    /** Bras de fer : ouvre l'écran au premier état, puis le met à jour. */
+    public static void armWrestle(com.evandouard.hxh.network.ArmWrestleStatePayload payload) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.screen instanceof ArmWrestleScreen open) open.update(payload);
+        else if (payload.result() == 0) mc.setScreen(new ArmWrestleScreen(payload));
+    }
+
     public static void openComputer(com.evandouard.hxh.network.OpenComputerPayload payload) {
         Minecraft.getInstance().setScreen(new HunterComputerScreen(payload));
     }

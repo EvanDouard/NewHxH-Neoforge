@@ -1253,5 +1253,14 @@
   "shop.hxh.locked": "Il ne te vend pas encore ça : fais d'abord sa quête",
   "shop.hxh.locked_short": "Après sa quête",
   "entity.hxh.great_stamp": "Great Stamp",
-  "item.hxh.great_stamp_spawn_egg": "Œuf d'apparition de Great Stamp"
+  "item.hxh.great_stamp_spawn_egg": "Œuf d'apparition de Great Stamp",
+  "npc.hxh.lutteur": "Champion de bras de fer",
+  "armwrestle.hxh.title": "Bras de fer",
+  "armwrestle.hxh.help": "Maintiens clic gauche ou Espace pour pousser : garde ton bras (rouge) dans la zone jaune",
+  "armwrestle.hxh.result_won": "Victoire !",
+  "armwrestle.hxh.result_lost": "Défaite…",
+  "armwrestle.hxh.start": "Bras de fer ! Mise : %s Jenny.",
+  "armwrestle.hxh.no_jenny": "Il faut miser %s Jenny",
+  "armwrestle.hxh.won": "Bras de fer gagné : +%s Jenny, +%s XP de Force",
+  "armwrestle.hxh.lost": "Bras de fer perdu (%s Jenny)"
 }

@@ -116,6 +116,9 @@ public class NpcEntity extends PathfinderMob {
             com.evandouard.hxh.auction.Auction auction = com.evandouard.hxh.auction.Auctions.forNpc(npcId());
             if (com.evandouard.hxh.nen.Exorcism.NPC.equals(npcId()) && !player.isShiftKeyDown()) com.evandouard.hxh.nen.Exorcism.talk(serverPlayer);
             else if (com.evandouard.hxh.contract.Contracts.NPC.equals(npcId()) && !player.isShiftKeyDown()) com.evandouard.hxh.contract.Contracts.talk(serverPlayer);
+            else if (com.evandouard.hxh.minigame.ArmWrestle.NPC.equals(npcId()) && !player.isShiftKeyDown())
+                com.evandouard.hxh.minigame.ArmWrestle.start(serverPlayer, com.evandouard.hxh.minigame.ArmWrestle.championStrength(serverPlayer),
+                        com.evandouard.hxh.minigame.ArmWrestle.STAKE);
             else if (shop != null && !player.isShiftKeyDown()) com.evandouard.hxh.shop.Shops.open(serverPlayer, shop);
             else if (auction != null && !player.isShiftKeyDown()) com.evandouard.hxh.auction.Auctions.open(serverPlayer, auction);
             else QuestManager.onTalk(serverPlayer, this);

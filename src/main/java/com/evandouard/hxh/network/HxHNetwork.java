@@ -33,6 +33,8 @@ public final class HxHNetwork {
         registrar.playToServer(ToggleNenModePayload.TYPE, ToggleNenModePayload.STREAM_CODEC, ToggleNenModePayload::handle);
         registrar.playToClient(OpenShopPayload.TYPE, OpenShopPayload.STREAM_CODEC, OpenShopPayload::handle);
         registrar.playToClient(OpenAuctionPayload.TYPE, OpenAuctionPayload.STREAM_CODEC, OpenAuctionPayload::handle);
+        registrar.playToClient(ArmWrestleStatePayload.TYPE, ArmWrestleStatePayload.STREAM_CODEC, ArmWrestleStatePayload::handle);
+        registrar.playToServer(ArmWrestleInputPayload.TYPE, ArmWrestleInputPayload.STREAM_CODEC, ArmWrestleInputPayload::handle);
         registrar.playToServer(AuctionBidPayload.TYPE, AuctionBidPayload.STREAM_CODEC, AuctionBidPayload::handle);
         registrar.playToClient(OpenComputerPayload.TYPE, OpenComputerPayload.STREAM_CODEC, OpenComputerPayload::handle);
         registrar.playToServer(ShopActionPayload.TYPE, ShopActionPayload.STREAM_CODEC, ShopActionPayload::handle);

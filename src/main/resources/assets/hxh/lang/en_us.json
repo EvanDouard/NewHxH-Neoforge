@@ -1253,5 +1253,14 @@
   "shop.hxh.locked": "He won't sell you that yet: do his quest first",
   "shop.hxh.locked_short": "After his quest",
   "entity.hxh.great_stamp": "Great Stamp",
-  "item.hxh.great_stamp_spawn_egg": "Great Stamp Spawn Egg"
+  "item.hxh.great_stamp_spawn_egg": "Great Stamp Spawn Egg",
+  "npc.hxh.lutteur": "Arm-Wrestling Champion",
+  "armwrestle.hxh.title": "Arm wrestling",
+  "armwrestle.hxh.help": "Hold left click or Space to push: keep your arm (red) in the yellow zone",
+  "armwrestle.hxh.result_won": "Victory!",
+  "armwrestle.hxh.result_lost": "Defeat…",
+  "armwrestle.hxh.start": "Arm wrestling! Stake: %s Jenny.",
+  "armwrestle.hxh.no_jenny": "You need to stake %s Jenny",
+  "armwrestle.hxh.won": "Arm wrestling won: +%s Jenny, +%s Strength XP",
+  "armwrestle.hxh.lost": "Arm wrestling lost (%s Jenny)"
 }

@@ -63,6 +63,11 @@ public final class HunterCommand {
                 .then(nenCommand())
                 .then(hatsuCommand())
                 .then(vowCommand())
+                // Bras de fer contre un adversaire de cette Force (admin, tests)
+                .then(Commands.literal("armwrestle").requires(src -> src.hasPermission(2))
+                        .then(Commands.argument("strength", com.mojang.brigadier.arguments.IntegerArgumentType.integer(0, 100)).executes(ctx ->
+                                com.evandouard.hxh.minigame.ArmWrestle.start(ctx.getSource().getPlayerOrException(),
+                                        com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(ctx, "strength"), 0) ? 1 : 0)))
                 // Licence Hunter (admin, tests) : donner ou retirer
                 .then(Commands.literal("license").requires(src -> src.hasPermission(2))
                         .then(Commands.literal("give").executes(ctx -> {

@@ -1715,4 +1715,11 @@ wait 12
 shot 64_coup_de_pied_fort_mur_creuse
 cmd kill @e[type=minecraft:pig]
 cmd gamemode creative
+# --- Bras de fer ---
+cmd hunter stat strength set 40
+cmd hunter armwrestle 40
+wait 30
+shot 65_bras_de_fer
+closescreen
+wait 400
 quit

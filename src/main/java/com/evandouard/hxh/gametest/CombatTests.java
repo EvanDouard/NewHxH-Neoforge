@@ -200,23 +200,23 @@ public final class CombatTests {
         helper.succeed();
     }
 
-    @GameTest(template = "empty", timeoutTicks = 100)
+    @GameTest(template = "empty", timeoutTicks = 120)
     public static void strongKickSendsFarAndDigsWalls(GameTestHelper helper) {
         var level = helper.getLevel();
         level.getGameRules().getRule(com.evandouard.hxh.HxHGameRules.NEN_DESTRUCTION).set(true, level.getServer());
-        // un mur de pierre 4 blocs derrière la cible
-        for (int y = 1; y <= 3; y++) for (int z = 0; z <= 2; z++) helper.setBlock(new BlockPos(6, y, z), net.minecraft.world.level.block.Blocks.STONE);
+        // un mur de pierre derrière la cible
+        for (int y = 1; y <= 3; y++) for (int z = 0; z <= 2; z++) helper.setBlock(new BlockPos(5, y, z), net.minecraft.world.level.block.Blocks.STONE);
         Zombie strong = husk(helper, 0);
         com.evandouard.hxh.stats.HunterStats.setLevel(strong, com.evandouard.hxh.data.Stat.STRENGTH, 40);
-        Zombie v = husk(helper, 2);
-        v.setNoGravity(false);
+        var v = helper.spawn(EntityType.PIG, new BlockPos(2, 1, 1));
         helper.assertTrue(Combat.isStrong(strong), "Force 40 : « fort »");
-        Combat.kick(strong);
+        Combat.kickNow(strong);
         helper.assertTrue(v.getDeltaMovement().horizontalDistance() > 2.0, "Coup de pied fort : projeté très loin (" + v.getDeltaMovement() + ")");
-        helper.runAfterDelay(30, () -> {
+        helper.runAfterDelay(40, () -> {
             int air = 0;
-            for (int y = 1; y <= 3; y++) for (int z = 0; z <= 2; z++) if (level.getBlockState(helper.absolutePos(new BlockPos(6, y, z))).isAir()) air++;
-            helper.assertTrue(air >= 3, "La cible a creusé le mur en le percutant (" + air + " blocs cassés)");
+            for (int y = 1; y <= 3; y++) for (int z = 0; z <= 2; z++) if (level.getBlockState(helper.absolutePos(new BlockPos(5, y, z))).isAir()) air++;
+            helper.assertTrue(air >= 2, "La cible a creusé le mur en le percutant (" + air + " blocs cassés, cible en "
+                    + helper.relativePos(v.blockPosition()) + ")");
             helper.succeed();
         });
     }

@@ -138,4 +138,31 @@ public final class TrainingTests {
         helper.assertTrue(!com.evandouard.hxh.meditation.MeditationShrines.buy(player, 5), "Niveau 5 jamais vendu");
         helper.succeed();
     }
+
+    @net.minecraft.gametest.framework.GameTest(template = "empty")
+    public static void armWrestlingRewardsSkillAndStrength(net.minecraft.gametest.framework.GameTestHelper helper) {
+        // Un joueur qui suit la zone gagne ; un joueur qui ne pousse jamais perd
+        var good = new com.evandouard.hxh.minigame.ArmWrestle.Match(40, 40, 100, 1L);
+        for (int t = 0; t < 4000 && good.result == 0; t++) {
+            good.holding = good.marker + good.velocity * 6 < good.zoneCenter;
+            good.step();
+        }
+        helper.assertTrue(good.result == 1, "Suivre la zone : victoire (" + good.result + ", barre " + good.progress + ")");
+        var lazy = new com.evandouard.hxh.minigame.ArmWrestle.Match(40, 40, 100, 2L);
+        for (int t = 0; t < 4000 && lazy.result == 0; t++) lazy.step();
+        helper.assertTrue(lazy.result == 2, "Ne jamais pousser : défaite");
+        // Plus fort que l'adversaire : zone plus large
+        var strong = new com.evandouard.hxh.minigame.ArmWrestle.Match(90, 20, 0, 3L);
+        var weak = new com.evandouard.hxh.minigame.ArmWrestle.Match(20, 90, 0, 3L);
+        helper.assertTrue(strong.zoneSize > weak.zoneSize, "La Force élargit la zone : " + strong.zoneSize + " / " + weak.zoneSize);
+        // Mise : prise au départ
+        net.minecraft.server.level.ServerPlayer p = helper.makeMockServerPlayerInLevel();
+        var q = com.evandouard.hxh.quest.QuestManager.data(p);
+        q.addJenny(-q.jenny());
+        helper.assertTrue(!com.evandouard.hxh.minigame.ArmWrestle.start(p, 30, 100), "Sans Jenny : pas de défi");
+        q.addJenny(100);
+        helper.assertTrue(com.evandouard.hxh.minigame.ArmWrestle.start(p, 30, 100) && q.jenny() == 0, "Mise prise au départ");
+        helper.assertTrue(com.evandouard.hxh.minigame.ArmWrestle.match(p) != null, "Manche en cours");
+        helper.succeed();
+    }
 }
