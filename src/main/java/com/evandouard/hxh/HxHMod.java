@@ -45,6 +45,8 @@ public final class HxHMod {
         com.evandouard.hxh.family.Families.registerEvents(NeoForge.EVENT_BUS);
         com.evandouard.hxh.hatsu.Vows.registerEvents(NeoForge.EVENT_BUS);
         com.evandouard.hxh.nen.Exorcism.registerEvents(NeoForge.EVENT_BUS);
+        com.evandouard.hxh.contract.Contracts.registerEvents(NeoForge.EVENT_BUS);
+        NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.contract.Contracts::register);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.computer.HunterComputer::register);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.exam.ExamPlacer::onServerStarted);
         com.evandouard.hxh.mob.MobPresets.registerEvents(NeoForge.EVENT_BUS);

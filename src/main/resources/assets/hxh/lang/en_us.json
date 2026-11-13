@@ -1221,5 +1221,12 @@
   "arena.hxh.bets.refused.closed": "Bets are closed for this fight",
   "arena.hxh.bets.refused.not_enough_jenny": "Not enough Jenny",
   "arena.hxh.bets.refused.against_self": "You cannot bet against yourself",
-  "arena.hxh.bets.refused.invalid": "Invalid bet"
+  "arena.hxh.bets.refused.invalid": "Invalid bet",
+  "npc.hxh.majordome_zoldyck": "Zoldyck Butler",
+  "dialog.hxh.majordome.none": "No contract for now. Come back later.",
+  "dialog.hxh.majordome.offer": "Contract: %s. Last known position: X %s, Z %s. You have %s minutes. Reward: %s Jenny.",
+  "dialog.hxh.majordome.reminder": "Your target: %s, near X %s, Z %s. Time left: %s min %s s.",
+  "dialog.hxh.majordome.late": "Deadline passed: the contract is cancelled. The family does not like to wait.",
+  "dialog.hxh.majordome.stolen": "Someone else eliminated your target: contract cancelled.",
+  "message.hxh.contract_done": "Contract fulfilled! +%s Jenny"
 }

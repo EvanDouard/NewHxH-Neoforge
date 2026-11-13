@@ -757,4 +757,33 @@ public final class QuestTests {
         helper.assertTrue(d.familyMove().isEmpty(), "Sans famille : pas de coup secret");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void zoldyckContractsPayTheHolder(GameTestHelper helper) {
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.family.Families.set(p, "");
+        QuestData d = QuestManager.data(p);
+        d.addJenny(-d.jenny());
+        var c = com.evandouard.hxh.contract.Contracts.get("garde_du_corps");
+        helper.assertTrue(c != null && com.evandouard.hxh.contract.Contracts.all().size() >= 4, "Contrats chargés");
+        var target = com.evandouard.hxh.contract.Contracts.start(p, c, helper.absoluteVec(new Vec3(3.5, 1, 3.5)));
+        helper.assertTrue(target != null && com.evandouard.hxh.contract.Contracts.hasContract(p), "Contrat ouvert, cible posée");
+        helper.assertTrue(target.hasCustomName(), "La cible porte le nom du contrat");
+        target.invulnerableTime = 0;
+        target.hurt(p.damageSources().playerAttack(p), 10000f);
+        helper.assertTrue(!target.isAlive(), "Cible éliminée");
+        helper.assertTrue(d.jenny() == c.reward(), "Récompense versée : " + d.jenny());
+        helper.assertTrue(!com.evandouard.hxh.contract.Contracts.hasContract(p), "Contrat clos");
+        // Délai dépassé : contrat raté, la cible s'en va
+        var t2 = com.evandouard.hxh.contract.Contracts.start(p, c, helper.absoluteVec(new Vec3(5.5, 1, 3.5)));
+        p.getPersistentData().getCompound("hxh_contract").putLong("deadline", p.level().getGameTime() - 1);
+        com.evandouard.hxh.contract.Contracts.expireIfLate(p);
+        helper.assertTrue(!com.evandouard.hxh.contract.Contracts.hasContract(p) && t2.isRemoved(), "Délai dépassé : contrat annulé, cible partie");
+        helper.assertTrue(d.jenny() == c.reward(), "Rien de plus");
+        // Un Zoldyck touche 50 % de plus
+        com.evandouard.hxh.family.Families.set(p, "zoldyck");
+        helper.assertTrue(com.evandouard.hxh.contract.Contracts.rewardFor(p, c) == Math.round(c.reward() * 1.5f), "Bonus Zoldyck");
+        com.evandouard.hxh.family.Families.set(p, "");
+        helper.succeed();
+    }
 }

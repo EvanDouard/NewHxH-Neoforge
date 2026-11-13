@@ -1,0 +1,9 @@
+{
+  "name": { "fr": "Un mercenaire qui a trahi son employeur", "en": "A mercenary who betrayed his employer" },
+  "preset": "vindicateur_transmuteur",
+  "reward": 450,
+  "min_distance": 120,
+  "max_distance": 250,
+  "time_seconds": 1200,
+  "weight": 3
+}

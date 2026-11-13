@@ -1221,5 +1221,12 @@
   "arena.hxh.bets.refused.closed": "Les paris sont fermés pour ce combat",
   "arena.hxh.bets.refused.not_enough_jenny": "Pas assez de Jenny",
   "arena.hxh.bets.refused.against_self": "Interdit de parier contre soi-même",
-  "arena.hxh.bets.refused.invalid": "Mise invalide"
+  "arena.hxh.bets.refused.invalid": "Mise invalide",
+  "npc.hxh.majordome_zoldyck": "Majordome des Zoldyck",
+  "dialog.hxh.majordome.none": "Aucun contrat pour le moment. Revenez plus tard.",
+  "dialog.hxh.majordome.offer": "Contrat : %s. Dernière position : X %s, Z %s. Vous avez %s minutes. Récompense : %s Jenny.",
+  "dialog.hxh.majordome.reminder": "Votre cible : %s, vers X %s, Z %s. Temps restant : %s min %s s.",
+  "dialog.hxh.majordome.late": "Délai dépassé : le contrat est annulé. La famille n'aime pas attendre.",
+  "dialog.hxh.majordome.stolen": "Quelqu'un d'autre a éliminé votre cible : contrat annulé.",
+  "message.hxh.contract_done": "Contrat rempli ! +%s Jenny"
 }

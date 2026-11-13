@@ -1,0 +1,9 @@
+{
+  "name": { "fr": "Le garde du corps d'un parrain", "en": "A mafia boss's bodyguard" },
+  "preset": "zombie_costaud",
+  "reward": 250,
+  "min_distance": 100,
+  "max_distance": 200,
+  "time_seconds": 1200,
+  "weight": 4
+}

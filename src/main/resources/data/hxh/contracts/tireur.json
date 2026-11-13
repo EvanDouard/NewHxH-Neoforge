@@ -1,0 +1,9 @@
+{
+  "name": { "fr": "Un tireur embusqué renégat", "en": "A renegade sniper" },
+  "preset": "squelette_archer",
+  "reward": 200,
+  "min_distance": 100,
+  "max_distance": 200,
+  "time_seconds": 900,
+  "weight": 3
+}

@@ -1639,4 +1639,17 @@ shot 58b_exorcisme
 cmd kill @e[type=hxh:npc]
 cmd hunter jenny set 0
 cmd gamemode creative
+# --- Contrats Zoldyck ---
+cmd kill @e[type=!minecraft:player]
+camera first
+cmd tp @s ~ ~ ~ 0 0
+look 0 10
+cmd summon hxh:npc ~ ~ ~3 {npc:"majordome_zoldyck",NoAI:1b,Silent:1b,Rotation:[180f,0f]}
+wait 20
+clearchat
+talkto majordome_zoldyck
+wait 15
+expect Contrat :
+shot 59_contrat_zoldyck
+cmd kill @e[type=!minecraft:player]
 quit

@@ -1,0 +1,9 @@
+{
+  "name": { "fr": "Un usurier de York Shin, manieur de Nen", "en": "A York Shin loan shark, Nen user" },
+  "preset": "elite_manipulateur",
+  "reward": 800,
+  "min_distance": 150,
+  "max_distance": 300,
+  "time_seconds": 1500,
+  "weight": 2
+}
