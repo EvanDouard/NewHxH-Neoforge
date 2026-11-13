@@ -369,4 +369,37 @@ public final class ArenaTests {
         helper.assertTrue(pig.getHealth() < before, "Les toupies touchent le cochon");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void betsPayWinnersAtFightEnd(GameTestHelper helper) {
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+        var q = QuestManager.data(p);
+        q.addJenny(-q.jenny());
+        q.addJenny(2000);
+        ArenaFighterEntity f = helper.spawn(ModEntities.ARENA_FIGHTER.get(), new BlockPos(1, 1, 1));
+        f.configure(120, null);
+        long now = helper.getLevel().getGameTime();
+        var book = com.evandouard.hxh.arena.ArenaBets.open(p, f, now);
+        float c = book.playerWinChance();
+        helper.assertTrue(c >= 0.1f && c <= 0.9f, "Cote bornée : " + c);
+        helper.assertTrue(com.evandouard.hxh.arena.ArenaBets.place(p, p.getUUID(), false, 100, now) == com.evandouard.hxh.arena.ArenaBets.Result.AGAINST_SELF, "Pas contre soi-même");
+        helper.assertTrue(com.evandouard.hxh.arena.ArenaBets.place(p, p.getUUID(), true, 5000, now) == com.evandouard.hxh.arena.ArenaBets.Result.NOT_ENOUGH_JENNY, "Pas assez de Jenny");
+        helper.assertTrue(com.evandouard.hxh.arena.ArenaBets.place(p, p.getUUID(), true, 500, now) == com.evandouard.hxh.arena.ArenaBets.Result.OK, "Mise sur soi acceptée");
+        helper.assertTrue(q.jenny() == 1500, "Mise prise tout de suite (" + q.jenny() + ")");
+        helper.assertTrue(com.evandouard.hxh.arena.ArenaBets.place(p, p.getUUID(), true, 100, now + com.evandouard.hxh.arena.ArenaBets.WINDOW_TICKS + 1)
+                == com.evandouard.hxh.arena.ArenaBets.Result.CLOSED, "Paris fermés après la fenêtre");
+        int expected = com.evandouard.hxh.arena.ArenaBets.payout(500, c);
+        helper.assertTrue(expected > 500, "Un pari gagnant rapporte plus que la mise");
+        com.evandouard.hxh.arena.ArenaBets.settle(id -> p, p.getUUID(), true);
+        helper.assertTrue(q.jenny() == 1500 + expected, "Gain versé : " + q.jenny() + " (attendu " + (1500 + expected) + ")");
+        helper.assertTrue(com.evandouard.hxh.arena.ArenaBets.book(p.getUUID()) == null, "Livre fermé");
+        // Un pari perdu ne rend rien
+        com.evandouard.hxh.arena.ArenaBets.open(p, f, now);
+        com.evandouard.hxh.arena.ArenaBets.place(p, p.getUUID(), true, 100, now);
+        int before = q.jenny();
+        com.evandouard.hxh.arena.ArenaBets.settle(id -> p, p.getUUID(), false);
+        helper.assertTrue(q.jenny() == before, "Pari perdu : rien de rendu");
+        f.discard();
+        helper.succeed();
+    }
 }

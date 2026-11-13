@@ -492,11 +492,13 @@ public final class Kinds {
             NenFx.impactOn(caster, target, 0.8f, color);
             // bombe dessinée collée à la cible, chiffres du compte à rebours
             if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.BOMB, target, target.position(), 1.5f, color, delay);
+            // marque de la bombe : un exorciste peut la retirer avant l'explosion
+            target.getPersistentData().putLong(com.evandouard.hxh.nen.Exorcism.BOMB, caster.level().getGameTime() + delay);
             int seconds = Math.max(1, delay / 20);
             for (int s = seconds; s >= 1; s--) {
                 final int left = s;
                 NenTasks.later((seconds - s) * 20, () -> {
-                    if (!target.isAlive()) return;
+                    if (!target.isAlive() || !target.getPersistentData().contains(com.evandouard.hxh.nen.Exorcism.BOMB)) return;
                     NenFx.flare(target, 0.6f + 0.3f * (seconds - left), color);
                     if (caster instanceof Player p) p.displayClientMessage(net.minecraft.network.chat.Component.literal(left + "…")
                             .withStyle(net.minecraft.ChatFormatting.RED, net.minecraft.ChatFormatting.BOLD), true);
@@ -504,6 +506,8 @@ public final class Kinds {
             }
             NenTasks.later(delay, () -> {
                 if (!target.isAlive() || !(target.level() instanceof ServerLevel level)) return;
+                if (!target.getPersistentData().contains(com.evandouard.hxh.nen.Exorcism.BOMB)) return; // désamorcée
+                target.getPersistentData().remove(com.evandouard.hxh.nen.Exorcism.BOMB);
                 Vec3 at = target.getBoundingBox().getCenter();
                 NenFx.impactAt(level, at, 2.4f, color);
                 NenFx.shockwaveAt(level, target.position().add(0, 0.2, 0), (float) radius, color);

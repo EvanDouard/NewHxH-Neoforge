@@ -1350,6 +1350,11 @@ talkto referee
 wait 100
 expect ton adversaire maîtrise le Nen
 expect Dans ce coin, Gido
+expect Guichet des paris
+cmd hunter jenny add 0
+cmd hunter bet Dev player 100
+wait 5
+expect Mise de 100 Jenny
 expectnot éfaite
 camera back
 wait 10
@@ -1362,6 +1367,7 @@ expectnot éfaite
 cmd kill @e[type=hxh:arena_fighter]
 wait 40
 expect Victoire
+expect Pari gagné
 shot 45c_objets_rendus
 wait 80
 cmd hunter arena floor 250
@@ -1614,4 +1620,23 @@ shot 57b_encheres_apres_une_mise
 closescreen
 cmd kill @e[type=hxh:npc]
 cmd hunter jenny set 0
+# --- Exorcisme de Nen ---
+cmd kill @e[type=!minecraft:player]
+cmd gamemode survival
+camera first
+cmd tp @s ~ ~ ~ 0 0
+look 0 10
+cmd summon hxh:npc ~ ~ ~3 {npc:"exorciste",NoAI:1b,Silent:1b,Rotation:[180f,0f]}
+cmd effect give @s hxh:nen_curse 600 0
+cmd hunter jenny set 1000
+wait 20
+clearchat
+shot 58a_malediction_de_nen
+talkto exorciste
+wait 15
+expect Mon Nen avale
+shot 58b_exorcisme
+cmd kill @e[type=hxh:npc]
+cmd hunter jenny set 0
+cmd gamemode creative
 quit

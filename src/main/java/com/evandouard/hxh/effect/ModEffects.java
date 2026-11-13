@@ -22,7 +22,28 @@ public final class ModEffects {
             .addAttributeModifier(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, HxHMod.id("fear_speed"),
                     -0.15, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
+    /**
+     * Malédiction de Nen : l'aura rancunière d'un manieur vaincu s'accroche. Dégâts −15 %, régénération d'aura
+     * divisée par deux. Ni le lait ni le temps ne l'enlèvent vite : il faut un exorciste.
+     */
+    public static final DeferredHolder<MobEffect, MobEffect> NEN_CURSE = EFFECTS.register("nen_curse", () -> new CurseEffect()
+            .addAttributeModifier(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE, HxHMod.id("nen_curse_damage"),
+                    -0.15, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+
     private ModEffects() {}
+
+    public static final class CurseEffect extends MobEffect {
+        CurseEffect() {
+            super(MobEffectCategory.HARMFUL, 0x8A1A3A);
+        }
+
+        /** Aucun remède ordinaire (lait, totem) : seul l'exorcisme l'enlève. */
+        @Override
+        public void fillEffectCures(java.util.Set<net.neoforged.neoforge.common.EffectCure> cures,
+                                    net.minecraft.world.effect.MobEffectInstance instance) {
+            cures.clear();
+        }
+    }
 
     public static final class FearEffect extends MobEffect {
         FearEffect() {

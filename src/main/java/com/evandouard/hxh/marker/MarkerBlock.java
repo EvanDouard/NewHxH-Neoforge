@@ -33,7 +33,7 @@ public class MarkerBlock extends BaseEntityBlock {
 
     /** PNJ proposés, dans l'ordre du clic droit. */
     public static final List<String> NPCS = List.of("navigator", "cook", "beans", "satotz", "buhara", "menchi", "netero",
-            "captain", "quiz_granny", "fake_satotz", "lippo", "tonpa", "kiriko_wife", "husband_1", "husband_2", "hotel_manager", "passeur", "receptionist", "referee", "guichetier", "archeologue", "commissaire_priseur");
+            "captain", "quiz_granny", "fake_satotz", "lippo", "tonpa", "kiriko_wife", "husband_1", "husband_2", "hotel_manager", "passeur", "receptionist", "referee", "guichetier", "archeologue", "commissaire_priseur", "exorciste");
 
     private final Kind kind;
 

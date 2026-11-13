@@ -63,6 +63,17 @@ public final class HunterCommand {
                 .then(nenCommand())
                 .then(hatsuCommand())
                 .then(vowCommand())
+                .then(Commands.literal("bet").then(Commands.argument("fighter", StringArgumentType.word())
+                        .then(Commands.argument("side", StringArgumentType.word())
+                                .suggests((ctx, b) -> SharedSuggestionProvider.suggest(List.of("player", "opponent"), b))
+                                .then(Commands.argument("stake", com.mojang.brigadier.arguments.IntegerArgumentType.integer(1)).executes(ctx -> {
+                                    var p = ctx.getSource().getPlayerOrException();
+                                    java.util.UUID f = com.evandouard.hxh.arena.ArenaBets.fighterByName(StringArgumentType.getString(ctx, "fighter"));
+                                    var r = com.evandouard.hxh.arena.ArenaBets.place(p, f == null ? new java.util.UUID(0, 0) : f,
+                                            !"opponent".equals(StringArgumentType.getString(ctx, "side")),
+                                            com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(ctx, "stake"), p.level().getGameTime());
+                                    return r == com.evandouard.hxh.arena.ArenaBets.Result.OK ? 1 : 0;
+                                })))))
                 // Événements aléatoires : en déclencher un (au hasard ou par nom) près de soi
                 .then(Commands.literal("event").requires(src -> src.hasPermission(2))
                         .then(Commands.argument("id", StringArgumentType.word())

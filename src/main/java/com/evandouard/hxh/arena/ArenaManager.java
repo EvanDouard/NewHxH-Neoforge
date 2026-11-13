@@ -433,6 +433,7 @@ public final class ArenaManager {
         fighter.configure(floor, player.getUUID());
         fighter.setWaiting(true);
         level.addFreshEntity(fighter);
+        ArenaBets.open(player, fighter, level.getGameTime()); // le guichet des paris ouvre
 
         Vec3 start = new Vec3(ps.getX() + 0.5, ps.getY(), ps.getZ() + 0.5);
         FIGHTS.put(player.getUUID(), new Fight(player.getUUID(), fighter.getUUID(), bracket.index(), floor, layout,
@@ -624,6 +625,7 @@ public final class ArenaManager {
     private static void finish(MinecraftServer server, Fight fight, @Nullable ServerPlayer player,
                                boolean win, String reason, boolean teleport) {
         FIGHTS.remove(fight.player);
+        ArenaBets.settle(server, fight.player, win);
         ServerLevel level = ArenaWorld.level(server);
         if (level != null && level.getEntity(fight.fighter) instanceof ArenaFighterEntity f) f.discard();
         if (player != null) {

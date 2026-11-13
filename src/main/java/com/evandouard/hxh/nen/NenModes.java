@@ -118,6 +118,7 @@ public final class NenModes {
         NenDefense.tickKo(entity, data);
         float regen = (float) (HxHConfig.AURA_REGEN_PER_SECOND.get() / 20.0);
         if (data.meditating()) regen *= 2; // la méditation recharge l'aura plus vite
+        if (entity.hasEffect(com.evandouard.hxh.effect.ModEffects.NEN_CURSE)) regen *= 0.5f; // malédiction de Nen
 
         switch (data.mode()) {
             case NONE, TEN, IN -> data.setAura(data.aura() + regen);

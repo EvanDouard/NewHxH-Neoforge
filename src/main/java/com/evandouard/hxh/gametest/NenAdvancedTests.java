@@ -151,4 +151,35 @@ public final class NenAdvancedTests {
         zombie.discard();
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void exorcistRemovesForeignAuras(GameTestHelper helper) {
+        net.minecraft.server.level.ServerPlayer p = helper.makeMockServerPlayerInLevel();
+        var q = com.evandouard.hxh.quest.QuestManager.data(p);
+        helper.assertTrue(com.evandouard.hxh.nen.Exorcism.curses(p).isEmpty(), "Au départ : aucune malédiction");
+        // Malédiction de Nen : le lait ne l'enlève pas
+        com.evandouard.hxh.nen.Exorcism.curse(p);
+        p.removeEffectsCuredBy(net.neoforged.neoforge.common.EffectCures.MILK);
+        helper.assertTrue(p.hasEffect(com.evandouard.hxh.effect.ModEffects.NEN_CURSE), "Le lait n'enlève pas la malédiction");
+        // Dette du Hakoware et bombe de Genthru
+        p.getPersistentData().putFloat(com.evandouard.hxh.hatsu.Specials.HAKO_DEBT, 12f);
+        p.getPersistentData().putLong(com.evandouard.hxh.nen.Exorcism.BOMB, p.level().getGameTime() + 100);
+        helper.assertTrue(com.evandouard.hxh.nen.Exorcism.curses(p).size() == 3, "Trois malédictions : " + com.evandouard.hxh.nen.Exorcism.curses(p));
+        // Pas assez de Jenny : rien ne change
+        q.addJenny(-q.jenny());
+        com.evandouard.hxh.nen.Exorcism.talk(p);
+        helper.assertTrue(com.evandouard.hxh.nen.Exorcism.curses(p).size() == 3, "Sans Jenny, l'exorciste ne fait rien");
+        int price = com.evandouard.hxh.nen.Exorcism.price(p, 3);
+        q.addJenny(price + 7);
+        com.evandouard.hxh.nen.Exorcism.talk(p);
+        helper.assertTrue(com.evandouard.hxh.nen.Exorcism.curses(p).isEmpty(), "Tout est exorcisé");
+        helper.assertTrue(q.jenny() == 7, "Prix payé (" + price + "), reste " + q.jenny());
+        helper.assertTrue(!p.hasEffect(com.evandouard.hxh.effect.ModEffects.NEN_CURSE), "Malédiction retirée");
+        // Le sceau d'un serment n'est pas une aura étrangère
+        com.evandouard.hxh.stats.HunterStats.get(p).setSealedUntil(p.level().getGameTime() + 1000);
+        com.evandouard.hxh.nen.Exorcism.exorcise(p);
+        helper.assertTrue(com.evandouard.hxh.stats.HunterStats.get(p).sealedUntil() > p.level().getGameTime(), "Le sceau du serment reste");
+        com.evandouard.hxh.stats.HunterStats.get(p).setSealedUntil(0);
+        helper.succeed();
+    }
 }

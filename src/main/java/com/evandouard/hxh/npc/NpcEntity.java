@@ -114,7 +114,8 @@ public class NpcEntity extends PathfinderMob {
             // Un marchand ouvre sa boutique (accroupi : on lui parle quand même, pour ses quêtes)
             com.evandouard.hxh.shop.Shop shop = com.evandouard.hxh.shop.ShopRegistry.forNpc(npcId());
             com.evandouard.hxh.auction.Auction auction = com.evandouard.hxh.auction.Auctions.forNpc(npcId());
-            if (shop != null && !player.isShiftKeyDown()) com.evandouard.hxh.shop.Shops.open(serverPlayer, shop);
+            if (com.evandouard.hxh.nen.Exorcism.NPC.equals(npcId()) && !player.isShiftKeyDown()) com.evandouard.hxh.nen.Exorcism.talk(serverPlayer);
+            else if (shop != null && !player.isShiftKeyDown()) com.evandouard.hxh.shop.Shops.open(serverPlayer, shop);
             else if (auction != null && !player.isShiftKeyDown()) com.evandouard.hxh.auction.Auctions.open(serverPlayer, auction);
             else QuestManager.onTalk(serverPlayer, this);
         }
