@@ -69,7 +69,7 @@ public final class ArenaBets {
     public static float winChance(LivingEntity player, LivingEntity opponent) {
         HunterData a = HunterStats.get(player), b = HunterStats.get(opponent);
         float diff = (a.hunterLevel() - b.hunterLevel()) + 0.5f * (a.nenLevel() - b.nenLevel());
-        return Math.max(0.1f, Math.min(0.9f, 0.5f + diff / 60f));
+        return Math.max(0.15f, Math.min(0.85f, 0.5f + diff / 60f));
     }
 
     /** Gain total (mise comprise) pour une mise sur un camp qui a cette chance de gagner. */

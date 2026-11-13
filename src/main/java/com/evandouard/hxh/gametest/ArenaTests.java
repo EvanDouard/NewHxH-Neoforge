@@ -381,7 +381,7 @@ public final class ArenaTests {
         long now = helper.getLevel().getGameTime();
         var book = com.evandouard.hxh.arena.ArenaBets.open(p, f, now);
         float c = book.playerWinChance();
-        helper.assertTrue(c >= 0.1f && c <= 0.9f, "Cote bornée : " + c);
+        helper.assertTrue(c >= 0.15f && c <= 0.85f, "Cote bornée : " + c);
         helper.assertTrue(com.evandouard.hxh.arena.ArenaBets.place(p, p.getUUID(), false, 100, now) == com.evandouard.hxh.arena.ArenaBets.Result.AGAINST_SELF, "Pas contre soi-même");
         helper.assertTrue(com.evandouard.hxh.arena.ArenaBets.place(p, p.getUUID(), true, 5000, now) == com.evandouard.hxh.arena.ArenaBets.Result.NOT_ENOUGH_JENNY, "Pas assez de Jenny");
         helper.assertTrue(com.evandouard.hxh.arena.ArenaBets.place(p, p.getUUID(), true, 500, now) == com.evandouard.hxh.arena.ArenaBets.Result.OK, "Mise sur soi acceptée");

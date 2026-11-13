@@ -1,11 +1,29 @@
 # À tester (ajouts non vérifiés)
 
 La CI a été bloquée (facturation) le 12 novembre ; le dépôt est public depuis le soir et elle tourne de nouveau.
+Run vert du 13 nov après-midi (08c021d) : 142 GameTests, paris, exorcisme, contrats.
 Run vert du 13 nov (89b5221) : 139 GameTests et le scénario passent (coups secrets, serments, enchères, combattants du 200e).
 Run vert du 12 nov au soir (08913eb) : compilation, tous les GameTests et le scénario passent. Les lignes « CI » sont cochées ;
 les lignes « En jeu » restent à regarder à la main.
 
 Légende : **CI** = vérifié par les GameTests ou une capture du scénario · **En jeu** = à regarder à la main.
+
+## Paris sur les combats de la Tour (13 nov, après-midi)
+- [x] CI : GameTest `betsPayWinnersAtFightEnd` (cote bornée, pas de pari contre soi, mise prise tout de suite, fermeture après 20 s, gain versé, pari perdu).
+- [x] CI : scénario au 200e : « Guichet des paris », mise de 100 J sur soi, « Pari gagné » à la victoire (capture 45).
+- [ ] En jeu : en multijoueur, un spectateur reçoit les liens [100 J] [500 J] [1000 J] et peut parier sur l'adversaire.
+- [ ] À juger : la cote (niveau Hunter + ½ niveau de Nen, bornée 15–85 %, 10 % gardés par le guichet).
+
+## Exorcisme de Nen (13 nov, après-midi)
+- [x] CI : GameTest `exorcistRemovesForeignAuras` (le lait n'enlève pas la malédiction ; malédiction, dette du Hakoware, bombe de Genthru retirées ; prix payé ; le sceau d'un serment reste).
+- [x] CI : captures `58a_malediction_de_nen` (icône d'œil rouge), `58b_exorcisme` (300 J).
+- [ ] En jeu : tuer des mobs à Nen (niveau de Nen ≥ 20) : 10 % de chance d'être maudit (dégâts −15 %, régénération d'aura ÷2, une journée).
+- [ ] En jeu : poser le PNJ `exorciste` ; désamorcer une bombe de Genthru avant l'explosion.
+
+## Contrats Zoldyck (13 nov, après-midi)
+- [x] CI : GameTest `zoldyckContractsPayTheHolder` (cible nommée, récompense au seul titulaire, délai dépassé = cible partie, +50 % pour un Zoldyck).
+- [x] CI : capture `59_contrat_zoldyck` (contrat, coordonnées, délai, récompense dans le chat).
+- [ ] En jeu : poser le PNJ `majordome_zoldyck`, prendre un contrat, rejoindre les coordonnées (100 à 300 blocs), éliminer la cible avant la fin.
 
 ## Coups secrets de famille (13 nov)
 - [x] CI : GameTest `familySecretMovesWork` (coup donné avec la famille, juste avant les coups de base, sans Nen, recharge, change avec la famille).
