@@ -1,7 +1,7 @@
 # À tester (ajouts non vérifiés)
 
 La CI a été bloquée (facturation) le 12 novembre ; le dépôt est public depuis le soir et elle tourne de nouveau.
-Run vert du 13 nov (d88ce5d) : coups secrets de famille.
+Run vert du 13 nov (89b5221) : 139 GameTests et le scénario passent (coups secrets, serments, enchères, combattants du 200e).
 Run vert du 12 nov au soir (08913eb) : compilation, tous les GameTests et le scénario passent. Les lignes « CI » sont cochées ;
 les lignes « En jeu » restent à regarder à la main.
 
@@ -14,19 +14,19 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 - [ ] En jeu : le carnet affiche « Coup secret : … » sous la famille.
 
 ## Serments et restrictions (13 nov)
-- [ ] CI : GameTest `vowsStrengthenAndSeal` (technique unique ×1,6 et refus des autres, rupture = sceau, payer de sa vie −2 PV, monstres seulement rompu sur un cochon, tout sacrifier ×3 puis scellé un jour).
-- [ ] CI : captures `56a_serments_liste`, `56b_serment_ultime_prete`.
+- [x] CI : GameTest `vowsStrengthenAndSeal` (technique unique ×1,6 et refus des autres, rupture = sceau, payer de sa vie −2 PV, monstres seulement rompu sur un cochon, tout sacrifier ×3 puis scellé un jour).
+- [x] CI : captures `56a_serments_liste`, `56b_serment_ultime_prete`.
 - [ ] En jeu : bouton « Serments » (écran K, fiche de son personnage) → prêter, renoncer (confirmation), sceau affiché.
 - [ ] En jeu : « Combat loyal » se rompt bien en frappant de dos, pas de face.
 
 ## Enchères de York Shin (13 nov)
-- [ ] CI : GameTest `auctionsOutbidThenSell` (4 lots par jour sans doublon, surenchères sans rien payer, adjugé à la dernière mise, lot vendu fermé).
-- [ ] CI : captures `57a_encheres_lots_du_jour`, `57b_encheres_apres_une_mise`.
+- [x] CI : GameTest `auctionsOutbidThenSell` (4 lots par jour sans doublon, surenchères sans rien payer, adjugé à la dernière mise, lot vendu fermé).
+- [x] CI : captures `57a_encheres_lots_du_jour`, `57b_encheres_apres_une_mise`.
 - [ ] En jeu : poser le PNJ `commissaire_priseur` (repère de PNJ), enchérir jusqu'à l'adjudication ; nouveaux lots le jour suivant.
 
 ## Combattants du 200e (13 nov)
-- [ ] CI : GameTest `namedChallengersAbove200` (Gido 200–209, Sadaso 210–219, Riehlvelt 220–224, Kastro 225–234, kits non proposés au joueur, toupies de Gido qui touchent).
-- [ ] CI : capture `45_combat_maitre_du_nen_sans_objets` : l'adversaire du 200e s'appelle « Gido (200e étage) ».
+- [x] CI : GameTest `namedChallengersAbove200` (Gido 200–209, Sadaso 210–219, Riehlvelt 220–224, Kastro 225–234, kits non proposés au joueur, toupies de Gido qui touchent).
+- [x] CI : capture `45_combat_maitre_du_nen_sans_objets` : l'arbitre annonce « Dans ce coin, Gido ! » (vérifié dans le chat).
 - [ ] En jeu : combattre Gido, Sadaso, Riehlvelt, Kastro : difficulté, techniques lisibles.
 
 ## Gyo par paliers (12 nov)
