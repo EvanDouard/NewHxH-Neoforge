@@ -32,7 +32,7 @@
   "item.hxh.nutritious_dish_3": "Nutritious dish III",
   "item.hxh.nutritious_dish_4": "Nutritious dish IV",
   "tooltip.hxh.dish": "A real Hunter's meal: +%s Vitality XP",
-  "tooltip.hxh.dish.source_gourmet": "Cooked by the Gourmet Hunter (III: his shop · IV: his quest, auctions)",
+  "tooltip.hxh.dish.source_gourmet": "Gourmet Hunter: shop after his quest, or cook it with his recipe book",
   "message.hxh.training.dish": "Hunter's meal: +%2$s %1$s XP",
   "npc.hxh.guichetier": "Airport clerk",
   "dialog.hxh.guichetier.idle": "Welcome aboard Hunter Airlines!",
@@ -1245,5 +1245,11 @@
   "arena.hxh.challenger.hisoka": "Hisoka",
   "arena.hxh.challenger.hisoka.intro": "He was waiting for you. He looks… delighted.",
   "entity.hxh.foxbear": "Foxbear",
-  "item.hxh.foxbear_spawn_egg": "Foxbear Spawn Egg"
+  "item.hxh.foxbear_spawn_egg": "Foxbear Spawn Egg",
+  "item.hxh.raw_foxbear_meat": "Raw Foxbear Meat",
+  "item.hxh.cooked_foxbear_meat": "Cooked Foxbear Meat",
+  "item.hxh.gourmet_recipe": "Gourmet Hunter's Recipe Book",
+  "tooltip.hxh.gourmet_recipe": "Level III and IV dishes at the crafting table (the book is not used up)",
+  "shop.hxh.locked": "He won't sell you that yet: do his quest first",
+  "shop.hxh.locked_short": "After his quest"
 }

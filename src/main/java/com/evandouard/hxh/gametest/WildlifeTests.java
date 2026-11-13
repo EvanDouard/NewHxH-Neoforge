@@ -64,13 +64,15 @@ public final class WildlifeTests {
     }
 
     @net.minecraft.gametest.framework.GameTest(template = "empty")
-    public static void foxbearIsAToughPredator(net.minecraft.gametest.framework.GameTestHelper helper) {
+    public static void foxbearActsLikeAPolarBear(net.minecraft.gametest.framework.GameTestHelper helper) {
         var bear = helper.spawn(com.evandouard.hxh.registry.ModEntities.FOXBEAR.get(), new net.minecraft.core.BlockPos(2, 1, 2));
         helper.assertTrue(bear.getMaxHealth() >= 60f, "Renard-ours : 60 PV (" + bear.getMaxHealth() + ")");
         helper.assertTrue(bear.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE) >= 9, "Gros dégâts");
         var cub = bear.getBreedOffspring(helper.getLevel(), bear);
         helper.assertTrue(cub instanceof com.evandouard.hxh.beast.FoxbearEntity, "Les petits sont des renards-ours");
         helper.assertTrue(bear.getLootTable().location().getPath().equals("entities/foxbear"), "Butin : " + bear.getLootTable().location());
+        // Comme l'ours polaire : il ne chasse pas un joueur de lui-même (neutre)
+        helper.assertTrue(bear.getTarget() == null, "Neutre au départ");
         bear.discard();
         helper.succeed();
     }

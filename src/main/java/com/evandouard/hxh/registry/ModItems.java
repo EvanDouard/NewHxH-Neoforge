@@ -15,6 +15,15 @@ public final class ModItems {
             ITEMS.register("foxbear_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.FOXBEAR, 0x6B4423, 0xE0A060, new Item.Properties()));
 
+    /** Viande de renard-ours, crue et cuite : ingrédient des recettes du Hunter gourmet. */
+    public static final DeferredItem<Item> RAW_FOXBEAR_MEAT = ITEMS.registerSimpleItem("raw_foxbear_meat",
+            new Item.Properties().food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(4).saturationModifier(0.3f).build()));
+    public static final DeferredItem<Item> COOKED_FOXBEAR_MEAT = ITEMS.registerSimpleItem("cooked_foxbear_meat",
+            new Item.Properties().food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(10).saturationModifier(0.9f).build()));
+    /** Carnet de recettes du Hunter gourmet (jamais consommé en cuisinant). */
+    public static final DeferredItem<com.evandouard.hxh.training.GourmetRecipeItem> GOURMET_RECIPE = ITEMS.register("gourmet_recipe",
+            () -> new com.evandouard.hxh.training.GourmetRecipeItem(new Item.Properties().rarity(net.minecraft.world.item.Rarity.EPIC)));
+
     public static final DeferredItem<Item> HUNTER_CARD =
             ITEMS.registerSimpleItem("hunter_card", new Item.Properties().stacksTo(1));
 

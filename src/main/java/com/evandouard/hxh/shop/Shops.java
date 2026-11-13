@@ -22,13 +22,19 @@ import java.util.List;
 public final class Shops {
     private Shops() {}
 
-    public enum Result { OK, NOT_ENOUGH_JENNY, NOTHING_TO_SELL, INVALID }
+    public enum Result { OK, NOT_ENOUGH_JENNY, NOTHING_TO_SELL, INVALID, LOCKED }
+
+    /** L'offre est-elle achetable par ce joueur (quête requise terminée) ? */
+    public static boolean unlocked(ServerPlayer player, Shop.Offer o) {
+        return o.requires().isEmpty() || QuestManager.data(player).isCompleted(o.requires());
+    }
 
     /** Ouvre (ou rafraîchit) l'écran de la boutique chez le joueur. */
     public static void open(ServerPlayer player, Shop shop) {
         QuestData d = QuestManager.data(player);
         List<OpenShopPayload.Line> sells = new ArrayList<>();
-        for (Shop.Offer o : shop.sells()) sells.add(new OpenShopPayload.Line(o.stack().copy(), o.price(), 0));
+        // owned = -1 : offre verrouillée (quête pas encore faite)
+        for (Shop.Offer o : shop.sells()) sells.add(new OpenShopPayload.Line(o.stack().copy(), o.price(), unlocked(player, o) ? 0 : -1));
         List<OpenShopPayload.Line> buys = new ArrayList<>();
         for (Shop.Buy b : shop.buys()) buys.add(new OpenShopPayload.Line(new ItemStack(b.item()), b.price(), count(player.getInventory(), b.item())));
         HxHNetwork.sendTo(player, new OpenShopPayload(shop.id().toString(), shop.npc(), d.jenny(), sells, buys));
@@ -38,6 +44,10 @@ public final class Shops {
         if (index < 0 || index >= shop.sells().size()) return Result.INVALID;
         Shop.Offer o = shop.sells().get(index);
         QuestData d = QuestManager.data(player);
+        if (!unlocked(player, o)) {
+            player.displayClientMessage(Component.translatable("shop.hxh.locked"), true);
+            return Result.LOCKED;
+        }
         if (d.jenny() < o.price()) {
             player.displayClientMessage(Component.translatable("shop.hxh.not_enough", o.price() - d.jenny()), true);
             return Result.NOT_ENOUGH_JENNY;

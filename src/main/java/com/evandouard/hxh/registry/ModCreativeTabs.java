@@ -18,6 +18,9 @@ public final class ModCreativeTabs {
                     .displayItems((params, output) -> {
                         output.accept(ModItems.HUNTER_CARD.get());
                         output.accept(ModItems.FOXBEAR_SPAWN_EGG.get());
+                        output.accept(ModItems.RAW_FOXBEAR_MEAT.get());
+                        output.accept(ModItems.COOKED_FOXBEAR_MEAT.get());
+                        output.accept(ModItems.GOURMET_RECIPE.get());
                         output.accept(ModItems.WATER_DIVINATION.get());
                         output.accept(ModItems.HUNTER_COMPUTER.get());
                         output.accept(ModItems.EXAM_BADGE.get());

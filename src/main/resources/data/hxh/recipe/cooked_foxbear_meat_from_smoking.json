@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "ingredient": {
+    "item": "hxh:raw_foxbear_meat"
+  },
+  "result": {
+    "id": "hxh:cooked_foxbear_meat",
+    "count": 1
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}

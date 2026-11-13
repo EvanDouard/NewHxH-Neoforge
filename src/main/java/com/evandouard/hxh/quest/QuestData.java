@@ -150,6 +150,13 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         return progress;
     }
 
+    /** Marque une quête comme terminée (commandes et tests). */
+    public void markCompleted(String questId) {
+        commit();
+        running.remove(questId);
+        completed.add(questId);
+    }
+
     public boolean isCompleted(String questId) {
         return completed.contains(questId);
     }

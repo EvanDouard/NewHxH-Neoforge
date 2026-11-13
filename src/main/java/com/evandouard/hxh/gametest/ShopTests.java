@@ -104,20 +104,27 @@ public final class ShopTests {
     public static void gourmetSellsDishThreeAndQuestGivesFour(GameTestHelper helper) {
         Shop shop = ShopRegistry.forNpc("hunter_gourmet");
         helper.assertTrue(shop != null, "Boutique du Hunter gourmet chargée");
-        helper.assertTrue(shop.sells().stream().anyMatch(o -> o.stack().getItem().toString().contains("nutritious_dish_3")), "Plat III vendu");
-        helper.assertTrue(shop.sells().stream().noneMatch(o -> o.stack().getItem().toString().contains("nutritious_dish_4")), "Plat IV jamais en boutique");
-        var quest = com.evandouard.hxh.quest.QuestRegistry.get(net.minecraft.resources.ResourceLocation.parse("hxh:gourmet_plat_legendaire"));
-        helper.assertTrue(quest != null && quest.problems().isEmpty(), "Quête du plat légendaire valide");
-        helper.assertTrue(quest.steps().stream().anyMatch(st -> st.rewardItem().contains("nutritious_dish_4")), "La quête donne un plat IV");
-        var a = com.evandouard.hxh.auction.Auctions.forNpc("commissaire_priseur");
-        helper.assertTrue(a.lots().stream().anyMatch(l -> l.stack().getItem().toString().contains("nutritious_dish_4")), "Plat IV aux enchères");
-        // Acheter un plat III et le manger : XP de Vitalité ×2,5 environ d'un plat I
+        int three = -1;
+        for (int i = 0; i < shop.sells().size(); i++) if (shop.sells().get(i).stack().getItem().toString().contains("nutritious_dish_3")) three = i;
+        helper.assertTrue(three >= 0, "Plat III à la carte");
         ServerPlayer p = helper.makeMockServerPlayerInLevel();
-        com.evandouard.hxh.family.Families.set(p, "");
         var d = com.evandouard.hxh.quest.QuestManager.data(p);
         d.addJenny(-d.jenny());
         d.addJenny(900);
-        helper.assertTrue(Shops.buy(p, shop, 0) == Shops.Result.OK && d.jenny() == 0, "Plat III acheté 900 J");
+        // Avant la première quête : les plats sont verrouillés
+        helper.assertTrue(Shops.buy(p, shop, three) == Shops.Result.LOCKED && d.jenny() == 900, "Plats verrouillés avant la quête");
+        d.markCompleted("hxh:gourmet_plat_legendaire");
+        helper.assertTrue(Shops.buy(p, shop, three) == Shops.Result.OK && d.jenny() == 0, "Après la quête : plat III acheté 900 J");
+        // Quêtes : plat légendaire (plat IV), puis recette secrète (carnet), qui demande de la viande de renard-ours
+        var q1 = com.evandouard.hxh.quest.QuestRegistry.get(net.minecraft.resources.ResourceLocation.parse("hxh:gourmet_plat_legendaire"));
+        var q2 = com.evandouard.hxh.quest.QuestRegistry.get(net.minecraft.resources.ResourceLocation.parse("hxh:gourmet_recette_secrete"));
+        helper.assertTrue(q1 != null && q1.problems().isEmpty() && q2 != null && q2.problems().isEmpty(), "Quêtes du gourmet valides");
+        helper.assertTrue(q2.steps().stream().anyMatch(st -> st.rewardItem().contains("gourmet_recipe")), "La quête finale donne le carnet");
+        helper.assertTrue(q2.steps().stream().anyMatch(st -> st.item().contains("foxbear") || st.entity().contains("foxbear")), "Elle passe par le renard-ours");
+        // Le carnet reste dans la grille après avoir cuisiné
+        var book = new net.minecraft.world.item.ItemStack(com.evandouard.hxh.registry.ModItems.GOURMET_RECIPE.get());
+        helper.assertTrue(book.getItem().hasCraftingRemainingItem(book)
+                && book.getItem().getCraftingRemainingItem(book).is(com.evandouard.hxh.registry.ModItems.GOURMET_RECIPE.get()), "Le carnet n'est pas consommé");
         helper.succeed();
     }
 }

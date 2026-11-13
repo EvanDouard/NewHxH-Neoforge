@@ -65,7 +65,7 @@ public class ShopScreen extends Screen {
             Button b = addRenderableWidget(Button.builder(Component.translatable("shop.hxh.buy"),
                     btn -> PacketDistributor.sendToServer(new ShopActionPayload(data.shop(), index, false, false)))
                     .bounds(x + W / 2 - 52, y + r * ROW, 44, 17).build());
-            b.active = data.jenny() >= sells.get(index).price();
+            b.active = data.jenny() >= sells.get(index).price() && sells.get(index).owned() >= 0;
         }
         List<OpenShopPayload.Line> buys = data.buys();
         for (int r = 0; r < rows() && r + scrollBuys < buys.size(); r++) {
@@ -109,7 +109,8 @@ public class ShopScreen extends Screen {
             item(g, l.stack(), x + 8, ry, mouseX, mouseY);
             g.drawString(font, font.plainSubstrByWidth(l.stack().getHoverName().getString(), 112), x + 28, ry, INK, false);
             int price = data.jenny() >= l.price() ? 0xFF7A5A00 : 0xFFC0392B;
-            g.drawString(font, Component.translatable("shop.hxh.price", l.price()), x + 28, ry + 9, price, false);
+            if (l.owned() < 0) g.drawString(font, Component.translatable("shop.hxh.locked_short"), x + 28, ry + 9, 0xFF999999, false);
+            else g.drawString(font, Component.translatable("shop.hxh.price", l.price()), x + 28, ry + 9, price, false);
         }
         List<OpenShopPayload.Line> buys = data.buys();
         for (int r = 0; r < rows() && r + scrollBuys < buys.size(); r++) {

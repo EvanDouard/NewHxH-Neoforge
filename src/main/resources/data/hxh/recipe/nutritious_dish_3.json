@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hxh:gourmet_recipe"
+    },
+    {
+      "item": "hxh:nutritious_dish_2"
+    },
+    {
+      "item": "hxh:cooked_foxbear_meat"
+    },
+    {
+      "item": "hxh:cooked_foxbear_meat"
+    },
+    {
+      "item": "minecraft:golden_carrot"
+    },
+    {
+      "item": "minecraft:glow_berries"
+    }
+  ],
+  "result": {
+    "id": "hxh:nutritious_dish_3",
+    "count": 1
+  }
+}

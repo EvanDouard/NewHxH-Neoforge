@@ -32,7 +32,7 @@
   "item.hxh.nutritious_dish_3": "Plat nutritif III",
   "item.hxh.nutritious_dish_4": "Plat nutritif IV",
   "tooltip.hxh.dish": "Un vrai repas de Hunter : +%s XP de Vitalité",
-  "tooltip.hxh.dish.source_gourmet": "Cuisiné par le Hunter gourmet (III : sa boutique · IV : sa quête, enchères)",
+  "tooltip.hxh.dish.source_gourmet": "Hunter gourmet : boutique après sa quête, ou à cuisiner avec son carnet de recettes",
   "message.hxh.training.dish": "Repas de Hunter : +%2$s XP de %1$s",
   "npc.hxh.guichetier": "Guichetier de l'aéroport",
   "dialog.hxh.guichetier.idle": "Bienvenue à bord de la compagnie Hunter Airlines !",
@@ -1245,5 +1245,11 @@
   "arena.hxh.challenger.hisoka": "Hisoka",
   "arena.hxh.challenger.hisoka.intro": "Il t'attendait. Il a l'air… ravi.",
   "entity.hxh.foxbear": "Renard-ours",
-  "item.hxh.foxbear_spawn_egg": "Œuf d'apparition de renard-ours"
+  "item.hxh.foxbear_spawn_egg": "Œuf d'apparition de renard-ours",
+  "item.hxh.raw_foxbear_meat": "Viande de renard-ours crue",
+  "item.hxh.cooked_foxbear_meat": "Viande de renard-ours cuite",
+  "item.hxh.gourmet_recipe": "Carnet de recettes du Hunter gourmet",
+  "tooltip.hxh.gourmet_recipe": "Plats III et IV à l'établi (le carnet n'est pas consommé)",
+  "shop.hxh.locked": "Il ne te vend pas encore ça : fais d'abord sa quête",
+  "shop.hxh.locked_short": "Après sa quête"
 }

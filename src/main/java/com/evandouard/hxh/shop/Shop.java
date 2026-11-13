@@ -21,11 +21,13 @@ import java.util.List;
  *   "sells": [ { "item": "hxh:dumbbell_3", "price": 800 },   // ce qu'il vend (prix en Jenny)
  *              { "item": "minecraft:bread", "count": 8, "price": 20 } ],
  *   "buys":  [ { "item": "minecraft:leather", "price": 4 } ] // ce qu'il rachète (prix à l'unité)
+ *   // une offre peut demander une quête terminée : "requires": "hxh:gourmet_plat_legendaire"
  * }
  * </pre>
  */
 public record Shop(ResourceLocation id, String npc, List<Offer> sells, List<Buy> buys) {
-    public record Offer(ItemStack stack, int price) {}
+    /** @param requires quête à avoir terminée pour pouvoir l'acheter (vide = toujours) */
+    public record Offer(ItemStack stack, int price, String requires) {}
 
     public record Buy(Item item, int price) {}
 
@@ -36,7 +38,8 @@ public record Shop(ResourceLocation id, String npc, List<Offer> sells, List<Buy>
             JsonObject o = e.getAsJsonObject();
             Item item = item(o);
             int count = GsonHelper.getAsInt(o, "count", 1);
-            sells.add(new Offer(new ItemStack(item, Math.max(1, count)), Math.max(0, GsonHelper.getAsInt(o, "price"))));
+            sells.add(new Offer(new ItemStack(item, Math.max(1, count)), Math.max(0, GsonHelper.getAsInt(o, "price")),
+                    GsonHelper.getAsString(o, "requires", "")));
         }
         List<Buy> buys = new ArrayList<>();
         for (JsonElement e : GsonHelper.getAsJsonArray(json, "buys", new JsonArray())) {

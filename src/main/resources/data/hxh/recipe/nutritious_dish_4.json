@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hxh:gourmet_recipe"
+    },
+    {
+      "item": "hxh:nutritious_dish_3"
+    },
+    {
+      "item": "hxh:cooked_foxbear_meat"
+    },
+    {
+      "item": "hxh:cooked_foxbear_meat"
+    },
+    {
+      "item": "minecraft:golden_apple"
+    },
+    {
+      "item": "minecraft:cooked_salmon"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    }
+  ],
+  "result": {
+    "id": "hxh:nutritious_dish_4",
+    "count": 1
+  }
+}
