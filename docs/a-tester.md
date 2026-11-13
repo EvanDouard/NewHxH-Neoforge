@@ -156,3 +156,8 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 - [x] CI : GameTest `doctorBlytheIsHeldAndDrainsAura` (Docteur Blythe maintenu).
 - [x] CI : GameTest `strongFightersHitInAnArea` (coups de base et Nen en zone selon les stats).
 - [ ] En jeu : sensation des attaques de zone (rayon, onde visible, pas trop fort) ; valider la liste des techniques à cible unique.
+
+## Retours du 13 novembre — lot C (formes de l'En)
+- [x] CI : GameTest `enShapesKeepTheSameVolume` (volume gardé, formes impossibles refusées, détection, déblocage à 50) + captures 70 (cube), 71 (cylindre), 72 (écran).
+- [ ] En jeu : carnet (O) → onglet Personnage → « Forme de l'En » ; essayer les 4 formes, vérifier que les mobs surlignés correspondent à la forme.
+- [ ] À juger : les parois sont discrètes avec une aura claire (arêtes et cercles encrés bien visibles) — plus marquées ?
