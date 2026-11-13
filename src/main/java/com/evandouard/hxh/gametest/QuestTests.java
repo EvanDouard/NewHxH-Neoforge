@@ -134,6 +134,11 @@ public final class QuestTests {
             if (key.getNamespace().equals(HxHMod.MODID) && !fr.has("item.hxh." + key.getPath())
                     && !fr.has("block.hxh." + key.getPath())) mute.add("objet " + key);
         }
+        for (var entry : com.evandouard.hxh.client.Bestiary.ENTRIES) {
+            if (!net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.containsKey(HxHMod.id(entry.id()))
+                    || !fr.has("bestiary.hxh." + entry.id() + ".desc") || !fr.has("bestiary.hxh." + entry.id() + ".where"))
+                mute.add("bestiaire " + entry.id());
+        }
         for (var preset : com.evandouard.hxh.mob.MobPresets.all().values()) {
             if (!fr.has(preset.nameKey())) mute.add("nom du mob " + preset.nameKey());
         }

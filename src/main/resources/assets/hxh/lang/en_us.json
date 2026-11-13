@@ -1358,5 +1358,21 @@
   "mob_preset.hxh.fourmi_chimere_soldat": "Chimera Ant soldier (Nen)",
   "mob_preset.hxh.suspect_brigade": "Troupe suspect (Nen)",
   "entity.hxh.kiriko": "Kiriko",
-  "item.hxh.kiriko_spawn_egg": "Kiriko Spawn Egg"
+  "item.hxh.kiriko_spawn_egg": "Kiriko Spawn Egg",
+  "screen.hxh.profile.tab_bestiary": "Bestiary",
+  "bestiary.hxh.intro": "The creatures of the Hunter x Hunter world. ★ = danger.",
+  "bestiary.hxh.where": "Where: %s",
+  "bestiary.hxh.nen_mobs": "Everywhere: some mobs master Nen (level visible with Gyo). Taking them down pays an Association bounty.",
+  "bestiary.hxh.kiriko.where": "forest before Zaban (Exam trial)",
+  "bestiary.hxh.kiriko.desc": "A magical beast that takes human form. Kiriko guide Exam candidates… after testing them.",
+  "bestiary.hxh.spider_eagle.where": "mountains, above y 80",
+  "bestiary.hxh.spider_eagle.desc": "Large cliff bird. It now and then lays a sought-after egg (Mount Split trial, cooking).",
+  "bestiary.hxh.great_stamp.where": "forests (Biska reserve)",
+  "bestiary.hxh.great_stamp.desc": "Giant charging pig. Its armoured snout shrugs off frontal hits: strike from the side, back or above.",
+  "bestiary.hxh.foxbear.where": "forests",
+  "bestiary.hxh.foxbear.desc": "Neutral like a polar bear, but the mother fiercely defends her cubs. Its meat is a Gourmet Hunter ingredient.",
+  "bestiary.hxh.man_faced_ape.where": "swamps (Numele)",
+  "bestiary.hxh.man_faced_ape.desc": "It mimics human voices to lure prey: beware of calls in the swamp.",
+  "bestiary.hxh.chimera_ant.where": "jungles",
+  "bestiary.hxh.chimera_ant.desc": "Colony soldier that hunts day and night. Some master Nen: Association bounty."
 }

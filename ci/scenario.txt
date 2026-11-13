@@ -2130,6 +2130,12 @@ cmd summon hxh:kiriko ~5 ~ ~8 {NoAI:1b,PersistenceRequired:1b}
 wait 10
 clearchat
 shot 96_singe_fourmi_chimere_et_kiriko
+key key.hxh.profile
+wait 10
+click Bestiaire
+wait 10
+shot 97_carnet_bestiaire
+closescreen
 cmd kill @e[type=!minecraft:player]
 cmd difficulty peaceful
 cmd gamemode creative

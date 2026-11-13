@@ -53,10 +53,11 @@ public class ProfileScreen extends Screen {
     @Override
     protected void init() {
         tabs.clear();
-        String[] keys = {"screen.hxh.profile.tab_character", "screen.hxh.profile.tab_quests", "screen.hxh.profile.tab_arena"};
+        String[] keys = {"screen.hxh.profile.tab_character", "screen.hxh.profile.tab_quests", "screen.hxh.profile.tab_arena",
+                "screen.hxh.profile.tab_bestiary"};
         int w = panelW();
         int left = width / 2 - w / 2;
-        int bw = (w - 8) / 3;
+        int bw = (w - 4 * (keys.length - 1)) / keys.length;
         for (int i = 0; i < keys.length; i++) {
             int index = i;
             tabs.add(addRenderableWidget(Button.builder(Component.translatable(keys[i]), b -> select(index))
@@ -147,6 +148,7 @@ public class ProfileScreen extends Screen {
         return switch (tab) {
             case 1 -> data.quests();
             case 2 -> data.arena();
+            case 3 -> Bestiary.lines();
             default -> data.character();
         };
     }

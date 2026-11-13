@@ -177,3 +177,4 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [x] CI : GameTest `numeleApeAndChimeraAntsHunt` + capture 96 (singe à visage humain, Fourmi-Chimère soldat). GameTest des traductions étendu à toutes les entités, objets et mobs d'exemple (corrigé : « suspect de la Brigade » sans nom).
 - [ ] À juger : modèles provisoires (singe : momie ; fourmi : araignée des cavernes ×1,5).
 - [x] CI : GameTest `unmaskedKirikoTransformsAndFliesAway` — dans l'épreuve des Kiriko, le faux mari démasqué devient un vrai Kiriko qui s'envole (capture 96). Modèle provisoire : perroquet vert ×3.
+- [x] CI : onglet « Bestiaire » du carnet (capture 97) ; GameTest des traductions : chaque créature du bestiaire existe et a sa description.

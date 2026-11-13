@@ -1358,5 +1358,21 @@
   "mob_preset.hxh.fourmi_chimere_soldat": "Fourmi-Chimère soldat (Nen)",
   "mob_preset.hxh.suspect_brigade": "Suspect de la Brigade (Nen)",
   "entity.hxh.kiriko": "Kiriko",
-  "item.hxh.kiriko_spawn_egg": "Œuf d'apparition de Kiriko"
+  "item.hxh.kiriko_spawn_egg": "Œuf d'apparition de Kiriko",
+  "screen.hxh.profile.tab_bestiary": "Bestiaire",
+  "bestiary.hxh.intro": "Les créatures du monde de Hunter x Hunter. ★ = danger.",
+  "bestiary.hxh.where": "Où : %s",
+  "bestiary.hxh.nen_mobs": "Partout : certains mobs maîtrisent le Nen (niveau visible au Gyo). Les abattre rapporte une prime de l'Association.",
+  "bestiary.hxh.kiriko.where": "forêt avant Zaban (épreuve de l'Examen)",
+  "bestiary.hxh.kiriko.desc": "Bête magique qui prend l'apparence des humains. Les Kiriko guident les candidats de l'Examen… après les avoir mis à l'épreuve.",
+  "bestiary.hxh.spider_eagle.where": "montagnes, au-dessus de y 80",
+  "bestiary.hxh.spider_eagle.desc": "Grand oiseau des falaises. Il pond de temps en temps un œuf très recherché (épreuve du Mont Split, cuisine).",
+  "bestiary.hxh.great_stamp.where": "forêts (réserve de Biska)",
+  "bestiary.hxh.great_stamp.desc": "Cochon géant qui charge. Son museau blindé encaisse les coups de face : frappe-le de côté, de dos ou d'en haut.",
+  "bestiary.hxh.foxbear.where": "forêts",
+  "bestiary.hxh.foxbear.desc": "Neutre comme un ours polaire, mais la mère défend férocement ses petits. Sa viande est un ingrédient du Hunter gourmet.",
+  "bestiary.hxh.man_faced_ape.where": "marais (Numele)",
+  "bestiary.hxh.man_faced_ape.desc": "Il imite la voix des humains pour attirer ses proies : méfie-toi des appels dans le marais.",
+  "bestiary.hxh.chimera_ant.where": "jungles",
+  "bestiary.hxh.chimera_ant.desc": "Soldat d'une colonie qui chasse de jour comme de nuit. Certaines maîtrisent le Nen : prime de l'Association."
 }
