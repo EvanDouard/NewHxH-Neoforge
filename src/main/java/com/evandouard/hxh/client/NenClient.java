@@ -67,6 +67,7 @@ public final class NenClient {
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.ARENA_FIGHTER.get(), ArenaFighterRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.EXAM_CANDIDATE.get(), ExamCandidateRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NEN_PROJECTILE.get(), NenProjectileRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.FOXBEAR.get(), FoxbearRenderer::new);
                     e.registerBlockEntityRenderer(com.evandouard.hxh.registry.ModBlockEntities.MARKER.get(),
                             com.evandouard.hxh.marker.MarkerLabelRenderer::new);
                 });

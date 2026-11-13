@@ -30,11 +30,24 @@ public final class ModEntities {
             ENTITIES.register("exam_candidate", () -> EntityType.Builder.of(com.evandouard.hxh.exam.ExamCandidate::new,
                     MobCategory.MONSTER).sized(0.6f, 1.8f).clientTrackingRange(10).build("exam_candidate"));
 
+    /** Renard-ours : prédateur des forêts (bestiaire). */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.beast.FoxbearEntity>> FOXBEAR =
+            ENTITIES.register("foxbear", () -> EntityType.Builder.of(com.evandouard.hxh.beast.FoxbearEntity::new,
+                    MobCategory.CREATURE).sized(1.8f, 1.9f).clientTrackingRange(10).build("foxbear"));
+
     private ModEntities() {}
+
+    public static void onSpawnPlacements(net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent event) {
+        event.register(FOXBEAR.get(), net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
+                net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                com.evandouard.hxh.beast.FoxbearEntity::canSpawn,
+                net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent.Operation.REPLACE);
+    }
 
     public static void onAttributes(EntityAttributeCreationEvent event) {
         event.put(NPC.get(), NpcEntity.createAttributes().build());
         event.put(ARENA_FIGHTER.get(), com.evandouard.hxh.arena.ArenaFighterEntity.createAttributes().build());
         event.put(EXAM_CANDIDATE.get(), com.evandouard.hxh.exam.ExamCandidate.createAttributes().build());
+        event.put(FOXBEAR.get(), com.evandouard.hxh.beast.FoxbearEntity.createAttributes().build());
     }
 }

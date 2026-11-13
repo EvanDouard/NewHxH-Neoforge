@@ -1243,5 +1243,7 @@
   "npc.hxh.hunter_gourmet": "Gourmet Hunter",
   "npc.hxh.cheadle": "Cheadle Yorkshire",
   "arena.hxh.challenger.hisoka": "Hisoka",
-  "arena.hxh.challenger.hisoka.intro": "He was waiting for you. He looks… delighted."
+  "arena.hxh.challenger.hisoka.intro": "He was waiting for you. He looks… delighted.",
+  "entity.hxh.foxbear": "Foxbear",
+  "item.hxh.foxbear_spawn_egg": "Foxbear Spawn Egg"
 }

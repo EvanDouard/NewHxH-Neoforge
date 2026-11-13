@@ -10,6 +10,11 @@ public final class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(HxHMod.MODID);
 
     /** Carte Hunter : objet provisoire du squelette, sa logique viendra avec l'Examen Hunter. */
+    /** Œuf d'apparition du renard-ours (créatif, tests). */
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> FOXBEAR_SPAWN_EGG =
+            ITEMS.register("foxbear_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.FOXBEAR, 0x6B4423, 0xE0A060, new Item.Properties()));
+
     public static final DeferredItem<Item> HUNTER_CARD =
             ITEMS.registerSimpleItem("hunter_card", new Item.Properties().stacksTo(1));
 

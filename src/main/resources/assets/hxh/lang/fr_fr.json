@@ -1243,5 +1243,7 @@
   "npc.hxh.hunter_gourmet": "Hunter gourmet",
   "npc.hxh.cheadle": "Cheadle Yorkshire",
   "arena.hxh.challenger.hisoka": "Hisoka",
-  "arena.hxh.challenger.hisoka.intro": "Il t'attendait. Il a l'air… ravi."
+  "arena.hxh.challenger.hisoka.intro": "Il t'attendait. Il a l'air… ravi.",
+  "entity.hxh.foxbear": "Renard-ours",
+  "item.hxh.foxbear_spawn_egg": "Œuf d'apparition de renard-ours"
 }

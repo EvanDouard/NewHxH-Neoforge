@@ -33,6 +33,7 @@ public final class HxHMod {
         com.evandouard.hxh.effect.ModEffects.EFFECTS.register(modEventBus);
         com.evandouard.hxh.registry.ModEntities.ENTITIES.register(modEventBus);
         modEventBus.addListener(com.evandouard.hxh.registry.ModEntities::onAttributes);
+        modEventBus.addListener(com.evandouard.hxh.registry.ModEntities::onSpawnPlacements);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.quest.QuestRegistry::register);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.combat.DeathFx::onTick);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.meditation.MeditationShrines::onChunkLoad);
