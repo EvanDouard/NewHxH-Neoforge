@@ -12,5 +12,19 @@
   "description": {
     "fr": "Treize voleurs d'élite marqués d'une araignée. Ils prennent ce qu'ils veulent.",
     "en": "Thirteen elite thieves marked with a spider. They take what they want."
-  }
+  },
+  "member_kits": [
+    "chrollo",
+    "nobunaga",
+    "feitan",
+    "uvogin",
+    "phinks",
+    "franklin",
+    "machi",
+    "shizuku",
+    "pakunoda",
+    "shalnark",
+    "kalluto",
+    "hisoka"
+  ]
 }

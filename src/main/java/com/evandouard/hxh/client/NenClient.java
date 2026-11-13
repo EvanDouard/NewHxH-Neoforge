@@ -68,6 +68,7 @@ public final class NenClient {
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.EXAM_CANDIDATE.get(), ExamCandidateRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NEN_PROJECTILE.get(), NenProjectileRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.FOXBEAR.get(), FoxbearRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.SPIDER_EAGLE.get(), SpiderEagleRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.GREAT_STAMP.get(), GreatStampRenderer::new);
                     e.registerBlockEntityRenderer(com.evandouard.hxh.registry.ModBlockEntities.MARKER.get(),
                             com.evandouard.hxh.marker.MarkerLabelRenderer::new);

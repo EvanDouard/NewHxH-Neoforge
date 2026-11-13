@@ -1307,5 +1307,18 @@
   "message.hxh.en_shape_up_too_high": "Impossible : trop haut au-dessus, il ne reste rien en dessous",
   "hud.hxh.contract_bubble.zoldyck": "Contrat Zoldyck",
   "hud.hxh.contract_bubble.blacklist": "Traque de la Blacklist",
-  "hud.hxh.contract_bubble.step": "Éliminer %s"
+  "hud.hxh.contract_bubble.step": "Éliminer %s",
+  "vow.hxh.character": "Serment du personnage",
+  "vow.hxh.character.desc": "Un serment propre à ton personnage.",
+  "vow.hxh.character.kurapika_judgment": "Chaîne-prison : la Brigade seulement",
+  "vow.hxh.character.kurapika_judgment.desc": "Comme Kurapika : la Chaîne-prison ×3, mais seulement contre la Brigade Fantôme (joueurs de la Brigade, mobs avec le personnage d'un de ses membres). La lancer sur quelqu'un d'autre : le coup ne porte pas, le serment est rompu et tu meurs.",
+  "vow.hxh.character.feitan_rising_sun": "Soleil levant : seulement blessé",
+  "vow.hxh.character.feitan_rising_sun.desc": "Comme Feitan : le Soleil levant ×1,8, mais il ne se déclenche que sous la moitié de ta vie (refusé sinon). Le serment ne se rompt pas.",
+  "vow.hxh.reason.character": "tu as enfreint le serment de ton personnage",
+  "message.hxh.vow_no_character": "Ton personnage n'a pas de serment propre",
+  "message.hxh.vow_character_hurt": "Serment : seulement sous la moitié de ta vie",
+  "message.hxh.vow_character_death": "Tu as enfreint ton serment : la chaîne se referme sur ton cœur.",
+  "entity.hxh.spider_eagle": "Aigle-araignée",
+  "item.hxh.spider_eagle_spawn_egg": "Œuf d'apparition d'aigle-araignée",
+  "command.hxh.contract_none": "Aucun contrat en cours"
 }

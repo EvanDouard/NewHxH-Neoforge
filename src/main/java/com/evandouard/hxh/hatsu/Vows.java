@@ -47,7 +47,9 @@ public final class Vows {
         /** Une seule technique : celle choisie au serment, les autres sont refusées. */
         SINGLE_TECHNIQUE(1.6f),
         /** Gon adulte : tout sacrifier. ×3 pendant 60 s, puis Hatsu scellé une journée. */
-        ULTIMATE(3.0f);
+        ULTIMATE(3.0f),
+        /** Serment propre au personnage (voir {@link CharacterVows}) : puissance et condition selon le kit. */
+        CHARACTER(1.0f);
 
         public final float power;
 
@@ -101,7 +103,19 @@ public final class Vows {
      */
     public static float statMultiplier(HunterData data) {
         Vow v = active(data);
-        return v == null || v == Vow.SINGLE_TECHNIQUE ? 1f : v.power;
+        return v == null || v == Vow.SINGLE_TECHNIQUE || v == Vow.CHARACTER ? 1f : v.power;
+    }
+
+    /** Serment de personnage en cours, ou null. */
+    @Nullable
+    public static CharacterVows.Def characterVow(HunterData data) {
+        return active(data) == Vow.CHARACTER ? CharacterVows.forKit(data.kit()) : null;
+    }
+
+    /** Nom du serment (celui du personnage pour un serment de personnage). */
+    public static Component name(HunterData data, Vow v) {
+        CharacterVows.Def def = v == Vow.CHARACTER ? CharacterVows.forKit(data.kit()) : null;
+        return Component.translatable(def != null ? def.translationKey() : v.translationKey());
     }
 
     public static boolean nenSealed(HunterData d, long gameTime) {
@@ -135,6 +149,11 @@ public final class Vows {
         if (sealed(d, entity.level().getGameTime())) return "message.hxh.vow_sealed";
         if (!d.vow().isEmpty()) return "message.hxh.vow_already";
         String tech = "";
+        if (v == Vow.CHARACTER) {
+            CharacterVows.Def def = CharacterVows.forKit(d.kit());
+            if (def == null) return "message.hxh.vow_no_character";
+            tech = def.technique();
+        }
         if (v == Vow.SINGLE_TECHNIQUE) {
             Technique t = Hatsu.selectedTechnique(d);
             if (t == null || t.needsNoNen()) return "message.hxh.vow_select_technique";
@@ -147,7 +166,7 @@ public final class Vows {
         entity.level().playSound(null, entity.blockPosition(), v == Vow.ULTIMATE ? SoundEvents.WITHER_SPAWN : SoundEvents.BEACON_ACTIVATE,
                 net.minecraft.sounds.SoundSource.PLAYERS, 0.8f, 0.8f);
         if (entity instanceof Player p) {
-            p.displayClientMessage(Component.translatable("message.hxh.vow_taken", Component.translatable(v.translationKey()))
+            p.displayClientMessage(Component.translatable("message.hxh.vow_taken", name(d, v))
                     .withStyle(ChatFormatting.GOLD), false);
         }
         return null;
@@ -207,6 +226,9 @@ public final class Vows {
         Vow v = active(d);
         if (v == Vow.BARE_HANDS && !entity.getMainHandItem().isEmpty()) return "message.hxh.vow_bare_hands";
         if (v == Vow.LIFE_PRICE && entity.getHealth() <= LIFE_PRICE + 0.01f) return "message.hxh.vow_life_low";
+        CharacterVows.Def def = characterVow(d);
+        if (def != null && def.condition() == CharacterVows.Condition.CASTER_HURT && t.id().equals(def.technique())
+                && entity.getHealth() > entity.getMaxHealth() * def.ratio()) return "message.hxh.vow_character_hurt";
         return null;
     }
 
@@ -222,6 +244,10 @@ public final class Vows {
         Vow v = active(d);
         if (v == null) return 1f;
         if (v == Vow.SINGLE_TECHNIQUE && !t.id().equals(d.vowTechnique())) return 1f;
+        if (v == Vow.CHARACTER) {
+            CharacterVows.Def def = CharacterVows.forKit(d.kit());
+            return def != null && t.id().equals(def.technique()) ? def.power() : 1f;
+        }
         return v.power;
     }
 
@@ -236,11 +262,44 @@ public final class Vows {
         Vow v = active(HunterStats.get(caster));
         if (v == null) return;
         LivingEntity target = event.getEntity();
+        if (v == Vow.CHARACTER) {
+            characterHit(event, caster, target);
+            return;
+        }
         boolean refused = (v == Vow.MONSTERS_ONLY && !(target instanceof Enemy)) || (v == Vow.FAIR_FIGHT && !facing(target, caster));
         if (refused) {
             event.setCanceled(true);
             if (caster instanceof Player p) p.displayClientMessage(Component.translatable(v == Vow.FAIR_FIGHT
                     ? "message.hxh.vow_blocked_back" : "message.hxh.vow_blocked_monster").withStyle(ChatFormatting.GOLD), true);
+        }
+    }
+
+    /**
+     * Serment de personnage à cible imposée (Kurapika) : la technique jurée touche quelqu'un hors de l'organisation
+     * → le coup ne porte pas et la pénalité tombe (la mort pour Kurapika, comme dans le manga).
+     */
+    private static void characterHit(LivingIncomingDamageEvent event, LivingEntity caster, LivingEntity target) {
+        CharacterVows.Def def = characterVow(HunterStats.get(caster));
+        if (def == null || def.condition() != CharacterVows.Condition.TARGET_ORG) return;
+        Technique t = com.evandouard.hxh.combat.AreaScaling.castingOf(caster);
+        if (t == null || !t.id().equals(def.technique())) return;
+        if (com.evandouard.hxh.org.Organizations.belongs(target, def.org())) return;
+        event.setCanceled(true);
+        punish(caster, def);
+    }
+
+    /** Pénalité d'un serment de personnage enfreint. */
+    public static void punish(LivingEntity caster, CharacterVows.Def def) {
+        switch (def.penalty()) {
+            case DEATH -> {
+                breakVow(caster, "vow.hxh.reason.character");
+                if (caster instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.vow_character_death")
+                        .withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), false);
+                NenFx.flare(caster, 2f, 0xFF8B0000);
+                caster.hurt(caster.damageSources().magic(), Float.MAX_VALUE);
+            }
+            case SEAL -> breakVow(caster, "vow.hxh.reason.character");
+            case REFUSE -> { }
         }
     }
 

@@ -142,6 +142,21 @@ public final class HunterCommand {
                                                 .executes(ctx -> enShape(ctx.getSource(), StringArgumentType.getString(ctx, "shape"),
                                                         com.mojang.brigadier.arguments.FloatArgumentType.getFloat(ctx, "a"),
                                                         com.mojang.brigadier.arguments.FloatArgumentType.getFloat(ctx, "b"))))))))
+                // Contrat en cours : aller jusqu'à la cible (admin, pour tester)
+                .then(Commands.literal("contract").requires(s -> s.hasPermission(2))
+                        .then(Commands.literal("goto").executes(ctx -> {
+                            net.minecraft.server.level.ServerPlayer p = ctx.getSource().getPlayerOrException();
+                            net.minecraft.core.BlockPos at = com.evandouard.hxh.contract.Contracts.targetPos(p);
+                            if (at == null) {
+                                ctx.getSource().sendFailure(Component.translatable("command.hxh.contract_none"));
+                                return 0;
+                            }
+                            var level = p.serverLevel();
+                            level.getChunk(at.getX() >> 4, at.getZ() >> 4);
+                            var ground = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, at);
+                            p.teleportTo(level, ground.getX() + 4.5, ground.getY(), ground.getZ() + 0.5, 90f, 10f);
+                            return 1;
+                        })))
                 .then(Commands.literal("shrine")
                         .then(Commands.literal("buy").then(Commands.argument("tier", IntegerArgumentType.integer(1, 5))
                                 .executes(ctx -> com.evandouard.hxh.meditation.MeditationShrines.buy(ctx.getSource().getPlayerOrException(),

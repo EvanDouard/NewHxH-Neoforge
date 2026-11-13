@@ -339,6 +339,43 @@ public final class HatsuTests {
         });
     }
 
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void characterVowsHaveTheirOwnRules(GameTestHelper helper) {
+        com.evandouard.hxh.hatsu.Vows.Vow CHAR = com.evandouard.hxh.hatsu.Vows.Vow.CHARACTER;
+        // Kurapika : Chaîne-prison ×3 contre la Brigade seulement, sinon la mort
+        Zombie kurapika = husk(helper, 0);
+        HunterData d = hunter(kurapika, NenType.CONJURER, "kurapika");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.take(kurapika, "character") == null, "Serment de Kurapika prêté");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.powerMultiplier(d, Techniques.KURAPIKA_CHAIN_JAIL) == 3f, "Chaîne-prison ×3");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.statMultiplier(d) == 1f, "Les stats ne bougent pas");
+        Zombie nobunaga = husk(helper, 2);
+        hunter(nobunaga, NenType.ENHANCER, "nobunaga");
+        com.evandouard.hxh.combat.AreaScaling.casting(kurapika, Techniques.KURAPIKA_CHAIN_JAIL);
+        float before = nobunaga.getHealth();
+        nobunaga.invulnerableTime = 0;
+        nobunaga.hurt(Techniques.damageFrom(kurapika), 5f);
+        helper.assertTrue(nobunaga.getHealth() < before && kurapika.isAlive(), "Contre un membre de la Brigade : ça porte");
+        net.minecraft.world.entity.animal.Pig pig = helper.spawnWithNoFreeWill(EntityType.PIG, new BlockPos(1, 1, 3));
+        pig.hurt(Techniques.damageFrom(kurapika), 5f);
+        helper.assertTrue(pig.getHealth() == pig.getMaxHealth(), "Hors de la Brigade : le coup ne porte pas");
+        helper.assertTrue(!kurapika.isAlive() && d.vow().isEmpty(), "Serment rompu et Kurapika meurt");
+        // Feitan : Soleil levant seulement blessé (refus, pas de rupture)
+        Zombie feitan = husk(helper, 4);
+        HunterData f = hunter(feitan, NenType.TRANSMUTER, "feitan");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.take(feitan, "character") == null, "Serment de Feitan prêté");
+        helper.assertTrue("message.hxh.vow_character_hurt".equals(com.evandouard.hxh.hatsu.Vows.entityRefusal(feitan, f,
+                com.evandouard.hxh.hatsu.Specials.FEITAN_RISING_SUN)), "En pleine forme : refusé");
+        feitan.setHealth(feitan.getMaxHealth() * 0.4f);
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.entityRefusal(feitan, f, com.evandouard.hxh.hatsu.Specials.FEITAN_RISING_SUN) == null,
+                "Blessé : autorisé");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.of(f) == CHAR, "Toujours sous serment");
+        // Un personnage sans serment propre
+        Zombie gon = husk(helper, 6);
+        hunter(gon, NenType.ENHANCER, "gon");
+        helper.assertTrue("message.hxh.vow_no_character".equals(com.evandouard.hxh.hatsu.Vows.take(gon, "character")), "Gon n'en a pas");
+        helper.succeed();
+    }
+
     @GameTest(template = "empty")
     public static void hisokaThrillScalesWithTargetHealth(GameTestHelper helper) {
         Zombie hisoka = husk(helper, 0);

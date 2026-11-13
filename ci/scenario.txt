@@ -1782,6 +1782,8 @@ key key.hxh.en
 cmd kill @e[tag=hxh_en_probe]
 key key.hxh.profile
 wait 15
+click Quêtes
+wait 5
 click Personnage
 wait 5
 click Forme de l'En
@@ -1818,11 +1820,11 @@ wait 20
 expect Contrat :
 shot 73_contrat_zoldyck_bulle_et_boussole
 cmd kill @e[type=hxh:npc]
-cmd execute at @e[tag=hxh_contract,limit=1] run tp @s ~4 ~ ~ 90 10
-wait 30
+cmd hunter contract goto
+wait 40
 shot 74_contrat_zoldyck_cible_proche
 clearchat
-cmd damage @e[tag=hxh_contract,limit=1] 1000 minecraft:player_attack by @s
+cmd damage @e[tag=hxh_contract,limit=1,sort=nearest] 1000 minecraft:player_attack by @s
 wait 10
 expect Contrat rempli
 # --- Attaques de zone : poing avec Force, Vitesse, Endurance au maximum ---
@@ -1847,10 +1849,12 @@ cmd hunter stat speed set 30
 cmd hunter stat endurance set 30
 # --- Gyo 40 : PV et armure au-dessus des mobs ---
 cmd hunter nen mastery gyo 40
-cmd summon minecraft:husk ~ ~ ~4 {NoAI:1b,PersistenceRequired:1b,ArmorItems:[{},{},{id:"minecraft:iron_chestplate",count:1},{}]}
+cmd tp @s ~ ~ ~ 0 0
+cmd summon minecraft:husk ~ ~ ~3 {NoAI:1b,PersistenceRequired:1b,ArmorItems:[{},{},{id:"minecraft:iron_chestplate",count:1},{}]}
 key key.hxh.gyo
 wait 20
-look 0 5
+clearchat
+wait 2
 shot 76_gyo_40_pv_et_armure
 key key.hxh.gyo
 cmd hunter nen mastery gyo 0
@@ -1879,6 +1883,8 @@ wait 5
 expect Serment en pause
 key key.hxh.profile
 wait 10
+click Quêtes
+wait 5
 click Personnage
 wait 5
 click Hatsu
@@ -1897,6 +1903,8 @@ cmd tp @s ~ ~ ~4 0 20
 wait 10
 key key.hxh.profile
 wait 10
+click Quêtes
+wait 5
 click Personnage
 wait 5
 click Méditer
@@ -1942,5 +1950,12 @@ shot 82_encheres_york_shin
 closescreen
 cmd kill @e[type=hxh:npc]
 cmd hunter hatsu set none
+# --- Bestiaire : aigle-araignée ---
+cmd tp @s ~30 -60 ~ 0 -10
+wait 10
+cmd summon hxh:spider_eagle ~ ~1 ~5 {NoAI:1b,PersistenceRequired:1b}
+wait 10
+shot 83_aigle_araignee
+cmd kill @e[type=hxh:spider_eagle]
 cmd gamemode creative
 quit

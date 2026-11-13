@@ -40,12 +40,20 @@ public final class ModEntities {
             ENTITIES.register("great_stamp", () -> EntityType.Builder.of(com.evandouard.hxh.beast.GreatStampEntity::new,
                     MobCategory.CREATURE).sized(1.9f, 1.9f).clientTrackingRange(10).build("great_stamp"));
 
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.beast.SpiderEagleEntity>> SPIDER_EAGLE =
+            ENTITIES.register("spider_eagle", () -> EntityType.Builder.of(com.evandouard.hxh.beast.SpiderEagleEntity::new,
+                    MobCategory.CREATURE).sized(1.2f, 2.0f).clientTrackingRange(10).build("spider_eagle"));
+
     private ModEntities() {}
 
     public static void onSpawnPlacements(net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent event) {
         event.register(FOXBEAR.get(), net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
                 net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 com.evandouard.hxh.beast.FoxbearEntity::canSpawn,
+                net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(SPIDER_EAGLE.get(), net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
+                net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING,
+                com.evandouard.hxh.beast.SpiderEagleEntity::canSpawn,
                 net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(GREAT_STAMP.get(), net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
                 net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
@@ -60,5 +68,6 @@ public final class ModEntities {
         event.put(EXAM_CANDIDATE.get(), com.evandouard.hxh.exam.ExamCandidate.createAttributes().build());
         event.put(FOXBEAR.get(), com.evandouard.hxh.beast.FoxbearEntity.createAttributes().build());
         event.put(GREAT_STAMP.get(), com.evandouard.hxh.beast.GreatStampEntity.createAttributes().build());
+        event.put(SPIDER_EAGLE.get(), com.evandouard.hxh.beast.SpiderEagleEntity.createAttributes().build());
     }
 }

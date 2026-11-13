@@ -60,6 +60,17 @@ public final class Organizations extends SimpleJsonResourceReloadListener {
         return player instanceof ServerPlayer sp ? get(QuestManager.data(sp).organization()) : null;
     }
 
+    /** L'entité fait-elle partie de l'organisation ? Joueur : celle qu'il a rejointe ; mob : son personnage. */
+    public static boolean belongs(net.minecraft.world.entity.LivingEntity e, String orgId) {
+        if (e instanceof Player p) {
+            Organization o = of(p);
+            return o != null && o.id().equals(orgId);
+        }
+        Organization o = get(orgId);
+        if (o == null || !e.hasData(com.evandouard.hxh.data.ModAttachments.HUNTER)) return false;
+        return o.memberKits().contains(e.getData(com.evandouard.hxh.data.ModAttachments.HUNTER).kit());
+    }
+
     /** Deux joueurs dans des organisations ennemies : leurs techniques se touchent. */
     public static boolean enemies(Player a, Player b) {
         if (!(a instanceof ServerPlayer sa) || !(b instanceof ServerPlayer sb)) return false;

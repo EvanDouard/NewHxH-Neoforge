@@ -127,8 +127,9 @@ public final class AreaScaling {
         return attacker.isAlliedTo(other);
     }
 
+    /** Dernière technique lancée par {@code caster} (celle dont les dégâts sont en train de tomber). */
     @Nullable
-    static Technique castingOf(LivingEntity caster) {
+    public static Technique castingOf(LivingEntity caster) {
         return CASTING.get(caster);
     }
 }

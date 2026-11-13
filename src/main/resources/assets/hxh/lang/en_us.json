@@ -1307,5 +1307,18 @@
   "message.hxh.en_shape_up_too_high": "Impossible: too high above, nothing would be left below",
   "hud.hxh.contract_bubble.zoldyck": "Zoldyck contract",
   "hud.hxh.contract_bubble.blacklist": "Blacklist hunt",
-  "hud.hxh.contract_bubble.step": "Take down %s"
+  "hud.hxh.contract_bubble.step": "Take down %s",
+  "vow.hxh.character": "Character vow",
+  "vow.hxh.character.desc": "A vow specific to your character.",
+  "vow.hxh.character.kurapika_judgment": "Chain Jail: the Troupe only",
+  "vow.hxh.character.kurapika_judgment.desc": "Like Kurapika: Chain Jail ×3, but only against the Phantom Troupe (Troupe players, mobs with a member's character). Use it on anyone else: the hit fails, the vow breaks and you die.",
+  "vow.hxh.character.feitan_rising_sun": "Rising Sun: only when wounded",
+  "vow.hxh.character.feitan_rising_sun.desc": "Like Feitan: Rising Sun ×1.8, but it only triggers below half your health (refused otherwise). The vow never breaks.",
+  "vow.hxh.reason.character": "you broke your character's vow",
+  "message.hxh.vow_no_character": "Your character has no vow of its own",
+  "message.hxh.vow_character_hurt": "Vow: only below half your health",
+  "message.hxh.vow_character_death": "You broke your vow: the chain closes around your heart.",
+  "entity.hxh.spider_eagle": "Spider eagle",
+  "item.hxh.spider_eagle_spawn_egg": "Spider Eagle Spawn Egg",
+  "command.hxh.contract_none": "No contract in progress"
 }

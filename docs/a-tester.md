@@ -167,3 +167,8 @@ Scénario « Tests en jeu faits par Claude » dans `ci/scenario.txt`, captures 7
 contrat Zoldyck (bulle + boussole, cible rejointe, contrat rempli), attaque de zone au poing, Gyo 40 (PV et armure),
 Docteur Blythe maintenu, serment en pause (écran), méditation au sanctuaire de niveau 5, PNJ exorciste,
 archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
+
+## Lot D (13 nov, soir)
+- [x] CI : GameTest `characterVowsHaveTheirOwnRules` (Kurapika : Brigade seulement sinon la mort ; Feitan : seulement blessé ; Gon : pas de serment propre).
+- [x] CI : GameTest `spiderEagleLaysEggsAndStaysWild` + capture 83 (aigle-araignée).
+- [ ] À juger : modèle provisoire de l'aigle-araignée (perroquet gris ×2,5) en attendant le modèle Blockbench.

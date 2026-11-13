@@ -75,3 +75,10 @@ Valeurs posées par Claude pour avancer. Elles marchent en jeu, mais on les revo
 | Docteur Blythe maintenu | 20 d'aura au départ, puis 10 d'aura/s ; 2 PV toutes les 0,5 s ; 30 s au plus ; recharge 20 s au relâchement |
 | Attaques de zone | coups de base dès Force + Vitesse + Endurance ≥ 180 ; Nen dès Volonté + niveau de Nen ≥ 120 ; voisins à 50 % des dégâts ; rayon 1,5 → 4 blocs |
 | Techniques jamais en zone | liste `AreaScaling.SINGLE_TARGET` (aiguilles d'Illumi, chaîne-prison, fils de Machi, Bungee Gum, Hakoware, dettes, vol de Chrollo…) |
+
+## Lot D (13 nov, soir)
+| Quoi | Valeur actuelle |
+|---|---|
+| Serment de Kurapika | Chaîne-prison ×3, contre la Brigade seulement (joueurs de la Brigade, mobs dont le personnage est dans `member_kits` de ryodan.json) ; sinon le coup ne porte pas, serment rompu, mort |
+| Serment de Feitan | Soleil levant ×1,8, seulement sous 50 % de vie (refus sinon, jamais de rupture) |
+| Aigle-araignée | 16 PV, vol 0,7 ; montagnes au-dessus de y 80, poids 5, 1–2 ; pond un œuf toutes les 10–20 min ; butin 1–3 plumes + 25 % d'œuf |

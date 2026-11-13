@@ -92,6 +92,17 @@ public class ShopScreen extends Screen {
         g.fill(x + W / 2 - 1, y + 30, x + W / 2 + 1, y + h - 8, INK);
     }
 
+    /** Nom d'objet tenant dans {@code w} pixels : coupé avec « … », nom entier au survol. */
+    private void name(GuiGraphics g, net.minecraft.world.item.ItemStack stack, int x, int y, int w, int color, int mouseX, int mouseY) {
+        String full = stack.getHoverName().getString();
+        String shown = full;
+        if (font.width(full) > w) shown = font.plainSubstrByWidth(full, w - font.width("…")).stripTrailing() + "…";
+        g.drawString(font, shown, x, y, color, false);
+        if (!shown.equals(full) && mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + 9) {
+            g.renderTooltip(font, Component.literal(full), mouseX, mouseY);
+        }
+    }
+
     @Override
     public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
         super.render(g, mouseX, mouseY, partialTick);
@@ -107,7 +118,7 @@ public class ShopScreen extends Screen {
             OpenShopPayload.Line l = sells.get(r + scrollSells);
             int ry = rowY + r * ROW;
             item(g, l.stack(), x + 8, ry, mouseX, mouseY);
-            g.drawString(font, font.plainSubstrByWidth(l.stack().getHoverName().getString(), 112), x + 28, ry, INK, false);
+            name(g, l.stack(), x + 28, ry, 112, INK, mouseX, mouseY);
             int price = data.jenny() >= l.price() ? 0xFF7A5A00 : 0xFFC0392B;
             if (l.owned() < 0) g.drawString(font, Component.translatable("shop.hxh.locked_short"), x + 28, ry + 9, 0xFF999999, false);
             else g.drawString(font, Component.translatable("shop.hxh.price", l.price()), x + 28, ry + 9, price, false);
@@ -117,8 +128,7 @@ public class ShopScreen extends Screen {
             OpenShopPayload.Line l = buys.get(r + scrollBuys);
             int ry = rowY + r * ROW, bx = x + W / 2 + 6;
             item(g, l.stack(), bx, ry, mouseX, mouseY);
-            g.drawString(font, font.plainSubstrByWidth(l.stack().getHoverName().getString(), 92), bx + 20, ry,
-                    l.owned() > 0 ? INK : 0xFF999999, false);
+            name(g, l.stack(), bx + 20, ry, 92, l.owned() > 0 ? INK : 0xFF999999, mouseX, mouseY);
             g.drawString(font, Component.translatable("shop.hxh.unit", l.price(), l.owned()), bx + 20, ry + 9,
                     0xFF7A5A00, false);
         }

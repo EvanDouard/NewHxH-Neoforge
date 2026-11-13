@@ -98,4 +98,21 @@ public final class WildlifeTests {
         helper.assertTrue(pig.getMaxHealth() >= 50f, "50 PV");
         helper.succeed();
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void spiderEagleLaysEggsAndStaysWild(GameTestHelper helper) {
+        var eagle = helper.spawn(com.evandouard.hxh.registry.ModEntities.SPIDER_EAGLE.get(), new BlockPos(1, 2, 1));
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.WHEAT_SEEDS, 8));
+        helper.assertTrue(eagle.mobInteract(player, net.minecraft.world.InteractionHand.MAIN_HAND) == net.minecraft.world.InteractionResult.PASS
+                && !eagle.isTame(), "Ne s'apprivoise pas avec des graines");
+        helper.assertTrue(eagle.getMaxHealth() == 16f, "16 PV : " + eagle.getMaxHealth());
+        eagle.setEggTime(2);
+        helper.runAfterDelay(10, () -> {
+            var eggs = helper.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                    eagle.getBoundingBox().inflate(6), i -> i.getItem().is(com.evandouard.hxh.registry.ModItems.SPIDER_EAGLE_EGG.get()));
+            helper.assertTrue(!eggs.isEmpty(), "Un œuf d'aigle-araignée est pondu");
+            helper.succeed();
+        });
+    }
 }

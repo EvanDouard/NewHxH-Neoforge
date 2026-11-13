@@ -46,14 +46,14 @@ public class VowScreen extends Screen {
         boolean sealed = Vows.sealed(d, now);
         Vows.Vow current = Vows.of(d);
         int right = width / 2 + 150;
-        Vows.Vow[] vows = Vows.Vow.values();
+        Vows.Vow[] vows = shown(d);
         for (int i = 0; i < vows.length; i++) {
             Vows.Vow v = vows[i];
             int y = TOP + i * ROW;
             Button take = Button.builder(Component.translatable(current == v ? "screen.hxh.vow.current" : "screen.hxh.vow.take"),
                     b -> confirmTake(v)).bounds(right - 84, y + 1, 84, 18).build();
             take.active = current == null && !sealed && d.hasKit();
-            take.setTooltip(Tooltip.create(Component.translatable(v.descriptionKey())));
+            take.setTooltip(Tooltip.create(description(d, v)));
             addRenderableWidget(take);
         }
         int bottom = height - 26;
@@ -73,12 +73,28 @@ public class VowScreen extends Screen {
         }
     }
 
+    /** Serments affichés : les communs, plus celui du personnage s'il en a un. */
+    private static Vows.Vow[] shown(HunterData d) {
+        boolean own = com.evandouard.hxh.hatsu.CharacterVows.forKit(d.kit()) != null;
+        return java.util.Arrays.stream(Vows.Vow.values()).filter(v -> v != Vows.Vow.CHARACTER || own).toArray(Vows.Vow[]::new);
+    }
+
+    private static Component description(HunterData d, Vows.Vow v) {
+        var def = v == Vows.Vow.CHARACTER ? com.evandouard.hxh.hatsu.CharacterVows.forKit(d.kit()) : null;
+        return Component.translatable(def != null ? def.descriptionKey() : v.descriptionKey());
+    }
+
+    private static float power(HunterData d, Vows.Vow v) {
+        var def = v == Vows.Vow.CHARACTER ? com.evandouard.hxh.hatsu.CharacterVows.forKit(d.kit()) : null;
+        return def != null ? def.power() : v.power;
+    }
+
     private void confirmTake(Vows.Vow v) {
         minecraft.setScreen(new ConfirmScreen(yes -> {
             if (yes) PacketDistributor.sendToServer(new VowPayload("take", v.id()));
             minecraft.setScreen(yes ? null : this);
-        }, Component.translatable("screen.hxh.vow.confirm_title", Component.translatable(v.translationKey())),
-                Component.translatable(v.descriptionKey()).append("\n\n").append(Component.translatable("screen.hxh.vow.confirm_text"))));
+        }, Component.translatable("screen.hxh.vow.confirm_title", Vows.name(data(), v)),
+                description(data(), v).copy().append("\n\n").append(Component.translatable("screen.hxh.vow.confirm_text"))));
     }
 
     private void confirmRenounce() {
@@ -99,7 +115,7 @@ public class VowScreen extends Screen {
         if (Vows.sealed(d, now)) {
             status = Component.translatable("screen.hxh.vow.sealed", Math.max(1, (d.sealedUntil() - now) / 1200 + 1)).withStyle(ChatFormatting.RED);
         } else if (Vows.of(d) != null) {
-            Component name = Component.translatable(Vows.of(d).translationKey());
+            Component name = Vows.name(d, Vows.of(d));
             status = d.vowUntil() > 0
                     ? Component.translatable("screen.hxh.vow.status_timed", name, Math.max(0, (d.vowUntil() - now) / 20)).withStyle(ChatFormatting.GOLD)
                     : Component.translatable("screen.hxh.vow.status", name).withStyle(ChatFormatting.GOLD);
@@ -111,7 +127,7 @@ public class VowScreen extends Screen {
         g.drawCenteredString(font, status, width / 2, 24, 0xFFFFFF);
 
         hovered = -1;
-        Vows.Vow[] vows = Vows.Vow.values();
+        Vows.Vow[] vows = shown(d);
         int left = width / 2 - 150;
         for (int i = 0; i < vows.length; i++) {
             Vows.Vow v = vows[i];
@@ -120,12 +136,12 @@ public class VowScreen extends Screen {
             if (over) hovered = i;
             boolean mine = Vows.of(d) == v;
             g.fill(left, y, left + 300, y + ROW - 2, mine ? 0x80604010 : over ? 0x60303050 : 0x40000000);
-            g.drawString(font, Component.translatable(v.translationKey()).withStyle(mine ? ChatFormatting.GOLD : ChatFormatting.WHITE),
+            g.drawString(font, Vows.name(d, v).copy().withStyle(mine ? ChatFormatting.GOLD : ChatFormatting.WHITE),
                     left + 6, y + 6, 0xFFFFFF);
-            g.drawString(font, Component.literal("×" + v.power).withStyle(ChatFormatting.AQUA), left + 176, y + 6, 0xFFFFFF);
+            g.drawString(font, Component.literal("×" + power(d, v)).withStyle(ChatFormatting.AQUA), left + 176, y + 6, 0xFFFFFF);
         }
         if (hovered >= 0) {
-            List<FormattedCharSequence> lines = font.split(Component.translatable(vows[hovered].descriptionKey()).withStyle(ChatFormatting.GRAY), 300);
+            List<FormattedCharSequence> lines = font.split(description(d, vows[hovered]).copy().withStyle(ChatFormatting.GRAY), 300);
             int y = TOP + vows.length * ROW + 2;
             for (FormattedCharSequence l : lines) {
                 if (y > height - 36) break;
