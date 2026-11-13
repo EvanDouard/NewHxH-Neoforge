@@ -78,6 +78,47 @@ public final class NenSensesTests {
     }
 
     @GameTest(template = "empty")
+    public static void enShapesKeepTheSameVolume(GameTestHelper helper) {
+        com.evandouard.hxh.nen.EnShape SPHERE = com.evandouard.hxh.nen.EnShape.SPHERE, HALF = com.evandouard.hxh.nen.EnShape.HALF_SPHERE,
+                CUBE = com.evandouard.hxh.nen.EnShape.CUBE, CYL = com.evandouard.hxh.nen.EnShape.CYLINDER;
+        double r = 12, v = com.evandouard.hxh.nen.EnShape.volume(r);
+        for (var shape : com.evandouard.hxh.nen.EnShape.values()) {
+            var d = com.evandouard.hxh.nen.EnShape.resolve(shape, r, 8, 4);
+            helper.assertTrue(Math.abs(d.volume() - v) / v < 0.03, shape.id() + " garde le volume : " + d.volume() + " / " + v);
+        }
+        var cube = com.evandouard.hxh.nen.EnShape.resolve(CUBE, r, 8, 0);
+        helper.assertTrue(Math.abs(cube.up() - 28.3) < 0.11, "Cube de demi-côté 8 : hauteur calculée " + cube.up());
+        // Impossibles : trop plat, trop haut, plus rien en dessous, rayon trop petit
+        helper.assertTrue(com.evandouard.hxh.nen.EnShape.refusal(CUBE, r, 50, 0) != null, "Cube trop plat refusé");
+        helper.assertTrue(com.evandouard.hxh.nen.EnShape.refusal(CUBE, r, 3, 0) != null, "Cube trop haut refusé (>64)");
+        helper.assertTrue(com.evandouard.hxh.nen.EnShape.refusal(CYL, r, 8, 60) != null, "Cylindre : rien en dessous, refusé");
+        helper.assertTrue(com.evandouard.hxh.nen.EnShape.refusal(CYL, r, 0.5, 1) != null, "Rayon < 1 refusé");
+        helper.assertTrue(com.evandouard.hxh.nen.EnShape.refusal(CYL, r, 8, 5) == null, "Cylindre 8 / 5 faisable");
+        helper.assertTrue(com.evandouard.hxh.nen.EnShape.refusal(HALF, r, 0, 0) == null && com.evandouard.hxh.nen.EnShape.refusal(SPHERE, r, 0, 0) == null,
+                "Sphère et demi-sphère toujours faisables");
+        // Détection : la demi-sphère ne sent rien sous les pieds, le cylindre oui
+        var feet = new net.minecraft.world.phys.Vec3(0, 64, 0);
+        var center = feet.add(0, 0.9, 0);
+        var below = new net.minecraft.world.phys.AABB(-0.3, 55, -0.3, 0.3, 56.8, 0.3);
+        helper.assertFalse(com.evandouard.hxh.nen.EnShape.contains(com.evandouard.hxh.nen.EnShape.resolve(HALF, r, 0, 0), feet, center, below),
+                "Demi-sphère : rien sous le sol");
+        helper.assertTrue(com.evandouard.hxh.nen.EnShape.contains(com.evandouard.hxh.nen.EnShape.resolve(CYL, r, 8, 2), feet, center, below),
+                "Cylindre qui descend : sent en dessous");
+        // Débloqué à la maîtrise 50, validé côté serveur
+        Zombie z = nenHusk(helper);
+        HunterData d = HunterStats.get(z);
+        d.setNenLevel(100);
+        d.setMasteryLevel(Mastery.EN, 40);
+        helper.assertTrue("message.hxh.en_shape_locked".equals(NenSenses.chooseEnShape(z, "cube", 8, 0)), "Verrouillé avant 50");
+        d.setMasteryLevel(Mastery.EN, 60);
+        helper.assertTrue(NenSenses.chooseEnShape(z, "cylinder", 8, 500) != null, "Forme impossible refusée");
+        helper.assertTrue(NenSenses.chooseEnShape(z, "cylinder", 12, 5) == null, "Cylindre choisi");
+        var dims = NenSenses.enDims(d);
+        helper.assertTrue(dims.shape() == CYL && dims.radius() == 12 && dims.up() == 5, "Forme réelle : " + dims);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void ryuTradesDefenseForAttack(GameTestHelper helper) {
         Zombie z = nenHusk(helper);
         HunterData d = HunterStats.get(z);

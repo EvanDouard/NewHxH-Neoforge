@@ -1757,6 +1757,31 @@ key key.hxh.cast
 wait 6
 shot 67_coup_de_pied_cible_percute_un_mob
 cmd kill @e[type=minecraft:pig]
+# --- Formes de l'En (maîtrise 50) ---
+cmd kill @e[type=!minecraft:player]
+cmd hunter nen mastery en 50
+cmd hunter en shape cube 8
+cmd summon minecraft:zombie ~3 ~ ~5 {NoAI:1b,PersistenceRequired:1b,Tags:["hxh_en_probe"]}
+key key.hxh.en
+wait 50
+camera back
+shot 70_en_en_cube
+camera first
+cmd hunter en shape cylinder 12 4
+wait 20
+camera back
+shot 71_en_en_cylindre
+camera first
+key key.hxh.en
+cmd kill @e[tag=hxh_en_probe]
+key key.hxh.profile
+wait 15
+click Forme de l'En
+wait 10
+shot 72_ecran_forme_de_l_en
+closescreen
+cmd hunter en shape sphere
+cmd hunter nen mastery en 0
 # --- Boussole de quête : étape « aller au phare » (0, 70, 0) ---
 cmd hunter quest reset
 cmd hunter quest start hxh:exemple_pecheur

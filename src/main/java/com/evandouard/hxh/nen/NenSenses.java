@@ -81,6 +81,26 @@ public final class NenSenses {
         return 2 + data.masteryLevel(Mastery.EN) * 0.25;
     }
 
+    /** Forme réelle de l'En : la forme choisie si elle est débloquée et faisable, sinon la sphère de base. */
+    public static EnShape.Dims enDims(HunterData data) {
+        double r = enRadius(data);
+        EnShape shape = EnShape.byId(data.enShape());
+        if (data.masteryLevel(Mastery.EN) < EnShape.UNLOCK_LEVEL
+                || EnShape.refusal(shape, r, data.enA(), data.enB()) != null) shape = EnShape.SPHERE;
+        return EnShape.resolve(shape, r, data.enA(), data.enB());
+    }
+
+    /** Choisit la forme de l'En. @return null si c'est fait, sinon la clé du refus */
+    public static String chooseEnShape(LivingEntity entity, String shapeId, float a, float b) {
+        HunterData data = HunterStats.get(entity);
+        if (data.masteryLevel(Mastery.EN) < EnShape.UNLOCK_LEVEL) return "message.hxh.en_shape_locked";
+        EnShape shape = EnShape.byId(shapeId);
+        String refusal = EnShape.refusal(shape, enRadius(data), a, b);
+        if (refusal != null) return refusal;
+        data.setEnShape(shape.id(), a, b);
+        return null;
+    }
+
     private static String senseRefusal(HunterData data) {
         if (!data.nenUnlocked()) return "message.hxh.nen_locked";
         if (data.mode() == NenMode.ZETSU || data.mode() == NenMode.IN) return "message.hxh.sense_concealed";

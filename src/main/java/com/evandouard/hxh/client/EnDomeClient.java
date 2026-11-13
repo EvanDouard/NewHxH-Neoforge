@@ -2,6 +2,7 @@ package com.evandouard.hxh.client;
 
 import com.evandouard.hxh.data.HunterData;
 import com.evandouard.hxh.data.ModAttachments;
+import com.evandouard.hxh.nen.EnShape;
 import com.evandouard.hxh.nen.NenSenses;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -72,6 +73,15 @@ public final class EnDomeClient {
         return NenSenses.enRadius(p.getData(ModAttachments.HUNTER)) * SCALE.getOrDefault(p.getUUID(), 0f);
     }
 
+    /** Forme effective de l'En du joueur maintenant (déployée selon le mouvement), ou null s'il est coupé. */
+    @org.jetbrains.annotations.Nullable
+    public static EnShape.Dims effectiveDims(Player p) {
+        if (!p.hasData(ModAttachments.HUNTER)) return null;
+        float k = SCALE.getOrDefault(p.getUUID(), 0f);
+        if (k <= 0f) return null;
+        return NenSenses.enDims(p.getData(ModAttachments.HUNTER)).scaled(k);
+    }
+
     static void register() {
         NeoForge.EVENT_BUS.addListener(RenderLevelStageEvent.class, EnDomeClient::onRender);
     }
@@ -87,10 +97,16 @@ public final class EnDomeClient {
         for (Player p : mc.level.players()) {
             if (!p.hasData(ModAttachments.HUNTER)) continue;
             HunterData d = p.getData(ModAttachments.HUNTER);
-            float r = (float) NenSenses.enRadius(d) * scale(p, pt);
-            if (r <= 0.15f) continue;
-            dome(event.getPoseStack(), buffers, cam, p.getPosition(pt), r, 0xFF000000 | d.auraColor(),
-                    mc.level.getGameTime() + pt);
+            float k = scale(p, pt);
+            EnShape.Dims dims = NenSenses.enDims(d).scaled(k);
+            if (dims.radius() <= 0.15f) continue;
+            int color = 0xFF000000 | d.auraColor();
+            float time = mc.level.getGameTime() + pt;
+            switch (dims.shape()) {
+                case CUBE -> box(event.getPoseStack(), buffers, cam, p.getPosition(pt), dims, color, time);
+                case CYLINDER -> cylinder(event.getPoseStack(), buffers, cam, p.getPosition(pt), dims, color, time);
+                default -> dome(event.getPoseStack(), buffers, cam, p.getPosition(pt), (float) dims.radius(), color, time);
+            }
             drew = true;
         }
         if (drew) buffers.endBatch();
@@ -140,6 +156,91 @@ public final class EnDomeClient {
         // Cercle encré au sol + liseré de couleur juste au-dessus
         ring(vc, pose, cam, base.add(0, 0.03, 0), r, 0.18f, 0xFF111111, 0.85f * dim);
         ring(vc, pose, cam, base.add(0, 0.04, 0), r - 0.18f, 0.12f, color, 0.8f * dim);
+    }
+
+    /** En en cube : faces translucides plus denses vues de biais, arêtes claires, carré encré au sol. */
+    private static void box(PoseStack pose, MultiBufferSource buffers, Vec3 cam, Vec3 base, EnShape.Dims d, int color, float time) {
+        VertexConsumer vc = buffers.getBuffer(RenderType.entityTranslucent(NenFxClient.WHITE));
+        double a = d.radius();
+        Vec3 lo = base.add(-a, -d.down(), -a), hi = base.add(a, d.up(), a);
+        boolean inside = cam.x > lo.x && cam.x < hi.x && cam.y > lo.y && cam.y < hi.y && cam.z > lo.z && cam.z < hi.z;
+        float dim = inside ? 0.6f : 1f;
+        float sweep = (time % 60f) / 60f;
+        int light = lerp(color, 0xFFFFFFFF, 0.5f);
+        // quatre côtés découpés en bandes horizontales (bande qui balaie de bas en haut) + le dessus
+        int bands = 10;
+        double h = d.up() + d.down();
+        for (int i = 0; i < bands; i++) {
+            double y0 = lo.y + h * i / bands, y1 = lo.y + h * (i + 1) / bands;
+            float band = Math.max(0f, 1f - Math.abs((float) i / bands - sweep) * 8f);
+            float alpha = (0.16f + band * 0.25f) * dim;
+            int c = lerp(color, 0xFFFFFFFF, band * 0.6f);
+            quad(vc, pose, cam, new Vec3(lo.x, y0, lo.z), new Vec3(hi.x, y0, lo.z), new Vec3(hi.x, y1, lo.z), new Vec3(lo.x, y1, lo.z), c, alpha);
+            quad(vc, pose, cam, new Vec3(lo.x, y0, hi.z), new Vec3(hi.x, y0, hi.z), new Vec3(hi.x, y1, hi.z), new Vec3(lo.x, y1, hi.z), c, alpha);
+            quad(vc, pose, cam, new Vec3(lo.x, y0, lo.z), new Vec3(lo.x, y0, hi.z), new Vec3(lo.x, y1, hi.z), new Vec3(lo.x, y1, lo.z), c, alpha);
+            quad(vc, pose, cam, new Vec3(hi.x, y0, lo.z), new Vec3(hi.x, y0, hi.z), new Vec3(hi.x, y1, hi.z), new Vec3(hi.x, y1, lo.z), c, alpha);
+        }
+        quad(vc, pose, cam, new Vec3(lo.x, hi.y, lo.z), new Vec3(hi.x, hi.y, lo.z), new Vec3(hi.x, hi.y, hi.z), new Vec3(lo.x, hi.y, hi.z),
+                lerp(color, 0xFFFFFFFF, 0.15f), 0.14f * dim);
+        // arêtes verticales et cadres haut / bas
+        float e = 0.08f;
+        for (double[] c : new double[][]{{lo.x, lo.z}, {hi.x, lo.z}, {hi.x, hi.z}, {lo.x, hi.z}}) {
+            quad(vc, pose, cam, new Vec3(c[0] - e, lo.y, c[1]), new Vec3(c[0] + e, lo.y, c[1]), new Vec3(c[0] + e, hi.y, c[1]),
+                    new Vec3(c[0] - e, hi.y, c[1]), light, 0.6f * dim);
+            quad(vc, pose, cam, new Vec3(c[0], lo.y, c[1] - e), new Vec3(c[0], lo.y, c[1] + e), new Vec3(c[0], hi.y, c[1] + e),
+                    new Vec3(c[0], hi.y, c[1] - e), light, 0.6f * dim);
+        }
+        frame(vc, pose, cam, lo.x, hi.x, lo.z, hi.z, hi.y, light, 0.6f * dim);
+        frame(vc, pose, cam, lo.x, hi.x, lo.z, hi.z, base.y + 0.03, 0xFF111111, 0.85f * dim);
+    }
+
+    /** Cadre carré horizontal (bords d'un cube). */
+    private static void frame(VertexConsumer vc, PoseStack pose, Vec3 cam, double x0, double x1, double z0, double z1, double y,
+                              int color, float alpha) {
+        double w = 0.15;
+        quad(vc, pose, cam, new Vec3(x0, y, z0), new Vec3(x1, y, z0), new Vec3(x1, y, z0 + w), new Vec3(x0, y, z0 + w), color, alpha);
+        quad(vc, pose, cam, new Vec3(x0, y, z1 - w), new Vec3(x1, y, z1 - w), new Vec3(x1, y, z1), new Vec3(x0, y, z1), color, alpha);
+        quad(vc, pose, cam, new Vec3(x0, y, z0), new Vec3(x0 + w, y, z0), new Vec3(x0 + w, y, z1), new Vec3(x0, y, z1), color, alpha);
+        quad(vc, pose, cam, new Vec3(x1 - w, y, z0), new Vec3(x1, y, z0), new Vec3(x1, y, z1), new Vec3(x1 - w, y, z1), color, alpha);
+    }
+
+    /** En en cylindre : paroi translucide (bord de bulle plus dense), anneaux clairs en haut et en bas, cercle au sol. */
+    private static void cylinder(PoseStack pose, MultiBufferSource buffers, Vec3 cam, Vec3 base, EnShape.Dims d, int color, float time) {
+        VertexConsumer vc = buffers.getBuffer(RenderType.entityTranslucent(NenFxClient.WHITE));
+        float r = (float) d.radius();
+        double y0 = base.y - d.down(), y1 = base.y + d.up();
+        double hx = cam.x - base.x, hz = cam.z - base.z;
+        boolean inside = hx * hx + hz * hz < r * r && cam.y > y0 && cam.y < y1;
+        float dim = inside ? 0.6f : 1f;
+        float sweep = (time % 60f) / 60f;
+        int bands = 10;
+        for (int i = 0; i < bands; i++) {
+            double ya = y0 + (y1 - y0) * i / bands, yb = y0 + (y1 - y0) * (i + 1) / bands;
+            float band = Math.max(0f, 1f - Math.abs((float) i / bands - sweep) * 8f);
+            int c = lerp(color, 0xFFFFFFFF, band * 0.6f);
+            for (int j = 0; j < SEGMENTS; j++) {
+                float a0 = (float) j / SEGMENTS * Mth.TWO_PI, a1 = (float) (j + 1) / SEGMENTS * Mth.TWO_PI;
+                Vec3 n = new Vec3(Mth.cos((a0 + a1) / 2), 0, Mth.sin((a0 + a1) / 2));
+                Vec3 mid = base.add(n.scale(r)).add(0, (ya + yb) / 2 - base.y, 0);
+                float facing = (float) Math.abs(n.dot(mid.subtract(cam).normalize()));
+                float alpha = (0.12f + 0.5f * (1f - facing) * (1f - facing) + band * 0.25f) * dim;
+                quad(vc, pose, cam, new Vec3(base.x + r * Mth.cos(a0), ya, base.z + r * Mth.sin(a0)),
+                        new Vec3(base.x + r * Mth.cos(a1), ya, base.z + r * Mth.sin(a1)),
+                        new Vec3(base.x + r * Mth.cos(a1), yb, base.z + r * Mth.sin(a1)),
+                        new Vec3(base.x + r * Mth.cos(a0), yb, base.z + r * Mth.sin(a0)), c, alpha);
+            }
+        }
+        int light = lerp(color, 0xFFFFFFFF, 0.5f);
+        ring(vc, pose, cam, new Vec3(base.x, y1, base.z), r, 0.15f, light, 0.6f * dim);
+        if (d.down() > 0.05) ring(vc, pose, cam, new Vec3(base.x, y0, base.z), r, 0.15f, light, 0.6f * dim);
+        ring(vc, pose, cam, base.add(0, 0.03, 0), r, 0.18f, 0xFF111111, 0.85f * dim);
+    }
+
+    private static void quad(VertexConsumer vc, PoseStack pose, Vec3 cam, Vec3 a, Vec3 b, Vec3 c, Vec3 d, int color, float alpha) {
+        vertex(vc, pose, cam, a, color, alpha);
+        vertex(vc, pose, cam, b, color, alpha);
+        vertex(vc, pose, cam, c, color, alpha);
+        vertex(vc, pose, cam, d, color, alpha);
     }
 
     private static Vec3 point(Vec3 base, float r, float lat, float lon) {

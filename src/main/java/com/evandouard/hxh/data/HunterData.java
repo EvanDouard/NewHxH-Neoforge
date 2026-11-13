@@ -77,6 +77,9 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     /** Gyo et En : interrupteurs indépendants de la posture (coupés par le Zetsu et l'In). */
     private boolean gyo = false;
     private boolean en = false;
+    /** Forme de l'En personnalisé (voir EnShape) et valeurs choisies : rayon, hauteur au-dessus (cylindre). */
+    private String enShape = "sphere";
+    private float enA = 3f, enB = 1f;
     /** Ryu : part de l'aura mise dans l'attaque, en % (le reste protège le corps). */
     private int ryuAttack = 50;
 
@@ -480,6 +483,25 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         dirty.add(AURA);
     }
 
+    public String enShape() {
+        return enShape;
+    }
+
+    public float enA() {
+        return enA;
+    }
+
+    public float enB() {
+        return enB;
+    }
+
+    public void setEnShape(String shape, float a, float b) {
+        enShape = shape;
+        enA = a;
+        enB = b;
+        dirty.add(AURA);
+    }
+
     public int ryuAttack() {
         return ryuAttack;
     }
@@ -650,6 +672,9 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             a.putLong("nenHidden", nenHiddenUntil);
             a.putBoolean("gyo", gyo);
             a.putBoolean("en", en);
+            a.putString("enShape", enShape);
+            a.putFloat("enA", enA);
+            a.putFloat("enB", enB);
             out.put(AURA, a);
             lastWrittenAura = (int) aura;
             return;
@@ -796,6 +821,11 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             nenHiddenUntil = a.getLong("nenHidden");
             gyo = a.getBoolean("gyo");
             en = a.getBoolean("en");
+            if (a.contains("enShape")) {
+                enShape = a.getString("enShape");
+                enA = a.getFloat("enA");
+                enB = a.getFloat("enB");
+            }
         }
         if (in.contains(HEAL)) {
             CompoundTag h = in.getCompound(HEAL);

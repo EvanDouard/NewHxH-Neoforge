@@ -129,6 +129,19 @@ public final class HunterCommand {
                         .executes(ctx -> com.evandouard.hxh.travel.AirTravel.fly(ctx.getSource().getPlayerOrException(),
                                 IntegerArgumentType.getInteger(ctx, "airport")) ? 1 : 0)))
                 // Sanctuaires de méditation : acheter des coordonnées (lien de l'archéologue) ; en bâtir un (admin)
+                // Forme de l'En (maîtrise 50) : /hunter en shape <sphere|half_sphere|cube|cylinder> [rayon] [hauteur+]
+                .then(Commands.literal("en").then(Commands.literal("shape")
+                        .then(Commands.argument("shape", StringArgumentType.word())
+                                .suggests((c, b) -> SharedSuggestionProvider.suggest(java.util.Arrays.stream(
+                                        com.evandouard.hxh.nen.EnShape.values()).map(com.evandouard.hxh.nen.EnShape::id), b))
+                                .executes(ctx -> enShape(ctx.getSource(), StringArgumentType.getString(ctx, "shape"), 3f, 1f))
+                                .then(Commands.argument("a", com.mojang.brigadier.arguments.FloatArgumentType.floatArg(0, 64))
+                                        .executes(ctx -> enShape(ctx.getSource(), StringArgumentType.getString(ctx, "shape"),
+                                                com.mojang.brigadier.arguments.FloatArgumentType.getFloat(ctx, "a"), 1f))
+                                        .then(Commands.argument("b", com.mojang.brigadier.arguments.FloatArgumentType.floatArg(0, 64))
+                                                .executes(ctx -> enShape(ctx.getSource(), StringArgumentType.getString(ctx, "shape"),
+                                                        com.mojang.brigadier.arguments.FloatArgumentType.getFloat(ctx, "a"),
+                                                        com.mojang.brigadier.arguments.FloatArgumentType.getFloat(ctx, "b"))))))))
                 .then(Commands.literal("shrine")
                         .then(Commands.literal("buy").then(Commands.argument("tier", IntegerArgumentType.integer(1, 5))
                                 .executes(ctx -> com.evandouard.hxh.meditation.MeditationShrines.buy(ctx.getSource().getPlayerOrException(),
@@ -856,6 +869,18 @@ public final class HunterCommand {
         d.addJenny(set ? amount - d.jenny() : amount);
         int now = d.jenny();
         source.sendSuccess(() -> Component.translatable("command.hxh.jenny", now), false);
+        return 1;
+    }
+
+    private static int enShape(net.minecraft.commands.CommandSourceStack src, String shape, float a, float b)
+            throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        LivingEntity e = (LivingEntity) src.getEntityOrException();
+        String refusal = com.evandouard.hxh.nen.NenSenses.chooseEnShape(e, shape, a, b);
+        if (refusal != null) {
+            src.sendFailure(Component.translatable(refusal));
+            return 0;
+        }
+        src.sendSuccess(() -> Component.translatable("message.hxh.en_shape_set"), false);
         return 1;
     }
 }

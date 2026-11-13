@@ -85,7 +85,13 @@ public class ProfileScreen extends Screen {
             pores.active = hunter.nenUnlocked();
             if (tab == 0) {
                 // Vitesse max : pour aller très vite seulement quand on le veut
-                addRenderableWidget(new SpeedSlider(left, ay - 24, w, 20, hunter.speedCap()));
+                addRenderableWidget(new SpeedSlider(left, ay - 24, w - 88, 20, hunter.speedCap()));
+                // Forme de l'En (maîtrise 50)
+                Button en = addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.en_shape"),
+                        b -> mc.setScreen(new EnShapeScreen(this))).bounds(left + w - 84, ay - 24, 84, 20).build());
+                en.active = hunter.masteryLevel(com.evandouard.hxh.data.Mastery.EN) >= com.evandouard.hxh.nen.EnShape.UNLOCK_LEVEL;
+                if (!en.active) en.setTooltip(net.minecraft.client.gui.components.Tooltip.create(Component.translatable(
+                        "screen.hxh.en_shape.locked", com.evandouard.hxh.nen.EnShape.UNLOCK_LEVEL)));
             }
         }
         addRenderableWidget(Button.builder(Component.translatable("gui.done"), b -> onClose())

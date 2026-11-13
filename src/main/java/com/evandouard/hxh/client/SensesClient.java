@@ -39,10 +39,16 @@ public final class SensesClient {
     public static boolean inLocalEn(Entity e) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || e == mc.player) return false;
-        double r = EnDomeClient.effectiveRadius(mc.player);
-        if (r <= 0 || !(e instanceof LivingEntity l)) return false;
+        var dims = EnDomeClient.effectiveDims(mc.player);
+        if (dims == null || !(e instanceof LivingEntity l)) return false;
         boolean zetsu = l.hasData(ModAttachments.HUNTER) && l.getData(ModAttachments.HUNTER).mode() == NenMode.ZETSU;
-        return !zetsu && inSphere(l, mc.player, r);
+        return !zetsu && inEn(l, mc.player, dims);
+    }
+
+    /** Une partie du corps de l'entité est-elle dans l'En (forme choisie) de {@code center} ? */
+    static boolean inEn(LivingEntity l, Entity center, com.evandouard.hxh.nen.EnShape.Dims dims) {
+        return com.evandouard.hxh.nen.EnShape.contains(dims, center.position(),
+                center.position().add(0, center.getBbHeight() / 2, 0), l.getBoundingBox());
     }
 
     /** Une partie du corps de l'entité est-elle dans la sphère d'En (et pas seulement son centre) ? */
@@ -74,17 +80,17 @@ public final class SensesClient {
         senseColor = me.auraColor() & 0xFFFFFF;
         Set<Entity> wanted = new HashSet<>();
         EnDomeClient.tick(mc);
-        double enRadius = EnDomeClient.effectiveRadius(mc.player);
+        var enDims = EnDomeClient.effectiveDims(mc.player);
         int gyo = me.gyo() ? me.masteryLevel(Mastery.GYO) : -1;
 
-        if (gyo >= 0 || enRadius > 0) {
+        if (gyo >= 0 || enDims != null) {
             for (Entity e : mc.level.entitiesForRendering()) {
                 if (e == mc.player || !(e instanceof LivingEntity living)) continue;
                 NenMode mode = living.hasData(ModAttachments.HUNTER) ? living.getData(ModAttachments.HUNTER).mode() : NenMode.NONE;
                 boolean zetsu = mode == NenMode.ZETSU;
                 if (NenSenses.gyoReveals(gyo, living, zetsu)) wanted.add(e);
                 // L'En sent tout ce qui vit dans la sphère, mobs ordinaires compris (le Zetsu y échappe)
-                if (enRadius > 0 && !zetsu && inSphere(living, mc.player, enRadius)) wanted.add(e);
+                if (enDims != null && !zetsu && inEn(living, mc.player, enDims)) wanted.add(e);
             }
         }
         for (Entity e : wanted) e.setGlowingTag(true);
