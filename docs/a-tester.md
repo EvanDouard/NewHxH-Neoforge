@@ -33,14 +33,14 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 - [x] CI : GameTest `gourmetSellsDishThreeAndQuestGivesFour` (plat III en boutique à 900 J, plat IV jamais en boutique mais dans la quête et aux enchères) ; capture `61_boutique_hunter_gourmet`.
 - [x] CI : GameTest `namedChallengersAbove200` étendu : Hisoka (son vrai kit) aux 235–240e étages.
 - [x] CI : GameTest `foxbearIsAToughPredator` (60 PV, 9 dégâts, petits renards-ours, butin) ; capture `62_renard_ours`.
-- [ ] En jeu : poser le PNJ `hunter_gourmet` ; clic droit = boutique, accroupi + clic droit = sa quête « Le plat légendaire » (16 carottes dorées, 16 saumons cuits, une pomme d'or enchantée → plat IV).
+- [x] Testé par Claude en CI (captures 94–95) : quête « Le plat légendaire » jusqu'au bout, plats débloqués en boutique. Corrigé : la licence vaut l'Examen pour les prérequis ; 14 PNJ affichaient une clé brute au lieu d'une réplique.
 - [x] Testé par Claude en CI (capture 85) : renard-ours et son petit, Great Stamp. Modèles et textures à faire (provisoires).
 - [x] Testé par Claude en CI (capture 84) : l'arbitre annonce Hisoka au 235e, cote et paris ouverts, combat lancé. Reste à toi : la difficulté.
 
 ## Rang Hunter et Blacklist (13 nov, fin d'après-midi)
 - [x] CI : GameTest `hunterStarsAndBlacklist` (licence exigée, une étoile par domaine : 200e étage, 3 captures, Nen 60 ; 1000 J × étoile ; étoiles jamais perdues ; traques réservées selon le rang ; une traque à la fois).
 - [x] CI : capture `60_blacklist_et_rang` (liste cliquable [Traquer] dans le chat, traques d'un rang supérieur grisées).
-- [ ] En jeu : ouvrir l'ordinateur Hunter avec la licence → la Blacklist s'affiche dans le chat ; prendre une traque, rejoindre la cible, la capturer.
+- [x] Testé par Claude en CI (capture 93) : traque de la Blacklist prise, bulle + boussole, cible capturée.
 - [ ] En jeu : carnet, ligne « Rang Hunter : ★☆☆ · Blacklist · Contrats ».
 - Nouvelle commande admin pour tes tests : `/hunter license give|remove`.
 
