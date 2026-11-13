@@ -377,6 +377,30 @@ public final class HatsuTests {
     }
 
     @GameTest(template = "empty")
+    public static void dayAndNightVowsSwitchWithTheSun(GameTestHelper helper) {
+        Zombie z = husk(helper, 0);
+        HunterData d = hunter(z, NenType.ENHANCER, "gon");
+        d.setLevel(com.evandouard.hxh.data.Stat.STRENGTH, 50);
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.take(z, "overtime") == null, "Heure supplémentaire prêtée");
+        d.setVowNight(false);
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.statMultiplier(d) == 0.7f, "Le jour : ×0,7");
+        helper.assertTrue(d.level(com.evandouard.hxh.data.Stat.STRENGTH) == 35, "Force 50 → 35 le jour : " + d.level(com.evandouard.hxh.data.Stat.STRENGTH));
+        d.setVowNight(true);
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.statMultiplier(d) == 1.3f, "La nuit : ×1,3");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.powerMultiplier(d, Techniques.KURAPIKA_CHAIN_JAIL) == 1.3f, "Techniques ×1,3 la nuit");
+        helper.assertTrue("message.hxh.vow_already".equals(com.evandouard.hxh.hatsu.Vows.take(z, "day_shift")),
+                "Service de jour refusé tant qu'Heure supplémentaire est prise");
+        com.evandouard.hxh.hatsu.Vows.breakVow(z, "vow.hxh.reason.renounced");
+        d.setSealedUntil(0);
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.take(z, "day_shift") == null, "Service de jour prêté");
+        d.setVowNight(true);
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.statMultiplier(d) == 0.7f, "Service de jour : ×0,7 la nuit");
+        d.setVowNight(false);
+        helper.assertTrue(com.evandouard.hxh.hatsu.Vows.statMultiplier(d) == 1.3f, "Service de jour : ×1,3 le jour");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void hisokaThrillScalesWithTargetHealth(GameTestHelper helper) {
         Zombie hisoka = husk(helper, 0);
         Zombie weak = husk(helper, 2);

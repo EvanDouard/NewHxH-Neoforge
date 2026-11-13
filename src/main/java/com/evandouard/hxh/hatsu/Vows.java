@@ -48,6 +48,10 @@ public final class Vows {
         SINGLE_TECHNIQUE(1.6f),
         /** Gon adulte : tout sacrifier. ×3 pendant 60 s, puis Hatsu scellé une journée. */
         ULTIMATE(3.0f),
+        /** Heure supplémentaire : tout ×0,7 le jour, ×1,3 la nuit. */
+        OVERTIME(1.3f),
+        /** Service de jour : tout ×1,3 le jour, ×0,7 la nuit (l'inverse d'Heure supplémentaire). */
+        DAY_SHIFT(1.3f),
         /** Serment propre au personnage (voir {@link CharacterVows}) : puissance et condition selon le kit. */
         CHARACTER(1.0f);
 
@@ -103,7 +107,25 @@ public final class Vows {
      */
     public static float statMultiplier(HunterData data) {
         Vow v = active(data);
-        return v == null || v == Vow.SINGLE_TECHNIQUE || v == Vow.CHARACTER ? 1f : v.power;
+        if (v == null || v == Vow.SINGLE_TECHNIQUE || v == Vow.CHARACTER) return 1f;
+        return timedPower(data, v);
+    }
+
+    /** Multiplicateur réduit des serments jour/nuit. */
+    public static final float TIMED_LOW = 0.7f;
+
+    /** Heure supplémentaire / Service de jour : ×1,3 dans sa période, ×0,7 dans l'autre ; les autres : leur puissance. */
+    public static float timedPower(HunterData data, Vow v) {
+        if (v == Vow.OVERTIME) return data.vowNight() ? v.power : TIMED_LOW;
+        if (v == Vow.DAY_SHIFT) return data.vowNight() ? TIMED_LOW : v.power;
+        return v.power;
+    }
+
+    /** Nuit dans le monde de l'entité (sans cycle jour/nuit, comme à la Tour Céleste : toujours le jour). */
+    public static boolean isNight(LivingEntity entity) {
+        if (entity.level().dimensionType().hasFixedTime()) return false;
+        long t = entity.level().getDayTime() % 24000L;
+        return t >= 13000L && t < 23000L;
     }
 
     /** Serment de personnage en cours, ou null. */
@@ -161,6 +183,7 @@ public final class Vows {
         }
         d.setVow(v.id(), tech, v == Vow.ULTIMATE ? entity.level().getGameTime() + ULTIMATE_TICKS : 0L);
         d.setVowOff(false);
+        d.setVowNight(isNight(entity));
         HunterStats.applyAttributes(entity);
         NenFx.flare(entity, v == Vow.ULTIMATE ? 2.4f : 1.2f, d.auraColor());
         entity.level().playSound(null, entity.blockPosition(), v == Vow.ULTIMATE ? SoundEvents.WITHER_SPAWN : SoundEvents.BEACON_ACTIVATE,
@@ -191,6 +214,17 @@ public final class Vows {
     public static void tick(LivingEntity entity) {
         HunterData d = HunterStats.get(entity);
         if (entity.tickCount % 20 == 0) {
+            // Serments jour/nuit : la puissance bascule au lever et au coucher du soleil
+            Vow cur = of(d);
+            if (cur == Vow.OVERTIME || cur == Vow.DAY_SHIFT) {
+                boolean night = isNight(entity);
+                if (night != d.vowNight()) {
+                    d.setVowNight(night);
+                    HunterStats.applyAttributes(entity);
+                    if (entity instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.vow_timed_switch",
+                            Component.translatable(cur.translationKey()), "×" + timedPower(d, cur)).withStyle(ChatFormatting.GOLD), true);
+                }
+            }
             boolean on = active(d) != null;
             boolean has = entity.hasEffect(com.evandouard.hxh.effect.ModEffects.VOW);
             if (on && !has) entity.addEffect(new net.minecraft.world.effect.MobEffectInstance(com.evandouard.hxh.effect.ModEffects.VOW,
@@ -248,7 +282,7 @@ public final class Vows {
             CharacterVows.Def def = CharacterVows.forKit(d.kit());
             return def != null && t.id().equals(def.technique()) ? def.power() : 1f;
         }
-        return v.power;
+        return timedPower(d, v);
     }
 
     /**

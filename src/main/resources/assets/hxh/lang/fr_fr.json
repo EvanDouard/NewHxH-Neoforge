@@ -1325,5 +1325,10 @@
   "command.hxh.contract_goto_spawn": "Au point d'apparition de la cible (elle n'est pas encore chargée)",
   "dialog.hxh.majordome.peaceful": "Le monde est trop paisible en ce moment : aucune cible ne survivrait jusqu'à votre arrivée. Revenez quand il y aura du danger.",
   "message.hxh.contract_peaceful": "Pas de traque en difficulté Paisible : la cible disparaîtrait",
-  "command.hxh.contract_cancelled": "Contrat annulé"
+  "command.hxh.contract_cancelled": "Contrat annulé",
+  "vow.hxh.overtime": "Heure supplémentaire",
+  "vow.hxh.overtime.desc": "Tu travailles la nuit : tout ×1,3 la nuit (stats, aura, techniques), mais tout ×0,7 le jour. Sans cycle jour/nuit (Tour Céleste), c'est le jour. Ne peut pas être pris en même temps que « Service de jour ».",
+  "vow.hxh.day_shift": "Service de jour",
+  "vow.hxh.day_shift.desc": "L'inverse d'« Heure supplémentaire » : tout ×1,3 le jour, mais tout ×0,7 la nuit. Les deux ne peuvent pas être pris ensemble.",
+  "message.hxh.vow_timed_switch": "%s : le soleil tourne, puissance %s"
 }

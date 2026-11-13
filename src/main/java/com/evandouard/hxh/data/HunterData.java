@@ -98,6 +98,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private long nenSealedUntil = 0;
     /** Serment conditionnel mis en pause par le joueur (combat loyal, monstres seulement, mains nues). */
     private boolean vowOff = false;
+    /** Serment jour/nuit : vrai la nuit (mis à jour par le serveur, synchronisé). */
+    private boolean vowNight = false;
     private final Map<String, Long> readyAt = new HashMap<>();
 
     private final Set<String> dirty = new HashSet<>();
@@ -598,6 +600,17 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         return vowOff;
     }
 
+    public boolean vowNight() {
+        return vowNight;
+    }
+
+    public void setVowNight(boolean night) {
+        if (night == vowNight) return;
+        vowNight = night;
+        dirty.add(HATSU);
+        for (Stat s : Stat.values()) dirty.add(statKey(s));
+    }
+
     public void setVowOff(boolean off) {
         vowOff = off;
         dirty.add(HATSU);
@@ -715,6 +728,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             h.putLong("sealedUntil", sealedUntil);
             h.putLong("nenSealedUntil", nenSealedUntil);
             h.putBoolean("vowOff", vowOff);
+            h.putBoolean("vowNight", vowNight);
             CompoundTag cd = new CompoundTag();
             readyAt.forEach(cd::putLong);
             h.put("readyAt", cd);
@@ -857,6 +871,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             sealedUntil = h.getLong("sealedUntil");
             nenSealedUntil = h.getLong("nenSealedUntil");
             vowOff = h.getBoolean("vowOff");
+            vowNight = h.getBoolean("vowNight");
             readyAt.clear();
             CompoundTag cd = h.getCompound("readyAt");
             for (String id : cd.getAllKeys()) readyAt.put(id, cd.getLong(id));

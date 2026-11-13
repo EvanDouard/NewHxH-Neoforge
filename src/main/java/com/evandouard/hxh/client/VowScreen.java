@@ -35,6 +35,33 @@ public class VowScreen extends Screen {
         this.parent = parent;
     }
 
+    /** Disposition : une colonne si tout tient, sinon deux. */
+    private int perColumn() {
+        return Math.max(1, (height - TOP - 54) / ROW);
+    }
+
+    private int columns(int count) {
+        return count > perColumn() ? 2 : 1;
+    }
+
+    private int cellW(int count) {
+        return columns(count) == 1 ? 300 : 200;
+    }
+
+    private int cellX(int i, int count) {
+        int cols = columns(count), w = cellW(count);
+        int total = cols * w + (cols - 1) * 6;
+        return width / 2 - total / 2 + (i / perColumn()) * (w + 6);
+    }
+
+    private int cellY(int i) {
+        return TOP + (i % perColumn()) * ROW;
+    }
+
+    private int buttonW(int count) {
+        return columns(count) == 1 ? 84 : 52;
+    }
+
     private static HunterData data() {
         return Minecraft.getInstance().player.getData(ModAttachments.HUNTER);
     }
@@ -45,13 +72,13 @@ public class VowScreen extends Screen {
         long now = minecraft.level.getGameTime();
         boolean sealed = Vows.sealed(d, now);
         Vows.Vow current = Vows.of(d);
-        int right = width / 2 + 150;
         Vows.Vow[] vows = shown(d);
+        int bw = buttonW(vows.length), cw = cellW(vows.length);
         for (int i = 0; i < vows.length; i++) {
             Vows.Vow v = vows[i];
-            int y = TOP + i * ROW;
+            int y = cellY(i);
             Button take = Button.builder(Component.translatable(current == v ? "screen.hxh.vow.current" : "screen.hxh.vow.take"),
-                    b -> confirmTake(v)).bounds(right - 84, y + 1, 84, 18).build();
+                    b -> confirmTake(v)).bounds(cellX(i, vows.length) + cw - bw, y + 1, bw, 18).build();
             take.active = current == null && !sealed && d.hasKit();
             take.setTooltip(Tooltip.create(description(d, v)));
             addRenderableWidget(take);
@@ -128,27 +155,29 @@ public class VowScreen extends Screen {
 
         hovered = -1;
         Vows.Vow[] vows = shown(d);
-        int left = width / 2 - 150;
-        for (int i = 0; i < vows.length; i++) {
+        int count = vows.length, cw = cellW(count), bw = buttonW(count);
+        for (int i = 0; i < count; i++) {
             Vows.Vow v = vows[i];
-            int y = TOP + i * ROW;
-            boolean over = mouseX >= left && mouseX <= left + 300 && mouseY >= y && mouseY < y + ROW - 2;
+            int x = cellX(i, count), y = cellY(i);
+            boolean over = mouseX >= x && mouseX <= x + cw && mouseY >= y && mouseY < y + ROW - 2;
             if (over) hovered = i;
             boolean mine = Vows.of(d) == v;
-            g.fill(left, y, left + 300, y + ROW - 2, mine ? 0x80604010 : over ? 0x60303050 : 0x40000000);
+            g.fill(x, y, x + cw, y + ROW - 2, mine ? 0x80604010 : over ? 0x60303050 : 0x40000000);
+            String mult = v == Vows.Vow.OVERTIME ? "☀0.7 ☾1.3" : v == Vows.Vow.DAY_SHIFT ? "☀1.3 ☾0.7" : "×" + power(d, v);
+            int multX = x + cw - bw - 6 - font.width(mult);
             // nom coupé avant la colonne du multiplicateur (le survol affiche la description en entier)
             String name = Vows.name(d, v).getString();
-            int maxW = 172;
+            int maxW = multX - x - 10;
             if (font.width(name) > maxW) name = font.plainSubstrByWidth(name, maxW - font.width("…")).stripTrailing() + "…";
-            g.drawString(font, Component.literal(name).withStyle(mine ? ChatFormatting.GOLD : ChatFormatting.WHITE),
-                    left + 6, y + 6, 0xFFFFFF);
-            g.drawString(font, Component.literal("×" + power(d, v)).withStyle(ChatFormatting.AQUA), left + 182, y + 6, 0xFFFFFF);
+            g.drawString(font, Component.literal(name).withStyle(mine ? ChatFormatting.GOLD : ChatFormatting.WHITE), x + 6, y + 6, 0xFFFFFF);
+            g.drawString(font, Component.literal(mult).withStyle(ChatFormatting.AQUA), multX, y + 6, 0xFFFFFF);
         }
         if (hovered >= 0) {
+            int left = width / 2 - 150;
             List<FormattedCharSequence> lines = font.split(description(d, vows[hovered]).copy().withStyle(ChatFormatting.GRAY), 300);
-            int y = TOP + vows.length * ROW + 2;
+            int y = TOP + Math.min(count, perColumn()) * ROW + 2;
             for (FormattedCharSequence l : lines) {
-                if (y > height - 36) break;
+                if (y > height - 56) break;
                 g.drawString(font, l, left, y, 0xFFFFFF);
                 y += font.lineHeight + 1;
             }
