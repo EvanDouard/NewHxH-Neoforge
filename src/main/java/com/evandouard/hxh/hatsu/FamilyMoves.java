@@ -38,6 +38,12 @@ public final class FamilyMoves {
         public boolean isFamily() {
             return true;
         }
+
+        /** Comme les coups de base : l'Endurance raccourcit la recharge (jusqu'à moitié à Endurance 100). */
+        @Override
+        public int cooldownFor(HunterData data) {
+            return Math.round(cooldownTicks() * (1f - 0.005f * data.level(Stat.ENDURANCE)));
+        }
     }
 
     /**

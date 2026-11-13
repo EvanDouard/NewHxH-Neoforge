@@ -112,6 +112,9 @@ public final class NenAwakening {
     }
 
     /** Une seconde de méditation = 20 ticks. Appelé chaque tick serveur. */
+    /** Couleur de l'aura qui tourne autour du méditant, par niveau de sanctuaire (I vert pâle … V doré). */
+    static final int[] SHRINE_COLORS = {0xFF9FE0A8, 0xFF7FD8FF, 0xFFB06BFF, 0xFFFF8A3C, 0xFFFFD23F};
+
     public static void tickMeditation(LivingEntity entity) {
         if (!entity.hasData(ModAttachments.HUNTER)) return;
         HunterData data = HunterStats.get(entity);
@@ -143,8 +146,25 @@ public final class NenAwakening {
         if (data.nenUnlocked() && entity.tickCount % 200 == 0) {
             // Déjà éveillé : la méditation entraîne la Volonté et le Nen
             // à côté d'une pierre de méditation (sanctuaire), la Volonté monte bien plus vite
-            HunterStats.addXp(entity, Stat.WILLPOWER, com.evandouard.hxh.meditation.MeditationShrines.willMultiplier(entity));
+            double mult = com.evandouard.hxh.meditation.MeditationShrines.willMultiplier(entity);
+            HunterStats.addXp(entity, Stat.WILLPOWER, mult);
             NenProgress.addNenXp(entity, 1);
+            // retour visible : XP gagnée, et le multiplicateur du sanctuaire s'il y en a un
+            if (entity instanceof Player player) {
+                player.displayClientMessage(mult > 1
+                        ? Component.translatable("message.hxh.meditation_xp_shrine", Math.round(mult), Math.round(mult))
+                        : Component.translatable("message.hxh.meditation_xp", 1), true);
+            }
+        }
+        // Près d'une pierre de méditation : l'aura se met à tourner autour du méditant, plus fort selon le niveau
+        if (data.nenUnlocked() && entity.tickCount % 20 == 0) {
+            int tier = com.evandouard.hxh.meditation.MeditationShrines.stoneTier(entity);
+            if (tier > 0) {
+                int color = SHRINE_COLORS[tier - 1];
+                com.evandouard.hxh.fx.NenFx.flare(entity, 0.6f + 0.35f * tier, color);
+                if (tier >= 3) com.evandouard.hxh.fx.NenFx.shockwave(entity, 1.2f + 0.5f * tier, color);
+                if (tier >= 5) com.evandouard.hxh.fx.NenFx.crackle(entity, color, 20);
+            }
         }
     }
 

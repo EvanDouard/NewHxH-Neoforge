@@ -133,6 +133,18 @@ public final class HunterCommand {
                         .then(Commands.literal("buy").then(Commands.argument("tier", IntegerArgumentType.integer(1, 5))
                                 .executes(ctx -> com.evandouard.hxh.meditation.MeditationShrines.buy(ctx.getSource().getPlayerOrException(),
                                         IntegerArgumentType.getInteger(ctx, "tier")) ? 1 : 0)))
+                        .then(Commands.literal("nearest").requires(src -> src.hasPermission(2)).executes(ctx -> {
+                            var p = ctx.getSource().getPlayerOrException();
+                            long[] sh = com.evandouard.hxh.meditation.MeditationShrines.nearest(p.serverLevel(), p.blockPosition());
+                            if (sh == null) {
+                                ctx.getSource().sendFailure(Component.translatable("command.hxh.shrine_none"));
+                                return 0;
+                            }
+                            net.minecraft.core.BlockPos pos = net.minecraft.core.BlockPos.of(sh[0]);
+                            ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.shrine_nearest", sh[1], pos.getX(), pos.getY(), pos.getZ(),
+                                    (int) Math.sqrt(pos.distSqr(p.blockPosition()))), false);
+                            return 1;
+                        }))
                         .then(Commands.literal("build").requires(src -> src.hasPermission(2))
                                 .then(Commands.argument("tier", IntegerArgumentType.integer(1, 5)).executes(ctx -> {
                                     var p = ctx.getSource().getPlayerOrException();
@@ -574,6 +586,11 @@ public final class HunterCommand {
                             if (refusal != null) ctx.getSource().sendFailure(Component.translatable(refusal));
                             return refusal == null ? 1 : 0;
                         })))
+                .then(Commands.literal("toggle").executes(ctx -> {
+                    ctx.getSource().sendSuccess(() -> Component.translatable(com.evandouard.hxh.hatsu.Vows.toggle(
+                            (LivingEntity) ctx.getSource().getEntityOrException())), false);
+                    return 1;
+                }))
                 .then(Commands.literal("renounce").executes(ctx -> {
                     com.evandouard.hxh.hatsu.Vows.breakVow((LivingEntity) ctx.getSource().getEntityOrException(), "vow.hxh.reason.renounced");
                     return 1;
@@ -582,6 +599,7 @@ public final class HunterCommand {
                     HunterData d = HunterStats.get((LivingEntity) ctx.getSource().getEntityOrException());
                     d.setVow("", "", 0L);
                     d.setSealedUntil(0L);
+                    d.setNenSealedUntil(0L);
                     return 1;
                 }));
     }

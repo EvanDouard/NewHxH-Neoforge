@@ -42,7 +42,25 @@ public final class SensesClient {
         double r = EnDomeClient.effectiveRadius(mc.player);
         if (r <= 0 || !(e instanceof LivingEntity l)) return false;
         boolean zetsu = l.hasData(ModAttachments.HUNTER) && l.getData(ModAttachments.HUNTER).mode() == NenMode.ZETSU;
-        return !zetsu && l.distanceTo(mc.player) <= r;
+        return !zetsu && inSphere(l, mc.player, r);
+    }
+
+    /** Une partie du corps de l'entité est-elle dans la sphère d'En (et pas seulement son centre) ? */
+    static boolean inSphere(LivingEntity l, Entity center, double r) {
+        var box = l.getBoundingBox();
+        var c = center.position().add(0, center.getBbHeight() / 2, 0);
+        double dx = Math.max(box.minX - c.x, Math.max(0, c.x - box.maxX));
+        double dy = Math.max(box.minY - c.y, Math.max(0, c.y - box.maxY));
+        double dz = Math.max(box.minZ - c.z, Math.max(0, c.z - box.maxZ));
+        return dx * dx + dy * dy + dz * dz <= r * r;
+    }
+
+    /** Maîtrise de l'En du joueur local (-1 si l'En est coupé). */
+    public static int localEnLevel() {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null) return -1;
+        HunterData d = mc.player.getData(ModAttachments.HUNTER);
+        return d.en() ? d.masteryLevel(Mastery.EN) : -1;
     }
 
     /** Couleur de contour d'une entité sentie par l'En ou le Gyo, ou -1 pour laisser Minecraft décider. */
@@ -66,7 +84,7 @@ public final class SensesClient {
                 boolean zetsu = mode == NenMode.ZETSU;
                 if (NenSenses.gyoReveals(gyo, living, zetsu)) wanted.add(e);
                 // L'En sent tout ce qui vit dans la sphère, mobs ordinaires compris (le Zetsu y échappe)
-                if (enRadius > 0 && !zetsu && living.distanceTo(mc.player) <= enRadius) wanted.add(e);
+                if (enRadius > 0 && !zetsu && inSphere(living, mc.player, enRadius)) wanted.add(e);
             }
         }
         for (Entity e : wanted) e.setGlowingTag(true);

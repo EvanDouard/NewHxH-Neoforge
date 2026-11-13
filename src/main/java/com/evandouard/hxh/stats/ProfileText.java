@@ -36,11 +36,16 @@ public final class ProfileText {
                 .withStyle(ChatFormatting.GOLD));
         for (Stat stat : Stat.values()) {
             int level = data.level(stat);
-            MutableComponent xpPart = level >= Stat.MAX_LEVEL
+            int base = data.baseLevel(stat);
+            MutableComponent xpPart = base >= Stat.MAX_LEVEL
                     ? Component.translatable("command.hxh.show.max")
-                    : Component.translatable("command.hxh.show.xp", data.xp(stat), Stat.xpToNext(level));
-            lines.add(Component.translatable("command.hxh.show.stat",
-                    Component.translatable(stat.translationKey()), level, xpPart));
+                    : Component.translatable("command.hxh.show.xp", data.xp(stat), Stat.xpToNext(base));
+            MutableComponent line = Component.translatable("command.hxh.show.stat",
+                    Component.translatable(stat.translationKey()), level, xpPart);
+            // Sous serment : niveau multiplié, avec le niveau gagné et le multiplicateur
+            if (level != base) line.append(Component.translatable("command.hxh.show.vow_boost", base,
+                    com.evandouard.hxh.hatsu.Vows.statMultiplier(data)).withStyle(ChatFormatting.GOLD));
+            lines.add(line);
         }
         Component nenType = data.nenType() == null
                 ? Component.translatable("nen.hxh.none")

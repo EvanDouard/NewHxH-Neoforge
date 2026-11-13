@@ -34,14 +34,17 @@ import java.util.UUID;
 
 /**
  * Sanctuaires de méditation (Volonté), niveaux 1 à 5 : petits temples posés dans le monde au fil de l'exploration,
- * avec une pierre de méditation au centre. Méditer (touche M) à côté de la pierre multiplie l'XP de Volonté.
+ * avec une pierre de méditation au centre. Méditer (bouton « Méditer » du carnet) à côté de la pierre multiplie l'XP de
+ * Volonté. Rares : environ 5 fois moins qu'au début, et jamais à moins de {@link #MIN_SPACING} blocs l'un de l'autre.
  * Les archéologues vendent les coordonnées des sanctuaires 1 à 4 déjà repérés ; ceux de niveau 5, très rares, ne
  * se vendent pas : il faut les trouver soi-même.
  */
 public final class MeditationShrines {
     public static final String ARCHAEOLOGIST = "archeologue";
     /** Chance qu'un nouveau tronçon de l'Overworld reçoive un sanctuaire, par niveau (1 à 5). */
-    static final double[] CHANCE = {1 / 120.0, 1 / 220.0, 1 / 420.0, 1 / 900.0, 1 / 4000.0};
+    static final double[] CHANCE = {1 / 700.0, 1 / 1400.0, 1 / 2800.0, 1 / 6000.0, 1 / 25000.0};
+    /** Distance minimale entre deux sanctuaires (blocs) : on n'en trouve jamais deux à côté. */
+    public static final int MIN_SPACING = 400;
     /** Multiplicateur d'XP de Volonté en méditant près de la pierre, par niveau. */
     public static final double[] WILL_MULT = {3, 5, 8, 12, 20};
     /** Prix des coordonnées chez l'archéologue (niveaux 1 à 4). */
@@ -125,6 +128,12 @@ public final class MeditationShrines {
             }
         }
         if (tier == 0) return;
+        BlockPos here = cp.getWorldPosition().offset(8, 0, 8);
+        for (long[] sh : Shrines.get(level).all()) {
+            BlockPos o = BlockPos.of(sh[0]);
+            double dx = o.getX() - here.getX(), dz = o.getZ() - here.getZ();
+            if (dx * dx + dz * dz < (double) MIN_SPACING * MIN_SPACING) return; // un autre sanctuaire est trop près
+        }
         final int chosen = tier;
         // le tronçon vient d'être généré : on bâtit au tick suivant, sur le fil du serveur
         level.getServer().execute(() -> {
@@ -203,6 +212,32 @@ public final class MeditationShrines {
     }
 
     // ---------- Méditation ----------
+
+    /** Sanctuaire le plus proche (pos, niveau), ou null (commande admin : /locate ne les connaît pas). */
+    public static long[] nearest(ServerLevel level, BlockPos from) {
+        long[] best = null;
+        double bd = Double.MAX_VALUE;
+        for (long[] sh : Shrines.get(level).all()) {
+            double d = BlockPos.of(sh[0]).distSqr(from);
+            if (d < bd) {
+                bd = d;
+                best = sh;
+            }
+        }
+        return best;
+    }
+
+    /** Niveau de la pierre à portée (0 sans pierre). */
+    public static int stoneTier(LivingEntity entity) {
+        BlockPos at = entity.blockPosition();
+        int best = 0;
+        int reach = (int) Math.ceil(STONE_RANGE);
+        for (BlockPos p : BlockPos.betweenClosed(at.offset(-reach, -1, -reach), at.offset(reach, 1, reach))) {
+            if (p.distToCenterSqr(entity.position()) > STONE_RANGE * STONE_RANGE) continue;
+            if (entity.level().getBlockState(p).getBlock() instanceof MeditationStoneBlock m) best = Math.max(best, m.tier());
+        }
+        return best;
+    }
 
     /** Multiplicateur d'XP de Volonté pour qui médite à côté d'une pierre (1 sinon). */
     public static double willMultiplier(LivingEntity entity) {

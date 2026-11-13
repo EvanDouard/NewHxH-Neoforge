@@ -94,10 +94,14 @@ public final class NenAdvancedTests {
         d.setAura(d.auraMax());
         helper.assertTrue(NenDefense.ko(striker) == null, "Le Ko se relance");
 
-        // Le coup part : le Ko est dépensé
+        // Le coup part : le Ko persiste (10 s au plus bas niveau), effet visible
         Zombie victim = husk(helper, 1);
         striker.doHurtTarget(victim);
-        helper.assertTrue(!NenDefense.koActive(striker), "Le Ko est dépensé après le coup");
+        helper.assertTrue(NenDefense.koActive(striker), "Le Ko persiste après le coup");
+        helper.assertTrue(striker.hasEffect(com.evandouard.hxh.effect.ModEffects.KO), "Effet « Ko » affiché");
+        helper.assertTrue(NenDefense.koDuration(d) >= NenDefense.KO_MIN_TICKS, "Au moins 10 s");
+        d.setMasteryLevel(com.evandouard.hxh.data.Mastery.KO, com.evandouard.hxh.data.Mastery.MAX_LEVEL);
+        helper.assertTrue(NenDefense.koDuration(d) == NenDefense.KO_MAX_TICKS, "2 min à la maîtrise maximale");
         helper.succeed();
     }
 

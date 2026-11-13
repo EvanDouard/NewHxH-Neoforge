@@ -66,6 +66,9 @@ public final class Impacts {
         final float radius;
         int digs;
         Vec3 lastVelocity = Vec3.ZERO;
+        /** Coup de pied fort : la cible percute aussi les autres mobs sur sa route (chacun une fois). */
+        boolean hitsMobs;
+        final java.util.Set<LivingEntity> alreadyHit = new java.util.HashSet<>();
 
         Flying(LivingEntity target, long until) {
             this(target, until, WALL_RADIUS, 1);
@@ -86,12 +89,41 @@ public final class Impacts {
 
     /** Surveille une cible qu'on vient de projeter : elle creusera les murs qu'elle percute. */
     public static void watchWallHits(LivingEntity target, float radius, int digs, int ticks) {
-        FLYING.removeIf(f -> f.target == target);
-        FLYING.add(new Flying(target, target.level().getGameTime() + ticks, radius, digs));
+        Flying f = new Flying(target, target.level().getGameTime() + ticks, radius, digs);
+        f.hitsMobs = true;
+        PENDING.add(f); // ajouté au prochain passage (on peut être appelé pendant le parcours de FLYING)
+    }
+
+    /** Dégâts infligés au mob percuté par une cible projetée, et part de la vitesse qui lui est transmise. */
+    public static final float BODY_HIT_DAMAGE = 4f, BODY_HIT_TRANSFER = 0.7f;
+
+    /** La cible projetée percute d'autres mobs : comme un mur, mais ce sont eux qui encaissent et s'envolent. */
+    static void bodyHits(ServerLevel level, Flying f) {
+        LivingEntity t = f.target;
+        Vec3 v = t.getDeltaMovement();
+        if (v.horizontalDistanceSqr() < 0.09) return;
+        for (LivingEntity other : level.getEntitiesOfClass(LivingEntity.class, t.getBoundingBox().inflate(0.4),
+                e -> e != t && e.isAlive() && !e.isSpectator() && !f.alreadyHit.contains(e))) {
+            f.alreadyHit.add(other);
+            Vec3 at = other.getBoundingBox().getCenter();
+            NenFx.impactAt(level, at, 1.8f, NenFx.WHITE);
+            NenFx.shockwaveAt(level, at, 1.6f, NenFx.WHITE);
+            level.playSound(null, at.x, at.y, at.z, SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.PLAYERS, 1f, 0.6f);
+            level.playSound(null, at.x, at.y, at.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.4f, 1.8f);
+            other.invulnerableTime = 0;
+            other.hurt(t.damageSources().flyIntoWall(), BODY_HIT_DAMAGE);
+            other.setDeltaMovement(v.x * BODY_HIT_TRANSFER, 0.3, v.z * BODY_HIT_TRANSFER);
+            other.hurtMarked = true;
+            // le mob percuté repart à son tour : il creuse les murs et percute les suivants
+            watchWallHits(other, f.radius, 1, KICK_WATCH_TICKS);
+            t.setDeltaMovement(v.scale(0.6));
+            t.hurtMarked = true;
+        }
     }
 
     private static final List<Frozen> FROZEN = new ArrayList<>();
     private static final List<Flying> FLYING = new ArrayList<>();
+    private static final List<Flying> PENDING = new ArrayList<>();
 
     private Impacts() {}
 
@@ -144,7 +176,7 @@ public final class Impacts {
         }
         level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.GENERIC_EXPLODE.value(),
                 SoundSource.PLAYERS, 0.8f, 1.4f);
-        if (destructive(level)) crater(level, Vec3.atCenterOf(ground), CRATER_RADIUS, attacker);
+        if (destructive(level)) bowl(level, Vec3.atBottomCenterOf(ground.above()), BOWL_RADIUS, attacker);
         NenFx.impactFrame(attacker, target, FREEZE_TICKS);
         FROZEN.removeIf(f -> f.target == target || f.attacker == attacker);
         FROZEN.add(new Frozen(attacker, target, attacker.position(), target.position(),
@@ -189,6 +221,27 @@ public final class Impacts {
         NenFx.debris(level, new Vec3(target.getX(), ground.getY() + 1.0, target.getZ()), Math.min(24, count / 2 + 4), color);
     }
 
+    /** Rayon du cratère de la frappe parfaite (demi-sphère sous la cible). */
+    public static final float BOWL_RADIUS = 3.2f;
+
+    /**
+     * Cratère propre en demi-sphère : tout ce qui est sous la surface, dans un rayon {@code r} autour du point
+     * d'impact (posé sur le sol), part ; rien au-dessus du sol. Les bords sont lissés (centre des blocs).
+     */
+    public static int bowl(ServerLevel level, Vec3 surface, float r, LivingEntity breaker) {
+        int ir = (int) Math.ceil(r), broken = 0;
+        BlockPos c = BlockPos.containing(surface);
+        for (BlockPos p : BlockPos.betweenClosed(c.offset(-ir, -ir, -ir), c.offset(ir, -1, ir))) {
+            Vec3 center = Vec3.atCenterOf(p);
+            if (center.distanceToSqr(surface) > r * r) continue;
+            BlockState s = level.getBlockState(p);
+            if (s.isAir() || !breakable(level, p, s)) continue;
+            level.destroyBlock(p, false, breaker);
+            broken++;
+        }
+        return broken;
+    }
+
     /** Sphère de blocs cassés (blocs pas trop durs, sans bloc-entité). */
     static int crater(ServerLevel level, Vec3 center, float r, LivingEntity breaker) {
         int ir = (int) Math.ceil(r), broken = 0;
@@ -228,6 +281,11 @@ public final class Impacts {
                 FLYING.add(new Flying(f.target, f.target.level().getGameTime() + WALL_WATCH_TICKS));
             }
         }
+        if (!PENDING.isEmpty()) {
+            for (Flying p : PENDING) FLYING.removeIf(f -> f.target == p.target);
+            FLYING.addAll(PENDING);
+            PENDING.clear();
+        }
         if (!FLYING.isEmpty()) {
             Iterator<Flying> it = FLYING.iterator();
             while (it.hasNext()) {
@@ -237,6 +295,7 @@ public final class Impacts {
                     it.remove();
                     continue;
                 }
+                if (f.hitsMobs) bodyHits(level, f);
                 if (!t.horizontalCollision) {
                     if (t.getDeltaMovement().horizontalDistanceSqr() > 0.01) f.lastVelocity = t.getDeltaMovement();
                     continue;

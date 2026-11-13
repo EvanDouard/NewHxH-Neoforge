@@ -30,8 +30,20 @@ public class ProfileScreen extends Screen {
 
     /** Nouvelles données reçues pendant que l'écran est ouvert. */
     public void update(ProfilePayload newData) {
+        if (newData.equals(this.data)) return; // rien n'a changé : on ne reconstruit pas l'écran
         this.data = newData;
         rebuildWidgets();
+    }
+
+    private int refreshTicks;
+
+    /** Stats et XP en temps réel : on redemande le carnet au serveur chaque seconde tant qu'il est ouvert. */
+    @Override
+    public void tick() {
+        super.tick();
+        if (++refreshTicks % 20 == 0) {
+            net.neoforged.neoforge.network.PacketDistributor.sendToServer(com.evandouard.hxh.network.RequestProfilePayload.INSTANCE);
+        }
     }
 
     private int panelW() {

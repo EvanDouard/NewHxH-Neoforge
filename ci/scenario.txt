@@ -1722,4 +1722,40 @@ wait 30
 shot 65_bras_de_fer
 closescreen
 wait 400
+# --- Sanctuaire : méditation visible selon le niveau ---
+cmd kill @e[type=!minecraft:player]
+cmd gamemode survival
+cmd tp @s ~40 ~ ~ 0 0
+wait 20
+cmd hunter shrine build 4
+wait 20
+cmd tp @s ~ ~ ~4 0 20
+wait 10
+key key.hxh.profile
+wait 10
+click Méditer
+wait 45
+camera back
+wait 2
+shot 66_meditation_sanctuaire_niveau_4
+camera first
+key key.hxh.profile
+wait 10
+click Méditer
+closescreen
+# --- Coup de pied fort : la cible percute un autre mob ---
+cmd kill @e[type=!minecraft:player]
+cmd tp @s ~30 ~ ~ 0 0
+wait 10
+cmd summon minecraft:pig ~ ~ ~2
+cmd summon minecraft:pig ~ ~ ~6
+cmd hunter stat strength set 60
+cmd hunter hatsu select basic_kick
+look 0 10
+wait 10
+key key.hxh.cast
+wait 6
+shot 67_coup_de_pied_cible_percute_un_mob
+cmd kill @e[type=minecraft:pig]
+cmd gamemode creative
 quit

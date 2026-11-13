@@ -354,15 +354,28 @@ public final class HatsuTests {
         helper.assertTrue(com.evandouard.hxh.hatsu.Vows.take(z, "monsters_only") == null, "Serment des monstres prêté");
         d.setAura(d.auraMax());
         d.setReadyAt("leorio_remote_punch", 0);
-        helper.assertTrue(Hatsu.cast(z) == null, "Coup à distance lancé sur le cochon");
-        helper.assertTrue(d.vow().isEmpty() && d.sealedUntil() > now, "Toucher un animal rompt le serment");
+        float pigHp = pig.getHealth();
+        Hatsu.cast(z);
+        helper.assertTrue(pig.getHealth() == pigHp, "Monstres seulement : le coup sur un animal ne porte pas");
+        helper.assertTrue("monsters_only".equals(d.vow()), "Le serment n'est pas rompu");
+        // Stats multipliées sous serment, et pause
+        d.setLevel(com.evandouard.hxh.data.Stat.STRENGTH, 20);
+        helper.assertTrue(d.level(com.evandouard.hxh.data.Stat.STRENGTH) == 30 && d.baseLevel(com.evandouard.hxh.data.Stat.STRENGTH) == 20, "Force ×1,5 sous serment");
+        helper.assertTrue("message.hxh.vow_paused".equals(com.evandouard.hxh.hatsu.Vows.toggle(z)) && d.level(com.evandouard.hxh.data.Stat.STRENGTH) == 20, "En pause : plus de bonus");
+        com.evandouard.hxh.hatsu.Vows.toggle(z);
+        d.setVow("", "", 0L);
         d.setSealedUntil(0);
         // Tout sacrifier : ×3 pendant 60 s, puis scellé une journée
         helper.assertTrue(com.evandouard.hxh.hatsu.Vows.take(z, "ultimate") == null, "Serment ultime prêté");
         helper.assertTrue(Math.abs(Hatsu.powerFor(z, d, punch) - base * 3f) < 1e-3, "Serment ultime ×3");
         d.setVow("ultimate", "", z.level().getGameTime() - 1);
         com.evandouard.hxh.hatsu.Vows.tick(z);
-        helper.assertTrue(d.vow().isEmpty() && d.sealedUntil() - z.level().getGameTime() > 20000, "Après le serment ultime : scellé une journée");
+        helper.assertTrue(d.vow().isEmpty() && d.nenSealedUntil() - z.level().getGameTime() > 200000, "Après le serment ultime : tout le Nen scellé une dizaine de jours");
+        d.setReadyAt("leorio_remote_punch", 0);
+        d.setAura(d.auraMax());
+        helper.assertTrue("message.hxh.nen_sealed".equals(Hatsu.castRefusal(d, punch, z.level().getGameTime())), "Plus de technique");
+        d.setNenSealedUntil(0);
+        d.setSealedUntil(0);
         helper.succeed();
     }
 }

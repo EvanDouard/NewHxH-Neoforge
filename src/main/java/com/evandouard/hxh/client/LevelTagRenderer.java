@@ -57,6 +57,12 @@ public final class LevelTagRenderer {
             text = text.copy().append(" · ").append(Component.translatable(data.nenType().translationKey()));
         }
 
+        // Gyo ou En de haut niveau : vie et armure de la cible
+        boolean seeHealth = (en && SensesClient.localEnLevel() >= com.evandouard.hxh.nen.NenSenses.EN_SEE_HEALTH)
+                || SensesClient.localGyoLevel() >= com.evandouard.hxh.nen.NenSenses.GYO_SEE_HEALTH;
+        Component health = seeHealth ? Component.translatable("hud.hxh.health_tag",
+                (int) Math.ceil(entity.getHealth()), (int) Math.ceil(entity.getMaxHealth()), entity.getArmorValue()) : null;
+
         PoseStack pose = event.getPoseStack();
         pose.pushPose();
         // Au-dessus de la tête, et encore au-dessus si un nom est déjà affiché
@@ -72,6 +78,13 @@ public final class LevelTagRenderer {
                 Font.DisplayMode.SEE_THROUGH, background, event.getPackedLight());
         font.drawInBatch(text, x, 0, colorFor(level, mine), false, matrix, event.getMultiBufferSource(),
                 Font.DisplayMode.NORMAL, 0, event.getPackedLight());
+        if (health != null) {
+            float hx = -font.width(health) / 2f;
+            font.drawInBatch(health, hx, 10, 0xFFFF6B6B, false, matrix, event.getMultiBufferSource(),
+                    Font.DisplayMode.SEE_THROUGH, background, event.getPackedLight());
+            font.drawInBatch(health, hx, 10, 0xFFFF6B6B, false, matrix, event.getMultiBufferSource(),
+                    Font.DisplayMode.NORMAL, 0, event.getPackedLight());
+        }
         pose.popPose();
     }
 }

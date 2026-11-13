@@ -26,6 +26,10 @@ public record VowPayload(String action, String vowId) implements CustomPacketPay
     public static void handle(VowPayload payload, IPayloadContext context) {
         context.enqueueWork(() -> {
             var player = context.player();
+            if ("toggle".equals(payload.action())) {
+                player.displayClientMessage(Component.translatable(Vows.toggle(player)), true);
+                return;
+            }
             if ("renounce".equals(payload.action())) {
                 Vows.breakVow(player, "vow.hxh.reason.renounced");
                 return;

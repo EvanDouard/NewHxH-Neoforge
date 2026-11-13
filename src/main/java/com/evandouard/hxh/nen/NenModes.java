@@ -105,6 +105,14 @@ public final class NenModes {
         if (!entity.hasData(ModAttachments.HUNTER)) return;
         HunterData data = HunterStats.get(entity);
         if (!data.nenUnlocked()) return;
+        // Nen scellé (prix de « Tout sacrifier ») : plus d'aura, plus de posture
+        if (com.evandouard.hxh.hatsu.Vows.nenSealed(data, entity.level().getGameTime())) {
+            if (data.mode() != NenMode.NONE) data.setMode(NenMode.NONE);
+            if (data.gyo()) data.setGyo(false);
+            if (data.en()) data.setEn(false);
+            if (data.aura() > 0) data.setAura(0);
+            return;
+        }
 
         // Ren : le plafond d'aura monte (selon la maîtrise du Ren), sans donner d'aura ; après, il redescend
         // à vitesse fixe (et l'aura au-dessus du plafond retombe avec lui)

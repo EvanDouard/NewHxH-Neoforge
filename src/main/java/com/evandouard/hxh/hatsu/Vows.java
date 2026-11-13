@@ -30,7 +30,8 @@ public final class Vows {
     public static final int BREAK_SEAL_TICKS = 12000;
     /** Serment ultime : 60 s de puissance, puis le Hatsu est scellé une journée de jeu. */
     public static final int ULTIMATE_TICKS = 1200;
-    public static final int ULTIMATE_SEAL_TICKS = 24000;
+    /** Après « Tout sacrifier » : tout le Nen scellé une dizaine de jours de jeu. */
+    public static final int ULTIMATE_SEAL_TICKS = 24000 * 10;
     /** Prix du serment de vie, en PV par technique. */
     public static final float LIFE_PRICE = 2f;
 
@@ -82,6 +83,42 @@ public final class Vows {
         return Vow.byId(data.vow());
     }
 
+    /** Serment en vigueur (prêté et pas mis en pause). */
+    @Nullable
+    public static Vow active(HunterData data) {
+        Vow v = of(data);
+        return v != null && !(toggleable(v) && data.vowOff()) ? v : null;
+    }
+
+    /** Serments à condition, qu'on peut mettre en pause et reprendre sans les rompre. */
+    public static boolean toggleable(Vow v) {
+        return v == Vow.FAIR_FIGHT || v == Vow.MONSTERS_ONLY || v == Vow.BARE_HANDS;
+    }
+
+    /**
+     * Multiplicateur des stats sous serment : tout est multiplié (Force, Vitesse… et donc l'aura via la Volonté),
+     * même au-delà des limites. Pas pour « Une seule technique », qui ne porte que sur sa technique.
+     */
+    public static float statMultiplier(HunterData data) {
+        Vow v = active(data);
+        return v == null || v == Vow.SINGLE_TECHNIQUE ? 1f : v.power;
+    }
+
+    public static boolean nenSealed(HunterData d, long gameTime) {
+        return gameTime < d.nenSealedUntil();
+    }
+
+    /** Met en pause ou reprend un serment à condition. @return clé du message */
+    public static String toggle(LivingEntity entity) {
+        HunterData d = HunterStats.get(entity);
+        Vow v = of(d);
+        if (v == null) return "message.hxh.vow_none";
+        if (!toggleable(v)) return "message.hxh.vow_not_toggleable";
+        d.setVowOff(!d.vowOff());
+        com.evandouard.hxh.stats.HunterStats.applyAttributes(entity);
+        return d.vowOff() ? "message.hxh.vow_paused" : "message.hxh.vow_resumed";
+    }
+
     public static boolean sealed(HunterData data, long gameTime) {
         return gameTime < data.sealedUntil();
     }
@@ -104,6 +141,8 @@ public final class Vows {
             tech = t.id();
         }
         d.setVow(v.id(), tech, v == Vow.ULTIMATE ? entity.level().getGameTime() + ULTIMATE_TICKS : 0L);
+        d.setVowOff(false);
+        HunterStats.applyAttributes(entity);
         NenFx.flare(entity, v == Vow.ULTIMATE ? 2.4f : 1.2f, d.auraColor());
         entity.level().playSound(null, entity.blockPosition(), v == Vow.ULTIMATE ? SoundEvents.WITHER_SPAWN : SoundEvents.BEACON_ACTIVATE,
                 net.minecraft.sounds.SoundSource.PLAYERS, 0.8f, 0.8f);
@@ -120,6 +159,7 @@ public final class Vows {
         if (d.vow().isEmpty()) return;
         d.setVow("", "", 0L);
         d.setSealedUntil(entity.level().getGameTime() + BREAK_SEAL_TICKS);
+        HunterStats.applyAttributes(entity);
         NenFx.flare(entity, 1.6f, 0x111111);
         entity.level().playSound(null, entity.blockPosition(), SoundEvents.CHAIN_BREAK, net.minecraft.sounds.SoundSource.PLAYERS, 1f, 0.6f);
         if (entity instanceof Player p) {
@@ -128,12 +168,21 @@ public final class Vows {
         }
     }
 
-    /** Fin du serment ultime : le prix tombe. */
+    /** Effet de rappel du serment ; fin du serment ultime : le prix tombe. */
     public static void tick(LivingEntity entity) {
         HunterData d = HunterStats.get(entity);
+        if (entity.tickCount % 20 == 0) {
+            boolean on = active(d) != null;
+            boolean has = entity.hasEffect(com.evandouard.hxh.effect.ModEffects.VOW);
+            if (on && !has) entity.addEffect(new net.minecraft.world.effect.MobEffectInstance(com.evandouard.hxh.effect.ModEffects.VOW,
+                    net.minecraft.world.effect.MobEffectInstance.INFINITE_DURATION, 0, false, false, true));
+            else if (!on && has) entity.removeEffect(com.evandouard.hxh.effect.ModEffects.VOW);
+        }
         if (d.vowUntil() <= 0 || entity.level().getGameTime() < d.vowUntil()) return;
         d.setVow("", "", 0L);
         d.setSealedUntil(entity.level().getGameTime() + ULTIMATE_SEAL_TICKS);
+        d.setNenSealedUntil(entity.level().getGameTime() + ULTIMATE_SEAL_TICKS);
+        HunterStats.applyAttributes(entity);
         if (entity instanceof Player p) {
             p.displayClientMessage(Component.translatable("message.hxh.vow_ultimate_over").withStyle(ChatFormatting.DARK_RED), false);
         }
@@ -145,8 +194,9 @@ public final class Vows {
     @Nullable
     public static String dataRefusal(HunterData d, Technique t, long gameTime) {
         if (t.needsNoNen()) return null;
+        if (nenSealed(d, gameTime)) return "message.hxh.nen_sealed";
         if (sealed(d, gameTime)) return "message.hxh.vow_sealed";
-        if (of(d) == Vow.SINGLE_TECHNIQUE && !t.id().equals(d.vowTechnique())) return "message.hxh.vow_single";
+        if (active(d) == Vow.SINGLE_TECHNIQUE && !t.id().equals(d.vowTechnique())) return "message.hxh.vow_single";
         return null;
     }
 
@@ -154,7 +204,7 @@ public final class Vows {
     @Nullable
     public static String entityRefusal(LivingEntity entity, HunterData d, Technique t) {
         if (t.needsNoNen()) return null;
-        Vow v = of(d);
+        Vow v = active(d);
         if (v == Vow.BARE_HANDS && !entity.getMainHandItem().isEmpty()) return "message.hxh.vow_bare_hands";
         if (v == Vow.LIFE_PRICE && entity.getHealth() <= LIFE_PRICE + 0.01f) return "message.hxh.vow_life_low";
         return null;
@@ -162,32 +212,35 @@ public final class Vows {
 
     /** Prix payé au lancement (serment de vie). */
     public static void pay(LivingEntity entity, HunterData d, Technique t) {
-        if (t.needsNoNen() || of(d) != Vow.LIFE_PRICE) return;
+        if (t.needsNoNen() || active(d) != Vow.LIFE_PRICE) return;
         entity.setHealth(Math.max(1f, entity.getHealth() - LIFE_PRICE));
     }
 
     /** Multiplicateur de puissance d'une technique sous serment. */
     public static float powerMultiplier(HunterData d, Technique t) {
         if (t.needsNoNen()) return 1f;
-        Vow v = of(d);
+        Vow v = active(d);
         if (v == null) return 1f;
         if (v == Vow.SINGLE_TECHNIQUE && !t.id().equals(d.vowTechnique())) return 1f;
         return v.power;
     }
 
-    /** Les techniques touchent : vérifie les serments qui portent sur la cible. */
+    /**
+     * Les techniques touchent : un serment à condition non respectée (cible de dos, cible qui n'est pas un monstre)
+     * annule le coup au lieu de rompre le serment.
+     */
     private static void onDamage(LivingIncomingDamageEvent event) {
         if (!NenDamageSource.isNen(event.getSource())) return;
         if (!(event.getSource().getEntity() instanceof LivingEntity caster) || caster == event.getEntity()) return;
         if (!caster.hasData(ModAttachments.HUNTER)) return;
-        HunterData d = HunterStats.get(caster);
-        Vow v = of(d);
+        Vow v = active(HunterStats.get(caster));
         if (v == null) return;
         LivingEntity target = event.getEntity();
-        if (v == Vow.MONSTERS_ONLY && !(target instanceof Enemy)) {
-            breakVow(caster, "vow.hxh.reason.monsters_only");
-        } else if (v == Vow.FAIR_FIGHT && !facing(target, caster)) {
-            breakVow(caster, "vow.hxh.reason.fair_fight");
+        boolean refused = (v == Vow.MONSTERS_ONLY && !(target instanceof Enemy)) || (v == Vow.FAIR_FIGHT && !facing(target, caster));
+        if (refused) {
+            event.setCanceled(true);
+            if (caster instanceof Player p) p.displayClientMessage(Component.translatable(v == Vow.FAIR_FIGHT
+                    ? "message.hxh.vow_blocked_back" : "message.hxh.vow_blocked_monster").withStyle(ChatFormatting.GOLD), true);
         }
     }
 

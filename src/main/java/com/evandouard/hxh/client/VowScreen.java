@@ -63,6 +63,14 @@ public class VowScreen extends Screen {
         addRenderableWidget(renounce);
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, b -> onClose())
                 .bounds(width / 2 + 4, bottom, 150, 20).build());
+        // Serment à condition : on peut le mettre en pause et le reprendre
+        if (current != null && Vows.toggleable(current)) {
+            addRenderableWidget(Button.builder(Component.translatable(d.vowOff() ? "screen.hxh.vow.resume" : "screen.hxh.vow.pause"),
+                    b -> {
+                        PacketDistributor.sendToServer(new VowPayload("toggle", ""));
+                        minecraft.setScreen(null);
+                    }).bounds(width / 2 - 75, bottom - 24, 150, 20).build());
+        }
     }
 
     private void confirmTake(Vows.Vow v) {

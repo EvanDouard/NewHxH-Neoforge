@@ -35,6 +35,8 @@ public final class NenSenses {
     /** L'In commence à se voir (pâle), et se voit nettement à {@link #GYO_SEE_IN_CLEAR}. */
     public static final int GYO_SEE_IN = 25;
     public static final int GYO_SEE_IN_CLEAR = 50;
+    /** Vie et armure de la cible affichées : Gyo à partir de ce niveau de maîtrise, ou En à partir de celui-ci. */
+    public static final int GYO_SEE_HEALTH = 40, EN_SEE_HEALTH = 30;
     /** Type de Nen affiché à côté du niveau. */
     public static final int GYO_SEE_TYPE = 35;
     /** Invisibilité par le Nen (Texture Surprise…) et trajectoire des tirs qui arrivent. */

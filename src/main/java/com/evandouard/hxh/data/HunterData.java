@@ -91,6 +91,10 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private long vowUntil = 0;
     /** Hatsu scellé jusqu'à ce tick (serment rompu, fin du serment ultime). */
     private long sealedUntil = 0;
+    /** Tout le Nen scellé jusqu'à ce tick (après « Tout sacrifier ») : ni aura, ni posture, ni technique. */
+    private long nenSealedUntil = 0;
+    /** Serment conditionnel mis en pause par le joueur (combat loyal, monstres seulement, mains nues). */
+    private boolean vowOff = false;
     private final Map<String, Long> readyAt = new HashMap<>();
 
     private final Set<String> dirty = new HashSet<>();
@@ -109,7 +113,15 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
 
     // ---------- Stats ----------
 
+    /** Niveau effectif : le niveau gagné, multiplié par un serment actif (peut dépasser 100, voulu). */
     public int level(Stat stat) {
+        int base = levels.get(stat);
+        float m = com.evandouard.hxh.hatsu.Vows.statMultiplier(this);
+        return m == 1f ? base : Math.round(base * m);
+    }
+
+    /** Niveau gagné par l'entraînement, sans serment. */
+    public int baseLevel(Stat stat) {
         return levels.get(stat);
     }
 
@@ -551,6 +563,25 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         dirty.add(HATSU);
     }
 
+    public long nenSealedUntil() {
+        return nenSealedUntil;
+    }
+
+    public void setNenSealedUntil(long gameTime) {
+        nenSealedUntil = gameTime;
+        dirty.add(HATSU);
+    }
+
+    public boolean vowOff() {
+        return vowOff;
+    }
+
+    public void setVowOff(boolean off) {
+        vowOff = off;
+        dirty.add(HATSU);
+        for (Stat s : Stat.values()) dirty.add(statKey(s));
+    }
+
     public boolean hasKit() {
         return !kit.isEmpty();
     }
@@ -657,6 +688,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             h.putString("vowTech", vowTechnique);
             h.putLong("vowUntil", vowUntil);
             h.putLong("sealedUntil", sealedUntil);
+            h.putLong("nenSealedUntil", nenSealedUntil);
+            h.putBoolean("vowOff", vowOff);
             CompoundTag cd = new CompoundTag();
             readyAt.forEach(cd::putLong);
             h.put("readyAt", cd);
@@ -792,6 +825,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             vowTechnique = h.getString("vowTech");
             vowUntil = h.getLong("vowUntil");
             sealedUntil = h.getLong("sealedUntil");
+            nenSealedUntil = h.getLong("nenSealedUntil");
+            vowOff = h.getBoolean("vowOff");
             readyAt.clear();
             CompoundTag cd = h.getCompound("readyAt");
             for (String id : cd.getAllKeys()) readyAt.put(id, cd.getLong(id));

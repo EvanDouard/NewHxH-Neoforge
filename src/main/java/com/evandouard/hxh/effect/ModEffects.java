@@ -16,6 +16,10 @@ public final class ModEffects {
 
     public static final DeferredHolder<MobEffect, NenEffect> GYO = EFFECTS.register("gyo", () -> new NenEffect(0xFFD27F));
     public static final DeferredHolder<MobEffect, NenEffect> EN = EFFECTS.register("en", () -> new NenEffect(0x7FC8FF));
+    /** Ko en cours (durée selon la maîtrise). */
+    public static final DeferredHolder<MobEffect, NenEffect> KO = EFFECTS.register("ko", () -> new NenEffect(0xFF8A3C));
+    /** Serment en cours : rappel permanent. */
+    public static final DeferredHolder<MobEffect, NenEffect> VOW = EFFECTS.register("vow", () -> new NenEffect(0xFFD23F));
 
     /** Peur : face à une aura écrasante, on bouge moins vite ; côté client, la vue se dézoome comme une crise de panique. */
     public static final DeferredHolder<MobEffect, MobEffect> FEAR = EFFECTS.register("fear", () -> new FearEffect()

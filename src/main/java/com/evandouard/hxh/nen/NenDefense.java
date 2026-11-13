@@ -80,7 +80,7 @@ public final class NenDefense {
             float charge = koCharge(data, attacker.level().getGameTime());
             factor *= 1f + (full - 1f) * (0.4f + 0.6f * charge); // pas encore chargé : moins fort
             if (consumeKo) {
-                data.setKoUntil(0);
+                // Le Ko persiste toute sa durée (10 s à 2 min selon la maîtrise) : chaque coup en profite
                 NenProgress.train(attacker, Mastery.KO, 5);
                 KO_LANDED.put(attacker, attacker.level().getGameTime());
             }
@@ -121,16 +121,20 @@ public final class NenDefense {
     }
 
     /**
-     * Ko : concentre toute l'aura dans le poing pour la prochaine attaque (5 s), le corps est découvert.
+     * Ko : concentre toute l'aura dans les poings pendant 10 s à 2 min (selon la maîtrise) ; le corps est découvert.
      * @return null si accepté, sinon la clé du refus
      */
-    /** Durée maximale d'un Ko tenu (ticks), temps de charge jusqu'à sa pleine puissance, aura tenue par seconde. */
-    public static final int KO_MAX_TICKS = 1200, KO_CHARGE_TICKS = 30;
+    /** Durée d'un Ko (ticks) : 10 s au plus bas niveau de maîtrise, 2 min au maximum ; temps de charge ; aura par seconde. */
+    public static final int KO_MIN_TICKS = 200, KO_MAX_TICKS = 2400, KO_CHARGE_TICKS = 30;
+
+    public static int koDuration(HunterData data) {
+        return KO_MIN_TICKS + Math.round((KO_MAX_TICKS - KO_MIN_TICKS) * data.masteryLevel(Mastery.KO) / (float) Mastery.MAX_LEVEL);
+    }
     public static final float KO_HOLD_PER_SECOND = 4f;
 
     /** Charge du Ko (0 à 1) : l'aura met un instant à affluer dans le poing. */
     public static float koCharge(HunterData data, long now) {
-        long start = data.koUntil() - KO_MAX_TICKS;
+        long start = data.koUntil() - koDuration(data);
         return Math.max(0f, Math.min(1f, (now - start) / (float) KO_CHARGE_TICKS));
     }
 
@@ -140,6 +144,7 @@ public final class NenDefense {
         data.setAura(data.aura() - KO_HOLD_PER_SECOND / 20f);
         if (data.aura() <= 0) {
             data.setKoUntil(0);
+            entity.removeEffect(com.evandouard.hxh.effect.ModEffects.KO);
             if (entity instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.ko_faded"), true);
         }
     }
@@ -150,6 +155,7 @@ public final class NenDefense {
         // Second appui : le Ko est relâché (l'aura déjà investie est perdue)
         if (koActive(entity)) {
             data.setKoUntil(0);
+            entity.removeEffect(com.evandouard.hxh.effect.ModEffects.KO);
             return "message.hxh.ko_cancelled";
         }
         if (NenLearning.refusal(entity, NenLearning.Ability.KO) != null) return NenLearning.refusal(entity, NenLearning.Ability.KO);
@@ -157,7 +163,10 @@ public final class NenDefense {
         int cost = koCost(data);
         if (data.aura() < cost) return "message.hxh.no_aura";
         data.setAura(data.aura() - cost);
-        data.setKoUntil(entity.level().getGameTime() + KO_MAX_TICKS);
+        int duration = koDuration(data);
+        data.setKoUntil(entity.level().getGameTime() + duration);
+        // effet « Ko » avec son compte à rebours, comme une potion
+        entity.addEffect(new net.minecraft.world.effect.MobEffectInstance(com.evandouard.hxh.effect.ModEffects.KO, duration, 0, false, false, true));
         // Le Ko rassemble Ten, Ren, Zetsu et Gyo dans le poing : ils sont coupés, le corps est découvert
         if (data.mode() != NenMode.NONE) data.setMode(NenMode.NONE);
         data.setGyo(false);

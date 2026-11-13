@@ -100,4 +100,22 @@ public final class ImpactTests {
         rule.set(before, level.getServer());
         helper.succeed();
     }
+
+    @net.minecraft.gametest.framework.GameTest(template = "empty")
+    public static void perfectStrikeDigsAHalfSphere(net.minecraft.gametest.framework.GameTestHelper helper) {
+        var level = helper.getLevel();
+        // sol épais : 4 couches de pierre sous la surface, et un bloc posé sur le sol (ne doit pas partir)
+        for (int x = 0; x <= 8; x++) for (int z = 0; z <= 8; z++) for (int y = 1; y <= 4; y++)
+            helper.setBlock(new net.minecraft.core.BlockPos(x, y, z), net.minecraft.world.level.block.Blocks.STONE);
+        helper.setBlock(new net.minecraft.core.BlockPos(5, 5, 4), net.minecraft.world.level.block.Blocks.OAK_PLANKS);
+        var husk = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.HUSK, new net.minecraft.core.BlockPos(4, 5, 4));
+        var surface = net.minecraft.world.phys.Vec3.atBottomCenterOf(helper.absolutePos(new net.minecraft.core.BlockPos(4, 5, 4)));
+        int broken = com.evandouard.hxh.combat.Impacts.bowl(level, surface, com.evandouard.hxh.combat.Impacts.BOWL_RADIUS, husk);
+        helper.assertTrue(broken >= 30, "Cratère en demi-sphère : " + broken + " blocs");
+        helper.assertTrue(!level.getBlockState(helper.absolutePos(new net.minecraft.core.BlockPos(5, 5, 4))).isAir(), "Rien au-dessus du sol ne part");
+        helper.assertTrue(level.getBlockState(helper.absolutePos(new net.minecraft.core.BlockPos(4, 4, 4))).isAir()
+                && level.getBlockState(helper.absolutePos(new net.minecraft.core.BlockPos(4, 2, 4))).isAir(), "Le centre est creusé en profondeur");
+        helper.assertTrue(!level.getBlockState(helper.absolutePos(new net.minecraft.core.BlockPos(7, 2, 4))).isAir(), "Le bord du fond reste (forme ronde, pas une boîte)");
+        helper.succeed();
+    }
 }
