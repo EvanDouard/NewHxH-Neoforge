@@ -337,7 +337,7 @@ public final class ArenaTests {
     @GameTest(template = "empty")
     public static void namedChallengersAbove200(GameTestHelper helper) {
         var level = helper.getLevel();
-        String[][] expected = {{"200", "arena_gido"}, {"215", "arena_sadaso"}, {"222", "arena_riehlvelt"}, {"230", "arena_kastro"}};
+        String[][] expected = {{"200", "arena_gido"}, {"215", "arena_sadaso"}, {"222", "arena_riehlvelt"}, {"230", "arena_kastro"}, {"237", "hisoka"}};
         for (String[] e : expected) {
             var f = com.evandouard.hxh.registry.ModEntities.ARENA_FIGHTER.get().create(level);
             f.moveTo(helper.absoluteVec(new net.minecraft.world.phys.Vec3(2.5, 1, 2.5)));
@@ -348,12 +348,13 @@ public final class ArenaTests {
             for (String id : com.evandouard.hxh.hatsu.Hatsu.kitOf(d).techniques()) {
                 helper.assertTrue(com.evandouard.hxh.hatsu.Techniques.get(id) != null, "Technique enregistrée : " + id);
             }
-            helper.assertTrue(com.evandouard.hxh.hatsu.Hatsu.choose(helper.makeMockServerPlayerInLevel(), e[1]) != null, "Kit non proposé au joueur");
+            if (e[1].startsWith("arena_"))
+                helper.assertTrue(com.evandouard.hxh.hatsu.Hatsu.choose(helper.makeMockServerPlayerInLevel(), e[1]) != null, "Kit non proposé au joueur");
         }
         // Hors de ces étages : adversaire ordinaire au kit de personnage
         var f = com.evandouard.hxh.registry.ModEntities.ARENA_FIGHTER.get().create(level);
         f.configure(245, null);
-        helper.assertTrue(!com.evandouard.hxh.stats.HunterStats.get(f).kit().startsWith("arena_"), "245e : adversaire ordinaire");
+        helper.assertTrue(!f.getPersistentData().contains(com.evandouard.hxh.arena.ArenaFighterEntity.CHALLENGER_TAG), "245e : adversaire ordinaire");
         // Gido lance ses toupies sur une cible proche
         var gido = com.evandouard.hxh.registry.ModEntities.ARENA_FIGHTER.get().create(level);
         gido.moveTo(helper.absoluteVec(new net.minecraft.world.phys.Vec3(1.5, 1, 1.5)));

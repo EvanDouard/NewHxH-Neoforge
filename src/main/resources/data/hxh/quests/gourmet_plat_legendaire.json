@@ -1,0 +1,82 @@
+{
+  "title": {
+    "fr": "Le plat légendaire",
+    "en": "The legendary dish"
+  },
+  "start_npc": "hunter_gourmet",
+  "requires": [
+    "hxh:hunter_exam"
+  ],
+  "npcs": {
+    "hunter_gourmet": {
+      "fr": "Hunter gourmet",
+      "en": "Gourmet Hunter"
+    }
+  },
+  "intro": {
+    "fr": "Un Hunter qui ne mange pas bien ne chasse pas bien. Tu veux goûter à mon plat légendaire ?",
+    "en": "A Hunter who doesn't eat well doesn't hunt well. Want a taste of my legendary dish?"
+  },
+  "steps": [
+    {
+      "id": "recipe",
+      "type": "talk",
+      "npc": "hunter_gourmet",
+      "objective": {
+        "fr": "Écouter le Hunter gourmet",
+        "en": "Listen to the Gourmet Hunter"
+      },
+      "dialog": {
+        "fr": "Il me faut des ingrédients d'exception : des carottes dorées, du saumon de rivière, et une pomme d'or enchantée. On en trouve parfois aux enchères de York Shin.",
+        "en": "I need exceptional ingredients: golden carrots, river salmon, and an enchanted golden apple. You can sometimes find one at the York Shin auction."
+      }
+    },
+    {
+      "id": "carrots",
+      "type": "bring",
+      "npc": "hunter_gourmet",
+      "item": "minecraft:golden_carrot",
+      "count": 16,
+      "objective": {
+        "fr": "Rapporter 16 carottes dorées",
+        "en": "Bring 16 golden carrots"
+      },
+      "dialog": {
+        "fr": "Parfaites.",
+        "en": "Perfect."
+      }
+    },
+    {
+      "id": "salmon",
+      "type": "bring",
+      "npc": "hunter_gourmet",
+      "item": "minecraft:cooked_salmon",
+      "count": 16,
+      "objective": {
+        "fr": "Rapporter 16 saumons cuits",
+        "en": "Bring 16 cooked salmon"
+      },
+      "dialog": {
+        "fr": "Bien grillés, comme il faut.",
+        "en": "Nicely grilled, just right."
+      }
+    },
+    {
+      "id": "apple",
+      "type": "bring",
+      "npc": "hunter_gourmet",
+      "item": "minecraft:enchanted_golden_apple",
+      "count": 1,
+      "reward_item": "hxh:nutritious_dish_4",
+      "reward_jenny": 500,
+      "objective": {
+        "fr": "Rapporter une pomme d'or enchantée",
+        "en": "Bring an enchanted golden apple"
+      },
+      "dialog": {
+        "fr": "Voilà mon plat légendaire. Désormais, je t'en cuisinerai un à chaque fois que tu m'apporteras ces ingrédients… et je t'en vends des plus simples.",
+        "en": "Here is my legendary dish. From now on I'll cook you simpler ones, for a price."
+      }
+    }
+  ]
+}

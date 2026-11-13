@@ -1661,4 +1661,18 @@ wait 10
 expect Blacklist de l'Association
 expect [Traquer]
 shot 60_blacklist_et_rang
+# --- Hunter gourmet (plats III et IV) ---
+cmd kill @e[type=!minecraft:player]
+camera first
+cmd tp @s ~ ~ ~ 0 0
+look 0 10
+cmd summon hxh:npc ~ ~ ~3 {npc:"hunter_gourmet",NoAI:1b,Silent:1b,Rotation:[180f,0f]}
+cmd hunter jenny set 1500
+wait 20
+talkto hunter_gourmet
+wait 15
+shot 61_boutique_hunter_gourmet
+closescreen
+cmd kill @e[type=hxh:npc]
+cmd hunter jenny set 0
 quit

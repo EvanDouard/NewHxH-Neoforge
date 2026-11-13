@@ -1,0 +1,18 @@
+{
+  "npc": "hunter_gourmet",
+  "sells": [
+    { "item": "hxh:nutritious_dish_3", "price": 900 },
+    { "item": "hxh:nutritious_dish_2", "price": 300 },
+    { "item": "minecraft:golden_carrot", "count": 8, "price": 160 },
+    { "item": "minecraft:honey_bottle", "count": 4, "price": 60 },
+    { "item": "minecraft:cooked_salmon", "count": 8, "price": 50 }
+  ],
+  "buys": [
+    { "item": "minecraft:cooked_beef", "price": 3 },
+    { "item": "minecraft:cooked_porkchop", "price": 3 },
+    { "item": "minecraft:cooked_salmon", "price": 4 },
+    { "item": "minecraft:rabbit_stew", "price": 15 },
+    { "item": "minecraft:glow_berries", "price": 2 },
+    { "item": "minecraft:enchanted_golden_apple", "price": 1200 }
+  ]
+}

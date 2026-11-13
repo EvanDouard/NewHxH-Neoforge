@@ -32,7 +32,7 @@
   "item.hxh.nutritious_dish_3": "Nutritious dish III",
   "item.hxh.nutritious_dish_4": "Nutritious dish IV",
   "tooltip.hxh.dish": "A real Hunter's meal: +%s Vitality XP",
-  "tooltip.hxh.dish.source_gourmet": "Cooked by Gourmet Hunters (soon)",
+  "tooltip.hxh.dish.source_gourmet": "Cooked by the Gourmet Hunter (III: his shop · IV: his quest, auctions)",
   "message.hxh.training.dish": "Hunter's meal: +%2$s %1$s XP",
   "npc.hxh.guichetier": "Airport clerk",
   "dialog.hxh.guichetier.idle": "Welcome aboard Hunter Airlines!",
@@ -1239,5 +1239,9 @@
   "message.hxh.blacklist_license": "The Blacklist is reserved for Hunter license holders",
   "message.hxh.blacklist_stars": "Your Hunter rank is too low for this hunt",
   "message.hxh.blacklist_busy": "You already have a hunt or a contract in progress",
-  "command.hxh.license": "Hunter license: %s"
+  "command.hxh.license": "Hunter license: %s",
+  "npc.hxh.hunter_gourmet": "Gourmet Hunter",
+  "npc.hxh.cheadle": "Cheadle Yorkshire",
+  "arena.hxh.challenger.hisoka": "Hisoka",
+  "arena.hxh.challenger.hisoka.intro": "He was waiting for you. He looks… delighted."
 }

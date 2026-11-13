@@ -14,7 +14,7 @@ import static com.evandouard.hxh.hatsu.Techniques.Style;
 
 /**
  * Combattants nommés de la Tour Céleste, au-delà du 200e étage (ceux qui « accueillent » les nouveaux manieurs de
- * Nen, comme dans l'anime) : Gido, Sadaso, Riehlvelt et Kastro. Leurs kits ne sont pas proposés au joueur (rangés
+ * Nen, comme dans l'anime) : Gido, Sadaso, Riehlvelt et Kastro, puis Hisoka (235–240) avec son vrai kit. Leurs kits ne sont pas proposés au joueur (rangés
  * avec les kits de mobs) ; un combattant de la Tour les reçoit selon l'étage du combat.
  */
 public final class ArenaChallengers {
@@ -60,7 +60,9 @@ public final class ArenaChallengers {
             new Challenger("gido", "arena_gido", 200, 209, 0x8A6A3C),
             new Challenger("sadaso", "arena_sadaso", 210, 219, 0x5A6A7A),
             new Challenger("riehlvelt", "arena_riehlvelt", 220, 224, 0x3C5A8A),
-            new Challenger("kastro", "arena_kastro", 225, 234, 0xB03030));
+            new Challenger("kastro", "arena_kastro", 225, 234, 0xB03030),
+            // Hisoka attend les plus forts : son vrai kit (Bungee Gum, Texture Surprise, cartes)
+            new Challenger("hisoka", "hisoka", 235, 240, 0xD04080));
 
     static {
         MobKits.named("arena_gido", NenType.MANIPULATOR, GIDO_TOPS, GIDO_TORNADO);

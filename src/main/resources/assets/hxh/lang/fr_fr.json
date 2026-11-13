@@ -32,7 +32,7 @@
   "item.hxh.nutritious_dish_3": "Plat nutritif III",
   "item.hxh.nutritious_dish_4": "Plat nutritif IV",
   "tooltip.hxh.dish": "Un vrai repas de Hunter : +%s XP de Vitalité",
-  "tooltip.hxh.dish.source_gourmet": "Cuisiné par les Hunters gourmets (bientôt)",
+  "tooltip.hxh.dish.source_gourmet": "Cuisiné par le Hunter gourmet (III : sa boutique · IV : sa quête, enchères)",
   "message.hxh.training.dish": "Repas de Hunter : +%2$s XP de %1$s",
   "npc.hxh.guichetier": "Guichetier de l'aéroport",
   "dialog.hxh.guichetier.idle": "Bienvenue à bord de la compagnie Hunter Airlines !",
@@ -1239,5 +1239,9 @@
   "message.hxh.blacklist_license": "La Blacklist est réservée aux titulaires de la licence Hunter",
   "message.hxh.blacklist_stars": "Ton rang Hunter n'est pas assez élevé pour cette traque",
   "message.hxh.blacklist_busy": "Tu as déjà une traque ou un contrat en cours",
-  "command.hxh.license": "Licence Hunter : %s"
+  "command.hxh.license": "Licence Hunter : %s",
+  "npc.hxh.hunter_gourmet": "Hunter gourmet",
+  "npc.hxh.cheadle": "Cheadle Yorkshire",
+  "arena.hxh.challenger.hisoka": "Hisoka",
+  "arena.hxh.challenger.hisoka.intro": "Il t'attendait. Il a l'air… ravi."
 }

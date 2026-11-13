@@ -99,4 +99,25 @@ public final class ShopTests {
         helper.assertTrue(com.evandouard.hxh.auction.Auctions.bid(player, a, 99) == com.evandouard.hxh.auction.Auctions.Result.INVALID, "Lot inexistant");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void gourmetSellsDishThreeAndQuestGivesFour(GameTestHelper helper) {
+        Shop shop = ShopRegistry.forNpc("hunter_gourmet");
+        helper.assertTrue(shop != null, "Boutique du Hunter gourmet chargée");
+        helper.assertTrue(shop.sells().stream().anyMatch(o -> o.stack().getItem().toString().contains("nutritious_dish_3")), "Plat III vendu");
+        helper.assertTrue(shop.sells().stream().noneMatch(o -> o.stack().getItem().toString().contains("nutritious_dish_4")), "Plat IV jamais en boutique");
+        var quest = com.evandouard.hxh.quest.QuestRegistry.get(net.minecraft.resources.ResourceLocation.parse("hxh:gourmet_plat_legendaire"));
+        helper.assertTrue(quest != null && quest.problems().isEmpty(), "Quête du plat légendaire valide");
+        helper.assertTrue(quest.steps().stream().anyMatch(st -> st.rewardItem().contains("nutritious_dish_4")), "La quête donne un plat IV");
+        var a = com.evandouard.hxh.auction.Auctions.forNpc("commissaire_priseur");
+        helper.assertTrue(a.lots().stream().anyMatch(l -> l.stack().getItem().toString().contains("nutritious_dish_4")), "Plat IV aux enchères");
+        // Acheter un plat III et le manger : XP de Vitalité ×2,5 environ d'un plat I
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.family.Families.set(p, "");
+        var d = com.evandouard.hxh.quest.QuestManager.data(p);
+        d.addJenny(-d.jenny());
+        d.addJenny(900);
+        helper.assertTrue(Shops.buy(p, shop, 0) == Shops.Result.OK && d.jenny() == 0, "Plat III acheté 900 J");
+        helper.succeed();
+    }
 }

@@ -18,7 +18,8 @@ import java.util.List;
 /**
  * Plat nutritif (gammes I à IV) : un vrai repas de Hunter, façon cuisine de Menchi. Le manger rapporte de l'XP de
  * Vitalité. Il nourrit beaucoup : on ne peut en manger qu'avec de la faim, ce qui limite l'entraînement à quelques
- * plats par jour de jeu. Les gammes III et IV viendront des Hunters gourmets (plus tard).
+ * plats par jour de jeu. Gamme III : vendue par le Hunter gourmet ; gamme IV : sa quête du plat légendaire et les
+ * enchères de York Shin.
  */
 public class NutritiousDishItem extends Item {
     /** XP de Vitalité d'un plat I. */
