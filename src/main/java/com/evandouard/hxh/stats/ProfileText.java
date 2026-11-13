@@ -179,6 +179,10 @@ public final class ProfileText {
         List<Component> lines = new ArrayList<>();
         lines.add(Component.translatable("profile.hxh.jenny", d.jenny()).withStyle(ChatFormatting.YELLOW));
         lines.add(Component.translatable("profile.hxh.hunter", Component.translatable(d.isHunter() ? "command.hxh.yes" : "command.hxh.no")));
+        if (d.isHunter()) {
+            lines.add(Component.translatable("profile.hxh.hunter_rank", com.evandouard.hxh.contract.HunterStars.stars(d.hunterStars()),
+                    d.blacklistCaught(), d.contractsDone()).withStyle(ChatFormatting.GOLD));
+        }
         var fam = com.evandouard.hxh.family.Families.get(d.family());
         lines.add(Component.translatable("profile.hxh.family", fam == null ? Component.translatable("family.hxh.none")
                 : Component.literal(fam.name(player.clientInformation().language())).withStyle(s -> s.withColor(fam.color()))));

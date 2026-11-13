@@ -1,0 +1,14 @@
+{
+  "board": "blacklist",
+  "name": {
+    "fr": "Un membre présumé de la Brigade Fantôme",
+    "en": "A suspected Phantom Troupe member"
+  },
+  "preset": "suspect_brigade",
+  "reward": 5000,
+  "min_stars": 2,
+  "min_distance": 250,
+  "max_distance": 400,
+  "time_seconds": 2400,
+  "weight": 1
+}

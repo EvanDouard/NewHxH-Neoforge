@@ -763,6 +763,7 @@ public final class QuestTests {
         ServerPlayer p = helper.makeMockServerPlayerInLevel();
         com.evandouard.hxh.family.Families.set(p, "");
         QuestData d = QuestManager.data(p);
+        d.setHunter(false); // pas d'étoile du rang Hunter pendant le test
         d.addJenny(-d.jenny());
         var c = com.evandouard.hxh.contract.Contracts.get("garde_du_corps");
         helper.assertTrue(c != null && com.evandouard.hxh.contract.Contracts.all().size() >= 4, "Contrats chargés");
@@ -784,6 +785,53 @@ public final class QuestTests {
         com.evandouard.hxh.family.Families.set(p, "zoldyck");
         helper.assertTrue(com.evandouard.hxh.contract.Contracts.rewardFor(p, c) == Math.round(c.reward() * 1.5f), "Bonus Zoldyck");
         com.evandouard.hxh.family.Families.set(p, "");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void hunterStarsAndBlacklist(GameTestHelper helper) {
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.family.Families.set(p, "");
+        QuestData d = QuestManager.data(p);
+        var h = com.evandouard.hxh.stats.HunterStats.get(p);
+        d.setHunter(false);
+        d.setHunterStars(0);
+        var easy = com.evandouard.hxh.contract.Contracts.get("bl_pilleur_de_tombes");
+        var hard = com.evandouard.hxh.contract.Contracts.get("bl_tueur_en_serie");
+        helper.assertTrue(easy != null && hard != null && easy.blacklist(), "Blacklist chargée");
+        helper.assertTrue("message.hxh.blacklist_license".equals(com.evandouard.hxh.contract.Contracts.blacklistRefusal(p, easy)), "Licence exigée");
+        // Sans licence : jamais d'étoile, même au 200e
+        d.setRegistered200(true);
+        com.evandouard.hxh.contract.HunterStars.update(p);
+        helper.assertTrue(d.hunterStars() == 0, "Pas d'étoile sans licence");
+        d.setHunter(true);
+        d.addJenny(-d.jenny());
+        com.evandouard.hxh.contract.HunterStars.update(p);
+        helper.assertTrue(d.hunterStars() == 1 && d.jenny() == 1000, "Licence + 200e : une étoile et 1000 J (" + d.hunterStars() + ", " + d.jenny() + ")");
+        helper.assertTrue(com.evandouard.hxh.contract.Contracts.blacklistRefusal(p, hard) == null, "Une étoile ouvre le tueur en série");
+        helper.assertTrue("message.hxh.blacklist_stars".equals(com.evandouard.hxh.contract.Contracts.blacklistRefusal(p,
+                com.evandouard.hxh.contract.Contracts.get("bl_suspect_brigade"))), "La Brigade demande deux étoiles");
+        // Une traque de la Blacklist compte pour le rang
+        var target = com.evandouard.hxh.contract.Contracts.start(p, easy, helper.absoluteVec(new Vec3(3.5, 1, 3.5)));
+        helper.assertTrue("message.hxh.blacklist_busy".equals(com.evandouard.hxh.contract.Contracts.blacklistRefusal(p, hard)), "Une traque à la fois");
+        target.invulnerableTime = 0;
+        target.hurt(p.damageSources().playerAttack(p), 10000f);
+        helper.assertTrue(d.blacklistCaught() == 1, "Criminel capturé compté");
+        helper.assertTrue(d.jenny() == 1000 + easy.reward(), "Prime de la Blacklist versée, sans bonus de famille");
+        // Niveau de Nen 60 : deuxième étoile ; trois captures : troisième
+        h.setNenLevel(60);
+        d.addBlacklistCaught();
+        d.addBlacklistCaught();
+        com.evandouard.hxh.contract.HunterStars.update(p);
+        helper.assertTrue(d.hunterStars() == 3, "Trois domaines : trois étoiles (" + d.hunterStars() + ")");
+        // Une étoile ne se perd pas
+        d.setRegistered200(false);
+        d.setArenaFloor(1);
+        com.evandouard.hxh.contract.HunterStars.update(p);
+        helper.assertTrue(d.hunterStars() == 3, "Les étoiles restent");
+        d.setHunter(false);
+        d.setHunterStars(0);
+        h.setNenLevel(0);
         helper.succeed();
     }
 }

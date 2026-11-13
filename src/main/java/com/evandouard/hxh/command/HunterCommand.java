@@ -63,6 +63,18 @@ public final class HunterCommand {
                 .then(nenCommand())
                 .then(hatsuCommand())
                 .then(vowCommand())
+                .then(Commands.literal("blacklist")
+                        .executes(ctx -> {
+                            com.evandouard.hxh.contract.Contracts.showBlacklist(ctx.getSource().getPlayerOrException());
+                            return 1;
+                        })
+                        .then(Commands.literal("take").then(Commands.argument("id", StringArgumentType.word()).executes(ctx -> {
+                            var p = ctx.getSource().getPlayerOrException();
+                            var c = com.evandouard.hxh.contract.Contracts.get(StringArgumentType.getString(ctx, "id"));
+                            String r = c == null ? "message.hxh.blacklist_unknown" : com.evandouard.hxh.contract.Contracts.takeBlacklist(p, c);
+                            if (r != null) ctx.getSource().sendFailure(Component.translatable(r));
+                            return r == null ? 1 : 0;
+                        }))))
                 .then(Commands.literal("bet").then(Commands.argument("fighter", StringArgumentType.word())
                         .then(Commands.argument("side", StringArgumentType.word())
                                 .suggests((ctx, b) -> SharedSuggestionProvider.suggest(List.of("player", "opponent"), b))

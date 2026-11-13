@@ -1228,5 +1228,15 @@
   "dialog.hxh.majordome.reminder": "Your target: %s, near X %s, Z %s. Time left: %s min %s s.",
   "dialog.hxh.majordome.late": "Deadline passed: the contract is cancelled. The family does not like to wait.",
   "dialog.hxh.majordome.stolen": "Someone else eliminated your target: contract cancelled.",
-  "message.hxh.contract_done": "Contract fulfilled! +%s Jenny"
+  "message.hxh.contract_done": "Contract fulfilled! +%s Jenny",
+  "profile.hxh.hunter_rank": "Hunter rank: %s · Blacklist: %s caught · Contracts: %s",
+  "message.hxh.hunter_star": "The Association grants you a star: %s! Bounty: %s Jenny.",
+  "message.hxh.blacklist_header": "Association Blacklist (already caught: %s)",
+  "message.hxh.blacklist_hunt": "[Hunt]",
+  "message.hxh.blacklist_needs": "(rank %s required)",
+  "message.hxh.blacklist_taken": "Hunt open: %s. Last known position: X %s, Z %s. Deadline: %s minutes. Bounty: %s Jenny.",
+  "message.hxh.blacklist_unknown": "Unknown hunt",
+  "message.hxh.blacklist_license": "The Blacklist is reserved for Hunter license holders",
+  "message.hxh.blacklist_stars": "Your Hunter rank is too low for this hunt",
+  "message.hxh.blacklist_busy": "You already have a hunt or a contract in progress"
 }

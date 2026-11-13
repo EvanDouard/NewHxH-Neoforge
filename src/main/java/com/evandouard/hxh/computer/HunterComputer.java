@@ -78,6 +78,8 @@ public final class HunterComputer extends SimpleJsonResourceReloadListener {
 
     public static void open(ServerPlayer player) {
         HxHNetwork.sendTo(player, new OpenComputerPayload(QuestManager.data(player).isHunter(), view(player)));
+        // La Blacklist de l'Association : traques cliquables dans le chat (licence exigée)
+        if (QuestManager.data(player).isHunter()) com.evandouard.hxh.contract.Contracts.showBlacklist(player);
     }
 
     private static String pick(Map<String, String> texts, String lang) {

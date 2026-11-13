@@ -1,0 +1,14 @@
+{
+  "board": "blacklist",
+  "name": {
+    "fr": "Un tueur en série manieur de Nen",
+    "en": "A Nen-using serial killer"
+  },
+  "preset": "elite_manipulateur",
+  "reward": 2000,
+  "min_stars": 1,
+  "min_distance": 200,
+  "max_distance": 350,
+  "time_seconds": 1800,
+  "weight": 1
+}

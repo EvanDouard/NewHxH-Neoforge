@@ -1,0 +1,14 @@
+{
+  "board": "blacklist",
+  "name": {
+    "fr": "Un pilleur de tombes",
+    "en": "A grave robber"
+  },
+  "preset": "zombie_costaud",
+  "reward": 400,
+  "min_stars": 0,
+  "min_distance": 100,
+  "max_distance": 200,
+  "time_seconds": 1200,
+  "weight": 1
+}

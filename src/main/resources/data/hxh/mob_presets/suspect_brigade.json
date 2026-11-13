@@ -1,0 +1,6 @@
+{
+  "entity": "minecraft:husk",
+  "stats": { "all": 90, "speed": 95 },
+  "nen": { "level": 85, "kit": "nobunaga", "mastery": 75, "mode": "ten" },
+  "equipment": { "head": "minecraft:netherite_helmet", "chest": "minecraft:netherite_chestplate", "legs": "minecraft:netherite_leggings" }
+}

@@ -46,8 +46,16 @@ import java.util.UUID;
  * </pre>
  */
 public final class Contracts extends SimpleJsonResourceReloadListener {
+    /**
+     * @param board {@code zoldyck} (majordome) ou {@code blacklist} (traques de l'Association, licence exigée)
+     * @param minStars étoiles du rang Hunter nécessaires (Blacklist)
+     */
     public record Contract(ResourceLocation id, String nameFr, String nameEn, String preset, int reward, int minDistance,
-                           int maxDistance, int timeSeconds, int weight) {
+                           int maxDistance, int timeSeconds, int weight, String board, int minStars) {
+        public boolean blacklist() {
+            return BLACKLIST.equals(board);
+        }
+
         public String name(String lang) {
             return lang != null && lang.startsWith("fr") ? nameFr : nameEn;
         }
@@ -58,7 +66,9 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
     /** Données du joueur : le contrat en cours. */
     static final String TAG = "hxh_contract";
     /** Données de la cible : titulaire et échéance. */
-    public static final String OWNER = "hxh_contract_owner", DEADLINE = "hxh_contract_deadline", REWARD = "hxh_contract_reward";
+    public static final String OWNER = "hxh_contract_owner", DEADLINE = "hxh_contract_deadline", REWARD = "hxh_contract_reward",
+            BOARD = "hxh_contract_board";
+    public static final String ZOLDYCK = "zoldyck", BLACKLIST = "blacklist";
 
     private static volatile Map<ResourceLocation, Contract> CONTRACTS = Map.of();
 
@@ -89,7 +99,8 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
                 JsonObject name = GsonHelper.getAsJsonObject(o, "name");
                 map.put(id, new Contract(id, GsonHelper.getAsString(name, "fr"), GsonHelper.getAsString(name, "en", GsonHelper.getAsString(name, "fr")),
                         GsonHelper.getAsString(o, "preset"), GsonHelper.getAsInt(o, "reward"), GsonHelper.getAsInt(o, "min_distance", 120),
-                        GsonHelper.getAsInt(o, "max_distance", 250), GsonHelper.getAsInt(o, "time_seconds", 1200), GsonHelper.getAsInt(o, "weight", 1)));
+                        GsonHelper.getAsInt(o, "max_distance", 250), GsonHelper.getAsInt(o, "time_seconds", 1200), GsonHelper.getAsInt(o, "weight", 1),
+                        GsonHelper.getAsString(o, "board", ZOLDYCK), GsonHelper.getAsInt(o, "min_stars", 0)));
             } catch (RuntimeException ex) {
                 HxHMod.LOGGER.error("[HxH] Contrat invalide {}", id, ex);
             }
@@ -120,7 +131,7 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
 
     public static int rewardFor(ServerPlayer p, Contract c) {
         var fam = com.evandouard.hxh.family.Families.of(p);
-        return fam != null && fam.id().equals("zoldyck") ? Math.round(c.reward() * ZOLDYCK_BONUS) : c.reward();
+        return !c.blacklist() && fam != null && fam.id().equals("zoldyck") ? Math.round(c.reward() * ZOLDYCK_BONUS) : c.reward();
     }
 
     // ---------- Majordome ----------
@@ -149,10 +160,11 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
 
     @Nullable
     static Contract pick(long seed) {
-        int total = CONTRACTS.values().stream().mapToInt(Contract::weight).sum();
+        java.util.List<Contract> pool = CONTRACTS.values().stream().filter(c -> !c.blacklist()).toList();
+        int total = pool.stream().mapToInt(Contract::weight).sum();
         if (total <= 0) return null;
         int r = new Random(seed).nextInt(total);
-        for (Contract c : CONTRACTS.values()) {
+        for (Contract c : pool) {
             r -= c.weight();
             if (r < 0) return c;
         }
@@ -176,6 +188,7 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
         target.getPersistentData().putUUID(OWNER, player.getUUID());
         target.getPersistentData().putLong(DEADLINE, deadline);
         target.getPersistentData().putInt(REWARD, reward);
+        target.getPersistentData().putString(BOARD, c.board());
         target.addTag("hxh_contract");
         CompoundTag s = new CompoundTag();
         s.putString("id", c.id().toString());
@@ -186,8 +199,13 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
         s.putInt("z", (int) Math.floor(at.z));
         s.putInt("reward", reward);
         player.getPersistentData().put(TAG, s);
-        say(player, Component.translatable("dialog.hxh.majordome.offer", c.name(lang), s.getInt("x"), s.getInt("z"),
-                c.timeSeconds() / 60, reward));
+        if (c.blacklist()) {
+            player.sendSystemMessage(Component.translatable("message.hxh.blacklist_taken", c.name(lang), s.getInt("x"), s.getInt("z"),
+                    c.timeSeconds() / 60, reward).withStyle(ChatFormatting.GOLD));
+        } else {
+            say(player, Component.translatable("dialog.hxh.majordome.offer", c.name(lang), s.getInt("x"), s.getInt("z"),
+                    c.timeSeconds() / 60, reward));
+        }
         return target;
     }
 
@@ -208,16 +226,70 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
         ServerPlayer p = server == null ? null : server.getPlayerList().getPlayer(owner);
         ServerPlayer killer = event.getSource().getEntity() instanceof ServerPlayer k ? k
                 : dead.getKillCredit() instanceof ServerPlayer k2 ? k2 : null;
-        if (killer != null && killer.getUUID().equals(owner)) complete(killer, tag.getInt(REWARD));
+        if (killer != null && killer.getUUID().equals(owner)) complete(killer, tag.getInt(REWARD), BLACKLIST.equals(tag.getString(BOARD)));
         else if (p != null) fail(p, "dialog.hxh.majordome.stolen");
     }
 
     /** Contrat rempli : récompense. */
-    public static void complete(ServerPlayer p, int reward) {
+    public static void complete(ServerPlayer p, int reward, boolean blacklist) {
         p.getPersistentData().remove(TAG);
+        if (blacklist) QuestManager.data(p).addBlacklistCaught();
+        else QuestManager.data(p).addContractDone();
+        HunterStars.update(p);
         QuestManager.data(p).addJenny(reward);
         QuestManager.sync(p);
         p.sendSystemMessage(Component.translatable("message.hxh.contract_done", reward).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
+    }
+
+    // ---------- Blacklist ----------
+
+    /** Refus de prendre cette traque de la Blacklist, ou null. */
+    @Nullable
+    public static String blacklistRefusal(ServerPlayer p, Contract c) {
+        if (!c.blacklist()) return "message.hxh.blacklist_unknown";
+        if (!QuestManager.data(p).isHunter()) return "message.hxh.blacklist_license";
+        if (QuestManager.data(p).hunterStars() < c.minStars()) return "message.hxh.blacklist_stars";
+        if (hasContract(p)) return "message.hxh.blacklist_busy";
+        return null;
+    }
+
+    /** Prend une traque de la Blacklist : la cible apparaît loin du joueur. */
+    @Nullable
+    public static String takeBlacklist(ServerPlayer p, Contract c) {
+        String refusal = blacklistRefusal(p, c);
+        if (refusal != null) return refusal;
+        double angle = p.getRandom().nextDouble() * Math.PI * 2;
+        int dist = c.minDistance() + p.getRandom().nextInt(Math.max(1, c.maxDistance() - c.minDistance() + 1));
+        ServerLevel level = p.serverLevel();
+        int x = p.getBlockX() + (int) Math.round(Math.cos(angle) * dist);
+        int z = p.getBlockZ() + (int) Math.round(Math.sin(angle) * dist);
+        level.getChunk(x >> 4, z >> 4);
+        BlockPos ground = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, 0, z));
+        return start(p, c, Vec3.atBottomCenterOf(ground)) == null ? "message.hxh.blacklist_unknown" : null;
+    }
+
+    /** Liste cliquable de la Blacklist dans le chat (ouverte depuis l'ordinateur Hunter ou /hunter blacklist). */
+    public static void showBlacklist(ServerPlayer p) {
+        var q = QuestManager.data(p);
+        String lang = p.clientInformation().language();
+        p.sendSystemMessage(Component.translatable("message.hxh.blacklist_header", q.blacklistCaught()).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
+        if (!q.isHunter()) {
+            p.sendSystemMessage(Component.translatable("message.hxh.blacklist_license").withStyle(ChatFormatting.GRAY));
+            return;
+        }
+        for (Contract c : CONTRACTS.values()) {
+            if (!c.blacklist()) continue;
+            boolean ok = q.hunterStars() >= c.minStars();
+            var line = Component.literal(" • " + c.name(lang) + " — " + c.reward() + " J ").withStyle(ok ? ChatFormatting.WHITE : ChatFormatting.DARK_GRAY);
+            if (ok) {
+                line.append(Component.translatable("message.hxh.blacklist_hunt").withStyle(st -> st.withColor(ChatFormatting.YELLOW)
+                        .withClickEvent(new net.minecraft.network.chat.ClickEvent(net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND,
+                                "/hunter blacklist take " + c.id().getPath()))));
+            } else {
+                line.append(Component.translatable("message.hxh.blacklist_needs", "★".repeat(c.minStars())));
+            }
+            p.sendSystemMessage(line);
+        }
     }
 
     static void fail(ServerPlayer p, String key) {
@@ -228,7 +300,10 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
     /** Toutes les 5 s : délai dépassé → contrat raté, la cible s'en va. */
     public static void tick(MinecraftServer server) {
         if (server.overworld().getGameTime() % 100 != 0) return;
-        for (ServerPlayer p : server.getPlayerList().getPlayers()) expireIfLate(p);
+        for (ServerPlayer p : server.getPlayerList().getPlayers()) {
+            expireIfLate(p);
+            HunterStars.update(p);
+        }
     }
 
     public static void expireIfLate(ServerPlayer p) {

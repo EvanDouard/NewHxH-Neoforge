@@ -1228,5 +1228,15 @@
   "dialog.hxh.majordome.reminder": "Votre cible : %s, vers X %s, Z %s. Temps restant : %s min %s s.",
   "dialog.hxh.majordome.late": "Délai dépassé : le contrat est annulé. La famille n'aime pas attendre.",
   "dialog.hxh.majordome.stolen": "Quelqu'un d'autre a éliminé votre cible : contrat annulé.",
-  "message.hxh.contract_done": "Contrat rempli ! +%s Jenny"
+  "message.hxh.contract_done": "Contrat rempli ! +%s Jenny",
+  "profile.hxh.hunter_rank": "Rang Hunter : %s · Blacklist : %s capturé(s) · Contrats : %s",
+  "message.hxh.hunter_star": "L'Association t'accorde une étoile : %s ! Prime : %s Jenny.",
+  "message.hxh.blacklist_header": "Blacklist de l'Association (déjà capturés : %s)",
+  "message.hxh.blacklist_hunt": "[Traquer]",
+  "message.hxh.blacklist_needs": "(rang %s requis)",
+  "message.hxh.blacklist_taken": "Traque ouverte : %s. Dernière position : X %s, Z %s. Délai : %s minutes. Prime : %s Jenny.",
+  "message.hxh.blacklist_unknown": "Traque inconnue",
+  "message.hxh.blacklist_license": "La Blacklist est réservée aux titulaires de la licence Hunter",
+  "message.hxh.blacklist_stars": "Ton rang Hunter n'est pas assez élevé pour cette traque",
+  "message.hxh.blacklist_busy": "Tu as déjà une traque ou un contrat en cours"
 }

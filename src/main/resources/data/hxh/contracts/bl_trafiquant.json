@@ -1,0 +1,14 @@
+{
+  "board": "blacklist",
+  "name": {
+    "fr": "Un trafiquant de la mafia de York Shin",
+    "en": "A York Shin mafia trafficker"
+  },
+  "preset": "vindicateur_transmuteur",
+  "reward": 900,
+  "min_stars": 0,
+  "min_distance": 150,
+  "max_distance": 250,
+  "time_seconds": 1500,
+  "weight": 1
+}

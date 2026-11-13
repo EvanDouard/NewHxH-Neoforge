@@ -61,6 +61,10 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     boolean familyAssigned = false;
     int arenaWins = 0;
     int arenaLosses = 0;
+    /** Criminels de la Blacklist capturés, contrats Zoldyck remplis, étoiles du rang Hunter (0 à 3). */
+    int blacklistCaught = 0;
+    int contractsDone = 0;
+    int hunterStars = 0;
     int jenny = 0;
     /** Où renvoyer le joueur quand il quitte la Tour (dimension + position), vide = point d'apparition. */
     String returnDim = "";
@@ -213,6 +217,34 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
 
     public long examReturnPos() {
         return examReturnPos;
+    }
+
+    public int blacklistCaught() {
+        return blacklistCaught;
+    }
+
+    public void addBlacklistCaught() {
+        blacklistCaught++;
+    }
+
+    public int contractsDone() {
+        return contractsDone;
+    }
+
+    public void addContractDone() {
+        contractsDone++;
+    }
+
+    public int hunterStars() {
+        return hunterStars;
+    }
+
+    public void setHunterStars(int stars) {
+        hunterStars = Math.max(0, Math.min(3, stars));
+    }
+
+    public boolean reached200() {
+        return registered200 || arenaFloor >= 200;
     }
 
     public boolean isHunter() {
@@ -391,6 +423,9 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         tag.put("exam_instances", inst);
         tag.putLong("exam_departure", examDeparture);
         tag.putString("organization", organization);
+        tag.putInt("blacklist_caught", blacklistCaught);
+        tag.putInt("contracts_done", contractsDone);
+        tag.putInt("hunter_stars", hunterStars);
         tag.putString("family", family);
         tag.putBoolean("family_assigned", familyAssigned);
         ListTag done = new ListTag();
@@ -453,6 +488,9 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         for (String k : inst.getAllKeys()) examInstances.put(k, inst.getInt(k));
         examDeparture = tag.contains("exam_departure") ? tag.getLong("exam_departure") : Long.MIN_VALUE;
         organization = tag.getString("organization");
+        blacklistCaught = tag.getInt("blacklist_caught");
+        contractsDone = tag.getInt("contracts_done");
+        hunterStars = tag.getInt("hunter_stars");
         family = tag.getString("family");
         familyAssigned = tag.getBoolean("family_assigned");
         completed.clear();

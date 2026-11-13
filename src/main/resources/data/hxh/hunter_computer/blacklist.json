@@ -1,0 +1,12 @@
+{
+  "category": { "fr": "Général", "en": "General" },
+  "order": 25,
+  "title": { "fr": "La Blacklist et le rang Hunter", "en": "The Blacklist and Hunter rank" },
+  "text": {
+    "fr": "La Blacklist recense les criminels recherchés par l'Association. Chaque fois que tu ouvres cet ordinateur, la liste des traques s'affiche dans le chat : clique sur [Traquer] pour en prendre une (une à la fois). La cible apparaît loin de toi, avec un délai.\n\nLe rang Hunter compte en étoiles, une par domaine où tu t'es illustré : combat (200e étage de la Tour Céleste), traque (3 criminels de la Blacklist capturés), Nen (niveau de Nen 60). Chaque étoile rapporte une prime et ouvre des traques plus dangereuses.",
+    "en": "The Blacklist lists the criminals wanted by the Association. Each time you open this computer, the list of hunts appears in the chat: click [Hunt] to take one (one at a time). The target appears far from you, with a deadline.\n\nHunter rank is counted in stars, one per field you excelled in: combat (200th floor of Heavens Arena), hunting (3 Blacklist criminals caught), Nen (Nen level 60). Each star pays a bounty and opens more dangerous hunts."
+  },
+  "requires": ["hunter"],
+  "hint": { "fr": "Réservé aux titulaires de la licence.", "en": "License holders only." },
+  "category_order": 0
+}
