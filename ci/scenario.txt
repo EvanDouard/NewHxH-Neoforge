@@ -4,6 +4,8 @@ wait 100
 cmd time set noon
 cmd gamerule doDaylightCycle false
 cmd gamerule hxhNenLearning false
+# famille tirée au hasard à la connexion : on la retire pour un scénario reproductible
+cmd hunter family set none
 cmd give @s hxh:hunter_card
 look 30 20
 wait 60

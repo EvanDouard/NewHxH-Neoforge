@@ -1,6 +1,7 @@
 # À tester (ajouts non vérifiés)
 
 La CI a été bloquée (facturation) le 12 novembre ; le dépôt est public depuis le soir et elle tourne de nouveau.
+Run vert du 13 nov soir (c4cc6d8) : 145 GameTests, Hunter gourmet, Hisoka.
 Run vert du 13 nov fin d'après-midi (c291c3d) : 144 GameTests, rang Hunter, Blacklist, quêtes d'organisation.
 Run vert du 13 nov après-midi (08c021d) : 142 GameTests, paris, exorcisme, contrats.
 Run vert du 13 nov (89b5221) : 139 GameTests et le scénario passent (coups secrets, serments, enchères, combattants du 200e).
@@ -8,6 +9,14 @@ Run vert du 12 nov au soir (08913eb) : compilation, tous les GameTests et le sc�
 les lignes « En jeu » restent à regarder à la main.
 
 Légende : **CI** = vérifié par les GameTests ou une capture du scénario · **En jeu** = à regarder à la main.
+
+## Hunter gourmet, Hisoka, renard-ours (13 nov, soir)
+- [x] CI : GameTest `gourmetSellsDishThreeAndQuestGivesFour` (plat III en boutique à 900 J, plat IV jamais en boutique mais dans la quête et aux enchères) ; capture `61_boutique_hunter_gourmet`.
+- [x] CI : GameTest `namedChallengersAbove200` étendu : Hisoka (son vrai kit) aux 235–240e étages.
+- [ ] CI : GameTest `foxbearIsAToughPredator` (60 PV, 9 dégâts, petits renards-ours, butin) ; capture `62_renard_ours`.
+- [ ] En jeu : poser le PNJ `hunter_gourmet` ; clic droit = boutique, accroupi + clic droit = sa quête « Le plat légendaire » (16 carottes dorées, 16 saumons cuits, une pomme d'or enchantée → plat IV).
+- [ ] En jeu : renards-ours dans les forêts (nouveaux tronçons), agressifs, la mère défend ses petits. Modèle et texture à faire (provisoire : ours polaire agrandi).
+- [ ] En jeu : combattre Hisoka au 235e étage.
 
 ## Rang Hunter et Blacklist (13 nov, fin d'après-midi)
 - [x] CI : GameTest `hunterStarsAndBlacklist` (licence exigée, une étoile par domaine : 200e étage, 3 captures, Nen 60 ; 1000 J × étoile ; étoiles jamais perdues ; traques réservées selon le rang ; une traque à la fois).
