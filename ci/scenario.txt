@@ -1680,7 +1680,8 @@ cmd hunter jenny set 0
 # --- Bestiaire : renard-ours ---
 cmd kill @e[type=!minecraft:player]
 camera first
-cmd tp @s ~ ~ ~ 0 0
+cmd tp @s ~30 ~ ~ 0 0
+wait 20
 look 0 5
 cmd summon hxh:foxbear ~ ~ ~7 {NoAI:1b,Rotation:[180f,0f]}
 cmd summon hxh:foxbear ~2.5 ~ ~6 {NoAI:1b,Age:-24000,Rotation:[200f,0f]}

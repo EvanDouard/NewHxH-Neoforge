@@ -13,7 +13,7 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 ## Hunter gourmet, Hisoka, renard-ours (13 nov, soir)
 - [x] CI : GameTest `gourmetSellsDishThreeAndQuestGivesFour` (plat III en boutique à 900 J, plat IV jamais en boutique mais dans la quête et aux enchères) ; capture `61_boutique_hunter_gourmet`.
 - [x] CI : GameTest `namedChallengersAbove200` étendu : Hisoka (son vrai kit) aux 235–240e étages.
-- [ ] CI : GameTest `foxbearIsAToughPredator` (60 PV, 9 dégâts, petits renards-ours, butin) ; capture `62_renard_ours`.
+- [x] CI : GameTest `foxbearIsAToughPredator` (60 PV, 9 dégâts, petits renards-ours, butin) ; capture `62_renard_ours`.
 - [ ] En jeu : poser le PNJ `hunter_gourmet` ; clic droit = boutique, accroupi + clic droit = sa quête « Le plat légendaire » (16 carottes dorées, 16 saumons cuits, une pomme d'or enchantée → plat IV).
 - [ ] En jeu : renards-ours dans les forêts (nouveaux tronçons), agressifs, la mère défend ses petits. Modèle et texture à faire (provisoire : ours polaire agrandi).
 - [ ] En jeu : combattre Hisoka au 235e étage.
