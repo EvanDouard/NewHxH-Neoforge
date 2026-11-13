@@ -1,0 +1,62 @@
+{
+  "title": {
+    "fr": "Le Conseil des Zodiaques",
+    "en": "The Zodiac Council"
+  },
+  "start_npc": "cheadle",
+  "requires": [
+    "hxh:org_zodiaques",
+    "org:association"
+  ],
+  "intro": {
+    "fr": "Un siège au Conseil se mérite. Le règlement est clair.",
+    "en": "A seat on the Council must be earned. The rules are clear."
+  },
+  "steps": [
+    {
+      "id": "rules",
+      "type": "talk",
+      "npc": "cheadle",
+      "objective": {
+        "fr": "Écouter Cheadle",
+        "en": "Listen to Cheadle"
+      },
+      "dialog": {
+        "fr": "Article 3 : un Zodiaque honore ses contrats et vide la Blacklist. Deux contrats, trois captures.",
+        "en": "Article 3: a Zodiac honours contracts and clears the Blacklist. Two contracts, three captures."
+      }
+    },
+    {
+      "id": "contracts",
+      "type": "contract_done",
+      "count": 2,
+      "objective": {
+        "fr": "Remplir 2 contrats",
+        "en": "Complete 2 contracts"
+      }
+    },
+    {
+      "id": "hunt",
+      "type": "blacklist_catch",
+      "count": 3,
+      "objective": {
+        "fr": "Capturer 3 cibles de la Blacklist",
+        "en": "Capture 3 Blacklist targets"
+      }
+    },
+    {
+      "id": "seat",
+      "type": "talk",
+      "npc": "cheadle",
+      "reward_jenny": 5000,
+      "objective": {
+        "fr": "Retourner voir Cheadle",
+        "en": "Return to Cheadle"
+      },
+      "dialog": {
+        "fr": "Approuvé à l'unanimité. Bienvenue au Conseil.",
+        "en": "Approved unanimously. Welcome to the Council."
+      }
+    }
+  ]
+}

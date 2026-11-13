@@ -1320,5 +1320,7 @@
   "message.hxh.vow_character_death": "Tu as enfreint ton serment : la chaîne se referme sur ton cœur.",
   "entity.hxh.spider_eagle": "Aigle-araignée",
   "item.hxh.spider_eagle_spawn_egg": "Œuf d'apparition d'aigle-araignée",
-  "command.hxh.contract_none": "Aucun contrat en cours"
+  "command.hxh.contract_none": "Aucun contrat en cours",
+  "command.hxh.contract_goto_seen": "Près de la cible du contrat",
+  "command.hxh.contract_goto_spawn": "Au point d'apparition de la cible (elle n'est pas encore chargée)"
 }

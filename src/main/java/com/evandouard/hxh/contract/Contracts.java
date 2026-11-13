@@ -214,6 +214,9 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
         target.getPersistentData().putInt(REWARD, reward);
         target.getPersistentData().putString(BOARD, c.board());
         target.addTag("hxh_contract");
+        // Un squelette ou un zombie ne doit pas brûler au soleil avant qu'on l'atteigne (contrat raté pour rien)
+        target.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE,
+                net.minecraft.world.effect.MobEffectInstance.INFINITE_DURATION, 0, false, false));
         CompoundTag s = new CompoundTag();
         s.putString("id", c.id().toString());
         s.putString("name", c.name(lang));
@@ -321,6 +324,7 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
 
     static void fail(ServerPlayer p, String key) {
         p.getPersistentData().remove(TAG);
+        QuestManager.sync(p); // la bulle du contrat disparaît
         p.sendSystemMessage(Component.translatable(key).withStyle(ChatFormatting.RED));
     }
 

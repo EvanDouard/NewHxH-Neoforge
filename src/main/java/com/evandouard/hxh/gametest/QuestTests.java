@@ -102,6 +102,16 @@ public final class QuestTests {
     }
 
     @GameTest(template = "empty")
+    public static void eachOrganizationHasAThirdQuest(GameTestHelper helper) {
+        for (String id : new String[]{"org_association_examinateur", "org_ryodan_meteor", "org_bombers_greed_island", "org_zodiaques_conseil"}) {
+            Quest q = QuestRegistry.get(HxHMod.id(id));
+            helper.assertTrue(q != null && q.problems().isEmpty(), id + " chargée sans erreur");
+            helper.assertTrue(q.requires().stream().anyMatch(r -> r.startsWith("org:")), id + " réservée à son organisation");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void firstQuestIsBecomingAHunter(GameTestHelper helper) {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
         QuestData d = QuestManager.data(player);
@@ -792,6 +802,7 @@ public final class QuestTests {
         var target = com.evandouard.hxh.contract.Contracts.start(p, c, helper.absoluteVec(new Vec3(3.5, 1, 3.5)));
         helper.assertTrue(target != null && com.evandouard.hxh.contract.Contracts.hasContract(p), "Contrat ouvert, cible posée");
         helper.assertTrue(target.hasCustomName(), "La cible porte le nom du contrat");
+        helper.assertTrue(target.hasEffect(net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE), "La cible ne brûle pas au soleil");
         target.invulnerableTime = 0;
         target.hurt(p.damageSources().playerAttack(p), 10000f);
         helper.assertTrue(!target.isAlive(), "Cible éliminée");

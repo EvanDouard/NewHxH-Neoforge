@@ -1,0 +1,67 @@
+{
+  "title": {
+    "fr": "Les cartes de Greed Island",
+    "en": "The Greed Island cards"
+  },
+  "start_npc": "genthru",
+  "requires": [
+    "hxh:org_bombers_masadora",
+    "org:bombers"
+  ],
+  "intro": {
+    "fr": "Il nous faut encore des explosifs. Et des cartes. Beaucoup de cartes.",
+    "en": "We still need explosives. And cards. Lots of cards."
+  },
+  "steps": [
+    {
+      "id": "plan",
+      "type": "talk",
+      "npc": "genthru",
+      "objective": {
+        "fr": "Écouter Genthru",
+        "en": "Listen to Genthru"
+      },
+      "dialog": {
+        "fr": "Les creepers sont des bombes qui marchent. Prends leur poudre, et rapporte-moi du papier pour les cartes.",
+        "en": "Creepers are walking bombs. Take their powder, and bring me paper for the cards."
+      }
+    },
+    {
+      "id": "creepers",
+      "type": "kill",
+      "entity": "minecraft:creeper",
+      "count": 15,
+      "objective": {
+        "fr": "Éliminer 15 creepers",
+        "en": "Eliminate 15 creepers"
+      }
+    },
+    {
+      "id": "powder",
+      "type": "bring",
+      "npc": "genthru",
+      "item": "minecraft:gunpowder",
+      "count": 16,
+      "objective": {
+        "fr": "Rapporter 16 poudres à canon à Genthru",
+        "en": "Bring 16 gunpowder to Genthru"
+      }
+    },
+    {
+      "id": "cards",
+      "type": "bring",
+      "npc": "genthru",
+      "item": "minecraft:paper",
+      "count": 32,
+      "reward_jenny": 2500,
+      "objective": {
+        "fr": "Rapporter 32 feuilles de papier à Genthru",
+        "en": "Bring 32 paper to Genthru"
+      },
+      "dialog": {
+        "fr": "Bombe ! … Je plaisante. Bon travail.",
+        "en": "Bomb! … Just kidding. Good work."
+      }
+    }
+  ]
+}

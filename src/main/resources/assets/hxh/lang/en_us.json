@@ -1320,5 +1320,7 @@
   "message.hxh.vow_character_death": "You broke your vow: the chain closes around your heart.",
   "entity.hxh.spider_eagle": "Spider eagle",
   "item.hxh.spider_eagle_spawn_egg": "Spider Eagle Spawn Egg",
-  "command.hxh.contract_none": "No contract in progress"
+  "command.hxh.contract_none": "No contract in progress",
+  "command.hxh.contract_goto_seen": "Next to the contract target",
+  "command.hxh.contract_goto_spawn": "At the target's spawn point (not loaded yet)"
 }

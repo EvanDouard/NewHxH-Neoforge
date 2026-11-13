@@ -1,0 +1,56 @@
+{
+  "title": {
+    "fr": "Examinateur de l'Examen Hunter",
+    "en": "Hunter Exam examiner"
+  },
+  "start_npc": "beans",
+  "requires": [
+    "hxh:org_association_traque",
+    "org:association"
+  ],
+  "intro": {
+    "fr": "Le président cherche des examinateurs pour la prochaine session. Prouve que tu sais préparer une épreuve.",
+    "en": "The chairman needs examiners for the next session. Prove you can set up a trial."
+  },
+  "steps": [
+    {
+      "id": "brief",
+      "type": "talk",
+      "npc": "beans",
+      "objective": {
+        "fr": "Écouter Beans",
+        "en": "Listen to Beans"
+      },
+      "dialog": {
+        "fr": "Comme Buhara et Menchi : rapporte de quoi faire passer la deuxième épreuve. Des Great Stamp, et des œufs d'aigle-araignée.",
+        "en": "Like Buhara and Menchi: bring what the second phase needs. Great Stamps, and spider eagle eggs."
+      }
+    },
+    {
+      "id": "stamps",
+      "type": "kill",
+      "entity": "hxh:great_stamp",
+      "count": 3,
+      "objective": {
+        "fr": "Chasser 3 Great Stamp (frapper de côté ou de dos)",
+        "en": "Hunt 3 Great Stamps (hit from the side or back)"
+      }
+    },
+    {
+      "id": "eggs",
+      "type": "bring",
+      "npc": "beans",
+      "item": "hxh:spider_eagle_egg",
+      "count": 3,
+      "reward_jenny": 2500,
+      "objective": {
+        "fr": "Rapporter 3 œufs d'aigle-araignée à Beans (montagnes)",
+        "en": "Bring 3 spider eagle eggs to Beans (mountains)"
+      },
+      "dialog": {
+        "fr": "Parfait. Le président sera ravi : tu feras passer l'épreuve l'an prochain.",
+        "en": "Perfect. The chairman will be pleased: you'll run the trial next year."
+      }
+    }
+  ]
+}

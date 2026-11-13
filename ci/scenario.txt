@@ -1852,7 +1852,8 @@ cmd hunter stat endurance set 30
 # --- Gyo 40 : PV et armure au-dessus des mobs ---
 cmd hunter nen mastery gyo 40
 cmd tp @s ~ ~ ~ 0 0
-cmd summon minecraft:husk ~ ~ ~3 {NoAI:1b,PersistenceRequired:1b,ArmorItems:[{},{},{id:"minecraft:iron_chestplate",count:1},{}]}
+cmd summon minecraft:husk ~ ~ ~3 {NoAI:1b,PersistenceRequired:1b}
+cmd item replace entity @e[type=minecraft:husk,limit=1,sort=nearest] armor.chest with minecraft:iron_chestplate
 key key.hxh.gyo
 wait 20
 clearchat
@@ -1965,8 +1966,10 @@ cmd gamemode survival
 cmd hunter arena floor 235
 cmd hunter arena register
 cmd hunter arena goto 235
-wait 100
+wait 200
 clearchat
+goto referee
+wait 40
 goto referee
 wait 15
 talkto referee

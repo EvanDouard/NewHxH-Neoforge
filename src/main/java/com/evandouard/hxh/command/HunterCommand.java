@@ -155,6 +155,10 @@ public final class HunterCommand {
                             level.getChunk(at.getX() >> 4, at.getZ() >> 4);
                             var ground = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, at);
                             p.teleportTo(level, ground.getX() + 4.5, ground.getY(), ground.getZ() + 0.5, 90f, 10f);
+                            boolean loaded = !level.getEntitiesOfClass(LivingEntity.class, new net.minecraft.world.phys.AABB(ground).inflate(8),
+                                    e -> e.getTags().contains("hxh_contract")).isEmpty();
+                            ctx.getSource().sendSuccess(() -> Component.translatable(loaded ? "command.hxh.contract_goto_seen"
+                                    : "command.hxh.contract_goto_spawn"), false);
                             return 1;
                         })))
                 .then(Commands.literal("shrine")

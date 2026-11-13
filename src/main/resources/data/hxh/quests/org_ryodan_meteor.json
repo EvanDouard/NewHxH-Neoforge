@@ -1,0 +1,67 @@
+{
+  "title": {
+    "fr": "Le butin de Meteor City",
+    "en": "The Meteor City loot"
+  },
+  "start_npc": "chrollo",
+  "requires": [
+    "hxh:org_ryodan_encheres",
+    "org:ryodan"
+  ],
+  "intro": {
+    "fr": "Meteor City n'a rien. Nous lui rapporterons de quoi tenir un hiver.",
+    "en": "Meteor City has nothing. We'll bring it enough to last a winter."
+  },
+  "steps": [
+    {
+      "id": "plan",
+      "type": "talk",
+      "npc": "chrollo",
+      "objective": {
+        "fr": "Écouter Chrollo",
+        "en": "Listen to Chrollo"
+      },
+      "dialog": {
+        "fr": "Prends ce qui te plaît, tant que ça finit chez nous. De l'or, et une relique qui défie la mort.",
+        "en": "Take whatever you like, as long as it ends up with us. Gold, and a relic that cheats death."
+      }
+    },
+    {
+      "id": "bears",
+      "type": "kill",
+      "entity": "hxh:foxbear",
+      "count": 2,
+      "objective": {
+        "fr": "Abattre 2 renards-ours (leurs peaux se vendent bien)",
+        "en": "Take down 2 foxbears (their pelts sell well)"
+      }
+    },
+    {
+      "id": "loot",
+      "type": "bring",
+      "npc": "chrollo",
+      "item": "minecraft:gold_ingot",
+      "count": 32,
+      "objective": {
+        "fr": "Rapporter 32 lingots d'or à Chrollo",
+        "en": "Bring 32 gold ingots to Chrollo"
+      }
+    },
+    {
+      "id": "relic",
+      "type": "bring",
+      "npc": "chrollo",
+      "item": "minecraft:totem_of_undying",
+      "count": 1,
+      "reward_jenny": 3500,
+      "objective": {
+        "fr": "Rapporter un totem d'immortalité à Chrollo (enchères, manoirs)",
+        "en": "Bring a totem of undying to Chrollo (auctions, mansions)"
+      },
+      "dialog": {
+        "fr": "Meteor City n'oubliera pas. Nous non plus.",
+        "en": "Meteor City won't forget. Neither will we."
+      }
+    }
+  ]
+}
