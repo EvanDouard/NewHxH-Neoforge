@@ -1349,6 +1349,7 @@ wait 15
 talkto referee
 wait 100
 expect ton adversaire maîtrise le Nen
+expect Dans ce coin, Gido
 expectnot éfaite
 camera back
 wait 10

@@ -1121,7 +1121,7 @@
   "profile.hxh.family_move": "  Coup secret : %s (menu des pouvoirs)",
   "screen.hxh.vow.title": "Serments et restrictions",
   "screen.hxh.vow.open": "Serments",
-  "screen.hxh.vow.take": "Prêter serment",
+  "screen.hxh.vow.take": "Prêter",
   "screen.hxh.vow.current": "En cours",
   "screen.hxh.vow.renounce": "Renoncer (rompre)",
   "screen.hxh.vow.none": "Aucun serment. Plus la contrainte est dure, plus le Hatsu est fort.",
@@ -1194,5 +1194,10 @@
   "technique.hxh.arena_kastro_tiger_bite": "Morsure du tigre",
   "technique.hxh.arena_kastro_tiger_bite.desc": "Mains en gueule de tigre, au corps à corps : très gros dégâts.",
   "technique.hxh.arena_kastro_double": "Double",
-  "technique.hxh.arena_kastro_double.desc": "Son double attire les coups pendant que le vrai Kastro disparaît : Invisibilité et Force 4 s."
+  "technique.hxh.arena_kastro_double.desc": "Son double attire les coups pendant que le vrai Kastro disparaît : Invisibilité et Force 4 s.",
+  "message.hxh.arena_challenger": "L'arbitre : « Dans ce coin, %s ! » %s",
+  "arena.hxh.challenger.gido.intro": "Ses toupies ont déjà eu raison de bien des nouveaux.",
+  "arena.hxh.challenger.sadaso.intro": "Méfie-toi de son bras gauche… qu'on ne voit pas.",
+  "arena.hxh.challenger.riehlvelt.intro": "Son fauteuil cache un canon à air.",
+  "arena.hxh.challenger.kastro.intro": "Neuf victoires, et il vise le titre de Maître d'étage."
 }

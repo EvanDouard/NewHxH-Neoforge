@@ -9,7 +9,7 @@
     { "item": "minecraft:trident", "start": 1800, "value": 3000, "weight": 4 },
     { "item": "minecraft:heart_of_the_sea", "start": 800, "value": 1500, "weight": 4 },
     { "item": "minecraft:netherite_ingot", "start": 1500, "value": 2400, "weight": 4 },
-    { "item": "minecraft:music_disc_pigstep", "start": 500, "value": 1200, "weight": 3 },
+    { "item": "minecraft:dragon_head", "start": 3000, "value": 5000, "weight": 3 },
     { "item": "minecraft:nether_star", "start": 4000, "value": 7000, "weight": 2 },
     { "item": "minecraft:elytra", "start": 6000, "value": 10000, "weight": 2 }
   ]

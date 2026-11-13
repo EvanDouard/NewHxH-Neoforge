@@ -46,6 +46,7 @@ public final class TrainingTests {
     @GameTest(template = "empty")
     public static void dumbbellRepGivesStrengthXp(GameTestHelper helper) {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.family.Families.set(player, "");
         DumbbellItem dumbbell = ModItems.DUMBBELLS.get(1).get();
         ItemStack stack = new ItemStack(dumbbell);
         HunterData d = HunterStats.get(player);
@@ -66,6 +67,7 @@ public final class TrainingTests {
         helper.setBlock(rel, block.defaultBlockState().setValue(TreadmillBlock.FACING, Direction.NORTH));
         BlockPos abs = helper.absolutePos(rel);
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.family.Families.set(player, ""); // pas de bonus de famille sur l'XP mesurée
         player.moveTo(abs.getX() + 0.5, abs.getY() + 0.375, abs.getZ() + 0.5);
         player.setOnGround(true);
         HunterData d = HunterStats.get(player);
@@ -104,6 +106,7 @@ public final class TrainingTests {
     @GameTest(template = "empty")
     public static void nutritiousDishGivesVitalityXp(GameTestHelper helper) {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.family.Families.set(player, "");
         var dish = ModItems.DISHES.get(0).get();
         HunterData d = HunterStats.get(player);
         player.getFoodData().setFoodLevel(4);
@@ -125,6 +128,7 @@ public final class TrainingTests {
         helper.assertTrue(stone != null && level.getBlockState(stone).getBlock() instanceof com.evandouard.hxh.meditation.MeditationStoneBlock,
                 "Pierre posée au centre");
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.family.Families.set(player, "");
         player.moveTo(stone.getX() + 1.5, stone.getY(), stone.getZ() + 0.5);
         helper.assertTrue(com.evandouard.hxh.meditation.MeditationShrines.willMultiplier(player) == 8, "Volonté ×8 près d'une pierre III");
         player.moveTo(stone.getX() + 12.5, stone.getY(), stone.getZ() + 0.5);

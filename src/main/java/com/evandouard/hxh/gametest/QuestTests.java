@@ -709,6 +709,7 @@ public final class QuestTests {
         java.util.Random r = new java.util.Random(42);
         for (int i = 0; i < 1000; i++) if (com.evandouard.hxh.family.Families.draw(r) == null) none++;
         helper.assertTrue(none > 600 && none < 800, "Environ 70 % sans famille au tirage (" + none + "/1000)");
+        com.evandouard.hxh.family.Families.set(p, ""); // les joueurs factices partagent leurs données : on nettoie
         helper.succeed();
     }
 

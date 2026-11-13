@@ -1,10 +1,33 @@
 # À tester (ajouts non vérifiés)
 
 La CI a été bloquée (facturation) le 12 novembre ; le dépôt est public depuis le soir et elle tourne de nouveau.
+Run vert du 13 nov (d88ce5d) : coups secrets de famille.
 Run vert du 12 nov au soir (08913eb) : compilation, tous les GameTests et le scénario passent. Les lignes « CI » sont cochées ;
 les lignes « En jeu » restent à regarder à la main.
 
 Légende : **CI** = vérifié par les GameTests ou une capture du scénario · **En jeu** = à regarder à la main.
+
+## Coups secrets de famille (13 nov)
+- [x] CI : GameTest `familySecretMovesWork` (coup donné avec la famille, juste avant les coups de base, sans Nen, recharge, change avec la famille).
+- [x] CI : captures `55a_famille_zoldyck_main_griffe` (encart « Main-griffe » 4/7, griffure) et `55b_famille_freecss_instinct_du_chasseur` (onde verte, vache repérée).
+- [ ] En jeu : Main-griffe (bond de 8 blocs + saignement) agréable ou trop fort ? Colère écarlate 15 s / recharge 90 s ; Instinct 32 blocs / 40 s ; Premiers soins 4 PV / 45 s.
+- [ ] En jeu : le carnet affiche « Coup secret : … » sous la famille.
+
+## Serments et restrictions (13 nov)
+- [ ] CI : GameTest `vowsStrengthenAndSeal` (technique unique ×1,6 et refus des autres, rupture = sceau, payer de sa vie −2 PV, monstres seulement rompu sur un cochon, tout sacrifier ×3 puis scellé un jour).
+- [ ] CI : captures `56a_serments_liste`, `56b_serment_ultime_prete`.
+- [ ] En jeu : bouton « Serments » (écran K, fiche de son personnage) → prêter, renoncer (confirmation), sceau affiché.
+- [ ] En jeu : « Combat loyal » se rompt bien en frappant de dos, pas de face.
+
+## Enchères de York Shin (13 nov)
+- [ ] CI : GameTest `auctionsOutbidThenSell` (4 lots par jour sans doublon, surenchères sans rien payer, adjugé à la dernière mise, lot vendu fermé).
+- [ ] CI : captures `57a_encheres_lots_du_jour`, `57b_encheres_apres_une_mise`.
+- [ ] En jeu : poser le PNJ `commissaire_priseur` (repère de PNJ), enchérir jusqu'à l'adjudication ; nouveaux lots le jour suivant.
+
+## Combattants du 200e (13 nov)
+- [ ] CI : GameTest `namedChallengersAbove200` (Gido 200–209, Sadaso 210–219, Riehlvelt 220–224, Kastro 225–234, kits non proposés au joueur, toupies de Gido qui touchent).
+- [ ] CI : capture `45_combat_maitre_du_nen_sans_objets` : l'adversaire du 200e s'appelle « Gido (200e étage) ».
+- [ ] En jeu : combattre Gido, Sadaso, Riehlvelt, Kastro : difficulté, techniques lisibles.
 
 ## Gyo par paliers (12 nov)
 - [x] CI : GameTest `gyoTiersFollowEvansTable` (paliers 5/10/20/25/35/50/100, invisibilité potion vs Nen, Zetsu au max).

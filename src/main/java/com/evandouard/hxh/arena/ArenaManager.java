@@ -444,6 +444,12 @@ public final class ArenaManager {
         player.setHealth(player.getMaxHealth());
         say(player, floor >= ArenaRules.NEN_FLOOR ? "message.hxh.arena_fight_nen" : "message.hxh.arena_fight",
                 ChatFormatting.GOLD, floor);
+        var challenger = com.evandouard.hxh.hatsu.ArenaChallengers.forFloor(floor);
+        if (challenger != null) {
+            say(player, "message.hxh.arena_challenger", ChatFormatting.RED,
+                    Component.translatable("arena.hxh.challenger." + challenger.id()),
+                    Component.translatable("arena.hxh.challenger." + challenger.id() + ".intro"));
+        }
         return null;
     }
 

@@ -1194,5 +1194,10 @@
   "technique.hxh.arena_kastro_tiger_bite": "Tiger Bite",
   "technique.hxh.arena_kastro_tiger_bite.desc": "Hands shaped like a tiger's jaws, in melee: very heavy damage.",
   "technique.hxh.arena_kastro_double": "Double",
-  "technique.hxh.arena_kastro_double.desc": "His double draws the blows while the real Kastro vanishes: Invisibility and Strength for 4 s."
+  "technique.hxh.arena_kastro_double.desc": "His double draws the blows while the real Kastro vanishes: Invisibility and Strength for 4 s.",
+  "message.hxh.arena_challenger": "Referee: \"In this corner, %s!\" %s",
+  "arena.hxh.challenger.gido.intro": "His tops have already beaten many newcomers.",
+  "arena.hxh.challenger.sadaso.intro": "Beware of his left arm… the one you can't see.",
+  "arena.hxh.challenger.riehlvelt.intro": "His wheelchair hides an air cannon.",
+  "arena.hxh.challenger.kastro.intro": "Nine wins, and he is after the Floor Master title."
 }

@@ -51,7 +51,7 @@ public class VowScreen extends Screen {
             Vows.Vow v = vows[i];
             int y = TOP + i * ROW;
             Button take = Button.builder(Component.translatable(current == v ? "screen.hxh.vow.current" : "screen.hxh.vow.take"),
-                    b -> confirmTake(v)).bounds(right - 70, y + 1, 70, 18).build();
+                    b -> confirmTake(v)).bounds(right - 84, y + 1, 84, 18).build();
             take.active = current == null && !sealed && d.hasKit();
             take.setTooltip(Tooltip.create(Component.translatable(v.descriptionKey())));
             addRenderableWidget(take);
@@ -114,7 +114,7 @@ public class VowScreen extends Screen {
             g.fill(left, y, left + 300, y + ROW - 2, mine ? 0x80604010 : over ? 0x60303050 : 0x40000000);
             g.drawString(font, Component.translatable(v.translationKey()).withStyle(mine ? ChatFormatting.GOLD : ChatFormatting.WHITE),
                     left + 6, y + 6, 0xFFFFFF);
-            g.drawString(font, Component.literal("×" + v.power).withStyle(ChatFormatting.AQUA), left + 170, y + 6, 0xFFFFFF);
+            g.drawString(font, Component.literal("×" + v.power).withStyle(ChatFormatting.AQUA), left + 176, y + 6, 0xFFFFFF);
         }
         if (hovered >= 0) {
             List<FormattedCharSequence> lines = font.split(Component.translatable(vows[hovered].descriptionKey()).withStyle(ChatFormatting.GRAY), 300);
