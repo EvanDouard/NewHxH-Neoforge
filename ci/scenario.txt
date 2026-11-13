@@ -2039,5 +2039,35 @@ wait 5
 shot 89_carnet_organisation_brigade
 closescreen
 cmd hunter org leave
+# ===== Tests en jeu faits par Claude (lot T3) =====
+# --- Dirigeables : deux guichets éloignés, vol payant de l'un à l'autre ---
+cmd hunter license remove
+cmd hunter jenny set 1000
+cmd tp @s ~60 -60 ~ -90 10
+wait 20
+cmd summon hxh:npc ~2 ~ ~ {npc:"guichetier",NoAI:1b}
+wait 5
+talkto guichetier
+wait 10
+cmd hunter airport name Alpha
+cmd tp @s ~600 -60 ~ -90 10
+wait 60
+cmd summon hxh:npc ~2 ~ ~ {npc:"guichetier",NoAI:1b}
+wait 5
+clearchat
+talkto guichetier
+wait 10
+expect Alpha
+shot 90_guichet_destinations
+cmd hunter airport name Beta
+clearchat
+cmd hunter fly name Alpha
+wait 30
+shot 91_en_vol
+wait 90
+expect Billet payé
+shot 92_arrivee_a_alpha
+cmd kill @e[type=hxh:npc]
+cmd hunter license give
 cmd gamemode creative
 quit

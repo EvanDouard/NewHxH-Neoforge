@@ -125,7 +125,19 @@ public final class HunterCommand {
                         .executes(ctx -> com.evandouard.hxh.hatsu.Specials.exitRefuge(ctx.getSource().getPlayerOrException(),
                                 IntegerArgumentType.getInteger(ctx, "n")) ? 1 : 0))))
                 // Vol en dirigeable (lien cliquable du guichetier) : ouvert à tous
-                .then(Commands.literal("fly").then(Commands.argument("airport", IntegerArgumentType.integer(1))
+                .then(Commands.literal("fly")
+                        // Par le nom de l'aéroport (pratique pour tester) : /hunter fly name <nom>
+                        .then(Commands.literal("name").then(Commands.argument("name", StringArgumentType.greedyString())
+                                .executes(ctx -> {
+                                    var player = ctx.getSource().getPlayerOrException();
+                                    String name = StringArgumentType.getString(ctx, "name");
+                                    for (var a : com.evandouard.hxh.travel.Airports.get(player.server).all()) {
+                                        if (a.name.equals(name)) return com.evandouard.hxh.travel.AirTravel.fly(player, a.id) ? 1 : 0;
+                                    }
+                                    ctx.getSource().sendFailure(Component.translatable("travel.hxh.unknown_destination"));
+                                    return 0;
+                                })))
+                        .then(Commands.argument("airport", IntegerArgumentType.integer(1))
                         .executes(ctx -> com.evandouard.hxh.travel.AirTravel.fly(ctx.getSource().getPlayerOrException(),
                                 IntegerArgumentType.getInteger(ctx, "airport")) ? 1 : 0)))
                 // Sanctuaires de méditation : acheter des coordonnées (lien de l'archéologue) ; en bâtir un (admin)
