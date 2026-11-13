@@ -2126,9 +2126,10 @@ cmd tp @s ~30 -60 ~ 0 10
 wait 10
 cmd summon hxh:man_faced_ape ~-2 ~ ~5 {NoAI:1b,PersistenceRequired:1b}
 cmd summon hxh:chimera_ant ~2 ~ ~6 {NoAI:1b,PersistenceRequired:1b}
+cmd summon hxh:kiriko ~5 ~ ~8 {NoAI:1b,PersistenceRequired:1b}
 wait 10
 clearchat
-shot 96_singe_et_fourmi_chimere
+shot 96_singe_fourmi_chimere_et_kiriko
 cmd kill @e[type=!minecraft:player]
 cmd difficulty peaceful
 cmd gamemode creative

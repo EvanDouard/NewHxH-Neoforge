@@ -38,13 +38,42 @@ public final class KirikoForest {
                 Component.translatable(key)));
     }
 
+    /** Durée pendant laquelle le faux mari reste caché (le Kiriko s'envole entre-temps), et départ du Kiriko. */
+    public static final int HIDDEN_TICKS = 220, KIRIKO_LEAVES = 160;
+
+    /**
+     * Le faux mari se transforme : il disparaît dans une gerbe, un Kiriko apparaît à sa place, salue, puis s'envole.
+     * Le PNJ revient ensuite (la forêt sert aussi aux autres candidats). @return le Kiriko
+     */
+    public static com.evandouard.hxh.beast.KirikoEntity reveal(ServerLevel level, NpcEntity husband) {
+        husband.setInvisible(true);
+        husband.setCustomNameVisible(false);
+        var kiriko = com.evandouard.hxh.registry.ModEntities.KIRIKO.get().create(level);
+        if (kiriko != null) {
+            kiriko.moveTo(husband.getX(), husband.getY(), husband.getZ(), husband.getYRot(), 0);
+            kiriko.leaveIn(KIRIKO_LEAVES);
+            kiriko.setCustomName(Component.translatable("entity.hxh.kiriko"));
+            level.addFreshEntity(kiriko);
+            com.evandouard.hxh.fx.NenFx.shockwaveAt(level, kiriko.position(), 2.5f, 0xFFFFFFFF);
+            level.playSound(null, husband.blockPosition(), net.minecraft.sounds.SoundEvents.ENDER_DRAGON_FLAP, net.minecraft.sounds.SoundSource.NEUTRAL, 1f, 1.4f);
+        }
+        com.evandouard.hxh.hatsu.NenTasks.later(HIDDEN_TICKS, () -> {
+            if (!husband.isAlive()) return;
+            husband.setInvisible(false);
+            husband.setCustomNameVisible(true);
+        });
+        return kiriko;
+    }
+
     /** Désigner le Kiriko (1 = gauche, 2 = droite). */
     public static boolean accuse(ServerPlayer player, int n) {
         boolean right = n == fakeIndex(player);
         if (right) {
             NpcEntity fake = QuestManager.findNpc(player, "husband_" + n, 32);
-            if (fake != null && fake.level() instanceof ServerLevel level)
+            if (fake != null && fake.level() instanceof ServerLevel level) {
                 com.evandouard.hxh.fx.NenFx.slashAt(level, fake.position().add(0, 1, 0), 1.8f, 0xFFFFFF);
+                reveal(level, fake);
+            }
             player.sendSystemMessage(Component.translatable("exam.hxh.kiriko.reveal").withStyle(ChatFormatting.GREEN));
         } else {
             player.sendSystemMessage(Component.translatable("exam.hxh.kiriko.wrong").withStyle(ChatFormatting.RED));

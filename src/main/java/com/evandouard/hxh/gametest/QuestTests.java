@@ -149,6 +149,21 @@ public final class QuestTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 300)
+    public static void unmaskedKirikoTransformsAndFliesAway(GameTestHelper helper) {
+        NpcEntity husband = npc(helper, "husband_2", 2);
+        var kiriko = com.evandouard.hxh.exam.KirikoForest.reveal(helper.getLevel(), husband);
+        helper.assertTrue(kiriko != null && kiriko.isAlive() && kiriko.isLeaving(), "Un Kiriko apparaît à la place du mari");
+        helper.assertTrue(husband.isInvisible(), "Le faux mari a disparu");
+        helper.runAfterDelay(com.evandouard.hxh.exam.KirikoForest.KIRIKO_LEAVES + 10, () -> {
+            helper.assertFalse(kiriko.isAlive(), "Le Kiriko s'est envolé");
+            helper.runAfterDelay(com.evandouard.hxh.exam.KirikoForest.HIDDEN_TICKS - com.evandouard.hxh.exam.KirikoForest.KIRIKO_LEAVES, () -> {
+                helper.assertFalse(husband.isInvisible(), "Le PNJ revient pour les candidats suivants");
+                helper.succeed();
+            });
+        });
+    }
+
     @GameTest(template = "empty")
     public static void firstQuestIsBecomingAHunter(GameTestHelper helper) {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();

@@ -1356,5 +1356,7 @@
   "entity.hxh.chimera_ant": "Chimera Ant soldier",
   "item.hxh.chimera_ant_spawn_egg": "Chimera Ant Spawn Egg",
   "mob_preset.hxh.fourmi_chimere_soldat": "Chimera Ant soldier (Nen)",
-  "mob_preset.hxh.suspect_brigade": "Troupe suspect (Nen)"
+  "mob_preset.hxh.suspect_brigade": "Troupe suspect (Nen)",
+  "entity.hxh.kiriko": "Kiriko",
+  "item.hxh.kiriko_spawn_egg": "Kiriko Spawn Egg"
 }

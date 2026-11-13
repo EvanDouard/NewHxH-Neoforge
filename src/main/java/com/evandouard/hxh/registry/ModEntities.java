@@ -52,6 +52,10 @@ public final class ModEntities {
             ENTITIES.register("chimera_ant", () -> EntityType.Builder.of(com.evandouard.hxh.beast.ChimeraAntEntity::new,
                     MobCategory.MONSTER).sized(2.0f, 1.3f).clientTrackingRange(8).build("chimera_ant"));
 
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.beast.KirikoEntity>> KIRIKO =
+            ENTITIES.register("kiriko", () -> EntityType.Builder.of(com.evandouard.hxh.beast.KirikoEntity::new,
+                    MobCategory.CREATURE).sized(1.4f, 2.4f).clientTrackingRange(10).build("kiriko"));
+
     private ModEntities() {}
 
     public static void onSpawnPlacements(net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent event) {
@@ -85,6 +89,7 @@ public final class ModEntities {
         event.put(FOXBEAR.get(), com.evandouard.hxh.beast.FoxbearEntity.createAttributes().build());
         event.put(GREAT_STAMP.get(), com.evandouard.hxh.beast.GreatStampEntity.createAttributes().build());
         event.put(SPIDER_EAGLE.get(), com.evandouard.hxh.beast.SpiderEagleEntity.createAttributes().build());
+        event.put(KIRIKO.get(), com.evandouard.hxh.beast.KirikoEntity.createAttributes().build());
         event.put(MAN_FACED_APE.get(), com.evandouard.hxh.beast.ManFacedApeEntity.createAttributes().build());
         event.put(CHIMERA_ANT.get(), com.evandouard.hxh.beast.ChimeraAntEntity.createAttributes().build());
     }

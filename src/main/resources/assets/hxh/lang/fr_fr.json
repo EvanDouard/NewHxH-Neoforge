@@ -1356,5 +1356,7 @@
   "entity.hxh.chimera_ant": "Fourmi-Chimère soldat",
   "item.hxh.chimera_ant_spawn_egg": "Œuf d'apparition de Fourmi-Chimère",
   "mob_preset.hxh.fourmi_chimere_soldat": "Fourmi-Chimère soldat (Nen)",
-  "mob_preset.hxh.suspect_brigade": "Suspect de la Brigade (Nen)"
+  "mob_preset.hxh.suspect_brigade": "Suspect de la Brigade (Nen)",
+  "entity.hxh.kiriko": "Kiriko",
+  "item.hxh.kiriko_spawn_egg": "Œuf d'apparition de Kiriko"
 }
