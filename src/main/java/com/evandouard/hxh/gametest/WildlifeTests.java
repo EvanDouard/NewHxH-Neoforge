@@ -115,4 +115,26 @@ public final class WildlifeTests {
             helper.succeed();
         });
     }
+
+    @GameTest(template = "empty", timeoutTicks = 120)
+    public static void numeleApeAndChimeraAntsHunt(GameTestHelper helper) {
+        var ape = helper.spawn(com.evandouard.hxh.registry.ModEntities.MAN_FACED_APE.get(), new BlockPos(1, 2, 1));
+        helper.assertTrue(ape.getMaxHealth() == 24f, "Singe : 24 PV");
+        String line = ((net.minecraft.network.chat.TranslatableContents) com.evandouard.hxh.beast.ManFacedApeEntity
+                .lureLine(helper.getLevel().getRandom()).getContents()).getKey();
+        helper.assertTrue(line.startsWith("dialog.hxh.man_faced_ape.lure_"), "Réplique trompeuse : " + line);
+        ape.discard();
+        // Fourmi-Chimère : chasse sans attendre la nuit (ici un villageois)
+        var ant = helper.spawn(com.evandouard.hxh.registry.ModEntities.CHIMERA_ANT.get(), new BlockPos(1, 2, 1));
+        var villager = helper.spawn(EntityType.VILLAGER, new BlockPos(4, 2, 4));
+        helper.assertTrue(ant.getMaxHealth() == 40f && ant.getArmorValue() >= 6, "Fourmi : 40 PV, armure 6");
+        // Le mob d'exemple naturel lui donne le Nen
+        MobPreset preset = MobPresets.get("fourmi_chimere_soldat");
+        helper.assertTrue(preset != null && preset.naturalChance() > 0, "Fourmi au Nen : mob d'exemple naturel");
+        var ant2 = helper.spawn(com.evandouard.hxh.registry.ModEntities.CHIMERA_ANT.get(), new BlockPos(6, 2, 1));
+        NenWildlife.convert(ant2, preset);
+        HunterData d = HunterStats.get(ant2);
+        helper.assertTrue(d.nenUnlocked() && d.nenLevel() == 35, "Fourmi convertie : Nen niveau " + d.nenLevel());
+        helper.succeedWhen(() -> helper.assertTrue(ant.getTarget() == villager, "La fourmi prend le villageois pour cible"));
+    }
 }

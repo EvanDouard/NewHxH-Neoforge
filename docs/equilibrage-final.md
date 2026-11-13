@@ -83,3 +83,5 @@ Valeurs posées par Claude pour avancer. Elles marchent en jeu, mais on les revo
 | Serment de Feitan | Soleil levant ×1,8, seulement sous 50 % de vie (refus sinon, jamais de rupture) |
 | Aigle-araignée | 16 PV, vol 0,7 ; montagnes au-dessus de y 80, poids 5, 1–2 ; pond un œuf toutes les 10–20 min ; butin 1–3 plumes + 25 % d'œuf |
 | Heure supplémentaire / Service de jour | ×1,3 dans sa période, ×0,7 dans l'autre (nuit = 13000–23000 ticks ; pas de cycle = jour) ; un seul serment à la fois |
+| Singe à visage humain | 24 PV, 4 dégâts, vitesse 0,3 ; marais, poids 20, 1–2 ; une réplique trompeuse ~toutes les 30 s à 24 blocs |
+| Fourmi-Chimère soldat | 40 PV, 7 dégâts, armure 6 ; jungles, poids 12, 2–3 ; 30 % au Nen (niveau 35, prime 600 J, mob d'exemple `fourmi_chimere_soldat`) |

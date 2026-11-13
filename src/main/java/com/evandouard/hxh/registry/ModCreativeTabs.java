@@ -19,6 +19,8 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.HUNTER_CARD.get());
                         output.accept(ModItems.FOXBEAR_SPAWN_EGG.get());
                         output.accept(ModItems.SPIDER_EAGLE_SPAWN_EGG.get());
+                        output.accept(ModItems.MAN_FACED_APE_SPAWN_EGG.get());
+                        output.accept(ModItems.CHIMERA_ANT_SPAWN_EGG.get());
                         output.accept(ModItems.GREAT_STAMP_SPAWN_EGG.get());
                         output.accept(ModItems.RAW_FOXBEAR_MEAT.get());
                         output.accept(ModItems.COOKED_FOXBEAR_MEAT.get());

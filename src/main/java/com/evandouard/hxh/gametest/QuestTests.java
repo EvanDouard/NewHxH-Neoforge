@@ -127,7 +127,17 @@ public final class QuestTests {
                     && !fr.has("dialog.hxh." + k.substring(8) + ".idle")) mute.add(k.substring(8));
             if (!en.has(k)) untranslated.add(k);
         }
-        helper.assertTrue(mute.isEmpty(), "PNJ sans réplique par défaut : " + mute);
+        for (var key : net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.keySet()) {
+            if (key.getNamespace().equals(HxHMod.MODID) && !fr.has("entity.hxh." + key.getPath())) mute.add("entité " + key);
+        }
+        for (var key : net.minecraft.core.registries.BuiltInRegistries.ITEM.keySet()) {
+            if (key.getNamespace().equals(HxHMod.MODID) && !fr.has("item.hxh." + key.getPath())
+                    && !fr.has("block.hxh." + key.getPath())) mute.add("objet " + key);
+        }
+        for (var preset : com.evandouard.hxh.mob.MobPresets.all().values()) {
+            if (!fr.has(preset.nameKey())) mute.add("nom du mob " + preset.nameKey());
+        }
+        helper.assertTrue(mute.isEmpty(), "PNJ sans réplique par défaut ou mob sans nom : " + mute);
         helper.assertTrue(untranslated.isEmpty(), "Textes sans traduction anglaise : " + untranslated);
         // La licence de Hunter vaut l'Examen réussi (quêtes qui le demandent)
         ServerPlayer p = helper.makeMockServerPlayerInLevel();

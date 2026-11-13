@@ -1,0 +1,6 @@
+{
+  "entity": "hxh:chimera_ant",
+  "stats": { "all": 45, "strength": 60, "endurance": 55 },
+  "nen": { "level": 35, "type": "enhancer", "mastery": 25, "mode": "ten", "aura": "wild" },
+  "natural": { "chance": 0.3, "bounty": 600 }
+}

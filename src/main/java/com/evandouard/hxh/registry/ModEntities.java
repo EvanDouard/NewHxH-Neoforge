@@ -44,6 +44,14 @@ public final class ModEntities {
             ENTITIES.register("spider_eagle", () -> EntityType.Builder.of(com.evandouard.hxh.beast.SpiderEagleEntity::new,
                     MobCategory.CREATURE).sized(1.2f, 2.0f).clientTrackingRange(10).build("spider_eagle"));
 
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.beast.ManFacedApeEntity>> MAN_FACED_APE =
+            ENTITIES.register("man_faced_ape", () -> EntityType.Builder.of(com.evandouard.hxh.beast.ManFacedApeEntity::new,
+                    MobCategory.MONSTER).sized(0.6f, 1.95f).clientTrackingRange(8).build("man_faced_ape"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.beast.ChimeraAntEntity>> CHIMERA_ANT =
+            ENTITIES.register("chimera_ant", () -> EntityType.Builder.of(com.evandouard.hxh.beast.ChimeraAntEntity::new,
+                    MobCategory.MONSTER).sized(2.0f, 1.3f).clientTrackingRange(8).build("chimera_ant"));
+
     private ModEntities() {}
 
     public static void onSpawnPlacements(net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent event) {
@@ -54,6 +62,14 @@ public final class ModEntities {
         event.register(SPIDER_EAGLE.get(), net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
                 net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING,
                 com.evandouard.hxh.beast.SpiderEagleEntity::canSpawn,
+                net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(MAN_FACED_APE.get(), net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
+                net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                com.evandouard.hxh.beast.ManFacedApeEntity::canSpawn,
+                net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(CHIMERA_ANT.get(), net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
+                net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                com.evandouard.hxh.beast.ChimeraAntEntity::canSpawn,
                 net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(GREAT_STAMP.get(), net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
                 net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
@@ -69,5 +85,7 @@ public final class ModEntities {
         event.put(FOXBEAR.get(), com.evandouard.hxh.beast.FoxbearEntity.createAttributes().build());
         event.put(GREAT_STAMP.get(), com.evandouard.hxh.beast.GreatStampEntity.createAttributes().build());
         event.put(SPIDER_EAGLE.get(), com.evandouard.hxh.beast.SpiderEagleEntity.createAttributes().build());
+        event.put(MAN_FACED_APE.get(), com.evandouard.hxh.beast.ManFacedApeEntity.createAttributes().build());
+        event.put(CHIMERA_ANT.get(), com.evandouard.hxh.beast.ChimeraAntEntity.createAttributes().build());
     }
 }

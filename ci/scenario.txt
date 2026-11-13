@@ -2120,6 +2120,16 @@ wait 10
 shot 95_boutique_gourmet_debloquee
 closescreen
 cmd kill @e[type=hxh:npc]
+cmd difficulty easy
+# --- Bestiaire : singe à visage humain (Numele) et Fourmi-Chimère soldat ---
+cmd tp @s ~30 -60 ~ 0 10
+wait 10
+cmd summon hxh:man_faced_ape ~-2 ~ ~5 {NoAI:1b,PersistenceRequired:1b}
+cmd summon hxh:chimera_ant ~2 ~ ~6 {NoAI:1b,PersistenceRequired:1b}
+wait 10
+clearchat
+shot 96_singe_et_fourmi_chimere
+cmd kill @e[type=!minecraft:player]
 cmd difficulty peaceful
 cmd gamemode creative
 quit

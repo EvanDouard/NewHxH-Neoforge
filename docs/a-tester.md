@@ -174,3 +174,5 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] À juger : modèle provisoire de l'aigle-araignée (perroquet gris ×2,5) en attendant le modèle Blockbench.
 - [x] CI : GameTest `eachOrganizationHasAThirdQuest` — nouvelles quêtes : Examinateur (Beans : 3 Great Stamp + 3 œufs d'aigle-araignée), Meteor City (Chrollo : 2 renards-ours, 32 or, un totem), Cartes de Greed Island (Genthru : 15 creepers, 16 poudres, 32 papiers), Conseil des Zodiaques (Cheadle : 2 contrats, 3 captures).
 - [x] CI : GameTest `dayAndNightVowsSwitchWithTheSun` (Heure supplémentaire et Service de jour, jamais ensemble) + capture 88 (écran des serments sur deux colonnes).
+- [x] CI : GameTest `numeleApeAndChimeraAntsHunt` + capture 96 (singe à visage humain, Fourmi-Chimère soldat). GameTest des traductions étendu à toutes les entités, objets et mobs d'exemple (corrigé : « suspect de la Brigade » sans nom).
+- [ ] À juger : modèles provisoires (singe : momie ; fourmi : araignée des cavernes ×1,5).

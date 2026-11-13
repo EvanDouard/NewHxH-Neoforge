@@ -1,0 +1,5 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#c:is_swamp",
+  "spawners": { "type": "hxh:man_faced_ape", "weight": 20, "minCount": 1, "maxCount": 2 }
+}

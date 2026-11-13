@@ -23,6 +23,13 @@ public final class ModItems {
             ITEMS.register("spider_eagle_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.SPIDER_EAGLE, 0x5A5A66, 0xC9B27A, new Item.Properties()));
 
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> MAN_FACED_APE_SPAWN_EGG =
+            ITEMS.register("man_faced_ape_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.MAN_FACED_APE, 0x6E5A3C, 0xD8B48A, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> CHIMERA_ANT_SPAWN_EGG =
+            ITEMS.register("chimera_ant_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.CHIMERA_ANT, 0x2E3A2A, 0x9E2B25, new Item.Properties()));
+
     /** Viande de renard-ours, crue et cuite : ingrédient des recettes du Hunter gourmet. */
     public static final DeferredItem<Item> RAW_FOXBEAR_MEAT = ITEMS.registerSimpleItem("raw_foxbear_meat",
             new Item.Properties().food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(4).saturationModifier(0.3f).build()));

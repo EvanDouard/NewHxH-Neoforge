@@ -1344,5 +1344,17 @@
   "dialog.hxh.majordome_zoldyck.idle": "La famille Zoldyck accepte tous les contrats. Pour un prix.",
   "dialog.hxh.hunter_gourmet.idle": "Un plat n'est rien sans de bons ingrédients. Reviens quand tu seras Hunter, je te ferai goûter.",
   "dialog.hxh.cheadle.idle": "Le règlement d'abord. Tout le reste ensuite.",
-  "dialog.hxh.lutteur.idle": "Un bras de fer ? Pose ton coude, si tu l'oses."
+  "dialog.hxh.lutteur.idle": "Un bras de fer ? Pose ton coude, si tu l'oses.",
+  "entity.hxh.man_faced_ape": "Singe à visage humain",
+  "entity.hxh.man_faced_ape.voice": "??? (une voix dans le marais)",
+  "item.hxh.man_faced_ape_spawn_egg": "Œuf d'apparition de singe à visage humain",
+  "dialog.hxh.man_faced_ape.idle": "Hu hu…",
+  "dialog.hxh.man_faced_ape.lure_0": "Par ici ! C'est moi l'examinateur, suivez-moi !",
+  "dialog.hxh.man_faced_ape.lure_1": "À l'aide ! Je suis blessé, dans le marais !",
+  "dialog.hxh.man_faced_ape.lure_2": "Ne fais pas confiance à l'autre, c'est un imposteur !",
+  "dialog.hxh.man_faced_ape.lure_3": "Hé, Hunter ! Il y a un trésor par là…",
+  "entity.hxh.chimera_ant": "Fourmi-Chimère soldat",
+  "item.hxh.chimera_ant_spawn_egg": "Œuf d'apparition de Fourmi-Chimère",
+  "mob_preset.hxh.fourmi_chimere_soldat": "Fourmi-Chimère soldat (Nen)",
+  "mob_preset.hxh.suspect_brigade": "Suspect de la Brigade (Nen)"
 }
