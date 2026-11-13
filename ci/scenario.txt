@@ -1697,4 +1697,22 @@ wait 20
 clearchat
 shot 63_great_stamp
 cmd kill @e[type=hxh:great_stamp]
+# --- Coup de pied fort : projection lointaine, la cible creuse le mur ---
+cmd kill @e[type=!minecraft:player]
+cmd gamemode survival
+camera first
+cmd tp @s ~10 ~ ~ 0 0
+wait 10
+cmd gamerule hxhNenDestruction true
+cmd fill ~-3 ~ ~8 ~3 ~4 ~8 minecraft:stone_bricks
+cmd summon minecraft:pig ~ ~ ~2
+cmd hunter stat strength set 60
+cmd hunter hatsu select basic_kick
+look 0 10
+wait 10
+key key.hxh.cast
+wait 12
+shot 64_coup_de_pied_fort_mur_creuse
+cmd kill @e[type=minecraft:pig]
+cmd gamemode creative
 quit

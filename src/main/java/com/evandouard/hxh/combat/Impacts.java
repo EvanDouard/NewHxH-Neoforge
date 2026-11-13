@@ -56,7 +56,39 @@ public final class Impacts {
     private record Frozen(LivingEntity attacker, LivingEntity target, Vec3 attackerPos, Vec3 targetPos, long until,
                           Runnable release) {}
 
-    private record Flying(LivingEntity target, long until) {}
+    /**
+     * Cible projetée qu'on surveille : si elle percute un mur, elle le défonce. {@code digs} = combien de murs elle
+     * peut encore creuser (le coup de pied fort continue sa course après le premier), {@code radius} = taille du trou.
+     */
+    private static final class Flying {
+        final LivingEntity target;
+        final long until;
+        final float radius;
+        int digs;
+        Vec3 lastVelocity = Vec3.ZERO;
+
+        Flying(LivingEntity target, long until) {
+            this(target, until, WALL_RADIUS, 1);
+        }
+
+        Flying(LivingEntity target, long until, float radius, int digs) {
+            this.target = target;
+            this.until = until;
+            this.radius = radius;
+            this.digs = digs;
+        }
+    }
+
+    /** Coup de pied fort : la cible part loin et creuse un trou autour d'elle dans les murs qu'elle percute (2 au plus). */
+    public static final float KICK_DIG_RADIUS = 1.6f;
+    public static final int KICK_DIGS = 2;
+    public static final int KICK_WATCH_TICKS = 30;
+
+    /** Surveille une cible qu'on vient de projeter : elle creusera les murs qu'elle percute. */
+    public static void watchWallHits(LivingEntity target, float radius, int digs, int ticks) {
+        FLYING.removeIf(f -> f.target == target);
+        FLYING.add(new Flying(target, target.level().getGameTime() + ticks, radius, digs));
+    }
 
     private static final List<Frozen> FROZEN = new ArrayList<>();
     private static final List<Flying> FLYING = new ArrayList<>();
@@ -205,18 +237,41 @@ public final class Impacts {
                     it.remove();
                     continue;
                 }
-                if (!t.horizontalCollision) continue;
-                it.remove();
-                Vec3 v = t.getDeltaMovement();
+                if (!t.horizontalCollision) {
+                    if (t.getDeltaMovement().horizontalDistanceSqr() > 0.01) f.lastVelocity = t.getDeltaMovement();
+                    continue;
+                }
+                Vec3 v = f.lastVelocity.horizontalDistanceSqr() > 1e-4 ? f.lastVelocity : t.getDeltaMovement();
                 Vec3 dir = v.horizontalDistanceSqr() > 1e-4 ? new Vec3(v.x, 0, v.z).normalize() : Vec3.ZERO;
-                Vec3 at = t.getBoundingBox().getCenter().add(dir.scale(0.9));
-                if (destructive(level)) crater(level, at, WALL_RADIUS, t);
-                NenFx.impactAt(level, at, 2.2f, NenFx.WHITE);
-                level.playSound(null, at.x, at.y, at.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.6f, 1.6f);
-                t.invulnerableTime = 0;
-                t.hurt(t.damageSources().flyIntoWall(), 3f);
+                wallHit(level, t, dir, f.radius);
+                f.digs--;
+                if (f.digs <= 0 || !destructive(level)) {
+                    it.remove();
+                } else if (v.horizontalDistanceSqr() > 0.04) {
+                    // le trou est fait : la cible continue sa course, un peu freinée, et peut creuser plus loin
+                    t.setDeltaMovement(v.x * 0.7, Math.max(v.y, 0.1), v.z * 0.7);
+                    t.hurtMarked = true;
+                }
             }
         }
+    }
+
+    /**
+     * La cible percute un mur : trou autour d'elle (règle hxhNenDestruction), éclats de la couleur du bloc, étoile
+     * d'impact, onde de choc, son d'explosion sourd, et dégâts de choc.
+     */
+    static void wallHit(ServerLevel level, LivingEntity t, Vec3 dir, float radius) {
+        Vec3 at = t.getBoundingBox().getCenter().add(dir.scale(0.6));
+        BlockPos wall = BlockPos.containing(t.getBoundingBox().getCenter().add(dir.scale(1.0)));
+        BlockState s = level.getBlockState(wall);
+        if (!s.isAir()) NenFx.debris(level, at, 24, s.getMapColor(level, wall).col);
+        if (destructive(level)) crater(level, at, radius, t);
+        NenFx.impactAt(level, at, 2.4f, NenFx.WHITE);
+        NenFx.shockwaveAt(level, at, radius + 1.2f, NenFx.WHITE);
+        level.playSound(null, at.x, at.y, at.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.7f, 1.5f);
+        level.playSound(null, at.x, at.y, at.z, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.5f, 0.6f);
+        t.invulnerableTime = 0;
+        t.hurt(t.damageSources().flyIntoWall(), 3f);
     }
 
     private static void hold(LivingEntity e, Vec3 pos) {

@@ -140,6 +140,19 @@ public final class Combat {
         target.hurtMarked = true;
     }
 
+    /** Poussée du coup de pied fort : très loin, à l'horizontale, un peu plus avec la Force. */
+    public static final double KICK_FAR_BASE = 2.6, KICK_FAR_PER_STRENGTH = 0.02;
+
+    static void kickFar(LivingEntity attacker, LivingEntity target) {
+        double strength = attacker.hasData(ModAttachments.HUNTER) ? HunterStats.get(attacker).level(Stat.STRENGTH) : 0;
+        double resist = target.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE);
+        double push = (KICK_FAR_BASE + strength * KICK_FAR_PER_STRENGTH) * Math.max(0.2, 1.0 - resist);
+        Vec3 dir = target.position().subtract(attacker.position()).multiply(1, 0, 1);
+        dir = dir.lengthSqr() < 1e-4 ? attacker.getLookAngle().multiply(1, 0, 1).normalize() : dir.normalize();
+        target.setDeltaMovement(dir.x * push, 0.25, dir.z * push);
+        target.hurtMarked = true;
+    }
+
     private static float baseAttack(LivingEntity entity) {
         AttributeInstance attack = entity.getAttribute(Attributes.ATTACK_DAMAGE);
         return attack != null ? (float) attack.getValue() : 1f;
@@ -169,7 +182,15 @@ public final class Combat {
         target.invulnerableTime = 0;
         target.hurt(meleeSource(attacker), baseAttack(attacker) * 0.7f + 1f);
         com.evandouard.hxh.fx.NenFx.impactOn(attacker, target, 1.2f, com.evandouard.hxh.fx.NenFx.WHITE);
-        Projection proj = projection(isStrong(attacker), Charge.NONE);
+        if (isStrong(attacker)) {
+            // Coup de pied fort : la cible part très loin et creuse les murs qu'elle percute
+            Impacts.land(attacker, target, Impacts.tierOf(attacker).down(), () -> {
+                kickFar(attacker, target);
+                Impacts.watchWallHits(target, Impacts.KICK_DIG_RADIUS, Impacts.KICK_DIGS, Impacts.KICK_WATCH_TICKS);
+            });
+            return target;
+        }
+        Projection proj = projection(false, Charge.NONE);
         Impacts.land(attacker, target, Impacts.tierOf(attacker).down(), () -> project(attacker, target, proj));
         return target;
     }

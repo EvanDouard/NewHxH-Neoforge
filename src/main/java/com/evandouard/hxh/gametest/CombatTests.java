@@ -199,4 +199,25 @@ public final class CombatTests {
         helper.assertTrue(d.aura() >= d.auraMax() && d.auraMax() > 0, "Aura pleine");
         helper.succeed();
     }
+
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void strongKickSendsFarAndDigsWalls(GameTestHelper helper) {
+        var level = helper.getLevel();
+        level.getGameRules().getRule(com.evandouard.hxh.HxHGameRules.NEN_DESTRUCTION).set(true, level.getServer());
+        // un mur de pierre 4 blocs derrière la cible
+        for (int y = 1; y <= 3; y++) for (int z = 0; z <= 2; z++) helper.setBlock(new BlockPos(6, y, z), net.minecraft.world.level.block.Blocks.STONE);
+        Zombie strong = husk(helper, 0);
+        com.evandouard.hxh.stats.HunterStats.setLevel(strong, com.evandouard.hxh.data.Stat.STRENGTH, 40);
+        Zombie v = husk(helper, 2);
+        v.setNoGravity(false);
+        helper.assertTrue(Combat.isStrong(strong), "Force 40 : « fort »");
+        Combat.kick(strong);
+        helper.assertTrue(v.getDeltaMovement().horizontalDistance() > 2.0, "Coup de pied fort : projeté très loin (" + v.getDeltaMovement() + ")");
+        helper.runAfterDelay(30, () -> {
+            int air = 0;
+            for (int y = 1; y <= 3; y++) for (int z = 0; z <= 2; z++) if (level.getBlockState(helper.absolutePos(new BlockPos(6, y, z))).isAir()) air++;
+            helper.assertTrue(air >= 3, "La cible a creusé le mur en le percutant (" + air + " blocs cassés)");
+            helper.succeed();
+        });
+    }
 }
