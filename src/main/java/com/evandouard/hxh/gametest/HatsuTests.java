@@ -319,7 +319,9 @@ public final class HatsuTests {
         d.setAura(500);
         helper.assertTrue(Techniques.PITOU_DOCTOR_BLYTHE.isCharged(), "Docteur Blythe se maintient");
         pitou.setHealth(4f);
-        Techniques.PITOU_DOCTOR_BLYTHE.perform(pitou, 1f);
+        // (patient = Pitou lui-même : en jeu c'est la cible devant lui, ici d'autres tests tournent à côté)
+        var doll = (Techniques.DollHeal) Techniques.PITOU_DOCTOR_BLYTHE;
+        com.evandouard.hxh.hatsu.LingeringNen.startHeldDoll(pitou, pitou, doll, 2f, doll.drain());
         helper.assertTrue(com.evandouard.hxh.hatsu.LingeringNen.isHoldingDoll(pitou), "La poupée opère tant qu'on tient");
         helper.runAfterDelay(40, () -> {
             helper.assertTrue(com.evandouard.hxh.hatsu.LingeringNen.isHoldingDoll(pitou), "Toujours là après 2 s (pas de durée fixe)");

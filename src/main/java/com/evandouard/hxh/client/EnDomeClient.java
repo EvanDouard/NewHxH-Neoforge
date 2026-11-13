@@ -173,7 +173,7 @@ public final class EnDomeClient {
         for (int i = 0; i < bands; i++) {
             double y0 = lo.y + h * i / bands, y1 = lo.y + h * (i + 1) / bands;
             float band = Math.max(0f, 1f - Math.abs((float) i / bands - sweep) * 8f);
-            float alpha = (0.16f + band * 0.25f) * dim;
+            float alpha = (0.24f + band * 0.3f) * dim;
             int c = lerp(color, 0xFFFFFFFF, band * 0.6f);
             quad(vc, pose, cam, new Vec3(lo.x, y0, lo.z), new Vec3(hi.x, y0, lo.z), new Vec3(hi.x, y1, lo.z), new Vec3(lo.x, y1, lo.z), c, alpha);
             quad(vc, pose, cam, new Vec3(lo.x, y0, hi.z), new Vec3(hi.x, y0, hi.z), new Vec3(hi.x, y1, hi.z), new Vec3(lo.x, y1, hi.z), c, alpha);
@@ -183,15 +183,16 @@ public final class EnDomeClient {
         quad(vc, pose, cam, new Vec3(lo.x, hi.y, lo.z), new Vec3(hi.x, hi.y, lo.z), new Vec3(hi.x, hi.y, hi.z), new Vec3(lo.x, hi.y, hi.z),
                 lerp(color, 0xFFFFFFFF, 0.15f), 0.14f * dim);
         // arêtes verticales et cadres haut / bas
-        float e = 0.08f;
+        float e = 0.12f;
         for (double[] c : new double[][]{{lo.x, lo.z}, {hi.x, lo.z}, {hi.x, hi.z}, {lo.x, hi.z}}) {
             quad(vc, pose, cam, new Vec3(c[0] - e, lo.y, c[1]), new Vec3(c[0] + e, lo.y, c[1]), new Vec3(c[0] + e, hi.y, c[1]),
-                    new Vec3(c[0] - e, hi.y, c[1]), light, 0.6f * dim);
+                    new Vec3(c[0] - e, hi.y, c[1]), 0xFF111111, 0.8f);
             quad(vc, pose, cam, new Vec3(c[0], lo.y, c[1] - e), new Vec3(c[0], lo.y, c[1] + e), new Vec3(c[0], hi.y, c[1] + e),
-                    new Vec3(c[0], hi.y, c[1] - e), light, 0.6f * dim);
+                    new Vec3(c[0], hi.y, c[1] - e), 0xFF111111, 0.8f);
         }
-        frame(vc, pose, cam, lo.x, hi.x, lo.z, hi.z, hi.y, light, 0.6f * dim);
-        frame(vc, pose, cam, lo.x, hi.x, lo.z, hi.z, base.y + 0.03, 0xFF111111, 0.85f * dim);
+        frame(vc, pose, cam, lo.x, hi.x, lo.z, hi.z, hi.y, 0xFF111111, 0.8f);
+        frame(vc, pose, cam, lo.x, hi.x, lo.z, hi.z, lo.y + 0.03, 0xFF111111, 0.85f);
+        frame(vc, pose, cam, lo.x + 0.15, hi.x - 0.15, lo.z + 0.15, hi.z - 0.15, lo.y + 0.04, color, 0.8f);
     }
 
     /** Cadre carré horizontal (bords d'un cube). */
@@ -223,7 +224,7 @@ public final class EnDomeClient {
                 Vec3 n = new Vec3(Mth.cos((a0 + a1) / 2), 0, Mth.sin((a0 + a1) / 2));
                 Vec3 mid = base.add(n.scale(r)).add(0, (ya + yb) / 2 - base.y, 0);
                 float facing = (float) Math.abs(n.dot(mid.subtract(cam).normalize()));
-                float alpha = (0.12f + 0.5f * (1f - facing) * (1f - facing) + band * 0.25f) * dim;
+                float alpha = (0.22f + 0.5f * (1f - facing) * (1f - facing) + band * 0.3f) * dim;
                 quad(vc, pose, cam, new Vec3(base.x + r * Mth.cos(a0), ya, base.z + r * Mth.sin(a0)),
                         new Vec3(base.x + r * Mth.cos(a1), ya, base.z + r * Mth.sin(a1)),
                         new Vec3(base.x + r * Mth.cos(a1), yb, base.z + r * Mth.sin(a1)),
@@ -231,9 +232,11 @@ public final class EnDomeClient {
             }
         }
         int light = lerp(color, 0xFFFFFFFF, 0.5f);
-        ring(vc, pose, cam, new Vec3(base.x, y1, base.z), r, 0.15f, light, 0.6f * dim);
-        if (d.down() > 0.05) ring(vc, pose, cam, new Vec3(base.x, y0, base.z), r, 0.15f, light, 0.6f * dim);
-        ring(vc, pose, cam, base.add(0, 0.03, 0), r, 0.18f, 0xFF111111, 0.85f * dim);
+        ring(vc, pose, cam, new Vec3(base.x, y1, base.z), r + 0.1f, 0.25f, 0xFF111111, 0.8f);
+        ring(vc, pose, cam, new Vec3(base.x, y1 - 0.01, base.z), r - 0.15f, 0.15f, light, 0.7f);
+        if (d.down() > 0.05) ring(vc, pose, cam, new Vec3(base.x, y0, base.z), r + 0.1f, 0.25f, 0xFF111111, 0.8f);
+        ring(vc, pose, cam, base.add(0, 0.03, 0), r + 0.1f, 0.25f, 0xFF111111, 0.85f);
+        ring(vc, pose, cam, base.add(0, 0.04, 0), r - 0.15f, 0.15f, color, 0.8f);
     }
 
     private static void quad(VertexConsumer vc, PoseStack pose, Vec3 cam, Vec3 a, Vec3 b, Vec3 c, Vec3 d, int color, float alpha) {

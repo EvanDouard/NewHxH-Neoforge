@@ -1760,22 +1760,29 @@ cmd kill @e[type=minecraft:pig]
 # --- Formes de l'En (maîtrise 50) ---
 cmd kill @e[type=!minecraft:player]
 cmd hunter nen mastery en 50
-cmd hunter en shape cube 8
+cmd hunter en shape cube 12
 cmd summon minecraft:zombie ~3 ~ ~5 {NoAI:1b,PersistenceRequired:1b,Tags:["hxh_en_probe"]}
+look 0 25
 key key.hxh.en
 wait 50
+clearchat
 camera back
+wait 2
 shot 70_en_en_cube
 camera first
 cmd hunter en shape cylinder 12 4
 wait 20
+clearchat
 camera back
+wait 2
 shot 71_en_en_cylindre
 camera first
 key key.hxh.en
 cmd kill @e[tag=hxh_en_probe]
 key key.hxh.profile
 wait 15
+click Personnage
+wait 5
 click Forme de l'En
 wait 10
 shot 72_ecran_forme_de_l_en
