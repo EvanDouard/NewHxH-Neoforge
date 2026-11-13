@@ -11,10 +11,12 @@ import java.util.Map;
 /**
  * Famille (fichier {@code data/<mod>/families/<id>.json}) : héritage du sang, tiré au hasard à la première connexion
  * (règle hxhRandomFamily). Tout est en données : poids du tirage, bonus d'XP par stat, immunité au poison, résistance
- * à la foudre, puissance accrue quand la vie est basse (yeux écarlates des Kurta).
+ * à la foudre, puissance accrue quand la vie est basse (yeux écarlates des Kurta), coup secret ({@code secret_move},
+ * une technique de {@link com.evandouard.hxh.hatsu.FamilyMoves}).
  */
 public record Family(String id, String nameFr, String nameEn, int color, int weight, Map<Stat, Double> xpBonus,
-                     boolean poisonImmune, float lightningResist, float lowHealthPower, String descFr, String descEn) {
+                     boolean poisonImmune, float lightningResist, float lowHealthPower, String descFr, String descEn,
+                     String secretMove) {
 
     /** Vie (fraction du maximum) sous laquelle la puissance augmente. */
     public static final float LOW_HEALTH = 0.4f;
@@ -35,7 +37,8 @@ public record Family(String id, String nameFr, String nameEn, int color, int wei
                 o.has("poison_immune") && o.get("poison_immune").getAsBoolean(),
                 o.has("lightning_resist") ? o.get("lightning_resist").getAsFloat() : 0f,
                 o.has("low_health_power") ? o.get("low_health_power").getAsFloat() : 0f,
-                desc.has("fr") ? desc.get("fr").getAsString() : "", desc.has("en") ? desc.get("en").getAsString() : "");
+                desc.has("fr") ? desc.get("fr").getAsString() : "", desc.has("en") ? desc.get("en").getAsString() : "",
+                o.has("secret_move") ? o.get("secret_move").getAsString() : "");
     }
 
     public String name(String lang) {

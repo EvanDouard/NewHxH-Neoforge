@@ -63,7 +63,7 @@
   "technique.hxh.silva_great_orb.desc": "Silva forme en une seconde une grosse boule d'aura et la propulse : elle emporte la cible et explose, sans creuser le terrain.",
   "technique.hxh.silva_great_orb": "Grande boule",
   "message.hxh.ging_copy_spent": "Copie épuisée : la technique s'efface",
-  "hud.hxh.copy_uses": "Copie \u00d7%s",
+  "hud.hxh.copy_uses": "Copie ×%s",
   "entity.hxh.nen_zombie": "Zombie de Nen",
   "technique.hxh.mob_nen_arrows": "Flèches de Nen",
   "technique.hxh.mob_nen_arrows.desc": "Trois flèches d'aura en éventail qui filent droit, sans retomber.",
@@ -1109,5 +1109,14 @@
   "message.hxh.hako_status": "Pot-Clean sur %s : dette %s / %s",
   "message.hxh.hako_bankrupt": "Banqueroute ! %s n'a plus d'aura pour se protéger.",
   "message.hxh.hako_bankrupt_you": "Banqueroute : Zetsu forcé, plus aucune protection contre le Nen.",
-  "message.hxh.bankrupt": "Banqueroute : impossible de quitter le Zetsu."
+  "message.hxh.bankrupt": "Banqueroute : impossible de quitter le Zetsu.",
+  "technique.hxh.family_zoldyck_claw": "Main-griffe",
+  "technique.hxh.family_zoldyck_claw.desc": "Coup secret des Zoldyck : la main se raidit en griffe, tu fonds sur la cible (8 blocs) et la lacères. Dégâts selon la Force et la Vitesse, saignement 3 s. Sans Nen.",
+  "technique.hxh.family_kurta_scarlet": "Colère écarlate",
+  "technique.hxh.family_kurta_scarlet.desc": "Coup secret des Kurta : tes yeux virent à l'écarlate pendant 15 s. Force II et Résistance I, Force III sous 40 % de vie. Sans Nen.",
+  "technique.hxh.family_freecss_instinct": "Instinct du chasseur",
+  "technique.hxh.family_freecss_instinct.desc": "Coup secret des Freecss : l'odorat et l'ouïe de Gon. Toutes les créatures à 32 blocs sont repérées 12 s, à travers les murs, et tu gagnes Vitesse I. Sans Nen.",
+  "technique.hxh.family_paladiknight_first_aid": "Premiers soins",
+  "technique.hxh.family_paladiknight_first_aid.desc": "Coup secret des Paladiknight : soigne l'allié devant toi (4 blocs) ou toi-même, 4 PV + un peu selon la Vitalité, et retire poison et faiblesse. Sans Nen.",
+  "profile.hxh.family_move": "  Coup secret : %s (menu des pouvoirs)"
 }

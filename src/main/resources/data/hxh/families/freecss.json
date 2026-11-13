@@ -11,7 +11,8 @@
     "vitality": 0.2
   },
   "description": {
-    "fr": "Le sang de Ging et de Gon : Force, Vitesse et Vitalité s'entraînent 20 % plus vite.",
-    "en": "The blood of Ging and Gon: Strength, Speed and Vitality train 20% faster."
-  }
+    "fr": "Le sang de Ging et de Gon : Force, Vitesse et Vitalité s'entraînent 20 % plus vite. Coup secret : Instinct du chasseur.",
+    "en": "The blood of Ging and Gon: Strength, Speed and Vitality train 20% faster. Secret move: Hunter's Instinct."
+  },
+  "secret_move": "family_freecss_instinct"
 }

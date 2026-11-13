@@ -83,6 +83,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     // Hatsu : personnage choisi (définitif), technique sélectionnée, recharges (tick de jeu où elle redevient prête)
     private String kit = "";
     private int selected = 0;
+    /** Coup secret de la famille (technique sans Nen ajoutée au menu), vide sans famille. */
+    private String familyMove = "";
     private final Map<String, Long> readyAt = new HashMap<>();
 
     private final Set<String> dirty = new HashSet<>();
@@ -504,6 +506,17 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         return kit;
     }
 
+    public String familyMove() {
+        return familyMove;
+    }
+
+    public void setFamilyMove(String id) {
+        String v = id == null ? "" : id;
+        if (v.equals(familyMove)) return;
+        familyMove = v;
+        dirty.add(HATSU);
+    }
+
     public boolean hasKit() {
         return !kit.isEmpty();
     }
@@ -605,6 +618,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             CompoundTag h = new CompoundTag();
             h.putString("kit", kit);
             h.putInt("selected", selected);
+            h.putString("familyMove", familyMove);
             CompoundTag cd = new CompoundTag();
             readyAt.forEach(cd::putLong);
             h.put("readyAt", cd);
@@ -735,6 +749,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             CompoundTag h = in.getCompound(HATSU);
             kit = h.getString("kit");
             selected = Math.max(0, h.getInt("selected"));
+            familyMove = h.getString("familyMove");
             readyAt.clear();
             CompoundTag cd = h.getCompound("readyAt");
             for (String id : cd.getAllKeys()) readyAt.put(id, cd.getLong(id));

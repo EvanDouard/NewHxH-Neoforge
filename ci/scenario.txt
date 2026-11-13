@@ -1542,4 +1542,34 @@ shot 54b_netero_la_paume_s_abat
 cmd hunter quest reset
 cmd gamemode creative
 camera first
+# --- Coups secrets de famille ---
+cmd kill @e[type=!minecraft:player]
+cmd gamemode survival
+cmd hunter family set zoldyck
+camera first
+cmd tp @s ~ ~ ~ 0 0
+look 0 10
+cmd hunter spawn mannequin ~ ~ ~6
+wait 20
+cmd hunter hatsu select family_zoldyck_claw
+clearchat
+wait 5
+key key.hxh.cast
+wait 3
+shot 55a_famille_zoldyck_main_griffe
+wait 20
+cmd kill @e[type=!minecraft:player]
+cmd hunter family set freecss
+cmd summon minecraft:pig ~8 ~ ~3 {NoAI:1b}
+cmd summon minecraft:cow ~-7 ~ ~5 {NoAI:1b}
+cmd summon minecraft:sheep ~2 ~ ~-9 {NoAI:1b}
+cmd hunter hatsu select family_freecss_instinct
+wait 10
+clearchat
+key key.hxh.cast
+wait 8
+shot 55b_famille_freecss_instinct_du_chasseur
+cmd kill @e[type=!minecraft:player]
+cmd hunter family set none
+cmd gamemode creative
 quit

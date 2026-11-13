@@ -105,6 +105,16 @@ public abstract class Technique {
         return false;
     }
 
+    /** Coup secret de famille : sans Nen, comme un coup de base, mais propre au sang (ni copié, ni volé). */
+    public boolean isFamily() {
+        return false;
+    }
+
+    /** Technique qui part sans Nen : coups de base et coups secrets de famille. */
+    public boolean needsNoNen() {
+        return isBase() || isFamily();
+    }
+
     /** Recharge réelle pour cette entité (les coups de base raccourcissent avec l'Endurance). */
     public int cooldownFor(com.evandouard.hxh.data.HunterData data) {
         return cooldownTicks;

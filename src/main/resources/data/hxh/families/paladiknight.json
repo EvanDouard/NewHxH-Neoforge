@@ -10,7 +10,8 @@
     "vitality": 0.15
   },
   "description": {
-    "fr": "Famille de Leorio, tournée vers la médecine : Endurance et Vitalité s'entraînent plus vite.",
-    "en": "Leorio's family, devoted to medicine: Endurance and Vitality train faster."
-  }
+    "fr": "Famille de Leorio, tournée vers la médecine : Endurance et Vitalité s'entraînent plus vite. Coup secret : Premiers soins.",
+    "en": "Leorio's family, devoted to medicine: Endurance and Vitality train faster. Secret move: First Aid."
+  },
+  "secret_move": "family_paladiknight_first_aid"
 }

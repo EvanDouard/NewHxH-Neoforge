@@ -10,7 +10,8 @@
     "willpower": 0.2
   },
   "description": {
-    "fr": "Clan aux yeux écarlates : sous 40 % de vie, les techniques gagnent 30 % de puissance ; la Volonté s'entraîne plus vite.",
-    "en": "Clan of the scarlet eyes: under 40% health, techniques gain 30% power; Willpower trains faster."
-  }
+    "fr": "Clan aux yeux écarlates : sous 40 % de vie, les techniques gagnent 30 % de puissance ; la Volonté s'entraîne plus vite. Coup secret : Colère écarlate.",
+    "en": "Clan of the scarlet eyes: under 40% health, techniques gain 30% power; Willpower trains faster. Secret move: Scarlet Wrath."
+  },
+  "secret_move": "family_kurta_scarlet"
 }

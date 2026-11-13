@@ -12,7 +12,8 @@
     "endurance": 0.15
   },
   "description": {
-    "fr": "Famille d'assassins de la montagne Kukuro : immunisé au poison, la foudre ne fait que la moitié des dégâts, Vitesse et Endurance s'entraînent plus vite.",
-    "en": "Family of assassins from Kukuroo Mountain: immune to poison, lightning deals half damage, faster Speed and Endurance training."
-  }
+    "fr": "Famille d'assassins de la montagne Kukuro : immunisé au poison, la foudre ne fait que la moitié des dégâts, Vitesse et Endurance s'entraînent plus vite. Coup secret : Main-griffe.",
+    "en": "Family of assassins from Kukuroo Mountain: immune to poison, lightning deals half damage, faster Speed and Endurance training. Secret move: Claw Hand."
+  },
+  "secret_move": "family_zoldyck_claw"
 }

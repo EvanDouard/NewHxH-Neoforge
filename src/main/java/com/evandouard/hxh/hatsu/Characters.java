@@ -137,7 +137,7 @@ public final class Characters {
 
     /** Un lanceur vient d'utiliser une technique : les Ging à 16 blocs la retiennent. */
     public static void observe(LivingEntity caster, Technique technique) {
-        if (technique.isBase() || technique.isCharged() || technique.id().startsWith("ging_")) return;
+        if (technique.needsNoNen() || technique.isCharged() || technique.id().startsWith("ging_")) return;
         for (LivingEntity e : Targeting.around(caster, 16))
             if ("ging".equals(data(e).kit())) e.getPersistentData().putString(GING_SEEN, technique.id());
     }

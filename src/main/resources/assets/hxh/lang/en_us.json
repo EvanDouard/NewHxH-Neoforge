@@ -63,7 +63,7 @@
   "technique.hxh.silva_great_orb.desc": "Silva forms a large aura orb in one second and launches it: it carries the target and explodes without digging.",
   "technique.hxh.silva_great_orb": "Great Orb",
   "message.hxh.ging_copy_spent": "Copy spent: the technique fades",
-  "hud.hxh.copy_uses": "Copy \u00d7%s",
+  "hud.hxh.copy_uses": "Copy ×%s",
   "entity.hxh.nen_zombie": "Nen Zombie",
   "technique.hxh.mob_nen_arrows": "Nen Arrows",
   "technique.hxh.mob_nen_arrows.desc": "Three aura arrows in a fan that fly straight without dropping.",
@@ -1109,5 +1109,14 @@
   "message.hxh.hako_status": "Pot-Clean on %s: debt %s / %s",
   "message.hxh.hako_bankrupt": "Bankruptcy! %s has no aura left to protect itself.",
   "message.hxh.hako_bankrupt_you": "Bankruptcy: forced Zetsu, no more protection against Nen.",
-  "message.hxh.bankrupt": "Bankruptcy: you can't leave Zetsu."
+  "message.hxh.bankrupt": "Bankruptcy: you can't leave Zetsu.",
+  "technique.hxh.family_zoldyck_claw": "Claw Hand",
+  "technique.hxh.family_zoldyck_claw.desc": "Zoldyck secret move: your hand hardens into a claw, you lunge at the target (8 blocks) and tear into it. Damage scales with Strength and Speed, 3 s bleeding. No Nen.",
+  "technique.hxh.family_kurta_scarlet": "Scarlet Wrath",
+  "technique.hxh.family_kurta_scarlet.desc": "Kurta secret move: your eyes turn scarlet for 15 s. Strength II and Resistance I, Strength III under 40% health. No Nen.",
+  "technique.hxh.family_freecss_instinct": "Hunter's Instinct",
+  "technique.hxh.family_freecss_instinct.desc": "Freecss secret move: Gon's sense of smell and hearing. Every creature within 32 blocks is spotted for 12 s, through walls, and you gain Speed I. No Nen.",
+  "technique.hxh.family_paladiknight_first_aid": "First Aid",
+  "technique.hxh.family_paladiknight_first_aid.desc": "Paladiknight secret move: heals the ally in front of you (4 blocks) or yourself, 4 HP plus a bit with Vitality, and removes poison and weakness. No Nen.",
+  "profile.hxh.family_move": "  Secret move: %s (powers menu)"
 }

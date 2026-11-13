@@ -191,7 +191,7 @@ public final class Specials {
             LivingEntity t = Targeting.inFront(caster, 10, 0.92);
             String id = t == null ? "" : t.getPersistentData().getString(LAST_TECHNIQUE);
             Technique take = Techniques.get(id);
-            if (take == null || !take.implemented() || take.isCharged() || take.isBase() || id.startsWith("chrollo_")) {
+            if (take == null || !take.implemented() || take.isCharged() || take.needsNoNen() || id.startsWith("chrollo_")) {
                 if (caster instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.chrollo_nothing"), true);
                 return false;
             }

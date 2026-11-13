@@ -37,6 +37,8 @@ public final class Hatsu {
         // Ging : la technique copiée prend place dans la liste tant qu'il reste des utilisations
         Technique copied = Characters.gingCopied(data);
         if (copied != null && !ids.contains(copied.id())) ids.add(copied.id());
+        // Coup secret de la famille, juste avant les coups de base
+        if (!data.familyMove().isEmpty() && Techniques.get(data.familyMove()) != null) ids.add(data.familyMove());
         ids.addAll(Techniques.BASE);
         return ids;
     }
@@ -122,6 +124,7 @@ public final class Hatsu {
      * n'en a qu'une « fausse » version, affaiblie : le vrai personnage, joueur ou entité du mod, reste meilleur.
      */
     public static float powerFor(LivingEntity entity, HunterData data, Technique technique) {
+        if (technique.isFamily()) return 1f; // le coup de famille se règle sur les stats, pas sur l'affinité
         float p = power(data, technique);
         if (isCopy(entity, data)) p *= MOB_COPY_POWER;
         p *= com.evandouard.hxh.family.Families.powerMultiplier(entity); // yeux écarlates des Kurta
@@ -155,7 +158,7 @@ public final class Hatsu {
      */
     @Nullable
     public static String castRefusal(HunterData data, Technique technique, long gameTime) {
-        if (technique.isBase()) return gameTime < data.readyAt(technique.id()) ? "message.hxh.hatsu_cooldown" : null;
+        if (technique.needsNoNen()) return gameTime < data.readyAt(technique.id()) ? "message.hxh.hatsu_cooldown" : null;
         if (!data.nenUnlocked()) return "message.hxh.nen_locked";
         // la recharge court toujours, Zetsu compris : on l'affiche en premier
         if (gameTime < data.readyAt(technique.id())) return "message.hxh.hatsu_cooldown";
@@ -174,7 +177,7 @@ public final class Hatsu {
         long now = entity.level().getGameTime();
         if (NenCharge.isCharging(entity) || ThunderHold.isHolding(entity) || HeldStrike.isHolding(entity)
                 || com.evandouard.hxh.combat.Combat.isCharging(entity)) return null; // déjà en charge
-        if (!technique.isBase() && com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU) != null) {
+        if (!technique.needsNoNen() && com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU) != null) {
             return com.evandouard.hxh.nen.NenLearning.refusal(entity, com.evandouard.hxh.nen.NenLearning.Ability.HATSU);
         }
         // Tour Céleste : pas de technique hors du ring (halls, guichets, chambres)

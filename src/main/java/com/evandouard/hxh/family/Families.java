@@ -41,7 +41,10 @@ public final class Families extends SimpleJsonResourceReloadListener {
 
     public static void registerEvents(IEventBus bus) {
         bus.addListener(PlayerEvent.PlayerLoggedInEvent.class, e -> {
-            if (e.getEntity() instanceof ServerPlayer sp) assignIfNeeded(sp);
+            if (e.getEntity() instanceof ServerPlayer sp) {
+                assignIfNeeded(sp);
+                syncSecretMove(sp);
+            }
         });
         bus.addListener(MobEffectEvent.Applicable.class, Families::onEffect);
         bus.addListener(LivingIncomingDamageEvent.class, Families::onDamage);
@@ -103,12 +106,19 @@ public final class Families extends SimpleJsonResourceReloadListener {
 
     public static void set(ServerPlayer player, String id) {
         QuestManager.data(player).setFamily(id);
+        syncSecretMove(player);
         Family f = get(id);
         if (f == null) return;
         String lang = player.clientInformation().language();
         player.sendSystemMessage(Component.translatable("family.hxh.born",
                 Component.literal(f.name(lang)).withStyle(s -> s.withColor(f.color()).withBold(true)),
                 f.description(lang)).withStyle(ChatFormatting.GRAY));
+    }
+
+    /** Le coup secret suit la famille (connexion, changement de famille, remise à zéro). */
+    public static void syncSecretMove(ServerPlayer player) {
+        Family f = get(QuestManager.data(player).family());
+        com.evandouard.hxh.hatsu.FamilyMoves.grant(player, f == null ? "" : f.secretMove());
     }
 
     // ---------- Effets ----------

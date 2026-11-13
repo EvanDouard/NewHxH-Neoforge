@@ -716,4 +716,9 @@ public final class Techniques {
             return true;
         }
     }
+
+    // Coups secrets de famille (enregistrés après tout le reste)
+    static {
+        FamilyMoves.init();
+    }
 }

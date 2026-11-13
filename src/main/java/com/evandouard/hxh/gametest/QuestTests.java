@@ -711,4 +711,49 @@ public final class QuestTests {
         helper.assertTrue(none > 600 && none < 800, "Environ 70 % sans famille au tirage (" + none + "/1000)");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void familySecretMovesWork(GameTestHelper helper) {
+        // Chaque famille donne son coup secret, placé juste avant les coups de base, lançable sans Nen
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+        var d = com.evandouard.hxh.stats.HunterStats.get(p);
+        com.evandouard.hxh.family.Families.set(p, "zoldyck");
+        helper.assertTrue(d.familyMove().equals("family_zoldyck_claw"), "Zoldyck : Main-griffe donnée (" + d.familyMove() + ")");
+        var ids = com.evandouard.hxh.hatsu.Hatsu.techniqueIds(d);
+        helper.assertTrue(ids.indexOf("family_zoldyck_claw") == ids.indexOf("basic_attack") - 1, "Coup secret juste avant les coups de base");
+        helper.assertTrue(!d.nenUnlocked(), "Pas de Nen pour ce test");
+        // Main-griffe : une cible devant, 8 blocs
+        net.minecraft.world.entity.monster.Zombie z = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.HUSK, new net.minecraft.core.BlockPos(5, 1, 1));
+        p.moveTo(helper.absoluteVec(new net.minecraft.world.phys.Vec3(1.5, 1, 1.5)));
+        p.lookAt(net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES, z.getEyePosition());
+        com.evandouard.hxh.hatsu.Hatsu.select(p, "family_zoldyck_claw");
+        float before = z.getHealth();
+        helper.assertTrue(com.evandouard.hxh.hatsu.Hatsu.cast(p) == null, "Main-griffe lancée sans Nen");
+        helper.assertTrue(z.getHealth() < before - 5, "Main-griffe : gros dégâts (" + before + " -> " + z.getHealth() + ")");
+        helper.assertTrue("message.hxh.hatsu_cooldown".equals(com.evandouard.hxh.hatsu.Hatsu.cast(p)), "Recharge après le coup");
+        // Ni copiable (Ging) ni volable (Chrollo)
+        helper.assertTrue(com.evandouard.hxh.hatsu.Techniques.get("family_zoldyck_claw").needsNoNen(), "Sans Nen");
+        // Kurta : Colère écarlate
+        com.evandouard.hxh.family.Families.set(p, "kurta");
+        helper.assertTrue(d.familyMove().equals("family_kurta_scarlet"), "Kurta : Colère écarlate");
+        helper.assertTrue(!com.evandouard.hxh.hatsu.Hatsu.techniqueIds(d).contains("family_zoldyck_claw"), "L'ancien coup disparaît");
+        com.evandouard.hxh.hatsu.Hatsu.select(p, "family_kurta_scarlet");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Hatsu.cast(p) == null, "Colère écarlate lancée");
+        helper.assertTrue(p.hasEffect(net.minecraft.world.effect.MobEffects.DAMAGE_BOOST), "Colère écarlate : Force");
+        // Paladiknight : Premiers soins sur soi
+        com.evandouard.hxh.family.Families.set(p, "paladiknight");
+        p.setHealth(6f);
+        p.setXRot(-90f); // personne devant : on se soigne soi-même
+        com.evandouard.hxh.hatsu.Hatsu.select(p, "family_paladiknight_first_aid");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Hatsu.cast(p) == null, "Premiers soins lancés");
+        helper.assertTrue(p.getHealth() >= 9.9f, "Premiers soins : +4 PV au moins (" + p.getHealth() + ")");
+        // Freecss : Instinct du chasseur repère le husk
+        com.evandouard.hxh.family.Families.set(p, "freecss");
+        com.evandouard.hxh.hatsu.Hatsu.select(p, "family_freecss_instinct");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Hatsu.cast(p) == null, "Instinct : une créature autour, réussi");
+        // Sans famille : plus de coup secret
+        com.evandouard.hxh.family.Families.set(p, "");
+        helper.assertTrue(d.familyMove().isEmpty(), "Sans famille : pas de coup secret");
+        helper.succeed();
+    }
 }
