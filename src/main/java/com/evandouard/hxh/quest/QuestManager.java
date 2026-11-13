@@ -846,6 +846,16 @@ public final class QuestManager {
         List<Quest.Step> qs = q == null ? List.of() : steps(d, q);
         Quest.Step step = st == null || st[0] >= qs.size() ? null : qs.get(st[0]);
         if (q == null || step == null) {
+            // Pas de quête suivie, mais un contrat en cours : bulle du contrat, avec la boussole vers la cible
+            String target = com.evandouard.hxh.contract.Contracts.activeName(player);
+            BlockPos at = com.evandouard.hxh.contract.Contracts.targetPos(player);
+            if (target != null && at != null) {
+                boolean bl = com.evandouard.hxh.contract.Contracts.activeIsBlacklist(player);
+                com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(
+                        Component.translatable(bl ? "hud.hxh.contract_bubble.blacklist" : "hud.hxh.contract_bubble.zoldyck"),
+                        Component.translatable("hud.hxh.contract_bubble.step", target), 0, 0, at.asLong()));
+                return;
+            }
             com.evandouard.hxh.network.HxHNetwork.sendTo(player, QuestStatusPayload.NONE);
             return;
         }

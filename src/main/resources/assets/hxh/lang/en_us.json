@@ -1304,5 +1304,8 @@
   "message.hxh.en_shape_too_big": "Impossible: a dimension would exceed 64 blocks",
   "message.hxh.en_shape_too_flat": "Impossible: the shape would be too flat (under 1 block)",
   "message.hxh.en_shape_negative": "The height can't be negative",
-  "message.hxh.en_shape_up_too_high": "Impossible: too high above, nothing would be left below"
+  "message.hxh.en_shape_up_too_high": "Impossible: too high above, nothing would be left below",
+  "hud.hxh.contract_bubble.zoldyck": "Zoldyck contract",
+  "hud.hxh.contract_bubble.blacklist": "Blacklist hunt",
+  "hud.hxh.contract_bubble.step": "Take down %s"
 }

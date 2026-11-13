@@ -129,6 +129,18 @@ public final class Contracts extends SimpleJsonResourceReloadListener {
         return p.getPersistentData().getCompound(TAG);
     }
 
+    /** Nom de la cible du contrat en cours, ou null. */
+    @Nullable
+    public static String activeName(ServerPlayer p) {
+        return hasContract(p) ? state(p).getString("name") : null;
+    }
+
+    /** Le contrat en cours vient de la Blacklist ? */
+    public static boolean activeIsBlacklist(ServerPlayer p) {
+        Contract c = hasContract(p) ? get(state(p).getString("id")) : null;
+        return c != null && c.blacklist();
+    }
+
     /** Où attend la cible du contrat en cours (pour la boussole de quête), ou null. */
     @Nullable
     public static BlockPos targetPos(ServerPlayer p) {

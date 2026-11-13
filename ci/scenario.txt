@@ -1801,5 +1801,146 @@ cmd tp @s 40 ~ 30 -45 0
 wait 20
 shot 69_boussole_de_quete_dos_tourne
 cmd hunter quest reset
+# ===== Tests en jeu faits par Claude (lot T1) =====
+cmd kill @e[type=!minecraft:player]
+cmd gamemode survival
+cmd tp @s ~200 -60 ~ 0 10
+wait 20
+cmd hunter quest reset
+cmd hunter jenny set 20000
+cmd hunter license give
+# --- Contrat Zoldyck : bulle du contrat + boussole, puis contrat rempli ---
+cmd summon hxh:npc ~2 ~ ~ {npc:"majordome_zoldyck",NoAI:1b}
+wait 10
+clearchat
+talkto majordome_zoldyck
+wait 20
+expect Contrat :
+shot 73_contrat_zoldyck_bulle_et_boussole
+cmd kill @e[type=hxh:npc]
+cmd execute at @e[tag=hxh_contract,limit=1] run tp @s ~4 ~ ~ 90 10
+wait 30
+shot 74_contrat_zoldyck_cible_proche
+clearchat
+cmd damage @e[tag=hxh_contract,limit=1] 1000 minecraft:player_attack by @s
+wait 10
+expect Contrat rempli
+# --- Attaques de zone : poing avec Force, Vitesse, Endurance au maximum ---
+cmd kill @e[type=!minecraft:player]
+cmd tp @s ~30 -60 ~ 0 10
+wait 10
+cmd hunter stat strength set 100
+cmd hunter stat speed set 100
+cmd hunter stat endurance set 100
+cmd summon minecraft:pig ~ ~ ~2 {NoAI:1b}
+cmd summon minecraft:pig ~1.2 ~ ~3 {NoAI:1b}
+cmd summon minecraft:pig ~-1.2 ~ ~3 {NoAI:1b}
+wait 10
+cmd hunter hatsu select basic_attack
+look 0 20
+key key.hxh.cast
+wait 3
+shot 75_attaque_de_zone_poing
+wait 20
+cmd kill @e[type=minecraft:pig]
+cmd hunter stat speed set 30
+cmd hunter stat endurance set 30
+# --- Gyo 40 : PV et armure au-dessus des mobs ---
+cmd hunter nen mastery gyo 40
+cmd summon minecraft:husk ~ ~ ~4 {NoAI:1b,PersistenceRequired:1b,ArmorItems:[{},{},{id:"minecraft:iron_chestplate",count:1},{}]}
+key key.hxh.gyo
+wait 20
+look 0 5
+shot 76_gyo_40_pv_et_armure
+key key.hxh.gyo
+cmd hunter nen mastery gyo 0
+cmd kill @e[type=minecraft:husk]
+# --- Docteur Blythe maintenu (kit de Pitou) ---
+cmd hunter hatsu set neferpitou
+cmd hunter hatsu select pitou_doctor_blythe
+cmd damage @s 8
+wait 5
+hold key.hxh.cast
+wait 40
+camera back
+wait 2
+shot 77_docteur_blythe_maintenu
+camera first
+release key.hxh.cast
+wait 10
+# --- Serment en pause ---
+clearchat
+cmd hunter vow take fair_fight
+wait 5
+expect Serment prêté
+clearchat
+cmd hunter vow toggle
+wait 5
+expect Serment en pause
+key key.hxh.profile
+wait 10
+click Personnage
+wait 5
+click Hatsu
+wait 10
+click Serments
+wait 10
+shot 78_ecran_serments_en_pause
+closescreen
+cmd hunter vow clear
+# --- Sanctuaire de niveau 5 ---
+cmd tp @s ~40 -60 ~ 0 0
+wait 20
+cmd hunter shrine build 5
+wait 20
+cmd tp @s ~ ~ ~4 0 20
+wait 10
+key key.hxh.profile
+wait 10
+click Personnage
+wait 5
+click Méditer
+wait 45
+camera back
+wait 2
+shot 79_meditation_sanctuaire_niveau_5
+camera first
+key key.hxh.profile
+wait 10
+click Méditer
+closescreen
+# --- PNJ : exorciste, archéologue, Hunter gourmet, commissaire-priseur ---
+cmd tp @s ~30 -60 ~ -90 10
+wait 10
+cmd summon hxh:npc ~2 ~ ~ {npc:"exorciste",NoAI:1b}
+wait 5
+clearchat
+talkto exorciste
+wait 10
+expect Aucune aura
+cmd kill @e[type=hxh:npc]
+cmd summon hxh:npc ~2 ~ ~ {npc:"archeologue",NoAI:1b}
+wait 5
+clearchat
+talkto archeologue
+wait 10
+expect sanctuaires
+shot 80_archeologue
+cmd kill @e[type=hxh:npc]
+cmd summon hxh:npc ~2 ~ ~ {npc:"hunter_gourmet",NoAI:1b}
+wait 5
+talkto hunter_gourmet
+wait 10
+shot 81_boutique_hunter_gourmet
+closescreen
+cmd kill @e[type=hxh:npc]
+cmd summon hxh:npc ~2 ~ ~ {npc:"commissaire_priseur",NoAI:1b}
+wait 5
+talkto commissaire_priseur
+wait 10
+shot 82_encheres_york_shin
+closescreen
+cmd kill @e[type=hxh:npc]
+cmd hunter hatsu set none
 cmd gamemode creative
 quit

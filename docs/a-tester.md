@@ -161,3 +161,9 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 - [x] CI : GameTest `enShapesKeepTheSameVolume` (volume gardé, formes impossibles refusées, détection, déblocage à 50) + captures 70 (cube), 71 (cylindre), 72 (écran).
 - [ ] En jeu : carnet (O) → onglet Personnage → « Forme de l'En » ; essayer les 4 formes, vérifier que les mobs surlignés correspondent à la forme.
 - [ ] À juger : les parois sont discrètes avec une aura claire (arêtes et cercles encrés bien visibles) — plus marquées ?
+
+## Tests en jeu faits par Claude en CI (lot T1, 13 nov)
+Scénario « Tests en jeu faits par Claude » dans `ci/scenario.txt`, captures 73 à 82 :
+contrat Zoldyck (bulle + boussole, cible rejointe, contrat rempli), attaque de zone au poing, Gyo 40 (PV et armure),
+Docteur Blythe maintenu, serment en pause (écran), méditation au sanctuaire de niveau 5, PNJ exorciste,
+archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).

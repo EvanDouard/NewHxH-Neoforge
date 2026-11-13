@@ -1304,5 +1304,8 @@
   "message.hxh.en_shape_too_big": "Impossible : une dimension dépasserait 64 blocs",
   "message.hxh.en_shape_too_flat": "Impossible : la forme serait trop plate (moins d'1 bloc)",
   "message.hxh.en_shape_negative": "La hauteur ne peut pas être négative",
-  "message.hxh.en_shape_up_too_high": "Impossible : trop haut au-dessus, il ne reste rien en dessous"
+  "message.hxh.en_shape_up_too_high": "Impossible : trop haut au-dessus, il ne reste rien en dessous",
+  "hud.hxh.contract_bubble.zoldyck": "Contrat Zoldyck",
+  "hud.hxh.contract_bubble.blacklist": "Traque de la Blacklist",
+  "hud.hxh.contract_bubble.step": "Éliminer %s"
 }
