@@ -120,7 +120,7 @@ public final class WildlifeTests {
     public static void numeleApeAndChimeraAntsHunt(GameTestHelper helper) {
         var ape = helper.spawn(com.evandouard.hxh.registry.ModEntities.MAN_FACED_APE.get(), new BlockPos(1, 2, 1));
         helper.assertTrue(ape.getMaxHealth() == 24f, "Singe : 24 PV");
-        String line = ((net.minecraft.network.chat.TranslatableContents) com.evandouard.hxh.beast.ManFacedApeEntity
+        String line = ((net.minecraft.network.chat.contents.TranslatableContents) com.evandouard.hxh.beast.ManFacedApeEntity
                 .lureLine(helper.getLevel().getRandom()).getContents()).getKey();
         helper.assertTrue(line.startsWith("dialog.hxh.man_faced_ape.lure_"), "Réplique trompeuse : " + line);
         ape.discard();
