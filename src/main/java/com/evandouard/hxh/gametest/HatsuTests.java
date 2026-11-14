@@ -243,6 +243,12 @@ public final class HatsuTests {
         helper.assertTrue(d.clanBonus(com.evandouard.hxh.data.Stat.WILLPOWER) == 10
                         && d.level(com.evandouard.hxh.data.Stat.WILLPOWER) == Math.min(100, will0 + 10),
                 "Clan 100 : Volonté +10 (" + will0 + " → " + d.level(com.evandouard.hxh.data.Stat.WILLPOWER) + ")");
+        // le carnet (onglet Personnage) montre la famille, le niveau de clan et l'héritage
+        String sheet = com.evandouard.hxh.stats.ProfileText.statsAndNen(player).stream()
+                .map(c -> c.getContents() instanceof net.minecraft.network.chat.contents.TranslatableContents t ? t.getKey() : "")
+                .reduce("", (a, b) -> a + " " + b);
+        helper.assertTrue(sheet.contains("profile.hxh.family") && sheet.contains("profile.hxh.clan_level_max")
+                && sheet.contains("profile.hxh.family_heritage"), "Carnet : famille, clan et héritage dans Personnage (" + sheet + ")");
         // l'entraînement nourrit le clan ; sans famille, rien
         com.evandouard.hxh.family.Families.setClanLevel(player, 0);
         HunterStats.addXp(player, com.evandouard.hxh.data.Stat.STRENGTH, 500);
