@@ -42,7 +42,10 @@ public class ExamCandidate extends PathfinderMob implements Enemy {
         goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 12f));
         goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        // Zevil : les candidats se chassent aussi entre eux (pas tous contre le joueur)
+        targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, ExamCandidate.class, 10, true, false,
+                other -> ZevilHunt.rivals(this, other) && other.distanceToSqr(this) < 20 * 20));
+        targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
     /** Numéro de skin (parmi les skins par défaut de Minecraft), fixe pour une entité. */

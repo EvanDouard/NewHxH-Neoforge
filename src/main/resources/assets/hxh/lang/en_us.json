@@ -1415,5 +1415,9 @@
   "command.hxh.hatsu.not_given": "%s: wasn't given to %s",
   "screen.hxh.hatsu.filter_type_on": "Click: show only this type",
   "screen.hxh.hatsu.filter_type_off": "Click: remove the filter",
-  "message.hxh.exam_trip_soon": "Leaving in %s s…"
+  "message.hxh.exam_trip_soon": "Leaving in %s s…",
+  "exam.hxh.zevil.qualified": "%s has their plates and leaves the island (%s/%s qualified)",
+  "exam.hxh.zevil.landed": "A new candidate lands on the island.",
+  "exam.hxh.zevil.status": "Qualified: %s/%s · candidates on the island: %s",
+  "exam.hxh.zevil.over": "%s candidates qualified: the hunt is over, and you don't have your points."
 }

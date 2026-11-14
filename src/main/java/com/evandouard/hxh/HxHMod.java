@@ -47,6 +47,7 @@ public final class HxHMod {
         com.evandouard.hxh.combat.AreaScaling.register(NeoForge.EVENT_BUS);
         com.evandouard.hxh.hatsu.Vows.registerEvents(NeoForge.EVENT_BUS);
         com.evandouard.hxh.nen.Exorcism.registerEvents(NeoForge.EVENT_BUS);
+        com.evandouard.hxh.exam.ZevilHunt.registerEvents(NeoForge.EVENT_BUS);
         com.evandouard.hxh.contract.Contracts.registerEvents(NeoForge.EVENT_BUS);
         NeoForge.EVENT_BUS.addListener(net.neoforged.neoforge.event.tick.ServerTickEvent.Post.class,
                 e -> com.evandouard.hxh.minigame.ArmWrestle.tick(e.getServer()));

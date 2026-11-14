@@ -1188,8 +1188,14 @@ cmd hunter exam board
 wait 80
 look 180 10
 shot 34f_ile_de_zevil
+cmd effect give @s minecraft:resistance 60 4 true
+cmd effect give @s minecraft:invisibility 30 0 true
+wait 200
+look 180 20
+shot 34f2_zevil_candidats_qui_se_battent
+cmd effect clear @s minecraft:invisibility
 cmd give @s hxh:target_plate
-wait 80
+wait 150
 expect Ton dirigeable t'attend
 wait 10
 cmd hunter exam go

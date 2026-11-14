@@ -1415,5 +1415,9 @@
   "command.hxh.hatsu.not_given": "%s : ne lui avait pas été donnée (%s)",
   "screen.hxh.hatsu.filter_type_on": "Clic : n'afficher que ce type",
   "screen.hxh.hatsu.filter_type_off": "Clic : enlever le filtre",
-  "message.hxh.exam_trip_soon": "Départ dans %s s…"
+  "message.hxh.exam_trip_soon": "Départ dans %s s…",
+  "exam.hxh.zevil.qualified": "%s a ses plaques et quitte l'île (%s/%s qualifiés)",
+  "exam.hxh.zevil.landed": "Un nouveau candidat débarque sur l'île.",
+  "exam.hxh.zevil.status": "Qualifiés : %s/%s · candidats sur l'île : %s",
+  "exam.hxh.zevil.over": "%s candidats sont qualifiés : la chasse est terminée, et tu n'as pas tes points."
 }

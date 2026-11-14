@@ -328,6 +328,28 @@ public final class QuestTests {
     }
 
     @GameTest(template = "empty")
+    public static void zevilCandidatesHuntEachOtherForPlates(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var a = com.evandouard.hxh.exam.ExamHazards.candidateForTests(level, helper.absolutePos(new BlockPos(1, 1, 1)), false);
+        var b = com.evandouard.hxh.exam.ExamHazards.candidateForTests(level, helper.absolutePos(new BlockPos(3, 1, 1)), false);
+        helper.assertTrue(com.evandouard.hxh.exam.ZevilHunt.rivals(a, b), "Deux candidats de Zevil sont rivaux");
+        helper.assertFalse(com.evandouard.hxh.exam.ZevilHunt.rivals(a, a), "Pas contre soi-même");
+        helper.assertTrue(com.evandouard.hxh.exam.ZevilHunt.plates(a) == 1, "Un candidat commence avec sa plaque");
+        b.getPersistentData().putInt(com.evandouard.hxh.exam.ZevilHunt.PLATES, 2);
+        b.hurt(level.damageSources().mobAttack(a), 1000f);
+        helper.assertTrue(com.evandouard.hxh.exam.ZevilHunt.plates(a) == 4,
+                "Le vainqueur prend toutes les plaques du vaincu (sa plaque + 2) : " + com.evandouard.hxh.exam.ZevilHunt.plates(a));
+        helper.assertTrue(com.evandouard.hxh.exam.ZevilHunt.plates(a) >= com.evandouard.hxh.exam.ZevilHunt.NPC_GOAL, "Assez pour se qualifier");
+        // vaincu par le joueur : ses plaques ramassées tombent au sol
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        a.hurt(level.damageSources().playerAttack(player), 1000f);
+        int onGround = level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, a.getBoundingBox().inflate(4),
+                e -> e.getItem().is(ModItems.EXAM_PLATE.get())).stream().mapToInt(e -> e.getItem().getCount()).sum();
+        helper.assertTrue(onGround >= 3, "Ses plaques tombent pour le joueur (ramassées + la sienne), obtenu " + onGround);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void fallingBehindFailsTheExam(GameTestHelper helper) {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
         NpcEntity navigator = npc(helper, "navigator", 0);

@@ -92,7 +92,7 @@ public final class ExamHazards {
                 if (player.tickCount % 200 == 0) restockSalmon(level, c);
             }
             case ZEVIL -> {
-                if (player.tickCount % 200 == 0 && step.type().equals("points")) restockCandidates(level, c, instance);
+                if (step.type().equals("points")) ZevilHunt.tick(player, level, c, instance);
                 if (player.getY() < ExamWorld.FLOOR_Y - 1.5 && player.isInWater()
                         && Math.abs(player.getZ() - c.getZ()) > 46) rescue(player, Vec3.atBottomCenterOf(c.offset(0, 0, 48)), "exam.hxh.overboard");
             }
@@ -379,13 +379,14 @@ public final class ExamHazards {
     private static final int[] NUMBERS = {16, 80, 118, 191, 294, 362, 371, 384};
 
     /** Un candidat de Zevil (vindicateur) qui garde sa plaque en main gauche ; elle tombe à sa défaite. */
-    static ExamCandidate candidate(ServerLevel level, BlockPos p, boolean target, int n) {
+    public static ExamCandidate candidate(ServerLevel level, BlockPos p, boolean target, int n) {
         ExamCandidate v = com.evandouard.hxh.registry.ModEntities.EXAM_CANDIDATE.get().create(level);
         if (v == null) return null;
         v.moveTo(p.getX() + 0.5, p.getY(), p.getZ() + 0.5, level.getRandom().nextFloat() * 360f, 0);
         v.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(target ? ModItems.TARGET_PLATE.get() : ModItems.EXAM_PLATE.get()));
         v.setDropChance(EquipmentSlot.OFFHAND, 2f);
-        v.setCustomName(Component.translatable(target ? "exam.hxh.candidate_target" : "exam.hxh.candidate", NUMBERS[n % NUMBERS.length]));
+        int number = n < NUMBERS.length ? NUMBERS[n] : 1 + Math.floorMod(n * 37 + 11, 405);
+        v.setCustomName(Component.translatable(target ? "exam.hxh.candidate_target" : "exam.hxh.candidate", number));
         v.setPersistenceRequired();
         v.addTag(CANDIDATE_TAG);
         if (target) v.addTag(TARGET_TAG);
