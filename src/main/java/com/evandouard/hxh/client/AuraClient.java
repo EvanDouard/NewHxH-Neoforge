@@ -93,15 +93,23 @@ public final class AuraClient {
             float halo = (scarlet ? 0.16f : 0.13f) * k * pulse;
             quadLocal(glow, pose, halo, color, 1f);
             quadLocal(glow, pose, 0.05f * k, scarlet ? 0xFFB0B0 : 0xFFFFFF, 1f);
-            if (scarlet) sparks(buffers, pose, e.getId() * 7 + s, time, k);
             pose.popPose();
+        }
+        // Éclairs après les deux lueurs : demander un autre tampon termine le précédent (« Not building! »)
+        if (scarlet) {
+            VertexConsumer bolts = buffers.getBuffer(RenderType.eyes(NenFxClient.WHITE));
+            for (int s = -1; s <= 1; s += 2) {
+                pose.pushPose();
+                pose.translate(spread * s, eyeAboveNeck, face);
+                sparks(bolts, pose, e.getId() * 7 + s, time, k);
+                pose.popPose();
+            }
         }
         pose.popPose();
     }
 
     /** Petits éclairs rouges autour d'un œil : 3 zigzags qui changent toutes les 2 images, à plat sur le visage. */
-    private static void sparks(MultiBufferSource buffers, PoseStack pose, int seed, float time, float k) {
-        VertexConsumer vc = buffers.getBuffer(RenderType.eyes(NenFxClient.WHITE));
+    private static void sparks(VertexConsumer vc, PoseStack pose, int seed, float time, float k) {
         int frame = (int) (time / 2f);
         for (int b = 0; b < 3; b++) {
             float r0 = hash(seed * 31 + frame * 7 + b);

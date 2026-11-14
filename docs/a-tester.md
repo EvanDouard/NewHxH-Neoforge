@@ -11,6 +11,19 @@ les lignes « En jeu » restent à regarder à la main.
 
 Légende : **CI** = vérifié par les GameTests ou une capture du scénario · **En jeu** = à regarder à la main.
 
+## Formes de l'En, yeux, Colère écarlate, clans, types de Nen (14 nov, après-midi)
+- [ ] CI : GameTest `everyEnShapeWorksAtEveryMasteryFrom50` (réglage par défaut faisable pour chaque forme de la maîtrise 50 à 100 ; forme gardée si l'En a grandi).
+- [ ] CI (captures `74` à `78`) : sphère complète vue d'en haut (dessous visible), écran demi-sphère → cube (réglage par défaut, bouton Appliquer actif), « » » +5, cube, cylindre, demi-sphère appliqués depuis l'écran.
+- [ ] CI (captures `98a` à `98d`) : yeux du Gyo de face, tête tournée à 45° et 90°, tête baissée.
+- [ ] CI (captures `99a` à `99d`) : yeux écarlates rouges avec éclairs ; carnet : niveau de clan Kurta 100 et durée 300 s ; Nen affiché « Spécialisation (yeux écarlates) ».
+- [ ] CI : GameTests `techniqueTypesPhysicalAndScarletEyes` et `kurtaClanLevelLengthensScarletEyes`.
+- [ ] En jeu : changer de forme dans l'écran à plusieurs maîtrises ; le texte dit que le volume grandit avec la maîtrise.
+- [ ] En jeu : la sphère complète se voit sous soi dans une grotte ou au-dessus du vide.
+- [ ] En jeu : Gyo en vue de face (F5 deux fois), tourner la tête : les yeux restent sur le visage. Pareil pour un mob copié.
+- [ ] En jeu : Colère écarlate : yeux rouges, éclairs, plus de Force ni de Résistance. `/hunter clan level 100` puis relancer : 5 min.
+- [ ] En jeu : pastilles de type dans l'encart de technique (強 vert, 変 violet, 具 rouge, 特 bleu, 操 gris, 放 jaune, 体 marron) et dans la liste des techniques (« Type : … · efficacité pour toi »).
+- [ ] À trancher : seconds types des techniques (estimation de départ dans `NenAffinity`), part de l'XP de stat qui va au clan (1/5), +30 XP de clan par coup secret, bonus de stats du clan (xp_bonus × 50 au niveau 100, réglable par `clan_stats`).
+
 ## En : cibles en surbrillance (14 nov)
 - [x] CI (capture `73_en_niveau_0_cible_en_surbrillance`) : En maîtrise 0, cochon à 2 blocs : contour couleur d'aura.
 - [ ] En jeu : En niveau 0 (rayon 2 blocs à l'arrêt), puis plus haut : tout ce qui vit dans l'En brille, à travers les murs. Le Gyo révèle aussi par le contour.

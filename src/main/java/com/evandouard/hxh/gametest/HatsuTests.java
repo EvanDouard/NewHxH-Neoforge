@@ -206,10 +206,10 @@ public final class HatsuTests {
         // Spécialiste contre Renforcement (opposé) : 40 %, zone à 70 %
         helper.assertTrue(Math.abs(com.evandouard.hxh.hatsu.NenAffinity.of(z, d, Techniques.GON_ROCK) - 0.4f) < 1e-4, "Pierre : 40 % pour un Spécialiste");
         helper.assertTrue(Math.abs(com.evandouard.hxh.hatsu.NenAffinity.sizeFactor(z, Techniques.GON_ROCK) - 0.7f) < 1e-4, "Zone à 70 % à l'opposé");
-        // deux types : moyenne (Foudre de Killua = Transformation + Émission, pour un Spécialiste : 80 % et 60 %)
+        // deux types : moyenne (Foudre de Killua = Transformation + Émission, pour un Spécialiste : 60 % et 60 %)
         helper.assertTrue(com.evandouard.hxh.hatsu.NenAffinity.types(Techniques.KILLUA_THUNDERBOLT).size() == 2, "Foudre : deux types");
-        helper.assertTrue(Math.abs(com.evandouard.hxh.hatsu.NenAffinity.of(z, d, Techniques.KILLUA_THUNDERBOLT) - 0.7f) < 1e-4,
-                "Foudre : moyenne 70 %");
+        helper.assertTrue(Math.abs(com.evandouard.hxh.hatsu.NenAffinity.of(z, d, Techniques.KILLUA_THUNDERBOLT) - 0.6f) < 1e-4,
+                "Foudre : 60 % et 60 %");
         // Yeux écarlates : Spécialisation, toutes les catégories à 100 %
         d.setNenType(NenType.ENHANCER);
         z.addEffect(new net.minecraft.world.effect.MobEffectInstance(com.evandouard.hxh.effect.ModEffects.SCARLET_EYES, 200));

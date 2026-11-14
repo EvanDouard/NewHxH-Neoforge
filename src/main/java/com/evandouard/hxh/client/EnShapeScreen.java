@@ -113,7 +113,9 @@ public class EnShapeScreen extends Screen {
         g.drawCenteredString(font, title, cx, 16, 0xFFFFFF);
         double r = baseRadius();
         g.drawCenteredString(font, Component.translatable("screen.hxh.en_shape.volume", f(r),
-                Math.round(EnShape.volume(r))).withStyle(ChatFormatting.GRAY), cx, 32, 0xFFFFFF);
+                Math.round(EnShape.volume(r))).withStyle(ChatFormatting.GRAY), cx, 30, 0xFFFFFF);
+        g.drawCenteredString(font, Component.translatable("screen.hxh.en_shape.volume_note").withStyle(ChatFormatting.DARK_GRAY),
+                cx, 40, 0xFFFFFF);
         if (shape.adjustable()) {
             g.drawCenteredString(font, Component.translatable(shape == EnShape.CUBE ? "screen.hxh.en_shape.half_side"
                     : "screen.hxh.en_shape.radius", f(a)), cx, 92, 0xFFFFFF);

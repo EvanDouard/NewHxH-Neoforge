@@ -1285,7 +1285,7 @@
   "screen.hxh.en_shape.locked": "Unlocked at En mastery %s",
   "screen.hxh.en_shape.title": "En shape",
   "screen.hxh.en_shape.apply": "Apply",
-  "screen.hxh.en_shape.volume": "Base radius %s · volume %s blocks³ (grows with your En mastery, the shape spreads this volume)",
+  "screen.hxh.en_shape.volume": "Base radius %s · volume %s blocks³",
   "screen.hxh.en_shape.radius": "Radius: %s",
   "screen.hxh.en_shape.half_side": "Radius (half side): %s",
   "screen.hxh.en_shape.up": "Height above: %s",
@@ -1399,5 +1399,6 @@
   "nen.hxh.physical": "Physical",
   "command.hxh.clan.set": "%s's clan level: %s",
   "command.hxh.clan.no_family": "%s has no family: no clan level",
-  "command.hxh.clan.xp": "+%s clan XP for %s (level %s)"
+  "command.hxh.clan.xp": "+%s clan XP for %s (level %s)",
+  "screen.hxh.en_shape.volume_note": "It grows with your En mastery; the shape spreads this volume."
 }

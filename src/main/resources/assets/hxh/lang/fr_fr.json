@@ -1285,7 +1285,7 @@
   "screen.hxh.en_shape.locked": "Débloqué à la maîtrise d'En %s",
   "screen.hxh.en_shape.title": "Forme de l'En",
   "screen.hxh.en_shape.apply": "Appliquer",
-  "screen.hxh.en_shape.volume": "Rayon de base %s · volume %s blocs³ (grandit avec ta maîtrise d'En, la forme répartit ce volume)",
+  "screen.hxh.en_shape.volume": "Rayon de base %s · volume %s blocs³",
   "screen.hxh.en_shape.radius": "Rayon : %s",
   "screen.hxh.en_shape.half_side": "Rayon (demi-côté) : %s",
   "screen.hxh.en_shape.up": "Hauteur au-dessus : %s",
@@ -1399,5 +1399,6 @@
   "nen.hxh.physical": "Physique",
   "command.hxh.clan.set": "Niveau de clan de %s : %s",
   "command.hxh.clan.no_family": "%s n'a pas de famille : pas de niveau de clan",
-  "command.hxh.clan.xp": "+%s XP de clan pour %s (niveau %s)"
+  "command.hxh.clan.xp": "+%s XP de clan pour %s (niveau %s)",
+  "screen.hxh.en_shape.volume_note": "Il grandit avec ta maîtrise d'En ; la forme répartit ce volume."
 }
