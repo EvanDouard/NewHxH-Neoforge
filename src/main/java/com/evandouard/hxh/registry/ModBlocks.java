@@ -77,5 +77,15 @@ public final class ModBlocks {
                             BlockBehaviour.Properties.of().strength(2f).sound(SoundType.METAL).noOcclusion())))
                     .toList();
 
+    /** Mannequin cogneur : frappe ce qui se tient devant lui (Endurance, ou Vitesse en esquivant). */
+    public static final DeferredBlock<com.evandouard.hxh.training.StrikingDummyBlock> STRIKING_DUMMY = BLOCKS.register("striking_dummy",
+            () -> new com.evandouard.hxh.training.StrikingDummyBlock(BlockBehaviour.Properties.of()
+                    .strength(2f).sound(SoundType.WOOD).noOcclusion()));
+
+    /** Bain glacé : y rester entraîne la Volonté. */
+    public static final DeferredBlock<com.evandouard.hxh.training.IceBathBlock> ICE_BATH = BLOCKS.register("ice_bath",
+            () -> new com.evandouard.hxh.training.IceBathBlock(BlockBehaviour.Properties.of()
+                    .strength(2f).sound(SoundType.METAL).noOcclusion()));
+
     private ModBlocks() {}
 }

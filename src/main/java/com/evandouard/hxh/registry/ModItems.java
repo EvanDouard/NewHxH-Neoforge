@@ -110,6 +110,11 @@ public final class ModItems {
                     new Item.Properties().rarity(com.evandouard.hxh.training.TrainingTier.values()[i].rarity())))
             .toList();
 
+    public static final DeferredItem<BlockItem> STRIKING_DUMMY =
+            ITEMS.registerSimpleBlockItem("striking_dummy", ModBlocks.STRIKING_DUMMY);
+    public static final DeferredItem<BlockItem> ICE_BATH =
+            ITEMS.registerSimpleBlockItem("ice_bath", ModBlocks.ICE_BATH);
+
     public static final DeferredItem<BlockItem> MARKER_NPC_CHOICE =
             ITEMS.registerSimpleBlockItem("marker_npc", ModBlocks.MARKER_NPC_CHOICE);
     public static final DeferredItem<BlockItem> MARKER_WAYPOINT =

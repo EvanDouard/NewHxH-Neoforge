@@ -1379,5 +1379,13 @@
   "bestiary.hxh.danger.0": "aucun",
   "bestiary.hxh.danger.1": "faible",
   "bestiary.hxh.danger.2": "moyen",
-  "bestiary.hxh.danger.3": "élevé"
+  "bestiary.hxh.danger.3": "élevé",
+  "block.hxh.striking_dummy": "Mannequin cogneur",
+  "block.hxh.ice_bath": "Bain glacé",
+  "tooltip.hxh.striking_dummy": "Frappe ce qui se tient devant lui : encaisser entraîne l'Endurance",
+  "tooltip.hxh.striking_dummy.dodge": "Accroupis-toi ou lève ton bouclier au bon moment pour esquiver (Vitesse)",
+  "message.hxh.striking_dummy.hit": "Le mannequin te cogne ! (Endurance)",
+  "message.hxh.striking_dummy.dodge": "Esquive ! %s +%s XP",
+  "tooltip.hxh.ice_bath": "Reste dans l'eau glacée : +%s XP de Volonté par seconde",
+  "message.hxh.ice_bath": "Le froid te mord… %s +%s XP"
 }

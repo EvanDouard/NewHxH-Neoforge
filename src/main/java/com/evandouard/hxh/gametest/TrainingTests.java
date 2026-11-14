@@ -9,6 +9,8 @@ import com.evandouard.hxh.stats.HunterStats;
 import com.evandouard.hxh.training.DumbbellItem;
 import com.evandouard.hxh.training.TrainingEvents;
 import com.evandouard.hxh.training.TreadmillBlock;
+import com.evandouard.hxh.training.StrikingDummyBlock;
+import com.evandouard.hxh.training.IceBathBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -163,6 +165,74 @@ public final class TrainingTests {
         q.addJenny(100);
         helper.assertTrue(com.evandouard.hxh.minigame.ArmWrestle.start(p, 30, 100) && q.jenny() == 0, "Mise prise au départ");
         helper.assertTrue(com.evandouard.hxh.minigame.ArmWrestle.match(p) != null, "Manche en cours");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void strikingDummyHitsAnyCreatureButNeverKills(GameTestHelper helper) {
+        BlockPos rel = new BlockPos(1, 1, 1);
+        BlockState state = ModBlocks.STRIKING_DUMMY.get().defaultBlockState().setValue(StrikingDummyBlock.FACING, Direction.SOUTH);
+        helper.setBlock(rel, state);
+        net.minecraft.world.entity.monster.Zombie zombie = helper.spawnWithNoFreeWill(
+                net.minecraft.world.entity.EntityType.ZOMBIE, new BlockPos(1, 1, 2));
+        BlockPos abs = helper.absolutePos(rel);
+        float start = zombie.getHealth();
+        for (int i = 0; i < 20; i++) {
+            zombie.invulnerableTime = 0;
+            zombie.moveTo(abs.getX() + 0.5, abs.getY(), abs.getZ() + 1.5);
+            StrikingDummyBlock.strike(helper.getLevel(), abs, state);
+        }
+        helper.assertTrue(zombie.getHealth() < start, "Le mannequin frappe aussi les mobs (vie " + zombie.getHealth() + ")");
+        helper.assertTrue(zombie.isAlive() && zombie.getHealth() >= StrikingDummyBlock.MIN_HEALTH - StrikingDummyBlock.DAMAGE,
+                "Le mannequin ne tue jamais : vie restante " + zombie.getHealth());
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void strikingDummyDodgeTrainsSpeed(GameTestHelper helper) {
+        BlockPos rel = new BlockPos(1, 1, 1);
+        BlockState state = ModBlocks.STRIKING_DUMMY.get().defaultBlockState().setValue(StrikingDummyBlock.FACING, Direction.SOUTH);
+        helper.setBlock(rel, state);
+        BlockPos abs = helper.absolutePos(rel);
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.family.Families.set(player, "");
+        player.moveTo(abs.getX() + 0.5, abs.getY(), abs.getZ() + 1.5);
+        HunterData d = HunterStats.get(player);
+        int speed = d.xp(Stat.SPEED);
+        player.setShiftKeyDown(true);
+        int n = StrikingDummyBlock.strike(helper.getLevel(), abs, state);
+        helper.assertTrue(n == 1, "Le joueur devant le mannequin est visé (" + n + ")");
+        helper.assertTrue(d.xp(Stat.SPEED) - speed == (int) StrikingDummyBlock.DODGE_XP,
+                "Esquiver accroupi : +" + StrikingDummyBlock.DODGE_XP + " XP de Vitesse, obtenu " + (d.xp(Stat.SPEED) - speed));
+        // derrière le mannequin : rien
+        player.setShiftKeyDown(false);
+        player.moveTo(abs.getX() + 0.5, abs.getY(), abs.getZ() - 1.5);
+        helper.assertTrue(StrikingDummyBlock.strike(helper.getLevel(), abs, state) == 0, "Le mannequin ne frappe que devant lui");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void iceBathTrainsWillpowerWithoutFreezeDamage(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.family.Families.set(player, "");
+        HunterData d = HunterStats.get(player);
+        int will = d.xp(Stat.WILLPOWER);
+        for (int t = 1; t <= 400; t++) {
+            player.tickCount = t;
+            IceBathBlock.soak(player);
+        }
+        helper.assertTrue(d.xp(Stat.WILLPOWER) - will == 20 * (int) IceBathBlock.XP_PER_SECOND,
+                "20 s de bain glacé : +" + 20 * IceBathBlock.XP_PER_SECOND + " XP de Volonté, obtenu " + (d.xp(Stat.WILLPOWER) - will));
+        // un mob aussi (le joueur de test est en créatif, donc insensible au gel)
+        net.minecraft.world.entity.animal.Pig pig = helper.spawnWithNoFreeWill(
+                net.minecraft.world.entity.EntityType.PIG, new BlockPos(2, 1, 2));
+        for (int t = 1; t <= 400; t++) {
+            pig.tickCount = t;
+            IceBathBlock.soak(pig);
+        }
+        helper.assertTrue(pig.getTicksFrozen() > 0 && !pig.isFullyFrozen(),
+                "Le givre monte sans atteindre les dégâts (" + pig.getTicksFrozen() + ")");
+        helper.assertTrue(pig.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN), "Le bain ralentit aussi les mobs");
         helper.succeed();
     }
 }

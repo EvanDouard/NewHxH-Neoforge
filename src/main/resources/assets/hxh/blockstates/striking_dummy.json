@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hxh:block/striking_dummy"
+    },
+    "facing=east": {
+      "model": "hxh:block/striking_dummy",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hxh:block/striking_dummy",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hxh:block/striking_dummy",
+      "y": 270
+    }
+  }
+}

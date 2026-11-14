@@ -1379,5 +1379,13 @@
   "bestiary.hxh.danger.0": "none",
   "bestiary.hxh.danger.1": "low",
   "bestiary.hxh.danger.2": "medium",
-  "bestiary.hxh.danger.3": "high"
+  "bestiary.hxh.danger.3": "high",
+  "block.hxh.striking_dummy": "Striking dummy",
+  "block.hxh.ice_bath": "Ice bath",
+  "tooltip.hxh.striking_dummy": "Hits whatever stands in front of it: taking hits trains Endurance",
+  "tooltip.hxh.striking_dummy.dodge": "Sneak or raise your shield at the right moment to dodge (Speed)",
+  "message.hxh.striking_dummy.hit": "The dummy hits you! (Endurance)",
+  "message.hxh.striking_dummy.dodge": "Dodged! %s +%s XP",
+  "tooltip.hxh.ice_bath": "Stay in the icy water: +%s Willpower XP per second",
+  "message.hxh.ice_bath": "The cold bites… %s +%s XP"
 }

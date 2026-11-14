@@ -37,6 +37,8 @@ public final class ModCreativeTabs {
                         ModItems.DUMBBELLS.forEach(i -> output.accept(i.get()));
                         ModItems.DISHES.forEach(i -> output.accept(i.get()));
                         ModItems.TREADMILLS.forEach(i -> output.accept(i.get()));
+                        output.accept(ModItems.STRIKING_DUMMY.get());
+                        output.accept(ModItems.ICE_BATH.get());
                         output.accept(ModItems.HEAVENS_ARENA_GATE.get());
                         output.accept(ModItems.ARENA_ELEVATOR.get());
                         output.accept(ModItems.ARENA_EXIT.get());

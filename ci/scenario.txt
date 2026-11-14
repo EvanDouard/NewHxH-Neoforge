@@ -1464,6 +1464,8 @@ cmd setblock 0 -60 62 hxh:treadmill_1[facing=north]
 cmd setblock 2 -60 62 hxh:treadmill_2[facing=north,mode=endurance]
 cmd setblock 4 -60 62 hxh:treadmill_3[facing=north]
 cmd setblock 6 -60 62 hxh:treadmill_4[facing=north,mode=endurance]
+cmd setblock 8 -60 62 hxh:striking_dummy[facing=south]
+cmd setblock -2 -60 62 hxh:ice_bath
 cmd clear @s
 cmd give @s hxh:dumbbell_1
 cmd give @s hxh:dumbbell_2
@@ -1472,6 +1474,14 @@ cmd give @s hxh:dumbbell_4
 cmd tp @s 3.5 -60 59.5 0 35
 wait 40
 shot 48c_objets_entrainement
+cmd tp @s -1.5 -60 62.5 0 20
+wait 80
+shot 48c2_bain_glace_givre
+cmd tp @s 8.5 -60 63.5 180 10
+wait 35
+shot 48c3_mannequin_cogneur
+cmd tp @s 3.5 -60 59.5 0 35
+wait 20
 cmd setblock 1 -60 64 hxh:marker_npc
 cmd setblock 3 -60 64 hxh:marker_waypoint
 cmd setblock 5 -60 64 hxh:marker_prey
