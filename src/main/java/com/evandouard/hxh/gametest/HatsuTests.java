@@ -221,6 +221,26 @@ public final class HatsuTests {
     }
 
     @GameTest(template = "empty")
+    public static void anyTechniqueCanBeGivenByName(GameTestHelper helper) {
+        helper.assertTrue(com.evandouard.hxh.hatsu.TechniqueNames.find("Jajanken: Rock") == Techniques.GON_ROCK, "Nom anglais");
+        helper.assertTrue(com.evandouard.hxh.hatsu.TechniqueNames.find("jajanken pierre") == Techniques.GON_ROCK, "Nom français sans ponctuation");
+        helper.assertTrue(com.evandouard.hxh.hatsu.TechniqueNames.find("\"gon_rock\"") == Techniques.GON_ROCK, "Identifiant entre guillemets");
+        helper.assertTrue(com.evandouard.hxh.hatsu.TechniqueNames.find("pas une technique") == null, "Inconnue : rien");
+        // chaque technique jouable a un nom en anglais et en français (pour les propositions de la commande)
+        for (var t : com.evandouard.hxh.hatsu.TechniqueNames.playable()) {
+            helper.assertFalse(com.evandouard.hxh.hatsu.TechniqueNames.name(t.id(), "en_us").equals(t.id())
+                    || com.evandouard.hxh.hatsu.TechniqueNames.name(t.id(), "fr_fr").equals(t.id()), "Sans nom : " + t.id());
+        }
+        // donnée à un mob sans personnage : elle rejoint sa liste et se lance
+        Zombie z = husk(helper, 1);
+        HunterData d = hunter(z, NenType.ENHANCER, null);
+        helper.assertTrue(d.giveTechnique("gon_rock") && !d.giveTechnique("gon_rock"), "Donnée une seule fois");
+        helper.assertTrue(Hatsu.techniqueIds(d).contains("gon_rock"), "Dans la liste des techniques");
+        helper.assertTrue(d.takeTechnique("gon_rock") && !Hatsu.techniqueIds(d).contains("gon_rock"), "Retirée");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void kurtaClanLevelLengthensScarletEyes(GameTestHelper helper) {
         var player = helper.makeMockServerPlayerInLevel();
         com.evandouard.hxh.family.Families.set(player, "kurta");

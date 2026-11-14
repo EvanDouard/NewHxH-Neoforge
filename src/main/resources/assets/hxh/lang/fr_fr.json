@@ -1407,5 +1407,12 @@
   "profile.hxh.family_poison": "insensible au poison",
   "profile.hxh.family_lightning": "foudre −%s %%",
   "screen.hxh.computer.bestiary": "Bestiaire",
-  "screen.hxh.computer.bestiary_intro": "Le bestiaire"
+  "screen.hxh.computer.bestiary_intro": "Le bestiaire",
+  "command.hxh.hatsu.unknown_technique": "Technique inconnue : %s",
+  "command.hxh.hatsu.given": "%s donnée à %s",
+  "command.hxh.hatsu.already_given": "%s : %s l'a déjà",
+  "command.hxh.hatsu.taken": "%s retirée à %s",
+  "command.hxh.hatsu.not_given": "%s : ne lui avait pas été donnée (%s)",
+  "screen.hxh.hatsu.filter_type_on": "Clic : n'afficher que ce type",
+  "screen.hxh.hatsu.filter_type_off": "Clic : enlever le filtre"
 }

@@ -315,6 +315,11 @@ click Retour
 wait 5
 click <
 wait 5
+click Transformation
+wait 5
+shot 16f_filtre_par_type_transformation
+click Transformation
+wait 5
 click Filtre
 wait 5
 shot 16e_filtre_mon_type
@@ -2289,6 +2294,18 @@ shot 99c_carnet_personnage_famille_et_clan
 closescreen
 cmd effect clear @s hxh:scarlet_eyes
 cmd hunter clan level 0
+# --- Donner n'importe quelle technique (nom anglais, français ou identifiant) ---
+clearchat
+cmd hunter hatsu give @s Jajanken: Rock
+wait 5
+expect Jajanken
+cmd hunter hatsu give @s Doctor Blythe
+wait 5
+camera first
+wait 5
+shot 99e_technique_donnee_dans_l_encart
+cmd hunter hatsu take @s gon_rock
+cmd hunter hatsu take @s pitou_doctor_blythe
 cmd time set noon
 camera first
 cmd difficulty peaceful

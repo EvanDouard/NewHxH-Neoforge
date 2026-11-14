@@ -34,6 +34,8 @@ public final class Hatsu {
         HatsuKit kit = kitOf(data);
         java.util.List<String> ids = new java.util.ArrayList<>();
         if (kit != null) ids.addAll(kit.techniques());
+        // techniques données par commande (/hunter hatsu give), après celles du personnage
+        for (String g : data.givenTechniques()) if (!ids.contains(g) && Techniques.get(g) != null) ids.add(g);
         // Ging : la technique copiée prend place dans la liste tant qu'il reste des utilisations
         Technique copied = Characters.gingCopied(data);
         if (copied != null && !ids.contains(copied.id())) ids.add(copied.id());

@@ -88,6 +88,8 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private int selected = 0;
     /** Coup secret de la famille (technique sans Nen ajoutée au menu), vide sans famille. */
     private String familyMove = "";
+    /** Techniques données en plus du kit ({@code /hunter hatsu give}), dans l'ordre où elles ont été données. */
+    private final java.util.List<String> givenTechniques = new java.util.ArrayList<>();
     /** XP de clan (famille) : niveau 0 à {@link #CLAN_MAX}, voir {@link #clanLevel()}. */
     private int clanXp = 0;
     /** Niveaux de stat offerts par le niveau de clan (calculés côté serveur selon la famille, synchronisés). */
@@ -563,6 +565,27 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         dirty.add(HATSU);
     }
 
+    // ---------- Techniques données ----------
+
+    public java.util.List<String> givenTechniques() {
+        return java.util.Collections.unmodifiableList(givenTechniques);
+    }
+
+    /** @return false si elle était déjà donnée */
+    public boolean giveTechnique(String id) {
+        if (givenTechniques.contains(id)) return false;
+        givenTechniques.add(id);
+        dirty.add(HATSU);
+        return true;
+    }
+
+    /** @return false si elle n'était pas donnée */
+    public boolean takeTechnique(String id) {
+        if (!givenTechniques.remove(id)) return false;
+        dirty.add(HATSU);
+        return true;
+    }
+
     // ---------- Clan ----------
 
     public static final int CLAN_MAX = 100;
@@ -780,6 +803,9 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             h.putInt("selected", selected);
             h.putString("familyMove", familyMove);
             h.putInt("clanXp", clanXp);
+            net.minecraft.nbt.ListTag given = new net.minecraft.nbt.ListTag();
+            for (String g : givenTechniques) given.add(net.minecraft.nbt.StringTag.valueOf(g));
+            h.put("given", given);
             CompoundTag cb = new CompoundTag();
             for (var e : clanBonus.entrySet()) cb.putInt(e.getKey().name(), e.getValue());
             h.put("clanBonus", cb);
@@ -927,6 +953,9 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             selected = Math.max(0, h.getInt("selected"));
             familyMove = h.getString("familyMove");
             clanXp = h.getInt("clanXp");
+            givenTechniques.clear();
+            net.minecraft.nbt.ListTag given = h.getList("given", net.minecraft.nbt.Tag.TAG_STRING);
+            for (int gi = 0; gi < given.size(); gi++) givenTechniques.add(given.getString(gi));
             clanBonus.clear();
             CompoundTag cb = h.getCompound("clanBonus");
             for (String k : cb.getAllKeys()) {

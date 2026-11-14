@@ -148,6 +148,19 @@ public final class NenAffinity {
         };
     }
 
+    /** Nom anglais de la catégorie (info-bulles, quelle que soit la langue du jeu). */
+    public static String englishName(@Nullable NenType type) {
+        if (type == null) return "Physical";
+        return switch (type) {
+            case ENHANCER -> "Enhancement";
+            case TRANSMUTER -> "Transmutation";
+            case CONJURER -> "Conjuration";
+            case SPECIALIST -> "Specialization";
+            case MANIPULATOR -> "Manipulation";
+            case EMITTER -> "Emission";
+        };
+    }
+
     /** Pour l'affichage : les types, ou une liste à un élément null pour Physique. */
     public static List<NenType> badges(Technique t) {
         List<NenType> types = types(t);

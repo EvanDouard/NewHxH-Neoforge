@@ -1407,5 +1407,12 @@
   "profile.hxh.family_poison": "poison immune",
   "profile.hxh.family_lightning": "lightning −%s%%",
   "screen.hxh.computer.bestiary": "Bestiary",
-  "screen.hxh.computer.bestiary_intro": "The bestiary"
+  "screen.hxh.computer.bestiary_intro": "The bestiary",
+  "command.hxh.hatsu.unknown_technique": "Unknown technique: %s",
+  "command.hxh.hatsu.given": "%s given to %s",
+  "command.hxh.hatsu.already_given": "%s: %s already has it",
+  "command.hxh.hatsu.taken": "%s taken from %s",
+  "command.hxh.hatsu.not_given": "%s: wasn't given to %s",
+  "screen.hxh.hatsu.filter_type_on": "Click: show only this type",
+  "screen.hxh.hatsu.filter_type_off": "Click: remove the filter"
 }

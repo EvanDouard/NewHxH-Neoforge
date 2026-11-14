@@ -31,6 +31,9 @@ public class HatsuSelectionScreen extends Screen {
 
     private int page = 0;
     private boolean onlyMyType = false;
+    /** Filtre par type de Nen (pastilles en haut à droite), null = tous. */
+    @org.jetbrains.annotations.Nullable
+    private com.evandouard.hxh.data.NenType typeFilter = null;
 
     public HatsuSelectionScreen() {
         super(Component.translatable("screen.hxh.hatsu.title"));
@@ -42,7 +45,8 @@ public class HatsuSelectionScreen extends Screen {
 
     private List<HatsuKit> visibleKits() {
         HunterData d = data();
-        return HatsuKits.all().stream().filter(k -> !onlyMyType || k.type() == d.nenType()).toList();
+        return HatsuKits.all().stream().filter(k -> !onlyMyType || k.type() == d.nenType())
+                .filter(k -> typeFilter == null || k.type() == typeFilter).toList();
     }
 
     private int pageCount() {
@@ -85,13 +89,78 @@ public class HatsuSelectionScreen extends Screen {
         addRenderableWidget(next);
         addRenderableWidget(Button.builder(Component.translatable(onlyMyType
                                 ? "screen.hxh.hatsu.filter_mine" : "screen.hxh.hatsu.filter_all"),
-                        b -> { onlyMyType = !onlyMyType; page = 0; rebuildWidgets(); })
+                        b -> { onlyMyType = !onlyMyType; typeFilter = null; page = 0; rebuildWidgets(); })
                 .bounds(16, bottom, 110, 20).build());
+        // Pastilles des six types : un clic trie la liste sur ce type, un second clic enlève le filtre
+        com.evandouard.hxh.data.NenType[] types = com.evandouard.hxh.data.NenType.values();
+        int bx = width - 16 - types.length * (TypeButton.SIZE + 2);
+        for (com.evandouard.hxh.data.NenType type : types) {
+            addRenderableWidget(new TypeButton(bx, 6, type, type == typeFilter, () -> {
+                typeFilter = typeFilter == type ? null : type;
+                onlyMyType = false;
+                page = 0;
+                rebuildWidgets();
+            }));
+            bx += TypeButton.SIZE + 2;
+        }
         // Serments et restrictions (une fois le personnage choisi)
         Button vows = Button.builder(Component.translatable("screen.hxh.vow.open"), b -> minecraft.setScreen(new VowScreen(this)))
                 .bounds(width - 126, bottom, 110, 20).build();
         vows.active = data().hasKit();
         addRenderableWidget(vows);
+    }
+
+    /** Bouton rond d'un type de Nen : la pastille des techniques, cadre doré quand le filtre est actif. */
+    private static final class TypeButton extends net.minecraft.client.gui.components.AbstractButton {
+        static final int SIZE = 16;
+        private final com.evandouard.hxh.data.NenType type;
+        private final boolean on;
+        private final Runnable action;
+
+        TypeButton(int x, int y, com.evandouard.hxh.data.NenType type, boolean on, Runnable action) {
+            super(x, y, SIZE, SIZE, Component.translatable(type.translationKey()));
+            this.type = type;
+            this.on = on;
+            this.action = action;
+            // info-bulle : le nom dans la langue du jeu, et en anglais
+            String english = com.evandouard.hxh.hatsu.NenAffinity.englishName(type);
+            MutableComponent tip = Component.translatable(type.translationKey()).copy().withStyle(s ->
+                    s.withColor(com.evandouard.hxh.hatsu.NenAffinity.color(type) & 0xFFFFFF).withBold(true));
+            if (!Component.translatable(type.translationKey()).getString().equals(english)) {
+                tip.append(Component.literal(" (" + english + ")").withStyle(ChatFormatting.GRAY));
+            }
+            tip.append(Component.literal("\n")).append(Component.translatable(on ? "screen.hxh.hatsu.filter_type_off"
+                    : "screen.hxh.hatsu.filter_type_on").withStyle(ChatFormatting.DARK_GRAY));
+            setTooltip(Tooltip.create(tip));
+        }
+
+        @Override
+        public void onPress() {
+            action.run();
+        }
+
+        @Override
+        protected void renderWidget(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
+            int frame = on ? 0xFFFFD23F : isHoveredOrFocused() ? 0xFFFFFFFF : 0x00000000;
+            if (frame != 0) {
+                g.fill(getX() - 1, getY() - 1, getX() + SIZE + 1, getY(), frame);
+                g.fill(getX() - 1, getY() + SIZE, getX() + SIZE + 1, getY() + SIZE + 1, frame);
+                g.fill(getX() - 1, getY(), getX(), getY() + SIZE, frame);
+                g.fill(getX() + SIZE, getY(), getX() + SIZE + 1, getY() + SIZE, frame);
+            }
+            var pose = g.pose();
+            pose.pushPose();
+            float k = SIZE / (float) NenBadge.SIZE;
+            pose.translate(getX(), getY(), 0);
+            pose.scale(k, k, 1);
+            NenBadge.draw(g, Minecraft.getInstance().font, type, 0, 0);
+            pose.popPose();
+        }
+
+        @Override
+        protected void updateWidgetNarration(net.minecraft.client.gui.narration.NarrationElementOutput out) {
+            defaultButtonNarrationText(out);
+        }
     }
 
     private static Component reason(HatsuKit kit, String refusal) {
@@ -143,7 +212,8 @@ public class HatsuSelectionScreen extends Screen {
                     .withStyle(mine ? ChatFormatting.AQUA : ChatFormatting.GRAY);
             if (!kit.typeConfirmed()) sub.append(Component.translatable("screen.hxh.hatsu.type_guess").withStyle(ChatFormatting.DARK_GRAY));
             if (!kit.implemented()) sub.append(Component.translatable("screen.hxh.hatsu.idea_tag").withStyle(ChatFormatting.LIGHT_PURPLE));
-            graphics.drawString(font, sub, 18, y + 13, 0xFFFFFF);
+            NenBadge.draw(graphics, font, kit.type(), 18, y + 12);
+            graphics.drawString(font, sub, 18 + NenBadge.SIZE + 3, y + 13, 0xFFFFFF);
         }
         graphics.drawCenteredString(font, Component.literal((page + 1) + " / " + pageCount()),
                 width / 2, height - 20, 0xFFFFFF);

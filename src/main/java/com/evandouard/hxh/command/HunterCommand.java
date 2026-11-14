@@ -699,10 +699,65 @@ public final class HunterCommand {
                 .then(targeted("cast", e -> Hatsu.requestCast(e)))
                 .then(targeted("release", e -> Hatsu.releaseCast(e)))
                 .then(targeted("next", e -> Hatsu.cycle(e)))
+                // N'importe quelle technique à n'importe qui : /hunter hatsu give Dev Jajanken: Rock
+                .then(Commands.literal("give").then(Commands.argument("targets", EntityArgument.entities())
+                        .then(Commands.argument("technique", StringArgumentType.greedyString())
+                                .suggests(HunterCommand::suggestTechniques)
+                                .executes(ctx -> giveTechnique(ctx, true)))))
+                .then(Commands.literal("take").then(Commands.argument("targets", EntityArgument.entities())
+                        .then(Commands.argument("technique", StringArgumentType.greedyString())
+                                .suggests(HunterCommand::suggestTechniques)
+                                .executes(ctx -> giveTechnique(ctx, false)))))
                 .then(Commands.literal("select").then(Commands.argument("technique", StringArgumentType.word())
                         .suggests((ctx, b) -> SharedSuggestionProvider.suggest(Techniques.allIds(), b))
                         .executes(ctx -> Hatsu.select((LivingEntity) ctx.getSource().getEntityOrException(),
                                 StringArgumentType.getString(ctx, "technique")) ? 1 : 0)));
+    }
+
+    /** Propose chaque technique par son nom (langue du joueur), avec l'identifiant en info-bulle ; l'id marche aussi. */
+    private static java.util.concurrent.CompletableFuture<com.mojang.brigadier.suggestion.Suggestions> suggestTechniques(
+            CommandContext<CommandSourceStack> ctx, com.mojang.brigadier.suggestion.SuggestionsBuilder b) {
+        String lang = ctx.getSource().getPlayer() != null ? ctx.getSource().getPlayer().clientInformation().language() : "en_us";
+        String typed = com.evandouard.hxh.hatsu.TechniqueNames.key(b.getRemaining());
+        for (com.evandouard.hxh.hatsu.Technique t : com.evandouard.hxh.hatsu.TechniqueNames.playable()) {
+            String name = com.evandouard.hxh.hatsu.TechniqueNames.name(t.id(), lang);
+            if (com.evandouard.hxh.hatsu.TechniqueNames.key(name).startsWith(typed)) {
+                b.suggest(name, Component.literal(t.id()));
+            } else if (com.evandouard.hxh.hatsu.TechniqueNames.key(t.id()).startsWith(typed)) {
+                b.suggest(t.id(), Component.literal(name));
+            }
+        }
+        return b.buildFuture();
+    }
+
+    private static int giveTechnique(CommandContext<CommandSourceStack> ctx, boolean give) throws CommandSyntaxException {
+        String text = StringArgumentType.getString(ctx, "technique");
+        com.evandouard.hxh.hatsu.Technique t = com.evandouard.hxh.hatsu.TechniqueNames.find(text);
+        if (t == null) {
+            ctx.getSource().sendFailure(Component.translatable("command.hxh.hatsu.unknown_technique", text));
+            return 0;
+        }
+        int n = 0;
+        for (Entity e : EntityArgument.getEntities(ctx, "targets")) {
+            if (!(e instanceof LivingEntity living)) continue;
+            HunterData d = HunterStats.get(living);
+            boolean changed = give ? d.giveTechnique(t.id()) : d.takeTechnique(t.id());
+            if (give) {
+                // de quoi la lancer tout de suite : Nen ouvert, et sélectionnée
+                if (!t.needsNoNen() && !d.nenUnlocked()) NenModes.unlock(living);
+                java.util.List<String> ids = Hatsu.techniqueIds(d);
+                d.setSelected(Math.max(0, ids.indexOf(t.id())));
+            } else {
+                d.setSelected(0);
+            }
+            if (changed) n++;
+            Component who = e.getDisplayName();
+            ctx.getSource().sendSuccess(() -> Component.translatable(give
+                    ? (changed ? "command.hxh.hatsu.given" : "command.hxh.hatsu.already_given")
+                    : (changed ? "command.hxh.hatsu.taken" : "command.hxh.hatsu.not_given"),
+                    Component.translatable(t.translationKey()), who), true);
+        }
+        return n;
     }
 
     private static int setKit(CommandContext<CommandSourceStack> ctx, Collection<? extends Entity> targets)
