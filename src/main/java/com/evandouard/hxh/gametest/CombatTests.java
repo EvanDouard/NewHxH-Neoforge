@@ -39,6 +39,11 @@ public final class CombatTests {
         var player = helper.makeMockServerPlayerInLevel();
         double bare = Combat.bareHandAttack(player);
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND_AXE));
+        // le joueur factice ne fait pas de tick : on applique nous-mêmes les bonus de l'objet tenu
+        player.getMainHandItem().forEachModifier(net.minecraft.world.entity.EquipmentSlot.MAINHAND, (attr, mod) -> {
+            var inst = player.getAttribute(attr);
+            if (inst != null && !inst.hasModifier(mod.id())) inst.addTransientModifier(mod);
+        });
         helper.assertTrue(player.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE) > bare + 5,
                 "La hache augmente bien l'attaque à l'épée");
         helper.assertTrue(Math.abs(Combat.bareHandAttack(player) - bare) < 1e-6,

@@ -745,7 +745,7 @@ public final class QuestManager {
             player.sendSystemMessage(Component.translatable("message.hxh.quest_completed",
                     q.title(player)).withStyle(ChatFormatting.GOLD));
             // Fin d'un voyage (Examen) : retour là d'où l'on était parti, après le temps de lire
-            tripLater(player, TRIP_DELAY, com.evandouard.hxh.exam.ExamTrips::returnHome);
+            tripLater(player, step.trial().isEmpty() ? 0 : TRIP_DELAY, com.evandouard.hxh.exam.ExamTrips::returnHome);
             com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.quest_done"),
                     q.title(player), "★", com.evandouard.hxh.network.Hud.GOLD);
         } else {
@@ -758,7 +758,8 @@ public final class QuestManager {
             // En vrai jeu, l'épreuve n'est annoncée qu'à l'embarquement (avant, l'objectif est d'aller au dirigeable)
             boolean deferred = real && newTrial;
             if (newTrial && !deferred) announceTrial(player, d, q, steps, d.step);
-            int delay = step.site().equals("kiriko") ? TRIP_DELAY_KIRIKO : TRIP_DELAY;
+            // attente seulement en sortant d'une épreuve (pas quand le guide donne le premier dirigeable)
+            int delay = step.trial().isEmpty() ? 0 : step.site().equals("kiriko") ? TRIP_DELAY_KIRIKO : TRIP_DELAY;
             if (real && newTrial) {
                 // Épreuve réussie : retour au dirigeable d'où l'on était parti, puis coordonnées du suivant
                 tripLater(player, delay, p -> {
