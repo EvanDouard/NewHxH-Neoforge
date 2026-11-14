@@ -844,6 +844,7 @@ talkto navigator
 wait 20
 expect Ton dirigeable t'attend
 shot 34_guide_donne_le_dirigeable
+wait 80
 cmd hunter exam go
 wait 60
 look 90 -5
@@ -892,6 +893,7 @@ expect Ton dirigeable t'attend
 wait 40
 shot 34_retour_au_dirigeable_apres_dolle
 wait 10
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
@@ -915,6 +917,7 @@ expect Mari ?
 shot 34k2_examiner_un_mari
 cmd hunter quest skip
 wait 30
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
@@ -957,6 +960,7 @@ expect boat#1
 goto navigator
 talkto navigator
 wait 10
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
@@ -973,6 +977,7 @@ cmd hunter quest skip
 wait 5
 cmd hunter quest skip
 wait 10
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
@@ -986,6 +991,7 @@ cmd hunter quest skip
 wait 5
 cmd hunter quest skip
 wait 10
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
@@ -1008,6 +1014,7 @@ talkto satotz
 wait 10
 cmd hunter quest skip
 wait 10
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
@@ -1021,6 +1028,7 @@ expect [hud] Brouillard de Numele
 shot 34d_marais_de_numele_brouillard
 cmd hunter quest skip
 wait 10
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
@@ -1039,6 +1047,7 @@ look 180 5
 shot 34j_288e_examen_la_meute
 cmd hunter quest skip
 wait 10
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
@@ -1056,6 +1065,7 @@ cmd hunter quest skip
 wait 5
 talkto buhara
 wait 10
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
@@ -1083,6 +1093,7 @@ talkto menchi
 wait 20
 expect Tu passes
 wait 10
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
@@ -1105,6 +1116,7 @@ wait 10
 shot 34e3_jeu_de_la_balle_de_netero
 cmd hunter quest skip
 wait 10
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
@@ -1147,6 +1159,7 @@ wait 20
 shot 34h3_tour_de_trick_escalier_pieges
 cmd hunter quest skip
 wait 10
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
@@ -1177,6 +1190,7 @@ wait 10
 goto hotel_manager
 talkto hotel_manager
 wait 10
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
@@ -1198,6 +1212,7 @@ cmd give @s hxh:target_plate
 wait 150
 expect Ton dirigeable t'attend
 wait 10
+wait 80
 cmd hunter exam go
 wait 60
 goto passeur
