@@ -12,7 +12,7 @@ les lignes « En jeu » restent à regarder à la main.
 Légende : **CI** = vérifié par les GameTests ou une capture du scénario · **En jeu** = à regarder à la main.
 
 ## En : cibles en surbrillance (14 nov)
-- [ ] CI (capture `73_en_niveau_0_cible_en_surbrillance`) : En maîtrise 0, cochon à 2 blocs : contour couleur d'aura.
+- [x] CI (capture `73_en_niveau_0_cible_en_surbrillance`) : En maîtrise 0, cochon à 2 blocs : contour couleur d'aura.
 - [ ] En jeu : En niveau 0 (rayon 2 blocs à l'arrêt), puis plus haut : tout ce qui vit dans l'En brille, à travers les murs. Le Gyo révèle aussi par le contour.
 
 ## Coup de pied fort et bras de fer (13 nov, soir)
