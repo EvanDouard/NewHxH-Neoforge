@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "hxh:heavens_arena_tower",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 64,
+    "separation": 32,
+    "salt": 48151623
+  }
+}

@@ -1414,5 +1414,6 @@
   "command.hxh.hatsu.taken": "%s taken from %s",
   "command.hxh.hatsu.not_given": "%s: wasn't given to %s",
   "screen.hxh.hatsu.filter_type_on": "Click: show only this type",
-  "screen.hxh.hatsu.filter_type_off": "Click: remove the filter"
+  "screen.hxh.hatsu.filter_type_off": "Click: remove the filter",
+  "message.hxh.exam_trip_soon": "Leaving in %s s…"
 }

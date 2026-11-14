@@ -312,6 +312,41 @@ public final class QuestManager {
         return false;
     }
 
+    /** Attente avant la téléportation de fin d'épreuve : on lit le message, on voit ce qui se passe (3,5 s). */
+    public static final int TRIP_DELAY = 70;
+    /** Kiriko démasqué : il faut voir la transformation et l'envol (6 s). */
+    public static final int TRIP_DELAY_KIRIKO = 120;
+
+    /**
+     * Téléportation de fin d'épreuve après une courte attente, compte à rebours dans la barre d'action. Dans les
+     * GameTests, tout de suite. Le joueur est retrouvé par son UUID (il a pu se reconnecter entre-temps).
+     */
+    /** Vrai pendant {@code /hunter quest skip} : téléportation immédiate. */
+    public static boolean instantTrips = false;
+
+    public static void tripLater(ServerPlayer player, int delay, java.util.function.Consumer<ServerPlayer> trip) {
+        if (instantTrips || player.server instanceof net.minecraft.gametest.framework.GameTestServer || delay <= 0) {
+            trip.accept(player);
+            return;
+        }
+        java.util.UUID id = player.getUUID();
+        net.minecraft.server.MinecraftServer server = player.server;
+        for (int s = delay / 20; s >= 1; s--) {
+            int left = s;
+            com.evandouard.hxh.hatsu.NenTasks.later(delay - left * 20 + 1, () -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(id);
+                if (p != null) p.displayClientMessage(Component.translatable("message.hxh.exam_trip_soon", left)
+                        .withStyle(ChatFormatting.GOLD), true);
+            });
+        }
+        com.evandouard.hxh.hatsu.NenTasks.later(delay, () -> {
+            ServerPlayer p = server.getPlayerList().getPlayer(id);
+            if (p == null) return;
+            trip.accept(p);
+            sync(p);
+        });
+    }
+
     /**
      * Épreuve ratée (distancé, passé par-dessus bord, mauvaise réponse…) : retour au point de départ, et l'examen
      * reprend à « trouver un guide », avec un nouveau tirage d'épreuves dans des lieux jamais vus.
@@ -339,7 +374,7 @@ public final class QuestManager {
         player.sendSystemMessage(Component.translatable("message.hxh.exam_failed").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
         player.sendSystemMessage(Component.translatable("message.hxh.exam_failed_detail").withStyle(ChatFormatting.GRAY));
         d.refocus();
-        com.evandouard.hxh.exam.ExamTrips.returnHome(player);
+        tripLater(player, TRIP_DELAY, com.evandouard.hxh.exam.ExamTrips::returnHome);
         sync(player);
     }
 
@@ -709,8 +744,8 @@ public final class QuestManager {
             if (!step.trial().isEmpty()) clearTrialItems(player);
             player.sendSystemMessage(Component.translatable("message.hxh.quest_completed",
                     q.title(player)).withStyle(ChatFormatting.GOLD));
-            // Fin d'un voyage (Examen) : retour là d'où l'on était parti
-            com.evandouard.hxh.exam.ExamTrips.returnHome(player);
+            // Fin d'un voyage (Examen) : retour là d'où l'on était parti, après le temps de lire
+            tripLater(player, TRIP_DELAY, com.evandouard.hxh.exam.ExamTrips::returnHome);
             com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.quest_done"),
                     q.title(player), "★", com.evandouard.hxh.network.Hud.GOLD);
         } else {
@@ -723,12 +758,15 @@ public final class QuestManager {
             // En vrai jeu, l'épreuve n'est annoncée qu'à l'embarquement (avant, l'objectif est d'aller au dirigeable)
             boolean deferred = real && newTrial;
             if (newTrial && !deferred) announceTrial(player, d, q, steps, d.step);
+            int delay = step.site().equals("kiriko") ? TRIP_DELAY_KIRIKO : TRIP_DELAY;
             if (real && newTrial) {
                 // Épreuve réussie : retour au dirigeable d'où l'on était parti, puis coordonnées du suivant
-                com.evandouard.hxh.exam.ExamTrips.returnHome(player);
-                BlockPos dep = com.evandouard.hxh.exam.ExamDeparture.create(player, player.blockPosition());
-                if (dep != null) player.sendSystemMessage(Component.translatable("exam.hxh.departure", dep.getX(), dep.getZ(),
-                        (int) Math.sqrt(dep.distSqr(player.blockPosition()))).withStyle(ChatFormatting.GOLD));
+                tripLater(player, delay, p -> {
+                    com.evandouard.hxh.exam.ExamTrips.returnHome(p);
+                    BlockPos dep = com.evandouard.hxh.exam.ExamDeparture.create(p, p.blockPosition());
+                    if (dep != null) p.sendSystemMessage(Component.translatable("exam.hxh.departure", dep.getX(), dep.getZ(),
+                            (int) Math.sqrt(dep.distSqr(p.blockPosition()))).withStyle(ChatFormatting.GOLD));
+                });
             } else if (site == com.evandouard.hxh.exam.ExamSite.HALL && step.site().equals("zaban")
                     && com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level())
                     && com.evandouard.hxh.exam.ExamHazards.siteAt(player.blockPosition()) == com.evandouard.hxh.exam.ExamSite.ZABAN) {
@@ -736,7 +774,18 @@ public final class QuestManager {
             } else if (site != null) {
                 // Dans une même épreuve, on passe d'un lieu à l'autre par ses transports (bateau, ascenseur…)
                 d.markExamVisited(site.id(), d.examInstance(site.id()));
-                com.evandouard.hxh.exam.ExamTrips.sendTo(player, site, d.examInstance(site.id()));
+                int instance = d.examInstance(site.id());
+                boolean follow = next.type().equals("follow");
+                String guideId = next.npc();
+                tripLater(player, delay, p -> {
+                    com.evandouard.hxh.exam.ExamTrips.sendTo(p, site, instance);
+                    // le guide de l'étape suivante repart de zéro une fois qu'on est arrivé
+                    if (follow) {
+                        NpcEntity guide = findNpc(p, guideId, 96);
+                        if (guide != null) guide.resetRoute();
+                        LOST_TICKS.remove(p.getUUID());
+                    }
+                });
             }
             if (!deferred) com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.new_step"),
                     q.objective(next, player), "!", com.evandouard.hxh.network.Hud.GOLD);

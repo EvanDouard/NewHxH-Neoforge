@@ -154,8 +154,49 @@ public final class Combat {
     }
 
     private static float baseAttack(LivingEntity entity) {
+        return (float) bareHandAttack(entity);
+    }
+
+    /**
+     * Dégâts d'attaque à mains nues : l'attribut d'attaque sans les bonus de l'objet tenu en main (une hache ou une
+     * épée ne renforce pas un coup de poing ou de pied), sauf pour les armes du mod (armes de Nen et autres).
+     * Le reste compte : Force, effets, serments.
+     */
+    public static double bareHandAttack(LivingEntity entity) {
         AttributeInstance attack = entity.getAttribute(Attributes.ATTACK_DAMAGE);
-        return attack != null ? (float) attack.getValue() : 1f;
+        if (attack == null) return 1;
+        net.minecraft.world.item.ItemStack held = entity.getMainHandItem();
+        if (held.isEmpty() || modWeapon(held)) return attack.getValue();
+        java.util.Set<net.minecraft.resources.ResourceLocation> fromItem = new java.util.HashSet<>();
+        held.forEachModifier(net.minecraft.world.entity.EquipmentSlot.MAINHAND, (attr, mod) -> {
+            if (attr.is(Attributes.ATTACK_DAMAGE)) fromItem.add(mod.id());
+        });
+        if (fromItem.isEmpty()) return attack.getValue();
+        double base = attack.getBaseValue(), add = 0, mulBase = 0, mulTotal = 1;
+        for (var mod : attack.getModifiers()) {
+            if (fromItem.contains(mod.id())) continue;
+            switch (mod.operation()) {
+                case ADD_VALUE -> add += mod.amount();
+                case ADD_MULTIPLIED_BASE -> mulBase += mod.amount();
+                case ADD_MULTIPLIED_TOTAL -> mulTotal *= 1 + mod.amount();
+            }
+        }
+        double v = base + add;
+        v = v + v * mulBase;
+        return attack.getAttribute().value().sanitizeValue(v * mulTotal);
+    }
+
+    /** Arme du mod (son objet est enregistré par HxH) : elle garde ses dégâts sur les coups physiques. */
+    public static boolean modWeapon(net.minecraft.world.item.ItemStack stack) {
+        return com.evandouard.hxh.HxHMod.MODID.equals(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace());
+    }
+
+    /**
+     * Après un coup physique (poing, pied, coup chargé) : l'arme en main repart de zéro, comme après un coup
+     * d'épée. On ne peut plus enchaîner « Attaque basique » puis un coup d'épée chargé.
+     */
+    public static void resetHeldWeapon(LivingEntity entity) {
+        if (entity instanceof Player p) p.resetAttackStrengthTicker();
     }
 
     private static DamageSource meleeSource(LivingEntity attacker) {
@@ -262,6 +303,7 @@ public final class Combat {
             return 0f;
         }
         boolean perfect = value >= CHARGE_PERFECT_FROM;
+        resetHeldWeapon(attacker); // l'arme en main repart de zéro au moment du coup
         CombatAnimations.play(attacker, CombatAnim.CHARGED_PUNCH);
         if (attacker instanceof Player p) {
             com.evandouard.hxh.network.Hud.callout(p, Component.translatable(perfect ? "message.hxh.strike_perfect" : "message.hxh.strike_good"),

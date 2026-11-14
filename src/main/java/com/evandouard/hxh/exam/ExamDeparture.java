@@ -42,12 +42,7 @@ public final class ExamDeparture {
         }
         ServerLevel level = player.serverLevel();
         if (ExamWorld.isExamLevel(level)) level = player.server.overworld();
-        double angle = player.getRandom().nextDouble() * Math.PI * 2;
-        int dist = MIN_DISTANCE + player.getRandom().nextInt(MAX_DISTANCE - MIN_DISTANCE + 1);
-        int x = from.getX() + (int) Math.round(Math.cos(angle) * dist);
-        int z = from.getZ() + (int) Math.round(Math.sin(angle) * dist);
-        level.getChunk(x >> 4, z >> 4); // génère le terrain pour connaître la surface
-        BlockPos ground = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, 0, z));
+        BlockPos ground = findSpot(level, from, player.getRandom());
         BlockPos npcPos = build(level, ground);
         NpcEntity npc = ModEntities.NPC.get().create(level);
         if (npc != null) {
@@ -60,46 +55,105 @@ public final class ExamDeparture {
         return npcPos;
     }
 
-    /** Hauteur du pont de la nacelle au-dessus du sol. */
+    /** Hauteur minimale du pont au-dessus du sol (plus haut s'il y a des arbres ou du relief sous le dirigeable). */
     static final int DECK = 6;
+    /** Emprise du dirigeable autour du mât (demi-longueur, demi-largeur), ballon compris. */
+    private static final int HALF_X = 12, HALF_Z = 5;
 
     /**
-     * Dirigeable provisoire amarré à un mât : nacelle de 11 × 5 à {@link #DECK} blocs du sol (échelle le long du
-     * mât), ballon rayé au-dessus, hélices à l'arrière ; renvoie la place de l'hôtesse sur le pont.
+     * Endroit d'amarrage à {@link #MIN_DISTANCE}–{@link #MAX_DISTANCE} blocs : sol dégagé et plat (pas d'eau, pas
+     * d'arbre sur le mât, pas de village ni d'autre structure). Jusqu'à 64 essais ; sinon le meilleur trouvé.
+     * Renvoie le sol au pied du mât.
+     */
+    static BlockPos findSpot(ServerLevel level, BlockPos from, net.minecraft.util.RandomSource rnd) {
+        BlockPos best = null;
+        int bestScore = Integer.MAX_VALUE;
+        for (int attempt = 0; attempt < 64; attempt++) {
+            double angle = rnd.nextDouble() * Math.PI * 2;
+            int dist = MIN_DISTANCE + rnd.nextInt(MAX_DISTANCE - MIN_DISTANCE + 1);
+            int x = from.getX() + (int) Math.round(Math.cos(angle) * dist);
+            int z = from.getZ() + (int) Math.round(Math.sin(angle) * dist);
+            level.getChunk(x >> 4, z >> 4); // génère le terrain pour connaître la surface
+            BlockPos ground = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, 0, z));
+            int score = spotScore(level, ground);
+            if (score < bestScore) {
+                bestScore = score;
+                best = ground;
+            }
+            if (score == 0) break;
+        }
+        return best;
+    }
+
+    /** 0 = parfait ; plus c'est grand, moins l'endroit convient (eau, feuillage, pente, structure). */
+    private static int spotScore(ServerLevel level, BlockPos ground) {
+        int score = 0;
+        if (!level.getFluidState(ground).isEmpty() || !level.getFluidState(ground.below()).isEmpty()) score += 100;
+        if (level.structureManager().hasAnyStructureAt(ground)) score += 100;
+        int lo = Integer.MAX_VALUE, hi = Integer.MIN_VALUE;
+        for (int dx = -2; dx <= 2; dx++) for (int dz = -2; dz <= 2; dz++) {
+            int sx = ground.getX() - 7 + dx, sz = ground.getZ() + dz; // autour du mât
+            int h = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, sx, sz);
+            int top = level.getHeight(Heightmap.Types.WORLD_SURFACE, sx, sz);
+            if (top > h + 1) score += 10; // feuillage au-dessus du pied du mât
+            lo = Math.min(lo, h);
+            hi = Math.max(hi, h);
+        }
+        score += Math.max(0, hi - lo - 1) * 5;
+        return score;
+    }
+
+    /** Pose un bloc seulement là où il n'y a rien : le dirigeable ne coupe ni arbre, ni maison, ni montagne. */
+    private static void put(ServerLevel level, BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
+        net.minecraft.world.level.block.state.BlockState there = level.getBlockState(pos);
+        if (there.isAir() || there.canBeReplaced()) level.setBlock(pos, state, 2);
+    }
+
+    private static void put(ServerLevel level, BlockPos pos, net.minecraft.world.level.block.Block block) {
+        put(level, pos, block.defaultBlockState());
+    }
+
+    /**
+     * Dirigeable provisoire amarré à un mât : il flotte au-dessus de tout ce qu'il survole (le pont est au moins à
+     * {@link #DECK} blocs du sol, plus haut s'il y a des arbres ou du relief), et ses blocs ne remplacent que l'air :
+     * rien n'est détruit. On monte par l'échelle du mât. Renvoie la place de l'hôtesse sur le pont.
      */
     private static BlockPos build(ServerLevel level, BlockPos ground) {
+        // hauteur du pont : au-dessus du plus haut bloc (feuillage compris) sous l'emprise du dirigeable
+        int top = ground.getY();
+        for (int dx = -HALF_X; dx <= HALF_X; dx += 2) for (int dz = -HALF_Z; dz <= HALF_Z; dz += 2) {
+            top = Math.max(top, level.getHeight(Heightmap.Types.WORLD_SURFACE, ground.getX() + dx, ground.getZ() + dz));
+        }
+        int deck = Math.max(DECK, top - ground.getY() + 2);
         BlockPos c = ground;
-        // mât d'amarrage et échelle
-        for (int y = 0; y <= DECK + 1; y++) {
-            ExamWorld.set(level, c.offset(-7, y, 0), Blocks.SPRUCE_LOG);
-            if (y <= DECK) ExamWorld.set(level, c.offset(-6, y, 0), Blocks.LADDER.defaultBlockState()
+        // mât d'amarrage et échelle, jusqu'au pont
+        for (int y = 0; y <= deck + 1; y++) {
+            put(level, c.offset(-7, y, 0), Blocks.SPRUCE_LOG);
+            if (y <= deck) put(level, c.offset(-6, y, 0), Blocks.LADDER.defaultBlockState()
                     .setValue(net.minecraft.world.level.block.LadderBlock.FACING, net.minecraft.core.Direction.EAST));
         }
-        ExamWorld.set(level, c.offset(-7, DECK + 2, 0), Blocks.LANTERN);
+        put(level, c.offset(-7, deck + 2, 0), Blocks.LANTERN);
         // nacelle
         for (int x = -5; x <= 5; x++) for (int z = -2; z <= 2; z++) {
-            ExamWorld.set(level, c.offset(x, DECK - 1, z), Blocks.DARK_OAK_PLANKS);
-            for (int y = 0; y < 3; y++) ExamWorld.set(level, c.offset(x, DECK + y, z), Blocks.AIR);
+            put(level, c.offset(x, deck - 1, z), Blocks.DARK_OAK_PLANKS);
             boolean edge = Math.abs(x) == 5 || Math.abs(z) == 2;
-            if (edge && !(x == -5 && z == 0)) ExamWorld.set(level, c.offset(x, DECK, z), Blocks.DARK_OAK_FENCE);
+            if (edge && !(x == -5 && z == 0)) put(level, c.offset(x, deck, z), Blocks.DARK_OAK_FENCE);
         }
         for (int[] k : new int[][]{{-5, -2}, {5, -2}, {-5, 2}, {5, 2}})
-            for (int y = 1; y <= 3; y++) ExamWorld.set(level, c.offset(k[0], DECK + y, k[1]), Blocks.CHAIN);
-        // ballon : ellipsoïde rayé blanc et rouge
-        int by = DECK + 7;
+            for (int y = 1; y <= 3; y++) put(level, c.offset(k[0], deck + y, k[1]), Blocks.CHAIN);
+        // ballon : coque d'ellipsoïde rayée blanc et rouge (l'intérieur reste tel quel)
+        int by = deck + 7;
         for (int x = -10; x <= 10; x++) for (int y = -3; y <= 3; y++) for (int z = -4; z <= 4; z++) {
             double e = (x * x) / 100.0 + (y * y) / 9.0 + (z * z) / 16.0;
-            if (e > 1.0) continue;
-            boolean shell = e > 0.6;
-            ExamWorld.set(level, c.offset(x, by + y, z), !shell ? Blocks.AIR
-                    : (Math.floorMod(x, 4) < 2 ? Blocks.WHITE_WOOL : Blocks.RED_WOOL));
+            if (e > 1.0 || e <= 0.6) continue;
+            put(level, c.offset(x, by + y, z), Math.floorMod(x, 4) < 2 ? Blocks.WHITE_WOOL : Blocks.RED_WOOL);
         }
         // dérives et hélice
-        for (int y = -2; y <= 2; y++) ExamWorld.set(level, c.offset(11, by + y, 0), Blocks.RED_WOOL);
-        for (int z = -2; z <= 2; z++) ExamWorld.set(level, c.offset(11, by, z), Blocks.RED_WOOL);
-        ExamWorld.set(level, c.offset(6, DECK, 0), Blocks.IRON_BARS);
-        ExamWorld.set(level, c.offset(7, DECK, 0), Blocks.IRON_BARS);
-        return c.offset(2, DECK, 0);
+        for (int y = -2; y <= 2; y++) put(level, c.offset(11, by + y, 0), Blocks.RED_WOOL);
+        for (int z = -2; z <= 2; z++) put(level, c.offset(11, by, z), Blocks.RED_WOOL);
+        put(level, c.offset(6, deck, 0), Blocks.IRON_BARS);
+        put(level, c.offset(7, deck, 0), Blocks.IRON_BARS);
+        return c.offset(2, deck, 0);
     }
 
     /** Le joueur parle à l'hôtesse : si c'est son dirigeable, elle lui propose d'embarquer (lien cliquable). */

@@ -34,6 +34,22 @@ public final class CombatTests {
     }
 
     @GameTest(template = "empty")
+    public static void physicalMovesIgnoreTheHeldTool(GameTestHelper helper) {
+        // Une hache en main ne renforce plus le coup de poing / de pied ; et le coup relance la recharge de l'arme
+        var player = helper.makeMockServerPlayerInLevel();
+        double bare = Combat.bareHandAttack(player);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND_AXE));
+        helper.assertTrue(player.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE) > bare + 5,
+                "La hache augmente bien l'attaque à l'épée");
+        helper.assertTrue(Math.abs(Combat.bareHandAttack(player) - bare) < 1e-6,
+                "Coup physique avec une hache : mêmes dégâts qu'à mains nues (" + Combat.bareHandAttack(player) + " / " + bare + ")");
+        Combat.resetHeldWeapon(player);
+        helper.assertTrue(player.getAttackStrengthScale(0f) < 0.2f, "Après un coup physique, l'arme repart de zéro");
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, net.minecraft.world.item.ItemStack.EMPTY);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void comboBuildsUpAndFinishes(GameTestHelper helper) {
         Zombie a = husk(helper, 0);
         Zombie v = husk(helper, 2);

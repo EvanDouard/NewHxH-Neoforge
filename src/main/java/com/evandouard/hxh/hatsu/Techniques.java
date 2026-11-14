@@ -222,12 +222,14 @@ public final class Techniques {
     public static final Technique BASIC_ATTACK = register(new BaseMove("basic_attack", 12, 4, 0.08f) {
         @Override
         public boolean perform(LivingEntity caster, float power) {
+            com.evandouard.hxh.combat.Combat.resetHeldWeapon(caster);
             return com.evandouard.hxh.combat.Combat.basicPunch(caster) != null;
         }
     });
     public static final Technique BASIC_KICK = register(new BaseMove("basic_kick", 30, 10, 0.2f) {
         @Override
         public boolean perform(LivingEntity caster, float power) {
+            com.evandouard.hxh.combat.Combat.resetHeldWeapon(caster);
             return com.evandouard.hxh.combat.Combat.kickNow(caster) != null;
         }
     });
@@ -244,6 +246,7 @@ public final class Techniques {
 
         @Override
         public boolean perform(LivingEntity caster, float power) {
+            com.evandouard.hxh.combat.Combat.resetHeldWeapon(caster);
             com.evandouard.hxh.combat.Combat.startStrike(caster);
             return true;
         }

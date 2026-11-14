@@ -372,7 +372,13 @@ public final class HunterCommand {
                             return problems.isEmpty() ? 1 : 0;
                         }))
                         .then(Commands.literal("skip").executes(ctx -> {
-                            com.evandouard.hxh.quest.QuestManager.advance(ctx.getSource().getPlayerOrException());
+                            // commande d'admin : pas d'attente avant la téléportation de fin d'épreuve
+                            com.evandouard.hxh.quest.QuestManager.instantTrips = true;
+                            try {
+                                com.evandouard.hxh.quest.QuestManager.advance(ctx.getSource().getPlayerOrException());
+                            } finally {
+                                com.evandouard.hxh.quest.QuestManager.instantTrips = false;
+                            }
                             return 1;
                         }))
                         .then(Commands.literal("start")

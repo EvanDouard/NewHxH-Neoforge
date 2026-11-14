@@ -885,6 +885,9 @@ expect Réfléchis bien
 shot 34_quiz_de_la_mamie
 wait 270
 expect se taire était la seule
+expect Départ dans
+shot 34_mamie_attente_avant_depart
+wait 80
 expect Ton dirigeable t'attend
 wait 40
 shot 34_retour_au_dirigeable_apres_dolle

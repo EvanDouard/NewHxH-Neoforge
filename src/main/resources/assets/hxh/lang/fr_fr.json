@@ -1414,5 +1414,6 @@
   "command.hxh.hatsu.taken": "%s retirée à %s",
   "command.hxh.hatsu.not_given": "%s : ne lui avait pas été donnée (%s)",
   "screen.hxh.hatsu.filter_type_on": "Clic : n'afficher que ce type",
-  "screen.hxh.hatsu.filter_type_off": "Clic : enlever le filtre"
+  "screen.hxh.hatsu.filter_type_off": "Clic : enlever le filtre",
+  "message.hxh.exam_trip_soon": "Départ dans %s s…"
 }

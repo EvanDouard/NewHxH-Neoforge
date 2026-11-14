@@ -116,7 +116,12 @@ public final class NenClient {
         boolean clicked = false;
         while (CAST.consumeClick()) clicked = true;
         boolean castDown = CAST.isDown();
-        if (!castWasDown && (castDown || clicked)) PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, true));
+        if (!castWasDown && (castDown || clicked)) {
+            PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, true));
+            // coup physique : l'arme en main repart de zéro aussi à l'écran (le serveur fait de même)
+            Technique sel = Hatsu.selectedTechnique(mc.player.getData(ModAttachments.HUNTER));
+            if (sel != null && sel.isBase()) mc.player.resetAttackStrengthTicker();
+        }
         if ((castWasDown && !castDown) || (clicked && !castDown && !castWasDown)) {
             PacketDistributor.sendToServer(new NenActionPayload(NenActionPayload.Action.CAST, false));
         }

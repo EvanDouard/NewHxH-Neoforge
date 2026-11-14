@@ -146,6 +146,11 @@ public final class ArenaTests {
         int gates = tower.get().filterBlocks(BlockPos.ZERO, new net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings(),
                 ModBlocks.HEAVENS_ARENA_GATE.get()).size();
         helper.assertTrue(gates == 2, "Deux portails d'entrée, obtenu " + gates);
+        // Génération naturelle en plus de celle posée près du spawn : /locate structure hxh:heavens_arena_tower la trouve
+        var sets = helper.getLevel().registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.STRUCTURE_SET);
+        var set = sets.get(ResourceLocation.parse("hxh:heavens_arena_tower"));
+        helper.assertTrue(set != null && set.structures().stream().anyMatch(e -> e.structure().is(ResourceLocation.parse("hxh:heavens_arena_tower"))),
+                "La tour a un structure_set (sinon /locate ne la trouve jamais)");
         helper.succeed();
     }
 
