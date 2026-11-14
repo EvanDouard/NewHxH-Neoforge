@@ -13,6 +13,11 @@ les lignes « En jeu » restent à regarder à la main.
 
 Légende : **CI** = vérifié par les GameTests ou une capture du scénario · **En jeu** = à regarder à la main.
 
+## Bestiaire dans l'ordinateur, famille dans le carnet (14 nov, fin d'après-midi)
+- [x] CI (capture `97_ordinateur_bestiaire_fourmi_chimere`) : catégorie « Bestiaire » de l'ordinateur Hunter, une fiche par créature (danger, où, description) ; l'onglet Bestiaire du carnet a disparu.
+- [x] CI : GameTest : famille, niveau de clan et héritage dans l'onglet Personnage.
+- [ ] En jeu : `/hunter max` met le niveau de clan à 100 ; carnet → Personnage, faire défiler sous les stats : famille, niveau de clan, stats offertes, héritage (XP en plus, stats au clan 100, poison, foudre), coup secret.
+
 ## Formes de l'En, yeux, Colère écarlate, clans, types de Nen (14 nov, après-midi)
 - [x] CI : GameTest `everyEnShapeWorksAtEveryMasteryFrom50` (réglage par défaut faisable pour chaque forme de la maîtrise 50 à 100 ; forme gardée si l'En a grandi).
 - [x] CI (captures `74` à `78`) : sphère complète vue d'en haut (dessous visible), écran demi-sphère → cube (réglage par défaut, bouton Appliquer actif), « » » +5, cube, cylindre, demi-sphère appliqués depuis l'écran.
