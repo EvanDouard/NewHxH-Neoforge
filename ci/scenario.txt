@@ -1809,7 +1809,8 @@ cmd hunter en shape sphere
 cmd hunter nen mastery en 0
 # --- En maîtrise 0 : la cible proche brille (contour couleur d'aura) ---
 cmd kill @e[type=!minecraft:player]
-cmd summon minecraft:zombie ^ ^ ^2 {NoAI:1b,PersistenceRequired:1b,Tags:["hxh_en_probe"]}
+cmd tp @s ~ ~ ~ 0 15
+cmd summon minecraft:pig ~ ~ ~2 {NoAI:1b,PersistenceRequired:1b,Tags:["hxh_en_probe"]}
 key key.hxh.en
 wait 40
 clearchat
