@@ -31,6 +31,7 @@ public class HunterComputerScreen extends Screen {
         super(Component.translatable("screen.hxh.computer.title"));
         this.data = data;
         entries.addAll(data.entries());
+        entries.addAll(ComputerRecipes.entries());
         entries.addAll(Bestiary.computerEntries());
         String category = null;
         for (int i = 0; i < entries.size(); i++) {

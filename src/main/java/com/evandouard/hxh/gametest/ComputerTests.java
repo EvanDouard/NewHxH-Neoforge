@@ -24,6 +24,19 @@ public final class ComputerTests {
     }
 
     @GameTest(template = "empty")
+    public static void modRecipesAreInTheRecipeBook(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.stats.HunterEvents.unlockModRecipes(player);
+        helper.assertTrue(player.getRecipeBook().contains(HxHMod.id("hunter_computer")), "L'ordinateur Hunter est dans le livre de recettes");
+        long mine = helper.getLevel().getServer().getRecipeManager().getRecipes().stream()
+                .filter(h -> h.id().getNamespace().equals(HxHMod.MODID)).count();
+        long known = helper.getLevel().getServer().getRecipeManager().getRecipes().stream()
+                .filter(h -> h.id().getNamespace().equals(HxHMod.MODID) && player.getRecipeBook().contains(h.id())).count();
+        helper.assertTrue(mine > 0 && known == mine, "Toutes les recettes du mod débloquées (" + known + "/" + mine + ")");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void entriesUnlockWithProgress(GameTestHelper helper) {
         helper.assertTrue(HunterComputer.entries().size() >= 10, "Les fiches sont chargées : " + HunterComputer.entries().size());
         ServerPlayer player = helper.makeMockServerPlayerInLevel();

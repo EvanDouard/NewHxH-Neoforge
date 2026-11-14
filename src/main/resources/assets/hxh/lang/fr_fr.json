@@ -1419,5 +1419,13 @@
   "exam.hxh.zevil.qualified": "%s a ses plaques et quitte l'île (%s/%s qualifiés)",
   "exam.hxh.zevil.landed": "Un nouveau candidat débarque sur l'île.",
   "exam.hxh.zevil.status": "Qualifiés : %s/%s · candidats sur l'île : %s",
-  "exam.hxh.zevil.over": "%s candidats sont qualifiés : la chasse est terminée, et tu n'as pas tes points."
+  "exam.hxh.zevil.over": "%s candidats sont qualifiés : la chasse est terminée, et tu n'as pas tes points.",
+  "screen.hxh.computer.recipes": "Recettes",
+  "screen.hxh.computer.recipe_shaped": "Établi, disposition imposée :",
+  "screen.hxh.computer.recipe_shapeless": "Établi, dans n'importe quel ordre :",
+  "screen.hxh.computer.recipe_furnace": "Four :",
+  "screen.hxh.computer.recipe_smoker": "Fumoir :",
+  "screen.hxh.computer.recipe_campfire": "Feu de camp :",
+  "screen.hxh.computer.recipe_time": "Cuisson : %s s",
+  "screen.hxh.computer.recipe_or_similar": "(ou semblable)"
 }

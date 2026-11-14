@@ -1419,5 +1419,13 @@
   "exam.hxh.zevil.qualified": "%s has their plates and leaves the island (%s/%s qualified)",
   "exam.hxh.zevil.landed": "A new candidate lands on the island.",
   "exam.hxh.zevil.status": "Qualified: %s/%s · candidates on the island: %s",
-  "exam.hxh.zevil.over": "%s candidates qualified: the hunt is over, and you don't have your points."
+  "exam.hxh.zevil.over": "%s candidates qualified: the hunt is over, and you don't have your points.",
+  "screen.hxh.computer.recipes": "Recipes",
+  "screen.hxh.computer.recipe_shaped": "Crafting table, fixed layout:",
+  "screen.hxh.computer.recipe_shapeless": "Crafting table, any order:",
+  "screen.hxh.computer.recipe_furnace": "Furnace:",
+  "screen.hxh.computer.recipe_smoker": "Smoker:",
+  "screen.hxh.computer.recipe_campfire": "Campfire:",
+  "screen.hxh.computer.recipe_time": "Cooking time: %s s",
+  "screen.hxh.computer.recipe_or_similar": "(or similar)"
 }

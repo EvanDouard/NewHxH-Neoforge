@@ -66,6 +66,15 @@ public final class HunterEvents {
         }
     }
 
+    /** Toutes les recettes du mod (ordinateur Hunter compris) apparaissent dans le livre de recettes dès le départ. */
+    public static void unlockModRecipes(ServerPlayer player) {
+        java.util.List<net.minecraft.world.item.crafting.RecipeHolder<?>> mine = new java.util.ArrayList<>();
+        for (var h : player.server.getRecipeManager().getRecipes()) {
+            if (h.id().getNamespace().equals(com.evandouard.hxh.HxHMod.MODID)) mine.add(h);
+        }
+        player.awardRecipes(mine);
+    }
+
     private static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         HunterData data = HunterStats.get(player);
@@ -77,6 +86,7 @@ public final class HunterEvents {
         }
         // Talent pour le Nen : tiré une fois pour toutes en début de partie
         if (data.talent() == null) data.setTalent(com.evandouard.hxh.data.NenTalent.roll(roll));
+        unlockModRecipes(player);
         HxHNetwork.syncFull(player);
     }
 
