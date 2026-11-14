@@ -65,7 +65,7 @@ public final class ComputerRecipes {
                 for (int x = 0; x < shaped.getWidth(); x++) {
                     Ingredient ing = ings.get(y * shaped.getWidth() + x);
                     if (ing.isEmpty()) {
-                        row.append("[   ]");
+                        row.append("[ - ]");
                         continue;
                     }
                     String n = name(ing);

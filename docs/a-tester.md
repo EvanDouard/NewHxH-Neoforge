@@ -13,6 +13,11 @@ les lignes « En jeu » restent à regarder à la main.
 
 Légende : **CI** = vérifié par les GameTests ou une capture du scénario · **En jeu** = à regarder à la main.
 
+## Recettes dans l'ordinateur et le livre de recettes (14 nov, soir)
+- [x] CI (captures `97b`, `97c`) : catégorie « Recettes » de l'ordinateur Hunter, une fiche par craft du mod (grille avec lettres et légende, ou liste d'ingrédients, ou cuisson).
+- [x] CI : GameTest `modRecipesAreInTheRecipeBook` : toutes les recettes du mod, ordinateur compris, débloquées à la connexion.
+- [ ] En jeu : ouvrir le livre de recettes (inventaire ou établi) : l'ordinateur Hunter y est, avec les haltères, tapis, mannequin, bain glacé, plats…
+
 ## Retours du 14 nov (fin d'après-midi) : fins d'épreuve, Tour, dirigeable, Zevil, coups physiques
 - [x] CI (capture `34_mamie_attente_avant_depart`) : 3,5 s d'attente avant la téléportation de fin d'épreuve, « Départ dans N s… » ; 6 s après avoir démasqué le Kiriko. Pas d'attente pour `/hunter quest skip` ni au premier dirigeable du guide.
 - [x] CI : GameTest `overworldTowerIsAvailable` : la tour a un structure_set (générée aussi naturellement, tous les ~1000 blocs, dans les biomes autorisés) en plus de celle posée près du spawn.
