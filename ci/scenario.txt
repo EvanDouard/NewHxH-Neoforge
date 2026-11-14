@@ -1804,6 +1804,15 @@ shot 72_ecran_forme_de_l_en
 closescreen
 cmd hunter en shape sphere
 cmd hunter nen mastery en 0
+# --- En maîtrise 0 : la cible proche brille (contour couleur d'aura) ---
+cmd kill @e[type=!minecraft:player]
+cmd summon minecraft:zombie ^ ^ ^2 {NoAI:1b,PersistenceRequired:1b,Tags:["hxh_en_probe"]}
+key key.hxh.en
+wait 40
+clearchat
+shot 73_en_niveau_0_cible_en_surbrillance
+key key.hxh.en
+cmd kill @e[tag=hxh_en_probe]
 # --- Boussole de quête : étape « aller au phare » (0, 70, 0) ---
 cmd hunter quest reset
 cmd hunter quest start hxh:exemple_pecheur
