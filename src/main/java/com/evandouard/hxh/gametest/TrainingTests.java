@@ -216,13 +216,14 @@ public final class TrainingTests {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
         com.evandouard.hxh.family.Families.set(player, "");
         HunterData d = HunterStats.get(player);
-        int will = d.xp(Stat.WILLPOWER);
+        int will = totalXp(d, Stat.WILLPOWER);
         for (int t = 1; t <= 400; t++) {
             player.tickCount = t;
             IceBathBlock.soak(player);
         }
-        helper.assertTrue(d.xp(Stat.WILLPOWER) - will == 20 * (int) IceBathBlock.XP_PER_SECOND,
-                "20 s de bain glacé : +" + 20 * IceBathBlock.XP_PER_SECOND + " XP de Volonté, obtenu " + (d.xp(Stat.WILLPOWER) - will));
+        int gained = totalXp(d, Stat.WILLPOWER) - will;
+        helper.assertTrue(gained == 20 * (int) IceBathBlock.XP_PER_SECOND,
+                "20 s de bain glacé : +" + 20 * IceBathBlock.XP_PER_SECOND + " XP de Volonté, obtenu " + gained);
         // un mob aussi (le joueur de test est en créatif, donc insensible au gel)
         net.minecraft.world.entity.animal.Pig pig = helper.spawnWithNoFreeWill(
                 net.minecraft.world.entity.EntityType.PIG, new BlockPos(2, 1, 2));
@@ -234,5 +235,12 @@ public final class TrainingTests {
                 "Le givre monte sans atteindre les dégâts (" + pig.getTicksFrozen() + ")");
         helper.assertTrue(pig.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN), "Le bain ralentit aussi les mobs");
         helper.succeed();
+    }
+
+    /** XP cumulée depuis le niveau 0 (les montées de niveau remettent le compteur du niveau à zéro). */
+    private static int totalXp(HunterData d, Stat stat) {
+        int total = d.xp(stat);
+        for (int l = 0; l < d.level(stat); l++) total += Stat.xpToNext(l);
+        return total;
     }
 }
