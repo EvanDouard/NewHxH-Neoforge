@@ -1360,7 +1360,7 @@
   "entity.hxh.kiriko": "Kiriko",
   "item.hxh.kiriko_spawn_egg": "Œuf d'apparition de Kiriko",
   "screen.hxh.profile.tab_bestiary": "Bestiaire",
-  "bestiary.hxh.intro": "Les créatures du monde de Hunter x Hunter. ★ = danger.",
+  "bestiary.hxh.intro": "Les créatures du monde de Hunter x Hunter, avec leur danger.",
   "bestiary.hxh.where": "Où : %s",
   "bestiary.hxh.nen_mobs": "Partout : certains mobs maîtrisent le Nen (niveau visible au Gyo). Les abattre rapporte une prime de l'Association.",
   "bestiary.hxh.kiriko.where": "forêt avant Zaban (épreuve de l'Examen)",
@@ -1374,5 +1374,10 @@
   "bestiary.hxh.man_faced_ape.where": "marais (Numele)",
   "bestiary.hxh.man_faced_ape.desc": "Il imite la voix des humains pour attirer ses proies : méfie-toi des appels dans le marais.",
   "bestiary.hxh.chimera_ant.where": "jungles",
-  "bestiary.hxh.chimera_ant.desc": "Soldat d'une colonie qui chasse de jour comme de nuit. Certaines maîtrisent le Nen : prime de l'Association."
+  "bestiary.hxh.chimera_ant.desc": "Soldat d'une colonie qui chasse de jour comme de nuit. Certaines maîtrisent le Nen : prime de l'Association.",
+  "bestiary.hxh.danger": "(danger : %s)",
+  "bestiary.hxh.danger.0": "aucun",
+  "bestiary.hxh.danger.1": "faible",
+  "bestiary.hxh.danger.2": "moyen",
+  "bestiary.hxh.danger.3": "élevé"
 }

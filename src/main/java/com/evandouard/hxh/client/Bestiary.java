@@ -29,9 +29,15 @@ public final class Bestiary {
         out.add(Component.translatable("bestiary.hxh.intro").withStyle(ChatFormatting.GRAY));
         out.add(Component.empty());
         for (Entry e : ENTRIES) {
-            String stars = "★".repeat(e.danger()) + "☆".repeat(3 - e.danger());
+            ChatFormatting color = switch (e.danger()) {
+                case 0 -> ChatFormatting.GREEN;
+                case 1 -> ChatFormatting.YELLOW;
+                case 2 -> ChatFormatting.GOLD;
+                default -> ChatFormatting.RED;
+            };
             out.add(Component.translatable("entity.hxh." + e.id()).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)
-                    .append(Component.literal("  " + stars).withStyle(e.danger() >= 3 ? ChatFormatting.RED : ChatFormatting.YELLOW)));
+                    .append(Component.literal("  ").append(Component.translatable("bestiary.hxh.danger",
+                            Component.translatable("bestiary.hxh.danger." + e.danger()))).withStyle(color)));
             out.add(Component.translatable("bestiary.hxh.where", Component.translatable("bestiary.hxh." + e.id() + ".where"))
                     .withStyle(ChatFormatting.AQUA));
             out.add(Component.translatable("bestiary.hxh." + e.id() + ".desc"));

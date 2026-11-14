@@ -1360,7 +1360,7 @@
   "entity.hxh.kiriko": "Kiriko",
   "item.hxh.kiriko_spawn_egg": "Kiriko Spawn Egg",
   "screen.hxh.profile.tab_bestiary": "Bestiary",
-  "bestiary.hxh.intro": "The creatures of the Hunter x Hunter world. ★ = danger.",
+  "bestiary.hxh.intro": "The creatures of the Hunter x Hunter world, with their danger.",
   "bestiary.hxh.where": "Where: %s",
   "bestiary.hxh.nen_mobs": "Everywhere: some mobs master Nen (level visible with Gyo). Taking them down pays an Association bounty.",
   "bestiary.hxh.kiriko.where": "forest before Zaban (Exam trial)",
@@ -1374,5 +1374,10 @@
   "bestiary.hxh.man_faced_ape.where": "swamps (Numele)",
   "bestiary.hxh.man_faced_ape.desc": "It mimics human voices to lure prey: beware of calls in the swamp.",
   "bestiary.hxh.chimera_ant.where": "jungles",
-  "bestiary.hxh.chimera_ant.desc": "Colony soldier that hunts day and night. Some master Nen: Association bounty."
+  "bestiary.hxh.chimera_ant.desc": "Colony soldier that hunts day and night. Some master Nen: Association bounty.",
+  "bestiary.hxh.danger": "(danger: %s)",
+  "bestiary.hxh.danger.0": "none",
+  "bestiary.hxh.danger.1": "low",
+  "bestiary.hxh.danger.2": "medium",
+  "bestiary.hxh.danger.3": "high"
 }
