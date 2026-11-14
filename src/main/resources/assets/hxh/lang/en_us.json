@@ -1395,7 +1395,7 @@
   "profile.hxh.clan_level_max": "Clan level %s (maximum)",
   "profile.hxh.scarlet_duration": "Scarlet eyes: %s s",
   "command.hxh.show.clan_boost": " (+%s clan)",
-  "command.hxh.show.scarlet_type": "%s (scarlet eyes; usually %s)",
+  "command.hxh.show.scarlet_type": "%s (scarlet eyes)",
   "nen.hxh.physical": "Physical",
   "command.hxh.clan.set": "%s's clan level: %s",
   "command.hxh.clan.no_family": "%s has no family: no clan level",

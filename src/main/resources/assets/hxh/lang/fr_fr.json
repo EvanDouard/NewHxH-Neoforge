@@ -1395,7 +1395,7 @@
   "profile.hxh.clan_level_max": "Niveau de clan %s (maximum)",
   "profile.hxh.scarlet_duration": "Yeux écarlates : %s s",
   "command.hxh.show.clan_boost": " (+%s clan)",
-  "command.hxh.show.scarlet_type": "%s (yeux écarlates ; d'habitude %s)",
+  "command.hxh.show.scarlet_type": "%s (yeux écarlates)",
   "nen.hxh.physical": "Physique",
   "command.hxh.clan.set": "Niveau de clan de %s : %s",
   "command.hxh.clan.no_family": "%s n'a pas de famille : pas de niveau de clan",
