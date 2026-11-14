@@ -224,6 +224,15 @@ public final class CiAutopilot {
                             + mc.level.getBlockState(target).getBlock().getName().getString() + ")");
                     return true;
                 }
+                case "pick" -> {
+                    // Ordinateur Hunter : ouvre la fiche dont l'identifiant est donné
+                    if (mc.screen instanceof com.evandouard.hxh.client.HunterComputerScreen pc && pc.select(arg)) {
+                        log("fiche '" + arg + "'");
+                        return true;
+                    }
+                    log("ECHEC : pas de fiche '" + arg + "' à l'écran");
+                    return false;
+                }
                 case "camera" -> {
                     mc.options.setCameraType(switch (arg) {
                         case "back" -> CameraType.THIRD_PERSON_BACK;

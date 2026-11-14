@@ -2237,11 +2237,13 @@ cmd summon hxh:kiriko ~5 ~ ~8 {NoAI:1b,PersistenceRequired:1b}
 wait 10
 clearchat
 shot 96_singe_fourmi_chimere_et_kiriko
-key key.hxh.profile
-wait 10
-click Bestiaire
-wait 10
-shot 97_carnet_bestiaire
+cmd setblock ~-1 ~ ~ hxh:hunter_computer[facing=east]
+wait 5
+useblock -1 0 0
+wait 15
+pick bestiary_chimera_ant
+wait 5
+shot 97_ordinateur_bestiaire_fourmi_chimere
 closescreen
 cmd kill @e[type=!minecraft:player]
 # --- Yeux du Gyo, tête tournée par rapport au corps (retour d'Evan : les yeux disparaissaient) ---
@@ -2281,12 +2283,9 @@ key key.hxh.profile
 wait 10
 click Quêtes
 wait 5
-click Tour Céleste
-wait 10
-shot 99c_carnet_niveau_de_clan_kurta
 click Personnage
 wait 10
-shot 99d_carnet_nen_specialisation_yeux_ecarlates
+shot 99c_carnet_personnage_famille_et_clan
 closescreen
 cmd effect clear @s hxh:scarlet_eyes
 cmd hunter clan level 0

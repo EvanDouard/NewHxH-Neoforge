@@ -18,6 +18,8 @@ public class HunterComputerScreen extends Screen {
     private static final int LIST_W = 130, LINE = 11;
 
     private final OpenComputerPayload data;
+    /** Fiches du serveur, puis celles du bestiaire (toujours lisibles, traduites ici). */
+    private final List<OpenComputerPayload.Entry> entries = new ArrayList<>();
     /** Lignes de la liste : en-têtes de catégorie (index -1) ou fiches. */
     private final List<Row> rows = new ArrayList<>();
     private int selected = -1;
@@ -28,9 +30,11 @@ public class HunterComputerScreen extends Screen {
     public HunterComputerScreen(OpenComputerPayload data) {
         super(Component.translatable("screen.hxh.computer.title"));
         this.data = data;
+        entries.addAll(data.entries());
+        entries.addAll(Bestiary.computerEntries());
         String category = null;
-        for (int i = 0; i < data.entries().size(); i++) {
-            OpenComputerPayload.Entry e = data.entries().get(i);
+        for (int i = 0; i < entries.size(); i++) {
+            OpenComputerPayload.Entry e = entries.get(i);
             if (!e.category().equals(category)) {
                 category = e.category();
                 rows.add(new Row(category, -1));
@@ -92,7 +96,7 @@ public class HunterComputerScreen extends Screen {
                 g.drawString(font, font.plainSubstrByWidth(row.label().toUpperCase(), LIST_W), x + 8, ry, ACCENT, false);
                 continue;
             }
-            OpenComputerPayload.Entry e = data.entries().get(row.entry());
+            OpenComputerPayload.Entry e = entries.get(row.entry());
             boolean sel = row.entry() == selected;
             if (sel) g.fill(x + 6, ry - 1, x + LIST_W + 4, ry + LINE - 1, INK);
             int color = !e.unlocked() ? 0xFF999999 : sel ? 0xFFFFFFFF : INK;
@@ -109,7 +113,7 @@ public class HunterComputerScreen extends Screen {
             g.drawWordWrap(font, Component.translatable("screen.hxh.computer.empty"), tx, ty, tw, 0xFF555555);
             return;
         }
-        OpenComputerPayload.Entry e = data.entries().get(selected);
+        OpenComputerPayload.Entry e = entries.get(selected);
         if (!e.unlocked()) {
             MangaHud.outlined(g, MangaHud.manga(Component.translatable("screen.hxh.computer.locked")), tx, ty, 0xFFFF6B6B, 1.1f);
             if (!e.hint().isEmpty()) g.drawWordWrap(font, Component.literal(e.hint()), tx, ty + 18, tw, 0xFF555555);
@@ -159,8 +163,8 @@ public class HunterComputerScreen extends Screen {
 
     /** Pour les tests du scénario : choisit la fiche dont l'identifiant est donné. */
     public boolean select(String id) {
-        for (int i = 0; i < data.entries().size(); i++) {
-            if (data.entries().get(i).id().equals(id)) {
+        for (int i = 0; i < entries.size(); i++) {
+            if (entries.get(i).id().equals(id)) {
                 selected = i;
                 textScroll = 0;
                 return true;

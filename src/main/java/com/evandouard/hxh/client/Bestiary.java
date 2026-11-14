@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Bestiaire du carnet (onglet « Bestiaire ») : chaque créature du mod avec ce qu'elle est, où la trouver et son
+ * Bestiaire de l'ordinateur Hunter (catégorie « Bestiaire ») : chaque créature du mod avec ce qu'elle est, où la trouver et son
  * danger. Textes dans les fichiers de langue ({@code bestiary.hxh.<id>.desc} et {@code .where}).
  */
 public final class Bestiary {
@@ -23,6 +23,24 @@ public final class Bestiary {
             new Entry("foxbear", 2),
             new Entry("man_faced_ape", 1),
             new Entry("chimera_ant", 3));
+
+    /** Fiches de l'ordinateur Hunter : une par créature, catégorie « Bestiaire », id {@code bestiary_<créature>}. */
+    public static List<com.evandouard.hxh.network.OpenComputerPayload.Entry> computerEntries() {
+        String category = Component.translatable("screen.hxh.computer.bestiary").getString();
+        List<com.evandouard.hxh.network.OpenComputerPayload.Entry> out = new ArrayList<>();
+        out.add(new com.evandouard.hxh.network.OpenComputerPayload.Entry("bestiary_intro", category,
+                Component.translatable("screen.hxh.computer.bestiary_intro").getString(),
+                Component.translatable("bestiary.hxh.intro").getString() + "\n\n"
+                        + Component.translatable("bestiary.hxh.nen_mobs").getString(), true, ""));
+        for (Entry e : ENTRIES) {
+            String text = Component.translatable("bestiary.hxh.danger", Component.translatable("bestiary.hxh.danger." + e.danger())).getString()
+                    + "\n" + Component.translatable("bestiary.hxh.where", Component.translatable("bestiary.hxh." + e.id() + ".where")).getString()
+                    + "\n\n" + Component.translatable("bestiary.hxh." + e.id() + ".desc").getString();
+            out.add(new com.evandouard.hxh.network.OpenComputerPayload.Entry("bestiary_" + e.id(), category,
+                    Component.translatable("entity.hxh." + e.id()).getString(), text, true, ""));
+        }
+        return out;
+    }
 
     public static List<Component> lines() {
         List<Component> out = new ArrayList<>();

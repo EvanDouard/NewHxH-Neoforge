@@ -508,6 +508,8 @@ public final class HunterCommand {
         d.setHealUnlocked(true);
         d.setHealLevel(HunterData.HEAL_MAX_LEVEL);
         com.evandouard.hxh.nen.NenLearning.learnAll(entity); // toutes les capacités apprises
+        // niveau de clan au maximum (sans famille, il ne donne rien mais reste prêt)
+        com.evandouard.hxh.family.Families.setClanLevel(entity, HunterData.CLAN_MAX);
         d.setAuraMax(NenModes.computeAuraMax(d));
         d.setAura(d.auraMax());
         HunterStats.applyAttributes(entity);

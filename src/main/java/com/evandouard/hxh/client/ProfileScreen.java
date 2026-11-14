@@ -53,8 +53,7 @@ public class ProfileScreen extends Screen {
     @Override
     protected void init() {
         tabs.clear();
-        String[] keys = {"screen.hxh.profile.tab_character", "screen.hxh.profile.tab_quests", "screen.hxh.profile.tab_arena",
-                "screen.hxh.profile.tab_bestiary"};
+        String[] keys = {"screen.hxh.profile.tab_character", "screen.hxh.profile.tab_quests", "screen.hxh.profile.tab_arena"};
         int w = panelW();
         int left = width / 2 - w / 2;
         int bw = (w - 4 * (keys.length - 1)) / keys.length;
@@ -148,7 +147,6 @@ public class ProfileScreen extends Screen {
         return switch (tab) {
             case 1 -> data.quests();
             case 2 -> data.arena();
-            case 3 -> Bestiary.lines();
             default -> data.character();
         };
     }

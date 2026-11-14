@@ -1400,5 +1400,12 @@
   "command.hxh.clan.set": "%s's clan level: %s",
   "command.hxh.clan.no_family": "%s has no family: no clan level",
   "command.hxh.clan.xp": "+%s clan XP for %s (level %s)",
-  "screen.hxh.en_shape.volume_note": "It grows with your En mastery; the shape spreads this volume."
+  "screen.hxh.en_shape.volume_note": "It grows with your En mastery; the shape spreads this volume.",
+  "profile.hxh.family_heritage": "Heritage:",
+  "profile.hxh.family_xp": "+%s%% %s XP",
+  "profile.hxh.family_clan_max": "at clan 100:",
+  "profile.hxh.family_poison": "poison immune",
+  "profile.hxh.family_lightning": "lightning −%s%%",
+  "screen.hxh.computer.bestiary": "Bestiary",
+  "screen.hxh.computer.bestiary_intro": "The bestiary"
 }

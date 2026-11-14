@@ -50,6 +50,12 @@ public final class ProfileText {
                     data.clanBonus(stat)).withStyle(ChatFormatting.LIGHT_PURPLE));
             lines.add(line);
         }
+        // Famille et niveau de clan, juste sous les stats qu'il fait monter
+        if (living instanceof ServerPlayer sp) {
+            lines.add(Component.empty());
+            lines.addAll(family(sp));
+            lines.add(Component.empty());
+        }
         Component nenType = data.nenType() == null
                 ? Component.translatable("nen.hxh.none")
                 : Component.translatable(data.nenType().translationKey());
@@ -186,16 +192,10 @@ public final class ProfileText {
         return obj;
     }
 
-    /** Tour Céleste et Jenny. */
-    public static List<Component> arena(ServerPlayer player) {
+    /** Famille : nom, niveau de clan et XP, stats offertes par le clan, coup secret (onglet Personnage du carnet). */
+    public static List<Component> family(ServerPlayer player) {
         QuestData d = QuestManager.data(player);
         List<Component> lines = new ArrayList<>();
-        lines.add(Component.translatable("profile.hxh.jenny", d.jenny()).withStyle(ChatFormatting.YELLOW));
-        lines.add(Component.translatable("profile.hxh.hunter", Component.translatable(d.isHunter() ? "command.hxh.yes" : "command.hxh.no")));
-        if (d.isHunter()) {
-            lines.add(Component.translatable("profile.hxh.hunter_rank", com.evandouard.hxh.contract.HunterStars.stars(d.hunterStars()),
-                    d.blacklistCaught(), d.contractsDone()).withStyle(ChatFormatting.GOLD));
-        }
         var fam = com.evandouard.hxh.family.Families.get(d.family());
         lines.add(Component.translatable("profile.hxh.family", fam == null ? Component.translatable("family.hxh.none")
                 : Component.literal(fam.name(player.clientInformation().language())).withStyle(s -> s.withColor(fam.color()))));
@@ -213,6 +213,32 @@ public final class ProfileText {
                 first = false;
             }
             lines.add(clan.withStyle(s -> s.withColor(fam.color())));
+            // ce que la famille apporte : XP d'entraînement en plus, et stats au clan 100
+            MutableComponent heritage = Component.translatable("profile.hxh.family_heritage");
+            boolean any = false;
+            for (var e : fam.xpBonus().entrySet()) {
+                heritage.append(any ? ", " : " ").append(Component.translatable("profile.hxh.family_xp",
+                        Math.round(e.getValue() * 100), Component.translatable(e.getKey().translationKey())));
+                any = true;
+            }
+            if (!fam.clanStats().isEmpty()) {
+                heritage.append(" · ").append(Component.translatable("profile.hxh.family_clan_max"));
+                boolean f2 = true;
+                for (var e : fam.clanStats().entrySet()) {
+                    heritage.append(f2 ? " " : ", ").append("+" + e.getValue() + " ").append(Component.translatable(e.getKey().translationKey()));
+                    f2 = false;
+                }
+                any = true;
+            }
+            if (fam.poisonImmune()) {
+                heritage.append(" · ").append(Component.translatable("profile.hxh.family_poison"));
+                any = true;
+            }
+            if (fam.lightningResist() > 0) {
+                heritage.append(" · ").append(Component.translatable("profile.hxh.family_lightning", Math.round(fam.lightningResist() * 100)));
+                any = true;
+            }
+            if (any) lines.add(heritage.withStyle(ChatFormatting.GRAY));
             if ("family_kurta_scarlet".equals(fam.secretMove())) {
                 lines.add(Component.translatable("profile.hxh.scarlet_duration",
                         com.evandouard.hxh.hatsu.FamilyMoves.scarletDuration(cl) / 20).withStyle(ChatFormatting.GRAY));
@@ -221,6 +247,19 @@ public final class ProfileText {
         if (fam != null && com.evandouard.hxh.hatsu.FamilyMoves.get(fam.secretMove()) != null) {
             lines.add(Component.translatable("profile.hxh.family_move",
                     Component.translatable("technique.hxh." + fam.secretMove())).withStyle(ChatFormatting.GRAY));
+        }
+        return lines;
+    }
+
+    /** Tour Céleste et Jenny. */
+    public static List<Component> arena(ServerPlayer player) {
+        QuestData d = QuestManager.data(player);
+        List<Component> lines = new ArrayList<>();
+        lines.add(Component.translatable("profile.hxh.jenny", d.jenny()).withStyle(ChatFormatting.YELLOW));
+        lines.add(Component.translatable("profile.hxh.hunter", Component.translatable(d.isHunter() ? "command.hxh.yes" : "command.hxh.no")));
+        if (d.isHunter()) {
+            lines.add(Component.translatable("profile.hxh.hunter_rank", com.evandouard.hxh.contract.HunterStars.stars(d.hunterStars()),
+                    d.blacklistCaught(), d.contractsDone()).withStyle(ChatFormatting.GOLD));
         }
         var org = com.evandouard.hxh.org.Organizations.get(d.organization());
         lines.add(Component.translatable("profile.hxh.organization", org == null ? Component.translatable("org.hxh.none_short")
