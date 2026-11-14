@@ -13,6 +13,16 @@ les lignes « En jeu » restent à regarder à la main.
 
 Légende : **CI** = vérifié par les GameTests ou une capture du scénario · **En jeu** = à regarder à la main.
 
+## Retours du 14 nov (fin d'après-midi) : fins d'épreuve, Tour, dirigeable, Zevil, coups physiques
+- [x] CI (capture `34_mamie_attente_avant_depart`) : 3,5 s d'attente avant la téléportation de fin d'épreuve, « Départ dans N s… » ; 6 s après avoir démasqué le Kiriko. Pas d'attente pour `/hunter quest skip` ni au premier dirigeable du guide.
+- [x] CI : GameTest `overworldTowerIsAvailable` : la tour a un structure_set (générée aussi naturellement, tous les ~1000 blocs, dans les biomes autorisés) en plus de celle posée près du spawn.
+- [x] CI : GameTest `zevilCandidatesHuntEachOtherForPlates` ; capture `34f2`.
+- [x] CI : GameTest `physicalMovesIgnoreTheHeldTool`.
+- [ ] En jeu : `/locate structure hxh:heavens_arena_tower` dans un nouveau monde (la génération naturelle ne vaut que pour les tronçons pas encore générés).
+- [ ] En jeu : dirigeable posé sur un sol plat et dégagé, au-dessus des arbres, sans rien couper ; on monte par l'échelle du mât.
+- [ ] En jeu : île de Zevil : les candidats se battent entre eux ; « X a ses plaques et quitte l'île (n/4) » ; un nouveau candidat débarque toutes les 25 s (18 au plus) ; à 4 qualifiés, épreuve terminée (éliminé sans ses 6 points). Le porteur de la plaque de ta cible ne se qualifie jamais.
+- [ ] En jeu : hache ou épée en main : « Attaque basique », coup de pied, coup chargé font les mêmes dégâts qu'à mains nues (sauf armes du mod) et l'arme repart de zéro (pas de coup d'épée chargé juste après).
+
 ## Tri du choix de Hatsu par type, /hunter hatsu give (14 nov, soir)
 - [x] CI (capture `16f_filtre_par_type_transformation`) : pastilles des six types en haut à droite ; un clic n'affiche que ce type (cadre doré), un second clic enlève le filtre. Chaque personnage a sa pastille.
 - [x] CI : GameTest `anyTechniqueCanBeGivenByName` (nom anglais, français, identifiant ; chaque technique a ses deux noms) ; capture `99e` : Jajanken et Doctor Blythe donnés apparaissent dans la liste.
