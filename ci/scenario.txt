@@ -1479,6 +1479,9 @@ wait 80
 shot 48c2_bain_glace_givre
 cmd tp @s 8.5 -60 63.5 180 10
 wait 35
+clearchat
+cmd tp @s 8.5 -60 65.8 180 20
+wait 5
 shot 48c3_mannequin_cogneur
 cmd tp @s 3.5 -60 59.5 0 35
 wait 20
