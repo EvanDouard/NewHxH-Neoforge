@@ -63,6 +63,33 @@ public final class HunterCommand {
                 .then(nenCommand())
                 .then(hatsuCommand())
                 .then(vowCommand())
+                // Niveau / XP de clan de sa famille (admin, tests)
+                .then(Commands.literal("clan").requires(src -> src.hasPermission(2))
+                        .then(Commands.literal("level").then(Commands.argument("level",
+                                com.mojang.brigadier.arguments.IntegerArgumentType.integer(0, com.evandouard.hxh.data.HunterData.CLAN_MAX)).executes(ctx -> {
+                            var p = ctx.getSource().getPlayerOrException();
+                            if (com.evandouard.hxh.family.Families.of(p) == null) {
+                                ctx.getSource().sendFailure(Component.translatable("command.hxh.clan.no_family", p.getDisplayName()));
+                                return 0;
+                            }
+                            int lvl = com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(ctx, "level");
+                            com.evandouard.hxh.family.Families.setClanLevel(p, lvl);
+                            ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.clan.set", p.getDisplayName(), lvl), false);
+                            return 1;
+                        })))
+                        .then(Commands.literal("xp").then(Commands.argument("amount",
+                                com.mojang.brigadier.arguments.IntegerArgumentType.integer(1, 100000)).executes(ctx -> {
+                            var p = ctx.getSource().getPlayerOrException();
+                            if (com.evandouard.hxh.family.Families.of(p) == null) {
+                                ctx.getSource().sendFailure(Component.translatable("command.hxh.clan.no_family", p.getDisplayName()));
+                                return 0;
+                            }
+                            int amount = com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(ctx, "amount");
+                            com.evandouard.hxh.family.Families.addClanXp(p, amount);
+                            int lvl = com.evandouard.hxh.stats.HunterStats.get(p).clanLevel();
+                            ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.clan.xp", amount, p.getDisplayName(), lvl), false);
+                            return 1;
+                        }))))
                 // Bras de fer contre un adversaire de cette Force (admin, tests)
                 .then(Commands.literal("armwrestle").requires(src -> src.hasPermission(2))
                         .then(Commands.argument("strength", com.mojang.brigadier.arguments.IntegerArgumentType.integer(0, 100)).executes(ctx ->

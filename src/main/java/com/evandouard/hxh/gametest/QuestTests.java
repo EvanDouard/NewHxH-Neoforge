@@ -830,7 +830,7 @@ public final class QuestTests {
         helper.assertTrue(!com.evandouard.hxh.hatsu.Hatsu.techniqueIds(d).contains("family_zoldyck_claw"), "L'ancien coup disparaît");
         com.evandouard.hxh.hatsu.Hatsu.select(p, "family_kurta_scarlet");
         helper.assertTrue(com.evandouard.hxh.hatsu.Hatsu.cast(p) == null, "Colère écarlate lancée");
-        helper.assertTrue(p.hasEffect(net.minecraft.world.effect.MobEffects.DAMAGE_BOOST), "Colère écarlate : Force");
+        helper.assertTrue(p.hasEffect(com.evandouard.hxh.effect.ModEffects.SCARLET_EYES), "Colère écarlate : yeux écarlates");
         // Paladiknight : Premiers soins sur soi
         com.evandouard.hxh.family.Families.set(p, "paladiknight");
         p.setHealth(6f);

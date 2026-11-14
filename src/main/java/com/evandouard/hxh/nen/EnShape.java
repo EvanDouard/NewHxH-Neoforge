@@ -90,6 +90,20 @@ public enum EnShape {
         };
     }
 
+    /**
+     * Réglage par défaut d'une forme pour un En de rayon de base R : cube aussi haut que large, cylindre aussi haut que
+     * large, coupé à mi-hauteur. Toujours faisable dès la maîtrise {@link #UNLOCK_LEVEL} (et jusqu'à 100).
+     * @return {a, b}
+     */
+    public static float[] defaults(EnShape shape, double baseRadius) {
+        double v = volume(baseRadius);
+        return switch (shape) {
+            case CUBE -> new float[]{(float) round1(Math.cbrt(v / 8)), 1f};
+            case CYLINDER -> new float[]{(float) round1(baseRadius), (float) round1(baseRadius * 2 / 3)};
+            default -> new float[]{3f, 1f};
+        };
+    }
+
     /** @return null si la forme est faisable, sinon la clé du refus */
     @Nullable
     public static String refusal(EnShape shape, double baseRadius, double a, double b) {

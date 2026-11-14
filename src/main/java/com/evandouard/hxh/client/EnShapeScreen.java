@@ -36,6 +36,22 @@ public class EnShapeScreen extends Screen {
         shape = EnShape.byId(d.enShape());
         a = d.enA();
         b = d.enB();
+        fitDefaults();
+    }
+
+    /** Réglage impossible pour cette forme (souvent celui d'une autre forme) : on part du réglage par défaut. */
+    private void fitDefaults() {
+        if (shape.adjustable() && refusal() != null) {
+            float[] def = EnShape.defaults(shape, baseRadius());
+            a = def[0];
+            b = def[1];
+        }
+    }
+
+    private void changeShape(EnShape to) {
+        shape = to;
+        fitDefaults();
+        rebuildWidgets();
     }
 
     private static HunterData data() {
@@ -49,24 +65,15 @@ public class EnShapeScreen extends Screen {
     @Override
     protected void init() {
         int cx = width / 2, y = 52;
-        addRenderableWidget(Button.builder(Component.literal("◀"), btn -> {
-            shape = EnShape.values()[(shape.ordinal() + EnShape.values().length - 1) % EnShape.values().length];
-            rebuildWidgets();
-        }).bounds(cx - 100, y, 20, 20).build());
-        addRenderableWidget(Button.builder(Component.translatable(shape.translationKey()), btn -> {
-            shape = shape.next();
-            rebuildWidgets();
-        }).bounds(cx - 76, y, 152, 20).build());
-        addRenderableWidget(Button.builder(Component.literal("▶"), btn -> {
-            shape = shape.next();
-            rebuildWidgets();
-        }).bounds(cx + 80, y, 20, 20).build());
-        if (shape.adjustable()) {
-            stepper(cx, y + 34, () -> a = Math.max(0, a - STEP), () -> a = Math.min((float) EnShape.MAX_SIZE, a + STEP));
-        }
-        if (shape.twoParams()) {
-            stepper(cx, y + 58, () -> b = Math.max(0, b - STEP), () -> b = Math.min((float) EnShape.MAX_SIZE, b + STEP));
-        }
+        addRenderableWidget(Button.builder(Component.literal("◀"), btn ->
+                changeShape(EnShape.values()[(shape.ordinal() + EnShape.values().length - 1) % EnShape.values().length]))
+                .bounds(cx - 100, y, 20, 20).build());
+        addRenderableWidget(Button.builder(Component.translatable(shape.translationKey()), btn -> changeShape(shape.next()))
+                .bounds(cx - 76, y, 152, 20).build());
+        addRenderableWidget(Button.builder(Component.literal("▶"), btn -> changeShape(shape.next()))
+                .bounds(cx + 80, y, 20, 20).build());
+        if (shape.adjustable()) stepper(cx, y + 34, true);
+        if (shape.twoParams()) stepper(cx, y + 58, false);
         apply = addRenderableWidget(Button.builder(Component.translatable("screen.hxh.en_shape.apply"), btn -> {
             PacketDistributor.sendToServer(new EnShapePayload(shape.id(), a, b));
             onClose();
@@ -76,16 +83,18 @@ public class EnShapeScreen extends Screen {
         apply.active = refusal() == null;
     }
 
-    /** Boutons − et + de part et d'autre d'une valeur. */
-    private void stepper(int cx, int y, Runnable minus, Runnable plus) {
-        addRenderableWidget(Button.builder(Component.literal("−"), btn -> {
-            minus.run();
-            apply.active = refusal() == null;
-        }).bounds(cx - 100, y, 20, 20).build());
-        addRenderableWidget(Button.builder(Component.literal("+"), btn -> {
-            plus.run();
-            apply.active = refusal() == null;
-        }).bounds(cx + 80, y, 20, 20).build());
+    /** Boutons −5, −, + et +5 de part et d'autre d'une valeur ({@code first} : rayon, sinon hauteur au-dessus). */
+    private void stepper(int cx, int y, boolean first) {
+        float[][] steps = {{-5f, -124}, {-STEP, -100}, {STEP, 80}, {5f, 104}};
+        for (float[] st : steps) {
+            float delta = st[0];
+            String label = delta == -5f ? "«" : delta < 0 ? "−" : delta == 5f ? "»" : "+";
+            addRenderableWidget(Button.builder(Component.literal(label), btn -> {
+                if (first) a = Math.max(0, Math.min((float) EnShape.MAX_SIZE, a + delta));
+                else b = Math.max(0, Math.min((float) EnShape.MAX_SIZE, b + delta));
+                apply.active = refusal() == null;
+            }).bounds(cx + (int) st[1], y, 20, 20).build());
+        }
     }
 
     @Nullable
@@ -110,6 +119,10 @@ public class EnShapeScreen extends Screen {
                     : "screen.hxh.en_shape.radius", f(a)), cx, 92, 0xFFFFFF);
         }
         if (shape.twoParams()) g.drawCenteredString(font, Component.translatable("screen.hxh.en_shape.up", f(b)), cx, 116, 0xFFFFFF);
+        if (shape.adjustable()) {
+            g.drawCenteredString(font, Component.translatable("screen.hxh.en_shape.steps").withStyle(ChatFormatting.DARK_GRAY),
+                    cx, height - 46, 0xFFFFFF);
+        }
         // Ce qui est calculé pour garder le volume
         String refusal = refusal();
         int y = shape.twoParams() ? 144 : shape.adjustable() ? 120 : 92;

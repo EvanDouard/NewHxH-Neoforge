@@ -87,21 +87,36 @@ public final class FamilyMoves {
     });
 
     /**
-     * Kurta — Colère écarlate : les yeux virent à l'écarlate pendant 15 s : Force II et Résistance I (Force III sous
-     * 40 % de vie). Le bonus passif des yeux écarlates sur les techniques reste à part.
+     * Kurta — Colère écarlate : les yeux virent à l'écarlate (effet « Yeux écarlates », rien d'autre). Le Nen devient
+     * Spécialisation et toutes les catégories passent à 100 % (voir {@link NenAffinity}). Durée : 15 s au niveau de
+     * clan 0, 5 min au niveau 100 ; la recharge (90 s, raccourcie par l'Endurance) part après la fin des yeux.
      */
     public static final Technique KURTA_SCARLET = Techniques.register(new Move("family_kurta_scarlet", 1800) {
         @Override
         public boolean perform(LivingEntity caster, float power) {
-            boolean low = caster.getHealth() <= caster.getMaxHealth() * 0.4f;
-            caster.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, low ? 2 : 1, false, false, true), caster);
-            caster.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 300, 0, false, false, true), caster);
+            int duration = scarletDuration(caster);
+            caster.addEffect(new MobEffectInstance(com.evandouard.hxh.effect.ModEffects.SCARLET_EYES, duration, 0, false, false, true), caster);
             NenFx.flare(caster, 1.4f, KURTA);
-            NenFx.crackle(caster, KURTA, 300);
+            NenFx.crackle(caster, KURTA, 60);
             Techniques.sound(caster, SoundEvents.WARDEN_HEARTBEAT);
             return true;
         }
+
+        @Override
+        public int cooldownFor(HunterData data) {
+            return scarletDuration(data.clanLevel()) + super.cooldownFor(data);
+        }
     });
+
+    /** Durée des yeux écarlates : 15 s au niveau de clan 0, 5 min au niveau 100 (linéaire). */
+    public static int scarletDuration(int clanLevel) {
+        int l = Math.max(0, Math.min(HunterData.CLAN_MAX, clanLevel));
+        return 300 + (6000 - 300) * l / HunterData.CLAN_MAX;
+    }
+
+    public static int scarletDuration(LivingEntity e) {
+        return scarletDuration(e.hasData(com.evandouard.hxh.data.ModAttachments.HUNTER) ? HunterStats.get(e).clanLevel() : 0);
+    }
 
     /**
      * Freecss — Instinct du chasseur : odorat et ouïe de Gon. Toutes les créatures à 32 blocs sont repérées 12 s (vues

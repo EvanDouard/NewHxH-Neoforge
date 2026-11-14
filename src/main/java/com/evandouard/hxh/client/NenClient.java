@@ -208,7 +208,7 @@ public final class NenClient {
         if (technique == null) return;
         java.util.List<String> ids = Hatsu.techniqueIds(data);
 
-        int w = 130;
+        int w = 150;
         int h = 34;
         int x = graphics.guiWidth() - w - 6;
         int y = graphics.guiHeight() - h - 6;
@@ -226,7 +226,10 @@ public final class NenClient {
         graphics.drawString(mc.font, counter, x + w - 5 - counterWidth, y + 5, 0xFF777777, false);
         // Nom tronqué avec « … » s'il déborde sur le compteur
         String name = Component.translatable(technique.translationKey()).getString();
-        int maxName = w - 10 - counterWidth - 10;
+        // pastille(s) du type de Nen de la technique, juste avant le compteur
+        int badgeW = NenBadge.width(technique);
+        NenBadge.draw(graphics, mc.font, technique, x + w - 5 - counterWidth - 4 - badgeW, y + 3);
+        int maxName = w - 10 - counterWidth - 10 - badgeW - 4;
         // Le gras ajoute un pixel par lettre : on mesure le texte tel qu'il est dessiné
         java.util.function.ToIntFunction<String> bold = t -> mc.font.width(Component.literal(t).withStyle(net.minecraft.ChatFormatting.BOLD));
         if (bold.applyAsInt(name) > maxName) {

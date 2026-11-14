@@ -471,6 +471,7 @@ public final class Techniques {
 
         @Override
         public boolean perform(LivingEntity caster, float power) {
+            double radius = this.radius * NenAffinity.sizeFactor(caster, this); // plus petite hors de son type
             List<LivingEntity> targets = Targeting.around(caster, radius);
             for (LivingEntity t : targets) {
                 t.invulnerableTime = 0;

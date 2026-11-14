@@ -99,6 +99,7 @@ public final class Kinds {
 
         @Override
         public boolean perform(LivingEntity caster, float power) {
+            double radius = this.radius * NenAffinity.sizeFactor(caster, this); // plus petite hors de son type
             List<LivingEntity> hit = enemiesAround(caster, caster.position().add(0, 1, 0), radius);
             for (LivingEntity t : hit) {
                 if (damage > 0) hurt(caster, t, damage * power);
@@ -259,6 +260,7 @@ public final class Kinds {
             if (!(caster.level() instanceof ServerLevel level)) return false;
             Vec3 c = center(caster);
             var rnd = caster.getRandom();
+            double radius = this.radius * NenAffinity.sizeFactor(caster, this);
             if (ringSprite != null) for (int k = 0; k < 6; k++) {
                 double a = k * Math.PI / 3;
                 NenFx.sprite(level, ringSprite, null, c.add(Math.cos(a) * (radius + 1), 1.2, Math.sin(a) * (radius + 1)), 2.2f, color, duration + 20);
@@ -373,7 +375,7 @@ public final class Kinds {
         public boolean perform(LivingEntity caster, float power) {
             if (!(caster.level() instanceof ServerLevel level)) return false;
             Vec3 eye = caster.getEyePosition(), look = caster.getLookAngle();
-            List<LivingEntity> hit = Netero.beamTargets(caster, eye, look, length, width);
+            List<LivingEntity> hit = Netero.beamTargets(caster, eye, look, length, width * NenAffinity.sizeFactor(caster, this));
             for (LivingEntity t : hit) {
                 hurt(caster, t, damage * power);
                 NenFx.impactOn(caster, t, 1.5f, color);
@@ -489,6 +491,7 @@ public final class Kinds {
         public boolean perform(LivingEntity caster, float power) {
             LivingEntity target = Targeting.inFront(caster, range, 0.92);
             if (target == null) return false;
+            double radius = this.radius * NenAffinity.sizeFactor(caster, this);
             NenFx.impactOn(caster, target, 0.8f, color);
             // bombe dessinée collée à la cible, chiffres du compte à rebours
             if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.BOMB, target, target.position(), 1.5f, color, delay);

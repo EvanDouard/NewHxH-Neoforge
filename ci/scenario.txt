@@ -1806,6 +1806,90 @@ wait 10
 shot 72_ecran_forme_de_l_en
 closescreen
 cmd hunter en shape sphere
+# --- Formes de l'En depuis l'écran à la maîtrise 60 (retour d'Evan : refus « 64 blocs » en passant au cube) ---
+cmd hunter nen mastery en 60
+cmd fill ~-1 ~19 ~-1 ~1 ~19 ~1 minecraft:glass
+cmd tp @s ~ ~20 ~ 0 35
+wait 20
+cmd summon minecraft:pig ~4 ~-6 ~4 {NoAI:1b,NoGravity:1b,PersistenceRequired:1b,Tags:["hxh_en_probe"]}
+key key.hxh.en
+wait 60
+clearchat
+camera back
+wait 2
+shot 74_en_sphere_complete_dessous_visible
+camera first
+key key.hxh.profile
+wait 15
+click Quêtes
+wait 5
+click Personnage
+wait 5
+click Forme de l'En
+wait 10
+click ▶
+wait 5
+shot 75a_ecran_demi_sphere
+click ▶
+wait 5
+shot 75b_ecran_cube_reglage_par_defaut
+click »
+wait 5
+shot 75c_ecran_cube_plus_5
+click Appliquer
+wait 10
+closescreen
+wait 40
+clearchat
+camera back
+wait 2
+shot 76_en_cube_depuis_l_ecran
+camera first
+key key.hxh.profile
+wait 15
+click Quêtes
+wait 5
+click Personnage
+wait 5
+click Forme de l'En
+wait 10
+click ▶
+wait 5
+shot 77a_ecran_cylindre_reglage_par_defaut
+click Appliquer
+wait 10
+closescreen
+wait 40
+clearchat
+camera back
+wait 2
+shot 77_en_cylindre_depuis_l_ecran
+camera first
+key key.hxh.profile
+wait 15
+click Quêtes
+wait 5
+click Personnage
+wait 5
+click Forme de l'En
+wait 10
+click ▶
+wait 5
+click ▶
+wait 5
+click Appliquer
+wait 10
+closescreen
+wait 40
+clearchat
+camera back
+wait 2
+shot 78_en_demi_sphere_depuis_l_ecran
+camera first
+key key.hxh.en
+cmd kill @e[tag=hxh_en_probe]
+cmd tp @s ~ ~-20 ~
+cmd hunter en shape sphere
 cmd hunter nen mastery en 0
 # --- En maîtrise 0 : la cible proche brille (contour couleur d'aura) ---
 cmd kill @e[type=!minecraft:player]
@@ -2160,6 +2244,54 @@ wait 10
 shot 97_carnet_bestiaire
 closescreen
 cmd kill @e[type=!minecraft:player]
+# --- Yeux du Gyo, tête tournée par rapport au corps (retour d'Evan : les yeux disparaissaient) ---
+cmd time set midnight
+cmd hunter nen refill
+camera front
+look 0 0
+wait 20
+key key.hxh.gyo
+wait 10
+clearchat
+shot 98a_gyo_yeux_de_face
+look 45 0
+wait 2
+shot 98b_gyo_yeux_tete_tournee_45
+look 90 0
+wait 2
+shot 98c_gyo_yeux_tete_tournee_90
+look 90 30
+wait 2
+shot 98d_gyo_yeux_tete_baissee
+key key.hxh.gyo
+# --- Colère écarlate : yeux rouges et petits éclairs, niveau de clan et durée ---
+cmd hunter family set kurta
+cmd hunter clan level 100
+look 0 0
+wait 20
+cmd effect give @s hxh:scarlet_eyes 60
+wait 10
+clearchat
+shot 99a_yeux_ecarlates_de_face
+look 60 0
+wait 2
+shot 99b_yeux_ecarlates_tete_tournee
+camera back
+key key.hxh.profile
+wait 10
+click Quêtes
+wait 5
+click Tour Céleste
+wait 10
+shot 99c_carnet_niveau_de_clan_kurta
+click Personnage
+wait 10
+shot 99d_carnet_nen_specialisation_yeux_ecarlates
+closescreen
+cmd effect clear @s hxh:scarlet_eyes
+cmd hunter clan level 0
+cmd time set noon
+camera first
 cmd difficulty peaceful
 cmd gamemode creative
 quit

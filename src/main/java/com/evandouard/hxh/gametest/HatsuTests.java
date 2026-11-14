@@ -185,7 +185,71 @@ public final class HatsuTests {
         Zombie gon = husk(helper, 1);
         HunterData d = hunter(gon, NenType.ENHANCER, "gon");
         helper.assertTrue(Math.abs(Hatsu.power(d, Techniques.GON_ROCK) - 1.0f) < 1e-4, "Pierre (Renforcement) : 100 %");
-        helper.assertTrue(Math.abs(Hatsu.power(d, Techniques.GON_PAPER) - 0.8f) < 1e-4, "Papier (Émission) : 80 %");
+        helper.assertTrue(Math.abs(Hatsu.power(d, Techniques.GON_PAPER) - 0.9f) < 1e-4, "Papier (Émission + Renforcement) : 90 %");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void techniqueTypesPhysicalAndScarletEyes(GameTestHelper helper) {
+        // toutes les techniques à deux types existent
+        for (String id : com.evandouard.hxh.hatsu.NenAffinity.secondaryIds()) {
+            helper.assertTrue(Techniques.get(id) != null, "Technique à deux types inconnue : " + id);
+        }
+        Zombie z = husk(helper, 1);
+        HunterData d = hunter(z, NenType.SPECIALIST, null);
+        // Physique : coups de base et coups secrets (Main-griffe comprise) à 100 % pour tout le monde
+        for (var t : new com.evandouard.hxh.hatsu.Technique[]{Techniques.BASIC_KICK, Techniques.BASIC_ATTACK,
+                com.evandouard.hxh.hatsu.FamilyMoves.ZOLDYCK_CLAW, com.evandouard.hxh.hatsu.FamilyMoves.KURTA_SCARLET}) {
+            helper.assertTrue(com.evandouard.hxh.hatsu.NenAffinity.physical(t), t.id() + " devrait être Physique");
+            helper.assertTrue(com.evandouard.hxh.hatsu.NenAffinity.of(z, d, t) == 1f, t.id() + " : 100 % pour un Spécialiste");
+        }
+        // Spécialiste contre Renforcement (opposé) : 40 %, zone à 70 %
+        helper.assertTrue(Math.abs(com.evandouard.hxh.hatsu.NenAffinity.of(z, d, Techniques.GON_ROCK) - 0.4f) < 1e-4, "Pierre : 40 % pour un Spécialiste");
+        helper.assertTrue(Math.abs(com.evandouard.hxh.hatsu.NenAffinity.sizeFactor(z, Techniques.GON_ROCK) - 0.7f) < 1e-4, "Zone à 70 % à l'opposé");
+        // deux types : moyenne (Foudre de Killua = Transformation + Émission, pour un Spécialiste : 80 % et 60 %)
+        helper.assertTrue(com.evandouard.hxh.hatsu.NenAffinity.types(Techniques.KILLUA_THUNDERBOLT).size() == 2, "Foudre : deux types");
+        helper.assertTrue(Math.abs(com.evandouard.hxh.hatsu.NenAffinity.of(z, d, Techniques.KILLUA_THUNDERBOLT) - 0.7f) < 1e-4,
+                "Foudre : moyenne 70 %");
+        // Yeux écarlates : Spécialisation, toutes les catégories à 100 %
+        d.setNenType(NenType.ENHANCER);
+        z.addEffect(new net.minecraft.world.effect.MobEffectInstance(com.evandouard.hxh.effect.ModEffects.SCARLET_EYES, 200));
+        helper.assertTrue(com.evandouard.hxh.hatsu.NenAffinity.typeOf(z, d) == NenType.SPECIALIST, "Yeux écarlates : Spécialisation");
+        for (var t : new com.evandouard.hxh.hatsu.Technique[]{Techniques.GON_ROCK, Techniques.PITOU_TERPSICHORA, Techniques.KILLUA_THUNDERBOLT}) {
+            helper.assertTrue(com.evandouard.hxh.hatsu.NenAffinity.of(z, d, t) == 1f, t.id() + " à 100 % sous les yeux écarlates");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void kurtaClanLevelLengthensScarletEyes(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.family.Families.set(player, "kurta");
+        HunterData d = HunterStats.get(player);
+        com.evandouard.hxh.family.Families.setClanLevel(player, 0);
+        int will0 = d.level(com.evandouard.hxh.data.Stat.WILLPOWER);
+        helper.assertTrue(com.evandouard.hxh.hatsu.FamilyMoves.KURTA_SCARLET.perform(player, 1f), "Colère écarlate lancée");
+        var eyes = player.getEffect(com.evandouard.hxh.effect.ModEffects.SCARLET_EYES);
+        helper.assertTrue(eyes != null && eyes.getDuration() == 300, "Clan 0 : 15 s de yeux écarlates, obtenu " + (eyes == null ? 0 : eyes.getDuration()));
+        helper.assertFalse(player.hasEffect(net.minecraft.world.effect.MobEffects.DAMAGE_BOOST)
+                || player.hasEffect(net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE), "Plus de Force ni de Résistance");
+        player.removeAllEffects();
+        com.evandouard.hxh.family.Families.setClanLevel(player, 100);
+        helper.assertTrue(d.clanLevel() == 100, "Niveau de clan 100");
+        com.evandouard.hxh.hatsu.FamilyMoves.KURTA_SCARLET.perform(player, 1f);
+        eyes = player.getEffect(com.evandouard.hxh.effect.ModEffects.SCARLET_EYES);
+        helper.assertTrue(eyes != null && eyes.getDuration() == 6000, "Clan 100 : 5 min de yeux écarlates");
+        helper.assertTrue(com.evandouard.hxh.hatsu.FamilyMoves.KURTA_SCARLET.cooldownFor(d) >= 6000, "La recharge part après les yeux");
+        // les stats de clan : Volonté +10 au clan 100 (xp_bonus 0,2 × 50)
+        helper.assertTrue(d.clanBonus(com.evandouard.hxh.data.Stat.WILLPOWER) == 10
+                        && d.level(com.evandouard.hxh.data.Stat.WILLPOWER) == Math.min(100, will0 + 10),
+                "Clan 100 : Volonté +10 (" + will0 + " → " + d.level(com.evandouard.hxh.data.Stat.WILLPOWER) + ")");
+        // l'entraînement nourrit le clan ; sans famille, rien
+        com.evandouard.hxh.family.Families.setClanLevel(player, 0);
+        HunterStats.addXp(player, com.evandouard.hxh.data.Stat.STRENGTH, 500);
+        helper.assertTrue(d.clanXp() > 0, "L'XP de stat donne de l'XP de clan");
+        com.evandouard.hxh.family.Families.set(player, "");
+        helper.assertTrue(d.clanBonus(com.evandouard.hxh.data.Stat.WILLPOWER) == 0, "Sans famille : aucun bonus de clan");
+        player.removeAllEffects();
         helper.succeed();
     }
 

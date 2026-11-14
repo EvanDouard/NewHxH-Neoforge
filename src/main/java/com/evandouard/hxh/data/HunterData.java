@@ -88,6 +88,10 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     private int selected = 0;
     /** Coup secret de la famille (technique sans Nen ajoutée au menu), vide sans famille. */
     private String familyMove = "";
+    /** XP de clan (famille) : niveau 0 à {@link #CLAN_MAX}, voir {@link #clanLevel()}. */
+    private int clanXp = 0;
+    /** Niveaux de stat offerts par le niveau de clan (calculés côté serveur selon la famille, synchronisés). */
+    private final java.util.EnumMap<Stat, Integer> clanBonus = new java.util.EnumMap<>(Stat.class);
     /** Serment en cours (voir Vows), technique visée par un serment de technique unique, fin du serment ultime. */
     private String vow = "";
     private String vowTechnique = "";
@@ -120,7 +124,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
 
     /** Niveau effectif : le niveau gagné, multiplié par un serment actif (peut dépasser 100, voulu). */
     public int level(Stat stat) {
-        int base = levels.get(stat);
+        int base = Math.min(Stat.MAX_LEVEL, levels.get(stat) + clanBonus.getOrDefault(stat, 0));
         float m = com.evandouard.hxh.hatsu.Vows.statMultiplier(this);
         return m == 1f ? base : Math.round(base * m);
     }
@@ -559,6 +563,59 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
         dirty.add(HATSU);
     }
 
+    // ---------- Clan ----------
+
+    public static final int CLAN_MAX = 100;
+
+    /** XP pour passer du niveau de clan {@code level} au suivant. */
+    public static int clanXpToNext(int level) {
+        return 40 + 4 * level;
+    }
+
+    /** XP totale pour atteindre le niveau de clan {@code level}. */
+    public static int clanXpFor(int level) {
+        int sum = 0;
+        for (int l = 0; l < Math.min(level, CLAN_MAX); l++) sum += clanXpToNext(l);
+        return sum;
+    }
+
+    public int clanXp() {
+        return clanXp;
+    }
+
+    public int clanLevel() {
+        int l = 0, left = clanXp;
+        while (l < CLAN_MAX && left >= clanXpToNext(l)) {
+            left -= clanXpToNext(l);
+            l++;
+        }
+        return l;
+    }
+
+    /** XP dans le niveau de clan en cours (pour la barre du carnet). */
+    public int clanXpInLevel() {
+        return clanXp - clanXpFor(clanLevel());
+    }
+
+    public void setClanXp(int xp) {
+        int v = Math.max(0, Math.min(clanXpFor(CLAN_MAX), xp));
+        if (v == clanXp) return;
+        clanXp = v;
+        dirty.add(HATSU);
+    }
+
+    public int clanBonus(Stat stat) {
+        return clanBonus.getOrDefault(stat, 0);
+    }
+
+    public void setClanBonus(java.util.Map<Stat, Integer> bonus) {
+        if (clanBonus.equals(bonus)) return;
+        clanBonus.clear();
+        clanBonus.putAll(bonus);
+        dirty.add(HATSU);
+        for (Stat st : Stat.values()) dirty.add(statKey(st));
+    }
+
     public String vow() {
         return vow;
     }
@@ -722,6 +779,10 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             h.putString("kit", kit);
             h.putInt("selected", selected);
             h.putString("familyMove", familyMove);
+            h.putInt("clanXp", clanXp);
+            CompoundTag cb = new CompoundTag();
+            for (var e : clanBonus.entrySet()) cb.putInt(e.getKey().name(), e.getValue());
+            h.put("clanBonus", cb);
             h.putString("vow", vow);
             h.putString("vowTech", vowTechnique);
             h.putLong("vowUntil", vowUntil);
@@ -865,6 +926,15 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
             kit = h.getString("kit");
             selected = Math.max(0, h.getInt("selected"));
             familyMove = h.getString("familyMove");
+            clanXp = h.getInt("clanXp");
+            clanBonus.clear();
+            CompoundTag cb = h.getCompound("clanBonus");
+            for (String k : cb.getAllKeys()) {
+                try {
+                    clanBonus.put(Stat.valueOf(k), cb.getInt(k));
+                } catch (IllegalArgumentException ignored) {
+                }
+            }
             vow = h.getString("vow");
             vowTechnique = h.getString("vowTech");
             vowUntil = h.getLong("vowUntil");

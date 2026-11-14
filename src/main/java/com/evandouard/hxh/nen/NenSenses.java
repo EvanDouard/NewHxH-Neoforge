@@ -85,9 +85,16 @@ public final class NenSenses {
     public static EnShape.Dims enDims(HunterData data) {
         double r = enRadius(data);
         EnShape shape = EnShape.byId(data.enShape());
-        if (data.masteryLevel(Mastery.EN) < EnShape.UNLOCK_LEVEL
-                || EnShape.refusal(shape, r, data.enA(), data.enB()) != null) shape = EnShape.SPHERE;
-        return EnShape.resolve(shape, r, data.enA(), data.enB());
+        if (data.masteryLevel(Mastery.EN) < EnShape.UNLOCK_LEVEL) return EnShape.resolve(EnShape.SPHERE, r, 0, 0);
+        float a = data.enA(), b = data.enB();
+        // L'En a grandi (ou rapetissé) depuis le réglage et la forme n'est plus faisable : même forme, réglage par défaut
+        if (EnShape.refusal(shape, r, a, b) != null) {
+            float[] def = EnShape.defaults(shape, r);
+            a = def[0];
+            b = def[1];
+            if (EnShape.refusal(shape, r, a, b) != null) shape = EnShape.SPHERE;
+        }
+        return EnShape.resolve(shape, r, a, b);
     }
 
     /** Choisit la forme de l'En. @return null si c'est fait, sinon la clé du refus */

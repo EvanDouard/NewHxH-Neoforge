@@ -78,6 +78,30 @@ public final class NenSensesTests {
     }
 
     @GameTest(template = "empty")
+    public static void everyEnShapeWorksAtEveryMasteryFrom50(GameTestHelper helper) {
+        // Retour d'Evan : « une dimension dépasserait 64 blocs » en changeant de forme. Le réglage par défaut de chaque
+        // forme doit être faisable à toute maîtrise débloquée, et un réglage devenu impossible quand l'En grandit garde
+        // la forme choisie (réglage par défaut) au lieu de retomber en sphère.
+        Zombie z = nenHusk(helper);
+        HunterData d = HunterStats.get(z);
+        for (int m = com.evandouard.hxh.nen.EnShape.UNLOCK_LEVEL; m <= 100; m++) {
+            d.setMasteryLevel(com.evandouard.hxh.data.Mastery.EN, m);
+            double r = NenSenses.enRadius(d), v = com.evandouard.hxh.nen.EnShape.volume(r);
+            for (var shape : com.evandouard.hxh.nen.EnShape.values()) {
+                float[] def = com.evandouard.hxh.nen.EnShape.defaults(shape, r);
+                String refusal = com.evandouard.hxh.nen.EnShape.refusal(shape, r, def[0], def[1]);
+                helper.assertTrue(refusal == null, shape.id() + " par défaut refusé à la maîtrise " + m + " : " + refusal);
+                var dims = com.evandouard.hxh.nen.EnShape.resolve(shape, r, def[0], def[1]);
+                helper.assertTrue(Math.abs(dims.volume() - v) / v < 0.03, shape.id() + " garde le volume à la maîtrise " + m);
+                d.setEnShape(shape.id(), 1f, 0f); // réglage absurde : trop haut pour le cube, refusé
+                helper.assertTrue(NenSenses.enDims(d).shape() == shape, shape.id() + " gardé malgré un réglage impossible (maîtrise " + m + ")");
+            }
+        }
+        d.setEnShape("sphere", 3f, 1f);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void enShapesKeepTheSameVolume(GameTestHelper helper) {
         com.evandouard.hxh.nen.EnShape SPHERE = com.evandouard.hxh.nen.EnShape.SPHERE, HALF = com.evandouard.hxh.nen.EnShape.HALF_SPHERE,
                 CUBE = com.evandouard.hxh.nen.EnShape.CUBE, CYL = com.evandouard.hxh.nen.EnShape.CYLINDER;

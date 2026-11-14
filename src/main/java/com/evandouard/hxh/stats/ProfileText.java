@@ -43,13 +43,21 @@ public final class ProfileText {
             MutableComponent line = Component.translatable("command.hxh.show.stat",
                     Component.translatable(stat.translationKey()), level, xpPart);
             // Sous serment : niveau multiplié, avec le niveau gagné et le multiplicateur
-            if (level != base) line.append(Component.translatable("command.hxh.show.vow_boost", base,
+            if (com.evandouard.hxh.hatsu.Vows.statMultiplier(data) != 1f) line.append(Component.translatable("command.hxh.show.vow_boost", base,
                     com.evandouard.hxh.hatsu.Vows.statMultiplier(data)).withStyle(ChatFormatting.GOLD));
+            // Niveau de clan : niveaux offerts par le sang
+            if (data.clanBonus(stat) > 0) line.append(Component.translatable("command.hxh.show.clan_boost",
+                    data.clanBonus(stat)).withStyle(ChatFormatting.LIGHT_PURPLE));
             lines.add(line);
         }
         Component nenType = data.nenType() == null
                 ? Component.translatable("nen.hxh.none")
                 : Component.translatable(data.nenType().translationKey());
+        // Yeux écarlates : Spécialisation le temps de l'effet, toutes les catégories à 100 %
+        if (com.evandouard.hxh.hatsu.NenAffinity.scarletEyes(living)) {
+            nenType = Component.translatable("command.hxh.show.scarlet_type", Component.translatable(
+                    com.evandouard.hxh.data.NenType.SPECIALIST.translationKey()), nenType).withStyle(ChatFormatting.RED);
+        }
         if (!data.nenUnlocked()) {
             lines.add(Component.translatable("command.hxh.show.nen_locked"));
         } else if (data.nenRevealed()) {
@@ -191,6 +199,25 @@ public final class ProfileText {
         var fam = com.evandouard.hxh.family.Families.get(d.family());
         lines.add(Component.translatable("profile.hxh.family", fam == null ? Component.translatable("family.hxh.none")
                 : Component.literal(fam.name(player.clientInformation().language())).withStyle(s -> s.withColor(fam.color()))));
+        if (fam != null) {
+            var hd = com.evandouard.hxh.stats.HunterStats.get(player);
+            int cl = hd.clanLevel();
+            MutableComponent clan = cl >= com.evandouard.hxh.data.HunterData.CLAN_MAX
+                    ? Component.translatable("profile.hxh.clan_level_max", cl)
+                    : Component.translatable("profile.hxh.clan_level", cl, hd.clanXpInLevel(), com.evandouard.hxh.data.HunterData.clanXpToNext(cl));
+            boolean first = true;
+            for (Stat st : Stat.values()) {
+                int b = hd.clanBonus(st);
+                if (b <= 0) continue;
+                clan.append(first ? " · " : ", ").append("+" + b + " ").append(Component.translatable(st.translationKey()));
+                first = false;
+            }
+            lines.add(clan.withStyle(s -> s.withColor(fam.color())));
+            if ("family_kurta_scarlet".equals(fam.secretMove())) {
+                lines.add(Component.translatable("profile.hxh.scarlet_duration",
+                        com.evandouard.hxh.hatsu.FamilyMoves.scarletDuration(cl) / 20).withStyle(ChatFormatting.GRAY));
+            }
+        }
         if (fam != null && com.evandouard.hxh.hatsu.FamilyMoves.get(fam.secretMove()) != null) {
             lines.add(Component.translatable("profile.hxh.family_move",
                     Component.translatable("technique.hxh." + fam.secretMove())).withStyle(ChatFormatting.GRAY));

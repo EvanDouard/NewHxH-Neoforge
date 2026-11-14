@@ -47,6 +47,8 @@ public final class HunterStats {
         int amount = (int) Math.round(rawAmount * HxHConfig.XP_MULTIPLIER.get());
         if (amount <= 0) return;
         HunterData data = get(entity);
+        // une part de l'entraînement nourrit le sang du clan
+        com.evandouard.hxh.family.Families.addClanXp(entity, amount * com.evandouard.hxh.family.Families.CLAN_XP_FROM_STATS);
         int gained = data.addXp(stat, amount);
         if (gained > 0) {
             applyAttributes(entity);

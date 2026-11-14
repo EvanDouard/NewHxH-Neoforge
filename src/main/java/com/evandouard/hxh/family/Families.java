@@ -119,6 +119,50 @@ public final class Families extends SimpleJsonResourceReloadListener {
     public static void syncSecretMove(ServerPlayer player) {
         Family f = get(QuestManager.data(player).family());
         com.evandouard.hxh.hatsu.FamilyMoves.grant(player, f == null ? "" : f.secretMove());
+        applyClan(player);
+    }
+
+    // ---------- XP de clan ----------
+
+    /** XP de clan gagnée en lançant son coup secret. */
+    public static final int CLAN_XP_PER_SECRET_MOVE = 30;
+    /** Part de l'XP de stat qui va au clan (1 sur 5). */
+    public static final double CLAN_XP_FROM_STATS = 0.2;
+
+    /** Recalcule les stats offertes par le niveau de clan (aucune sans famille). */
+    public static void applyClan(LivingEntity entity) {
+        if (!entity.hasData(com.evandouard.hxh.data.ModAttachments.HUNTER)) return;
+        com.evandouard.hxh.data.HunterData d = com.evandouard.hxh.stats.HunterStats.get(entity);
+        Family f = of(entity);
+        d.setClanBonus(f == null ? java.util.Map.<com.evandouard.hxh.data.Stat, Integer>of() : f.clanBonus(d.clanLevel()));
+        com.evandouard.hxh.stats.HunterStats.applyAttributes(entity);
+    }
+
+    /** Ajoute de l'XP de clan (sans famille : rien) ; annonce les montées de niveau. */
+    public static void addClanXp(LivingEntity entity, double amount) {
+        Family f = of(entity);
+        if (f == null || amount <= 0) return;
+        com.evandouard.hxh.data.HunterData d = com.evandouard.hxh.stats.HunterStats.get(entity);
+        // arrondi au hasard : 0,4 XP = 40 % de chance d'en gagner 1
+        int whole = (int) Math.floor(amount);
+        if (entity.getRandom().nextDouble() < amount - whole) whole++;
+        if (whole <= 0) return;
+        int before = d.clanLevel();
+        d.setClanXp(d.clanXp() + whole);
+        int after = d.clanLevel();
+        if (after != before) {
+            applyClan(entity);
+            if (entity instanceof ServerPlayer p) {
+                com.evandouard.hxh.network.Hud.toast(p, Component.literal(f.name(p.clientInformation().language())),
+                        Component.translatable("hud.hxh.toast.clan_level", after), "+" + (after - before), f.color());
+            }
+        }
+    }
+
+    /** Fixe le niveau de clan (commande d'administration). */
+    public static void setClanLevel(LivingEntity entity, int level) {
+        com.evandouard.hxh.stats.HunterStats.get(entity).setClanXp(com.evandouard.hxh.data.HunterData.clanXpFor(level));
+        applyClan(entity);
     }
 
     // ---------- Effets ----------

@@ -58,14 +58,18 @@ public final class AuraClient {
     }
 
     /**
-     * Gyo : deux lueurs aux yeux, dessinées avec le modèle (repère de l'entité, tourné comme sa tête), donc toujours
-     * collées au visage.
+     * Gyo et yeux écarlates : deux lueurs dessinées À PLAT sur le visage, dans le repère de la tête (pivot au cou,
+     * comme le modèle), donc toujours collées aux yeux quel que soit l'angle. Avant, c'étaient des carrés tournés vers
+     * la caméra, à 0,27 bloc du centre de la tête : dès qu'on tournait la tête, le cube de la tête passait devant et
+     * les lueurs disparaissaient. Vu de dos, le visage cache les yeux, comme il se doit.
+     * Yeux écarlates (Kurta) : rouges, plus vifs, avec de petits éclairs qui crépitent autour.
      */
     private static void onLivingRender(net.neoforged.neoforge.client.event.RenderLivingEvent.Post<?, ?> event) {
         LivingEntity e = event.getEntity();
         if (e.isInvisible() || !e.hasData(ModAttachments.HUNTER) || NenFxClient.firstPerson(e)) return;
         HunterData d = e.getData(ModAttachments.HUNTER);
-        if (!d.gyo() && !e.hasEffect(com.evandouard.hxh.effect.ModEffects.GYO)) return;
+        boolean scarlet = e.hasEffect(com.evandouard.hxh.effect.ModEffects.SCARLET_EYES);
+        if (!scarlet && !d.gyo() && !e.hasEffect(com.evandouard.hxh.effect.ModEffects.GYO)) return;
         float pt = event.getPartialTick();
         float headYaw = Mth.rotLerp(pt, e.yHeadRotO, e.yHeadRot);
         float pitch = Mth.lerp(pt, e.xRotO, e.getXRot());
@@ -73,19 +77,60 @@ public final class AuraClient {
         float time = (mc.level == null ? 0 : mc.level.getGameTime()) + pt;
         float pulse = 0.85f + 0.15f * Mth.sin(time * 0.5f);
         PoseStack pose = event.getPoseStack();
-        VertexConsumer glow = event.getMultiBufferSource().getBuffer(RenderType.eyes(NenFxClient.GLOW));
-        int color = d.auraColor() & 0xFFFFFF;
+        MultiBufferSource buffers = event.getMultiBufferSource();
+        VertexConsumer glow = buffers.getBuffer(RenderType.eyes(NenFxClient.GLOW));
+        int color = scarlet ? 0xFF1E1E : d.auraColor() & 0xFFFFFF;
+        // Repère de la tête : pivot au cou (là où le modèle la fait tourner), échelle selon la taille de l'entité
+        float k = e.getBbHeight() / 1.8f;
+        float eyeAboveNeck = 0.21f * k, face = 0.265f * k, spread = 0.115f * k;
+        pose.pushPose();
+        pose.translate(0, e.getEyeHeight() - eyeAboveNeck, 0);
+        pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-headYaw));
+        pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(pitch));
         for (int s = -1; s <= 1; s += 2) {
             pose.pushPose();
-            pose.translate(0, e.getEyeHeight() + 0.06, 0);
-            pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-headYaw));
-            pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(pitch));
-            pose.translate(0.12 * s, 0.03, 0.27);
-            pose.mulPose(mc.getEntityRenderDispatcher().cameraOrientation());
-            quadLocal(glow, pose, 0.2f * pulse, color, 1f);
-            quadLocal(glow, pose, 0.08f, 0xFFFFFF, 1f);
+            pose.translate(spread * s, eyeAboveNeck, face);
+            float halo = (scarlet ? 0.16f : 0.13f) * k * pulse;
+            quadLocal(glow, pose, halo, color, 1f);
+            quadLocal(glow, pose, 0.05f * k, scarlet ? 0xFFB0B0 : 0xFFFFFF, 1f);
+            if (scarlet) sparks(buffers, pose, e.getId() * 7 + s, time, k);
             pose.popPose();
         }
+        pose.popPose();
+    }
+
+    /** Petits éclairs rouges autour d'un œil : 3 zigzags qui changent toutes les 2 images, à plat sur le visage. */
+    private static void sparks(MultiBufferSource buffers, PoseStack pose, int seed, float time, float k) {
+        VertexConsumer vc = buffers.getBuffer(RenderType.eyes(NenFxClient.WHITE));
+        int frame = (int) (time / 2f);
+        for (int b = 0; b < 3; b++) {
+            float r0 = hash(seed * 31 + frame * 7 + b);
+            if (r0 < 0.25f) continue; // un éclair sur quatre s'éteint : ça crépite
+            float ang = (r0 * 2f + b / 3f) * Mth.TWO_PI;
+            float x = Mth.cos(ang) * 0.06f * k, y = Mth.sin(ang) * 0.06f * k;
+            for (int seg = 0; seg < 3; seg++) {
+                float len = (0.035f + 0.03f * hash(seed + frame * 13 + b * 5 + seg)) * k;
+                float jitter = (hash(seed * 3 + frame * 17 + b * 11 + seg) - 0.5f) * 1.6f;
+                float nx = x + Mth.cos(ang + jitter) * len, ny = y + Mth.sin(ang + jitter) * len;
+                line(vc, pose, x, y, nx, ny, 0.007f * k, 0xFF3A2A, 0.95f);
+                line(vc, pose, x, y, nx, ny, 0.003f * k, 0xFFE0D0, 1f);
+                x = nx;
+                y = ny;
+            }
+        }
+    }
+
+    /** Trait épais à plat (z = 0,001) entre deux points du repère local. */
+    private static void line(VertexConsumer vc, PoseStack pose, float x0, float y0, float x1, float y1, float w, int rgb, float alpha) {
+        float dx = x1 - x0, dy = y1 - y0, len = Mth.sqrt(dx * dx + dy * dy);
+        if (len < 1e-5f) return;
+        float px = -dy / len * w, py = dx / len * w;
+        PoseStack.Pose last = pose.last();
+        int a = Mth.clamp((int) (alpha * 255), 0, 255);
+        float[][] c = {{x0 - px, y0 - py}, {x1 - px, y1 - py}, {x1 + px, y1 + py}, {x0 + px, y0 + py}};
+        for (float[] v : c) vc.addVertex(last.pose(), v[0], v[1], 0.001f).setColor((rgb >> 16) & 255, (rgb >> 8) & 255, rgb & 255, a)
+                .setUv(0.5f, 0.5f).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(LIGHT)
+                .setNormal(last, 0f, 1f, 0f);
     }
 
     private static void quadLocal(VertexConsumer vc, PoseStack pose, float h, int rgb, float alpha) {

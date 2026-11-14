@@ -97,11 +97,10 @@ public class TechniqueListScreen extends Screen {
                     .withStyle(ChatFormatting.GOLD), 0, true);
             add(Component.translatable(t.descriptionKey()), 8, false);
 
-            MutableComponent category = Component.translatable("screen.hxh.techniques.category",
-                    Component.translatable(t.category().translationKey()));
-            if (viewerType != null) {
-                category.append(Component.translatable("screen.hxh.techniques.affinity",
-                        Math.round(viewerType.affinity(t.category()) * 100)));
+            MutableComponent category = Component.translatable("screen.hxh.techniques.category", NenBadge.label(t));
+            if (viewerType != null || com.evandouard.hxh.hatsu.NenAffinity.physical(t)) {
+                category.append(Component.translatable("screen.hxh.techniques.affinity", Math.round(
+                        com.evandouard.hxh.hatsu.NenAffinity.of(net.minecraft.client.Minecraft.getInstance().player, data, t) * 100)));
             }
             add(category.withStyle(ChatFormatting.GRAY), 8, false);
             if (t.minNenLevel() > 0) {

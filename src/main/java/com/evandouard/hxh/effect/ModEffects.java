@@ -18,6 +18,11 @@ public final class ModEffects {
     public static final DeferredHolder<MobEffect, NenEffect> EN = EFFECTS.register("en", () -> new NenEffect(0x7FC8FF));
     /** Ko en cours (durée selon la maîtrise). */
     public static final DeferredHolder<MobEffect, NenEffect> KO = EFFECTS.register("ko", () -> new NenEffect(0xFF8A3C));
+    /**
+     * Yeux écarlates (Colère écarlate des Kurta) : le Nen devient Spécialisation le temps de l'effet et toutes les
+     * catégories passent à 100 % d'efficacité. Rien d'autre (ni Force, ni Résistance). Voir NenAffinity.
+     */
+    public static final DeferredHolder<MobEffect, NenEffect> SCARLET_EYES = EFFECTS.register("scarlet_eyes", () -> new NenEffect(0xE0263A));
     /** Serment en cours : rappel permanent. */
     public static final DeferredHolder<MobEffect, NenEffect> VOW = EFFECTS.register("vow", () -> new NenEffect(0xFFD23F));
 

@@ -126,7 +126,8 @@ public final class Hatsu {
      */
     public static float powerFor(LivingEntity entity, HunterData data, Technique technique) {
         if (technique.isFamily()) return 1f; // le coup de famille se règle sur les stats, pas sur l'affinité
-        float p = power(data, technique);
+        // type(s) de la technique contre le type du lanceur ; Physique et yeux écarlates : 100 %
+        float p = NenAffinity.of(entity, data, technique) * (1f + data.level(Stat.WILLPOWER) * 0.01f);
         if (isCopy(entity, data)) p *= MOB_COPY_POWER;
         p *= com.evandouard.hxh.family.Families.powerMultiplier(entity); // yeux écarlates des Kurta
         p *= Vows.powerMultiplier(data, technique); // serment en cours
@@ -148,10 +149,9 @@ public final class Hatsu {
         return "minecraft".equals(net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).getNamespace());
     }
 
+    /** Puissance hors effets propres à l'entité (yeux écarlates, copie, serment). */
     public static float power(HunterData data, Technique technique) {
-        NenType type = data.nenType();
-        float affinity = type == null ? 0.4f : type.affinity(technique.category());
-        return affinity * (1f + data.level(Stat.WILLPOWER) * 0.01f);
+        return NenAffinity.of(null, data, technique) * (1f + data.level(Stat.WILLPOWER) * 0.01f);
     }
 
     /**
@@ -208,6 +208,10 @@ public final class Hatsu {
         boolean hit = technique.perform(entity, powerFor(entity, data, technique));
         if (technique.isBase() && entity instanceof net.minecraft.server.level.ServerPlayer sp) {
             com.evandouard.hxh.quest.QuestManager.onBaseStrike(sp);
+        }
+        // coup secret lancé : le sang s'éveille (XP de clan)
+        if (technique.isFamily() && hit) {
+            com.evandouard.hxh.family.Families.addClanXp(entity, com.evandouard.hxh.family.Families.CLAN_XP_PER_SECRET_MOVE);
         }
         data.setAura(data.aura() - technique.auraCost());
         if (technique.resource() != null) data.addKitValue(technique.resource(), -technique.resourceCost(), Float.MAX_VALUE);

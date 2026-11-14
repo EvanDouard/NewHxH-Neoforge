@@ -105,21 +105,31 @@ public final class EnDomeClient {
             switch (dims.shape()) {
                 case CUBE -> box(event.getPoseStack(), buffers, cam, p.getPosition(pt), dims, color, time);
                 case CYLINDER -> cylinder(event.getPoseStack(), buffers, cam, p.getPosition(pt), dims, color, time);
-                default -> dome(event.getPoseStack(), buffers, cam, p.getPosition(pt), (float) dims.radius(), color, time);
+                case SPHERE -> dome(event.getPoseStack(), buffers, cam, p.getPosition(pt), p.getBbHeight() / 2,
+                        (float) dims.radius(), color, time, true);
+                default -> dome(event.getPoseStack(), buffers, cam, p.getPosition(pt), 0, (float) dims.radius(), color, time, false);
             }
             drew = true;
         }
         if (drew) buffers.endBatch();
     }
 
-    private static void dome(PoseStack pose, MultiBufferSource buffers, Vec3 cam, Vec3 base, float r, int color, float time) {
+    /**
+     * Sphère complète (centrée au milieu du corps, {@code full}) ou dôme posé au sol (demi-sphère). La partie sous le
+     * sol de la sphère est cachée par le terrain, mais visible dans une grotte ou au-dessus du vide.
+     */
+    private static void dome(PoseStack pose, MultiBufferSource buffers, Vec3 cam, Vec3 feet, float lift, float r, int color,
+                             float time, boolean full) {
         VertexConsumer vc = buffers.getBuffer(RenderType.entityTranslucent(NenFxClient.WHITE));
+        Vec3 base = feet.add(0, lift, 0);
         boolean inside = cam.distanceTo(base) < r;
+        float latMin = full ? -Mth.HALF_PI : 0f;
+        int rings = full ? RINGS * 2 : RINGS;
         float dim = inside ? 0.7f : 1f;
         // Bande qui balaie le dôme de bas en haut (un tour toutes les 3 s)
         float sweep = (time % 60f) / 60f;
-        for (int i = 0; i < RINGS; i++) {
-            float lat0 = (float) i / RINGS * Mth.HALF_PI, lat1 = (float) (i + 1) / RINGS * Mth.HALF_PI;
+        for (int i = 0; i < rings; i++) {
+            float lat0 = latMin + (float) i / RINGS * Mth.HALF_PI, lat1 = latMin + (float) (i + 1) / RINGS * Mth.HALF_PI;
             for (int j = 0; j < SEGMENTS; j++) {
                 float lon0 = (float) j / SEGMENTS * Mth.TWO_PI, lon1 = (float) (j + 1) / SEGMENTS * Mth.TWO_PI;
                 Vec3 p00 = point(base, r, lat0, lon0), p01 = point(base, r, lat0, lon1);
@@ -130,7 +140,7 @@ public final class EnDomeClient {
                 float facing = (float) Math.abs(n.dot(view));
                 // bord de bulle plus dense, centre presque transparent
                 float alpha = 0.12f + 0.55f * (1f - facing) * (1f - facing);
-                float h = (float) i / RINGS;
+                float h = (float) i / rings;
                 float band = Math.max(0f, 1f - Math.abs(h - sweep) * 8f);
                 alpha += band * 0.25f;
                 // haut du dôme un peu plus clair
@@ -143,7 +153,7 @@ public final class EnDomeClient {
             }
         }
         // Deux parallèles plus clairs : on lit la forme du dôme même vu de l'intérieur
-        for (float lat : new float[]{0.45f, 0.95f}) {
+        for (float lat : full ? new float[]{-0.95f, -0.45f, 0f, 0.45f, 0.95f} : new float[]{0.45f, 0.95f}) {
             int light = lerp(color, 0xFFFFFFFF, 0.5f);
             for (int j = 0; j < SEGMENTS; j++) {
                 float lon0 = (float) j / SEGMENTS * Mth.TWO_PI, lon1 = (float) (j + 1) / SEGMENTS * Mth.TWO_PI;
@@ -153,9 +163,12 @@ public final class EnDomeClient {
                 vertex(vc, pose, cam, point(base, r, lat + 0.025f, lon0), light, 0.45f * dim);
             }
         }
-        // Cercle encré au sol + liseré de couleur juste au-dessus
-        ring(vc, pose, cam, base.add(0, 0.03, 0), r, 0.18f, 0xFF111111, 0.85f * dim);
-        ring(vc, pose, cam, base.add(0, 0.04, 0), r - 0.18f, 0.12f, color, 0.8f * dim);
+        // Cercle encré au sol (là où la bulle coupe le sol) + liseré de couleur juste au-dessus
+        float ground = (float) Math.sqrt(Math.max(0, r * r - lift * lift));
+        if (ground > 0.3f) {
+            ring(vc, pose, cam, feet.add(0, 0.03, 0), ground, 0.18f, 0xFF111111, 0.85f * dim);
+            ring(vc, pose, cam, feet.add(0, 0.04, 0), ground - 0.18f, 0.12f, color, 0.8f * dim);
+        }
     }
 
     /** En en cube : faces translucides plus denses vues de biais, arêtes claires, carré encré au sol. */
