@@ -180,6 +180,6 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [x] CI : onglet « Bestiaire » du carnet (capture 97) ; GameTest des traductions : chaque créature du bestiaire existe et a sa description.
 
 ## Entraînement : mannequin cogneur et bain glacé (14 nov)
-- [ ] CI : GameTests `strikingDummyHitsAnyCreatureButNeverKills`, `strikingDummyDodgeTrainsSpeed`, `iceBathTrainsWillpowerWithoutFreezeDamage` + captures 48c (objets posés), 48c2 (givre dans le bain), 48c3 (mannequin qui cogne).
+- [x] CI : GameTests `strikingDummyHitsAnyCreatureButNeverKills`, `strikingDummyDodgeTrainsSpeed`, `iceBathTrainsWillpowerWithoutFreezeDamage` + captures 48c (objets posés), 48c2 (givre dans le bain), 48c3 (mannequin qui cogne).
 - [ ] En jeu : rythme du mannequin (un coup toutes les 1,5 s, 1 cœur, jamais sous 2 cœurs) ; esquiver en s'accroupissant ou au bouclier donne de la Vitesse.
 - [ ] À juger : modèles et textures provisoires (mannequin en paille sur pied, cuve en métal) ; recettes (mannequin : botte de foin + bâtons + piston ; bain : chaudron + 2 glaces compactées + seau d'eau).
