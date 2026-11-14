@@ -61,8 +61,11 @@ public class ChimeraAntEntity extends Spider {
         targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, true));
     }
 
-    /** Pour les tests : la fourmi chasse-t-elle en plein jour ? (ses buts de cible ne dépendent pas de la lumière) */
+    /**
+     * La fourmi chasse-t-elle les joueurs sans condition de lumière ? (l'araignée de Minecraft utilise un but de cible
+     * qui ne marche que dans le noir ; la fourmi, le but ordinaire)
+     */
     public boolean huntsInDaylight() {
-        return true;
+        return targetSelector.getAvailableGoals().stream().anyMatch(w -> w.getGoal().getClass() == NearestAttackableTargetGoal.class);
     }
 }

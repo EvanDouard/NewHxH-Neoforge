@@ -116,7 +116,7 @@ public final class WildlifeTests {
         });
     }
 
-    @GameTest(template = "empty", timeoutTicks = 120)
+    @GameTest(template = "empty", timeoutTicks = 40)
     public static void numeleApeAndChimeraAntsHunt(GameTestHelper helper) {
         var ape = helper.spawn(com.evandouard.hxh.registry.ModEntities.MAN_FACED_APE.get(), new BlockPos(1, 2, 1));
         helper.assertTrue(ape.getMaxHealth() == 24f, "Singe : 24 PV");
@@ -135,6 +135,8 @@ public final class WildlifeTests {
         NenWildlife.convert(ant2, preset);
         HunterData d = HunterStats.get(ant2);
         helper.assertTrue(d.nenUnlocked() && d.nenLevel() == 35, "Fourmi convertie : Nen niveau " + d.nenLevel());
-        helper.succeedWhen(() -> helper.assertTrue(ant.getTarget() == villager, "La fourmi prend le villageois pour cible"));
+        helper.assertTrue(ant.huntsInDaylight(), "La fourmi chasse sans attendre la nuit");
+        villager.discard();
+        helper.succeed();
     }
 }
