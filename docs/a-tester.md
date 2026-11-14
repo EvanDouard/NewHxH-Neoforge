@@ -13,6 +13,12 @@ les lignes « En jeu » restent à regarder à la main.
 
 Légende : **CI** = vérifié par les GameTests ou une capture du scénario · **En jeu** = à regarder à la main.
 
+## Tri du choix de Hatsu par type, /hunter hatsu give (14 nov, soir)
+- [x] CI (capture `16f_filtre_par_type_transformation`) : pastilles des six types en haut à droite ; un clic n'affiche que ce type (cadre doré), un second clic enlève le filtre. Chaque personnage a sa pastille.
+- [x] CI : GameTest `anyTechniqueCanBeGivenByName` (nom anglais, français, identifiant ; chaque technique a ses deux noms) ; capture `99e` : Jajanken et Doctor Blythe donnés apparaissent dans la liste.
+- [ ] En jeu : survoler une pastille : nom français + anglais.
+- [ ] En jeu : `/hunter hatsu give Dev ` puis Tab : la liste propose les techniques par leur nom ; `/hunter hatsu take Dev <technique>` les retire.
+
 ## Bestiaire dans l'ordinateur, famille dans le carnet (14 nov, fin d'après-midi)
 - [x] CI (capture `97_ordinateur_bestiaire_fourmi_chimere`) : catégorie « Bestiaire » de l'ordinateur Hunter, une fiche par créature (danger, où, description) ; l'onglet Bestiaire du carnet a disparu.
 - [x] CI : GameTest : famille, niveau de clan et héritage dans l'onglet Personnage.
