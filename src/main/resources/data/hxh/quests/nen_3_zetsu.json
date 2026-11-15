@@ -5,8 +5,8 @@
   },
   "start_npc": "wing",
   "intro": {
-    "fr": "Tu sais réduire ton aura. Maintenant, ferme tes pores.",
-    "en": "You can shrink your aura. Now close your pores."
+    "fr": "Le Zetsu n'est que l'In poussé au bout. Continue à t'entraîner avec l'In et tu comprendras le Zetsu.",
+    "en": "Zetsu is just In pushed to the end. Keep training with In and you'll understand Zetsu."
   },
   "npcs": {
     "wing": {
@@ -16,42 +16,29 @@
   },
   "steps": [
     {
-      "id": "learn",
-      "type": "talk",
-      "npc": "wing",
-      "reward_learn": [
-        "zetsu"
-      ],
-      "objective": {
-        "fr": "Écouter la leçon de Wing",
-        "en": "Listen to Wing's lesson"
-      },
-      "dialog": {
-        "fr": "Coupe ton aura entièrement : plus personne ne te sentira. Mais tu es sans défense.",
-        "en": "Cut your aura entirely: no one will sense you. But you are defenceless."
-      }
-    },
-    {
       "id": "practice",
-      "type": "nen_mode",
+      "type": "mastery",
       "mode": "zetsu",
-      "seconds": 20,
+      "count": 0,
       "objective": {
-        "fr": "Tenir le Zetsu 20 secondes",
-        "en": "Hold Zetsu for 20 seconds"
+        "fr": "Continuer l'In jusqu'au palier du Zetsu",
+        "en": "Keep training In up to the Zetsu tier"
       }
     },
     {
       "id": "done",
       "type": "talk",
       "npc": "wing",
+      "reward_learn": [
+        "zetsu"
+      ],
       "objective": {
         "fr": "Retourner voir Wing",
         "en": "Go back to Wing"
       },
       "dialog": {
-        "fr": "Parfait. Le Zetsu remplace l'In : ta touche de dissimulation donne désormais le Zetsu.",
-        "en": "Perfect. Zetsu replaces In: your hide key now gives Zetsu."
+        "fr": "Tu as compris : ferme complètement tes pores. Le Zetsu remplace l'In, ta touche de dissimulation donne désormais le Zetsu. Plus personne ne te sent… mais tu es sans défense.",
+        "en": "You've got it: close your pores completely. Zetsu replaces In, your hide key now gives Zetsu. No one senses you any more… but you are defenceless."
       }
     }
   ],

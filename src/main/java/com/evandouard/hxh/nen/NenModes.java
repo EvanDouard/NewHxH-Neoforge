@@ -133,13 +133,14 @@ public final class NenModes {
             case ZETSU -> data.setAura(data.aura() + regen * (float) (HxHConfig.ZETSU_REGEN_MULTIPLIER.get()
                     + data.masteryLevel(com.evandouard.hxh.data.Mastery.ZETSU) * 0.02));
             case REN -> {
-                data.setAura(data.aura() - (float) (HxHConfig.REN_DRAIN_PER_SECOND.get() / 20.0));
+                data.setAura(data.aura() - (float) (HxHConfig.REN_DRAIN_PER_SECOND.get()
+                        * NenCost.factor(data, com.evandouard.hxh.data.Mastery.REN) / 20.0));
                 if (data.aura() <= 0) exhaust(entity, data);
             }
             case KEN -> {
                 double drain = Math.max(1.5, HxHConfig.KEN_DRAIN_PER_SECOND.get()
                         - data.masteryLevel(com.evandouard.hxh.data.Mastery.KEN) * 0.02);
-                data.setAura(data.aura() - (float) (drain / 20.0));
+                data.setAura(data.aura() - (float) (drain * NenCost.factor(data, com.evandouard.hxh.data.Mastery.KEN) / 20.0));
                 if (data.aura() <= 0) exhaust(entity, data);
             }
         }

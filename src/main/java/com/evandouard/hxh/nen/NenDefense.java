@@ -117,7 +117,8 @@ public final class NenDefense {
     }
 
     public static int koCost(HunterData data) {
-        return Math.max(10, (int) Math.round(HxHConfig.KO_AURA_COST.get() - data.masteryLevel(Mastery.KO) * 0.15));
+        return (int) Math.round(Math.max(10, HxHConfig.KO_AURA_COST.get() - data.masteryLevel(Mastery.KO) * 0.15)
+                * NenCost.factor(data, Mastery.KO));
     }
 
     /**
@@ -141,7 +142,7 @@ public final class NenDefense {
     /** Pendant le Ko : il coûte de l'aura tant qu'on le tient ; plus d'aura, il retombe. */
     public static void tickKo(LivingEntity entity, HunterData data) {
         if (!koActive(entity)) return;
-        data.setAura(data.aura() - KO_HOLD_PER_SECOND / 20f);
+        data.setAura(data.aura() - KO_HOLD_PER_SECOND * (float) NenCost.factor(data, Mastery.KO) / 20f);
         if (data.aura() <= 0) {
             data.setKoUntil(0);
             entity.removeEffect(com.evandouard.hxh.effect.ModEffects.KO);

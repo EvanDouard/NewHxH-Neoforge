@@ -13,6 +13,14 @@ public enum Mastery {
     /** Plafond minimal : même un débutant peut monter ses maîtrises jusqu'à ce niveau. */
     public static final int MIN_CAP = 5;
 
+    /**
+     * Maîtrise où sont rangés le niveau et l'XP : l'In et le Zetsu partagent la même (la dissimulation),
+     * le Zetsu n'étant que le palier supérieur de l'In.
+     */
+    public Mastery storage() {
+        return this == ZETSU ? IN : this;
+    }
+
     public String id() {
         return name().toLowerCase(Locale.ROOT);
     }

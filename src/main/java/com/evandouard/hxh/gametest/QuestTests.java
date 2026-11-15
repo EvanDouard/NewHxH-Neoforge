@@ -139,6 +139,10 @@ public final class QuestTests {
                     || !fr.has("bestiary.hxh." + entry.id() + ".desc") || !fr.has("bestiary.hxh." + entry.id() + ".where"))
                 mute.add("bestiaire " + entry.id());
         }
+        // Chaque PNJ qui donne une quête a une réplique quand il n'a plus rien à proposer
+        for (Quest q : QuestRegistry.all()) {
+            if (!q.startNpc().isEmpty() && !fr.has("dialog.hxh." + q.startNpc() + ".idle")) mute.add("PNJ de quête " + q.startNpc());
+        }
         for (var preset : com.evandouard.hxh.mob.MobPresets.all().values()) {
             if (!fr.has(preset.nameKey())) mute.add("nom du mob " + preset.nameKey());
         }
@@ -593,7 +597,8 @@ public final class QuestTests {
         helper.assertTrue(com.evandouard.hxh.quest.QuestManager.start(player, com.evandouard.hxh.quest.QuestRegistry.HEAVENS_ARENA),
                 "Une 2e quête peut démarrer pendant la 1re");
         helper.assertTrue(d.runningQuests().size() == 2, "Deux quêtes en cours");
-        helper.assertTrue(exam.equals(d.active()), "La 1re quête reste suivie");
+        helper.assertTrue(arena.equals(d.active()), "La quête qu'on vient de commencer passe en suivi");
+        helper.assertTrue(d.track(exam), "On peut revenir à l'Examen");
 
         // La quête de la Tour avance même si elle n'est pas suivie
         com.evandouard.hxh.npc.NpcEntity hostess = helper.spawn(com.evandouard.hxh.registry.ModEntities.NPC.get(), new net.minecraft.core.BlockPos(1, 1, 1));
@@ -601,10 +606,11 @@ public final class QuestTests {
         hostess.setNoGravity(true);
         com.evandouard.hxh.quest.QuestManager.onTalk(player, hostess);
         helper.assertTrue(d.stateOf(arena)[0] == 1, "L'étape « parler à l'hôtesse » de la quête non suivie est validée");
-        helper.assertTrue(exam.equals(d.active()) && d.step() == 0, "La quête suivie n'a pas bougé");
+        helper.assertTrue(d.stateOf(exam)[0] == 0, "L'Examen n'a pas bougé");
+        helper.assertTrue(arena.equals(d.active()) && d.step() == 1, "Parler au PNJ d'une quête la fait suivre");
 
-        helper.assertTrue(d.track(arena), "On peut suivre l'autre quête");
-        helper.assertTrue(arena.equals(d.active()) && d.step() == 1, "Le curseur suit la quête de la Tour");
+        helper.assertTrue(d.track(exam), "On peut suivre l'autre quête");
+        helper.assertTrue(exam.equals(d.active()) && d.step() == 0, "Le curseur suit l'Examen");
         helper.assertTrue(!d.track("hxh:inconnue"), "Impossible de suivre une quête qui n'est pas en cours");
         helper.succeed();
     }
@@ -679,12 +685,22 @@ public final class QuestTests {
             helper.assertTrue(h.learned("ten"), "Leçon écoutée : Ten appris");
             helper.assertTrue(com.evandouard.hxh.nen.NenModes.trySetMode(player, com.evandouard.hxh.data.NenMode.TEN) == null,
                     "Ten utilisable une fois appris");
-            for (int s = 1; s <= 20; s++) {
-                player.tickCount = 20 * (s + 1);
-                QuestManager.tick(player);
-            }
+            // Entraînement : il faut atteindre le niveau 1 du Ten ; Wing le dit si on revient trop tôt
+            player.tickCount = 40;
+            QuestManager.tick(player);
             QuestManager.onTalk(player, wing);
-            helper.assertTrue(d.isCompleted(ten.toString()), "Ten tenu 20 s puis retour à Wing : leçon terminée");
+            helper.assertTrue(d.isRunning(ten.toString()) && d.stateOf(ten.toString())[0] == 2,
+                    "Pas encore niveau 1 : Wing demande de s'entraîner encore");
+            h.setMasteryLevel(com.evandouard.hxh.data.Mastery.TEN, 1);
+            player.tickCount = 60;
+            QuestManager.tick(player);
+            QuestManager.onTalk(player, wing);
+            helper.assertTrue(d.isCompleted(ten.toString()), "Ten niveau 1 puis retour à Wing : leçon terminée");
+            // Leçons bout à bout : Wing propose l'In (et pas le Ren, ni le Ken)
+            QuestManager.onTalk(player, wing);
+            helper.assertTrue(d.isRunning(HxHMod.id("nen_2_in").toString()), "Après le Ten : l'In");
+            helper.assertTrue(!d.isRunning(HxHMod.id("nen_4_ren").toString()), "Le Ren attend le Zetsu");
+            helper.assertTrue(HxHMod.id("nen_2_in").toString().equals(d.active()), "La leçon commencée passe en suivi");
             // /hunter max : tout est su
             com.evandouard.hxh.nen.NenLearning.learnAll(player);
             helper.assertTrue(com.evandouard.hxh.nen.NenSenses.setGyo(player, true) == null, "Tout appris : Gyo accepté");
@@ -692,6 +708,36 @@ public final class QuestTests {
         } finally {
             com.evandouard.hxh.nen.NenLearning.forceInTests = false;
         }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void wingLessonsAreChainedAndZetsuIsTheInTier(GameTestHelper helper) {
+        // Chaîne : Ten → In → Zetsu → Ren → Gyo → Ken → En → Ko ; le Hatsu à part, après le Ren
+        String[][] chain = {{"nen_2_in", "nen_1_ten"}, {"nen_3_zetsu", "nen_2_in"}, {"nen_4_ren", "nen_3_zetsu"},
+                {"nen_5_gyo", "nen_4_ren"}, {"nen_6_ken", "nen_5_gyo"}, {"nen_7_en", "nen_6_ken"},
+                {"nen_8_ko", "nen_7_en"}, {"nen_4b_hatsu", "nen_4_ren"}};
+        for (String[] link : chain) {
+            Quest q = QuestRegistry.get(HxHMod.id(link[0]));
+            helper.assertTrue(q != null && q.requires().equals(java.util.List.of("hxh:" + link[1])),
+                    link[0] + " doit demander " + link[1] + " : " + (q == null ? "absente" : q.requires()));
+        }
+        // Le Zetsu : continuer l'In jusqu'au palier ; le Ken : continuer le Ten
+        Quest zetsu = QuestRegistry.get(HxHMod.id("nen_3_zetsu"));
+        Quest.Step tier = zetsu.steps().get(0);
+        helper.assertTrue(tier.type().equals("mastery") && tier.masteryTrained() == com.evandouard.hxh.data.Mastery.IN
+                && tier.masteryGoal() == com.evandouard.hxh.HxHConfig.ZETSU_UNLOCK_IN_LEVEL.get(), "Palier du Zetsu = niveau d'In");
+        Quest.Step kenTier = QuestRegistry.get(HxHMod.id("nen_6_ken")).steps().get(0);
+        helper.assertTrue(kenTier.masteryTrained() == com.evandouard.hxh.data.Mastery.TEN
+                && kenTier.masteryGoal() == com.evandouard.hxh.HxHConfig.KEN_UNLOCK_TEN_LEVEL.get(), "Palier du Ken = niveau de Ten");
+        // In et Zetsu partagent la même XP
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.data.HunterData h = com.evandouard.hxh.stats.HunterStats.get(player);
+        for (int i = 0; i < com.evandouard.hxh.data.Mastery.xpToNext(0); i++) h.addMasteryXp(com.evandouard.hxh.data.Mastery.ZETSU, 1);
+        helper.assertTrue(h.masteryLevel(com.evandouard.hxh.data.Mastery.IN) == 1
+                && h.masteryLevel(com.evandouard.hxh.data.Mastery.ZETSU) == 1, "Le Zetsu fait monter l'In (même XP)");
+        h.setMasteryLevel(com.evandouard.hxh.data.Mastery.IN, 7);
+        helper.assertTrue(h.masteryLevel(com.evandouard.hxh.data.Mastery.ZETSU) == 7, "Niveau partagé");
         helper.succeed();
     }
 

@@ -88,6 +88,7 @@ public final class MangaHud {
     }
 
     private static void onRegisterLayers(RegisterGuiLayersEvent event) {
+        event.registerAbove(VanillaGuiLayers.CAMERA_OVERLAYS, HxHMod.id("gyo_vignette"), GyoVignette::render);
         event.registerAbove(VanillaGuiLayers.HOTBAR, HxHMod.id("manga_aura"), MangaHud::renderAura);
         event.registerAbove(VanillaGuiLayers.HOTBAR, HxHMod.id("manga_quest"), MangaHud::renderQuestAndToasts);
         event.registerAbove(VanillaGuiLayers.CROSSHAIR, HxHMod.id("manga_callout"), MangaHud::renderCallout);

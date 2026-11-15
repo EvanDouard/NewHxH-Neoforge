@@ -1427,5 +1427,12 @@
   "screen.hxh.computer.recipe_smoker": "Fumoir :",
   "screen.hxh.computer.recipe_campfire": "Feu de camp :",
   "screen.hxh.computer.recipe_time": "Cuisson : %s s",
-  "screen.hxh.computer.recipe_or_similar": "(ou semblable)"
+  "screen.hxh.computer.recipe_or_similar": "(ou semblable)",
+  "dialog.hxh.wing.idle": "Osu ! Continue de travailler tes bases : le Nen, c'est d'abord de la patience.",
+  "dialog.hxh.chrollo.idle": "Un livre, une capacité… Tout a une valeur, si l'on sait la voir.",
+  "dialog.hxh.genthru.idle": "Ne reste pas trop près de moi. Ça pourrait exploser.",
+  "dialog.hxh.netero_maitre.idle": "Ho ho ! La prière d'un vieil homme n'attend personne. Reviens quand tu seras prêt.",
+  "dialog.hxh.pecheur.idle": "Ça mord peu aujourd'hui… mais la mer finit toujours par donner.",
+  "dialog.hxh.train_more": "Pas encore. Entraîne-toi encore un peu : %s niveau %s sur %s avant de passer à la suite.",
+  "dialog.hxh.train_more_hold": "Pas encore. Entraîne-toi encore un peu : %s."
 }

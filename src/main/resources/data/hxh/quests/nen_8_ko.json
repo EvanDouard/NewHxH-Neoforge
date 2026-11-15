@@ -35,13 +35,13 @@
     },
     {
       "id": "practice",
-      "type": "nen_mode",
-      "mode": "ten",
-      "seconds": 10,
+      "type": "mastery",
+      "mode": "ko",
       "objective": {
-        "fr": "Tenir le Ten 10 secondes pour te concentrer",
-        "en": "Hold Ten for 10 seconds to focus"
-      }
+        "fr": "Pratiquer le Ko jusqu'au niveau 1 de maîtrise",
+        "en": "Practise Ko up to mastery level 1"
+      },
+      "count": 1
     },
     {
       "id": "done",
@@ -58,6 +58,6 @@
     }
   ],
   "requires": [
-    "hxh:nen_6_ken"
+    "hxh:nen_7_en"
   ]
 }

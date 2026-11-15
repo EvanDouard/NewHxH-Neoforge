@@ -157,4 +157,27 @@ public final class NenTests {
         helper.succeed();
     }
 
+
+    @GameTest(template = "empty")
+    public static void beginnersPayMoreAura(GameTestHelper helper) {
+        double start = HxHConfig.BEGINNER_COST_MULTIPLIER.get();
+        int until = HxHConfig.BEGINNER_COST_UNTIL.get();
+        helper.assertTrue(Math.abs(com.evandouard.hxh.nen.NenCost.factor(0) - start) < 1e-6, "Maîtrise 0 : coût ×" + start);
+        helper.assertTrue(Math.abs(com.evandouard.hxh.nen.NenCost.factor(until) - 1.0) < 1e-6, "Maîtrisé : coût normal");
+        helper.assertTrue(com.evandouard.hxh.nen.NenCost.factor(until / 2) > 1.0
+                && com.evandouard.hxh.nen.NenCost.factor(until / 2) < start, "Entre les deux : le surcoût diminue");
+        // Un débutant épuise son Ren plus vite qu'un utilisateur confirmé
+        Zombie rookie = nenZombie(helper);
+        Zombie expert = nenZombie(helper);
+        HunterData r = HunterStats.get(rookie), e = HunterStats.get(expert);
+        e.setMasteryLevel(com.evandouard.hxh.data.Mastery.REN, until);
+        NenModes.trySetMode(rookie, NenMode.REN);
+        NenModes.trySetMode(expert, NenMode.REN);
+        float ra = r.aura(), ea = e.aura();
+        helper.runAfterDelay(20, () -> {
+            helper.assertTrue(ra - r.aura() > (ea - e.aura()) * 1.5f,
+                    "Ren débutant : " + (ra - r.aura()) + " contre " + (ea - e.aura()));
+            helper.succeed();
+        });
+    }
 }

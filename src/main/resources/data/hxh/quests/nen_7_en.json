@@ -33,13 +33,13 @@
     },
     {
       "id": "practice",
-      "type": "nen_sense",
+      "type": "mastery",
       "mode": "en",
-      "seconds": 15,
       "objective": {
-        "fr": "Garder l'En 15 secondes",
-        "en": "Keep En for 15 seconds"
-      }
+        "fr": "Pratiquer l'En jusqu'au niveau 1 de maîtrise",
+        "en": "Practise En up to mastery level 1"
+      },
+      "count": 1
     },
     {
       "id": "done",
@@ -56,6 +56,6 @@
     }
   ],
   "requires": [
-    "hxh:nen_5_gyo"
+    "hxh:nen_6_ken"
   ]
 }

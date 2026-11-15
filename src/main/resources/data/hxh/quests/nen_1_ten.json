@@ -42,13 +42,13 @@
     },
     {
       "id": "practice",
-      "type": "nen_mode",
+      "type": "mastery",
       "mode": "ten",
-      "seconds": 20,
       "objective": {
-        "fr": "Tenir le Ten 20 secondes",
-        "en": "Hold Ten for 20 seconds"
-      }
+        "fr": "Pratiquer le Ten jusqu'au niveau 1 de maîtrise",
+        "en": "Practise Ten up to mastery level 1"
+      },
+      "count": 1
     },
     {
       "id": "done",

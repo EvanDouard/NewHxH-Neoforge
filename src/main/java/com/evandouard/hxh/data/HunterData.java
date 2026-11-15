@@ -429,11 +429,11 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     }
 
     public int masteryLevel(Mastery m) {
-        return masteryLevels.get(m);
+        return masteryLevels.get(m.storage());
     }
 
     public int masteryXp(Mastery m) {
-        return masteryXp.get(m);
+        return masteryXp.get(m.storage());
     }
 
     /** Plafond de verre : une maîtrise ne dépasse pas le niveau de Nen (minimum {@link Mastery#MIN_CAP}). */
@@ -442,6 +442,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
     }
 
     public void setMasteryLevel(Mastery m, int level) {
+        m = m.storage();
         masteryLevels.put(m, Math.max(0, Math.min(Mastery.MAX_LEVEL, level)));
         masteryXp.put(m, 0);
         dirty.add(PROGRESS);
@@ -452,6 +453,7 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
      * @return le nombre de niveaux gagnés
      */
     public int addMasteryXp(Mastery m, int amount) {
+        m = m.storage();
         int level = masteryLevels.get(m);
         int cap = masteryCap();
         if (amount <= 0 || level >= cap) return 0;
@@ -946,6 +948,13 @@ public final class HunterData implements INBTSerializable<CompoundTag> {
                 masteryLevels.put(m, Math.max(0, Math.min(Mastery.MAX_LEVEL, t.getInt("level"))));
                 masteryXp.put(m, Math.max(0, t.getInt("xp")));
             }
+            // Anciennes sauvegardes : le Zetsu avait sa propre maîtrise, on garde la meilleure des deux
+            if (masteryLevels.get(Mastery.ZETSU) > masteryLevels.get(Mastery.IN)) {
+                masteryLevels.put(Mastery.IN, masteryLevels.get(Mastery.ZETSU));
+                masteryXp.put(Mastery.IN, masteryXp.get(Mastery.ZETSU));
+            }
+            masteryLevels.put(Mastery.ZETSU, 0);
+            masteryXp.put(Mastery.ZETSU, 0);
         }
         if (in.contains(HATSU)) {
             CompoundTag h = in.getCompound(HATSU);

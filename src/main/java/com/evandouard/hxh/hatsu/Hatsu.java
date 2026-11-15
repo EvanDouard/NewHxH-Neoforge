@@ -168,7 +168,7 @@ public final class Hatsu {
         if (gameTime < data.readyAt(technique.id())) return "message.hxh.hatsu_cooldown";
         if (data.mode() == NenMode.ZETSU) return "message.hxh.hatsu_zetsu";
         if (data.nenLevel() < technique.minNenLevel()) return "message.hxh.hatsu_nen_level";
-        if (data.aura() < technique.auraCost()) return "message.hxh.no_aura";
+        if (data.aura() < com.evandouard.hxh.nen.NenCost.cost(data, technique)) return "message.hxh.no_aura";
         String vow = Vows.dataRefusal(data, technique, gameTime);
         if (vow != null) return vow;
         return technique.extraRefusal(data);
@@ -196,13 +196,13 @@ public final class Hatsu {
         String vowRefusal = Vows.entityRefusal(entity, data, technique);
         if (vowRefusal != null) return vowRefusal;
         Vows.pay(entity, data, technique); // serment de vie : le prix part au lancement
-        if (technique instanceof Techniques.ChargedOrb orb && data.aura() < orb.auraCost() + orb.minSpent) {
+        if (technique instanceof Techniques.ChargedOrb orb && data.aura() < com.evandouard.hxh.nen.NenCost.cost(data, orb) + orb.minSpent) {
             return "message.hxh.no_aura"; // pas de quoi charger un vrai coup
         }
         com.evandouard.hxh.combat.AreaScaling.casting(entity, technique);
         if (technique.isCharged()) {
             // On commence à charger : la recharge partira au relâchement
-            data.setAura(data.aura() - technique.auraCost());
+            data.setAura(data.aura() - com.evandouard.hxh.nen.NenCost.cost(data, technique));
             technique.perform(entity, powerFor(entity, data, technique));
             return null;
         }
@@ -215,7 +215,7 @@ public final class Hatsu {
         if (technique.isFamily() && hit) {
             com.evandouard.hxh.family.Families.addClanXp(entity, com.evandouard.hxh.family.Families.CLAN_XP_PER_SECRET_MOVE);
         }
-        data.setAura(data.aura() - technique.auraCost());
+        data.setAura(data.aura() - com.evandouard.hxh.nen.NenCost.cost(data, technique));
         if (technique.resource() != null) data.addKitValue(technique.resource(), -technique.resourceCost(), Float.MAX_VALUE);
         int cooldown = technique.cooldownFor(data);
         if ("cheadle".equals(data.kit())) cooldown = Math.round(cooldown * 0.9f); // Secrétaire : recharges −10 %

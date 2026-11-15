@@ -64,7 +64,7 @@ public final class ThunderHold {
             }
             long held = caster.level().getGameTime() - h.start();
             HunterData data = HunterStats.get(caster);
-            float cost = drain(held);
+            float cost = drain(held) * (float) com.evandouard.hxh.nen.NenCost.hatsu(data);
             if (data.aura() < cost || held >= MAX_TICKS || !(caster instanceof Player) && held >= MOB_RELEASE) {
                 done.add(caster);
                 continue;

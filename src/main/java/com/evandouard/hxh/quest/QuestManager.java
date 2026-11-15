@@ -187,7 +187,7 @@ public final class QuestManager {
         d.commit();
         if (q.randomTrials()) drawPlan(player, d, q);
         d.running.put(id, new int[]{0, 0});
-        if (d.tracked.isEmpty()) d.tracked = id;
+        d.tracked = id; // une quête qu'on commence passe en quête suivie
         d.refocus();
         player.sendSystemMessage(Component.translatable("message.hxh.quest_started",
                 q.title(player)).withStyle(ChatFormatting.GOLD));
@@ -423,18 +423,36 @@ public final class QuestManager {
             Quest q = activeQuest(d);
             Quest.Step step = currentStep(d);
             if (q != null && step != null && step.type().equals("quiz") && step.npc().equals(npc.npcId())) {
+                d.tracked = id; // parler au PNJ d'une quête la fait suivre
                 askQuiz(player, npc, q, step, d);
                 d.refocus();
                 return;
             }
             if (q != null && step != null && step.type().equals("talk") && step.npc().equals(npc.npcId())) {
+                d.tracked = id; // parler au PNJ d'une quête la fait suivre
                 say(player, npc, q.dialog(step, player));
                 advance(player);
                 d.refocus();
                 return;
             }
+            // Le maître pendant un entraînement : il dit où on en est et ce qu'il reste à faire
+            if (q != null && step != null && q.startNpc().equals(npc.npcId())
+                    && java.util.List.of("mastery", "nen_mode", "nen_sense").contains(step.type())) {
+                d.tracked = id;
+                if (step.type().equals("mastery") && step.masteryTrained() != null) {
+                    com.evandouard.hxh.data.Mastery m = step.masteryTrained();
+                    int level = com.evandouard.hxh.stats.HunterStats.get(player).masteryLevel(m);
+                    say(player, npc, Component.translatable("dialog.hxh.train_more",
+                            Component.translatable(m.translationKey()), level, step.masteryGoal()));
+                } else {
+                    say(player, npc, Component.translatable("dialog.hxh.train_more_hold", q.objective(step, player)));
+                }
+                d.refocus();
+                return;
+            }
             // Apporter des objets au PNJ : ils sont pris de l'inventaire s'il y en a assez
             if (q != null && step != null && step.type().equals("bring") && step.npc().equals(npc.npcId())) {
+                d.tracked = id; // parler au PNJ d'une quête la fait suivre
                 net.minecraft.world.item.Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(ResourceLocation.parse(step.item()));
                 int have = player.getInventory().countItem(item);
                 if (have >= step.count()) {
@@ -621,6 +639,19 @@ public final class QuestManager {
         // Inscription au 200e : validée même si elle a eu lieu avant d'arriver à cette étape
         if (step.type().equals("arena_register_200") && player.tickCount % 20 == 0 && d.registered200()) {
             advance(player);
+            return;
+        }
+        // Entraînement au Nen : atteindre un niveau de maîtrise (validé même s'il est déjà atteint)
+        if (step.type().equals("mastery") && player.tickCount % 20 == 0) {
+            com.evandouard.hxh.data.Mastery m = step.masteryTrained();
+            int level = m == null ? 0 : com.evandouard.hxh.stats.HunterStats.get(player).masteryLevel(m);
+            int goal = step.masteryGoal();
+            if (level >= goal) {
+                advance(player);
+            } else if (level != d.progress) {
+                d.progress = level;
+                sync(player);
+            }
             return;
         }
         // Entraînement au Nen : tenir une posture / un sens, ou attendre un état (éveil, divination, Hatsu)

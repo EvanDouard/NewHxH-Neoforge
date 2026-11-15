@@ -561,6 +561,9 @@ look 0 0
 key key.hxh.gyo
 wait 10
 shot 22n7b_gyo_aura_aux_yeux
+camera first
+wait 5
+shot 22n7c_gyo_liseret_couleur_aura_bord_ecran
 key key.hxh.gyo
 camera back
 cmd hunter hatsu set kalluto
@@ -1286,8 +1289,15 @@ talkto wing
 wait 10
 expect [hud] Capacité apprise
 shot 38b_wing_lecon_ten
+cmd hunter nen mastery ten 0
 key key.hxh.ten
-wait 420
+wait 60
+clearchat
+talkto wing
+wait 10
+expect Entraîne-toi encore
+shot 38c_wing_entraine_toi_encore_niveau
+wait 400
 clearchat
 talkto wing
 wait 10

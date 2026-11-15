@@ -33,13 +33,13 @@
     },
     {
       "id": "practice",
-      "type": "nen_mode",
+      "type": "mastery",
       "mode": "in",
-      "seconds": 20,
       "objective": {
-        "fr": "Tenir l'In 20 secondes",
-        "en": "Hold In for 20 seconds"
-      }
+        "fr": "Pratiquer l'In jusqu'au niveau 2 de maîtrise",
+        "en": "Practise In up to mastery level 2"
+      },
+      "count": 2
     },
     {
       "id": "done",
@@ -50,8 +50,8 @@
         "en": "Go back to Wing"
       },
       "dialog": {
-        "fr": "Pas mal. Va plus loin, et tu pourras la couper complètement.",
-        "en": "Not bad. Go further and you'll cut it completely."
+        "fr": "Pas mal. Continue de t'entraîner à l'In : en allant plus loin, tu comprendras le Zetsu.",
+        "en": "Not bad. Keep training In: go further and you'll understand Zetsu."
       }
     }
   ],

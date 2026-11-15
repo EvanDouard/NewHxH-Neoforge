@@ -33,13 +33,13 @@
     },
     {
       "id": "practice",
-      "type": "nen_sense",
+      "type": "mastery",
       "mode": "gyo",
-      "seconds": 15,
       "objective": {
-        "fr": "Garder le Gyo 15 secondes",
-        "en": "Keep Gyo for 15 seconds"
-      }
+        "fr": "Pratiquer le Gyo jusqu'au niveau 1 de maîtrise",
+        "en": "Practise Gyo up to mastery level 1"
+      },
+      "count": 1
     },
     {
       "id": "done",

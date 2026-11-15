@@ -50,7 +50,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
     /** Types d'étapes connus. */
     public static final Set<String> TYPES = Set.of("talk", "kill", "follow", "bring", "reach", "custom",
             "quiz", "survive", "points", "duel", "ball", "waypoint", "knockout",
-            "nen_mode", "nen_sense", "nen_flag", "prayer", "kannon", "wounded_meditation",
+            "nen_mode", "nen_sense", "nen_flag", "mastery", "prayer", "kannon", "wounded_meditation",
             "arena_win", "arena_floor", "arena_register_200", "blacklist_catch", "contract_done");
 
     public record Step(String id, String type, String npc, String entity, int count, int seconds,
@@ -68,10 +68,31 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
                 case "bring" -> count;
                 case "follow", "nen_mode", "nen_sense", "survive", "waypoint", "kannon", "wounded_meditation" -> seconds;
                 case "prayer" -> count;
+                case "mastery" -> masteryGoal();
                 case "quiz" -> "silence".equals(answer) ? seconds : 0;
                 case "points", "duel", "ball", "knockout" -> count;
                 default -> 0;
             };
+        }
+
+        /**
+         * Niveau de maîtrise visé par une étape « mastery ». {@code count} à 0 : le palier réglé dans la
+         * configuration (l'In jusqu'au Zetsu, le Ten jusqu'au Ken).
+         */
+        public int masteryGoal() {
+            if (count > 0) return count;
+            return switch (mode) {
+                case "in", "zetsu" -> com.evandouard.hxh.HxHConfig.ZETSU_UNLOCK_IN_LEVEL.get();
+                case "ten", "ken" -> com.evandouard.hxh.HxHConfig.KEN_UNLOCK_TEN_LEVEL.get();
+                default -> 1;
+            };
+        }
+
+        /** Maîtrise travaillée par une étape « mastery » (palier du Zetsu = In, palier du Ken = Ten). */
+        public com.evandouard.hxh.data.Mastery masteryTrained() {
+            if ("ken".equals(mode)) return com.evandouard.hxh.data.Mastery.TEN;
+            com.evandouard.hxh.data.Mastery m = com.evandouard.hxh.data.Mastery.byId(mode);
+            return m == null ? null : m.storage();
         }
     }
 
@@ -227,6 +248,8 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
             if (type.equals("custom") && step.note().isEmpty()) problems.add(where + "décrire la condition dans \"note\"");
             if (type.equals("nen_mode") && com.evandouard.hxh.data.NenMode.byId(step.mode()) == null)
                 problems.add(where + "posture inconnue « " + step.mode() + " » (ten, zetsu, in, ren, ken)");
+            if (type.equals("mastery") && com.evandouard.hxh.data.Mastery.byId(step.mode()) == null)
+                problems.add(where + "maîtrise inconnue « " + step.mode() + " » (ten, in, zetsu, ren, ken, gyo, en, ko…)");
             if (type.equals("nen_sense") && !List.of("gyo", "en").contains(step.mode()))
                 problems.add(where + "sens inconnu « " + step.mode() + " » (gyo, en)");
             if (type.equals("nen_flag") && !List.of("unlocked", "revealed", "kit").contains(step.mode()))

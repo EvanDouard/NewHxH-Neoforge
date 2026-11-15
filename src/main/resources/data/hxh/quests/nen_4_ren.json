@@ -33,13 +33,13 @@
     },
     {
       "id": "practice",
-      "type": "nen_mode",
+      "type": "mastery",
       "mode": "ren",
-      "seconds": 15,
       "objective": {
-        "fr": "Tenir le Ren 15 secondes",
-        "en": "Hold Ren for 15 seconds"
-      }
+        "fr": "Pratiquer le Ren jusqu'au niveau 1 de maîtrise",
+        "en": "Practise Ren up to mastery level 1"
+      },
+      "count": 1
     },
     {
       "id": "done",
@@ -56,6 +56,6 @@
     }
   ],
   "requires": [
-    "hxh:nen_1_ten"
+    "hxh:nen_3_zetsu"
   ]
 }

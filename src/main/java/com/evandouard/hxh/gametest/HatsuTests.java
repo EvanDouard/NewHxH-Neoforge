@@ -71,7 +71,7 @@ public final class HatsuTests {
         float aura = d.aura();
         float health = target.getHealth();
         helper.assertTrue(Hatsu.cast(gon) == null, "Ciseaux aurait dû partir");
-        helper.assertTrue(Math.abs(d.aura() - (aura - Techniques.GON_SCISSORS.auraCost())) < 0.01, "Coût retiré");
+        helper.assertTrue(Math.abs(d.aura() - (aura - com.evandouard.hxh.nen.NenCost.cost(d, Techniques.GON_SCISSORS))) < 0.01, "Coût retiré");
         helper.assertTrue(d.readyAt("gon_scissors") > helper.getLevel().getGameTime(), "La recharge doit démarrer");
         helper.assertTrue("message.hxh.hatsu_cooldown".equals(Hatsu.cast(gon)), "Second lancement : en recharge");
         helper.succeedWhen(() -> helper.assertTrue(target.getHealth() < health, "La lame aurait dû toucher la cible"));

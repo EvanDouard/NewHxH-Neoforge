@@ -145,8 +145,9 @@ public final class LingeringNen {
             boolean dry = false;
             if (d.drain > 0) {
                 com.evandouard.hxh.data.HunterData data = com.evandouard.hxh.stats.HunterStats.get(d.caster);
-                if (data.aura() < d.drain) dry = true;
-                else data.setAura(data.aura() - d.drain);
+                float drain = d.drain * (float) com.evandouard.hxh.nen.NenCost.hatsu(data);
+                if (data.aura() < drain) dry = true;
+                else data.setAura(data.aura() - drain);
             }
             if (!d.caster.isAlive() || !d.patient.isAlive() || now >= d.until || dry) {
                 di.remove();

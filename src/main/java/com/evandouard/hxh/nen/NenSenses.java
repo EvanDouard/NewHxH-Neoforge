@@ -162,8 +162,10 @@ public final class NenSenses {
                 data.setEn(false);
             } else {
                 float drain = 0;
-                if (data.gyo()) drain += (float) Math.max(0.2, HxHConfig.GYO_DRAIN_PER_SECOND.get() - data.masteryLevel(Mastery.GYO) * 0.008);
-                if (data.en()) drain += (float) Math.max(0.5, HxHConfig.EN_DRAIN_PER_SECOND.get() - data.masteryLevel(Mastery.EN) * 0.01);
+                if (data.gyo()) drain += (float) (Math.max(0.2, HxHConfig.GYO_DRAIN_PER_SECOND.get() - data.masteryLevel(Mastery.GYO) * 0.008)
+                        * NenCost.factor(data, Mastery.GYO));
+                if (data.en()) drain += (float) (Math.max(0.5, HxHConfig.EN_DRAIN_PER_SECOND.get() - data.masteryLevel(Mastery.EN) * 0.01)
+                        * NenCost.factor(data, Mastery.EN));
                 data.setAura(data.aura() - drain / 20f);
                 if (data.aura() <= 0) {
                     data.setGyo(false);
@@ -218,7 +220,7 @@ public final class NenSenses {
         if (held.getDamageValue() > 0 && entity.getRandom().nextDouble() < chance) {
             held.setDamageValue(held.getDamageValue() - 1);
         }
-        data.setAura(data.aura() - 0.5f);
+        data.setAura(data.aura() - 0.5f * (float) NenCost.factor(data, Mastery.SHU));
         NenProgress.train(entity, Mastery.SHU, 1);
     }
 }

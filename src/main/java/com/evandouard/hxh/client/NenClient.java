@@ -245,7 +245,7 @@ public final class NenClient {
 
         // Ging : la copie affiche ses utilisations restantes
         com.evandouard.hxh.hatsu.Technique copied = com.evandouard.hxh.hatsu.Characters.gingCopied(data);
-        Component costLine = Component.translatable("hud.hxh.technique_cost", technique.auraCost());
+        Component costLine = Component.translatable("hud.hxh.technique_cost", com.evandouard.hxh.nen.NenCost.cost(data, technique));
         if (copied == technique) costLine = costLine.copy().append(" · ").append(Component.translatable("hud.hxh.copy_uses",
                 Math.round(data.kitValue(com.evandouard.hxh.hatsu.Characters.GING_COPY_USES))));
         graphics.drawString(mc.font, costLine, x + 10, y + 14, 0xFF1F6FA8, false);

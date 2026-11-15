@@ -81,7 +81,7 @@ public final class NenCharge {
             }
             HunterData data = HunterStats.get(entity);
             long held = entity.level().getGameTime() - c.start();
-            float drain = c.technique().drainPerTick;
+            float drain = c.technique().drainPerTick * (float) com.evandouard.hxh.nen.NenCost.hatsu(data);
             if (data.aura() >= drain) {
                 data.setAura(data.aura() - drain);
                 c.spent()[0] += drain;

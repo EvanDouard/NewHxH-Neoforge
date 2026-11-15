@@ -149,8 +149,20 @@ public final class HxHConfig {
             .defineInRange("awakening.openPoresRange", 4.0, 1.0, 32.0);
 
     public static final ModConfigSpec.IntValue ZETSU_UNLOCK_IN_LEVEL = BUILDER
-            .comment("Niveau de maîtrise de l'In à atteindre pour débloquer le Zetsu complet")
-            .defineInRange("senses.zetsuUnlockInLevel", 10, 0, 100);
+            .comment("Niveau de maîtrise de l'In (partagée avec le Zetsu) à atteindre pour passer au Zetsu")
+            .defineInRange("senses.zetsuUnlockInLevel", 5, 0, 100);
+
+    public static final ModConfigSpec.IntValue KEN_UNLOCK_TEN_LEVEL = BUILDER
+            .comment("Niveau de maîtrise du Ten à atteindre pour que Wing enseigne le Ken")
+            .defineInRange("senses.kenUnlockTenLevel", 5, 0, 100);
+
+    public static final ModConfigSpec.DoubleValue BEGINNER_COST_MULTIPLIER = BUILDER
+            .comment("Coût en aura des techniques à la maîtrise 0 (multiplicateur ; redescend à 1 au niveau ci-dessous)")
+            .defineInRange("aura.beginnerCostMultiplier", 2.5, 1.0, 10.0);
+
+    public static final ModConfigSpec.IntValue BEGINNER_COST_UNTIL = BUILDER
+            .comment("Niveau de maîtrise (ou de Nen, pour les Hatsu) à partir duquel le coût en aura est normal")
+            .defineInRange("aura.beginnerCostUntil", 20, 1, 100);
 
     public static final ModConfigSpec.DoubleValue GYO_DRAIN_PER_SECOND = BUILDER
             .comment("Aura consommée par seconde quand le Gyo est actif")

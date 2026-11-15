@@ -1427,5 +1427,12 @@
   "screen.hxh.computer.recipe_smoker": "Smoker:",
   "screen.hxh.computer.recipe_campfire": "Campfire:",
   "screen.hxh.computer.recipe_time": "Cooking time: %s s",
-  "screen.hxh.computer.recipe_or_similar": "(or similar)"
+  "screen.hxh.computer.recipe_or_similar": "(or similar)",
+  "dialog.hxh.wing.idle": "Osu! Keep working on your basics: Nen is patience first.",
+  "dialog.hxh.chrollo.idle": "A book, an ability… Everything has value, if you know how to see it.",
+  "dialog.hxh.genthru.idle": "Don't stand too close to me. Things might explode.",
+  "dialog.hxh.netero_maitre.idle": "Ho ho! An old man's prayer waits for no one. Come back when you're ready.",
+  "dialog.hxh.pecheur.idle": "Not much biting today… but the sea always gives in the end.",
+  "dialog.hxh.train_more": "Not yet. Train a little more: %s level %s of %s before moving on.",
+  "dialog.hxh.train_more_hold": "Not yet. Train a little more: %s."
 }

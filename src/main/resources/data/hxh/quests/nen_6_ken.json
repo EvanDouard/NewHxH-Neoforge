@@ -5,8 +5,8 @@
   },
   "start_npc": "wing",
   "intro": {
-    "fr": "Le Ren, mais tenu longtemps, pour se défendre partout.",
-    "en": "Ren, held for long, to defend everywhere."
+    "fr": "Le Ken, c'est un Ten si solide qu'il tient comme un Ren. Continue à t'entraîner avec le Ten et tu comprendras le Ken.",
+    "en": "Ken is a Ten so solid it holds like a Ren. Keep training with Ten and you'll understand Ken."
   },
   "npcs": {
     "wing": {
@@ -16,46 +16,33 @@
   },
   "steps": [
     {
-      "id": "learn",
-      "type": "talk",
-      "npc": "wing",
-      "reward_learn": [
-        "ken"
-      ],
-      "objective": {
-        "fr": "Écouter la leçon de Wing",
-        "en": "Listen to Wing's lesson"
-      },
-      "dialog": {
-        "fr": "Maintiens un Ren égal sur tout le corps : c'est le Ken.",
-        "en": "Keep an even Ren over your whole body: that's Ken."
-      }
-    },
-    {
       "id": "practice",
-      "type": "nen_mode",
+      "type": "mastery",
       "mode": "ken",
-      "seconds": 15,
+      "count": 0,
       "objective": {
-        "fr": "Tenir le Ken 15 secondes",
-        "en": "Hold Ken for 15 seconds"
+        "fr": "Continuer le Ten jusqu'au palier du Ken",
+        "en": "Keep training Ten up to the Ken tier"
       }
     },
     {
       "id": "done",
       "type": "talk",
       "npc": "wing",
+      "reward_learn": [
+        "ken"
+      ],
       "objective": {
         "fr": "Retourner voir Wing",
         "en": "Go back to Wing"
       },
       "dialog": {
-        "fr": "Tu tiendras plus longtemps en combat.",
-        "en": "You'll last longer in a fight."
+        "fr": "Ton Ten est prêt : maintiens un Ren égal sur tout le corps, c'est le Ken. Appuie deux fois sur la touche du Ten. Tu tiendras plus longtemps en combat.",
+        "en": "Your Ten is ready: keep an even Ren over your whole body, that's Ken. Press the Ten key twice. You'll last longer in a fight."
       }
     }
   ],
   "requires": [
-    "hxh:nen_4_ren"
+    "hxh:nen_5_gyo"
   ]
 }
