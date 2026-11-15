@@ -122,6 +122,10 @@ public class HunterComputerScreen extends Screen {
         }
         g.drawString(font, Component.literal(e.title()).withStyle(s -> s.withBold(true)), tx, ty, INK, false);
         g.fill(tx, ty + 11, tx + tw, ty + 12, INK);
+        // Recette : la grille d'artisanat avec les icônes, puis le résultat
+        ComputerRecipes.Layout layout = ComputerRecipes.layout(e.id());
+        int textTop = ty + 16;
+        if (layout != null) textTop = drawRecipe(g, layout, tx, ty + 16, mouseX, mouseY) + 6;
         List<FormattedCharSequence> lines = new ArrayList<>();
         for (String para : e.text().split("\n")) {
             if (para.isBlank()) {
@@ -130,13 +134,81 @@ public class HunterComputerScreen extends Screen {
             }
             lines.addAll(font.split(Component.literal(para), tw));
         }
-        int maxLines = (y + h - 14 - (ty + 16)) / 10;
+        int maxLines = (y + h - 14 - textTop) / 10;
         textScroll = Math.max(0, Math.min(textScroll, lines.size() - maxLines));
         for (int i = 0; i < maxLines && i + textScroll < lines.size(); i++) {
-            g.drawString(font, lines.get(i + textScroll), tx, ty + 16 + i * 10, 0xFF1D2B22, false);
+            g.drawString(font, lines.get(i + textScroll), tx, textTop + i * 10, 0xFF1D2B22, false);
         }
+        if (layout != null) recipeTooltip(g, layout, tx, ty + 16, mouseX, mouseY);
         if (lines.size() > maxLines) {
             g.drawString(font, (textScroll > 0 ? "▲" : " ") + (textScroll + maxLines < lines.size() ? "▼" : ""), x + w - 22, y + h - 20, INK, false);
+        }
+    }
+
+    private static final int SLOT = 18;
+
+    /** Haut gauche de la grille de la recette (sous la ligne qui dit où la fabriquer). */
+    private int gridTop(int top) {
+        return top + 12;
+    }
+
+    /** Une case : cadre encré, fond clair, comme un inventaire de manga. */
+    private static void slot(GuiGraphics g, int x, int y, boolean big) {
+        int s = big ? SLOT + 8 : SLOT;
+        g.fill(x, y, x + s, y + s, INK);
+        g.fill(x + 1, y + 1, x + s - 1, y + s - 1, 0xFFF4F1E6);
+    }
+
+    /** L'objet montré pour un ingrédient : les variantes défilent toutes les secondes (« n'importe quelle planche »). */
+    private static net.minecraft.world.item.ItemStack shown(net.minecraft.world.item.crafting.Ingredient ing) {
+        net.minecraft.world.item.ItemStack[] items = ing.getItems();
+        if (items.length == 0) return net.minecraft.world.item.ItemStack.EMPTY;
+        return items[(int) ((net.minecraft.Util.getMillis() / 1000) % items.length)];
+    }
+
+    /** Dessine la grille, la flèche et le résultat. Renvoie le bas de la zone dessinée. */
+    private int drawRecipe(GuiGraphics g, ComputerRecipes.Layout l, int x, int top, int mouseX, int mouseY) {
+        Component kind = l.cooking() ? Component.translatable(l.kindKey()).append(" ")
+                .append(Component.translatable("screen.hxh.computer.recipe_time", l.cookSeconds()))
+                : Component.translatable(l.kindKey());
+        g.drawString(font, kind, x, top, 0xFF1D2B22, false);
+        int gy = gridTop(top);
+        int rows = l.cooking() ? 1 : 3;
+        int gridW = l.width() * SLOT;
+        for (int i = 0; i < l.grid().size(); i++) {
+            int sx = x + (i % l.width()) * SLOT, sy = gy + (i / l.width()) * SLOT;
+            slot(g, sx, sy, false);
+            net.minecraft.world.item.ItemStack st = shown(l.grid().get(i));
+            if (!st.isEmpty()) g.renderItem(st, sx + 1, sy + 1);
+        }
+        int midY = gy + rows * SLOT / 2;
+        // flèche
+        int ax = x + gridW + 8;
+        g.fill(ax, midY - 1, ax + 18, midY + 1, INK);
+        for (int k = 0; k < 4; k++) g.fill(ax + 14 + k, midY - 4 + k, ax + 15 + k, midY + 4 - k, INK);
+        int rx = ax + 26, ry = midY - (SLOT + 8) / 2;
+        slot(g, rx, ry, true);
+        g.renderItem(l.result(), rx + 5, ry + 5);
+        g.renderItemDecorations(font, l.result(), rx + 5, ry + 5);
+        return gy + rows * SLOT;
+    }
+
+    /** Info-bulle de l'objet survolé dans la grille ou le résultat. */
+    private void recipeTooltip(GuiGraphics g, ComputerRecipes.Layout l, int x, int top, int mouseX, int mouseY) {
+        int gy = gridTop(top);
+        for (int i = 0; i < l.grid().size(); i++) {
+            int sx = x + (i % l.width()) * SLOT, sy = gy + (i / l.width()) * SLOT;
+            if (mouseX >= sx && mouseX < sx + SLOT && mouseY >= sy && mouseY < sy + SLOT) {
+                net.minecraft.world.item.ItemStack st = shown(l.grid().get(i));
+                if (!st.isEmpty()) g.renderTooltip(font, st, mouseX, mouseY);
+                return;
+            }
+        }
+        int rows = l.cooking() ? 1 : 3;
+        int midY = gy + rows * SLOT / 2;
+        int rx = x + l.width() * SLOT + 34, ry = midY - (SLOT + 8) / 2;
+        if (mouseX >= rx && mouseX < rx + SLOT + 8 && mouseY >= ry && mouseY < ry + SLOT + 8) {
+            g.renderTooltip(font, l.result(), mouseX, mouseY);
         }
     }
 

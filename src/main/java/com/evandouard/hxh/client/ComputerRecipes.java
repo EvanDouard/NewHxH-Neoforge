@@ -26,6 +26,21 @@ import java.util.Map;
 public final class ComputerRecipes {
     private ComputerRecipes() {}
 
+    /** Disposition à dessiner : grille 3×3 (ou une case pour la cuisson), résultat, sorte de recette. */
+    public record Layout(List<Ingredient> grid, int width, ItemStack result, String kindKey, int cookSeconds) {
+        public boolean cooking() {
+            return cookSeconds >= 0;
+        }
+    }
+
+    private static final Map<String, Layout> LAYOUTS = new java.util.HashMap<>();
+
+    /** Disposition de la fiche {@code recipe_…}, ou null. */
+    @org.jetbrains.annotations.Nullable
+    public static Layout layout(String entryId) {
+        return LAYOUTS.get(entryId);
+    }
+
     public static List<OpenComputerPayload.Entry> entries() {
         Minecraft mc = Minecraft.getInstance();
         List<OpenComputerPayload.Entry> out = new ArrayList<>();
@@ -41,7 +56,9 @@ public final class ComputerRecipes {
             ItemStack result = r.getResultItem(mc.level.registryAccess());
             if (result.isEmpty()) continue;
             String title = result.getHoverName().getString() + (result.getCount() > 1 ? " ×" + result.getCount() : "");
-            out.add(new OpenComputerPayload.Entry("recipe_" + h.id().getPath(), category, title, text(r), true, ""));
+            String id = "recipe_" + h.id().getPath();
+            LAYOUTS.put(id, layoutOf(r, result));
+            out.add(new OpenComputerPayload.Entry(id, category, title, totals(r), true, ""));
         }
         return out;
     }
@@ -53,40 +70,33 @@ public final class ComputerRecipes {
         return items.length > 1 ? n + " " + Component.translatable("screen.hxh.computer.recipe_or_similar").getString() : n;
     }
 
-    private static String text(Recipe<?> r) {
-        StringBuilder sb = new StringBuilder();
+    private static Layout layoutOf(Recipe<?> r, ItemStack result) {
+        List<Ingredient> grid = new ArrayList<>();
         if (r instanceof ShapedRecipe shaped) {
-            sb.append(Component.translatable("screen.hxh.computer.recipe_shaped").getString()).append("\n\n");
-            // une lettre par ingrédient différent, puis la grille et la légende
-            Map<String, Character> letters = new LinkedHashMap<>();
-            var ings = shaped.getIngredients();
-            for (int y = 0; y < shaped.getHeight(); y++) {
-                StringBuilder row = new StringBuilder();
-                for (int x = 0; x < shaped.getWidth(); x++) {
-                    Ingredient ing = ings.get(y * shaped.getWidth() + x);
-                    if (ing.isEmpty()) {
-                        row.append("[ - ]");
-                        continue;
-                    }
-                    String n = name(ing);
-                    char c = letters.computeIfAbsent(n, k -> (char) ('A' + letters.size()));
-                    row.append("[ ").append(c).append(" ]");
-                }
-                sb.append(row).append("\n");
+            // recentrée dans une grille 3 × 3, comme à l'établi
+            for (int i = 0; i < 9; i++) grid.add(Ingredient.EMPTY);
+            for (int y = 0; y < shaped.getHeight(); y++) for (int x = 0; x < shaped.getWidth(); x++) {
+                grid.set(y * 3 + x, shaped.getIngredients().get(y * shaped.getWidth() + x));
             }
-            sb.append("\n");
-            for (var e : letters.entrySet()) sb.append(e.getValue()).append(" = ").append(e.getKey()).append("\n");
-        } else if (r instanceof AbstractCookingRecipe cooking) {
+            return new Layout(grid, 3, result, "screen.hxh.computer.recipe_shaped", -1);
+        }
+        if (r instanceof AbstractCookingRecipe cooking) {
+            grid.add(cooking.getIngredients().get(0));
             String where = r instanceof SmokingRecipe ? "screen.hxh.computer.recipe_smoker"
                     : r instanceof CampfireCookingRecipe ? "screen.hxh.computer.recipe_campfire" : "screen.hxh.computer.recipe_furnace";
-            sb.append(Component.translatable(where).getString()).append("\n\n");
-            sb.append(name(cooking.getIngredients().get(0))).append("  →  ")
-                    .append(cooking.getResultItem(Minecraft.getInstance().level.registryAccess()).getHoverName().getString())
-                    .append("\n").append(Component.translatable("screen.hxh.computer.recipe_time", cooking.getCookingTime() / 20).getString());
-        } else {
-            sb.append(Component.translatable("screen.hxh.computer.recipe_shapeless").getString()).append("\n\n");
-            for (Ingredient ing : r.getIngredients()) if (!ing.isEmpty()) sb.append("• ").append(name(ing)).append("\n");
+            return new Layout(grid, 1, result, where, cooking.getCookingTime() / 20);
         }
+        for (Ingredient ing : r.getIngredients()) if (!ing.isEmpty() && grid.size() < 9) grid.add(ing);
+        while (grid.size() < 9) grid.add(Ingredient.EMPTY);
+        return new Layout(grid, 3, result, "screen.hxh.computer.recipe_shapeless", -1);
+    }
+
+    /** Sous la grille : la liste des ingrédients avec leur nombre (« 5 × Lingot de fer »). */
+    private static String totals(Recipe<?> r) {
+        Map<String, Integer> count = new LinkedHashMap<>();
+        for (Ingredient ing : r.getIngredients()) if (!ing.isEmpty()) count.merge(name(ing), 1, Integer::sum);
+        StringBuilder sb = new StringBuilder();
+        for (var e : count.entrySet()) sb.append(e.getValue()).append(" × ").append(e.getKey()).append("\n");
         return sb.toString().stripTrailing();
     }
 }

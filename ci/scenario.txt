@@ -2275,10 +2275,13 @@ wait 5
 shot 97_ordinateur_bestiaire_fourmi_chimere
 pick recipe_hunter_computer
 wait 5
-shot 97b_ordinateur_recette_de_l_ordinateur
+shot 97b_ordinateur_recette_icones_ordinateur
 pick recipe_nutritious_dish_1
 wait 5
-shot 97c_ordinateur_recette_sans_forme
+shot 97c_ordinateur_recette_icones_sans_forme
+pick recipe_cooked_foxbear_meat_from_smelting
+wait 5
+shot 97d_ordinateur_recette_icones_four
 closescreen
 cmd kill @e[type=!minecraft:player]
 # --- Yeux du Gyo, tête tournée par rapport au corps (retour d'Evan : les yeux disparaissaient) ---
