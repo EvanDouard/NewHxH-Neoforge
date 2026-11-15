@@ -228,3 +228,11 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [x] CI : GameTests `strikingDummyHitsAnyCreatureButNeverKills`, `strikingDummyDodgeTrainsSpeed`, `iceBathTrainsWillpowerWithoutFreezeDamage` + captures 48c (objets posés), 48c2 (givre dans le bain), 48c3 (mannequin qui cogne).
 - [ ] En jeu : rythme du mannequin (un coup toutes les 1,5 s, 1 cœur, jamais sous 2 cœurs) ; esquiver en s'accroupissant ou au bouclier donne de la Vitesse.
 - [ ] À juger : modèles et textures provisoires (mannequin en paille sur pied, cuve en métal) ; recettes (mannequin : botte de foin + bâtons + piston ; bain : chaudron + 2 glaces compactées + seau d'eau).
+
+## Leçons de Wing, maîtrises et coût d'aura (15 nov)
+- [ ] CI : GameTest `wingLessonsAreChainedAndZetsuIsTheInTier` (chaîne Ten → In → Zetsu → Ren → Gyo → Ken → En → Ko, Hatsu après le Ren ; Zetsu = palier de l'In, Ken = palier du Ten ; In et Zetsu partagent la même XP).
+- [ ] CI : GameTest `nenMustBeLearnedFromWing` étendu (niveau 1 du Ten requis, Wing dit « entraîne-toi encore » sinon, l'In est proposé ensuite et passe en suivi) + capture 38c.
+- [ ] CI : GameTest `beginnersPayMoreAura` (×2,5 à la maîtrise 0, normal au niveau 20) ; `questsRunInParallelAndCanBeTracked` : la quête commencée ou continuée chez un PNJ passe en suivi.
+- [ ] CI : capture 22n7c (liseré de Gyo, couleur de l'aura, ~10 px qui s'efface vers le centre).
+- [ ] En jeu : rythme des leçons (In 2, palier du Zetsu = In 5 ≈ 4 min d'In, palier du Ken = Ten 5 ≈ 4 min de Ten) ; surcoût débutant trop fort ou pas assez ?
+- [ ] À juger : intensité du liseré de Gyo (opacité 0x70 au bord).

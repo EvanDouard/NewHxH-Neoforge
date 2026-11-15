@@ -85,3 +85,9 @@ Valeurs posées par Claude pour avancer. Elles marchent en jeu, mais on les revo
 | Heure supplémentaire / Service de jour | ×1,3 dans sa période, ×0,7 dans l'autre (nuit = 13000–23000 ticks ; pas de cycle = jour) ; un seul serment à la fois |
 | Singe à visage humain | 24 PV, 4 dégâts, vitesse 0,3 ; marais, poids 20, 1–2 ; une réplique trompeuse ~toutes les 30 s à 24 blocs |
 | Fourmi-Chimère soldat | 40 PV, 7 dégâts, armure 6 ; jungles, poids 12, 2–3 ; 30 % au Nen (niveau 35, prime 600 J, mob d'exemple `fourmi_chimere_soldat`) |
+
+## Maîtrises et leçons de Wing (15 nov)
+- Palier du Zetsu : In (maîtrise partagée avec le Zetsu) niveau **5** (`senses.zetsuUnlockInLevel`), ≈ 4 min d'In tenu. L'exemple « In jusqu'au niveau 30 » demanderait ≈ 6 h d'In **et** le niveau de Nen 30 (plafond de verre des maîtrises), soit ≈ 9 h : trop long pour une leçon de début. À relever si on veut un vrai palier tardif.
+- Palier du Ken : Ten niveau **5** (`senses.kenUnlockTenLevel`).
+- Étapes des autres leçons : niveau 1 de la maîtrise (In : niveau 2).
+- Surcoût débutant : ×**2,5** à la maîtrise 0, redescend en ligne droite jusqu'à ×1 au niveau **20** (`aura.beginnerCostMultiplier`, `aura.beginnerCostUntil`). Postures et sens : leur maîtrise ; Ko : maîtrise du Ko ; Hatsu : niveau de Nen. Le soin par l'aura garde son propre barème.
