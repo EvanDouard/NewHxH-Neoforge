@@ -16,7 +16,7 @@ public final class GyoVignette {
     /** Épaisseur du liseré, en pixels d'interface. */
     public static final int WIDTH = 10;
     /** Opacité au bord de l'écran (0-255). */
-    private static final int EDGE_ALPHA = 0x70;
+    private static final int EDGE_ALPHA = 0xB0;
 
     public static void render(GuiGraphics g, DeltaTracker delta) {
         Minecraft mc = Minecraft.getInstance();
@@ -27,7 +27,7 @@ public final class GyoVignette {
         int w = g.guiWidth(), h = g.guiHeight();
         for (int i = 0; i < WIDTH; i++) {
             double t = 1.0 - i / (double) WIDTH; // 1 au bord, 0 vers l'intérieur
-            int alpha = (int) Math.round(EDGE_ALPHA * t * t);
+            int alpha = (int) Math.round(EDGE_ALPHA * Math.pow(t, 1.5));
             if (alpha <= 0) continue;
             int c = alpha << 24 | rgb;
             g.fill(i, i, w - i, i + 1, c);             // haut
