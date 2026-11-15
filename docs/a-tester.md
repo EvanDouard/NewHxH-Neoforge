@@ -14,7 +14,7 @@ les lignes « En jeu » restent à regarder à la main.
 Légende : **CI** = vérifié par les GameTests ou une capture du scénario · **En jeu** = à regarder à la main.
 
 ## Recettes dans l'ordinateur et le livre de recettes (14 nov, soir)
-- [x] CI (captures `97b`, `97c`) : catégorie « Recettes » de l'ordinateur Hunter, une fiche par craft du mod (grille avec lettres et légende, ou liste d'ingrédients, ou cuisson).
+- [x] CI (captures `97b`, `97c`, `97d`) : catégorie « Recettes » de l'ordinateur Hunter : grille d'artisanat avec les icônes (variantes qui défilent), flèche, résultat et quantité, info-bulles au survol ; liste des ingrédients comptés dessous ; cuisson : une case et le temps.
 - [x] CI : GameTest `modRecipesAreInTheRecipeBook` : toutes les recettes du mod, ordinateur compris, débloquées à la connexion.
 - [ ] En jeu : ouvrir le livre de recettes (inventaire ou établi) : l'ordinateur Hunter y est, avec les haltères, tapis, mannequin, bain glacé, plats…
 

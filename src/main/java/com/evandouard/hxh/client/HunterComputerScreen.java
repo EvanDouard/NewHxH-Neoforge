@@ -156,7 +156,7 @@ public class HunterComputerScreen extends Screen {
     private static void slot(GuiGraphics g, int x, int y, boolean big) {
         int s = big ? SLOT + 8 : SLOT;
         g.fill(x, y, x + s, y + s, INK);
-        g.fill(x + 1, y + 1, x + s - 1, y + s - 1, 0xFFF4F1E6);
+        g.fill(x + 1, y + 1, x + s - 1, y + s - 1, 0xFF8B8B8B); // gris des cases de Minecraft : la vitre se voit
     }
 
     /** L'objet montré pour un ingrédient : les variantes défilent toutes les secondes (« n'importe quelle planche »). */
