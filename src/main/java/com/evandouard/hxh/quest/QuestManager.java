@@ -817,7 +817,17 @@ public final class QuestManager {
             int delay = step.trial().isEmpty() ? 0 : step.site().equals("kiriko") ? TRIP_DELAY_KIRIKO : TRIP_DELAY;
             if (real && newTrial) {
                 // Épreuve réussie : retour au salon du dirigeable, d'où l'hôtesse fait embarquer pour la suivante
-                tripLater(player, delay, com.evandouard.hxh.exam.ExamDeparture::toLobby);
+                if (step.trial().isEmpty()) {
+                    // Le guide donne le premier dirigeable, dans le monde
+                    tripLater(player, delay, p -> {
+                        com.evandouard.hxh.exam.ExamTrips.returnHome(p);
+                        BlockPos dep = com.evandouard.hxh.exam.ExamDeparture.create(p, p.blockPosition());
+                        if (dep != null) p.sendSystemMessage(Component.translatable("exam.hxh.departure", dep.getX(), dep.getZ(),
+                                (int) Math.sqrt(dep.distSqr(p.blockPosition()))).withStyle(ChatFormatting.GOLD));
+                    });
+                } else {
+                    tripLater(player, delay, com.evandouard.hxh.exam.ExamDeparture::toLobby);
+                }
             } else if (site == com.evandouard.hxh.exam.ExamSite.HALL && step.site().equals("zaban")
                     && com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level())
                     && com.evandouard.hxh.exam.ExamHazards.siteAt(player.blockPosition()) == com.evandouard.hxh.exam.ExamSite.ZABAN) {

@@ -61,7 +61,7 @@ public final class QuestTests {
         for (int n = 0; n < 300; n++) {
             java.util.List<String> t = com.evandouard.hxh.quest.TrialPlan.draw(exam, random);
             seen.add(t);
-            helper.assertTrue(t.size() >= 4 && t.size() <= 6, "4 à 6 épreuves : " + t);
+            helper.assertTrue(t.size() >= 5 && t.size() <= 7, "5 à 7 épreuves : " + t);
             helper.assertTrue(new java.util.HashSet<>(t).size() == t.size(), "Pas deux fois la même épreuve : " + t);
             helper.assertTrue(t.get(t.size() - 1).equals("tournoi") && t.get(t.size() - 2).equals("zevil"),
                     "Toujours les badges de Zevil puis le tournoi final : " + t);

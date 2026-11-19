@@ -288,6 +288,11 @@ public final class HunterCommand {
                                 return 0;
                             }
                             net.minecraft.core.BlockPos b = net.minecraft.core.BlockPos.of(dep);
+                            if (com.evandouard.hxh.exam.ExamWorld.isExamLevel(p.level())) {
+                                // Dans le salon du dirigeable : face à l'hôtesse
+                                p.teleportTo((net.minecraft.server.level.ServerLevel) p.level(), b.getX() + 0.5, b.getY(), b.getZ() + 2.5, 0f, 10f);
+                                return 1;
+                            }
                             p.teleportTo(p.server.overworld(), b.getX() - 1.5, b.getY(), b.getZ() + 0.5, -90f, 10f); // sur le pont, face à l'hôtesse
                             return 1;
                         }))

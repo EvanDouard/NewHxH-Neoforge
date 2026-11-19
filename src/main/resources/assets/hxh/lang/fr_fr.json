@@ -1447,5 +1447,5 @@
   "message.hxh.mastery_level_up_cap": "%s : niveau %s, plafond atteint : monte ton niveau de Nen pour aller plus loin.",
   "screen.hxh.nen_graph.header": "Niveau de Nen %s · plafond des maîtrises %s · prochain niveau : %s %%",
   "exam.hxh.site.lobby_dirigeable": "Salon du dirigeable",
-  "exam.hxh.lobby": "Épreuve réussie ! Repose-toi dans le salon du dirigeable ; parle à l'hôtesse quand tu es prêt pour la suite."
+  "exam.hxh.lobby": "Épreuve réussie ! Ton dirigeable t'attend : repose-toi dans le salon, puis parle à l'hôtesse quand tu es prêt pour la suite."
 }

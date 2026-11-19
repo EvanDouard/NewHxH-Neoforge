@@ -1447,5 +1447,5 @@
   "message.hxh.mastery_level_up_cap": "%s: level %s, cap reached: raise your Nen level to go further.",
   "screen.hxh.nen_graph.header": "Nen level %s · mastery cap %s · next level: %s%%",
   "exam.hxh.site.lobby_dirigeable": "Airship lounge",
-  "exam.hxh.lobby": "Trial passed! Rest in the airship lounge; talk to the hostess when you're ready for the next one."
+  "exam.hxh.lobby": "Trial passed! Your airship awaits: rest in the lounge, then talk to the hostess when you're ready for the next one."
 }
