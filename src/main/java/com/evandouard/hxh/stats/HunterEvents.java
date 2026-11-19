@@ -77,8 +77,11 @@ public final class HunterEvents {
         player.awardRecipes(mine);
     }
 
-    private static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+    /**
+     * Type de Nen (si la règle de partie le veut) et talent, tirés une fois pour toutes : à la première connexion,
+     * et de nouveau après un {@code /hunter reset} qui les a effacés.
+     */
+    public static void rollIdentity(ServerPlayer player) {
         HunterData data = HunterStats.get(player);
         // Tirage indépendant du joueur (le générateur de l'entité donnait toujours le même résultat au 1er tirage)
         net.minecraft.util.RandomSource roll = net.minecraft.util.RandomSource.create(System.nanoTime()
@@ -86,8 +89,13 @@ public final class HunterEvents {
         if (data.nenType() == null && player.serverLevel().getGameRules().getBoolean(HxHGameRules.RANDOM_NEN_TYPE)) {
             data.setNenType(NenType.random(roll));
         }
-        // Talent pour le Nen : tiré une fois pour toutes en début de partie
         if (data.talent() == null) data.setTalent(com.evandouard.hxh.data.NenTalent.roll(roll));
+    }
+
+    private static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        HunterData data = HunterStats.get(player);
+        rollIdentity(player);
         unlockModRecipes(player);
         restoreHealthLater(player, data.lastHealth());
         HxHNetwork.syncFull(player);

@@ -69,6 +69,9 @@ public class WaterDivinationBlock extends HorizontalDirectionalBlock {
      */
     public static NenType divine(Level level, BlockPos pos, Player player) {
         HunterData data = HunterStats.get(player);
+        if (data.nenUnlocked() && data.nenType() == null && player instanceof net.minecraft.server.level.ServerPlayer sp) {
+            com.evandouard.hxh.stats.HunterEvents.rollIdentity(sp); // type perdu (reset, ancienne sauvegarde)
+        }
         if (!data.nenUnlocked() || data.nenType() == null) {
             player.displayClientMessage(Component.translatable("divination.hxh.nothing"), false);
             return null;

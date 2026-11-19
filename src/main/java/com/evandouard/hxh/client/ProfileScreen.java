@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Carnet de Hunter (touche O) : statistiques et Nen, quêtes, Tour Céleste et Jenny, par onglets ;
- * boutons pour le Hatsu, la méditation, le Ryu et l'ouverture des pores de la cible visée.
- * La molette fait défiler les longues pages.
+ * Carnet de Hunter (touche O), par onglets : Personnage (stats cliquables, fiches Nen et famille, boutons de
+ * réglage : Hatsu, méditation, Ryu, pores, vitesse, En), Quêtes, Tour Céleste, Nen (graphe des techniques) et Aura
+ * (aura, soin par le Nen, régénération). Cliquer une stat ou une technique ouvre sa fiche : description, XP, niveau
+ * et barre de paliers (survol = ce que fait la technique à ce niveau, efficacité en aura comprise).
+ * La molette fait défiler les longues pages ; Échap ferme d'abord la fiche ouverte.
  */
 public class ProfileScreen extends Screen {
     private static int lastTab = 0;
@@ -47,13 +49,14 @@ public class ProfileScreen extends Screen {
     }
 
     private int panelW() {
-        return Math.min(340, width - 20);
+        return Math.min(380, width - 20);
     }
 
     @Override
     protected void init() {
         tabs.clear();
-        String[] keys = {"screen.hxh.profile.tab_character", "screen.hxh.profile.tab_quests", "screen.hxh.profile.tab_arena", "screen.hxh.profile.tab_nen"};
+        String[] keys = {"screen.hxh.profile.tab_character", "screen.hxh.profile.tab_quests", "screen.hxh.profile.tab_arena",
+                "screen.hxh.profile.tab_nen", "screen.hxh.profile.tab_aura"};
         int w = panelW();
         int left = width / 2 - w / 2;
         int bw = (w - 4 * (keys.length - 1)) / keys.length;
@@ -62,8 +65,11 @@ public class ProfileScreen extends Screen {
             tabs.add(addRenderableWidget(Button.builder(Component.translatable(keys[i]), b -> select(index))
                     .bounds(left + i * (bw + 4), 28, bw, 20).build()));
         }
-        if (tab == 1) addTrackButtons(left, w);
-        else if (tab != 3) {
+        if (!selected.isEmpty() && (tab == 0 || tab == 3 || tab == 4)) {
+            addRenderableWidget(Button.builder(Component.translatable("screen.hxh.detail.back"), b -> closeDetail())
+                    .bounds(left + w - 64, 53, 60, 14).build());
+        } else if (tab == 1) addTrackButtons(left, w);
+        else if (tab == 0 || tab == 2) {
             // Actions (2 lignes de 2) : Hatsu, méditation, Ryu, ouverture des pores de la cible visée
             int aw = (w - 4) / 2;
             int ay = height - 76;
@@ -123,6 +129,7 @@ public class ProfileScreen extends Screen {
         tab = index;
         lastTab = index;
         scroll = 0;
+        if (changed) selected = "";
         for (int i = 0; i < tabs.size(); i++) tabs.get(i).active = i != index;
         if (changed) rebuildWidgets();
     }
@@ -147,6 +154,11 @@ public class ProfileScreen extends Screen {
         return switch (tab) {
             case 1 -> data.quests();
             case 2 -> data.arena();
+            case 0 -> switch (selected) {
+                case "txt:identity" -> data.extra().identity();
+                case "txt:family" -> data.extra().family();
+                default -> data.character();
+            };
             default -> data.character();
         };
     }
@@ -162,7 +174,8 @@ public class ProfileScreen extends Screen {
 
     /** Bas du panneau de texte : au-dessus du curseur « Vitesse max » sur l'onglet Personnage. */
     private int panelBottom() {
-        return tab == 0 ? height - 106 : tab == 3 ? height - 34 : height - 82;
+        if (tab == 0) return selected.isEmpty() ? height - 106 : height - 34;
+        return tab >= 3 ? height - 34 : height - 82;
     }
 
     private int visibleRows() {
@@ -184,8 +197,18 @@ public class ProfileScreen extends Screen {
         g.drawCenteredString(font, title, width / 2, 12, 0xFFD27F);
         int top = 56, bottom = panelBottom();
         g.fill(left, top - 4, left + w, bottom, 0xAA000000);
+        parseDetails();
+        if (!selected.isEmpty() && (tab == 3 || tab == 4 || tab == 0)) {
+            if (tab == 3) layoutGraph(left, top, w, bottom);
+            renderDetail(g, left, top, w, bottom, mouseX, mouseY);
+            return;
+        }
         if (tab == 3) {
             renderGraph(g, left, top, w, bottom, mouseX, mouseY);
+            return;
+        }
+        if (tab == 0 || tab == 4) {
+            renderCards(g, left, top, w, mouseX, mouseY);
             return;
         }
         List<FormattedCharSequence> rows = wrapped();
@@ -272,7 +295,7 @@ public class ProfileScreen extends Screen {
         g.fill(left + 8, top + 9, left + w - 8, top + 11, 0xFF333333);
         g.fill(left + 8, top + 9, left + 8 + (w - 16) * nenMeta[2] / 100, top + 11, 0xFF4F9BE0);
         GNode hover = nodeAt(mouseX, mouseY);
-        String focus = hover != null ? hover.ability().id() : selected;
+        String focus = hover != null ? hover.ability().id() : "";
         // Liens : plus clairs quand la technique parente est acquise, en surbrillance autour de la technique visée
         for (var e : com.evandouard.hxh.nen.NenTree.edges()) {
             GNode a = graphNodes.get(e.from().id()), b = graphNodes.get(e.to().id());
@@ -322,13 +345,306 @@ public class ProfileScreen extends Screen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (super.mouseClicked(mouseX, mouseY, button)) return true;
+        if (!selected.isEmpty()) return false;
+        int w = panelW();
+        int left = width / 2 - w / 2;
         if (tab == 3) {
             GNode n = nodeAt(mouseX, mouseY);
-            selected = n == null ? "" : n.ability().id();
+            if (n != null) open(n.ability().id());
+            else if (mouseY >= 52 && mouseY < 70 && mouseX >= left && mouseX < left + w) open("nen"); // bandeau du niveau de Nen
             return true;
+        }
+        if (tab == 0 || tab == 4) {
+            for (Card c : cards(left, 56, w)) {
+                if (mouseX >= c.x() && mouseX < c.x() + c.w() && mouseY >= c.y() && mouseY < c.y() + CARD_H) {
+                    open(c.id());
+                    return true;
+                }
+            }
         }
         return false;
     }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        // Échap : referme d'abord la fiche ouverte
+        if (keyCode == 256 && !selected.isEmpty()) {
+            closeDetail();
+            return true;
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    private void open(String id) {
+        selected = id;
+        scroll = 0;
+        rebuildWidgets();
+    }
+
+    /** Ouvre la fiche d'une stat, d'une technique ou de l'aura (scénarios de test et raccourcis). */
+    public boolean pickSubject(String id) {
+        parseDetails();
+        boolean text = id.startsWith("txt:");
+        if (!text && !subjects.containsKey(id)) return false;
+        int target = text || com.evandouard.hxh.stats.ProfileDetails.STATS.contains(id) ? 0
+                : com.evandouard.hxh.stats.ProfileDetails.AURA.contains(id) ? 4 : 3;
+        tab = target;
+        lastTab = target;
+        selected = id;
+        scroll = 0;
+        rebuildWidgets();
+        return true;
+    }
+
+    private void closeDetail() {
+        selected = "";
+        scroll = 0;
+        rebuildWidgets();
+    }
+
+    // ---------- Fiches : cartes cliquables (Personnage, Aura) et détail par niveau ----------
+
+    private record Eff(char flag, String key, String value) {}
+
+    private record Milestone(int level, List<Eff> effects) {}
+
+    private static final class Subject {
+        boolean ok = true;
+        int level, xp, next = -1, cap = 100;
+        final List<Milestone> milestones = new ArrayList<>();
+    }
+
+    private final java.util.Map<String, Subject> subjects = new java.util.HashMap<>();
+    private List<String> parsedFrom;
+
+    private void parseDetails() {
+        if (parsedFrom == data.details()) return;
+        parsedFrom = data.details();
+        subjects.clear();
+        for (String line : parsedFrom) {
+            try {
+                String[] p = line.split("\\|", 4);
+                if (p[0].equals("D")) {
+                    String[] q = line.split("\\|");
+                    Subject sub = subjects.computeIfAbsent(q[1], k -> new Subject());
+                    sub.ok = q[2].equals("1");
+                    sub.level = Integer.parseInt(q[3]);
+                    sub.xp = Integer.parseInt(q[4]);
+                    sub.next = Integer.parseInt(q[5]);
+                    sub.cap = Integer.parseInt(q[6]);
+                } else if (p[0].equals("M")) {
+                    Subject sub = subjects.computeIfAbsent(p[1], k -> new Subject());
+                    int at = Integer.parseInt(p[2].split("\\|")[0]);
+                    List<Eff> effects = new ArrayList<>();
+                    if (p.length > 3) for (String token : p[3].split(";")) {
+                        if (token.isEmpty()) continue;
+                        char flag = token.charAt(0) == '!' || token.charAt(0) == '+' ? token.charAt(0) : ' ';
+                        String rest = flag == ' ' ? token : token.substring(1);
+                        int eq = rest.indexOf('=');
+                        effects.add(new Eff(flag, eq < 0 ? rest : rest.substring(0, eq), eq < 0 ? "" : rest.substring(eq + 1)));
+                    }
+                    sub.milestones.add(new Milestone(at, effects));
+                }
+            } catch (RuntimeException ignored) {
+                // ligne illisible : on l'ignore plutôt que de casser tout le carnet
+            }
+        }
+    }
+
+    private static final int CARD_H = 26;
+
+    private record Card(String id, Component label, int x, int y, int w) {}
+
+    private List<Card> cards(int left, int top, int w) {
+        List<Card> out = new ArrayList<>();
+        if (tab == 4) {
+            String[] ids = {"aura", "heal", "regen"};
+            int cw = (w - 16 - 8) / 3;
+            for (int i = 0; i < ids.length; i++) out.add(new Card(ids[i], Component.translatable("screen.hxh.aura." + ids[i]),
+                    left + 8 + i * (cw + 4), top + 14, cw));
+            return out;
+        }
+        int cw = (w - 16 - 16) / 5;
+        for (int i = 0; i < com.evandouard.hxh.stats.ProfileDetails.STATS.size(); i++) {
+            String id = com.evandouard.hxh.stats.ProfileDetails.STATS.get(i);
+            out.add(new Card(id, Component.translatable("stat.hxh." + id), left + 8 + i * (cw + 4), top + 12, cw));
+        }
+        String[] texts = {"summary", "nen_identity", "family"};
+        String[] ids = {"txt:summary", "txt:identity", "txt:family"};
+        int tw = (w - 16 - 8) / 3;
+        for (int i = 0; i < texts.length; i++) out.add(new Card(ids[i], Component.translatable("screen.hxh.character." + texts[i]),
+                left + 8 + i * (tw + 4), top + 44, tw));
+        return out;
+    }
+
+    private void renderCards(GuiGraphics g, int left, int top, int w, int mouseX, int mouseY) {
+        if (tab == 0) {
+            g.drawString(font, data.character().isEmpty() ? Component.empty() : data.character().get(0), left + 8, top - 1, 0xFFD27F);
+        } else {
+            g.drawString(font, Component.translatable("screen.hxh.aura.title"), left + 8, top - 1, 0x9FD3FF);
+        }
+        for (Card c : cards(left, top, w)) {
+            Subject sub = subjects.get(c.id());
+            boolean hover = mouseX >= c.x() && mouseX < c.x() + c.w() && mouseY >= c.y() && mouseY < c.y() + CARD_H;
+            boolean locked = sub != null && !sub.ok;
+            g.fill(c.x() - 1, c.y() - 1, c.x() + c.w() + 1, c.y() + CARD_H + 1, hover ? 0xFFFFFFFF : locked ? 0xFF555555 : 0xFF8C6A2E);
+            g.fill(c.x(), c.y(), c.x() + c.w(), c.y() + CARD_H, 0xFF222222);
+            g.drawCenteredString(font, c.label(), c.x() + c.w() / 2, c.y() + 3, locked ? 0xFF999999 : 0xFFFFFF);
+            if (sub != null) {
+                g.drawCenteredString(font, Component.translatable("screen.hxh.detail.level", sub.level), c.x() + c.w() / 2, c.y() + 13, 0xFFFFD27F);
+                if (sub.next > 0) {
+                    g.fill(c.x(), c.y() + CARD_H - 3, c.x() + c.w(), c.y() + CARD_H, 0xFF333333);
+                    g.fill(c.x(), c.y() + CARD_H - 3, c.x() + Math.min(c.w(), c.w() * sub.xp / sub.next), c.y() + CARD_H, 0xFF4F9BE0);
+                }
+            }
+        }
+        if (tab == 4) {
+            int y = top + 50;
+            for (FormattedCharSequence l : wrapped()) {
+                if (y + 9 > panelBottom()) break;
+                g.drawString(font, l, left + 8, y, 0xFFFFFF);
+                y += 11;
+            }
+        }
+    }
+
+    private Component subjectName(String id) {
+        return switch (id) {
+            case "txt:summary" -> Component.translatable("screen.hxh.character.summary");
+            case "txt:identity" -> Component.translatable("screen.hxh.character.nen_identity");
+            case "txt:family" -> Component.translatable("screen.hxh.character.family");
+            case "nen" -> Component.translatable("screen.hxh.character.nen_level");
+            case "aura", "heal", "regen" -> Component.translatable("screen.hxh.aura." + id);
+            case "strength", "speed", "endurance", "vitality", "willpower" -> Component.translatable("stat.hxh." + id);
+            default -> Component.translatable("ability.hxh." + id);
+        };
+    }
+
+    private Component effectText(Eff e) {
+        Component arg = e.value().startsWith("@") ? Component.translatable(e.value().substring(1)) : Component.literal(e.value());
+        net.minecraft.network.chat.MutableComponent text = Component.translatable("detail.hxh.eff." + e.key(), arg);
+        if (e.flag() == '!') return Component.translatable("screen.hxh.detail.tag_eff").withStyle(net.minecraft.ChatFormatting.GREEN)
+                .append(text.withStyle(net.minecraft.ChatFormatting.WHITE));
+        if (e.flag() == '+') return Component.translatable("screen.hxh.detail.tag_unlock").withStyle(net.minecraft.ChatFormatting.GOLD)
+                .append(text.withStyle(net.minecraft.ChatFormatting.WHITE));
+        return text.withStyle(net.minecraft.ChatFormatting.WHITE);
+    }
+
+    /** Fiche d'une stat, d'une technique ou de l'aura : description, XP, barre de paliers et effets du palier visé. */
+    private void renderDetail(GuiGraphics g, int left, int top, int w, int bottom, int mouseX, int mouseY) {
+        int x = left + 8, right = left + w - 8;
+        g.drawString(font, subjectName(selected), x, top, 0xFFD27F);
+        if (selected.startsWith("txt:")) {
+            List<FormattedCharSequence> rows = wrapped();
+            int y = top + 14;
+            for (int i = scroll; i < rows.size() && y + 9 <= bottom; i++) {
+                g.drawString(font, rows.get(i), x, y, 0xFFFFFF);
+                y += 11;
+            }
+            return;
+        }
+        Subject sub = subjects.get(selected);
+        if (sub == null) return;
+        int y = top + 11;
+        Component level = sub.cap < MAX_LEVEL_BAR && sub.cap > 0
+                ? Component.translatable("screen.hxh.detail.level_cap", sub.level, sub.cap)
+                : Component.translatable("screen.hxh.detail.level", sub.level);
+        g.drawString(font, level, x, y, 0xFFFFFFFF);
+        if (!sub.ok) g.drawString(font, Component.translatable("screen.hxh.detail.locked"), x + font.width(level) + 8, y, 0xFFE05050);
+        y += 11;
+        // description
+        int maxDesc = Math.max(1, (bottom - y - 78) / 10);
+        List<FormattedCharSequence> desc = font.split(Component.translatable("detail.hxh.desc." + selected), right - x);
+        for (int i = 0; i < Math.min(maxDesc, desc.size()); i++) {
+            g.drawString(font, desc.get(i), x, y, 0xFFBBBBBB);
+            y += 10;
+        }
+        // conditions de déblocage (graphe du Nen) tant que la technique n'est pas acquise
+        GNode node = graphNodes.get(selected);
+        if (node != null && !node.learned()) {
+            StringBuilder sb = new StringBuilder(Component.translatable("screen.hxh.detail.reqs").getString());
+            if (node.reqs().isEmpty()) sb.append(Component.translatable("screen.hxh.nen_graph.base").getString());
+            boolean first = true;
+            for (String[] r : node.reqs()) {
+                if (!first) sb.append("  ");
+                first = false;
+                boolean done = Integer.parseInt(r[2]) >= Integer.parseInt(r[1]);
+                if (r[0].equals("hatsu")) sb.append(done ? "§a" : "§7").append(Component.translatable("screen.hxh.nen_graph.hatsu").getString());
+                else sb.append(done ? "§a" : "§7").append(Component.translatable("mastery.hxh." + r[0]).getString())
+                        .append(' ').append(Math.min(Integer.parseInt(r[2]), 999)).append('/').append(r[1]);
+                sb.append("§r");
+            }
+            for (FormattedCharSequence l : font.split(Component.literal(sb.toString()), right - x)) {
+                g.drawString(font, l, x, y, 0xFFFFFF);
+                y += 10;
+            }
+        }
+        y += 2;
+        // XP
+        if (sub.next > 0) {
+            Component xp = Component.translatable("screen.hxh.detail.xp", sub.xp, sub.next);
+            g.drawString(font, xp, x, y, 0xFF9FD3FF);
+            int bx = x + font.width(xp) + 6;
+            g.fill(bx, y + 2, right, y + 6, 0xFF333333);
+            g.fill(bx, y + 2, bx + (right - bx) * Math.min(sub.xp, sub.next) / sub.next, y + 6, 0xFF4F9BE0);
+        } else {
+            g.drawString(font, Component.translatable("screen.hxh.detail.max"), x, y, 0xFF9FD3FF);
+        }
+        y += 12;
+        // barre de paliers : niveau 0 à 100, un repère par palier
+        int barL = x + 6, barR = right - 6, barW = barR - barL;
+        g.fill(barL, y + 3, barR, y + 6, 0xFF333333);
+        g.fill(barL, y + 3, barL + barW * Math.min(100, sub.level) / 100, y + 6, 0xFF4FBF6A);
+        if (sub.cap < 100) g.fill(barL + barW * sub.cap / 100, y, barL + barW * sub.cap / 100 + 1, y + 9, 0xFFE05050);
+        int hovered = -1, best = 99;
+        for (int i = 0; i < sub.milestones.size(); i++) {
+            int mx = barL + barW * sub.milestones.get(i).level() / 100;
+            int d = Math.abs(mouseX - mx);
+            if (d <= 5 && mouseY >= y - 3 && mouseY <= y + 22 && d < best) {
+                best = d;
+                hovered = i;
+            }
+        }
+        int lastRight = -100, reached = 0;
+        for (int i = 0; i < sub.milestones.size(); i++) {
+            Milestone m = sub.milestones.get(i);
+            int mx = barL + barW * m.level() / 100;
+            boolean done = m.level() <= sub.level;
+            if (done) reached = i;
+            int color = done ? 0xFF5FBF6A : m.level() <= sub.cap ? 0xFF999999 : 0xFF774444;
+            if (i == hovered) g.fill(mx - 3, y - 1, mx + 4, y + 10, 0xFFFFFFFF);
+            g.fill(mx - 2, y, mx + 3, y + 9, color);
+            String label = String.valueOf(m.level());
+            int lw = font.width(label);
+            if (mx - lw / 2 > lastRight + 3) {
+                g.drawString(font, label, mx - lw / 2, y + 11, done ? 0xFFFFFFFF : 0xFF888888);
+                lastRight = mx + lw / 2;
+            }
+        }
+        y += 23;
+        // ce que fait le palier visé (ou le dernier atteint)
+        if (sub.milestones.isEmpty()) return;
+        Milestone shown = sub.milestones.get(hovered >= 0 ? hovered : reached);
+        net.minecraft.network.chat.MutableComponent head = hovered >= 0
+                ? Component.translatable("screen.hxh.detail.at", shown.level())
+                : Component.translatable("screen.hxh.detail.now", shown.level());
+        if (hovered >= 0 && shown.level() > sub.cap && sub.cap < 100) head.append(Component.translatable("screen.hxh.detail.beyond_cap"));
+        g.drawString(font, head.withStyle(net.minecraft.ChatFormatting.AQUA), x, y, 0xFFFFFFFF);
+        y += 11;
+        if (shown.effects().isEmpty()) {
+            g.drawString(font, Component.translatable("screen.hxh.detail.hint"), x, y, 0xFF888888);
+            return;
+        }
+        for (Eff e : shown.effects()) {
+            for (FormattedCharSequence l : font.split(effectText(e), right - x)) {
+                if (y + 9 > bottom) return;
+                g.drawString(font, l, x, y, 0xFFFFFFFF);
+                y += 10;
+            }
+        }
+    }
+
+    private static final int MAX_LEVEL_BAR = 100;
 
     @Override
     public boolean isPauseScreen() {

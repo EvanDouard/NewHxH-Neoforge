@@ -392,6 +392,28 @@ public final class QuestManager {
         sync(player);
     }
 
+    /**
+     * Un candidat qui « meurt » dans le monde de l'Examen ne meurt pas : il est soigné, sorti de l'Examen (épreuve
+     * ratée) et garde tous ses objets.
+     * @return true si la mort doit être annulée
+     */
+    public static boolean leaveExamInsteadOfDying(ServerPlayer player) {
+        if (!com.evandouard.hxh.exam.ExamTrips.enabled(player) || player.isCreative() || player.isSpectator()) return false;
+        if (!com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level())) return false;
+        player.setHealth(player.getMaxHealth());
+        player.clearFire();
+        player.removeAllEffects();
+        player.fallDistance = 0;
+        player.setAirSupply(player.getMaxAirSupply());
+        player.getFoodData().setFoodLevel(Math.max(player.getFoodData().getFoodLevel(), 10));
+        player.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+        player.hurtMarked = true;
+        player.sendSystemMessage(Component.translatable("message.hxh.exam_death_exit").withStyle(ChatFormatting.YELLOW));
+        failExam(player);
+        com.evandouard.hxh.exam.ExamTrips.returnHome(player);
+        return true;
+    }
+
     /** Clic droit sur un PNJ. */
     public static void onTalk(ServerPlayer player, NpcEntity npc) {
         QuestData d = data(player);
@@ -444,6 +466,7 @@ public final class QuestManager {
             }
             if (q != null && step != null && step.type().equals("talk") && step.npc().equals(npc.npcId())) {
                 d.tracked = id; // parler au PNJ d'une quête la fait suivre
+                wingTypeRemark(player, npc, q, step);
                 say(player, npc, q.dialog(step, player));
                 advance(player);
                 d.refocus();
@@ -775,6 +798,17 @@ public final class QuestManager {
         NpcEntity best = null;
         for (NpcEntity n : list) if (best == null || n.distanceTo(player) < best.distanceTo(player)) best = n;
         return best;
+    }
+
+    /**
+     * Wing commente le type de Nen qu'on lui annonce (ce que ça implique, et sa surprise pour une Spécialisation)
+     * avant de dire que le choix du Hatsu est définitif.
+     */
+    private static void wingTypeRemark(ServerPlayer player, NpcEntity npc, Quest q, Quest.Step step) {
+        if (!q.id().getPath().equals("nen_4b_hatsu") || !step.id().equals("learn")) return;
+        com.evandouard.hxh.data.NenType type = com.evandouard.hxh.stats.HunterStats.get(player).nenType();
+        if (type == null) return;
+        say(player, npc, Component.translatable("dialog.hxh.wing.type_remark." + type.id()));
     }
 
     /** Termine l'étape en cours (récompenses), passe à la suivante ou termine la quête. */

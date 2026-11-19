@@ -27,13 +27,19 @@ public final class NenDefense {
     }
 
     public static float tenResistance(HunterData data) {
-        return (float) (HxHConfig.TEN_RESISTANCE_BASE.get()
-                + data.masteryLevel(Mastery.TEN) * HxHConfig.TEN_RESISTANCE_PER_LEVEL.get());
+        return tenResistanceAt(data.masteryLevel(Mastery.TEN));
+    }
+
+    public static float tenResistanceAt(int level) {
+        return (float) (HxHConfig.TEN_RESISTANCE_BASE.get() + level * HxHConfig.TEN_RESISTANCE_PER_LEVEL.get());
     }
 
     public static float kenResistance(HunterData data) {
-        return (float) (HxHConfig.KEN_RESISTANCE_BASE.get()
-                + data.masteryLevel(Mastery.KEN) * HxHConfig.KEN_RESISTANCE_PER_LEVEL.get());
+        return kenResistanceAt(data.masteryLevel(Mastery.KEN));
+    }
+
+    public static float kenResistanceAt(int level) {
+        return (float) (HxHConfig.KEN_RESISTANCE_BASE.get() + level * HxHConfig.KEN_RESISTANCE_PER_LEVEL.get());
     }
 
     public static boolean koActive(LivingEntity entity) {

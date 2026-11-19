@@ -529,6 +529,8 @@ public final class HunterCommand {
 
     private static void resetAll(LivingEntity entity) {
         HunterStats.get(entity).reset();
+        // Un joueur remis à zéro retrouve un type de Nen et un talent (sinon la divination ne révèle rien)
+        if (entity instanceof net.minecraft.server.level.ServerPlayer sp) com.evandouard.hxh.stats.HunterEvents.rollIdentity(sp);
         HunterStats.applyAttributes(entity);
     }
 

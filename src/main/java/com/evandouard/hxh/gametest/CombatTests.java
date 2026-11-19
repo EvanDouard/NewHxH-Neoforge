@@ -247,6 +247,29 @@ public final class CombatTests {
     }
 
     @GameTest(template = "empty")
+    public static void strongKickReachesFarBlocksAndSlamsIntoTheGround(GameTestHelper helper) {
+        var level = helper.getLevel();
+        level.getGameRules().getRule(com.evandouard.hxh.HxHGameRules.NEN_DESTRUCTION).set(true, level.getServer());
+        Zombie strong = husk(helper, 0);
+        com.evandouard.hxh.stats.HunterStats.setLevel(strong, com.evandouard.hxh.data.Stat.STRENGTH, 40);
+        helper.assertTrue(Combat.kickReach(strong, true) > Combat.kickReach(strong, false) + 5,
+                "Coup de pied fort : atteint des blocs bien plus loin (" + Combat.kickReach(strong, true) + ")");
+        helper.assertTrue(Combat.kickReach(strong, true) <= 24.0, "Portée plafonnée");
+        // Écrasé au sol : cuvette dans le sol, plus large avec la vitesse
+        for (int x = 0; x <= 8; x++) for (int z = 0; z <= 8; z++) for (int y = 1; y <= 2; y++)
+            helper.setBlock(new BlockPos(x, y, z), net.minecraft.world.level.block.Blocks.STONE);
+        Zombie t = helper.spawnWithNoFreeWill(EntityType.HUSK, new BlockPos(4, 3, 4));
+        com.evandouard.hxh.combat.Impacts.floorHit(level, t, 3.0);
+        int air = 0;
+        for (int x = 0; x <= 8; x++) for (int z = 0; z <= 8; z++)
+            if (level.getBlockState(helper.absolutePos(new BlockPos(x, 2, z))).isAir()) air++;
+        helper.assertTrue(air >= 5, "L'écrasement au sol creuse une cuvette (" + air + " blocs cassés)");
+        helper.assertTrue(com.evandouard.hxh.combat.Impacts.floorRadius(4.0) > com.evandouard.hxh.combat.Impacts.floorRadius(1.0),
+                "Plus la chute est rapide, plus le trou est large");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void strongKickFollowsTheAim(GameTestHelper helper) {
         // Viser vers le bas : la cible est enfoncée vers le bas ; viser à plat : elle part à l'horizontale
         Zombie strong = husk(helper, 0);

@@ -159,6 +159,20 @@ public final class NenTests {
 
 
     @GameTest(template = "empty")
+    public static void costCollapsesBrutallyBeforeLevelFive(GameTestHelper helper) {
+        double f0 = com.evandouard.hxh.nen.NenCost.factor(0), f5 = com.evandouard.hxh.nen.NenCost.factor(5),
+                f10 = com.evandouard.hxh.nen.NenCost.factor(10), f20 = com.evandouard.hxh.nen.NenCost.factor(20);
+        helper.assertTrue(f0 > f5 && f5 > f10 && f10 > f20 && f20 == 1.0, "Le surcoût ne fait que descendre jusqu'à ×1");
+        helper.assertTrue(f0 - f5 > f5 - f10, "La baisse est bien plus forte entre 0 et 5 qu'entre 5 et 10 (" + f0 + ", " + f5 + ", " + f10 + ")");
+        // Tenir le Ten ou l'In coûte beaucoup à 0, de moins en moins, et plus rien dès le niveau 5
+        double d0 = com.evandouard.hxh.nen.NenCost.novicePostureDrain(0), d3 = com.evandouard.hxh.nen.NenCost.novicePostureDrain(3);
+        helper.assertTrue(d0 > HxHConfig.AURA_REGEN_PER_SECOND.get(), "Niveau 0 : le Ten coûte plus que la régénération (" + d0 + ")");
+        helper.assertTrue(d3 < d0 && d3 > 0, "Niveau 3 : coût en baisse");
+        helper.assertTrue(com.evandouard.hxh.nen.NenCost.novicePostureDrain(5) == 0, "Niveau 5 : posture gratuite");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void beginnersPayMoreAura(GameTestHelper helper) {
         double start = HxHConfig.BEGINNER_COST_MULTIPLIER.get();
         int until = HxHConfig.BEGINNER_COST_UNTIL.get();

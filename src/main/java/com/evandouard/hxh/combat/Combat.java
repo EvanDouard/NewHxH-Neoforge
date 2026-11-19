@@ -219,13 +219,27 @@ public final class Combat {
         return null;
     }
 
+    /** Portée du coup de pied sur le décor : 3 blocs, et bien plus loin quand il est fort (monte avec la Force, 24 au plus). */
+    public static final float KICK_BLOCK_BOOST = 1.8f;
+
+    public static double kickReach(LivingEntity attacker, boolean strong) {
+        if (!strong) return 3.0;
+        double strength = attacker.hasData(ModAttachments.HUNTER) ? HunterStats.get(attacker).level(Stat.STRENGTH) : 0;
+        return Math.min(24.0, 8.0 + strength * 0.15);
+    }
+
     /** Le coup de pied lui-même (la recharge est gérée par la technique « coup de pied »). @return la cible ou null */
     public static LivingEntity kickNow(LivingEntity attacker) {
         CombatAnimations.play(attacker, CombatAnim.KICK);
         LivingEntity target = Targeting.inFront(attacker, 3.0, 0.8);
         attacker.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
                 SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.PLAYERS, 1f, 0.8f);
-        if (target == null) return null; // coup dans le vide : il part quand même
+        if (target == null) {
+            // Coup dans le vide : il part quand même, et le décor encaisse (de loin pour un coup de pied fort)
+            boolean strong = isStrong(attacker);
+            Impacts.missedStrike(attacker, kickReach(attacker, strong), (baseAttack(attacker) * 0.7f + 1f) * (strong ? KICK_BLOCK_BOOST : 1f));
+            return null;
+        }
         target.invulnerableTime = 0;
         target.hurt(meleeSource(attacker), baseAttack(attacker) * 0.7f + 1f);
         AreaScaling.baseSplash(attacker, target, baseAttack(attacker) * 0.7f + 1f, meleeSource(attacker));

@@ -66,6 +66,8 @@ public final class Impacts {
         final float radius;
         int digs;
         Vec3 lastVelocity = Vec3.ZERO;
+        /** Plus grande vitesse de chute atteinte depuis la projection (pour creuser le sol à l'arrivée). */
+        double fallSpeed;
         /** Coup de pied fort : la cible percute aussi les autres mobs sur sa route (chacun une fois). */
         boolean hitsMobs;
         final java.util.Set<LivingEntity> alreadyHit = new java.util.HashSet<>();
@@ -91,6 +93,8 @@ public final class Impacts {
     public static void watchWallHits(LivingEntity target, float radius, int digs, int ticks) {
         Flying f = new Flying(target, target.level().getGameTime() + ticks, radius, digs);
         f.hitsMobs = true;
+        // déjà projetée vers le bas (coup visé vers le sol) : elle s'écrase dès qu'elle touche le sol
+        f.fallSpeed = Math.max(0, -target.getDeltaMovement().y);
         PENDING.add(f); // ajouté au prochain passage (on peut être appelé pendant le parcours de FLYING)
     }
 
@@ -296,6 +300,17 @@ public final class Impacts {
                     continue;
                 }
                 if (f.hitsMobs) bodyHits(level, f);
+                // Projetée vers le bas : à l'arrivée au sol, elle y creuse un cratère (selon sa vitesse de chute)
+                if (t.getDeltaMovement().y < -0.3) f.fallSpeed = Math.max(f.fallSpeed, -t.getDeltaMovement().y);
+                if (f.hitsMobs && f.fallSpeed >= FLOOR_MIN_SPEED && t.onGround()) {
+                    floorHit(level, t, f.fallSpeed);
+                    f.fallSpeed = 0;
+                    f.digs--;
+                    if (f.digs <= 0 || !destructive(level)) {
+                        it.remove();
+                        continue;
+                    }
+                }
                 if (!t.horizontalCollision) {
                     if (t.getDeltaMovement().horizontalDistanceSqr() > 0.01) f.lastVelocity = t.getDeltaMovement();
                     continue;
@@ -313,6 +328,29 @@ public final class Impacts {
                 }
             }
         }
+    }
+
+    /** Vitesse de chute (blocs/tick) à partir de laquelle une cible projetée creuse le sol, et agrandissement par bloc/tick en plus. */
+    public static final double FLOOR_MIN_SPEED = 0.8;
+
+    /** Rayon du trou au sol pour une vitesse de chute donnée (borné au rayon du cratère de la frappe parfaite). */
+    public static float floorRadius(double speed) {
+        return (float) Math.min(BOWL_RADIUS, 1.0 + Math.max(0, speed - FLOOR_MIN_SPEED) * 1.2);
+    }
+
+    /** La cible s'écrase au sol après avoir été projetée vers le bas : éclats, onde de choc, cuvette (règle hxhNenDestruction). */
+    public static void floorHit(ServerLevel level, LivingEntity t, double speed) {
+        BlockPos ground = groundUnder(level, t);
+        Vec3 surface = new Vec3(t.getX(), ground.getY() + 1.0, t.getZ());
+        float r = floorRadius(speed);
+        debris(level, t, ground, (int) (16 + speed * 8));
+        if (destructive(level)) bowl(level, surface, r, t);
+        NenFx.impactAt(level, surface, 2.4f, NenFx.WHITE);
+        NenFx.shockwaveAt(level, surface, r + 1.2f, NenFx.WHITE);
+        level.playSound(null, surface.x, surface.y, surface.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.8f, 1.2f);
+        level.playSound(null, surface.x, surface.y, surface.z, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.6f, 0.5f);
+        t.invulnerableTime = 0;
+        t.hurt(t.damageSources().flyIntoWall(), 3f);
     }
 
     /**

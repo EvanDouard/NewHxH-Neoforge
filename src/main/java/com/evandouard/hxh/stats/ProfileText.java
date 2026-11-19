@@ -125,6 +125,61 @@ public final class ProfileText {
         return lines;
     }
 
+    /**
+     * Résumé du carnet (onglet Personnage) : niveau de Hunter, résistance, aura, Hatsu. Le détail des stats, des
+     * maîtrises, du Nen et du soin est dans les fiches cliquables (voir {@link ProfileDetails}).
+     */
+    public static List<Component> summary(ServerPlayer player) {
+        HunterData data = HunterStats.get(player);
+        List<Component> lines = new ArrayList<>();
+        lines.add(Component.translatable("command.hxh.show.header", player.getDisplayName(), data.hunterLevel())
+                .withStyle(ChatFormatting.GOLD));
+        if (data.nenUnlocked()) {
+            lines.add(Component.translatable("command.hxh.show.resistance",
+                    String.format(java.util.Locale.ROOT, "%.1f", com.evandouard.hxh.nen.NenDefense.totalResistance(player))));
+            lines.add(Component.translatable("command.hxh.show.aura", (int) data.aura(), data.auraMax(),
+                    Component.translatable(data.mode().translationKey())));
+        } else {
+            lines.add(Component.translatable("command.hxh.show.nen_locked"));
+            if (data.meditationTicks() > 0) lines.add(Component.translatable("command.hxh.show.meditation", data.meditationTicks() / 20));
+        }
+        HatsuKit kit = Hatsu.kitOf(data);
+        if (kit != null) {
+            Technique current = Hatsu.selectedTechnique(data);
+            lines.add(Component.translatable("command.hxh.show.hatsu", Component.translatable(kit.translationKey()),
+                    current == null ? Component.literal("-") : Component.translatable(current.translationKey())));
+        }
+        return lines;
+    }
+
+    /** Fiche « Nen » du personnage : type (révélé par la divination), talent, techniques apprises. */
+    public static List<Component> identity(ServerPlayer player) {
+        HunterData data = HunterStats.get(player);
+        List<Component> lines = new ArrayList<>();
+        Component nenType = data.nenType() == null ? Component.translatable("nen.hxh.none")
+                : Component.translatable(data.nenType().translationKey());
+        if (com.evandouard.hxh.hatsu.NenAffinity.scarletEyes(player)) {
+            nenType = Component.translatable("command.hxh.show.scarlet_type", Component.translatable(
+                    com.evandouard.hxh.data.NenType.SPECIALIST.translationKey()), nenType).withStyle(ChatFormatting.RED);
+        }
+        if (!data.nenUnlocked()) lines.add(Component.translatable("command.hxh.show.nen_locked"));
+        else lines.add(Component.translatable("command.hxh.show.nen", data.nenRevealed() ? nenType : Component.literal("???")));
+        Component talent = data.talent() == null || !data.nenRevealed()
+                ? Component.literal("???")
+                : Component.translatable(data.talent().translationKey()).append(Component.literal(" (×"
+                + String.valueOf(data.talent().multiplier()).replace(".0", "").replace('.', ',') + ")"));
+        lines.add(Component.translatable("profile.hxh.talent", talent));
+        if (data.nenUnlocked() && com.evandouard.hxh.nen.NenLearning.applies(player)) {
+            java.util.List<String> names = new java.util.ArrayList<>();
+            for (com.evandouard.hxh.nen.NenLearning.Ability ab : com.evandouard.hxh.nen.NenLearning.Ability.values()) {
+                if (data.learned(ab.id())) names.add(Component.translatable(ab.translationKey()).getString());
+            }
+            lines.add(Component.translatable("profile.hxh.learned", names.isEmpty()
+                    ? Component.translatable("profile.hxh.learned_none") : Component.literal(String.join(", ", names))));
+        }
+        return lines;
+    }
+
     /** Quête suivie, autres quêtes en cours, puis quêtes terminées ou pas encore commencées. */
     public static List<Component> quests(ServerPlayer player) {
         QuestData d = QuestManager.data(player);

@@ -14,12 +14,42 @@ import com.evandouard.hxh.hatsu.Technique;
 public final class NenCost {
     private NenCost() {}
 
-    /** Multiplicateur de coût pour un niveau de maîtrise. */
+    /** Fin de la phase brutale : jusqu'à ce niveau, le surcoût s'effondre. */
+    public static final int BRUTAL_UNTIL = 5;
+
+    /**
+     * Multiplicateur de coût pour un niveau de maîtrise : très élevé à 0, il s'effondre brutalement jusqu'au niveau 5
+     * ({@code beginnerCostAtLevel5}), puis redescend doucement jusqu'à ×1 au niveau {@code beginnerCostUntil}.
+     */
     public static double factor(int level) {
         int until = until();
         if (level >= until) return 1.0;
         double start = start();
-        return 1.0 + (start - 1.0) * (1.0 - Math.max(0, level) / (double) until);
+        int l = Math.max(0, level);
+        if (until <= BRUTAL_UNTIL) return 1.0 + (start - 1.0) * (1.0 - l / (double) until);
+        double mid = Math.min(start, Math.max(1.0, atLevel5()));
+        if (l < BRUTAL_UNTIL) return start + (mid - start) * (l / (double) BRUTAL_UNTIL);
+        return 1.0 + (mid - 1.0) * (1.0 - (l - BRUTAL_UNTIL) / (double) (until - BRUTAL_UNTIL));
+    }
+
+    /** Aura par seconde que coûte le simple maintien du Ten ou de l'In à ce niveau de maîtrise (0 dès le niveau 5). */
+    public static double novicePostureDrain(int level) {
+        if (level >= BRUTAL_UNTIL) return 0;
+        double base;
+        try {
+            base = HxHConfig.NOVICE_POSTURE_DRAIN.get();
+        } catch (IllegalStateException e) {
+            base = 5.0;
+        }
+        return base * (1.0 - Math.max(0, level) / (double) BRUTAL_UNTIL);
+    }
+
+    public static double atLevel5() {
+        try {
+            return HxHConfig.BEGINNER_COST_AT_LEVEL_5.get();
+        } catch (IllegalStateException e) {
+            return 2.0;
+        }
     }
 
     public static double factor(HunterData data, Mastery mastery) {
@@ -40,7 +70,7 @@ public final class NenCost {
         try {
             return HxHConfig.BEGINNER_COST_MULTIPLIER.get();
         } catch (IllegalStateException e) {
-            return 2.5; // configuration pas encore chargée (côté client, écrans)
+            return 5.0; // configuration pas encore chargée (côté client, écrans)
         }
     }
 

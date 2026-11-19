@@ -129,7 +129,18 @@ public final class NenModes {
         if (entity.hasEffect(com.evandouard.hxh.effect.ModEffects.NEN_CURSE)) regen *= 0.5f; // malédiction de Nen
 
         switch (data.mode()) {
-            case NONE, TEN, IN -> data.setAura(data.aura() + regen);
+            case NONE -> data.setAura(data.aura() + regen);
+            case TEN, IN -> {
+                // Débutant : tenir la posture coûte cher (plus que la régénération), de moins en moins jusqu'au niveau 5
+                com.evandouard.hxh.data.Mastery m = data.mode() == NenMode.TEN ? com.evandouard.hxh.data.Mastery.TEN : com.evandouard.hxh.data.Mastery.IN;
+                // (les mobs ne progressent pas : leur maîtrise fixée à la main ne les prive pas de leur posture)
+                float drain = NenLearning.applies(entity) ? (float) (NenCost.novicePostureDrain(data.masteryLevel(m)) / 20.0) : 0f;
+                data.setAura(data.aura() + regen - drain);
+                if (drain > 0 && data.aura() <= 0) {
+                    data.setMode(NenMode.NONE);
+                    if (entity instanceof Player player) player.displayClientMessage(Component.translatable("message.hxh.posture_empty"), true);
+                }
+            }
             case ZETSU -> data.setAura(data.aura() + regen * (float) (HxHConfig.ZETSU_REGEN_MULTIPLIER.get()
                     + data.masteryLevel(com.evandouard.hxh.data.Mastery.ZETSU) * 0.02));
             case REN -> {

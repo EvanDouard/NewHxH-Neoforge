@@ -807,6 +807,39 @@ public final class QuestTests {
     }
 
     @GameTest(template = "empty")
+    public static void profileDetailsShowEffectsAndEfficiencyPerLevel(GameTestHelper helper) {
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.data.HunterData h = com.evandouard.hxh.stats.HunterStats.get(player);
+        h.setNenLevel(12);
+        var lines = com.evandouard.hxh.stats.ProfileDetails.encode(player);
+        for (String id : new String[]{"strength", "speed", "endurance", "vitality", "willpower", "ten", "in", "zetsu", "ren", "ken", "gyo",
+                "en", "ko", "ryu", "shu", "hatsu", "nen", "aura", "heal", "regen"}) {
+            helper.assertTrue(lines.stream().anyMatch(l -> l.startsWith("D|" + id + "|")), "En-tête de la fiche « " + id + " »");
+            helper.assertTrue(lines.stream().filter(l -> l.startsWith("M|" + id + "|")).count() >= 5, "Paliers de la fiche « " + id + " »");
+        }
+        helper.assertTrue(lines.stream().anyMatch(l -> l.startsWith("D|nen|1|12|")), "Niveau de Nen dans la fiche (" + lines.stream().filter(l -> l.startsWith("D|nen|")).findFirst().orElse("") + ")");
+        // L'efficacité en aura est signalée et s'améliore avec le niveau
+        String ren0 = lines.stream().filter(l -> l.startsWith("M|ren|0|")).findFirst().orElse("");
+        String ren20 = lines.stream().filter(l -> l.startsWith("M|ren|20|")).findFirst().orElse("");
+        helper.assertTrue(ren0.contains("!cost_mult=") && ren20.contains("!cost_mult="), "Le coût en aura est marqué « efficacité » (" + ren0 + ")");
+        double c0 = Double.parseDouble(ren0.substring(ren0.indexOf("!cost_mult=") + 11).split(";")[0]);
+        double c20 = Double.parseDouble(ren20.substring(ren20.indexOf("!cost_mult=") + 11).split(";")[0]);
+        helper.assertTrue(c0 > c20 && c20 == 1.0, "Coût du Ren : ×" + c0 + " au niveau 0, ×" + c20 + " au niveau 20");
+        helper.assertTrue(lines.stream().anyMatch(l -> l.startsWith("M|ten|0|") && l.contains("!posture_drain=")), "Le Ten coûte de l'aura à tenir au niveau 0");
+        helper.assertTrue(lines.stream().anyMatch(l -> l.startsWith("M|ten|5|") && l.contains("!posture_free")), "… et plus rien dès le niveau 5");
+        helper.assertTrue(lines.stream().anyMatch(l -> l.startsWith("M|gyo|35|") && l.contains("gyo_type")), "Le Gyo voit le type de Nen au niveau 35");
+        helper.assertTrue(lines.stream().anyMatch(l -> l.startsWith("M|strength|") && l.contains("+str_strong")), "Palier du coup de pied fort");
+        // Le paquet du carnet passe par le réseau sans rien perdre
+        var payload = com.evandouard.hxh.network.ProfilePayload.of(player);
+        var buf = new net.minecraft.network.RegistryFriendlyByteBuf(io.netty.buffer.Unpooled.buffer(), player.registryAccess());
+        com.evandouard.hxh.network.ProfilePayload.STREAM_CODEC.encode(buf, payload);
+        var back = com.evandouard.hxh.network.ProfilePayload.STREAM_CODEC.decode(buf);
+        helper.assertTrue(back.details().equals(payload.details()) && back.graph().equals(payload.graph())
+                && back.extra().identity().size() == payload.extra().identity().size(), "Paquet du carnet : aller-retour identique");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void wingGivesAllAdvancedQuestsAtOnceAfterHatsu(GameTestHelper helper) {
         com.evandouard.hxh.nen.NenLearning.forceInTests = true;
         try {

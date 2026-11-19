@@ -157,8 +157,16 @@ public final class HxHConfig {
             .defineInRange("senses.kenUnlockTenLevel", 5, 0, 100);
 
     public static final ModConfigSpec.DoubleValue BEGINNER_COST_MULTIPLIER = BUILDER
-            .comment("Coût en aura des techniques à la maîtrise 0 (multiplicateur ; redescend à 1 au niveau ci-dessous)")
-            .defineInRange("aura.beginnerCostMultiplier", 2.5, 1.0, 10.0);
+            .comment("Coût en aura des techniques à la maîtrise 0 (multiplicateur ; chute brutalement jusqu'au niveau 5, puis redescend à 1 au niveau ci-dessous)")
+            .defineInRange("aura.beginnerCostMultiplier", 5.0, 1.0, 20.0);
+
+    public static final ModConfigSpec.DoubleValue BEGINNER_COST_AT_LEVEL_5 = BUILDER
+            .comment("Multiplicateur de coût en aura au niveau 5 (fin de la phase brutale, avant la descente douce jusqu'à 1)")
+            .defineInRange("aura.beginnerCostAtLevel5", 2.0, 1.0, 20.0);
+
+    public static final ModConfigSpec.DoubleValue NOVICE_POSTURE_DRAIN = BUILDER
+            .comment("Aura consommée par seconde par le Ten et l'In à la maîtrise 0 (tombe à 0 au niveau 5)")
+            .defineInRange("aura.novicePostureDrain", 5.0, 0.0, 1000.0);
 
     public static final ModConfigSpec.IntValue BEGINNER_COST_UNTIL = BUILDER
             .comment("Niveau de maîtrise (ou de Nen, pour les Hatsu) à partir duquel le coût en aura est normal")

@@ -230,6 +230,11 @@ public final class CiAutopilot {
                         log("fiche '" + arg + "'");
                         return true;
                     }
+                    // Carnet de Hunter : ouvre la fiche d'une stat, d'une technique ou de l'aura
+                    if (mc.screen instanceof com.evandouard.hxh.client.ProfileScreen ps && ps.pickSubject(arg)) {
+                        log("fiche du carnet '" + arg + "'");
+                        return true;
+                    }
                     log("ECHEC : pas de fiche '" + arg + "' à l'écran");
                     return false;
                 }

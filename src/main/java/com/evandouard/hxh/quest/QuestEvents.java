@@ -37,7 +37,12 @@ public final class QuestEvents {
                 com.evandouard.hxh.exam.NeteroBall.attempt(p, npc);
             }
         });
-        bus.addListener(LivingDeathEvent.class, e -> {
+        bus.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, LivingDeathEvent.class, e -> {
+            // Mourir dans l'Examen : pas de mort (donc pas d'objets perdus), le candidat est simplement sorti
+            if (e.getEntity() instanceof ServerPlayer dying && QuestManager.leaveExamInsteadOfDying(dying)) {
+                e.setCanceled(true);
+                return;
+            }
             if (e.getSource().getEntity() instanceof ServerPlayer p) QuestManager.onKill(p, e.getEntity());
         });
     }

@@ -2364,9 +2364,45 @@ cmd hunter nen mastery gyo 0
 wait 10
 key key.hxh.profile
 wait 20
-click Graphe du Nen
+click Nen
 wait 25
 shot 99f_graphe_du_nen
+# Fiche d'une technique : description, XP, barre de paliers, effets par niveau (efficacité en aura comprise)
+pick ten
+wait 10
+shot 99g_fiche_ten_paliers
+pick gyo
+wait 10
+shot 99h_fiche_gyo_deblocages
+pick hatsu
+wait 10
+shot 99i_fiche_hatsu_cout
+pick nen
+wait 10
+shot 99j_fiche_niveau_de_nen
+# Onglet Personnage : stats cliquables et fiches
+click Personnage
+wait 10
+shot 99k_personnage_cartes_stats
+pick strength
+wait 10
+shot 99l_fiche_force_coup_de_pied
+pick willpower
+wait 10
+shot 99m_fiche_volonte
+pick txt:identity
+wait 10
+shot 99n_fiche_type_de_nen
+# Onglet Aura : aura, soin par le Nen, régénération d'aura
+click Aura
+wait 10
+shot 99o_onglet_aura
+pick heal
+wait 10
+shot 99p_fiche_soin_par_le_nen
+pick regen
+wait 10
+shot 99q_fiche_regeneration_aura
 closescreen
 cmd time set noon
 camera first
