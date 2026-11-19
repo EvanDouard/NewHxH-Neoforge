@@ -312,7 +312,8 @@ public final class QuestManager {
     /** Un tick passé trop loin du guide : avertit, et renvoie true quand la limite est atteinte. */
     /** Examen : départ donné par le guide mais dirigeable pas encore pris (le candidat est encore hors des lieux). */
     public static boolean awaitingDeparture(ServerPlayer player, QuestData d) {
-        return d.examDeparture() != Long.MIN_VALUE && !com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level());
+        // Le dirigeable du monde comme le salon de l'Examen : tant que le candidat n'a pas embarqué, il n'est pas distancé
+        return d.examDeparture() != Long.MIN_VALUE;
     }
 
     private static boolean fallBehind(ServerPlayer player) {
