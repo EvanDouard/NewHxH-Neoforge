@@ -143,7 +143,22 @@ public final class Combat {
     /** Poussée du coup de pied fort : très loin, dans la direction visée (à plat : à l'horizontale), un peu plus avec la Force. */
     public static final double KICK_FAR_BASE = 2.6, KICK_FAR_PER_STRENGTH = 0.02;
 
-    static void kickFar(LivingEntity attacker, LivingEntity target) {
+    /** Part de la course libre qu'une cible traverse en roche au Force 100 (la moitié), et tunnel minimal (blocs). */
+    public static final double TUNNEL_SHARE = 0.5, TUNNEL_MIN = 3.0;
+
+    /**
+     * Blocs de roche que la cible projetée traversera : la moitié de la distance qu'elle aurait parcourue sans rien
+     * sur sa route, au niveau 100 de Force ; de plus en plus court en dessous (rien au seuil « fort »).
+     * À appeler juste après {@link #kickFar} (d'après la vitesse donnée à la cible).
+     */
+    public static double tunnelBudget(LivingEntity attacker, LivingEntity target) {
+        double strength = attacker.hasData(ModAttachments.HUNTER) ? HunterStats.get(attacker).level(Stat.STRENGTH) : 0;
+        double from = com.evandouard.hxh.HxHConfig.COMBAT_STRONG_FROM.get();
+        double share = Math.max(0, Math.min(1, (strength - from) / Math.max(1, 100 - from)));
+        return TUNNEL_SHARE * share * Impacts.freeFlightDistance(target.getDeltaMovement().length());
+    }
+
+    public static void kickFar(LivingEntity attacker, LivingEntity target) {
         double strength = attacker.hasData(ModAttachments.HUNTER) ? HunterStats.get(attacker).level(Stat.STRENGTH) : 0;
         double resist = target.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE);
         double push = (KICK_FAR_BASE + strength * KICK_FAR_PER_STRENGTH) * Math.max(0.2, 1.0 - resist);
@@ -248,7 +263,9 @@ public final class Combat {
             // Coup de pied fort : la cible part très loin et creuse les murs qu'elle percute
             Impacts.land(attacker, target, Impacts.tierOf(attacker).down(), () -> {
                 kickFar(attacker, target);
-                Impacts.watchWallHits(target, Impacts.KICK_DIG_RADIUS, Impacts.KICK_DIGS, Impacts.KICK_WATCH_TICKS);
+                double budget = tunnelBudget(attacker, target);
+                if (budget >= TUNNEL_MIN) Impacts.watchTunnel(target, budget, Impacts.KICK_WATCH_TICKS * 2);
+                else Impacts.watchWallHits(target, Impacts.KICK_DIG_RADIUS, Impacts.KICK_DIGS, Impacts.KICK_WATCH_TICKS);
             });
             return target;
         }

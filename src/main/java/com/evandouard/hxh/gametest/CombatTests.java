@@ -269,6 +269,44 @@ public final class CombatTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 120)
+    public static void maxStrengthKickTunnelsThroughHalfTheFlightDistance(GameTestHelper helper) {
+        var level = helper.getLevel();
+        level.getGameRules().getRule(com.evandouard.hxh.HxHGameRules.NEN_DESTRUCTION).set(true, level.getServer());
+        Zombie weak = husk(helper, 0), max = husk(helper, 0);
+        com.evandouard.hxh.stats.HunterStats.setLevel(weak, com.evandouard.hxh.data.Stat.STRENGTH, 30);
+        com.evandouard.hxh.stats.HunterStats.setLevel(max, com.evandouard.hxh.data.Stat.STRENGTH, 100);
+        Zombie t = husk(helper, 6);
+        Combat.kickFar(max, t);
+        double free = com.evandouard.hxh.combat.Impacts.freeFlightDistance(t.getDeltaMovement().length());
+        double budget = Combat.tunnelBudget(max, t);
+        helper.assertTrue(Math.abs(budget - free * 0.5) < 1e-6, "Force 100 : la moitié de la course libre (" + budget + " pour " + free + ")");
+        Zombie t2 = husk(helper, 6);
+        Combat.kickFar(weak, t2);
+        helper.assertTrue(Combat.tunnelBudget(weak, t2) < 1e-6, "Au seuil « fort » : pas de tunnel");
+        // Tunnel réel : mur de pierre épais, la cible lancée vers lui le traverse sur son budget, pas plus
+        for (int x = 3; x <= 40; x++) for (int y = 1; y <= 7; y++) for (int z = 0; z <= 8; z++)
+            helper.setBlock(new BlockPos(x, y, z), net.minecraft.world.level.block.Blocks.STONE);
+        for (int x = 0; x <= 2; x++) for (int y = 1; y <= 7; y++) for (int z = 0; z <= 8; z++)
+            helper.setBlock(new BlockPos(x, y, z), net.minecraft.world.level.block.Blocks.AIR);
+        Zombie shot = helper.spawnWithNoFreeWill(EntityType.HUSK, new BlockPos(1, 4, 4));
+        shot.setDeltaMovement(2.2, 0.0, 0);
+        shot.hurtMarked = true;
+        com.evandouard.hxh.combat.Impacts.watchTunnel(shot, 10, 80);
+        helper.runAfterDelay(60, () -> {
+            int dug = 0;
+            for (int x = 3; x <= 40; x++)
+                if (level.getBlockState(helper.absolutePos(new BlockPos(x, 4, 4))).isAir()) dug++;
+            helper.assertTrue(dug >= 8 && dug <= 16, "Le tunnel traverse environ son budget de 10 blocs (" + dug + ")");
+            int wide = 0;
+            for (int y = 3; y <= 6; y++) for (int z = 3; z <= 6; z++)
+                if (level.getBlockState(helper.absolutePos(new BlockPos(6, y, z))).isAir()) wide++;
+            helper.assertTrue(wide >= 4, "Le trou est rond, assez large pour la cible (" + wide + " blocs dégagés dans la section)");
+            helper.assertTrue(level.getBlockState(helper.absolutePos(new BlockPos(30, 4, 4))).isAir() == false, "Au-delà du budget, la roche tient");
+            helper.succeed();
+        });
+    }
+
     @GameTest(template = "empty")
     public static void strongKickFollowsTheAim(GameTestHelper helper) {
         // Viser vers le bas : la cible est enfoncée vers le bas ; viser à plat : elle part à l'horizontale

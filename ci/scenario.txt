@@ -1775,6 +1775,20 @@ key key.hxh.cast
 wait 12
 shot 64_coup_de_pied_fort_mur_creuse
 cmd kill @e[type=minecraft:pig]
+# Force 100 : la cible traverse la moitié de sa course en roche, trou rond en entonnoir
+cmd tp @s ~10 ~ ~ 0 0
+wait 10
+cmd fill ~-4 ~ ~6 ~4 ~5 ~34 minecraft:stone
+cmd summon minecraft:pig ~ ~ ~2
+cmd hunter stat strength set 100
+look 0 3
+wait 100
+key key.hxh.cast
+wait 30
+shot 64b_coup_de_pied_niveau_100_tunnel
+cmd tp @s ~ ~ ~ 0 0
+wait 5
+cmd kill @e[type=minecraft:pig]
 cmd gamemode creative
 # --- Bras de fer ---
 cmd hunter stat strength set 40

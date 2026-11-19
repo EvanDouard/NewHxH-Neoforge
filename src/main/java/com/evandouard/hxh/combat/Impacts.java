@@ -70,6 +70,11 @@ public final class Impacts {
         double fallSpeed;
         /** Coup de pied fort : la cible percute aussi les autres mobs sur sa route (chacun une fois). */
         boolean hitsMobs;
+        /** Coup de pied niveau max : blocs pleins qu'il lui reste à traverser (0 = pas de tunnel / tunnel fini). */
+        double tunnel;
+        /** Longueur de roche déjà traversée (le trou est un entonnoir à l'entrée, puis un tunnel régulier). */
+        double tunneled;
+        boolean entered;
         final java.util.Set<LivingEntity> alreadyHit = new java.util.HashSet<>();
 
         Flying(LivingEntity target, long until) {
@@ -96,6 +101,93 @@ public final class Impacts {
         // déjà projetée vers le bas (coup visé vers le sol) : elle s'écrase dès qu'elle touche le sol
         f.fallSpeed = Math.max(0, -target.getDeltaMovement().y);
         PENDING.add(f); // ajouté au prochain passage (on peut être appelé pendant le parcours de FLYING)
+    }
+
+    /** Tunnel du coup de pied : rayon du conduit, de l'entonnoir d'entrée (au départ) et de la chambre où la cible s'arrête. */
+    public static final float TUNNEL_RADIUS = 1.35f, TUNNEL_FUNNEL = 1.3f, TUNNEL_CHAMBER = 2.4f;
+    /** Longueur (en blocs de roche) sur laquelle l'entonnoir se resserre jusqu'au conduit. */
+    public static final double TUNNEL_FUNNEL_LENGTH = 3.0;
+
+    /**
+     * Coup de pied très fort : au lieu de s'arrêter au premier mur, la cible le traverse sur {@code budget} blocs de
+     * roche, en y perçant un tunnel rond (entrée en entonnoir, bords irréguliers) ; au bout, elle s'écrase dans une
+     * chambre plus large.
+     */
+    public static void watchTunnel(LivingEntity target, double budget, int ticks) {
+        Flying f = new Flying(target, target.level().getGameTime() + ticks, TUNNEL_CHAMBER, 1);
+        f.hitsMobs = true;
+        f.tunnel = budget;
+        f.fallSpeed = Math.max(0, -target.getDeltaMovement().y);
+        PENDING.add(f);
+    }
+
+    /** Distance qu'une cible lancée à cette vitesse parcourrait librement (traînée de l'air 0,91 par tick). */
+    public static double freeFlightDistance(double speed) {
+        return speed / 0.09;
+    }
+
+    /** Rayon du tunnel après {@code dug} blocs de roche traversés : large à l'entrée, resserré ensuite. */
+    public static float tunnelRadius(double dug) {
+        double funnel = Math.max(0, 1.0 - dug / TUNNEL_FUNNEL_LENGTH);
+        return (float) (TUNNEL_RADIUS + TUNNEL_FUNNEL * funnel);
+    }
+
+    /** Perce le chemin que la cible va prendre ce tick. Renvoie le nombre de blocs cassés. */
+    private static void tunnelStep(ServerLevel level, Flying f) {
+        LivingEntity t = f.target;
+        Vec3 v = t.getDeltaMovement();
+        double sp = v.length();
+        if (sp < 0.4) { f.tunnel = 0; return; } // freinée : la course est finie
+        Vec3 dir = v.scale(1 / sp);
+        Vec3 from = t.getBoundingBox().getCenter();
+        double reach = sp + 1.2;
+        int color = -1;
+        Vec3 lastSolid = null;
+        for (double d = 0; d <= reach && f.tunnel > 0; d += 0.5) {
+            Vec3 p = from.add(dir.scale(d));
+            BlockPos bp = BlockPos.containing(p);
+            BlockState here = level.getBlockState(bp);
+            boolean solid = !here.isAir() && here.getFluidState().isEmpty();
+            if (solid && !breakable(level, bp, here)) { f.tunnel = 0; break; } // roche inbrisable : on s'y écrase
+            if (solid) {
+                if (!f.entered) {
+                    f.entered = true;
+                    Vec3 at = p;
+                    NenFx.debris(level, at, 30, here.getMapColor(level, bp).col);
+                    NenFx.impactAt(level, at, 3.0f, NenFx.WHITE);
+                    NenFx.shockwaveAt(level, at, tunnelRadius(0) + 1.5f, NenFx.WHITE);
+                    level.playSound(null, at.x, at.y, at.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 1.0f, 1.2f);
+                    level.playSound(null, at.x, at.y, at.z, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.7f, 0.5f);
+                    t.invulnerableTime = 0;
+                    t.hurt(t.damageSources().flyIntoWall(), 3f);
+                }
+                if (d <= sp) { f.tunnel -= 0.5; f.tunneled += 0.5; }
+                color = here.getMapColor(level, bp).col;
+                lastSolid = p;
+            }
+            if (f.entered) carveRound(level, p, tunnelRadius(f.tunneled), t);
+        }
+        if (lastSolid != null) {
+            NenFx.debris(level, lastSolid, 10, color);
+            if (t.tickCount % 3 == 0) level.playSound(null, lastSolid.x, lastSolid.y, lastSolid.z,
+                    SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.5f, 1.6f);
+        }
+        if (f.tunnel <= 0) f.tunnel = 0;
+    }
+
+    /** Boule de blocs cassés aux bords un peu irréguliers (un vrai trou d'impact, pas un tube lisse). */
+    private static void carveRound(ServerLevel level, Vec3 c, float r, LivingEntity breaker) {
+        int ir = (int) Math.ceil(r);
+        BlockPos o = BlockPos.containing(c);
+        for (BlockPos p : BlockPos.betweenClosed(o.offset(-ir, -ir, -ir), o.offset(ir, ir, ir))) {
+            double d2 = p.distToCenterSqr(c);
+            if (d2 > r * r) continue;
+            BlockState s = level.getBlockState(p);
+            if (s.isAir() || !breakable(level, p, s)) continue;
+            // bord : un bloc sur trois reste, selon sa position (même résultat à chaque passage)
+            if (d2 > (r - 0.55) * (r - 0.55) && Math.floorMod(p.getX() * 31 + p.getY() * 17 + p.getZ() * 7, 3) == 0) continue;
+            level.destroyBlock(p, false, breaker);
+        }
     }
 
     /** Dégâts infligés au mob percuté par une cible projetée, et part de la vitesse qui lui est transmise. */
@@ -309,6 +401,16 @@ public final class Impacts {
                     if (f.digs <= 0 || !destructive(level)) {
                         it.remove();
                         continue;
+                    }
+                }
+                if (f.tunnel > 0) {
+                    if (!destructive(level)) f.tunnel = 0;
+                    else {
+                        tunnelStep(level, f);
+                        if (f.tunnel > 0) {
+                            if (t.getDeltaMovement().horizontalDistanceSqr() > 0.01) f.lastVelocity = t.getDeltaMovement();
+                            continue; // pas de mur à défoncer : le chemin est dégagé devant elle
+                        }
                     }
                 }
                 if (!t.horizontalCollision) {
