@@ -256,8 +256,12 @@ expect apparu
 cmd execute if entity @e[type=minecraft:husk,distance=..10]
 wait 5
 expect Test réussi
+# l'élite lance Terreur au hasard : on survit à l'attente (sinon l'écran de mort bloque le scénario)
+cmd effect give @s minecraft:resistance 40 4 true
+cmd effect give @s minecraft:regeneration 40 4 true
 wait 140
 expect Terreur
+cmd effect clear @s
 shot 13h_mobs_exemple_peur
 cmd kill @e[type=minecraft:husk,distance=..12]
 cmd kill @e[type=minecraft:husk,distance=..12]
@@ -479,9 +483,10 @@ wait 15
 shot 22j_illumi_transformation_aiguilles
 # --- Netero : Prière et Kannon ---
 cmd hunter hatsu set netero
+wait 20
 camera front
 key key.hxh.profile
-wait 10
+wait 20
 click Prière
 wait 120
 shot 22m_netero_priere_jauge
