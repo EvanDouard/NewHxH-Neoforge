@@ -1021,6 +1021,8 @@ goto satotz
 talkto satotz
 wait 10
 cmd hunter quest skip
+wait 5
+cmd hunter quest skip
 wait 10
 wait 80
 cmd hunter exam go

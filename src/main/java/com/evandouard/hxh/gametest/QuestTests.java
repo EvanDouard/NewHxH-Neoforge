@@ -181,7 +181,7 @@ public final class QuestTests {
         helper.assertTrue(d.isRunning(QuestRegistry.HUNTER_EXAM.toString()), "L'Examen démarre dès l'arrivée");
         helper.assertTrue(QuestManager.currentStep(d).id().equals("guide"), "Première étape : trouver un guide");
         int trials = d.planTrials(QuestRegistry.HUNTER_EXAM.toString()).size();
-        helper.assertTrue(trials >= 4 && trials <= 6, "Parcours tiré : " + trials + " épreuves");
+        helper.assertTrue(trials >= 5 && trials <= 7, "Parcours tiré : " + trials + " épreuves");
         helper.succeed();
     }
 
