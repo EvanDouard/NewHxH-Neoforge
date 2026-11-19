@@ -104,3 +104,9 @@ Techniques de base enseignées par Wing : Ten, In, Ren, Hatsu. Le reste se débl
 
 ## Jajanken ultime (19 nov)
 - Rayon d'explosion plafonné à **16** blocs (`NenProjectile.MAX_BLAST`) ; l'aura en trop n'ajoute plus que des dégâts. Blocs retirés du centre vers l'extérieur, 1500 par tick, sans particules ni mises à jour de voisins.
+
+## Coût d'aura des débutants et fiches du carnet (19 nov, soir)
+- Multiplicateur de coût : ×5 à la maîtrise 0 (`aura.beginnerCostMultiplier`), ×2 au niveau 5 (`aura.beginnerCostAtLevel5`), puis descente douce jusqu'à ×1 au niveau 20 (`aura.beginnerCostUntil`). Valable pour Ren, Ken, Gyo, En, Ko, Shu (maîtrise) et Hatsu (niveau de Nen).
+- Ten et In : maintien payant de 0 à 5 (`aura.novicePostureDrain` = 5 aura/s à 0, nul à 5 ; la régénération rend 2/s) ; un joueur à court d'aura retombe en posture neutre sans pénalité. Ne s'applique qu'aux joueurs en apprentissage.
+- Coup de pied fort : portée sur les blocs 8 + 0,15 × Force (24 au plus), dégâts ×1,8 pour les éclats/trous ; écrasement au sol dès 0,8 bloc/tick de chute, cuvette de 1 à 3,2 blocs selon la vitesse.
+- Les valeurs affichées dans les fiches du carnet viennent des mêmes formules (donc de la configuration du serveur).

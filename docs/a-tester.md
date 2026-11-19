@@ -249,3 +249,12 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] CI : capture 22n7c (liseré de Gyo, couleur de l'aura, ~10 px qui s'efface vers le centre).
 - [ ] En jeu : rythme des leçons (In 2, palier du Zetsu = In 5 ≈ 4 min d'In, palier du Ken = Ten 5 ≈ 4 min de Ten) ; surcoût débutant trop fort ou pas assez ?
 - [ ] À juger : intensité du liseré de Gyo (opacité 0xB0 au bord, renforcée après la 1re capture trop pâle).
+
+## Retours du 19 novembre (soir) — carnet, coût d'aura, coup de pied, examen
+- [x] CI : GameTests `costCollapsesBrutallyBeforeLevelFive` (coût ×5 à la maîtrise 0, ×2 au niveau 5, ×1 au niveau 20 ; Ten et In coûtent de l'aura à tenir de 0 à 5, rien ensuite), `strongKickReachesFarBlocksAndSlamsIntoTheGround` (portée du coup de pied fort sur les blocs, cuvette au sol), `profileDetailsShowEffectsAndEfficiencyPerLevel` (fiches par niveau, efficacité marquée, paquet du carnet).
+- [x] CI : captures 99g à 99q — fiches Ten, Gyo, Hatsu, Niveau de Nen ; onglet Personnage (cartes de stats), fiches Force, Volonté, Type de Nen ; onglet Aura, fiches Soin et Régénération.
+- [ ] En jeu : tenir le Ten au niveau 0 vide l'aura en ≈ 30 s (5/s − 2/s de régénération) ; à 5 il ne coûte plus rien. Trop dur / trop doux ?
+- [ ] En jeu : coup de pied fort visé vers le bas → la cible s'écrase et creuse une cuvette ; coup de pied dans le vide vers un mur lointain → éclats, trou à partir d'un certain niveau de Force (règle hxhNenDestruction).
+- [ ] En jeu : mourir dans l'Examen → message jaune, on sort au point de départ, aucun objet perdu, l'épreuve est ratée.
+- [ ] En jeu : après `/hunter reset`, la divination redonne un type de Nen ; Wing commente ce type avant « choisis ton Hatsu » (Spécialisation : il est surpris).
+- [ ] À juger : lisibilité des cartes et de la barre de paliers (survol d'un palier = effets en bas), onglets Nen / Aura.
