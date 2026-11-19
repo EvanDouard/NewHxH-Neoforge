@@ -140,16 +140,22 @@ public final class Combat {
         target.hurtMarked = true;
     }
 
-    /** Poussée du coup de pied fort : très loin, à l'horizontale, un peu plus avec la Force. */
+    /** Poussée du coup de pied fort : très loin, dans la direction visée (à plat : à l'horizontale), un peu plus avec la Force. */
     public static final double KICK_FAR_BASE = 2.6, KICK_FAR_PER_STRENGTH = 0.02;
 
     static void kickFar(LivingEntity attacker, LivingEntity target) {
         double strength = attacker.hasData(ModAttachments.HUNTER) ? HunterStats.get(attacker).level(Stat.STRENGTH) : 0;
         double resist = target.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE);
         double push = (KICK_FAR_BASE + strength * KICK_FAR_PER_STRENGTH) * Math.max(0.2, 1.0 - resist);
-        Vec3 dir = target.position().subtract(attacker.position()).multiply(1, 0, 1);
-        dir = dir.lengthSqr() < 1e-4 ? attacker.getLookAngle().multiply(1, 0, 1).normalize() : dir.normalize();
-        target.setDeltaMovement(dir.x * push, 0.25, dir.z * push);
+        // La cible part dans la direction visée : viser vers le bas l'enfonce, viser vers le haut l'envoie en l'air
+        Vec3 aim = attacker.getLookAngle();
+        if (aim.horizontalDistanceSqr() < 1e-4) {
+            Vec3 away = target.position().subtract(attacker.position()).multiply(1, 0, 1);
+            aim = away.lengthSqr() < 1e-4 ? new Vec3(0, aim.y, 0) : away.normalize().add(0, aim.y, 0).normalize();
+        }
+        double vertical = aim.y * push;
+        if (aim.y > -0.2) vertical = Math.max(vertical, 0) + 0.25; // à plat : le petit saut habituel
+        target.setDeltaMovement(aim.x * push, vertical, aim.z * push);
         target.hurtMarked = true;
     }
 

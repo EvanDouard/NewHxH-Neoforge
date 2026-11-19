@@ -104,6 +104,27 @@ public final class HatsuTests {
         });
     }
 
+    @GameTest(template = "empty", timeoutTicks = 260)
+    public static void hugeOrbBlastIsCappedAndSpreadOverTicks(GameTestHelper helper) {
+        // Jajanken ultime avec une énorme aura (serments, Volonté) : l'explosion a un rayon plafonné (plus de lag)
+        var level = helper.getLevel();
+        level.getGameRules().getRule(com.evandouard.hxh.HxHGameRules.NEN_DESTRUCTION).set(true, level.getServer());
+        Zombie gon = husk(helper, 1);
+        gon.setXRot(0f);
+        BlockPos sentinelRow = new BlockPos(0, 28, 1);
+        for (int x = 0; x <= 30; x++) helper.setBlock(sentinelRow.offset(x, 0, 0), net.minecraft.world.level.block.Blocks.STONE);
+        var orb = com.evandouard.hxh.hatsu.NenProjectile.launch(gon, com.evandouard.hxh.hatsu.NenProjectile.ORB, 1_000_000f, 50f, 0xFFFFFFFF);
+        orb.setEpic(true);
+        helper.runAfterDelay(220, () -> {
+            helper.assertTrue(orb.isRemoved(), "L'orbe a explosé");
+            int left = 0;
+            for (int x = 0; x <= 30; x++)
+                if (!level.getBlockState(helper.absolutePos(sentinelRow.offset(x, 0, 0))).isAir()) left++;
+            helper.assertTrue(left == 31, "Rayon plafonné : les blocs à 25+ blocs sont intacts (" + left + "/31)");
+            helper.succeed();
+        });
+    }
+
     @GameTest(template = "empty")
     public static void missStillCosts(GameTestHelper helper) {
         Zombie leorio = husk(helper, 1);

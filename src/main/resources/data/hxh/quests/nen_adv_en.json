@@ -1,0 +1,32 @@
+{
+  "title": {
+    "fr": "Technique avancée : En",
+    "en": "Advanced technique: En"
+  },
+  "start_npc": "wing",
+  "batch": true,
+  "intro": {
+    "fr": "Tu connais les bases. Le reste se découvre en t'entraînant : j'ai noté ce qu'il faut atteindre pour chaque technique avancée, tu peux t'y mettre dans l'ordre que tu veux. Pas besoin de revenir me voir.",
+    "en": "You know the basics. The rest is discovered through training: I've noted what you need to reach for each advanced technique, in any order you like. No need to come back to me."
+  },
+  "npcs": {
+    "wing": {
+      "fr": "Wing",
+      "en": "Wing"
+    }
+  },
+  "steps": [
+    {
+      "id": "unlock",
+      "type": "nen_tree",
+      "mode": "en",
+      "objective": {
+        "fr": "Ten niveau 10 et Ren niveau 8",
+        "en": "Ten level 10 and Ren level 8"
+      }
+    }
+  ],
+  "requires": [
+    "hxh:nen_4b_hatsu"
+  ]
+}

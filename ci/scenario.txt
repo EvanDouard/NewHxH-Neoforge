@@ -2354,6 +2354,18 @@ wait 5
 shot 99e_technique_donnee_dans_l_encart
 cmd hunter hatsu take @s gon_rock
 cmd hunter hatsu take @s pitou_doctor_blythe
+# --- Graphe du Nen (menu O) : dépendances entre techniques et avancement ---
+cmd hunter nen mastery ten 7
+cmd hunter nen mastery in 5
+cmd hunter nen mastery ren 4
+cmd hunter nen mastery gyo 0
+wait 10
+key key.hxh.profile
+wait 20
+click Graphe du Nen
+wait 25
+shot 99f_graphe_du_nen
+closescreen
 cmd time set noon
 camera first
 cmd difficulty peaceful

@@ -23,7 +23,8 @@ import java.util.Set;
  * {@code follow} (rester à moins de {@code max_distance} blocs du PNJ pendant {@code seconds} s),
  * {@code bring} (apporter {@code count} {@code item} au PNJ), {@code reach} (aller à {@code pos}, à {@code radius}
  * blocs près), {@code custom} (condition décrite dans {@code note}, à coder plus tard ; validée par
- * {@code /hunter quest validate}). Tour Céleste : {@code arena_win}, {@code arena_floor}, {@code arena_register_200}.
+ * {@code /hunter quest validate}). {@code nen_tree} : se termine quand la technique {@code mode} est apprise (déblocage
+ * par le graphe du Nen). {@code "batch": true} : quête donnée avec toutes les autres du même PNJ. Tour Céleste : {@code arena_win}, {@code arena_floor}, {@code arena_register_200}.
  * Traques : {@code blacklist_catch} (criminels de la Blacklist), {@code contract_done} (contrats Zoldyck).
  * <p>
  * Textes : soit des clés de traduction ({@code quest.<ns>.<nom>}, {@code quest.<ns>.<nom>.<étape>},
@@ -32,7 +33,7 @@ import java.util.Set;
  */
 public record Quest(ResourceLocation id, Map<String, String> title, String startNpc, List<String> requires,
                     Map<String, String> intro, Map<String, Map<String, String>> npcNames, List<Step> steps,
-                    List<String> problems, Map<String, Trial> trials, int minTrials, int maxTrials) {
+                    List<String> problems, Map<String, Trial> trials, int minTrials, int maxTrials, boolean batch) {
 
     /**
      * Épreuve tirée au sort (Examen Hunter) : un groupe d'étapes ({@code "trial": "<id>"} sur chaque étape).
@@ -50,7 +51,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
     /** Types d'étapes connus. */
     public static final Set<String> TYPES = Set.of("talk", "kill", "follow", "bring", "reach", "custom",
             "quiz", "survive", "points", "duel", "ball", "waypoint", "knockout",
-            "nen_mode", "nen_sense", "nen_flag", "mastery", "prayer", "kannon", "wounded_meditation",
+            "nen_mode", "nen_sense", "nen_flag", "mastery", "nen_tree", "prayer", "kannon", "wounded_meditation",
             "arena_win", "arena_floor", "arena_register_200", "blacklist_catch", "contract_done");
 
     public record Step(String id, String type, String npc, String entity, int count, int seconds,
@@ -312,6 +313,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
             min = max = trials.size();
         }
         return new Quest(id, texts(root, "title"), str(root, "start_npc", ""), List.copyOf(requires),
-                texts(root, "intro"), npcNames, List.copyOf(steps), List.copyOf(problems), java.util.Collections.unmodifiableMap(trials), min, max);
+                texts(root, "intro"), npcNames, List.copyOf(steps), List.copyOf(problems), java.util.Collections.unmodifiableMap(trials), min, max,
+                root.has("batch") && root.get("batch").getAsBoolean());
     }
 }

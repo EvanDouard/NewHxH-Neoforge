@@ -40,11 +40,13 @@ public final class HunterEvents {
         gameBus.addListener(HunterEvents::onJoinLevel);
         gameBus.addListener(HunterEvents::onLogin);
         gameBus.addListener(HunterEvents::onRespawn);
+        gameBus.addListener(HunterEvents::onLogout);
         gameBus.addListener(HunterEvents::onChangeDimension);
         gameBus.addListener(HunterEvents::onPlayerTick);
         gameBus.addListener(HunterEvents::onIncomingDamage);
         gameBus.addListener(HunterEvents::onDamageDealt);
         gameBus.addListener(HunterEvents::onKnockback);
+        gameBus.addListener(com.evandouard.hxh.combat.FallImpact::onFall);
         gameBus.addListener(HunterEvents::onHeal);
         gameBus.addListener(HunterEvents::onStartTracking);
         gameBus.addListener(HunterEvents::onEntityTick);
@@ -87,7 +89,30 @@ public final class HunterEvents {
         // Talent pour le Nen : tiré une fois pour toutes en début de partie
         if (data.talent() == null) data.setTalent(com.evandouard.hxh.data.NenTalent.roll(roll));
         unlockModRecipes(player);
+        restoreHealthLater(player, data.lastHealth());
         HxHNetwork.syncFull(player);
+    }
+
+    /** À la déconnexion : on retient la vie (les PV bonus de Vitalité ou de personnage ne sont rendus qu'après le chargement). */
+    private static void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) rememberHealth(player);
+    }
+
+    public static void rememberHealth(ServerPlayer player) {
+        HunterStats.get(player).setLastHealth(player.isAlive() ? player.getHealth() : -1f);
+    }
+
+    /**
+     * À la connexion, Minecraft charge la vie avant que les PV max bonus soient revenus et la rabote à 20 :
+     * on la rend quand les modificateurs sont de nouveau posés (les passifs de personnage le font dans la seconde).
+     */
+    private static void restoreHealthLater(ServerPlayer player, float saved) {
+        float atLogin = player.getHealth();
+        if (saved <= atLogin + 0.01f) return;
+        com.evandouard.hxh.hatsu.NenTasks.later(30, () -> {
+            if (player.isAlive() && !player.hasDisconnected() && player.getHealth() >= atLogin - 0.01f && player.getHealth() < saved)
+                player.setHealth(Math.min(saved, player.getMaxHealth()));
+        });
     }
 
     private static void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
@@ -100,6 +125,7 @@ public final class HunterEvents {
 
     private static void onPlayerTick(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        if (player.tickCount % 100 == 11) rememberHealth(player); // reprise même si le serveur plante
         // Vitesse : 1 XP par seconde de sprint au sol
         if (player.tickCount % 20 == 0 && player.isSprinting() && player.onGround()) {
             HunterStats.addXp(player, Stat.SPEED, 1);

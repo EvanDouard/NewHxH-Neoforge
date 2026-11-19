@@ -699,7 +699,7 @@ public final class QuestTests {
             // Leçons bout à bout : Wing propose l'In (et pas le Ren, ni le Ken)
             QuestManager.onTalk(player, wing);
             helper.assertTrue(d.isRunning(HxHMod.id("nen_2_in").toString()), "Après le Ten : l'In");
-            helper.assertTrue(!d.isRunning(HxHMod.id("nen_4_ren").toString()), "Le Ren attend le Zetsu");
+            helper.assertTrue(!d.isRunning(HxHMod.id("nen_4_ren").toString()), "Le Ren attend la fin de l'In");
             helper.assertTrue(HxHMod.id("nen_2_in").toString().equals(d.active()), "La leçon commencée passe en suivi");
             // /hunter max : tout est su
             com.evandouard.hxh.nen.NenLearning.learnAll(player);
@@ -713,23 +713,20 @@ public final class QuestTests {
 
     @GameTest(template = "empty")
     public static void wingLessonsAreChainedAndZetsuIsTheInTier(GameTestHelper helper) {
-        // Chaîne : Ten → In → Zetsu → Ren → Gyo → Ken → En → Ko ; le Hatsu à part, après le Ren
-        String[][] chain = {{"nen_2_in", "nen_1_ten"}, {"nen_3_zetsu", "nen_2_in"}, {"nen_4_ren", "nen_3_zetsu"},
-                {"nen_5_gyo", "nen_4_ren"}, {"nen_6_ken", "nen_5_gyo"}, {"nen_7_en", "nen_6_ken"},
-                {"nen_8_ko", "nen_7_en"}, {"nen_4b_hatsu", "nen_4_ren"}};
+        // Bases enseignées une à une : Ten → In → Ren → Hatsu ; le reste (Zetsu, Shu, Ken, En, Gyo, Ko, Ryu) vient du graphe
+        String[][] chain = {{"nen_2_in", "nen_1_ten"}, {"nen_4_ren", "nen_2_in"}, {"nen_4b_hatsu", "nen_4_ren"}};
         for (String[] link : chain) {
             Quest q = QuestRegistry.get(HxHMod.id(link[0]));
             helper.assertTrue(q != null && q.requires().equals(java.util.List.of("hxh:" + link[1])),
                     link[0] + " doit demander " + link[1] + " : " + (q == null ? "absente" : q.requires()));
         }
-        // Le Zetsu : continuer l'In jusqu'au palier ; le Ken : continuer le Ten
-        Quest zetsu = QuestRegistry.get(HxHMod.id("nen_3_zetsu"));
-        Quest.Step tier = zetsu.steps().get(0);
-        helper.assertTrue(tier.type().equals("mastery") && tier.masteryTrained() == com.evandouard.hxh.data.Mastery.IN
-                && tier.masteryGoal() == com.evandouard.hxh.HxHConfig.ZETSU_UNLOCK_IN_LEVEL.get(), "Palier du Zetsu = niveau d'In");
-        Quest.Step kenTier = QuestRegistry.get(HxHMod.id("nen_6_ken")).steps().get(0);
-        helper.assertTrue(kenTier.masteryTrained() == com.evandouard.hxh.data.Mastery.TEN
-                && kenTier.masteryGoal() == com.evandouard.hxh.HxHConfig.KEN_UNLOCK_TEN_LEVEL.get(), "Palier du Ken = niveau de Ten");
+        for (String adv : new String[]{"zetsu", "shu", "ken", "en", "gyo", "ko", "ryu"}) {
+            Quest q = QuestRegistry.get(HxHMod.id("nen_adv_" + adv));
+            helper.assertTrue(q != null && q.batch() && q.requires().equals(java.util.List.of("hxh:nen_4b_hatsu"))
+                            && q.steps().size() == 1 && q.steps().get(0).type().equals("nen_tree")
+                            && q.steps().get(0).mode().equals(adv),
+                    "nen_adv_" + adv + " : quête en lot, donnée après le Hatsu, terminée par le graphe");
+        }
         // In et Zetsu partagent la même XP
         net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
         com.evandouard.hxh.data.HunterData h = com.evandouard.hxh.stats.HunterStats.get(player);
@@ -738,6 +735,83 @@ public final class QuestTests {
                 && h.masteryLevel(com.evandouard.hxh.data.Mastery.ZETSU) == 1, "Le Zetsu fait monter l'In (même XP)");
         h.setMasteryLevel(com.evandouard.hxh.data.Mastery.IN, 7);
         helper.assertTrue(h.masteryLevel(com.evandouard.hxh.data.Mastery.ZETSU) == 7, "Niveau partagé");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void advancedTechniquesUnlockFromTheGraph(GameTestHelper helper) {
+        com.evandouard.hxh.nen.NenLearning.forceInTests = true;
+        try {
+            net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+            com.evandouard.hxh.data.HunterData h = com.evandouard.hxh.stats.HunterStats.get(player);
+            QuestData d = QuestManager.data(player);
+            com.evandouard.hxh.data.Mastery TEN = com.evandouard.hxh.data.Mastery.TEN, IN = com.evandouard.hxh.data.Mastery.IN,
+                    REN = com.evandouard.hxh.data.Mastery.REN, GYO = com.evandouard.hxh.data.Mastery.GYO,
+                    KO = com.evandouard.hxh.data.Mastery.KO, KEN = com.evandouard.hxh.data.Mastery.KEN;
+            // Le joueur n'a jamais vu Wing pour les techniques avancées : seuls les niveaux comptent
+            h.learn("ten");
+            h.learn("in");
+            h.learn("ren");
+            player.tickCount = 27;
+            h.setMasteryLevel(IN, 4);
+            QuestManager.tick(player);
+            helper.assertTrue(!h.learned("zetsu"), "In 4 : pas encore de Zetsu");
+            h.setMasteryLevel(IN, com.evandouard.hxh.HxHConfig.ZETSU_UNLOCK_IN_LEVEL.get());
+            QuestManager.tick(player);
+            helper.assertTrue(h.learned("zetsu"), "In au palier : Zetsu débloqué sans voir Wing");
+            helper.assertTrue(d.isCompleted(HxHMod.id("nen_adv_zetsu").toString()), "La quête du Zetsu est terminée d'office");
+            h.setMasteryLevel(REN, 5);
+            QuestManager.tick(player);
+            helper.assertTrue(h.learned("gyo") && !h.learned("en"), "Ren 5 : Gyo, mais pas encore En");
+            h.setMasteryLevel(TEN, 10);
+            h.setMasteryLevel(REN, 10);
+            h.setMasteryLevel(IN, 10);
+            QuestManager.tick(player);
+            helper.assertTrue(h.learned("ken") && h.learned("en") && h.learned("shu"), "Ten 10 / Ren 10 : Ken, En, Shu");
+            helper.assertTrue(!h.learned("ko"), "Ko : il manque le Gyo 5 et le Hatsu");
+            h.setMasteryLevel(GYO, 5);
+            QuestManager.tick(player);
+            helper.assertTrue(!h.learned("ko"), "Ko : le Hatsu n'est pas appris");
+            h.learn("hatsu");
+            QuestManager.tick(player);
+            helper.assertTrue(h.learned("ko"), "Ko : conditions et Hatsu réunis");
+            helper.assertTrue(!h.learned("ryu"), "Ryu : pas encore");
+            h.setMasteryLevel(GYO, 15);
+            h.setMasteryLevel(KO, 10);
+            h.setMasteryLevel(KEN, 10);
+            QuestManager.tick(player);
+            helper.assertTrue(h.learned("ryu"), "Ryu : Gyo 15, Ko 10, Ken 10");
+            // Les progrès sont mesurés pour l'écran du graphe
+            helper.assertTrue(com.evandouard.hxh.nen.NenTree.progress(h, com.evandouard.hxh.nen.NenTree.node(
+                    com.evandouard.hxh.nen.NenLearning.Ability.RYU)) == 1f, "Technique apprise : progression pleine");
+        } finally {
+            com.evandouard.hxh.nen.NenLearning.forceInTests = false;
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void wingGivesAllAdvancedQuestsAtOnceAfterHatsu(GameTestHelper helper) {
+        com.evandouard.hxh.nen.NenLearning.forceInTests = true;
+        try {
+            net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+            QuestData d = QuestManager.data(player);
+            for (String q : new String[]{"nen_1_ten", "nen_2_in", "nen_4_ren"}) QuestManager.completeSilently(player, HxHMod.id(q));
+            NpcEntity wing = npc(helper, "wing", 1);
+            QuestManager.onTalk(player, wing);
+            helper.assertTrue(d.isRunning(HxHMod.id("nen_4b_hatsu").toString()), "Wing demande le Hatsu");
+            helper.assertTrue(!d.isRunning(HxHMod.id("nen_adv_ken").toString()), "Les avancées attendent le Hatsu");
+            QuestManager.completeSilently(player, HxHMod.id("nen_4b_hatsu"));
+            QuestManager.onTalk(player, wing);
+            for (String adv : new String[]{"zetsu", "shu", "ken", "en", "gyo", "ko", "ryu"})
+                helper.assertTrue(d.isRunning(HxHMod.id("nen_adv_" + adv).toString()), "Quête " + adv + " donnée en même temps");
+            // Ancienne sauvegarde : la leçon du Ko d'avant vaut la quête du Ko
+            QuestData old = new QuestData();
+            old.markCompleted("hxh:nen_8_ko");
+            helper.assertTrue(QuestManager.requirementMet(old, "hxh:nen_adv_ko"), "Alias de l'ancienne leçon du Ko");
+        } finally {
+            com.evandouard.hxh.nen.NenLearning.forceInTests = false;
+        }
         helper.succeed();
     }
 

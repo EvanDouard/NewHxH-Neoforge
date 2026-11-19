@@ -205,10 +205,28 @@ public class NenProjectile extends Entity {
         return hardness >= 0 && hardness <= 50 && level.getBlockEntity(p) == null;
     }
 
+    /** Rayon maximal de l'explosion (blocs) et nombre de blocs retirés par tick. */
+    public static final float MAX_BLAST = 16f;
+    public static final int BLOCKS_PER_TICK = 1500;
+
+    /**
+     * Retire des blocs sans les faire tomber ni réagir (pas de particules ni de mise à jour de voisins pour
+     * chacun), {@link #BLOCKS_PER_TICK} par tick.
+     */
+    private static void clearBlocks(ServerLevel level, java.util.List<BlockPos> blocks, int from) {
+        int end = Math.min(blocks.size(), from + BLOCKS_PER_TICK);
+        for (int i = from; i < end; i++) {
+            BlockPos p = blocks.get(i);
+            if (!level.getBlockState(p).isAir()) level.setBlock(p, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 2 | 16);
+        }
+        if (end < blocks.size()) NenTasks.later(1, () -> clearBlocks(level, blocks, end));
+    }
+
     /** Bouquet final : dégâts et projection selon l'aura chargée, cratère si la règle est active. */
     private void explode(ServerLevel level, @Nullable LivingEntity caster) {
         float power = power();
-        float blast = 2.5f + power / 30f;
+        // Rayon plafonné : au-delà, l'aura en plus ne fait qu'ajouter des dégâts (sinon des millions de blocs : lag)
+        float blast = Math.min(MAX_BLAST, 2.5f + power / 30f);
         Vec3 c = position();
         for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, new AABB(c, c).inflate(blast),
                 e -> e.isAlive() && e != caster && !(e instanceof com.evandouard.hxh.npc.NpcEntity))) {
@@ -216,25 +234,29 @@ public class NenProjectile extends Entity {
             e.invulnerableTime = 0;
             e.hurt(level.damageSources().indirectMagic(this, caster), damage * falloff);
             Vec3 push = e.position().subtract(c).normalize();
-            e.knockback(0.6 + power / 60f, -push.x, -push.z);
-            e.setDeltaMovement(e.getDeltaMovement().add(0, 0.3 + power / 200f, 0));
+            e.knockback(Math.min(4.0, 0.6 + power / 60f), -push.x, -push.z);
+            e.setDeltaMovement(e.getDeltaMovement().add(0, Math.min(1.5, 0.3 + power / 200f), 0));
             e.hurtMarked = true;
         }
         if (destructive(level)) {
             int ir = (int) Math.ceil(blast);
             BlockPos b = BlockPos.containing(c);
+            java.util.List<BlockPos> doomed = new java.util.ArrayList<>();
             for (BlockPos p : BlockPos.betweenClosed(b.offset(-ir, -ir, -ir), b.offset(ir, ir, ir))) {
                 double d = Math.sqrt(p.distToCenterSqr(c));
                 if (d > blast) continue;
                 // Tout disparaît dans le rayon ; seule la dernière couronne est irrégulière
                 if (d > blast - 1 && level.random.nextFloat() < 0.4f) continue;
                 BlockState s = level.getBlockState(p);
-                if (!s.isAir() && breakable(level, p, s)) level.destroyBlock(p, false, this);
+                if (!s.isAir() && breakable(level, p, s)) doomed.add(p.immutable());
             }
+            // Du centre vers l'extérieur, par paquets : un gros cratère ne bloque plus le serveur d'un coup
+            doomed.sort(java.util.Comparator.comparingDouble(p -> p.distToCenterSqr(c)));
+            clearBlocks(level, doomed, 0);
         }
         // Pierre classique : les blocs autour sautent mais restent en place
         if (!destructive(level)) NenFx.quake(level, c, blast);
-        NenFx.impactAt(level, c, 2.5f + power / 25f, color());
+        NenFx.impactAt(level, c, Math.min(24f, 2.5f + power / 25f), color());
         NenFx.shockwaveAt(level, c.add(0, -0.5, 0), blast * 1.5f, color());
         level.playSound(null, c.x, c.y, c.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 1.4f, 0.8f);
         discard();

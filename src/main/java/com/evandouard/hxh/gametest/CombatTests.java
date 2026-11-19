@@ -246,6 +246,64 @@ public final class CombatTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty")
+    public static void strongKickFollowsTheAim(GameTestHelper helper) {
+        // Viser vers le bas : la cible est enfoncée vers le bas ; viser à plat : elle part à l'horizontale
+        Zombie strong = husk(helper, 0);
+        com.evandouard.hxh.stats.HunterStats.setLevel(strong, com.evandouard.hxh.data.Stat.STRENGTH, 40);
+        Zombie below = husk(helper, 6);
+        strong.setXRot(40f);
+        var eye = strong.getEyePosition();
+        below.setPos(eye.x + 2.0, eye.y - 2.0 * Math.tan(Math.toRadians(40)) - 0.97, eye.z);
+        Combat.kickNow(strong);
+        helper.assertTrue(below.getDeltaMovement().y < -0.5,
+                "Visée vers le bas : la cible s'enfonce (" + below.getDeltaMovement() + ")");
+        Zombie flat = husk(helper, 6);
+        strong.setXRot(0f);
+        flat.setPos(eye.x + 2.0, eye.y - 0.97, eye.z);
+        Combat.kickNow(strong);
+        helper.assertTrue(flat.getDeltaMovement().y >= 0 && flat.getDeltaMovement().horizontalDistance() > 2.0,
+                "Visée à plat : projetée à l'horizontale (" + flat.getDeltaMovement() + ")");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void fallDamageMeltsWithWillpowerAndLandingMarksTheGround(GameTestHelper helper) {
+        helper.assertTrue(com.evandouard.hxh.combat.FallImpact.damageFactor(0) < 1f, "Chute : moins de dégâts que vanilla");
+        helper.assertTrue(com.evandouard.hxh.combat.FallImpact.damageFactor(50) < com.evandouard.hxh.combat.FallImpact.damageFactor(10),
+                "Plus de Volonté : moins de dégâts de chute");
+        helper.assertTrue(com.evandouard.hxh.combat.FallImpact.damageFactor(100) == 0f, "Volonté max : aucun dégât de chute");
+        // Atterrissage : de haut, le sol est creusé (règle de destruction active)
+        var level = helper.getLevel();
+        level.getGameRules().getRule(com.evandouard.hxh.HxHGameRules.NEN_DESTRUCTION).set(true, level.getServer());
+        for (int x = 0; x <= 6; x++) for (int z = 0; z <= 6; z++) helper.setBlock(new BlockPos(x, 0, z), net.minecraft.world.level.block.Blocks.STONE);
+        Zombie z = husk(helper, 3);
+        z.teleportTo(helper.absolutePos(new BlockPos(3, 1, 3)).getX() + 0.5, helper.absolutePos(new BlockPos(3, 1, 3)).getY(),
+                helper.absolutePos(new BlockPos(3, 1, 3)).getZ() + 0.5);
+        com.evandouard.hxh.combat.FallImpact.impact(level, z, 30f);
+        helper.assertTrue(level.getBlockState(helper.absolutePos(new BlockPos(3, 0, 3))).isAir(), "Grosse chute : cratère sous les pieds");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void lastHealthSurvivesSaveAndLoad(GameTestHelper helper) {
+        // Vie bonus (Vitalité, Youpi…) : la vie est sauvegardée pour être rendue à la reconnexion
+        HunterData saved = new HunterData();
+        saved.setLastHealth(33.5f);
+        HunterData loaded = new HunterData();
+        loaded.read(saved.writeAll());
+        helper.assertTrue(loaded.lastHealth() == 33.5f, "Vie sauvegardée : " + loaded.lastHealth());
+        helper.assertTrue(new HunterData().lastHealth() < 0, "Rien de sauvegardé par défaut");
+        // À la déconnexion d'un joueur vivant, sa vie est retenue
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        HunterData d = HunterStats.get(player);
+        player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(60);
+        player.setHealth(47f);
+        com.evandouard.hxh.stats.HunterEvents.rememberHealth(player);
+        helper.assertTrue(d.lastHealth() == 47f, "La vie courante est mémorisée");
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", timeoutTicks = 40)
     public static void strongFightersHitInAnArea(GameTestHelper helper) {
         Zombie fighter = husk(helper, 0);

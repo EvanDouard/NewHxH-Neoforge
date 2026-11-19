@@ -1434,5 +1434,14 @@
   "dialog.hxh.netero_maitre.idle": "Ho ho ! La prière d'un vieil homme n'attend personne. Reviens quand tu seras prêt.",
   "dialog.hxh.pecheur.idle": "Ça mord peu aujourd'hui… mais la mer finit toujours par donner.",
   "dialog.hxh.train_more": "Pas encore. Entraîne-toi encore un peu : %s niveau %s sur %s avant de passer à la suite.",
-  "dialog.hxh.train_more_hold": "Pas encore. Entraîne-toi encore un peu : %s."
+  "dialog.hxh.train_more_hold": "Pas encore. Entraîne-toi encore un peu : %s.",
+  "message.hxh.nen_unlocked": "Technique débloquée : %s ! Tu peux l'utiliser, pas besoin de retourner voir Wing.",
+  "hud.hxh.toast.nen_unlocked": "Technique débloquée",
+  "screen.hxh.profile.tab_nen": "Graphe du Nen",
+  "screen.hxh.nen_graph.hint": "Survole ou clique une technique : conditions et avancement.",
+  "screen.hxh.nen_graph.unlocked": "débloquée",
+  "screen.hxh.nen_graph.progress": "en cours (%s %%)",
+  "screen.hxh.nen_graph.locked": "verrouillée",
+  "screen.hxh.nen_graph.base": "Technique de base : enseignée par Wing.",
+  "screen.hxh.nen_graph.hatsu": "Hatsu appris"
 }

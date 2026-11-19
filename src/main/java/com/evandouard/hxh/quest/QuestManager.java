@@ -34,7 +34,9 @@ public final class QuestManager {
         String id = ResourceLocation.parse(r).toString();
         // La licence de Hunter vaut l'Examen réussi (licence donnée par un admin, monde repris…)
         if (id.equals(QuestRegistry.HUNTER_EXAM.toString()) && d.isHunter()) return true;
-        return d.completed.contains(id);
+        if (d.completed.contains(id)) return true;
+        // Anciennes leçons de Wing (chaîne linéaire) : la leçon du Ko vaut la combinaison Ko débloquée
+        return id.equals("hxh:nen_adv_ko") && d.completed.contains("hxh:nen_8_ko");
     }
 
     public static QuestData data(ServerPlayer player) {
@@ -176,6 +178,18 @@ public final class QuestManager {
             d.commit();
         }
         d.refocus();
+    }
+
+    /** Termine une quête sans passer par ses étapes (technique débloquée par le graphe) ; elle n'a pas à être commencée. */
+    public static void completeSilently(ServerPlayer player, ResourceLocation questId) {
+        QuestData d = data(player);
+        String id = questId.toString();
+        if (d.completed.contains(id) || QuestRegistry.get(questId) == null) return;
+        d.commit();
+        d.running.remove(id);
+        d.completed.add(id);
+        d.refocus();
+        sync(player);
     }
 
     /** Démarre une quête si elle n'est ni en cours ni déjà terminée. Elle devient suivie si rien ne l'était. */
@@ -437,7 +451,7 @@ public final class QuestManager {
             }
             // Le maître pendant un entraînement : il dit où on en est et ce qu'il reste à faire
             if (q != null && step != null && q.startNpc().equals(npc.npcId())
-                    && java.util.List.of("mastery", "nen_mode", "nen_sense").contains(step.type())) {
+                    && java.util.List.of("mastery", "nen_mode", "nen_sense", "nen_tree").contains(step.type())) {
                 d.tracked = id;
                 if (step.type().equals("mastery") && step.masteryTrained() != null) {
                     com.evandouard.hxh.data.Mastery m = step.masteryTrained();
@@ -477,14 +491,17 @@ public final class QuestManager {
         }
         d.refocus();
         // Un PNJ qui donne une quête (start_npc) : elle démarre si ses prérequis sont faits
+        boolean startedBatch = false;
         for (Quest q : QuestRegistry.all()) {
             String id = q.id().toString();
             if (!q.startNpc().equals(npc.npcId()) || d.running.containsKey(id) || d.completed.contains(id)) continue;
             if (!q.requires().stream().allMatch(r -> requirementMet(d, r))) continue;
-            say(player, npc, q.introDialog(player));
+            if (!startedBatch) say(player, npc, q.introDialog(player));
             start(player, q.id());
-            return;
+            if (!q.batch()) return;
+            startedBatch = true; // Wing donne d'un coup toutes les quêtes de techniques avancées
         }
+        if (startedBatch) return;
         String idle = com.evandouard.hxh.arena.ArenaManager.idleDialog(player, npc);
         say(player, npc, idle != null ? idle : "dialog.hxh." + npc.npcId() + ".idle");
     }
@@ -558,6 +575,7 @@ public final class QuestManager {
 
     /** Chaque tick : étape « suivre un PNJ » (et vérification de l'étage atteint, chaque seconde). */
     public static void tick(ServerPlayer player) {
+        com.evandouard.hxh.nen.NenTree.tick(player);
         if (data(player).running.isEmpty()) return;
         forEachQuest(player, d -> tickStep(player, d));
     }
@@ -639,6 +657,12 @@ public final class QuestManager {
         // Inscription au 200e : validée même si elle a eu lieu avant d'arriver à cette étape
         if (step.type().equals("arena_register_200") && player.tickCount % 20 == 0 && d.registered200()) {
             advance(player);
+            return;
+        }
+        // Technique avancée : la quête se termine dès que le graphe du Nen l'a débloquée
+        if (step.type().equals("nen_tree") && player.tickCount % 20 == 0) {
+            com.evandouard.hxh.data.HunterData h = com.evandouard.hxh.stats.HunterStats.get(player);
+            if (h.learned(step.mode())) advance(player);
             return;
         }
         // Entraînement au Nen : atteindre un niveau de maîtrise (validé même s'il est déjà atteint)

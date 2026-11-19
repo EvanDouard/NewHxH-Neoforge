@@ -53,7 +53,7 @@ public class ProfileScreen extends Screen {
     @Override
     protected void init() {
         tabs.clear();
-        String[] keys = {"screen.hxh.profile.tab_character", "screen.hxh.profile.tab_quests", "screen.hxh.profile.tab_arena"};
+        String[] keys = {"screen.hxh.profile.tab_character", "screen.hxh.profile.tab_quests", "screen.hxh.profile.tab_arena", "screen.hxh.profile.tab_nen"};
         int w = panelW();
         int left = width / 2 - w / 2;
         int bw = (w - 4 * (keys.length - 1)) / keys.length;
@@ -63,7 +63,7 @@ public class ProfileScreen extends Screen {
                     .bounds(left + i * (bw + 4), 28, bw, 20).build()));
         }
         if (tab == 1) addTrackButtons(left, w);
-        else {
+        else if (tab != 3) {
             // Actions (2 lignes de 2) : Hatsu, méditation, Ryu, ouverture des pores de la cible visée
             int aw = (w - 4) / 2;
             int ay = height - 76;
@@ -162,7 +162,7 @@ public class ProfileScreen extends Screen {
 
     /** Bas du panneau de texte : au-dessus du curseur « Vitesse max » sur l'onglet Personnage. */
     private int panelBottom() {
-        return tab == 0 ? height - 106 : height - 82;
+        return tab == 0 ? height - 106 : tab == 3 ? height - 34 : height - 82;
     }
 
     private int visibleRows() {
@@ -184,6 +184,10 @@ public class ProfileScreen extends Screen {
         g.drawCenteredString(font, title, width / 2, 12, 0xFFD27F);
         int top = 56, bottom = panelBottom();
         g.fill(left, top - 4, left + w, bottom, 0xAA000000);
+        if (tab == 3) {
+            renderGraph(g, left, top, w, bottom, mouseX, mouseY);
+            return;
+        }
         List<FormattedCharSequence> rows = wrapped();
         int y = top;
         for (int i = scroll; i < rows.size() && y + 9 <= bottom; i++) {
@@ -193,6 +197,126 @@ public class ProfileScreen extends Screen {
         if (rows.size() > visibleRows()) {
             g.drawString(font, Component.literal(scroll + visibleRows() < rows.size() ? "▼" : "▲"), left + w - 12, bottom - 12, 0xAAAAAA);
         }
+    }
+
+    // ---------- Onglet « Graphe du Nen » : dépendances entre techniques et avancement ----------
+
+    private record GNode(com.evandouard.hxh.nen.NenLearning.Ability ability, int layer, boolean learned,
+                         List<String[]> reqs, int x, int y) {
+        float progress() {
+            if (learned) return 1f;
+            if (reqs.isEmpty()) return 0f;
+            float sum = 0;
+            for (String[] r : reqs) sum += Math.min(1f, Integer.parseInt(r[2]) / (float) Math.max(1, Integer.parseInt(r[1])));
+            return sum / reqs.size();
+        }
+    }
+
+    private static final int NODE_W = 58, NODE_H = 20;
+    private String selected = "";
+    private final java.util.Map<String, GNode> graphNodes = new java.util.LinkedHashMap<>();
+
+    /** Place les nœuds : une rangée par couche (base, avancées, combinaison, maîtrise), répartis sur la largeur. */
+    private void layoutGraph(int left, int top, int w, int bottom) {
+        graphNodes.clear();
+        int[] perLayer = new int[4];
+        List<String[]> parsed = new ArrayList<>();
+        for (String line : data.graph()) {
+            String[] p = line.split("\\|", -1);
+            parsed.add(p);
+            perLayer[Integer.parseInt(p[1])]++;
+        }
+        int detail = 46;
+        int usable = bottom - top - detail - NODE_H;
+        int[] seen = new int[4];
+        for (String[] p : parsed) {
+            var ability = com.evandouard.hxh.nen.NenLearning.Ability.byId(p[0]);
+            if (ability == null) continue;
+            int layer = Integer.parseInt(p[1]);
+            List<String[]> reqs = new ArrayList<>();
+            if (!p[3].isEmpty()) for (String r : p[3].split(",")) reqs.add(r.split(":"));
+            int n = perLayer[layer];
+            int slot = w / n;
+            int x = left + slot * seen[layer]++ + slot / 2 - NODE_W / 2;
+            int y = top + 2 + usable * layer / 3;
+            graphNodes.put(p[0], new GNode(ability, layer, "1".equals(p[2]), reqs, x, y));
+        }
+    }
+
+    private GNode nodeAt(double mx, double my) {
+        for (GNode n : graphNodes.values())
+            if (mx >= n.x() && mx < n.x() + NODE_W && my >= n.y() && my < n.y() + NODE_H) return n;
+        return null;
+    }
+
+    private static void line(GuiGraphics g, int x0, int y0, int x1, int y1, int color, boolean dashed) {
+        int steps = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0));
+        for (int i = 0; i <= steps; i++) {
+            if (dashed && (i / 3) % 2 == 1) continue;
+            int x = x0 + (x1 - x0) * i / Math.max(1, steps), y = y0 + (y1 - y0) * i / Math.max(1, steps);
+            g.fill(x, y, x + 1, y + 1, color);
+        }
+    }
+
+    private void renderGraph(GuiGraphics g, int left, int top, int w, int bottom, int mouseX, int mouseY) {
+        layoutGraph(left, top, w, bottom);
+        GNode hover = nodeAt(mouseX, mouseY);
+        String focus = hover != null ? hover.ability().id() : selected;
+        // Liens : plus clairs quand la technique parente est acquise, en surbrillance autour de la technique visée
+        for (var e : com.evandouard.hxh.nen.NenTree.edges()) {
+            GNode a = graphNodes.get(e.from().id()), b = graphNodes.get(e.to().id());
+            if (a == null || b == null) continue;
+            boolean lit = focus.equals(e.from().id()) || focus.equals(e.to().id());
+            int color = lit ? 0xFFFFD27F : a.learned() ? 0xFF5FBF6A : 0xFF666666;
+            line(g, a.x() + NODE_W / 2, a.y() + NODE_H, b.x() + NODE_W / 2, b.y(), color, e.uncertain());
+        }
+        for (GNode n : graphNodes.values()) {
+            boolean active = n.ability().id().equals(focus);
+            int border = n.learned() ? 0xFF5FBF6A : n.progress() > 0 ? 0xFFE0A030 : 0xFF777777;
+            int fill = n.learned() ? 0xFF1F4D26 : 0xFF222222;
+            g.fill(n.x() - 1, n.y() - 1, n.x() + NODE_W + 1, n.y() + NODE_H + 1, active ? 0xFFFFFFFF : border);
+            g.fill(n.x(), n.y(), n.x() + NODE_W, n.y() + NODE_H, fill);
+            if (!n.learned() && n.progress() > 0)
+                g.fill(n.x(), n.y() + NODE_H - 3, n.x() + Math.round(NODE_W * n.progress()), n.y() + NODE_H, 0xFFB8801C);
+            Component name = Component.translatable(n.ability().translationKey());
+            g.drawCenteredString(font, name, n.x() + NODE_W / 2, n.y() + 4, n.learned() ? 0xFFFFFF : 0xBBBBBB);
+        }
+        // Détail de la technique visée ou choisie
+        int dy = bottom - 44;
+        GNode info = graphNodes.get(focus);
+        if (info == null) {
+            g.drawString(font, Component.translatable("screen.hxh.nen_graph.hint"), left + 8, dy + 4, 0xAAAAAA);
+            return;
+        }
+        Component status = Component.translatable(info.learned() ? "screen.hxh.nen_graph.unlocked"
+                : info.progress() > 0 ? "screen.hxh.nen_graph.progress" : "screen.hxh.nen_graph.locked", Math.round(info.progress() * 100));
+        g.drawString(font, Component.translatable(info.ability().translationKey()).append(" – ").append(status), left + 8, dy, 0xFFD27F);
+        StringBuilder sb = new StringBuilder();
+        if (info.reqs().isEmpty()) sb.append(Component.translatable("screen.hxh.nen_graph.base").getString());
+        for (String[] r : info.reqs()) {
+            if (sb.length() > 0) sb.append("   ");
+            boolean done = Integer.parseInt(r[2]) >= Integer.parseInt(r[1]);
+            if (r[0].equals("hatsu")) sb.append(done ? "§a" : "§7").append(Component.translatable("screen.hxh.nen_graph.hatsu").getString());
+            else sb.append(done ? "§a" : "§7").append(Component.translatable("mastery.hxh." + r[0]).getString())
+                    .append(' ').append(Math.min(Integer.parseInt(r[2]), 999)).append('/').append(r[1]);
+            sb.append("§r");
+        }
+        int ry = dy + 12;
+        for (FormattedCharSequence l : font.split(Component.literal(sb.toString()), w - 16)) {
+            g.drawString(font, l, left + 8, ry, 0xFFFFFF);
+            ry += 10;
+        }
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (super.mouseClicked(mouseX, mouseY, button)) return true;
+        if (tab == 3) {
+            GNode n = nodeAt(mouseX, mouseY);
+            selected = n == null ? "" : n.ability().id();
+            return true;
+        }
+        return false;
     }
 
     @Override

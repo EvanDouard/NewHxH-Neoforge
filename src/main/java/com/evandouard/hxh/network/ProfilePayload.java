@@ -15,7 +15,7 @@ import java.util.List;
 
 /** Serveur → client : contenu des onglets du carnet de Hunter. */
 public record ProfilePayload(List<Component> character, List<Component> quests, List<Component> arena,
-                             List<String> runningQuests, String trackedQuest)
+                             List<String> runningQuests, String trackedQuest, List<String> graph)
         implements CustomPacketPayload {
     public static final Type<ProfilePayload> TYPE = new Type<>(HxHMod.id("profile"));
 
@@ -28,12 +28,13 @@ public record ProfilePayload(List<Component> character, List<Component> quests, 
             LINES, ProfilePayload::arena,
             ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()), ProfilePayload::runningQuests,
             ByteBufCodecs.STRING_UTF8, ProfilePayload::trackedQuest,
+            ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()), ProfilePayload::graph,
             ProfilePayload::new);
 
     public static ProfilePayload of(ServerPlayer player) {
         var d = com.evandouard.hxh.quest.QuestManager.data(player);
         return new ProfilePayload(ProfileText.statsAndNen(player), ProfileText.quests(player), ProfileText.arena(player),
-                d.runningQuests(), d.active());
+                d.runningQuests(), d.active(), com.evandouard.hxh.nen.NenTree.encode(player));
     }
 
     @Override
