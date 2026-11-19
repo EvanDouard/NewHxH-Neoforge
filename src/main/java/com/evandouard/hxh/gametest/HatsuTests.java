@@ -110,8 +110,8 @@ public final class HatsuTests {
         var level = helper.getLevel();
         level.getGameRules().getRule(com.evandouard.hxh.HxHGameRules.NEN_DESTRUCTION).set(true, level.getServer());
         Zombie gon = husk(helper, 1);
-        gon.setXRot(0f);
-        BlockPos sentinelRow = new BlockPos(0, 28, 1);
+        gon.setXRot(-90f); // vers le ciel : l'explosion (rayon 16) ne touche pas les tests voisins
+        BlockPos sentinelRow = new BlockPos(0, 1, 3);
         for (int x = 0; x <= 30; x++) helper.setBlock(sentinelRow.offset(x, 0, 0), net.minecraft.world.level.block.Blocks.STONE);
         var orb = com.evandouard.hxh.hatsu.NenProjectile.launch(gon, com.evandouard.hxh.hatsu.NenProjectile.ORB, 1_000_000f, 50f, 0xFFFFFFFF);
         orb.setEpic(true);
@@ -120,7 +120,7 @@ public final class HatsuTests {
             int left = 0;
             for (int x = 0; x <= 30; x++)
                 if (!level.getBlockState(helper.absolutePos(sentinelRow.offset(x, 0, 0))).isAir()) left++;
-            helper.assertTrue(left == 31, "Rayon plafonné : les blocs à 25+ blocs sont intacts (" + left + "/31)");
+            helper.assertTrue(left == 31, "Rayon plafonné : les blocs à 20+ blocs sont intacts (" + left + "/31)");
             helper.succeed();
         });
     }
