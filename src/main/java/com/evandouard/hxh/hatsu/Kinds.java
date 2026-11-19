@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Types de techniques réutilisables ajoutés avec les personnages de la fiche {@code docs/kits-personnages.md} :
+ * Types de techniques réutilisables ajoutés avec les personnages de la fiche {@code docs/hatsu-et-techniques.md} :
  * zone autour de soi avec effets, soutien des alliés, rafales, pluie d'impacts, balayage en arc, rayon, tempête qui
  * dure, bombe à retardement. Comme le reste, ils marchent pour n'importe quelle LivingEntity.
  */

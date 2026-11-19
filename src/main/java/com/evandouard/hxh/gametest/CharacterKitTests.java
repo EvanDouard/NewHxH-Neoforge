@@ -16,7 +16,7 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
-/** Personnages ajoutés depuis la fiche docs/kits-personnages.md. */
+/** Personnages ajoutés depuis la fiche docs/hatsu-et-techniques.md. */
 @GameTestHolder(HxHMod.MODID)
 @PrefixGameTestTemplate(false)
 public final class CharacterKitTests {

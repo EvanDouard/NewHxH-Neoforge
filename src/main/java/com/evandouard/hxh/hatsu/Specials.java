@@ -44,7 +44,7 @@ import static com.evandouard.hxh.data.NenType.*;
 import static com.evandouard.hxh.hatsu.Techniques.register;
 
 /**
- * Personnages à mécanique propre (fiche docs/kits-personnages.md, retours d'Evan) : Biscuit (deux formes), Chrollo
+ * Personnages à mécanique propre (fiche docs/hatsu-et-techniques.md, retours d'Evan) : Biscuit (deux formes), Chrollo
  * (livre volé), Feitan (jauge de Douleur), Phinks (tours de bras limités par le Nen), Shalnark (contrôle limité par
  * l'écart de Nen), Knov (portes marquées, refuge), Knuckle (Hakoware), Shaiapouf (vol).
  */

@@ -54,7 +54,7 @@ public final class HatsuKits {
             Techniques.HISOKA_BUNGEE_GUM, Techniques.HISOKA_CARDS, Techniques.HISOKA_TEXTURE_SURPRISE);
 
 
-    // ---------- Personnages de la fiche docs/kits-personnages.md (première version jouable) ----------
+    // ---------- Personnages de la fiche docs/hatsu-et-techniques.md (première version jouable) ----------
     public static final HatsuKit PARISTON = playable("pariston", SPECIALIST, List.of(Characters.PARISTON_CHARISMA), Characters.PARISTON_LOVE_DEBT);
     public static final HatsuKit GING = playable("ging", EMITTER, List.of(Characters.GING_ARCHAEOLOGIST), Characters.GING_EMISSION_PUNCH, Characters.GING_COPY);
     public static final HatsuKit CHEADLE = playable("cheadle", MANIPULATOR, List.of(Characters.CHEADLE_SECRETARY), Characters.CHEADLE_RULES);

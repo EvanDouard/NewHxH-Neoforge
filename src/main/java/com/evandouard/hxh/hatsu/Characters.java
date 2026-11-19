@@ -34,7 +34,7 @@ import static com.evandouard.hxh.data.NenType.*;
 import static com.evandouard.hxh.hatsu.Techniques.register;
 
 /**
- * Techniques et passifs des personnages de la fiche {@code docs/kits-personnages.md} qui n'ont pas besoin d'un
+ * Techniques et passifs des personnages de la fiche {@code docs/hatsu-et-techniques.md} qui n'ont pas besoin d'un
  * système à part (Netero, Biscuit, Feitan, Phinks, Shalnark, Knov, Knuckle, Shaiapouf, Chrollo ont leur classe).
  * Première version jouable : formes dessinées existantes ; les rendus sur mesure viendront ensuite.
  */
