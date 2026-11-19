@@ -209,6 +209,11 @@ public class NenProjectile extends Entity {
     public static final float MAX_BLAST = 16f;
     public static final int BLOCKS_PER_TICK = 1500;
 
+    /** Rayon de l'explosion selon l'aura mise dans le coup, plafonné. */
+    public static float blastRadius(float power) {
+        return Math.min(MAX_BLAST, 2.5f + power / 30f);
+    }
+
     /**
      * Retire des blocs sans les faire tomber ni réagir (pas de particules ni de mise à jour de voisins pour
      * chacun), {@link #BLOCKS_PER_TICK} par tick.
@@ -226,7 +231,7 @@ public class NenProjectile extends Entity {
     private void explode(ServerLevel level, @Nullable LivingEntity caster) {
         float power = power();
         // Rayon plafonné : au-delà, l'aura en plus ne fait qu'ajouter des dégâts (sinon des millions de blocs : lag)
-        float blast = Math.min(MAX_BLAST, 2.5f + power / 30f);
+        float blast = blastRadius(power);
         Vec3 c = position();
         for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, new AABB(c, c).inflate(blast),
                 e -> e.isAlive() && e != caster && !(e instanceof com.evandouard.hxh.npc.NpcEntity))) {
