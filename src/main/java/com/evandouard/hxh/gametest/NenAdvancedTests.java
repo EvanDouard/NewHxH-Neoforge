@@ -81,6 +81,7 @@ public final class NenAdvancedTests {
         Zombie striker = husk(helper, 0);
         NenModes.unlock(striker);
         HunterData d = HunterStats.get(striker);
+        d.setMasteryLevel(com.evandouard.hxh.data.Mastery.KO, 20); // maîtrisé : plus de surcoût de débutant
         float aura = d.aura();
         helper.assertTrue(NenDefense.ko(striker) == null, "Le Ko aurait dû s'activer");
         helper.assertTrue(d.aura() < aura, "Le Ko consomme de l'aura d'un coup");

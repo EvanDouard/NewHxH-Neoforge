@@ -339,6 +339,7 @@ wait 10
 expect Hatsu : Illumi Zoldyck
 cmd kill @e[type=minecraft:villager]
 cmd difficulty easy
+cmd hunter nen level 20
 cmd summon minecraft:husk ~ ~ ~4 {NoAI:1b,PersistenceRequired:1b}
 look 0 12
 wait 30
@@ -1020,8 +1021,6 @@ wait 10
 goto satotz
 talkto satotz
 wait 10
-cmd hunter quest skip
-wait 5
 cmd hunter quest skip
 wait 10
 wait 80

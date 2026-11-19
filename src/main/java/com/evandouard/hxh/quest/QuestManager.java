@@ -848,11 +848,11 @@ public final class QuestManager {
             boolean deferred = real && newTrial;
             if (newTrial && !deferred) announceTrial(player, d, q, steps, d.step);
             // attente seulement en sortant d'une épreuve (pas quand le guide donne le premier dirigeable)
-            int delay = step.trial().isEmpty() ? 0 : step.site().equals("kiriko") ? TRIP_DELAY_KIRIKO : TRIP_DELAY;
+            int delay = d.step == 1 ? 0 : step.site().equals("kiriko") ? TRIP_DELAY_KIRIKO : TRIP_DELAY;
             if (real && newTrial) {
                 // Épreuve réussie : retour au salon du dirigeable, d'où l'hôtesse fait embarquer pour la suivante
-                if (step.trial().isEmpty()) {
-                    // Le guide donne le premier dirigeable, dans le monde
+                if (d.step == 1) {
+                    // Le guide (1re étape de l'Examen) donne le premier dirigeable, dans le monde
                     tripLater(player, delay, p -> {
                         com.evandouard.hxh.exam.ExamTrips.returnHome(p);
                         BlockPos dep = com.evandouard.hxh.exam.ExamDeparture.create(p, p.blockPosition());
