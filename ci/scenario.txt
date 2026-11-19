@@ -1297,6 +1297,7 @@ wait 10
 expect [hud] Capacité apprise
 shot 38b_wing_lecon_ten
 cmd hunter nen mastery ten 0
+cmd hunter refill
 key key.hxh.ten
 wait 60
 clearchat
