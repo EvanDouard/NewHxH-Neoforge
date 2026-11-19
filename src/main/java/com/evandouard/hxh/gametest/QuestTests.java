@@ -46,7 +46,7 @@ public final class QuestTests {
         Quest exam = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
         helper.assertTrue(exam != null, "La quête hxh:hunter_exam doit être chargée depuis le datapack");
         helper.assertTrue(exam.steps().size() == 34, "34 étapes attendues, obtenu " + exam.steps().size());
-        helper.assertTrue(exam.trials().size() == 12 && exam.minTrials() == 4 && exam.maxTrials() == 6, "12 épreuves, 4 à 6 tirées");
+        helper.assertTrue(exam.trials().size() == 12 && exam.minTrials() == 5 && exam.maxTrials() == 7, "12 épreuves, 5 à 7 tirées");
         helper.succeed();
     }
 

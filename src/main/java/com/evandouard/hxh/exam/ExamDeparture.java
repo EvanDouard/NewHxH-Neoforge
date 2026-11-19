@@ -156,6 +156,22 @@ public final class ExamDeparture {
         return c.offset(2, deck, 0);
     }
 
+    /**
+     * Épreuve réussie : le joueur revient dans le salon du dirigeable (au lieu de son point de départ dans le monde),
+     * s'y repose un peu, et l'hôtesse l'y fait embarquer pour l'épreuve suivante.
+     */
+    public static void toLobby(ServerPlayer player) {
+        if (!ExamTrips.enabled(player)) return;
+        QuestData d = QuestManager.data(player);
+        int instance = d.examInstance(ExamSite.LOBBY.id());
+        if (!ExamTrips.sendTo(player, ExamSite.LOBBY, instance)) return;
+        BlockPos hostess = ExamWorld.ensure(ExamWorld.level(player.server), ExamSite.LOBBY, instance).npcs().get("passeur");
+        if (hostess != null) d.setExamDeparture(hostess.asLong());
+        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.REGENERATION, 200, 1, false, false, true));
+        player.getFoodData().eat(6, 0.6f);
+        player.sendSystemMessage(Component.translatable("exam.hxh.lobby").withStyle(ChatFormatting.GOLD));
+    }
+
     /** Le joueur parle à l'hôtesse : si c'est son dirigeable, elle lui propose d'embarquer (lien cliquable). */
     public static boolean talk(ServerPlayer player, NpcEntity hostess) {
         QuestData d = QuestManager.data(player);
@@ -200,8 +216,8 @@ public final class ExamDeparture {
             player.sendSystemMessage(Component.translatable("dialog.hxh.passeur.gone").withStyle(ChatFormatting.RED));
             return false;
         }
-        if ((ExamTrips.enabled(player)
-                && (ExamWorld.isExamLevel(player.level()) || BlockPos.of(dep).distSqr(player.blockPosition()) > MATCH * MATCH))) {
+        // Le dirigeable du monde comme le salon de l'Examen : il faut être près de l'hôtesse
+        if (ExamTrips.enabled(player) && BlockPos.of(dep).distSqr(player.blockPosition()) > MATCH * MATCH) {
             player.sendSystemMessage(Component.translatable("dialog.hxh.passeur.too_far").withStyle(ChatFormatting.RED));
             return false;
         }

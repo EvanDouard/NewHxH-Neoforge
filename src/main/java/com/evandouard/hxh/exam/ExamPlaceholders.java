@@ -38,6 +38,7 @@ final class ExamPlaceholders {
             case KIRIKO -> kirikoForest(level, c, place);
             case ISLAND_HOTEL -> islandHotel(level, c, place);
             case OPENING_288 -> opening288(level, c, place);
+            case LOBBY -> lobby(level, c, place);
         };
     }
 
@@ -396,6 +397,24 @@ final class ExamPlaceholders {
         Map<String, BlockPos> npcs = new LinkedHashMap<>();
         npcs.put("netero", c.offset(0, 0, -3));
         return new ExamWorld.Site(c.offset(0, 0, 4), 180f, npcs, List.of(), List.of());
+    }
+
+    // ------------------------------------------------------------------ Salon du dirigeable
+
+    /** Petit salon de repos : tapis rouge, hublots, lanternes ; l'hôtesse au fond fait embarquer pour l'épreuve suivante. */
+    private static ExamWorld.Site lobby(ServerLevel level, BlockPos c, boolean place) {
+        if (place) {
+            room(level, c, 6, 4, 5, Blocks.DARK_OAK_PLANKS, Blocks.SPRUCE_PLANKS, Blocks.WHITE_CONCRETE);
+            for (int x = -4; x <= 4; x++) set(level, c.offset(x, -1, 0), Blocks.RED_WOOL);
+            for (int x = -4; x <= 4; x += 4) {
+                set(level, c.offset(x, 2, -4), Blocks.GLASS);
+                set(level, c.offset(x, 2, 4), Blocks.GLASS);
+            }
+            for (int x = -4; x <= 4; x += 4) set(level, c.offset(x, 4, 0), Blocks.LANTERN);
+        }
+        Map<String, BlockPos> npcs = new LinkedHashMap<>();
+        npcs.put("passeur", c.offset(0, 0, -3));
+        return new ExamWorld.Site(c.offset(0, 0, 2), 180f, npcs, List.of(), List.of());
     }
 
     // ------------------------------------------------------------------ Tour de Trick

@@ -31,7 +31,9 @@ public enum ExamSite {
     /** Île-hôtel (hors-série de l'anime de 1999) : payer sa chambre avec le trésor d'une épave, survivre à la vague. */
     ISLAND_HOTEL("ile_hotel"),
     /** Plaine d'ouverture du 288e Examen (OVA) : assommer tous les candidats. */
-    OPENING_288("ouverture_288");
+    OPENING_288("ouverture_288"),
+    /** Salon du dirigeable de l'Association : on y revient après chaque épreuve réussie, l'hôtesse y fait embarquer pour la suivante. */
+    LOBBY("lobby_dirigeable");
 
     private final String file;
 
