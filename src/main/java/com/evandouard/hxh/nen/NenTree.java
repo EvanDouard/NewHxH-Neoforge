@@ -101,6 +101,10 @@ public final class NenTree {
     public static List<String> encode(ServerPlayer player) {
         HunterData d = HunterStats.get(player);
         List<String> out = new ArrayList<>();
+        // En-tête : niveau de Nen, plafond des maîtrises, avancement vers le niveau suivant (%)
+        int nenLevel = d.nenLevel();
+        int pct = nenLevel >= Mastery.MAX_LEVEL ? 100 : Math.round(100f * d.nenXp() / Mastery.nenXpToNext(nenLevel));
+        out.add("meta|" + nenLevel + "|" + d.masteryCap() + "|" + pct);
         for (Node n : nodes()) {
             List<String> reqs = new ArrayList<>();
             for (Req r : n.reqs()) reqs.add(r.mastery().id() + ":" + r.level() + ":" + d.masteryLevel(r.mastery()));

@@ -214,6 +214,8 @@ public class ProfileScreen extends Screen {
 
     private static final int NODE_W = 58, NODE_H = 20;
     private String selected = "";
+    /** Niveau de Nen, plafond des maîtrises, % vers le niveau suivant. */
+    private int[] nenMeta = {0, 5, 0};
     private final java.util.Map<String, GNode> graphNodes = new java.util.LinkedHashMap<>();
 
     /** Place les nœuds : une rangée par couche (base, avancées, combinaison, maîtrise), répartis sur la largeur. */
@@ -223,10 +225,15 @@ public class ProfileScreen extends Screen {
         List<String[]> parsed = new ArrayList<>();
         for (String line : data.graph()) {
             String[] p = line.split("\\|", -1);
+            if (p[0].equals("meta")) {
+                nenMeta = new int[]{Integer.parseInt(p[1]), Integer.parseInt(p[2]), Integer.parseInt(p[3])};
+                continue;
+            }
             parsed.add(p);
             perLayer[Integer.parseInt(p[1])]++;
         }
         int detail = 46;
+        top += 14; // bandeau du niveau de Nen
         int usable = bottom - top - detail - NODE_H;
         int[] seen = new int[4];
         for (String[] p : parsed) {
@@ -260,6 +267,10 @@ public class ProfileScreen extends Screen {
 
     private void renderGraph(GuiGraphics g, int left, int top, int w, int bottom, int mouseX, int mouseY) {
         layoutGraph(left, top, w, bottom);
+        // Bandeau : niveau de Nen, plafond des maîtrises et barre d'XP vers le niveau suivant
+        g.drawString(font, Component.translatable("screen.hxh.nen_graph.header", nenMeta[0], nenMeta[1], nenMeta[2]), left + 8, top - 1, 0x9FD3FF);
+        g.fill(left + 8, top + 9, left + w - 8, top + 11, 0xFF333333);
+        g.fill(left + 8, top + 9, left + 8 + (w - 16) * nenMeta[2] / 100, top + 11, 0xFF4F9BE0);
         GNode hover = nodeAt(mouseX, mouseY);
         String focus = hover != null ? hover.ability().id() : selected;
         // Liens : plus clairs quand la technique parente est acquise, en surbrillance autour de la technique visée

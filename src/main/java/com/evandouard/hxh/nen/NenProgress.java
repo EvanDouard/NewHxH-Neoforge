@@ -33,7 +33,18 @@ public final class NenProgress {
         if (data.addNenXp(amount) > 0 && entity instanceof Player player) {
             com.evandouard.hxh.network.Hud.toast(player, Component.translatable("hud.hxh.toast.nen"),
                     Component.translatable("hud.hxh.toast.level", data.nenLevel()), "+1", com.evandouard.hxh.network.Hud.BLUE);
+            levelUpFx(player, com.evandouard.hxh.fx.NenFx.ENHANCER);
+            player.sendSystemMessage(Component.translatable("message.hxh.nen_level_up", data.nenLevel(), data.masteryCap())
+                    .withStyle(net.minecraft.ChatFormatting.AQUA));
         }
+    }
+
+    /** Passage de niveau bien visible : son et onde d'aura autour des pieds. */
+    private static void levelUpFx(Player player, int color) {
+        if (!(player.level() instanceof net.minecraft.server.level.ServerLevel level)) return;
+        level.playSound(null, player.getX(), player.getY(), player.getZ(), net.minecraft.sounds.SoundEvents.PLAYER_LEVELUP,
+                net.minecraft.sounds.SoundSource.PLAYERS, 0.8f, 1.2f);
+        com.evandouard.hxh.fx.NenFx.shockwaveAt(level, player.position().add(0, 0.1, 0), 2.5f, color);
     }
 
     /** Pratique d'une technique de base : XP de maîtrise + XP de Nen. */
@@ -44,6 +55,11 @@ public final class NenProgress {
         if (masteryXp > 0 && data.addMasteryXp(mastery, masteryXp) > 0 && entity instanceof Player player) {
             com.evandouard.hxh.network.Hud.toast(player, Component.translatable(mastery.translationKey()),
                     Component.translatable("hud.hxh.toast.level", data.masteryLevel(mastery)), "+1", com.evandouard.hxh.network.Hud.PURPLE);
+            levelUpFx(player, com.evandouard.hxh.fx.NenFx.GOLD);
+            boolean atCap = data.masteryLevel(mastery) >= data.masteryCap();
+            player.sendSystemMessage(Component.translatable(atCap ? "message.hxh.mastery_level_up_cap" : "message.hxh.mastery_level_up",
+                    Component.translatable(mastery.translationKey()), data.masteryLevel(mastery), data.masteryCap())
+                    .withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
         }
         addNenXp(entity, amount);
     }

@@ -538,8 +538,8 @@
   "command.hxh.show.nen_level": "  Nen level: %s (%s)",
   "command.hxh.show.masteries": "  Masteries:",
   "command.hxh.show.resistance": "  Current resistance: %s HP per attack",
-  "message.hxh.nen_level_up": "Nen level %s!",
-  "message.hxh.mastery_level_up": "%s: level %s!",
+  "message.hxh.nen_level_up": "Nen level %s! Your masteries can now reach level %s.",
+  "message.hxh.mastery_level_up": "%s: level %s (cap %s).",
   "message.hxh.hatsu_nen_level": "Nen level too low",
   "message.hxh.ko_ready": "Ko charged — body exposed!",
   "mastery.hxh.ten": "Ten",
@@ -1443,5 +1443,7 @@
   "screen.hxh.nen_graph.progress": "in progress (%s%%)",
   "screen.hxh.nen_graph.locked": "locked",
   "screen.hxh.nen_graph.base": "Basic technique: taught by Wing.",
-  "screen.hxh.nen_graph.hatsu": "Hatsu learned"
+  "screen.hxh.nen_graph.hatsu": "Hatsu learned",
+  "message.hxh.mastery_level_up_cap": "%s: level %s, cap reached: raise your Nen level to go further.",
+  "screen.hxh.nen_graph.header": "Nen level %s · mastery cap %s · next level: %s%%"
 }

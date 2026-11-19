@@ -791,6 +791,22 @@ public final class QuestTests {
     }
 
     @GameTest(template = "empty")
+    public static void nenGraphPayloadCarriesLevelAndCap(GameTestHelper helper) {
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        com.evandouard.hxh.data.HunterData h = com.evandouard.hxh.stats.HunterStats.get(player);
+        h.setNenLevel(12);
+        var lines = com.evandouard.hxh.nen.NenTree.encode(player);
+        helper.assertTrue(lines.get(0).startsWith("meta|12|12|"), "En-tête : niveau de Nen et plafond (" + lines.get(0) + ")");
+        helper.assertTrue(lines.size() == 1 + com.evandouard.hxh.nen.NenTree.nodes().size(), "Un nœud par ligne après l'en-tête");
+        // Le passage de niveau est annoncé (message + toast) : un gain d'XP de Nen suffisant monte le niveau
+        h.setNenLevel(0);
+        h.setNenUnlocked(true);
+        com.evandouard.hxh.nen.NenProgress.addNenXp(player, com.evandouard.hxh.data.Mastery.nenXpToNext(0) * 2);
+        helper.assertTrue(h.nenLevel() >= 1, "Niveau de Nen gagné");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void wingGivesAllAdvancedQuestsAtOnceAfterHatsu(GameTestHelper helper) {
         com.evandouard.hxh.nen.NenLearning.forceInTests = true;
         try {

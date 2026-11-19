@@ -538,8 +538,8 @@
   "command.hxh.show.nen_level": "  Niveau de Nen : %s (%s)",
   "command.hxh.show.masteries": "  Maîtrises :",
   "command.hxh.show.resistance": "  Résistance actuelle : %s PV par attaque",
-  "message.hxh.nen_level_up": "Niveau de Nen %s !",
-  "message.hxh.mastery_level_up": "%s : niveau %s !",
+  "message.hxh.nen_level_up": "Niveau de Nen %s ! Tes maîtrises peuvent monter jusqu'au niveau %s.",
+  "message.hxh.mastery_level_up": "%s : niveau %s (plafond %s).",
   "message.hxh.hatsu_nen_level": "Niveau de Nen insuffisant",
   "message.hxh.ko_ready": "Ko chargé — corps à découvert !",
   "mastery.hxh.ten": "Ten",
@@ -1443,5 +1443,7 @@
   "screen.hxh.nen_graph.progress": "en cours (%s %%)",
   "screen.hxh.nen_graph.locked": "verrouillée",
   "screen.hxh.nen_graph.base": "Technique de base : enseignée par Wing.",
-  "screen.hxh.nen_graph.hatsu": "Hatsu appris"
+  "screen.hxh.nen_graph.hatsu": "Hatsu appris",
+  "message.hxh.mastery_level_up_cap": "%s : niveau %s, plafond atteint : monte ton niveau de Nen pour aller plus loin.",
+  "screen.hxh.nen_graph.header": "Niveau de Nen %s · plafond des maîtrises %s · prochain niveau : %s %%"
 }

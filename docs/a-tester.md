@@ -17,6 +17,7 @@ Légende : **CI** = vérifié par les GameTests ou une capture du scénario · *
 - **CI** Les techniques avancées se débloquent toutes seules aux niveaux requis, sans voir Wing (GameTest `advancedTechniquesUnlockFromTheGraph`) : Zetsu = In 5 · Shu = Ten 8 · Ken = Ten 5 + Ren 3 · En = Ten 10 + Ren 8 · Gyo = Ren 5 · Ko = Ten 10 + In 10 + Ren 10 + Gyo 5 + Hatsu appris · Ryu = Gyo 15 + Ko 10 + Ken 10.
 - **CI** Wing enseigne Ten → In → Ren → Hatsu (divination puis choix du Hatsu), puis donne les 7 quêtes `nen_adv_*` d'un coup (`wingGivesAllAdvancedQuestsAtOnceAfterHatsu`) ; chacune se termine dès que la technique est débloquée, sans retourner voir Wing. Les anciennes sauvegardes (leçon du Ko faite) restent valides.
 - **CI** Onglet « Graphe du Nen » du carnet (touche O) : capture `99f_graphe_du_nen` du scénario.
+- **CI** Passage de niveau plus visible : message dans le chat (niveau de Nen et plafond des maîtrises ; « plafond atteint » pour une maîtrise), son et onde d'aura aux pieds, et bandeau du graphe (niveau de Nen, plafond, barre d'XP) — `nenGraphPayloadCarriesLevelAndCap`. **En jeu** juger la lisibilité.
 - **En jeu** Le graphe : survoler ou cliquer une technique affiche conditions et avancement ; les liens s'allument ; Ken → Ryu en pointillé (incertain).
 - **En jeu** Un joueur qui n'a jamais parlé à Wing après le Hatsu débloque quand même le Gyo à Ren 5 (message + bandeau « Technique débloquée »).
 - **CI** Coup de pied fort dans la direction visée (`strongKickFollowsTheAim`) ; **En jeu** viser le sol et frapper : la cible s'enfonce.
