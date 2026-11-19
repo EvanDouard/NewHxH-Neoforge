@@ -91,3 +91,16 @@ Valeurs posées par Claude pour avancer. Elles marchent en jeu, mais on les revo
 - Palier du Ken : Ten niveau **5** (`senses.kenUnlockTenLevel`).
 - Étapes des autres leçons : niveau 1 de la maîtrise (In : niveau 2).
 - Surcoût débutant : ×**2,5** à la maîtrise 0, redescend en ligne droite jusqu'à ×1 au niveau **20** (`aura.beginnerCostMultiplier`, `aura.beginnerCostUntil`). Postures et sens : leur maîtrise ; Ko : maîtrise du Ko ; Hatsu : niveau de Nen. Le soin par l'aura garde son propre barème.
+
+## Graphe des techniques du Nen (19 nov)
+Techniques de base enseignées par Wing : Ten, In, Ren, Hatsu. Le reste se débloque aux niveaux de maîtrise (plafond de verre : niveau de Nen, minimum 5). Valeurs **proposées**, à trancher (`NenTree.nodes()`) :
+- Zetsu : In 5 (`senses.zetsuUnlockInLevel`) · Shu : Ten 8 (Ken + 3) · Ken : Ten 5 (`senses.kenUnlockTenLevel`) + Ren 3 · En : Ten 10 + Ren 8 · Gyo : Ren 5.
+- Ko : Ten 10, In 10, Ren 10, Gyo 5, Hatsu appris. Ryu : Gyo 15, Ko 10, Ken 10 (le lien Ken → Ryu est incertain dans le schéma de référence).
+- Ces niveaux au-dessus de 5 demandent un niveau de Nen équivalent.
+
+## Chute et impact au sol (19 nov)
+- Dégâts de chute = vanilla × **0,6** × (1 − Volonté/100) : 0 à la Volonté 100 (`FallImpact.BASE_FACTOR`).
+- Impact : éclats ≥ 4 blocs, onde ≥ 8, secousse ≥ 14, cratère (rayon 1 → 3,2) ≥ 20.
+
+## Jajanken ultime (19 nov)
+- Rayon d'explosion plafonné à **16** blocs (`NenProjectile.MAX_BLAST`) ; l'aura en trop n'ajoute plus que des dégâts. Blocs retirés du centre vers l'extérieur, 1500 par tick, sans particules ni mises à jour de voisins.

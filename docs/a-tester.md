@@ -13,6 +13,17 @@ les lignes « En jeu » restent à regarder à la main.
 
 Légende : **CI** = vérifié par les GameTests ou une capture du scénario · **En jeu** = à regarder à la main.
 
+## Graphe des techniques du Nen, chute, Kick, vie, Jajanken (19 nov)
+- **CI** Les techniques avancées se débloquent toutes seules aux niveaux requis, sans voir Wing (GameTest `advancedTechniquesUnlockFromTheGraph`) : Zetsu = In 5 · Shu = Ten 8 · Ken = Ten 5 + Ren 3 · En = Ten 10 + Ren 8 · Gyo = Ren 5 · Ko = Ten 10 + In 10 + Ren 10 + Gyo 5 + Hatsu appris · Ryu = Gyo 15 + Ko 10 + Ken 10.
+- **CI** Wing enseigne Ten → In → Ren → Hatsu (divination puis choix du Hatsu), puis donne les 7 quêtes `nen_adv_*` d'un coup (`wingGivesAllAdvancedQuestsAtOnceAfterHatsu`) ; chacune se termine dès que la technique est débloquée, sans retourner voir Wing. Les anciennes sauvegardes (leçon du Ko faite) restent valides.
+- **CI** Onglet « Graphe du Nen » du carnet (touche O) : capture `99f_graphe_du_nen` du scénario.
+- **En jeu** Le graphe : survoler ou cliquer une technique affiche conditions et avancement ; les liens s'allument ; Ken → Ryu en pointillé (incertain).
+- **En jeu** Un joueur qui n'a jamais parlé à Wing après le Hatsu débloque quand même le Gyo à Ren 5 (message + bandeau « Technique débloquée »).
+- **CI** Coup de pied fort dans la direction visée (`strongKickFollowsTheAim`) ; **En jeu** viser le sol et frapper : la cible s'enfonce.
+- **CI** Chute : dégâts × 0,6 × (1 − Volonté/100), nuls à la Volonté 100 (`fallDamageMeltsWithWillpowerAndLandingMarksTheGround`) ; impact au sol selon la hauteur : éclats dès 4 blocs, onde dès 8, secousse dès 14, cratère dès 20 (règle de destruction). **En jeu** sauter de haut avec différentes Volontés.
+- **CI** La vie courante est sauvegardée (`lastHealthSurvivesSaveAndLoad`) ; **En jeu** se déconnecter avec Vitalité élevée ou en Youpi (+20 PV) et revenir : la vie n'est plus rabotée à 20.
+- **CI** Jajanken ultime : rayon d'explosion plafonné à 16 blocs, blocs retirés par paquets de 1500 par tick (`hugeOrbBlastIsCappedAndSpreadOverTicks`) ; **En jeu** refaire l'ultime avec serments et très grosse aura : plus de lag.
+
 ## Recettes dans l'ordinateur et le livre de recettes (14 nov, soir)
 - [x] CI (captures `97b`, `97c`, `97d`) : catégorie « Recettes » de l'ordinateur Hunter : grille d'artisanat avec les icônes (variantes qui défilent), flèche, résultat et quantité, info-bulles au survol ; liste des ingrédients comptés dessous ; cuisson : une case et le temps.
 - [x] CI : GameTest `modRecipesAreInTheRecipeBook` : toutes les recettes du mod, ordinateur compris, débloquées à la connexion.
