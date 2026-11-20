@@ -26,13 +26,13 @@ Aujourd'hui, tous utilisent le **modèle du joueur** avec un skin 64×64 et quel
 | Leorio | Joueur + cheveux | Geo : grand (≈ 1,9), costume, lunettes rondes, mallette | P1 |
 | Hisoka | Joueur + pointes | Geo : grand, cheveux plaqués, maquillage, cartes, deux expressions | P1 |
 | Netero | Joueur + barbe, chignon | Geo : petit vieillard, barbe, chignon, lobes, chemise « 心 », Kannon (voir 3.3) | P1 |
-| Satotz | Joueur + coiffure, moustache | Geo : grand et maigre, longs membres, moustache, pas de bouche | P2 |
-| Menchi | Joueur + couettes | Geo : cinq couettes, résille, short | P2 |
-| Buhara | Joueur ×1,5 + ventre | Geo : colosse (≈ 2,5 blocs), ventre énorme, gros appétit (animation) | P2 |
-| Beans | Joueur ×0,7 + dôme | Geo : petit, tête en haricot, costume | P2 |
-| Les 36 autres personnages jouables (Pitou, Illumi, Silva, Zeno, Chrollo, Uvogin, Meruem…) | Aucun modèle : le joueur garde son skin, un mob garde son apparence | Geo pour chacun, en commençant par les antagonistes visibles (Brigade Fantôme, Fourmis-Chimères, Zoldyck) — **détail de chaque personnage et de chaque technique en partie 5** | P1 à P3 |
+| Satotz | Joueur + coiffure, moustache | Geo : grand et maigre, longs membres, moustache, pas de bouche | P3 |
+| Menchi | Joueur + couettes | Geo : cinq couettes, résille, short | P3 |
+| Buhara | Joueur ×1,5 + ventre | Geo : colosse (≈ 2,5 blocs), ventre énorme, gros appétit (animation) | P3 |
+| Beans | Joueur ×0,7 + dôme | Geo : petit, tête en haricot, costume | P3 |
+| Les 36 autres personnages jouables (Pitou, Illumi, Silva, Zeno, Chrollo, Uvogin, Meruem…) | Aucun modèle : le joueur garde son skin, un mob garde son apparence | Geo pour chacun, ordre de priorité en 5.0 — **détail de chaque personnage et de chaque technique en partie 5** | P1 à P3 |
 | Personnages avec un Hatsu absents du jeu (Kortopi, Bonolenov, Shoot, Welfin…) | — | *IDÉE* : voir 5.3 | — |
-| Combattants nommés de la Tour : Gido, Sadaso, Riehlvelt, Kastro | Combattant générique (4 skins de lutteur) | Geo : Gido (jambe de bois, toupies), Sadaso (bras fantôme), Riehlvelt (fauteuil roulant, fouet), Kastro (tenue de combat, double) | P2 |
+| Combattants nommés de la Tour : Gido, Sadaso, Riehlvelt, Kastro | Combattant générique (4 skins de lutteur) | Geo : Gido (jambe de bois, toupies), Sadaso (bras fantôme), Riehlvelt (fauteuil roulant, fouet), Kastro (tenue de combat, double) | Kastro P2, les autres P3 |
 
 ### 1.2 PNJ génériques et figurants
 
@@ -219,9 +219,24 @@ Repères :
 - **Inventée** : technique créée pour le mod (l'œuvre ne montre pas de Hatsu pour ce personnage) ;
 - formats : *Geo*, *Objet*, *Fx*, *Geo-Fx* (voir le haut du document).
 
+### 5.0 Ordre de priorité des personnages
+
+Critères (décidés avec Evan) : **importance dans le manga** et **quantité de choses connues sur le personnage et
+son Hatsu**. Un personnage secondaire mais très détaillé (les Gardes royaux) passe avant un personnage important
+dont on ne sait presque rien. Les personnages mineurs ou au Hatsu inconnu passent en dernier.
+
+| Priorité | Personnages | Pourquoi |
+|---|---|---|
+| **P1** — en premier | Gon, Killua, Kurapika, Leorio, Hisoka · Netero · Meruem, Neferpitou, Shaiapouf, Youpi · Chrollo, Uvogin · Illumi, Zeno · Biscuit | Personnages principaux, ou Hatsu montrés en détail dans de grands combats (Gardes royaux, Netero contre Meruem, Uvogin contre Kurapika, Zeno et Silva contre Chrollo, Biscuit à Greed Island) |
+| **P2** — ensuite | Silva, Ging · Feitan, Nobunaga, Phinks, Franklin, Machi, Shizuku, Pakunoda, Shalnark (Brigade) · Kite, Knuckle, Morel, Knov · Razor, Genthru · Kastro · Alluka/Nanika (absente) | Rôle important dans un arc, Hatsu connu mais moins central |
+| **P3** — plus tard | Palm, Kalluto, Neon, Senritsu, Wing, Zushi · Pariston, Cheadle, Botobai, Menchi, Bushidora, Tsezguerra (Hatsu jamais montré) · Satotz, Buhara, Beans (pas de Hatsu) · Gido, Sadaso, Riehlvelt · tous les absents de 5.3 sauf Alluka | Rôle secondaire, ou Hatsu inconnu ou à peine montré |
+
+Dans chaque fiche, les **techniques absentes** suivent la priorité de leur personnage, avec deux exceptions
+remontées en P1 parce qu'elles sont emblématiques : **Gon adulte** et la **Chaîne du jugement** de Kurapika.
+
 ### 5.1 Personnages jouables du jeu (43)
 
-#### Gon Freecss — Renforcement
+#### Gon Freecss — Renforcement · **P1**
 - **Modèle** : enfant (~1,5 bloc), cheveux noirs en grandes pointes aux bouts verts, veste verte à col blanc,
   short vert, bottes. Deux expressions (sourire, colère). **Variante « Gon adulte »** (voir Absente).
 - **Accessoires** : canne à pêche (*Objet*, P1), sac à dos.
@@ -236,7 +251,7 @@ Repères :
   jusqu'aux pieds, aura noire immense. À faire : *Geo* variante complète + animation de transformation. Lien :
   serment « Tout sacrifier ».
 
-#### Killua Zoldyck — Transformation
+#### Killua Zoldyck — Transformation · **P1**
 - **Modèle** : enfant (~1,5 bloc), touffe de cheveux blancs ébouriffés, yeux bleus, haut blanc sur manches longues
   bleu nuit, short, chaussures violettes, posture voûtée, mains en poches au repos. Expression « assassin »
   (yeux vides).
@@ -252,7 +267,7 @@ Repères :
 - **Narukami** (absente, *IDÉE*) — éclair lancé en ligne droite depuis la paume. *Fx*.
 - **Mains-griffes Zoldyck** — coup secret de famille (voir Famille Zoldyck, *Fx* griffures).
 
-#### Kurapika — Matérialisation (Spécialisation aux yeux écarlates)
+#### Kurapika — Matérialisation (Spécialisation aux yeux écarlates) · **P1**
 - **Modèle** : ~1,7 bloc, carré blond, tabard bleu brodé d'or sur vêtements blancs, puis costume noir (arc de
   York Shin) — deux tenues possibles. **Yeux écarlates** (expression qui s'allume).
 - **Accessoires** : les **cinq chaînes** de la main droite, une par doigt (*Objet* + *Fx*), boucle d'oreille.
@@ -268,7 +283,7 @@ Repères :
 - **Temps de l'Empereur / Emperor Time** (absente, *IDÉE*) — yeux écarlates, toutes les catégories à 100 %
   (déjà en partie via le coup secret « Colère écarlate »).
 
-#### Neferpitou — Spécialisation
+#### Neferpitou — Spécialisation · **P1**
 - **Modèle** : Garde royal, silhouette fine et souple (~1,8 bloc), oreilles et **queue de chat**, cheveux blancs
   bouclés, yeux rouges fendus, griffes, genoux d'animal (jambes digitigrades). Chaînes d'os pour la queue (≥ 4) et
   les oreilles.
@@ -287,7 +302,7 @@ Repères :
 - **Puppet Master** (absente, *IDÉE*) — un **pantin-clown** manipule les cadavres (Kite) ; fils et aiguilles
   plantés dans le corps contrôlé. *Geo-Fx* pantin + *Fx* fils vers le corps contrôlé.
 
-#### Illumi Zoldyck — Manipulation
+#### Illumi Zoldyck — Manipulation · **P1**
 - **Modèle** : ~1,85 bloc, longs cheveux noirs raides jusqu'aux hanches (chaîne d'os), visage inexpressif, yeux
   noirs vides, tenue vert sombre à larges manches, ceinture à motifs. **Variante « Gittarackur »** : visage
   hérissé d'aiguilles, peau grise, cheveux en pointes (déguisement de l'Examen).
@@ -299,7 +314,7 @@ Repères :
 - **Pantins à aiguilles** (absente, *IDÉE*) — des humains contrôlés par une aiguille dans la tête (zombies
   d'Illumi). *Fx* aiguille sur la tête des mobs contrôlés.
 
-#### Leorio Paladiknight — Émission
+#### Leorio Paladiknight — Émission · **P1**
 - **Modèle** : grand (~1,9 bloc), costume bleu nuit, cravate, lunettes rondes, cheveux noirs courts. Variante
   « blouse de médecin » (P3).
 - **Accessoires** : mallette (*Objet*, P3), couteau de poche (P3).
@@ -309,7 +324,7 @@ Repères :
 - **Onde de choc** (en jeu, inventée en partie) — *Fx* anneau au sol.
 - **Percussion interne** (en jeu, inventée) — *Fx* impact discret.
 
-#### Isaac Netero — Renforcement
+#### Isaac Netero — Renforcement · **P1**
 - **Modèle** : petit vieillard (~1,6 bloc) mais musclé dans son vrai combat, crâne dégarni, chignon, longue barbe
   blanche, sourcils tombants, longs lobes, chemise « 心 », pantalon, sandales. Variante « dôgi » (combat contre
   Meruem, torse nu musclé). Pose de prière (mains jointes).
@@ -323,7 +338,7 @@ Repères :
 - **Mains numérotées** (absentes, *IDÉE*) — Main n° 3 (paume du dessus qui écrase), n° 9 (paumes latérales), n° 33
   (bouche de Kannon)… *Animations* de la même statue.
 
-#### Hisoka Morow — Transformation
+#### Hisoka Morow — Transformation · **P1**
 - **Modèle** : grand et élancé (~1,9 bloc), cheveux rouges plaqués en pointes, étoile et larme maquillées, yeux
   dorés, tenue de bouffon (haut blanc à symboles de cartes, pantalon), musculature sèche. Expressions : sourire
   pervers, excitation.
@@ -335,48 +350,48 @@ Repères :
   surface qui se décolle + gerbe de cartes.
 - **Poing élastique** (en jeu, inventée) — poing au bout d'un fil de Bungee Gum. *Fx* poing + fil.
 
-#### Pariston Hill — Spécialisation (Hatsu jamais montré dans l'œuvre)
+#### Pariston Hill — Spécialisation (Hatsu jamais montré dans l'œuvre) · **P3**
 - **Modèle** : ~1,8 bloc, cheveux blonds bouclés, costume clair, sourire permanent.
 - **Dette d'amour** (en jeu, inventée) — cœur rose au-dessus de la cible. *Fx* cœur (sprite redessiné).
 - *Note* : dans l'œuvre, il crée des **Fourmis-Chimères** artificielles (mutants) — piste de technique *IDÉE*.
 
-#### Ging Freecss — Émission
+#### Ging Freecss — Émission · **P2**
 - **Modèle** : ~1,7 bloc, barbe de trois jours, bandeau sur la tête, cape-turban, tenue d'explorateur.
 - **Poing à distance** (en jeu) — un poing d'aura sort d'un portail près de la cible (frappe de Leorio qu'il a
   copiée). *Fx* portail + poing. Lien : même effet que Leorio.
 - **Copie** (en jeu) — il reproduit la technique vue. Lien : réutilise l'effet de la technique copiée, teinté de
   son aura.
 
-#### Cheadle Yorkshire — Manipulation (Hatsu non montré)
+#### Cheadle Yorkshire — Manipulation (Hatsu non montré) · **P3**
 - **Modèle** : ~1,7 bloc, lunettes, cheveux verts, tenue de secrétaire stricte, chien (Zodiaque du Chien).
 - **Règlement** (en jeu, inventée) — *Fx* zone au sol aux bords tracés.
 
-#### Botobai Gigante — Renforcement (Hatsu non montré)
+#### Botobai Gigante — Renforcement (Hatsu non montré) · **P3**
 - **Modèle** : très grand (~2,3 blocs), crâne rasé, barbe, carrure énorme, uniforme de Zodiaque (Tigre).
 - **Pression** (en jeu, inventée) — *Fx* onde écrasante.
 
-#### Menchi — Transformation (Hatsu non montré)
+#### Menchi — Transformation (Hatsu non montré) · **P3**
 - **Modèle** : cheveux verts en cinq couettes, résille noire, haut de bikini rose, short en jean.
 - **Accessoires** : couteaux de cuisine (*Objet*, P3).
 - **Repas de gourmet** (en jeu, inventée) — un plat posé devant les alliés. *Objet* plat fumant + *Fx* vapeur.
 
-#### Bushidora Ambitious — Renforcement (Hatsu non montré)
+#### Bushidora Ambitious — Renforcement (Hatsu non montré) · **P3**
 - **Modèle** : ~1,8 bloc, épéiste, cheveux mi-longs, tenue de voyageur (Greed Island).
 - **Accessoires** : épée (*Objet*, P2).
 - **Lame d'aura** (en jeu, inventée) — *Fx* lame allongée sur l'objet épée.
 
-#### Tsezguerra — Renforcement (Hatsu non montré)
+#### Tsezguerra — Renforcement (Hatsu non montré) · **P3**
 - **Modèle** : ~1,8 bloc, lunettes, tenue de mercenaire (Greed Island).
 - **Accessoires** : livre de cartes de Greed Island (*Objet*, P3).
 - **Frappe chargée**, **Défense instantanée** (en jeu, inventées) — *Fx* génériques.
 
-#### Silva Zoldyck — Émission
+#### Silva Zoldyck — Émission · **P2**
 - **Modèle** : très grand (~2 blocs), longue crinière argentée, yeux bleus, carrure de fauve, tenue sombre.
 - **Grande boule** (en jeu) — grosse sphère d'aura lancée à deux mains (contre Chrollo). *Fx* orbe géant.
 - **Orbes explosifs** (en jeu) — sphères d'aura violettes en salve. *Fx* orbes.
 - **Frappe du patriarche** (en jeu, inventée) — *Fx* impact.
 
-#### Zeno Zoldyck — Émission (Transformation)
+#### Zeno Zoldyck — Émission (Transformation) · **P1**
 - **Modèle** : vieillard petit et vif (~1,5 bloc), moustache, longue tresse, tenue traditionnelle avec
   l'inscription « 一日一殺 » (un meurtre par jour).
 - **Tête de dragon** (en jeu) — un **dragon d'aura doré** jaillit de sa main, mord et emporte la cible. *Geo-Fx*
@@ -387,14 +402,14 @@ Repères :
 - **Aura Blast** (en jeu, inventée) — *Fx* explosion.
 - **Lance du dragon / Dragon Lance** (absente, *IDÉE*) — dragon lancé comme une lance.
 
-#### Kalluto Zoldyck — Manipulation
+#### Kalluto Zoldyck — Manipulation · **P3**
 - **Modèle** : enfant (~1,3 bloc), carré noir, **kimono**, visage androgyne, éventail à la main.
 - **Accessoires** : éventail (*Objet*, P2).
 - **Danse des papiers** (en jeu) — tourbillon de **feuilles de papier coupantes** (et papier qui anime les
   cadavres). *Fx* nuée de papiers 3D. Lien : l'éventail les dirige.
 - **Éventail de papier** (en jeu) — *Fx* gerbe de papiers.
 
-#### Nobunaga Hazama — Renforcement
+#### Nobunaga Hazama — Renforcement · **P2**
 - **Modèle** : ~1,8 bloc, samouraï, chignon, barbe naissante, kimono ouvert, sandales.
 - **Accessoires** : katana et fourreau à la ceinture (*Objet*, P2).
 - **Iai** (en jeu) — posture accroupie, la main sur la poignée ; tout ce qui entre dans son **En** (4 m) est
@@ -402,44 +417,44 @@ Repères :
 - **Coupe instantanée**, **Posture du samouraï**, **Pas du sabreur** (en jeu, inventées en partie) — animations
   de sabre.
 
-#### Uvogin — Renforcement
+#### Uvogin — Renforcement · **P1**
 - **Modèle** : colosse (~2,6 blocs), crinière sauvage, torse nu couvert de fourrures, bracelets, muscles énormes.
   Expression : rugissement.
 - **Big Bang Impact** (en jeu) — poing énorme qui pulvérise le sol (cratère). *Fx* aura sur le poing + cratère +
   débris. Lien : os de la main droite.
 - **Cri** (absente, *IDÉE*) — cri assourdissant (onde de son visible).
 
-#### Franklin Bordeau — Émission
+#### Franklin Bordeau — Émission · **P2**
 - **Modèle** : ~2,2 blocs, visage couturé, oreilles étirées, crâne rasé, long manteau.
 - **Double mitrailleuse** (en jeu) — il **coupe le bout de ses doigts** : dix canons qui tirent des balles d'aura.
   À faire : bouts de doigts visibles (modèle de main dédié) + *Fx* rafale. Lien : dix points de départ sur les
   doigts.
 - **Tir concentré**, **Tir perforant** (en jeu, inventés) — *Fx* tir.
 
-#### Machi Komacine — Transformation
+#### Machi Komacine — Transformation · **P2**
 - **Modèle** : ~1,6 bloc, queue de cheval violette, tenue de ninja (haut ample, ceinture), regard froid.
 - **Fils de Nen** (en jeu) — fils d'aura très fins, invisibles sans Gyo, qui ligotent. *Fx* fils fins (visibles
   au Gyo). Lien : partent de ses doigts.
 - **Fil étrangleur** (en jeu) — *Fx* fil.
 - **Suture** (passif) — recoud les membres. Animation de couture.
 
-#### Shizuku Murasaki — Matérialisation
+#### Shizuku Murasaki — Matérialisation · **P2**
 - **Modèle** : ~1,6 bloc, carré noir, lunettes, pull col roulé, air distrait.
 - **Blinky** (en jeu) — un **aspirateur au visage** (yeux, bouche) qui aspire tout. *Geo-Fx* ou *Objet* animé
   (bouche qui s'ouvre). Lien : tenu par sa main.
 
-#### Pakunoda — Spécialisation
+#### Pakunoda — Spécialisation · **P2**
 - **Modèle** : grande (~1,85 bloc), cheveux blonds, costume noir, chemise.
 - **Accessoires** : revolver (*Objet*, P2).
 - **Bombe de mémoire** (en jeu) — balles de souvenirs tirées au revolver. *Objet* revolver + *Fx* balles.
 - **Lecture de souvenirs** (passif) — main posée sur la cible.
 
-#### Neon Nostrade — Spécialisation
+#### Neon Nostrade — Spécialisation · **P3**
 - **Modèle** : ~1,6 bloc, cheveux bleu-violet, tenue de jeune héritière.
 - **Lovely Ghostwriter** (en jeu) — sa main tient un stylo qui **écrit seul** un poème de prédiction. *Objet*
   stylo + carnet ; *Fx* texte qui s'écrit. Lien : un « esprit » invisible guide sa main (animation).
 
-#### Razor — Émission
+#### Razor — Émission · **P2**
 - **Modèle** : grand (~2,1 blocs), forte carrure, cheveux longs, tenue de maître du jeu (Greed Island).
 - **Accessoires** : ballon (*Objet*).
 - **Balle d'aura** (en jeu) — ballon de dodgeball frappé avec une puissance monstrueuse. *Fx* ballon enflammé.
@@ -447,7 +462,7 @@ Repères :
   démon (numéro peint, variantes). Lien : apparaissent autour de lui.
 - **Smash** (en jeu, inventée) — *Fx* impact.
 
-#### Genthru — Matérialisation
+#### Genthru — Matérialisation · **P2**
 - **Modèle** : ~1,8 bloc, chef des Bombers, tenue de Greed Island ; visage abîmé après l'explosion (variante).
 - **Petite fleur / Little Flower** (en jeu) — il saisit la tête de la cible et la fait exploser. *Fx* explosion
   dans la main. Lien : sa main encaisse.
@@ -455,13 +470,13 @@ Repères :
   marquée d'un compte à rebours se colle à la cible. *Geo-Fx* démon + *Objet* bombe (chiffres qui défilent,
   texture `sprite_digits`). Lien : la bombe suit l'os de la poitrine de la cible.
 
-#### Kite — Matérialisation
+#### Kite — Matérialisation · **P2**
 - **Modèle** : grand (~1,9 bloc), très longs cheveux blancs, chapeau, long manteau, allure de chasseur.
 - **Crazy Slot** (en jeu) — un **clown** de la roulette parle et attribue une arme au hasard : faux (**Silent
   Waltz**), fusil, bâton… (neuf emplacements). À faire : *Geo-Fx* clown (bouche qui parle) + *Objet* chaque arme.
   Lien : l'arme tirée remplace l'objet en main pendant la technique.
 
-#### Morel Mackernasey — Manipulation
+#### Morel Mackernasey — Manipulation · **P2**
 - **Modèle** : grand et massif (~2 blocs), longs cheveux et barbe, **pipe géante** (calebasse).
 - **Accessoires** : pipe (*Objet*, P2).
 - **Deep Purple** (en jeu) — de la fumée de sa pipe naissent des **soldats de fumée** numérotés. *Geo-Fx*
@@ -469,14 +484,14 @@ Repères :
 - **Nuage aveuglant** (en jeu) — *Fx* fumée.
 - **Prison de fumée / Smoky Jail** (absente, *IDÉE*) — une cage de fumée dôme qui enferme. *Fx* dôme de fumée.
 
-#### Palm Siberia — Renforcement (Manipulation)
+#### Palm Siberia — Renforcement (Manipulation) · **P3**
 - **Modèle** : ~1,7 bloc, longs cheveux noirs, yeux fous ; **variante « Veuve noire »** : corps de Chimère,
   armure noire, cheveux-lames.
 - **Wink Blue** (passif en jeu) — **un œil de cristal** (et un sirène dans une boule de cristal) qui montre la
   cible à distance. *Objet* boule de cristal.
 - **Veuve noire** (en jeu) — bascule vers la variante armure. *Geo* variante + animation.
 
-#### Meruem — Émission
+#### Meruem — Émission · **P1**
 - **Modèle** : le Roi (~1,9 bloc), peau verte, **casque crânien** sur la tête, yeux fendus, **queue** articulée
   (chaîne d'os) terminée en pointe, corps musclé, cape (plus tard). Expressions : neutre, rage.
 - **Rafale de rage** (en jeu) — explosion d'aura sombre. *Fx*.
@@ -486,38 +501,38 @@ Repères :
 - **Ailes de Pouf / Beelzebub** (absentes, *IDÉE*) — après avoir absorbé ses Gardes, il gagne des ailes. *Geo*
   ailes.
 
-#### Menthuthuyoupi (Youpi) — Transformation
+#### Menthuthuyoupi (Youpi) — Transformation · **P1**
 - **Modèle** : énorme (~2,8 blocs), crâne, peau sombre, corps massif.
 - **Métamorphose** (en jeu) — il transforme ses bras en **armes** (lames, masses, ailes, gueules). *Geo* bras
   variantes (lame, poing géant). Lien : remplacent les os du bras.
 - **Rafale de rage** (en jeu) — *Fx*.
 - **Poing colossal**, **Lames organiques**, **Ailes monstrueuses** (en jeu) — variantes du bras et des ailes.
 
-#### Shaiapouf (Pouf) — Manipulation
+#### Shaiapouf (Pouf) — Manipulation · **P1**
 - **Modèle** : ~1,8 bloc, cheveux blonds en mèches, **ailes de papillon**, costume élégant.
 - **Message spirituel** (en jeu) — **écailles dorées** de ses ailes qui lisent les émotions. *Fx* poudre dorée.
 - **Belzébuth** (en jeu) — il se divise en **dizaines de mini-Pouf** volants. *Geo-Fx* mini-Pouf. Lien : même
   modèle à petite échelle.
 - **Cocon** (absente, *IDÉE*) — il enveloppe le Roi dans un cocon de soie. *Fx* cocon.
 
-#### Zushi — Manipulation
+#### Zushi — Manipulation · **P3**
 - **Modèle** : enfant (~1,3 bloc), dôgi de Shingen-ryu, crâne rasé.
 - **Poing de Ren** (en jeu) — *Fx* impact.
 
-#### Senritsu — Émission
+#### Senritsu — Émission · **P3**
 - **Modèle** : petite (~1,4 bloc), apparence transformée par la Mélodie démoniaque, costume noir.
 - **Accessoires** : flûte (*Objet*, P2).
 - **Mélodie** (en jeu) — sa flûte joue la « Mélodie de l'amour ». *Fx* notes de musique + ondes. Lien : sortent de
   la flûte.
 
-#### Biscuit Krueger — Transformation
+#### Biscuit Krueger — Transformation · **P1**
 - **Modèle** : deux formes — **petite** (~1,4 bloc, fillette blonde à couettes, robe rose) et **grande**
   (~2,5 blocs, très musclée). Deux *Geo* complets.
 - **Changer de forme** (en jeu) — animation de transformation.
 - **Cookie, la masseuse / Magical Esthetician** (en jeu) — **Cookie**, petite esthéticienne en tenue, apparaît et
   masse. *Geo-Fx* Cookie + table de massage (P3). Lien : apparaît à côté de Biscuit.
 
-#### Chrollo Lucilfer — Spécialisation
+#### Chrollo Lucilfer — Spécialisation · **P1**
 - **Modèle** : ~1,8 bloc, cheveux noirs plaqués, **croix tatouée sur le front**, long manteau à col de fourrure.
   Variante : cheveux libres, bandage sur le front.
 - **Chasseur de compétences / Skill Hunter** (en jeu) — un **livre** avec une **empreinte de main** sur la
@@ -525,7 +540,7 @@ Repères :
 - **Techniques volées** (absentes, *IDÉE*) : *Indoor Fish* (poisson carnivore), *Sun and Moon* (tampons-bombes),
   *Convert Hands*, *Fun Fun Cloth* (tissu qui rétrécit). *Geo-Fx* chacun.
 
-#### Feitan Portor — Transformation
+#### Feitan Portor — Transformation · **P2**
 - **Modèle** : petit (~1,55 bloc), cheveux noirs, **masque-col** remontant sur la bouche, longue tunique sombre.
 - **Accessoires** : **parapluie-épée** (*Objet*, P2).
 - **Soleil levant / Rising Sun** (en jeu) — il revêt une **armure de flammes** et fait naître un **soleil**
@@ -533,58 +548,58 @@ Repères :
   jauge de Douleur.
 - **Vague de chaleur**, **Éclat solaire**, **Pas fantôme** (en jeu, en partie inventées).
 
-#### Phinks Magcub — Renforcement
+#### Phinks Magcub — Renforcement · **P2**
 - **Modèle** : ~1,85 bloc, crâne rasé, pas de sourcils, survêtement.
 - **Ripper Cyclotron** (en jeu) — il **fait tourner son bras** comme une hélice : chaque tour renforce le coup.
   Animation de moulinets + *Fx* traînée circulaire.
 
-#### Shalnark — Manipulation
+#### Shalnark — Manipulation · **P2**
 - **Modèle** : ~1,75 bloc, cheveux blonds, visage enfantin, tenue décontractée.
 - **Accessoires** : **téléphone** et **antennes** (*Objet*, P2).
 - **Voix noire / Black Voice** (en jeu) — il plante une **antenne** dans la cible et la contrôle par son
   téléphone. *Objet* antenne plantée (suit l'os de la cible). Lien : téléphone ↔ antenne.
 - **Pilote automatique** (en jeu) — antenne plantée dans sa propre tête : aura déchaînée. *Fx* + antenne.
 
-#### Knov — Émission
+#### Knov — Émission · **P2**
 - **Modèle** : grand (~1,9 bloc), cheveux noirs, costume, lunettes ; variante après le traumatisme (cheveux
   blancs).
 - **Marquer une porte / Scream** (en jeu) — marque d'aura sur un mur ou une porte. *Fx* marque (porte d'aura).
 - **Cache-cache / Hide and Seek** (en jeu) — portail vers un **appartement** dans une autre dimension. *Fx*
   portail + pièce construite (structure).
 
-#### Knuckle Bine — Matérialisation
+#### Knuckle Bine — Matérialisation · **P2**
 - **Modèle** : ~1,8 bloc, cheveux en arrière, veste sans manches, attitude de voyou.
 - **Hakoware (passif) / Activer Pot-Clean** (en jeu) — **Pot-Clean**, petite créature au visage d'enfant qui se
   colle à la cible et **affiche la dette** (chiffres qui augmentent). *Geo-Fx* Pot-Clean + *Fx* compteur. Lien :
   suit la cible jusqu'au remboursement.
 - **Annuler Pot-Clean** (en jeu) — Pot-Clean disparaît.
 
-#### Wing — Renforcement
+#### Wing — Renforcement · **P3**
 - **Modèle** : ~1,75 bloc, lunettes, chemise mal rentrée, allure de professeur.
 - **Shingen-ryû** (en jeu, inventée) — posture de garde. Animation.
 
 ### 5.2 Personnages hors liste jouable (déjà en PNJ ou combattants)
 
-#### Satotz, Buhara, Beans
+#### Satotz, Buhara, Beans · **P3**
 Pas de Hatsu montré : uniquement le modèle (voir 1.1). Satotz : longs membres pour la course de l'Examen. Buhara :
 animation de dégustation (porc entier).
 
-#### Gido — Manipulation (combattant de la Tour)
+#### Gido — Manipulation (combattant de la Tour) · **P3**
 - **Modèle** : petit, **jambe de bois**, chapeau. Animation de rotation.
 - **Toupies tourbillon** (en jeu) — nuée de **toupies** lancées. *Objet* toupie.
 - **Danse de la tornade** (en jeu) — il tourne sur sa jambe de bois. Animation.
 
-#### Sadaso — Émission
+#### Sadaso — Émission · **P3**
 - **Modèle** : grand, visage creusé, **bras gauche manquant** (manche vide).
 - **Main fantôme** (en jeu) — un **bras gauche d'aura invisible** agrippe la cible. *Fx* bras fantôme (visible au
   Gyo). Lien : part de l'épaule gauche.
 
-#### Riehlvelt — Transformation
+#### Riehlvelt — Transformation · **P3**
 - **Modèle** : en **fauteuil roulant** (*Objet* intégré au modèle), cheveux mi-longs.
 - **Fouet électrique** (en jeu) — fouet chargé d'électricité. *Objet* fouet + *Fx* arcs.
 - **Canon à air** (en jeu) — air comprimé tiré par le fauteuil. *Fx* bouffée d'air.
 
-#### Kastro — Renforcement
+#### Kastro — Renforcement · **P2**
 - **Modèle** : ~1,85 bloc, cheveux longs attachés, tenue de combat chinoise.
 - **Morsure du tigre** (en jeu) — mains en gueule de tigre. *Fx* gueule de tigre sur les mains.
 - **Double** (en jeu) — un **double** de lui-même (Matérialisation, hors de son type). *Geo* même modèle,
@@ -594,18 +609,18 @@ animation de dégustation (porc entier).
 
 Rien n'est codé. Chaque entrée = un modèle *Geo* + les effets de son Hatsu.
 
-| Personnage | Hatsu (type quand il est connu) | Ce que contient la technique | Modèles à faire |
-|---|---|---|---|
-| Kortopi (Brigade) | **Gallery Fake** — Matérialisation | Copie parfaite d'un objet (ou de corps) touché de la main droite, qui disparaît au bout de 24 h | *Geo* petit personnage couvert de cheveux (un œil visible) ; *Fx* copie translucide qui se solidifie |
-| Bonolenov Ndongo (Brigade) | **Battle Cantabile** — Matérialisation | Ses trous dans la peau jouent une musique en dansant ; « Jupiter » : armure planétaire | *Geo* corps bandé ; *Geo* armure « Jupiter » ; *Fx* notes |
-| Shoot McMahon | **Hotel Rafflesia** et mains flottantes | Trois mains d'aura flottantes qui frappent ; une **cage à oiseau** enferme les parties du corps arrachées | *Geo* Shoot (bras gauche manquant) ; *Geo-Fx* 3 mains ; *Objet* cage |
-| Ikalgo | Tireur, **Living Dead Dolls** | Pieuvre (Chimère) ; contrôle des cadavres grâce à des sangsues | *Geo* Ikalgo (pieuvre, chapeau) ; *Fx* sangsues |
-| Welfin | **Missile Man** — Matérialisation | Un canon lance des missiles d'aura dès qu'on lui ment | *Geo* Welfin (Chimère loup) ; *Geo-Fx* canon et missiles |
-| Zazan | **Queen Shot** | Le dard de sa queue transforme ses victimes en serviteurs ; seconde forme monstrueuse | *Geo* Zazan (deux formes) ; *Fx* dard |
-| Goreinu | **Gorille blanc / Gorille noir** — Matérialisation | Deux gorilles d'aura ; le blanc permet d'échanger sa place avec une cible | *Geo* Goreinu ; *Geo-Fx* deux gorilles |
-| Abengane | Exorciste | Une bête de Nen qui dévore le Nen d'un autre (lien avec l'exorcisme déjà dans le jeu) | *Geo* Abengane ; *Geo-Fx* bête de Nen |
-| Hanzo | **Hanzo Skwad** | Un double astral qui agit à sa place | *Geo* ninja chauve ; *Geo* double translucide |
-| Alluka / Nanika | Souhaits (pouvoir hors norme) | Nanika exauce les vœux ; yeux noirs, bouche béante | *Geo* Alluka, expression « Nanika » ; *Fx* aura noire |
+| Personnage | Hatsu (type quand il est connu) | Ce que contient la technique | Modèles à faire | Priorité |
+|---|---|---|---|---|
+| Kortopi (Brigade) | **Gallery Fake** — Matérialisation | Copie parfaite d'un objet (ou de corps) touché de la main droite, qui disparaît au bout de 24 h | *Geo* petit personnage couvert de cheveux (un œil visible) ; *Fx* copie translucide qui se solidifie | P3 |
+| Bonolenov Ndongo (Brigade) | **Battle Cantabile** — Matérialisation | Ses trous dans la peau jouent une musique en dansant ; « Jupiter » : armure planétaire | *Geo* corps bandé ; *Geo* armure « Jupiter » ; *Fx* notes | P3 |
+| Shoot McMahon | **Hotel Rafflesia** et mains flottantes | Trois mains d'aura flottantes qui frappent ; une **cage à oiseau** enferme les parties du corps arrachées | *Geo* Shoot (bras gauche manquant) ; *Geo-Fx* 3 mains ; *Objet* cage | P3 |
+| Ikalgo | Tireur, **Living Dead Dolls** | Pieuvre (Chimère) ; contrôle des cadavres grâce à des sangsues | *Geo* Ikalgo (pieuvre, chapeau) ; *Fx* sangsues | P3 |
+| Welfin | **Missile Man** — Matérialisation | Un canon lance des missiles d'aura dès qu'on lui ment | *Geo* Welfin (Chimère loup) ; *Geo-Fx* canon et missiles | P3 |
+| Zazan | **Queen Shot** | Le dard de sa queue transforme ses victimes en serviteurs ; seconde forme monstrueuse | *Geo* Zazan (deux formes) ; *Fx* dard | P3 |
+| Goreinu | **Gorille blanc / Gorille noir** — Matérialisation | Deux gorilles d'aura ; le blanc permet d'échanger sa place avec une cible | *Geo* Goreinu ; *Geo-Fx* deux gorilles | P3 |
+| Abengane | Exorciste | Une bête de Nen qui dévore le Nen d'un autre (lien avec l'exorcisme déjà dans le jeu) | *Geo* Abengane ; *Geo-Fx* bête de Nen | P3 |
+| Hanzo | **Hanzo Skwad** | Un double astral qui agit à sa place | *Geo* ninja chauve ; *Geo* double translucide | P3 |
+| Alluka / Nanika | Souhaits (pouvoir hors norme) | Nanika exauce les vœux ; yeux noirs, bouche béante | *Geo* Alluka, expression « Nanika » ; *Fx* aura noire | P2 |
 
 *D'autres personnages ont un Hatsu (prétendants de la succession, Zodiaques…), mais leurs capacités sont trop
 peu détaillées dans l'œuvre pour être listées sans inventer. À compléter si Evan le souhaite.*
