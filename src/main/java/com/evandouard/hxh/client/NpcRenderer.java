@@ -21,17 +21,24 @@ import net.minecraft.resources.ResourceLocation;
 public class NpcRenderer extends HumanoidMobRenderer<NpcEntity, PlayerModel<NpcEntity>> {
     private final PlayerModel<NpcEntity> wide;
     private final PlayerModel<NpcEntity> slim;
+    /** Personnages qui ont un vrai modèle (GeckoLib) : rendu délégué. */
+    private final com.evandouard.hxh.client.geo.NpcGeoRenderer geo;
 
     public NpcRenderer(EntityRendererProvider.Context context) {
         super(context, new PlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), false), 0.5f);
         this.wide = getModel();
         this.slim = new PlayerModel<>(context.bakeLayer(ModelLayers.PLAYER_SLIM), true);
         addLayer(new CharacterExtrasLayer<>(this, e -> CharacterLooks.get(e.npcId())));
+        this.geo = new com.evandouard.hxh.client.geo.NpcGeoRenderer(context);
     }
 
     @Override
     public void render(NpcEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
                        MultiBufferSource buffers, int packedLight) {
+        if (com.evandouard.hxh.client.geo.NpcGeoModel.has(entity.npcId())) {
+            geo.render(entity, entityYaw, partialTick, poseStack, buffers, packedLight);
+            return;
+        }
         CharacterLook look = CharacterLooks.get(entity.npcId());
         this.model = look != null && look.slim() ? slim : wide;
         this.shadowRadius = 0.5f * (look != null ? Math.max(look.scaleX(), look.scaleZ()) : 1f);

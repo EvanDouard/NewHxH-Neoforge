@@ -1582,6 +1582,22 @@ expect [Association Hunter]
 expect manieur de Nen errant
 shot 52_evenement_prime_association
 cmd difficulty peaceful
+# --- Modèles GeckoLib : Gon (pilote) de face, de profil, de dos, à côté d'un PNJ de taille adulte ---
+cmd kill @e[tag=geo_ci]
+cmd fill ~-6 ~30 ~-3 ~6 ~30 ~9 minecraft:smooth_stone
+cmd tp @s ~ ~31 ~ 0 0
+look 0 6
+cmd summon hxh:npc ~-2.4 ~ ~4 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-0.6 ~ ~4 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~1.2 ~ ~4 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~3.0 ~ ~4 {npc:"cook",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 60
+clearchat
+shot 60a_gon_geckolib
+look -40 18
+wait 5
+shot 60b_gon_geckolib_dessus
+cmd kill @e[tag=geo_ci]
 # --- Apparences des personnages (skins, tailles, cheveux/barbes en 3D) ---
 cmd kill @e[type=hxh:npc]
 camera first

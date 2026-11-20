@@ -27,7 +27,16 @@ import net.minecraft.world.phys.Vec3;
  * PNJ du mod (Navigateur, Beans, Satotz, Netero…). Invulnérable et persistant ; un clic droit lui parle.
  * Son identifiant ({@code npc}) choisit son nom, sa texture et ses dialogues.
  */
-public class NpcEntity extends PathfinderMob {
+public class NpcEntity extends PathfinderMob implements software.bernie.geckolib.animatable.GeoEntity {
+    /** Animations communes à tous les modèles GeckoLib de personnage (noms des fichiers {@code animations/entity/npc/<id>.animation.json}). */
+    public static final software.bernie.geckolib.animation.RawAnimation IDLE =
+            software.bernie.geckolib.animation.RawAnimation.begin().thenLoop("idle");
+    public static final software.bernie.geckolib.animation.RawAnimation WALK =
+            software.bernie.geckolib.animation.RawAnimation.begin().thenLoop("walk");
+
+    private final software.bernie.geckolib.animatable.instance.AnimatableInstanceCache geoCache =
+            software.bernie.geckolib.util.GeckoLibUtil.createInstanceCache(this);
+
     private static final EntityDataAccessor<String> NPC_ID =
             SynchedEntityData.defineId(NpcEntity.class, EntityDataSerializers.STRING);
 
@@ -174,5 +183,18 @@ public class NpcEntity extends PathfinderMob {
             routeIndex = tag.getInt("route_index");
         }
         NbtUtils.readBlockPos(tag, "home").ifPresent(p -> home = p);
+    }
+
+    // ---------- GeckoLib (rendu des personnages qui ont un modèle sur mesure) ----------
+
+    @Override
+    public void registerControllers(software.bernie.geckolib.animation.AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new software.bernie.geckolib.animation.AnimationController<>(this, "base", 5,
+                state -> state.setAndContinue(state.isMoving() ? WALK : IDLE)));
+    }
+
+    @Override
+    public software.bernie.geckolib.animatable.instance.AnimatableInstanceCache getAnimatableInstanceCache() {
+        return geoCache;
     }
 }
