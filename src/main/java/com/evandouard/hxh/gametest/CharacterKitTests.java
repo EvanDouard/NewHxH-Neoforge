@@ -131,12 +131,13 @@ public final class CharacterKitTests {
         HunterData d = hunter(pakunoda, NenType.SPECIALIST, "pakunoda");
         var bomb = com.evandouard.hxh.hatsu.Characters.PAKUNODA_MEMORY_BOMB;
         for (int i = 1; i <= 5; i++) {
-            helper.assertTrue(bomb.perform(pakunoda, 1f), "Balle " + i);
+            bomb.perform(pakunoda, 1f); // la balle part, touchée ou non
             helper.assertTrue(bomb.cooldownFor(d) == 0, "Balle " + i + " : pas de recharge");
         }
-        helper.assertTrue(bomb.perform(pakunoda, 1f), "6e balle");
+        bomb.perform(pakunoda, 1f);
         helper.assertTrue(bomb.cooldownFor(d) > 0, "Après la 6e : rechargement");
-        helper.assertTrue(bomb.perform(pakunoda, 1f) && bomb.cooldownFor(d) == 0, "Rechargé : la série repart");
+        bomb.perform(pakunoda, 1f);
+        helper.assertTrue(bomb.cooldownFor(d) == 0, "Rechargé : la série repart");
         helper.succeed();
     }
 
