@@ -394,10 +394,12 @@ public class ProfileScreen extends Screen {
         if (!text && !subjects.containsKey(id)) return false;
         int target = text || com.evandouard.hxh.stats.ProfileDetails.STATS.contains(id) ? 0
                 : com.evandouard.hxh.stats.ProfileDetails.AURA.contains(id) ? 4 : 3;
-        tab = target; // lastTab inchangé : le carnet se rouvre sur l'onglet que le joueur a choisi
+        int keepTab = lastTab; // le carnet se rouvrira sur l'onglet que le joueur a choisi, pas sur celui de la fiche
+        tab = target;
         selected = id;
         scroll = 0;
         rebuildWidgets();
+        lastTab = keepTab;
         return true;
     }
 

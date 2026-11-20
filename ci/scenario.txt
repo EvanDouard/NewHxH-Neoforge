@@ -1319,6 +1319,14 @@ cmd hunter refill
 wait 100
 cmd hunter refill
 wait 100
+cmd hunter refill
+wait 100
+cmd hunter refill
+wait 100
+cmd hunter refill
+wait 100
+cmd hunter refill
+wait 100
 clearchat
 talkto wing
 wait 10
