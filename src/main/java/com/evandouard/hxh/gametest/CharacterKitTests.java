@@ -55,18 +55,57 @@ public final class CharacterKitTests {
         helper.assertTrue(Math.abs(d.kitValue(KitBars.PRAYER) - 50f) < 0.01f, "10 s de prière : 50 → " + d.kitValue(KitBars.PRAYER));
         float hp = target.getHealth();
         helper.assertTrue(Hatsu.cast(netero) == null, "La paume de Kannon part");
-        helper.assertTrue(Math.abs(d.kitValue(KitBars.PRAYER) - 20f) < 0.01f, "30 de Prière dépensés");
+        helper.assertTrue(Math.abs(d.kitValue(KitBars.PRAYER) - 40f) < 0.01f, "10 de Prière dépensés");
         helper.assertTrue(target.getHealth() < hp, "La cible devant est frappée");
-        // Poings de Kannon : coups renforcés
-        helper.assertTrue(Hatsu.select(netero, "netero_kannon_fists"), "Poings sélectionnables");
-        helper.assertTrue(Hatsu.cast(netero) == null, "Les poings de Kannon s'allument");
-        float out = Hatsu.modifyOutgoingMelee(netero, target, 10f);
-        helper.assertTrue(out >= 15.9f, "Coups ×1,6 avec les poings de Kannon : " + out);
         // Main zéro : seulement prière pleine
         d.setAura(d.auraMax());
         helper.assertTrue("message.hxh.no_prayer".equals(Hatsu.castRefusal(d, Netero.ZERO_HAND, now)), "Main zéro : prière pleine requise");
         d.setKitValue(KitBars.PRAYER, KitBars.PRAYER_MAX);
         helper.assertTrue(Hatsu.castRefusal(d, Netero.ZERO_HAND, now) == null, "Prière pleine : Main zéro prête");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void zoldyckAssassinHitsIsolatedTargetsHarder(GameTestHelper helper) {
+        Zombie silva = husk(helper, 0);
+        Zombie target = husk(helper, 2);
+        hunter(silva, NenType.EMITTER, "silva");
+        float alone = Hatsu.modifyOutgoingMelee(silva, target, 10f);
+        helper.assertTrue(alone >= 12.4f, "Cible isolée : +25 % : " + alone);
+        Zombie other = husk(helper, 4);
+        float crowded = Hatsu.modifyOutgoingMelee(silva, target, 10f);
+        helper.assertTrue(crowded <= 10.01f, "Un autre être vivant à côté : pas de bonus : " + crowded);
+        other.discard();
+        silva.discard();
+        Zombie killua = husk(helper, 1);
+        hunter(killua, NenType.TRANSMUTER, "killua");
+        helper.assertTrue(Hatsu.modifyOutgoingMelee(killua, target, 10f) <= 10.01f, "Killua n'a pas encore le bonus");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void botobaiVeteranIsStrongerWhenHealthy(GameTestHelper helper) {
+        Zombie botobai = husk(helper, 0);
+        hunter(botobai, NenType.ENHANCER, "botobai");
+        botobai.setHealth(botobai.getMaxHealth());
+        botobai.tickCount = 20;
+        com.evandouard.hxh.hatsu.Characters.BOTOBAI_VETERAN.tick(botobai);
+        helper.assertTrue(botobai.hasEffect(net.minecraft.world.effect.MobEffects.DAMAGE_BOOST)
+                && botobai.hasEffect(net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE), "En forme : puissance et résistance");
+        botobai.removeAllEffects();
+        botobai.setHealth(botobai.getMaxHealth() * 0.3f);
+        com.evandouard.hxh.hatsu.Characters.BOTOBAI_VETERAN.tick(botobai);
+        helper.assertTrue(!botobai.hasEffect(net.minecraft.world.effect.MobEffects.DAMAGE_BOOST), "Blessé : pas de bonus");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void zeroHandSpendsAllAura(GameTestHelper helper) {
+        Zombie netero = husk(helper, 0);
+        HunterData d = hunter(netero, NenType.ENHANCER, "netero");
+        d.setAura(d.auraMax());
+        helper.assertTrue(Netero.ZERO_HAND.perform(netero, 1f), "La Main zéro part");
+        helper.assertTrue(d.aura() < 0.01f, "Toute l'aura est dépensée : " + d.aura());
         helper.succeed();
     }
 

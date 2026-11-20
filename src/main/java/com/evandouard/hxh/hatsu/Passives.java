@@ -38,6 +38,33 @@ public final class Passives {
         }
     };
 
+    /**
+     * Corps d'assassin (Silva, Zeno, Kalluto ; pas Killua pour l'instant) : Corps Zoldyck, et +25 % de dégâts
+     * au corps à corps sur une cible isolée (aucun autre être vivant à 6 blocs d'elle).
+     */
+    public static final Passive ZOLDYCK_ASSASSIN = new Passive("zoldyck_assassin", true) {
+        @Override
+        public float modifyIncoming(LivingEntity owner, DamageSource source, float amount) {
+            return ZOLDYCK_BODY.modifyIncoming(owner, source, amount);
+        }
+
+        @Override
+        public void tick(LivingEntity owner) {
+            ZOLDYCK_BODY.tick(owner);
+        }
+
+        @Override
+        public float modifyOutgoingMelee(LivingEntity owner, LivingEntity target, float amount) {
+            return isolated(owner, target) ? amount * 1.25f : amount;
+        }
+    };
+
+    /** Vrai si rien d'autre ne vit à 6 blocs de la cible (le lanceur ne compte pas). */
+    static boolean isolated(LivingEntity owner, LivingEntity target) {
+        return target.level().getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(6),
+                e -> e != owner && e != target && e.isAlive() && !e.isSpectator()).isEmpty();
+    }
+
     /** Illumi — Entraînement Zoldyck : immunisé au poison. */
     public static final Passive POISON_TRAINING = new Passive("poison_training", true) {
         @Override

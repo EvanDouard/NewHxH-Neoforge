@@ -28,9 +28,6 @@ public final class Netero {
     private Netero() {}
 
     public static final String KIT = "netero";
-    /** Ticks restants des Poings de Kannon (ressource du personnage). */
-    static final String FISTS = "kannon_fists";
-    static final float FISTS_BONUS = 1.6f;
     /** Prière gagnée par seconde de prière (pleine en 20 s) ; pour un mob, regain passif par seconde. */
     public static final float PRAYER_PER_SECOND = 5f, MOB_PRAYER_PER_SECOND = 2f;
 
@@ -57,42 +54,15 @@ public final class Netero {
         }
     }
 
-    /** Passif « Prière » : regain passif pour les mobs, décompte des Poings de Kannon, coups renforcés. */
+    /** Passif « Prière » : regain passif pour les mobs. */
     public static final Passive PRAYER = new Passive("netero_prayer", true) {
         @Override
         public void tick(LivingEntity owner) {
             HunterData data = HunterStats.get(owner);
             if (!(owner instanceof Player) && owner.tickCount % 20 == 0)
                 data.addKitValue(KitBars.PRAYER, MOB_PRAYER_PER_SECOND, KitBars.PRAYER_MAX);
-            float fists = data.kitValue(FISTS);
-            if (fists > 0) {
-                data.setKitValue(FISTS, Math.max(0, fists - 1));
-                if (owner.tickCount % 20 == 0 && owner.level() instanceof ServerLevel level)
-                    NenFx.sprite(level, NenFx.Sprite.KANNON_HANDS, owner, owner.position(), 1.2f, NenFx.GOLD, 22);
-            }
-        }
-
-        @Override
-        public float modifyOutgoingMelee(LivingEntity owner, LivingEntity target, float amount) {
-            if (HunterStats.get(owner).kitValue(FISTS) <= 0) return amount;
-            NenFx.impactOn(owner, target, 1.4f, NenFx.GOLD);
-            return amount * FISTS_BONUS;
         }
     };
-
-    /** Poings de Kannon : 10 s de coups renforcés (×1,6), mains dorées sur les poings. */
-    public static final Technique KANNON_FISTS = Techniques.register(new Technique("netero_kannon_fists", NenType.ENHANCER, 15, 300) {
-        @Override
-        public boolean perform(LivingEntity caster, float power) {
-            HunterStats.get(caster).setKitValue(FISTS, Math.round(200 * Math.max(0.5f, power)));
-            NenFx.flare(caster, 1.4f, NenFx.GOLD);
-            if (caster.level() instanceof ServerLevel level)
-                NenFx.sprite(level, NenFx.Sprite.KANNON, caster, caster.position(), 4.5f, NenFx.GOLD, 24);
-            caster.level().playSound(null, caster.getX(), caster.getY(), caster.getZ(), SoundEvents.BELL_RESONATE,
-                    SoundSource.PLAYERS, 0.8f, 1.3f);
-            return true;
-        }
-    }).costs(KitBars.PRAYER, 15);
 
     /** Paume de la statue : un cône large et long (12 blocs, 40°). */
     private static final Techniques.PalmWave KANNON_PALM = new Techniques.PalmWave("netero_kannon_palm", NenType.ENHANCER,
@@ -117,7 +87,7 @@ public final class Netero {
             KANNON_PALM.perform(caster, power);
             return true;
         }
-    }).costs(KitBars.PRAYER, 30).requiresNenLevel(10);
+    }).costs(KitBars.PRAYER, 10).requiresNenLevel(10);
 
     /** Main zéro : prière pleine, tout part. Rayon de 24 blocs, 2,5 de large : 40 dégâts, image d'impact. */
     public static final Technique ZERO_HAND = Techniques.register(new Technique("netero_zero_hand", NenType.ENHANCER, 60, 1200) {
@@ -136,10 +106,18 @@ public final class Netero {
             if (!(caster.level() instanceof ServerLevel level)) return false;
             NenFx.sprite(level, NenFx.Sprite.KANNON, caster, caster.position(), 12f, NenFx.WHITE, 50);
             Vec3 eye = caster.getEyePosition(), look = caster.getLookAngle();
+            // Toute l'aura qui reste part dans le rayon : de 15 dégâts (rien) à 60 (aura pleine)
+            HunterData data = HunterStats.get(caster);
+            float spent = data.auraMax() <= 0 ? 0f : Math.min(1f, data.aura() / data.auraMax());
+            data.setAura(0f);
+            float damage = (15f + 45f * spent) * power;
             List<LivingEntity> hit = beamTargets(caster, eye, look, 24, 2.5);
+            if (com.evandouard.hxh.HxHGameRules.canDestroy(level))
+                for (int i = 3; i <= 24; i += 3)
+                    com.evandouard.hxh.combat.Impacts.crater(level, eye.add(look.scale(i)), 1.8f, caster);
             for (LivingEntity t : hit) {
                 t.invulnerableTime = 0;
-                t.hurt(Techniques.damageFrom(caster), 40f * power);
+                t.hurt(Techniques.damageFrom(caster), damage);
                 t.setDeltaMovement(t.getDeltaMovement().add(look.scale(2.5)));
                 t.hurtMarked = true;
                 NenFx.impactFrame(caster, t, 16);

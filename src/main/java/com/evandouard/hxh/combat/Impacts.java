@@ -339,7 +339,7 @@ public final class Impacts {
     }
 
     /** Sphère de blocs cassés (blocs pas trop durs, sans bloc-entité). */
-    static int crater(ServerLevel level, Vec3 center, float r, LivingEntity breaker) {
+    public static int crater(ServerLevel level, Vec3 center, float r, LivingEntity breaker) {
         int ir = (int) Math.ceil(r), broken = 0;
         BlockPos c = BlockPos.containing(center);
         for (BlockPos p : BlockPos.betweenClosed(c.offset(-ir, -ir, -ir), c.offset(ir, ir, ir))) {

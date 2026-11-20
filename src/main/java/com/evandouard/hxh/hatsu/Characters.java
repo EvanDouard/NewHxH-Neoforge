@@ -242,7 +242,7 @@ public final class Characters {
     // =====================================================================
     // Botobai (Renforcement*)
     // =====================================================================
-    /** Vétéran : résiste au recul et à la peur (les effets de faiblesse et lenteur durent moitié moins). */
+    /** Vétéran : résiste au recul ; tant que ses PV sont hauts (70 % ou plus), bonus de résistance et de puissance. */
     public static final Passive BOTOBAI_VETERAN = new Passive("botobai_veteran", true) {
         @Override
         public void tick(LivingEntity owner) {
@@ -251,12 +251,10 @@ public final class Characters {
             if (kb != null && kb.getModifier(VETERAN_KB) == null)
                 kb.addTransientModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(VETERAN_KB, 0.5,
                         net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE));
-            for (var eff : List.of(MobEffects.WEAKNESS, MobEffects.MOVEMENT_SLOWDOWN)) {
-                var inst = owner.getEffect(eff);
-                if (inst != null && inst.getDuration() > 40) {
-                    owner.removeEffect(eff);
-                    owner.addEffect(Kinds.quiet(eff, inst.getDuration() / 2, inst.getAmplifier()));
-                }
+            // En bonne santé (au moins 70 % de vie) : résistance et puissance
+            if (owner.getHealth() >= owner.getMaxHealth() * 0.7f) {
+                owner.addEffect(Kinds.quiet(MobEffects.DAMAGE_RESISTANCE, 60, 0));
+                owner.addEffect(Kinds.quiet(MobEffects.DAMAGE_BOOST, 60, 0));
             }
         }
     };

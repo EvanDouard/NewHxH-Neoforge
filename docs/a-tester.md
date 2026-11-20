@@ -269,3 +269,9 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - **En jeu** La Tour Céleste n'est posée que sur terre ferme (recherche en spirale d'un terrain sec au-dessus du niveau de la mer). Ne s'applique qu'aux nouveaux mondes : une tour déjà posée dans l'eau ne bouge pas.
 - **CI** Carte Famille : le coup secret est expliqué (capture `99r_famille_coup_secret_explique`). Boutons Hatsu et Ryu dans leurs fiches, onglet Nen (`99s`, `99t`).
 - **CI** Rééquilibrage : Force +0,5 dégât/niveau (+50 au niveau 100), Vitalité +0,4 PV/niveau (+40), Endurance 0,1 (10 PV plats) (`strengthIsMuchStrongerAtMaxLevel`). Attention : un fichier de config existant garde les anciennes valeurs.
+
+## Lot 2 des techniques de ton fichier (20 nov)
+- [x] CI : `zoldyckAssassinHitsIsolatedTargetsHarder`, `botobaiVeteranIsStrongerWhenHealthy`, `zeroHandSpendsAllAura` ; `neteroSpendsPrayerOnKannon` mis à jour (Bodhisattva = 10 de Prière, Poings de Kannon retirés).
+- [ ] En jeu : Silva, Zeno ou Kalluto frappent +25 % une cible seule (rien d'autre à 6 blocs) ; Killua n'a pas encore ce bonus.
+- [ ] En jeu : Netero n'a plus les Poings de Kannon ; Bodhisattva coûte 10 de Prière ; Main zéro : dégâts selon l'aura qui restait (aura vide après), blocs détruits le long du rayon si `hxhNenDestruction`.
+- [ ] En jeu : Botobai en forme (≥ 70 % PV) a Force I et Résistance I ; Cookie donne aussi Force I aux alliés ; Pierre sans retenue de Gon demande Nen 60 ; aiguille d'Illumi : 2 s.
