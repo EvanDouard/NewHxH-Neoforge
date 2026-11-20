@@ -126,6 +126,37 @@ public final class Techniques {
     public static final Technique PITOU_DOCTOR_BLYTHE = register(new DollHeal("pitou_doctor_blythe", NenType.SPECIALIST, 20, 400,
             2f, 0.5f));
 
+    // ---------- Ajouts du 20 nov (propositions validées de docs/hatsu-et-techniques.md, partie 8) ----------
+    /** Rage de Gon (adulte) : Force IV et Vitesse III pendant 8 s. Ultime : jamais lancée par un mob. */
+    public static final Technique GON_RAGE = register(new SelfBuff("gon_rage", NenType.ENHANCER, 60, 900,
+            List.of(new Effect(MobEffects.DAMAGE_BOOST, 160, 3), new Effect(MobEffects.MOVEMENT_SPEED, 160, 2)),
+            new Look(Style.CRACKLE, 0xFF7A1020, 1.6f), SoundEvents.WARDEN_ROAR)).requiresNenLevel(30);
+    /** Sérum d'urgence (Leorio) : un soin lancé sur la cible visée (12 blocs), allié ou non. */
+    public static final Technique LEORIO_SERUM = register(new Strike("leorio_serum", NenType.EMITTER, 30, 200,
+            12, 0.97, 0f, 0f, List.of(new Effect(MobEffects.HEAL, 1, 1), new Effect(MobEffects.REGENERATION, 100, 1)),
+            new Look(Style.WARP_FIST, NenFx.EMITTER, 1.2f), SoundEvents.BREWING_STAND_BREW)).requiresNenLevel(5);
+    /** Poids des ancêtres (Zeno) : la cible visée est alourdie, très lente et ne saute presque plus pendant 8 s. */
+    public static final Technique ZENO_ANCESTOR_WEIGHT = register(new Strike("zeno_ancestor_weight", NenType.EMITTER, 30, 300,
+            14, 0.95, 1f, 0f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 160, 1), new Effect(MobEffects.JUMP, 160, 128)),
+            new Look(Style.IMPACT, NenFx.EMITTER, 1.4f), SoundEvents.ANVIL_LAND)).requiresNenLevel(10);
+    /** Cage de Pain Packer (Feitan) : la cible visée est retenue 3 s (très lente, affaiblie). */
+    public static final Technique FEITAN_CAGE = register(new Strike("feitan_cage", NenType.TRANSMUTER, 40, 400,
+            10, 0.95, 2f, 0f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 60, 6), new Effect(MobEffects.WEAKNESS, 60, 1)),
+            new Look(Style.FLARE, NenFx.DARK, 1.4f), SoundEvents.BLAZE_SHOOT)).requiresNenLevel(10);
+    /** Bouclier de membrane (Meruem) : une enveloppe d'aura qui absorbe 20 PV pendant 6 s. */
+    public static final Technique MERUEM_MEMBRANE = register(new SelfBuff("meruem_membrane", NenType.EMITTER, 30, 400,
+            List.of(new Effect(MobEffects.ABSORPTION, 120, 4)),
+            new Look(Style.FLARE, NenFx.WHITE, 1.4f), SoundEvents.BEACON_POWER_SELECT)).requiresNenLevel(5);
+    /** Cri royal (Meruem) : une onde qui repousse et blesse tout dans 8 blocs. */
+    public static final Technique MERUEM_ROYAL_CRY = register(new Blast("meruem_royal_cry", NenType.EMITTER, 30, 300,
+            8, 3f, 2.2f, new Look(Style.SHOCKWAVE, NenFx.DARK, 1.6f), SoundEvents.WARDEN_ROAR)).requiresNenLevel(10);
+    /** Pierre massue (Biscuit) : un coup de poing au sol, onde de choc qui secoue la zone (5 blocs). */
+    public static final Technique BISCUIT_CLUB_STONE = register(new Blast("biscuit_club_stone", NenType.TRANSMUTER, 35, 300,
+            5, 6f, 1.6f, new Look(Style.SHOCKWAVE, NenFx.TRANSMUTER, 1.2f), SoundEvents.GENERIC_EXPLODE.value())).requiresNenLevel(10);
+    /** Souffle de Kannon (Netero) : une onde sacrée en cône (10 blocs) qui repousse tout le monde. Coûte de la Prière. */
+    public static final Technique NETERO_KANNON_BREATH = register(new PalmWave("netero_kannon_breath", NenType.ENHANCER, 25, 250,
+            10.0, 40.0, 6f, 2.6f, NenFx.GOLD)).costs(KitBars.PRAYER, 20).requiresNenLevel(10);
+
     // =====================================================================
     // Hisoka (Transmutation)
     // =====================================================================

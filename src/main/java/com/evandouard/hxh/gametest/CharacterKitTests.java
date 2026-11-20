@@ -167,4 +167,24 @@ public final class CharacterKitTests {
         helper.assertTrue(a.getPersistentData().getString(com.evandouard.hxh.hatsu.Specials.BOOK).isEmpty(), "Page utilisée puis effacée");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void newTechniquesOf20November(GameTestHelper helper) {
+        Zombie a = husk(helper, 0);
+        Zombie b = husk(helper, 2);
+        hunter(a, NenType.ENHANCER, "gon");
+        com.evandouard.hxh.hatsu.Techniques.GON_RAGE.perform(a, 1f);
+        helper.assertTrue(a.hasEffect(net.minecraft.world.effect.MobEffects.DAMAGE_BOOST), "Rage de Gon : Force");
+        helper.assertTrue(a.getEffect(net.minecraft.world.effect.MobEffects.DAMAGE_BOOST).getAmplifier() == 3, "Force IV");
+        hunter(a, NenType.EMITTER, "meruem");
+        com.evandouard.hxh.hatsu.Techniques.MERUEM_MEMBRANE.perform(a, 1f);
+        helper.assertTrue(a.getAbsorptionAmount() >= 0 && a.hasEffect(net.minecraft.world.effect.MobEffects.ABSORPTION), "Bouclier de membrane : absorption");
+        for (String id : new String[]{"gon_rage", "leorio_serum", "zeno_ancestor_weight", "feitan_cage", "meruem_membrane",
+                "meruem_royal_cry", "biscuit_club_stone", "netero_kannon_breath"})
+            helper.assertTrue(com.evandouard.hxh.hatsu.Techniques.get(id) != null, "Technique enregistrée : " + id);
+        helper.assertTrue(com.evandouard.hxh.hatsu.HatsuKits.get("meruem").techniques().contains("meruem_royal_cry"), "Cri royal dans le kit de Meruem");
+        helper.assertTrue(com.evandouard.hxh.hatsu.HatsuKits.get("netero").techniques().contains("netero_kannon_breath"), "Souffle de Kannon dans le kit de Netero");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Techniques.GON_RAGE.isUltimate(), "La Rage de Gon est une technique ultime");
+        helper.succeed();
+    }
 }

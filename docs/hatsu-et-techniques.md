@@ -14,7 +14,7 @@ leurs descriptions à jour sont ci-dessous) et `propositions-techniques.md` (rep
 # Dans le jeu
 
 <!-- DEBUT-GENERE -->
-*Généré depuis le code par `tools/docs/hatsu_doc.py` — 95 techniques enregistrées. Aura = coût d'aura au lancement, tel qu'affiché en jeu (×10 par rapport aux unités du code) ; recharge en secondes ; une technique ratée coûte quand même.*
+*Généré depuis le code par `tools/docs/hatsu_doc.py` — 103 techniques enregistrées. Aura = coût d'aura au lancement, tel qu'affiché en jeu (×10 par rapport aux unités du code) ; recharge en secondes ; une technique ratée coûte quand même.*
 
 ## 1. Principes du Nen
 
@@ -83,6 +83,7 @@ Garçon de l'île de la Baleine, pur Renforcement. Son Jajanken décline la pier
 | **Jajanken : Ciseaux** <br>*Jajanken: Scissors* | Transformation + Renforcement | 250 | 5 s | Nen 5 | L'aura prend la forme d'une lame qui file tout droit jusqu'à toucher un bloc ou un ennemi. |
 | **Jajanken : Papier** <br>*Jajanken: Paper* | Émission + Renforcement | 300 | 6 s | Nen 10 | Gon ouvre la main et libère son aura d'un coup : un cône d'émission qui frappe tout ce qui est devant lui et le projette loin (catégorie Émission : 80 % pour Gon). |
 | **Jajanken : Pierre sans retenue** ★ <br>*Jajanken: Rock, all out* | Renforcement | 400 | 20 s | Nen 30 | Gon met tout dans le poing : la boule enfle jusqu'à deux fois sa taille, puis se recondense, minuscule et aveuglante. Ceux qui la regardent sont éblouis. Coûte deux fois plus d'aura, frappe bien plus fort et creuse un cratère énorme. |
+| **Rage de Gon** ★ <br>*Gon's Rage* | Renforcement | 600 | 45 s | Nen 30 | Gon adulte laisse sa colère l'envahir : Force IV et Vitesse III pendant 8 s. |
 
 #### Killua Zoldyck — Transformation
 
@@ -144,6 +145,7 @@ Futur médecin : il fait voyager ses coups de poing à distance.
 |---|---|---|---|---|---|
 | **Coup à distance** <br>*Remote Punch* | Émission | 300 | 6 s | — | Le poing frappe le sol et ressort sous la cible, jusqu'à 12 blocs. |
 | **Onde de choc** <br>*Shockwave* | Émission | 400 | 10 s | Nen 5 | Frappe le sol : onde qui blesse et repousse tout autour. |
+| **Sérum d'urgence** <br>*Emergency Serum* | Émission | 300 | 10 s | Nen 5 | Projette un soin sur la cible visée (12 blocs) : soin immédiat puis régénération. |
 
 #### Isaac Netero — Renforcement
 
@@ -157,6 +159,7 @@ Président de l'Association, maître absolu du Renforcement. Sa force vient de l
 | **Poings de Kannon** <br>*Kannon's Fists* | Renforcement | 150 + 15 Prière | 15 s | — | Kannon prête ses poings à Netero : pendant 10 s, ses coups sont renforcés (×1,6), mains dorées sur les poings. Coûte 15 de Prière. |
 | **Bodhisattva aux mille mains** <br>*Hundred-Type Guanyin Bodhisattva* | Renforcement + Émission | 300 + 30 Prière | 10 s | Nen 10 | L'immense statue de Kannon surgit derrière Netero et frappe d'une paume géante tout ce qui est devant (12 blocs). Coûte 30 de Prière. |
 | **Main zéro** ★ <br>*Zero Hand* | Renforcement + Émission | 600 + 100 Prière | 60 s | Nen 40 | Prière pleine : tout est dépensé. Un rayon d'aura pure jaillit de la statue (24 blocs, 40 dégâts). |
+| **Souffle de Kannon** <br>*Kannon's Breath* | Renforcement | 250 + 20 Prière | 12,5 s | Nen 10 | Une onde sacrée en cône (10 blocs) repousse tout le monde. Consomme de la Prière. |
 
 #### Hisoka Morow — Transformation
 
@@ -229,6 +232,7 @@ Maîtresse du Shingen-ryu, experte en pierres précieuses.
 |---|---|---|---|---|---|
 | **Changer de forme** <br>*Switch Form* | Transformation | 0 | 2 s | — | Passe de la petite à la grande forme, ou l'inverse. |
 | **Cookie, la masseuse** <br>*Cookie, the Masseuse* | Transformation + Matérialisation | 300 | 20 s | — | Cookie soigne Biscuit et ses alliés à 3 blocs, régénération et un peu de satiété. |
+| **Pierre massue** <br>*Club Stone* | Transformation | 350 | 15 s | Nen 10 | Un coup de poing au sol : l'onde de choc secoue et repousse tout à 5 blocs. |
 
 #### Menchi — Transformation
 
@@ -288,6 +292,7 @@ Grand-père de Killua, assassin légendaire.
 |---|---|---|---|---|---|
 | **Tête de dragon** <br>*Dragon Head* | Émission + Transformation | 300 | 8 s | — | Un dragon d'aura doré jaillit de la main et frappe la cible (14 blocs). |
 | **Plongée du dragon** ★ <br>*Dragon Dive* | Émission + Transformation | 600 | 30 s | Nen 30 | Le dragon se scinde en dizaines de petits dragons qui pleuvent autour du point visé. |
+| **Poids des ancêtres** <br>*Weight of the Ancestors* | Émission | 300 | 15 s | Nen 10 | Alourdit la cible visée (14 blocs) : très lente et presque incapable de sauter pendant 8 s. |
 
 #### Kalluto Zoldyck — Manipulation
 
@@ -324,6 +329,7 @@ Membre de la Brigade, tortionnaire.
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
 | **Soleil levant** <br>*Rising Sun* | Transformation + Matérialisation | 400 + 100 Douleur | 30 s | Nen 20 | Douleur pleine : un soleil de feu surgit au-dessus de Feitan et brûle tout à 8 blocs. |
+| **Pain Packer : cage** <br>*Pain Packer: Cage* | Transformation | 400 | 20 s | Nen 10 | Un cercle de flammes noires retient la cible visée (10 blocs) 3 s : quasi immobile et affaiblie. |
 
 #### Nobunaga Hazama — Renforcement
 
@@ -523,6 +529,8 @@ Le roi des fourmis-chimères.
 |---|---|---|---|---|---|
 | **Rafale de rage** <br>*Rage Blast* | Émission + Renforcement | 400 | 15 s | — | Une onde d'aura sombre dévastatrice autour de lui (7 blocs). |
 | **Photon** ★ | Émission + Renforcement | 500 | 20 s | Nen 30 | Un rayon d'aura blanc concentré (20 blocs). |
+| **Bouclier de membrane** <br>*Membrane Shield* | Émission | 300 | 20 s | Nen 5 | Une enveloppe d'aura absorbe 20 PV de dégâts pendant 6 s. |
+| **Cri royal** <br>*Royal Cry* | Émission | 300 | 15 s | Nen 10 | Une onde de peur repousse et blesse tout ce qui est à 8 blocs. |
 
 #### Shaiapouf — Manipulation
 
@@ -666,12 +674,12 @@ Les doublons éventuels avec les kits existants (docs/hatsu-et-techniques.md) se
 
 Chaque proposition ci-dessous comparée aux techniques déjà en jeu (parties 1 à 7). **Nouveau** = rien d'équivalent,
 à coder tel quel ; **Variante** = amélioration d'une technique existante (on la modifie, on n'ajoute pas) ;
-**Doublon** = déjà en jeu, à abandonner ou à fusionner. Rien n'est codé : Evan tranche la colonne « Suite ».
+**Doublon** = déjà en jeu, à abandonner ou à fusionner. Premier lot codé le 20 nov (8 techniques, versions simples avec les effets disponibles) ; le reste attend le choix d'Evan.
 
 | Perso | Proposition | Verdict | En jeu aujourd'hui | Suite proposée |
 |---|---|---|---|---|
 | Gon | Pierre en rafale | Nouveau | Pierre, Ciseaux, Papier, Pierre sans retenue | Coder |
-| Gon | Rage de Gon (adulte) | Nouveau | — | Coder (idéal pour le niveau 80+) |
+| Gon | Rage de Gon (adulte) | Nouveau | — | **Codé le 20 nov** (version simple, voir partie « Dans le jeu ») |
 | Gon | Ren du chasseur (passif) | Nouveau | Passifs de personnage existants | Coder |
 | Killua | Foudre fatale | Variante | Foudre (paralysie presque totale) | Fusionner dans Foudre (portée courte, étourdissement) |
 | Killua | Godspeed enchaîné | Variante | Godspeed (vitesse III, 10 s) | Ajouter la règle de recharge à Godspeed |
@@ -680,29 +688,29 @@ Chaque proposition ci-dessous comparée aux techniques déjà en jeu (parties 1 
 | Kurapika | Détection de la chaîne de l'index | Nouveau | — | Coder |
 | Kurapika | Empereur du Temps | Doublon | Colère écarlate (coup secret des Kurta, 6 types à 100 %) | Abandonner ou la renommer |
 | Leorio | Poing à distance chargé | Variante | Coup à distance (12 blocs) | Ajouter la charge au Coup à distance |
-| Leorio | Sérum d'urgence | Nouveau | Aucun soin sur allié pour Leorio | Coder |
+| Leorio | Sérum d'urgence | Nouveau | Aucun soin sur allié pour Leorio | **Codé le 20 nov** (version simple, voir partie « Dans le jeu ») |
 | Leorio | Diagnostic | Variante | Gyo 40 et En 30 montrent déjà la vie des cibles | Ajouter seulement le type de Nen |
 | Hisoka | Trampoline | Nouveau | Bungee Gum (lien élastique) | Coder |
 | Hisoka | Leurre | Variante | Texture surprise (invisible 8 s) | Ajouter le faux Hisoka à Texture surprise |
 | Hisoka | Cartes en éventail | Variante | Cartes renforcées (une carte) | Mode éventail de Cartes renforcées |
 | Chrollo | Skill Hunter temporaire | Doublon | Chasseur de compétences (vole la dernière technique) ; Ging a Copie | Abandonner |
 | Chrollo | Livre ouvert | Nouveau | — | Coder |
-| Netero | Souffle de Kannon | Nouveau | Poings de Kannon, Bodhisattva, Main zéro | Coder |
+| Netero | Souffle de Kannon | Nouveau | Poings de Kannon, Bodhisattva, Main zéro | **Codé le 20 nov** (version simple, voir partie « Dans le jeu ») |
 | Netero | Paumes de feu mille fois | Variante | Bodhisattva aux mille mains | Fusionner avec le Bodhisattva |
-| Meruem | Bouclier de membrane | Nouveau | Rafale de rage, Photon | Coder |
-| Meruem | Cri royal | Nouveau | — | Coder |
-| Feitan | Cage de Pain Packer | Nouveau | Soleil levant | Coder |
+| Meruem | Bouclier de membrane | Nouveau | Rafale de rage, Photon | **Codé le 20 nov** (version simple, voir partie « Dans le jeu ») |
+| Meruem | Cri royal | Nouveau | — | **Codé le 20 nov** (version simple, voir partie « Dans le jeu ») |
+| Feitan | Cage de Pain Packer | Nouveau | Soleil levant | **Codé le 20 nov** (version simple, voir partie « Dans le jeu ») |
 | Feitan | Double soleil | Variante | Soleil levant | Option du Soleil levant |
 | Illumi | Aiguille de contrôle | Nouveau | Aiguille (lenteur + nausée), Aiguille de métamorphose | Coder |
 | Illumi | Visage d'emprunt | Nouveau | — | Coder |
-| Biscuit | Pierre massue | Nouveau | Changer de forme, Cookie | Coder |
+| Biscuit | Pierre massue | Nouveau | Changer de forme, Cookie | **Codé le 20 nov** (version simple, voir partie « Dans le jeu ») |
 | Biscuit | Sérénité de Cookie | Doublon | Cookie, la masseuse (soin de zone, régénération) | Abandonner |
 | Pitou | Poupée de vie | Doublon | Doctor Blythe maintenu (poupée qui soigne) | Abandonner |
 | Pitou | Aura dormante | Variante | Zetsu et In (même maîtrise) | Abandonner ou lier au Zetsu |
 | Kite | Lance de chasse | Nouveau | Crazy Slot | Coder |
 | Kite | Œil d'aura | Doublon | En et Gyo | Abandonner |
 | Zeno / Silva | Dragon Dive | Doublon | Plongée du dragon (déjà là, niveau 30+) | Abandonner (la version en ligne pourrait être un mode) |
-| Zeno / Silva | Poids des ancêtres | Nouveau | Tête de dragon, Orbes explosifs | Coder |
+| Zeno / Silva | Poids des ancêtres | Nouveau | Tête de dragon, Orbes explosifs | **Codé le 20 nov** (version simple, voir partie « Dans le jeu ») |
 
 Bilan : 18 nouveaux, 9 variantes, 6 doublons (Empereur du Temps, Skill Hunter temporaire, Sérénité de Cookie, Poupée de vie, Œil d'aura, Dragon Dive).
 Les montants d'aura écrits dans les propositions sont en unités du jeu telles qu'affichées (×10 depuis le 20 nov) : à ajuster au moment de coder.

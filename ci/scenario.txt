@@ -533,6 +533,17 @@ cmd hunter nen refill
 cmd hunter hatsu cast
 wait 6
 shot 22n3_meruem_rafale_de_rage
+cmd hunter nen level 40
+cmd hunter nen refill
+cmd hunter hatsu select meruem_royal_cry
+cmd hunter hatsu cast
+wait 6
+shot 22n3b_meruem_cri_royal
+cmd hunter nen refill
+cmd hunter hatsu select meruem_membrane
+cmd hunter hatsu cast
+wait 6
+shot 22n3c_meruem_bouclier_de_membrane
 cmd hunter hatsu set zeno
 cmd hunter nen refill
 look 0 -30

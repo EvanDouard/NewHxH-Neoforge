@@ -268,3 +268,7 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - **En jeu** La Tour Céleste n'est posée que sur terre ferme (recherche en spirale d'un terrain sec au-dessus du niveau de la mer). Ne s'applique qu'aux nouveaux mondes : une tour déjà posée dans l'eau ne bouge pas.
 - **CI** Carte Famille : le coup secret est expliqué (capture `99r_famille_coup_secret_explique`). Boutons Hatsu et Ryu dans leurs fiches, onglet Nen (`99s`, `99t`).
 - **CI** Rééquilibrage : Force +0,5 dégât/niveau (+50 au niveau 100), Vitalité +0,4 PV/niveau (+40), Endurance 0,1 (10 PV plats) (`strengthIsMuchStrongerAtMaxLevel`). Attention : un fichier de config existant garde les anciennes valeurs.
+
+## Premier lot de nouvelles techniques (20 nov, matinée)
+- **CI** 8 techniques de la partie 8 de `hatsu-et-techniques.md` : Rage de Gon (Force IV + Vitesse III, 8 s, Nen 30), Sérum d'urgence (Leorio, soin sur la cible visée), Poids des ancêtres (Zeno, cible lente et sans saut), Pain Packer : cage (Feitan, cible retenue 3 s), Bouclier de membrane et Cri royal (Meruem), Pierre massue (Biscuit), Souffle de Kannon (Netero, coûte de la Prière). Lancées une à une par le test « chaque technique de chaque kit » et `newTechniquesOf20November` ; captures `22n3b` et `22n3c`.
+- **En jeu** Versions simples : le Cri royal ne fait pas fuir ni étourdir (effets de fuite pas encore codés), la Rage n'a pas d'épuisement final. Dis-moi si tu veux les versions complètes.
