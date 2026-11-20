@@ -20,7 +20,9 @@ public final class NenModes {
     private NenModes() {}
 
     public static int computeAuraMax(HunterData data) {
-        return HxHConfig.AURA_BASE.get() + HxHConfig.AURA_PER_WILLPOWER.get() * data.level(Stat.WILLPOWER);
+        // Le talent pour le Nen multiplie tout : Prometteur ×1, Surdoué ×2…
+        return (int) Math.round((HxHConfig.AURA_BASE.get() + HxHConfig.AURA_PER_WILLPOWER.get() * data.level(Stat.WILLPOWER))
+                * data.talentMultiplier());
     }
 
     /** Débloque le Nen : aura pleine, mode neutre. */
@@ -126,6 +128,10 @@ public final class NenModes {
         NenDefense.tickKo(entity, data);
         float regen = (float) (HxHConfig.AURA_REGEN_PER_SECOND.get() / 20.0);
         if (data.meditating()) regen *= 2; // la méditation recharge l'aura plus vite
+        // Niveaux 0 à 4 de la régénération : aucune régénération (seul le sommeil rend l'aura) ; les mobs et les
+        // entités sans règle d'apprentissage gardent leur régénération normale
+        if (NenLearning.applies(entity)) regen *= (float) NenCost.regenFactor(data.masteryLevel(com.evandouard.hxh.data.Mastery.REGEN));
+        if (entity instanceof net.minecraft.server.level.ServerPlayer sp) sleepAndEmpty(sp, data);
         if (entity.hasEffect(com.evandouard.hxh.effect.ModEffects.NEN_CURSE)) regen *= 0.5f; // malédiction de Nen
 
         switch (data.mode()) {
@@ -173,6 +179,31 @@ public final class NenModes {
                 default -> { }
             }
         }
+    }
+
+    /** Joueurs ayant déjà été rechargés par le sommeil en cours ; joueurs prévenus que leur aura est à plat. */
+    private static final java.util.Set<java.util.UUID> SLEPT = new java.util.HashSet<>(), EMPTY_TOLD = new java.util.HashSet<>();
+    /** XP de régénération d'aura gagnée en dormant avec l'aura à plat (au prorata de l'aura manquante). */
+    public static final int SLEEP_REGEN_XP = 80;
+
+    /** Dormir assez longtemps rend toute l'aura et fait progresser la régénération ; aura à zéro : on le dit. */
+    private static void sleepAndEmpty(net.minecraft.server.level.ServerPlayer player, HunterData data) {
+        java.util.UUID id = player.getUUID();
+        if (!player.isSleeping()) SLEPT.remove(id);
+        else if (player.isSleepingLongEnough() && SLEPT.add(id)) {
+            float missing = data.auraMax() > 0 ? 1f - data.aura() / data.auraMax() : 0f;
+            data.setAura(data.auraMax());
+            if (NenLearning.applies(player) && missing > 0.02f) {
+                NenProgress.trainOnly(player, com.evandouard.hxh.data.Mastery.REGEN, Math.max(1, Math.round(SLEEP_REGEN_XP * missing)));
+            }
+            player.sendSystemMessage(Component.translatable("message.hxh.sleep_refill").withStyle(net.minecraft.ChatFormatting.AQUA));
+        }
+        if (data.aura() <= 0.0001f) {
+            if (EMPTY_TOLD.add(id)) {
+                player.sendSystemMessage(Component.translatable(data.masteryLevel(com.evandouard.hxh.data.Mastery.REGEN) < NenCost.REGEN_FROM
+                        ? "message.hxh.aura_empty_sleep" : "message.hxh.aura_empty").withStyle(net.minecraft.ChatFormatting.YELLOW));
+            }
+        } else if (data.aura() > data.auraMax() * 0.05f) EMPTY_TOLD.remove(id);
     }
 
     private static void exhaust(LivingEntity entity, HunterData data) {

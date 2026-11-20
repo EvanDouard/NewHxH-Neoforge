@@ -49,8 +49,13 @@ public final class NenProgress {
 
     /** Pratique d'une technique de base : XP de maîtrise + XP de Nen. */
     public static void train(LivingEntity entity, Mastery mastery, int amount) {
+        if (trainOnly(entity, mastery, amount)) addNenXp(entity, amount);
+    }
+
+    /** XP de maîtrise seule (sans XP de Nen) : le sommeil et la méditation entraînent la régénération d'aura. */
+    public static boolean trainOnly(LivingEntity entity, Mastery mastery, int amount) {
         HunterData data = HunterStats.get(entity);
-        if (!data.nenUnlocked() || amount <= 0) return;
+        if (!data.nenUnlocked() || amount <= 0) return false;
         int masteryXp = withTalent(entity, amount);
         if (masteryXp > 0 && data.addMasteryXp(mastery, masteryXp) > 0 && entity instanceof Player player) {
             com.evandouard.hxh.network.Hud.toast(player, Component.translatable(mastery.translationKey()),
@@ -61,6 +66,6 @@ public final class NenProgress {
                     Component.translatable(mastery.translationKey()), data.masteryLevel(mastery), data.masteryCap())
                     .withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
         }
-        addNenXp(entity, amount);
+        return true;
     }
 }

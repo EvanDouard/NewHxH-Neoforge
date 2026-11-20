@@ -5,8 +5,8 @@
   },
   "start_npc": "wing",
   "intro": {
-    "fr": "Osu ! Je suis Wing. Tu veux apprendre le Nen ? Commence par ouvrir tes pores : médite jusqu'à sentir ton aura.",
-    "en": "Osu! I'm Wing. You want to learn Nen? First open your pores: meditate until you feel your aura."
+    "fr": "Osu ! Je suis Wing. Tu veux apprendre le Nen ? Je pourrais t'ouvrir les pores de force, mais j'ai peur que tu n'y survives pas : je préfère que tu médites et que tu apprennes à contrôler ton Nen naturellement. Ce sera long. Trouve un meilleur endroit pour méditer : près d'une pierre de méditation, dans un sanctuaire, ça va bien plus vite (les archéologues vendent les coordonnées).",
+    "en": "Osu! I'm Wing. You want to learn Nen? I could force your pores open, but I'm afraid you wouldn't survive it: I'd rather you meditate and learn to control your Nen naturally. It will take a while. Find a better place to meditate: next to a meditation stone, in a shrine, it goes much faster (archaeologists sell the coordinates)."
   },
   "npcs": {
     "wing": {
@@ -15,6 +15,15 @@
     }
   },
   "steps": [
+    {
+      "id": "shrine",
+      "type": "stone_meditation",
+      "seconds": 30,
+      "objective": {
+        "fr": "Trouver un meilleur endroit pour méditer : un sanctuaire, et méditer 30 s près de sa pierre",
+        "en": "Find a better place to meditate: a shrine, and meditate 30 s next to its stone"
+      }
+    },
     {
       "id": "awaken",
       "type": "nen_flag",

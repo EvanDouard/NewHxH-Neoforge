@@ -71,8 +71,32 @@ public final class QuestManager {
     public static void startFirstQuest(ServerPlayer player) {
         QuestData d = data(player);
         String exam = QuestRegistry.HUNTER_EXAM.toString();
+        startArenaDiscovery(player); // d'abord : la quête de l'Examen reste la quête suivie
         if (d.hunter || d.completed.contains(exam) || d.running.containsKey(exam)) return;
         start(player, QuestRegistry.HUNTER_EXAM);
+    }
+
+    /** Quête donnée dès le début : découvrir la Heaven Arena (la Tour Céleste). */
+    public static void startArenaDiscovery(ServerPlayer player) {
+        QuestData d = data(player);
+        String arena = QuestRegistry.HEAVENS_ARENA.toString();
+        if (d.running.containsKey(arena) || d.completed.contains(arena)) return; // déjà passé au guichet
+        if (!start(player, QuestRegistry.DISCOVER_ARENA)) return;
+        net.minecraft.core.BlockPos c = com.evandouard.hxh.arena.TowerPlacer.center(player.server);
+        if (c != null) {
+            player.sendSystemMessage(Component.translatable("quest.hxh.discover_arena.hint", c.getX(), c.getZ())
+                    .withStyle(ChatFormatting.GRAY));
+        }
+    }
+
+    /** La Tour est « découverte » : à moins de 60 blocs, ou guichet déjà franchi (quête de la Tour en cours ou faite). */
+    static boolean arenaDiscovered(ServerPlayer player) {
+        QuestData d = data(player);
+        String arena = QuestRegistry.HEAVENS_ARENA.toString();
+        if (d.running.containsKey(arena) || d.completed.contains(arena)) return true;
+        net.minecraft.core.BlockPos c = com.evandouard.hxh.arena.TowerPlacer.center(player.server);
+        return c != null && player.level().dimension() == net.minecraft.world.level.Level.OVERWORLD
+                && player.blockPosition().distSqr(new net.minecraft.core.BlockPos(c.getX(), player.getBlockY(), c.getZ())) < 60 * 60;
     }
 
     /** Une touche sur Netero au jeu de la balle ; renvoie le nombre de touches. */
@@ -649,6 +673,26 @@ public final class QuestManager {
         // Quête de Netero (soin) : paumes de Kannon, méditation blessé
         if (step.type().equals("kannon")) {
             NeteroTraining.kannon(player, step, d);
+            return;
+        }
+        // Découvrir la Tour Céleste : la voir de près (ou avoir déjà franchi son guichet)
+        if (step.type().equals("arena_discover")) {
+            if (player.tickCount % 20 == 0 && arenaDiscovered(player)) advance(player);
+            return;
+        }
+        // Méditer près d'une pierre de méditation (sanctuaire) : le compteur avance seconde après seconde
+        if (step.type().equals("stone_meditation")) {
+            if (player.tickCount % 20 != 0) return;
+            com.evandouard.hxh.data.HunterData h = com.evandouard.hxh.stats.HunterStats.get(player);
+            if (h.nenUnlocked()) { // déjà éveillé : rien à trouver
+                advance(player);
+                return;
+            }
+            if (h.meditating() && com.evandouard.hxh.meditation.MeditationShrines.stoneTier(player) > 0) {
+                d.progress++;
+                if (d.progress >= step.seconds()) advance(player);
+                else sync(player);
+            }
             return;
         }
         if (step.type().equals("wounded_meditation")) {

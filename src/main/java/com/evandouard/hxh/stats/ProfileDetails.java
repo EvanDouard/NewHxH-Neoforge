@@ -79,9 +79,9 @@ public final class ProfileDetails {
         out.add("D|heal|" + (d.healUnlocked() ? 1 : 0) + "|" + hl + "|" + d.healXp() + "|"
                 + (hl >= HunterData.HEAL_MAX_LEVEL ? -1 : HunterData.healXpToNext(hl)) + "|" + HunterData.HEAL_MAX_LEVEL);
         milestones(out, "heal", NEN_LEVELS, new int[0]);
-        int zl = d.masteryLevel(Mastery.ZETSU);
-        out.add("D|regen|1|" + zl + "|" + d.masteryXp(Mastery.ZETSU) + "|" + (zl >= Mastery.MAX_LEVEL ? -1 : Mastery.xpToNext(zl)) + "|" + d.masteryCap());
-        milestones(out, "regen", NEN_LEVELS, new int[0]);
+        int zl = d.masteryLevel(Mastery.REGEN);
+        out.add("D|regen|1|" + zl + "|" + d.masteryXp(Mastery.REGEN) + "|" + (zl >= Mastery.MAX_LEVEL ? -1 : Mastery.xpToNext(zl)) + "|" + d.masteryCap());
+        milestones(out, "regen", NEN_LEVELS, new int[]{NenCost.REGEN_FROM});
         return out;
     }
 
@@ -170,22 +170,26 @@ public final class ProfileDetails {
             case "endurance" -> e.add(line("", "end_resist", n(level * HxHConfig.ENDURANCE_FLAT_PER_LEVEL.get())));
             case "vitality" -> e.add(line("", "vit_health", n(level * HxHConfig.VITALITY_HEALTH_PER_LEVEL.get())));
             case "willpower" -> {
-                e.add(line("", "wp_aura", String.valueOf(HxHConfig.AURA_BASE.get() + HxHConfig.AURA_PER_WILLPOWER.get() * level)));
+                e.add(line("", "wp_aura", String.valueOf(NenCost.shown(HxHConfig.AURA_BASE.get() + HxHConfig.AURA_PER_WILLPOWER.get() * level))));
                 e.add(line("", "wp_fall", pct(com.evandouard.hxh.combat.FallImpact.damageFactor(level))));
             }
             case "aura" -> {
-                e.add(line("", "wp_aura", String.valueOf(HxHConfig.AURA_BASE.get() + HxHConfig.AURA_PER_WILLPOWER.get() * level)));
-                e.add(line("", "aura_regen", n(HxHConfig.AURA_REGEN_PER_SECOND.get())));
+                e.add(line("", "wp_aura", String.valueOf(NenCost.shown(HxHConfig.AURA_BASE.get() + HxHConfig.AURA_PER_WILLPOWER.get() * level))));
+                e.add(line("", "aura_regen", NenCost.shownText(HxHConfig.AURA_REGEN_PER_SECOND.get())));
             }
             case "heal" -> {
                 e.add(line("", "heal_rate", n(NenHealing.healPerSecond(level))));
-                e.add(line("!", "heal_cost", n(NenHealing.auraPerHealth(level))));
+                e.add(line("!", "heal_cost", NenCost.shownText(NenHealing.auraPerHealth(level))));
             }
             case "regen" -> {
-                double base = HxHConfig.AURA_REGEN_PER_SECOND.get();
-                e.add(line("", "regen_base", n(base)));
-                e.add(line("", "regen_zetsu", n(base * (HxHConfig.ZETSU_REGEN_MULTIPLIER.get() + level * 0.02))));
-                e.add(line("", "regen_meditation", n(base * 2)));
+                double base = HxHConfig.AURA_REGEN_PER_SECOND.get() * NenCost.regenFactor(level);
+                if (level < NenCost.REGEN_FROM) e.add(line("", "regen_none", ""));
+                else e.add(line(level == NenCost.REGEN_FROM ? "+" : "", "regen_base", NenCost.shownText(base)));
+                if (level >= NenCost.REGEN_FROM) {
+                    e.add(line("", "regen_zetsu", NenCost.shownText(base * (HxHConfig.ZETSU_REGEN_MULTIPLIER.get() + 0))));
+                    e.add(line("", "regen_meditation", NenCost.shownText(base * 2)));
+                }
+                e.add(line("", "regen_sleep", ""));
             }
             case "nen" -> {
                 e.add(line("", "nen_cap", String.valueOf(Math.max(Mastery.MIN_CAP, level))));
@@ -193,36 +197,36 @@ public final class ProfileDetails {
             }
             case "ten" -> {
                 e.add(line("", "resist", n(NenDefense.tenResistanceAt(level))));
-                if (level < NenCost.BRUTAL_UNTIL) e.add(line("!", "posture_drain", n(NenCost.novicePostureDrain(level))));
+                if (level < NenCost.BRUTAL_UNTIL) e.add(line("!", "posture_drain", NenCost.shownText(NenCost.novicePostureDrain(level))));
                 else e.add(line("!", "posture_free", ""));
                 unlocks(e, Mastery.TEN, level);
             }
             case "in" -> {
-                if (level < NenCost.BRUTAL_UNTIL) e.add(line("!", "posture_drain", n(NenCost.novicePostureDrain(level))));
+                if (level < NenCost.BRUTAL_UNTIL) e.add(line("!", "posture_drain", NenCost.shownText(NenCost.novicePostureDrain(level))));
                 else e.add(line("!", "posture_free", ""));
                 if (level == HxHConfig.ZETSU_UNLOCK_IN_LEVEL.get()) e.add(line("+", "in_zetsu", ""));
                 unlocks(e, Mastery.IN, level);
             }
             case "zetsu" -> {
-                e.add(line("", "regen_zetsu", n(HxHConfig.AURA_REGEN_PER_SECOND.get() * (HxHConfig.ZETSU_REGEN_MULTIPLIER.get() + level * 0.02))));
+                e.add(line("", "regen_zetsu", NenCost.shownText(HxHConfig.AURA_REGEN_PER_SECOND.get() * (HxHConfig.ZETSU_REGEN_MULTIPLIER.get() + level * 0.02))));
                 unlocks(e, Mastery.ZETSU, level);
             }
             case "ren" -> {
                 e.add(line("", "ren_surge", pct(0.25 + level * 0.005)));
                 e.add(line("", "ren_damage", pct(HxHConfig.REN_DAMAGE_BONUS.get() + level * 0.004)));
-                e.add(line("!", "drain", n(HxHConfig.REN_DRAIN_PER_SECOND.get() * NenCost.factor(level))));
+                e.add(line("!", "drain", NenCost.shownText(HxHConfig.REN_DRAIN_PER_SECOND.get() * NenCost.factor(level))));
                 e.add(line("!", "cost_mult", n(NenCost.factor(level))));
                 unlocks(e, Mastery.REN, level);
             }
             case "ken" -> {
                 e.add(line("", "resist", n(NenDefense.kenResistanceAt(level))));
                 e.add(line("", "ken_damage", pct((HxHConfig.REN_DAMAGE_BONUS.get() + level * 0.004) * 0.5)));
-                e.add(line("!", "drain", n(Math.max(1.5, HxHConfig.KEN_DRAIN_PER_SECOND.get() - level * 0.02) * NenCost.factor(level))));
+                e.add(line("!", "drain", NenCost.shownText(Math.max(1.5, HxHConfig.KEN_DRAIN_PER_SECOND.get() - level * 0.02) * NenCost.factor(level))));
                 e.add(line("!", "cost_mult", n(NenCost.factor(level))));
                 unlocks(e, Mastery.KEN, level);
             }
             case "gyo" -> {
-                e.add(line("!", "drain", n(Math.max(0.2, HxHConfig.GYO_DRAIN_PER_SECOND.get() - level * 0.008) * NenCost.factor(level))));
+                e.add(line("!", "drain", NenCost.shownText(Math.max(0.2, HxHConfig.GYO_DRAIN_PER_SECOND.get() - level * 0.008) * NenCost.factor(level))));
                 e.add(line("!", "cost_mult", n(NenCost.factor(level))));
                 if (level >= NenSenses.GYO_SEE_INVISIBLE) e.add(line("", "gyo_invisible", ""));
                 if (level >= NenSenses.GYO_SEE_TYPE) e.add(line("", "gyo_type", ""));
@@ -232,7 +236,7 @@ public final class ProfileDetails {
             }
             case "en" -> {
                 e.add(line("", "en_radius", n(2 + level * 0.25)));
-                e.add(line("!", "drain", n(Math.max(0.5, HxHConfig.EN_DRAIN_PER_SECOND.get() - level * 0.01) * NenCost.factor(level))));
+                e.add(line("!", "drain", NenCost.shownText(Math.max(0.5, HxHConfig.EN_DRAIN_PER_SECOND.get() - level * 0.01) * NenCost.factor(level))));
                 e.add(line("!", "cost_mult", n(NenCost.factor(level))));
                 if (level >= EnShape.UNLOCK_LEVEL) e.add(line("", "en_shape", ""));
                 unlocks(e, Mastery.EN, level);
@@ -240,7 +244,7 @@ public final class ProfileDetails {
             case "ko" -> {
                 e.add(line("", "ko_damage", n(HxHConfig.KO_DAMAGE_MULTIPLIER.get() + level * 0.02)));
                 e.add(line("", "ko_duration", n((NenDefense.KO_MIN_TICKS + (NenDefense.KO_MAX_TICKS - NenDefense.KO_MIN_TICKS) * level / (double) Mastery.MAX_LEVEL) / 20.0)));
-                e.add(line("!", "ko_cost", String.valueOf(Math.round(Math.max(10, HxHConfig.KO_AURA_COST.get() - level * 0.15) * NenCost.factor(level)))));
+                e.add(line("!", "ko_cost", String.valueOf(NenCost.shown(Math.max(10, HxHConfig.KO_AURA_COST.get() - level * 0.15) * NenCost.factor(level)))));
                 e.add(line("!", "cost_mult", n(NenCost.factor(level))));
                 unlocks(e, Mastery.KO, level);
             }
@@ -251,7 +255,7 @@ public final class ProfileDetails {
             case "shu" -> {
                 e.add(line("", "shu_damage", pct(0.1 + level * 0.004)));
                 e.add(line("", "shu_save", pct(0.2 + level * 0.006)));
-                e.add(line("!", "shu_cost", n(0.5 * NenCost.factor(level))));
+                e.add(line("!", "shu_cost", NenCost.shownText(0.5 * NenCost.factor(level))));
                 e.add(line("!", "cost_mult", n(NenCost.factor(level))));
                 unlocks(e, Mastery.SHU, level);
             }

@@ -323,7 +323,7 @@ public final class Techniques {
         @Override
         public net.minecraft.network.chat.Component conditions() {
             return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.charged",
-                    Math.round(drainPerTick * 20), maxTicks / 20);
+                    com.evandouard.hxh.nen.NenCost.shown(drainPerTick * 20), maxTicks / 20);
         }
 
         @Override
@@ -588,7 +588,7 @@ public final class Techniques {
         @Override
         public net.minecraft.network.chat.Component conditions() {
             return net.minecraft.network.chat.Component.translatable("technique.hxh.cond.hold_doll",
-                    String.format(java.util.Locale.ROOT, "%.0f", drain * 20));
+                    com.evandouard.hxh.nen.NenCost.shownText(drain * 20));
         }
 
         @Override

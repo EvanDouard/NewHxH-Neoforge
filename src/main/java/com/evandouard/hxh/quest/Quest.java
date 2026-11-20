@@ -52,7 +52,8 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
     public static final Set<String> TYPES = Set.of("talk", "kill", "follow", "bring", "reach", "custom",
             "quiz", "survive", "points", "duel", "ball", "waypoint", "knockout",
             "nen_mode", "nen_sense", "nen_flag", "mastery", "nen_tree", "prayer", "kannon", "wounded_meditation",
-            "arena_win", "arena_floor", "arena_register_200", "blacklist_catch", "contract_done");
+            "arena_win", "arena_floor", "arena_register_200", "blacklist_catch", "contract_done",
+            "arena_discover", "stone_meditation");
 
     public record Step(String id, String type, String npc, String entity, int count, int seconds,
                        double maxDistance, String rewardItem, boolean rewardHunter, int rewardJenny,
@@ -67,7 +68,7 @@ public record Quest(ResourceLocation id, Map<String, String> title, String start
             return switch (type) {
                 case "kill", "arena_win", "arena_floor", "blacklist_catch", "contract_done" -> count;
                 case "bring" -> count;
-                case "follow", "nen_mode", "nen_sense", "survive", "waypoint", "kannon", "wounded_meditation" -> seconds;
+                case "follow", "nen_mode", "nen_sense", "survive", "waypoint", "kannon", "wounded_meditation", "stone_meditation" -> seconds;
                 case "prayer" -> count;
                 case "mastery" -> masteryGoal();
                 case "quiz" -> "silence".equals(answer) ? seconds : 0;

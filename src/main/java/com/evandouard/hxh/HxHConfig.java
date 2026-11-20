@@ -13,8 +13,8 @@ public final class HxHConfig {
             .defineInRange("stats.xpMultiplier", 1.0, 0.0, 100.0);
 
     public static final ModConfigSpec.DoubleValue STRENGTH_DAMAGE_PER_LEVEL = BUILDER
-            .comment("Dégâts de corps à corps ajoutés par niveau de Force (1.0 = un demi-cœur)")
-            .defineInRange("stats.strengthDamagePerLevel", 0.1, 0.0, 10.0);
+            .comment("Dégâts de corps à corps ajoutés par niveau de Force (1.0 = un demi-cœur ; 0.5 → +50 au niveau 100, Meruem / Gon adulte)")
+            .defineInRange("stats.strengthDamagePerLevel", 0.5, 0.0, 10.0);
 
     public static final ModConfigSpec.DoubleValue SPEED_PERCENT_PER_LEVEL = BUILDER
             .comment("Vitesse : part linéaire par niveau (0.02 = +2 % par niveau)")
@@ -33,12 +33,12 @@ public final class HxHConfig {
             .defineInRange("stats.stepUpFromSpeedBonus", 0.35, 0.0, 10.0);
 
     public static final ModConfigSpec.DoubleValue ENDURANCE_FLAT_PER_LEVEL = BUILDER
-            .comment("Résistance plate aux attaques par niveau d'Endurance, en PV (0.05 = 5 PV au niveau 100)")
-            .defineInRange("stats.enduranceFlatPerLevel", 0.05, 0.0, 10.0);
+            .comment("Résistance plate aux attaques par niveau d'Endurance, en PV (0.1 = 10 PV au niveau 100)")
+            .defineInRange("stats.enduranceFlatPerLevel", 0.1, 0.0, 10.0);
 
     public static final ModConfigSpec.DoubleValue VITALITY_HEALTH_PER_LEVEL = BUILDER
-            .comment("Points de vie max ajoutés par niveau de Vitalité (2.0 = un cœur)")
-            .defineInRange("stats.vitalityHealthPerLevel", 0.2, 0.0, 10.0);
+            .comment("Points de vie max ajoutés par niveau de Vitalité (2.0 = un cœur ; 0.4 → +40 PV au niveau 100)")
+            .defineInRange("stats.vitalityHealthPerLevel", 0.4, 0.0, 10.0);
 
     public static final ModConfigSpec.IntValue AURA_BASE = BUILDER
             .comment("Aura max de départ d'un utilisateur de Nen")
@@ -166,7 +166,7 @@ public final class HxHConfig {
 
     public static final ModConfigSpec.DoubleValue NOVICE_POSTURE_DRAIN = BUILDER
             .comment("Aura consommée par seconde par le Ten et l'In à la maîtrise 0 (tombe à 0 au niveau 5)")
-            .defineInRange("aura.novicePostureDrain", 5.0, 0.0, 1000.0);
+            .defineInRange("aura.novicePostureDrain", 4.0, 0.0, 1000.0);
 
     public static final ModConfigSpec.IntValue BEGINNER_COST_UNTIL = BUILDER
             .comment("Niveau de maîtrise (ou de Nen, pour les Hatsu) à partir duquel le coût en aura est normal")

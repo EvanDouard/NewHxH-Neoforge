@@ -96,7 +96,7 @@ public final class ProfileText {
             lines.add(masteries.withStyle(ChatFormatting.GRAY));
             lines.add(Component.translatable("command.hxh.show.resistance",
                     String.format(java.util.Locale.ROOT, "%.1f", com.evandouard.hxh.nen.NenDefense.totalResistance(living))));
-            lines.add(Component.translatable("command.hxh.show.aura", (int) data.aura(), data.auraMax(),
+            lines.add(Component.translatable("command.hxh.show.aura", com.evandouard.hxh.nen.NenCost.shown(data.aura()), com.evandouard.hxh.nen.NenCost.shown(data.auraMax()),
                     Component.translatable(data.mode().translationKey())));
         }
         HatsuKit kit = Hatsu.kitOf(data);
@@ -137,7 +137,7 @@ public final class ProfileText {
         if (data.nenUnlocked()) {
             lines.add(Component.translatable("command.hxh.show.resistance",
                     String.format(java.util.Locale.ROOT, "%.1f", com.evandouard.hxh.nen.NenDefense.totalResistance(player))));
-            lines.add(Component.translatable("command.hxh.show.aura", (int) data.aura(), data.auraMax(),
+            lines.add(Component.translatable("command.hxh.show.aura", com.evandouard.hxh.nen.NenCost.shown(data.aura()), com.evandouard.hxh.nen.NenCost.shown(data.auraMax()),
                     Component.translatable(data.mode().translationKey())));
         } else {
             lines.add(Component.translatable("command.hxh.show.nen_locked"));
@@ -302,6 +302,8 @@ public final class ProfileText {
         if (fam != null && com.evandouard.hxh.hatsu.FamilyMoves.get(fam.secretMove()) != null) {
             lines.add(Component.translatable("profile.hxh.family_move",
                     Component.translatable("technique.hxh." + fam.secretMove())).withStyle(ChatFormatting.GRAY));
+            // ce que fait le coup secret (même texte que dans le menu des pouvoirs)
+            lines.add(Component.translatable("technique.hxh." + fam.secretMove() + ".desc").withStyle(ChatFormatting.DARK_AQUA));
         }
         return lines;
     }

@@ -680,19 +680,21 @@ public final class QuestTests {
             helper.assertTrue(d.isRunning(ten.toString()), "Wing lance la leçon du Ten");
             d.track(ten.toString());
             player.tickCount = 20;
+            QuestManager.tick(player); // déjà éveillé : l'étape du sanctuaire est validée
+            player.tickCount = 40;
             QuestManager.tick(player); // éveil déjà fait : étape validée
             QuestManager.onTalk(player, wing);
             helper.assertTrue(h.learned("ten"), "Leçon écoutée : Ten appris");
             helper.assertTrue(com.evandouard.hxh.nen.NenModes.trySetMode(player, com.evandouard.hxh.data.NenMode.TEN) == null,
                     "Ten utilisable une fois appris");
             // Entraînement : il faut atteindre le niveau 1 du Ten ; Wing le dit si on revient trop tôt
-            player.tickCount = 40;
+            player.tickCount = 60;
             QuestManager.tick(player);
             QuestManager.onTalk(player, wing);
-            helper.assertTrue(d.isRunning(ten.toString()) && d.stateOf(ten.toString())[0] == 2,
+            helper.assertTrue(d.isRunning(ten.toString()) && d.stateOf(ten.toString())[0] == 3,
                     "Pas encore niveau 1 : Wing demande de s'entraîner encore");
             h.setMasteryLevel(com.evandouard.hxh.data.Mastery.TEN, 1);
-            player.tickCount = 60;
+            player.tickCount = 80;
             QuestManager.tick(player);
             QuestManager.onTalk(player, wing);
             helper.assertTrue(d.isCompleted(ten.toString()), "Ten niveau 1 puis retour à Wing : leçon terminée");
@@ -1142,5 +1144,41 @@ public final class QuestTests {
         helper.assertTrue(d.stateOf(q)[0] == 2, "Deux captures : étape suivante (rapport à Beans)");
         d.setOrganization("");
         helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void discoverArenaQuestCompletesOnceTheDeskIsPassed(GameTestHelper helper) {
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(player);
+        net.minecraft.resources.ResourceLocation q = com.evandouard.hxh.quest.QuestRegistry.DISCOVER_ARENA;
+        helper.assertTrue(QuestManager.start(player, q), "La quête « Découvrir la Heaven Arena » existe et démarre");
+        helper.assertTrue(d.isRunning(q.toString()), "Elle est en cours");
+        QuestManager.completeSilently(player, HxHMod.id("heavens_arena")); // guichet franchi = Tour découverte
+        player.tickCount = 20;
+        QuestManager.tick(player);
+        helper.assertTrue(d.isCompleted(q.toString()), "Tour découverte : quête terminée");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void stoneMeditationStepSkipsWhenNenAlreadyAwake(GameTestHelper helper) {
+        com.evandouard.hxh.nen.NenLearning.forceInTests = true;
+        try {
+            net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+            QuestData d = QuestManager.data(player);
+            net.minecraft.resources.ResourceLocation ten = HxHMod.id("nen_1_ten");
+            helper.assertTrue(QuestManager.start(player, ten), "La leçon du Ten démarre");
+            helper.assertTrue(d.stateOf(ten.toString())[0] == 0, "Première étape : trouver un sanctuaire où méditer");
+            player.tickCount = 20;
+            QuestManager.tick(player);
+            helper.assertTrue(d.stateOf(ten.toString())[0] == 0, "Sans méditer près d'une pierre : on n'avance pas");
+            com.evandouard.hxh.stats.HunterStats.get(player).setNenUnlocked(true);
+            player.tickCount = 40;
+            QuestManager.tick(player);
+            helper.assertTrue(d.stateOf(ten.toString())[0] >= 1, "Nen éveillé : l'étape du sanctuaire est passée");
+            helper.succeed();
+        } finally {
+            com.evandouard.hxh.nen.NenLearning.forceInTests = false;
+        }
     }
 }

@@ -128,7 +128,9 @@ public final class NenAwakening {
         }
 
         if (!data.nenUnlocked()) {
-            data.setMeditationTicks(data.meditationTicks() + 1);
+            // près d'une pierre de méditation, l'éveil est bien plus rapide (×3 à ×20 selon le niveau du sanctuaire)
+            int boost = (int) Math.max(1, Math.round(com.evandouard.hxh.meditation.MeditationShrines.willMultiplier(entity)));
+            data.setMeditationTicks(data.meditationTicks() + boost);
             int needed = HxHConfig.MEDITATION_SECONDS_TO_AWAKEN.get() * 20;
             if (data.meditationTicks() >= needed) {
                 NenModes.unlock(entity);
@@ -149,6 +151,7 @@ public final class NenAwakening {
             double mult = com.evandouard.hxh.meditation.MeditationShrines.willMultiplier(entity);
             HunterStats.addXp(entity, Stat.WILLPOWER, mult);
             NenProgress.addNenXp(entity, 1);
+            NenProgress.trainOnly(entity, com.evandouard.hxh.data.Mastery.REGEN, 1); // méditer entraîne aussi la régénération d'aura
             // retour visible : XP gagnée, et le multiplicateur du sanctuaire s'il y en a un
             if (entity instanceof Player player) {
                 player.displayClientMessage(mult > 1

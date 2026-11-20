@@ -258,3 +258,13 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu : mourir dans l'Examen → message jaune, on sort au point de départ, aucun objet perdu, l'épreuve est ratée.
 - [ ] En jeu : après `/hunter reset`, la divination redonne un type de Nen ; Wing commente ce type avant « choisis ton Hatsu » (Spécialisation : il est surpris).
 - [ ] À juger : lisibilité des cartes et de la barre de paliers (survol d'un palier = effets en bas), onglets Nen / Aura.
+
+## Retours du 20 novembre (nuit) — aura ×10, talent, sommeil, quêtes, équilibrage
+- **CI** Aura maximale = (base + Volonté) × talent de Nen : Prometteur ×1 = 1000 affichés, Prodige ×2 = 2000 (`auraMaxScalesWithNenTalent`). L'affichage est ×10 (HUD, carnet, `/hunter show`, coûts des techniques) ; les coûts internes ne changent pas.
+- **CI** Ten du débutant ≈ 40 aura/s affichés au niveau 0 (≈ 2 barres du niveau 1), nul au niveau 5.
+- **CI** Maîtrise « Régénération d'aura » (`mastery regen`) : aucune régénération naturelle de 0 à 4, puis démarre au niveau 5 (`auraRegenIsNullBeforeLevelFive`). Dormir rend 100 % de l'aura et donne de l'XP de régénération ; la méditation aussi. À 0 d'aura : message qui conseille de dormir. **En jeu** vérifier le ressenti (très dur au début, voulu).
+- **CI** Quête de départ « Découvrir la Heaven Arena » (`discoverArenaQuestCompletesOnceTheDeskIsPassed`) : donne les coordonnées de la Tour dans le chat ; terminée dès qu'on s'approche à 60 blocs ou qu'on passe au guichet.
+- **CI** Wing : nouvelle première étape « trouver un meilleur endroit pour méditer » (30 s de méditation près d'une pierre de sanctuaire, `stone_meditation`), avec sa réplique sur les pores et la survie. Étape sautée si le Nen est déjà éveillé. En méditation avant l'éveil, la pierre accélère le compteur selon son palier.
+- **En jeu** La Tour Céleste n'est posée que sur terre ferme (recherche en spirale d'un terrain sec au-dessus du niveau de la mer). Ne s'applique qu'aux nouveaux mondes : une tour déjà posée dans l'eau ne bouge pas.
+- **CI** Carte Famille : le coup secret est expliqué (capture `99r_famille_coup_secret_explique`). Boutons Hatsu et Ryu dans leurs fiches, onglet Nen (`99s`, `99t`).
+- **CI** Rééquilibrage : Force +0,5 dégât/niveau (+50 au niveau 100), Vitalité +0,4 PV/niveau (+40), Endurance 0,1 (10 PV plats) (`strengthIsMuchStrongerAtMaxLevel`). Attention : un fichier de config existant garde les anciennes valeurs.

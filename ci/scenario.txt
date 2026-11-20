@@ -302,6 +302,8 @@ cmd hunter nen reveal
 wait 10
 key key.hxh.profile
 wait 15
+pick hatsu
+wait 10
 click Hatsu
 wait 20
 shot 16_choix_du_hatsu
@@ -357,6 +359,8 @@ wait 10
 shot 20_technique_suivante
 key key.hxh.profile
 wait 15
+pick hatsu
+wait 10
 click Hatsu
 wait 10
 shot 21_ma_fiche_illumi
@@ -777,6 +781,8 @@ cmd kill @e[tag=hxh_en_probe]
 key key.hxh.en
 key key.hxh.profile
 wait 15
+pick ryu
+wait 10
 click Ryu
 wait 10
 shot 27_ecran_ryu
@@ -1650,6 +1656,8 @@ camera first
 look 0 10
 key key.hxh.profile
 wait 15
+pick hatsu
+wait 10
 click Hatsu
 wait 15
 click Serments
@@ -2418,6 +2426,18 @@ shot 99p_fiche_soin_par_le_nen
 pick regen
 wait 10
 shot 99q_fiche_regeneration_aura
+pick txt:family
+wait 10
+shot 99r_famille_coup_secret_explique
+pick hatsu
+wait 10
+shot 99s_fiche_hatsu_avec_bouton
+pick ryu
+wait 10
+shot 99t_fiche_ryu_avec_bouton
+click Quêtes
+wait 15
+shot 99u_quetes_decouvrir_heaven_arena
 closescreen
 cmd time set noon
 camera first
