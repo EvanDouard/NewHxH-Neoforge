@@ -25,3 +25,25 @@ profil, dos + les textures), pour vérifier sans lancer le jeu.
 - On peut aussi retoucher les PNG à la main (ou dans Blockbench) : le jeu ne lit que les PNG et le JSON.
 
 Sans fichier d'apparence, un PNJ utilise `textures/entity/npc/<id>.png`, sinon Steve. F3+T recharge les apparences.
+
+## Modèles sur mesure (GeckoLib)
+
+Les personnages refaits au niveau décrit dans `docs/Analyse_model.md` ont un vrai modèle GeckoLib, qui remplace le
+rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Premier personnage : **Gon**.
+
+```
+python3 tools/models/gon.py
+```
+
+Le script (`tools/models/geolib.py` + un fichier par personnage) écrit :
+
+- `assets/hxh/geo/entity/npc/<id>.geo.json` — os (corps, torse, tête, cheveux, bras, avant-bras, mains, os
+  d'objet, jambes, mollets) et cubes ;
+- `assets/hxh/animations/entity/npc/<id>.animation.json` — animations `idle` et `walk` (communes) ;
+- `assets/hxh/textures/entity/npc_geo/<id>.png` — chaque face peinte à densité fixe (4 pixels de texture par
+  pixel de modèle, 6 pour le visage) et rangée automatiquement ;
+- `build/model-previews/<id>.png` — aperçu 3D (face, trois-quarts, profil, dos et texture).
+
+Les fichiers s'ouvrent aussi dans Blockbench (format « GeckoLib animated model ») pour les retoucher à la main.
+Repère : Y vers le haut, pieds à 0, l'avant vers -Z, le côté gauche du personnage en +X. GeckoLib inverse les
+rotations X et Z par rapport à l'aperçu : le script les inverse à l'écriture (`to_geckolib`).
