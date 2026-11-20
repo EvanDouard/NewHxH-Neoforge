@@ -14,7 +14,7 @@ leurs descriptions à jour sont ci-dessous) et `propositions-techniques.md` (rep
 # Dans le jeu
 
 <!-- DEBUT-GENERE -->
-*Généré depuis le code par `tools/docs/hatsu_doc.py` — 95 techniques enregistrées. Aura = coût d'aura au lancement ; recharge en secondes ; une technique ratée coûte quand même.*
+*Généré depuis le code par `tools/docs/hatsu_doc.py` — 95 techniques enregistrées. Aura = coût d'aura au lancement, tel qu'affiché en jeu (×10 par rapport aux unités du code) ; recharge en secondes ; une technique ratée coûte quand même.*
 
 ## 1. Principes du Nen
 
@@ -79,10 +79,10 @@ Garçon de l'île de la Baleine, pur Renforcement. Son Jajanken décline la pier
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Jajanken : Pierre** <br>*Jajanken: Rock* | Renforcement | 10 | 8 s | — | Gon charge son aura dans le poing, immobile : une boule d'une demi-taille de joueur brille et change de couleur à chaque palier tant qu'on maintient la touche. Relâcher la lance tout droit : elle creuse sa route, emporte la cible et explose. Plus on charge, plus c'est destructeur. Le Ryu tourné vers l'attaque la rend plus grosse. |
-| **Jajanken : Ciseaux** <br>*Jajanken: Scissors* | Transformation + Renforcement | 25 | 5 s | Nen 5 | L'aura prend la forme d'une lame qui file tout droit jusqu'à toucher un bloc ou un ennemi. |
-| **Jajanken : Papier** <br>*Jajanken: Paper* | Émission + Renforcement | 30 | 6 s | Nen 10 | Gon ouvre la main et libère son aura d'un coup : un cône d'émission qui frappe tout ce qui est devant lui et le projette loin (catégorie Émission : 80 % pour Gon). |
-| **Jajanken : Pierre sans retenue** ★ <br>*Jajanken: Rock, all out* | Renforcement | 40 | 20 s | Nen 30 | Gon met tout dans le poing : la boule enfle jusqu'à deux fois sa taille, puis se recondense, minuscule et aveuglante. Ceux qui la regardent sont éblouis. Coûte deux fois plus d'aura, frappe bien plus fort et creuse un cratère énorme. |
+| **Jajanken : Pierre** <br>*Jajanken: Rock* | Renforcement | 100 | 8 s | — | Gon charge son aura dans le poing, immobile : une boule d'une demi-taille de joueur brille et change de couleur à chaque palier tant qu'on maintient la touche. Relâcher la lance tout droit : elle creuse sa route, emporte la cible et explose. Plus on charge, plus c'est destructeur. Le Ryu tourné vers l'attaque la rend plus grosse. |
+| **Jajanken : Ciseaux** <br>*Jajanken: Scissors* | Transformation + Renforcement | 250 | 5 s | Nen 5 | L'aura prend la forme d'une lame qui file tout droit jusqu'à toucher un bloc ou un ennemi. |
+| **Jajanken : Papier** <br>*Jajanken: Paper* | Émission + Renforcement | 300 | 6 s | Nen 10 | Gon ouvre la main et libère son aura d'un coup : un cône d'émission qui frappe tout ce qui est devant lui et le projette loin (catégorie Émission : 80 % pour Gon). |
+| **Jajanken : Pierre sans retenue** ★ <br>*Jajanken: Rock, all out* | Renforcement | 400 | 20 s | Nen 30 | Gon met tout dans le poing : la boule enfle jusqu'à deux fois sa taille, puis se recondense, minuscule et aveuglante. Ceux qui la regardent sont éblouis. Coûte deux fois plus d'aura, frappe bien plus fort et creuse un cratère énorme. |
 
 #### Killua Zoldyck — Transformation
 
@@ -93,8 +93,8 @@ Héritier des Zoldyck : il transforme son aura en électricité.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Foudre** <br>*Thunderbolt* | Transformation + Émission | 10 | 6 s | — | Décharge électrique qui paralyse presque complètement la cible. |
-| **Godspeed** | Transformation + Manipulation | 50 | 30 s | Nen 10 | Son corps réagit par réflexe électrique : vitesse III et minage rapide pendant 10 s. |
+| **Foudre** <br>*Thunderbolt* | Transformation + Émission | 100 | 6 s | — | Décharge électrique qui paralyse presque complètement la cible. |
+| **Godspeed** | Transformation + Manipulation | 500 | 30 s | Nen 10 | Son corps réagit par réflexe électrique : vitesse III et minage rapide pendant 10 s. |
 
 #### Kurapika — Matérialisation
 
@@ -106,8 +106,8 @@ Dernier survivant du clan Kurta : chaînes matérialisées.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Prison de chaînes** <br>*Chain Jail* | Matérialisation + Manipulation | 45 | 20 s | Nen 5 | La chaîne immobilise la cible (lenteur VII) et l'affaiblit pendant 5 s. |
-| **Chaîne sacrée** <br>*Holy Chain* | Matérialisation + Renforcement | 35 | 15 s | — | La chaîne du pouce soigne 8 PV. |
+| **Prison de chaînes** <br>*Chain Jail* | Matérialisation + Manipulation | 450 | 20 s | Nen 5 | La chaîne immobilise la cible (lenteur VII) et l'affaiblit pendant 5 s. |
+| **Chaîne sacrée** <br>*Holy Chain* | Matérialisation + Renforcement | 350 | 15 s | — | La chaîne du pouce soigne 8 PV. |
 
 #### Neferpitou — Spécialisation
 
@@ -118,8 +118,8 @@ Garde royal du roi des fourmis-chimères, spécialiste félin.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Terpsichora** | Spécialisation + Manipulation | 60 | 30 s | Nen 10 | Le corps manipulé comme une marionnette : force II, vitesse II et saut II pendant 10 s. |
-| **Doctor Blythe** | Spécialisation + Matérialisation | 20 | 20 s | — | La poupée-chirurgienne apparaît au-dessus du blessé devant toi (ou de toi-même) et le recoud : 16 PV en 4 s. Tu restes immobile pendant l'opération. |
+| **Terpsichora** | Spécialisation + Manipulation | 600 | 30 s | Nen 10 | Le corps manipulé comme une marionnette : force II, vitesse II et saut II pendant 10 s. |
+| **Doctor Blythe** | Spécialisation + Matérialisation | 200 | 20 s | — | La poupée-chirurgienne apparaît au-dessus du blessé devant toi (ou de toi-même) et le recoud : 16 PV en 4 s. Tu restes immobile pendant l'opération. |
 
 #### Illumi Zoldyck — Manipulation
 
@@ -130,8 +130,8 @@ Aîné des Zoldyck : aiguilles qui manipulent les corps.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Aiguille** <br>*Needle* | Manipulation | 25 | 5 s | — | Une aiguille qui dérègle le corps : lenteur III et nausée pendant 5 s. |
-| **Aiguille de métamorphose** <br>*Transformation Needle* | Manipulation + Transformation | 50 | 30 s | Nen 10 | Se plante des aiguilles pour remodeler son corps : résistance et force pendant 15 s. |
+| **Aiguille** <br>*Needle* | Manipulation | 250 | 5 s | — | Une aiguille qui dérègle le corps : lenteur III et nausée pendant 5 s. |
+| **Aiguille de métamorphose** <br>*Transformation Needle* | Manipulation + Transformation | 500 | 30 s | Nen 10 | Se plante des aiguilles pour remodeler son corps : résistance et force pendant 15 s. |
 
 #### Leorio Paladiknight — Émission
 
@@ -142,8 +142,8 @@ Futur médecin : il fait voyager ses coups de poing à distance.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Coup à distance** <br>*Remote Punch* | Émission | 30 | 6 s | — | Le poing frappe le sol et ressort sous la cible, jusqu'à 12 blocs. |
-| **Onde de choc** <br>*Shockwave* | Émission | 40 | 10 s | Nen 5 | Frappe le sol : onde qui blesse et repousse tout autour. |
+| **Coup à distance** <br>*Remote Punch* | Émission | 300 | 6 s | — | Le poing frappe le sol et ressort sous la cible, jusqu'à 12 blocs. |
+| **Onde de choc** <br>*Shockwave* | Émission | 400 | 10 s | Nen 5 | Frappe le sol : onde qui blesse et repousse tout autour. |
 
 #### Isaac Netero — Renforcement
 
@@ -154,9 +154,9 @@ Président de l'Association, maître absolu du Renforcement. Sa force vient de l
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Poings de Kannon** <br>*Kannon's Fists* | Renforcement | 15 + 15 Prière | 15 s | — | Kannon prête ses poings à Netero : pendant 10 s, ses coups sont renforcés (×1,6), mains dorées sur les poings. Coûte 15 de Prière. |
-| **Bodhisattva aux mille mains** <br>*Hundred-Type Guanyin Bodhisattva* | Renforcement + Émission | 30 + 30 Prière | 10 s | Nen 10 | L'immense statue de Kannon surgit derrière Netero et frappe d'une paume géante tout ce qui est devant (12 blocs). Coûte 30 de Prière. |
-| **Main zéro** ★ <br>*Zero Hand* | Renforcement + Émission | 60 + 100 Prière | 60 s | Nen 40 | Prière pleine : tout est dépensé. Un rayon d'aura pure jaillit de la statue (24 blocs, 40 dégâts). |
+| **Poings de Kannon** <br>*Kannon's Fists* | Renforcement | 150 + 15 Prière | 15 s | — | Kannon prête ses poings à Netero : pendant 10 s, ses coups sont renforcés (×1,6), mains dorées sur les poings. Coûte 15 de Prière. |
+| **Bodhisattva aux mille mains** <br>*Hundred-Type Guanyin Bodhisattva* | Renforcement + Émission | 300 + 30 Prière | 10 s | Nen 10 | L'immense statue de Kannon surgit derrière Netero et frappe d'une paume géante tout ce qui est devant (12 blocs). Coûte 30 de Prière. |
+| **Main zéro** ★ <br>*Zero Hand* | Renforcement + Émission | 600 + 100 Prière | 60 s | Nen 40 | Prière pleine : tout est dépensé. Un rayon d'aura pure jaillit de la statue (24 blocs, 40 dégâts). |
 
 #### Hisoka Morow — Transformation
 
@@ -167,9 +167,9 @@ Magicien imprévisible, amoureux des combats.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Bungee Gum** | Transformation | 20 | 1,5 s | — | Colle une aura élastique sur la cible devant toi. Tant que le lien tient (10 s), elle est ramenée vers toi dès qu'elle s'éloigne. Relance la technique : l'élastique se contracte d'un coup et la projette contre toi. |
-| **Cartes renforcées** <br>*Reinforced cards* | Transformation + Émission | 10 | 1,5 s | — | Une carte à jouer renforcée par le Nen, lancée comme une lame. Elle tranche tout ce qu'elle touche. |
-| **Texture surprise** <br>*Texture Surprise* | Transformation | 40 | 25 s | Nen 10 | Tu recouvres ton corps d'une fausse texture : tu disparais 8 s dans une gerbe de cartes, et les monstres te perdent de vue. |
+| **Bungee Gum** | Transformation | 200 | 1,5 s | — | Colle une aura élastique sur la cible devant toi. Tant que le lien tient (10 s), elle est ramenée vers toi dès qu'elle s'éloigne. Relance la technique : l'élastique se contracte d'un coup et la projette contre toi. |
+| **Cartes renforcées** <br>*Reinforced cards* | Transformation + Émission | 100 | 1,5 s | — | Une carte à jouer renforcée par le Nen, lancée comme une lame. Elle tranche tout ce qu'elle touche. |
+| **Texture surprise** <br>*Texture Surprise* | Transformation | 400 | 25 s | Nen 10 | Tu recouvres ton corps d'une fausse texture : tu disparais 8 s dans une gerbe de cartes, et les monstres te perdent de vue. |
 
 ### Association Hunter et examinateurs
 
@@ -182,7 +182,7 @@ Vice-président de l'Association, manipulateur souriant.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Dette d'amour** <br>*Love Debt* | Spécialisation | 25 | 15 s | — | Marque une cible (10 blocs) pendant 10 s : la moitié des coups qu'elle te porte lui revient. Un cœur rose la désigne. |
+| **Dette d'amour** <br>*Love Debt* | Spécialisation | 250 | 15 s | — | Marque une cible (10 blocs) pendant 10 s : la moitié des coups qu'elle te porte lui revient. Un cœur rose la désigne. |
 
 #### Ging Freecss — Émission
 
@@ -193,8 +193,8 @@ Le père de Gon, Hunter de légende et archéologue.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Poing à distance** <br>*Remote Punch* | Émission | 20 | 4 s | — | Un poing d'aura jaillit d'un portail à côté de la cible (10 blocs). |
-| **Copie** <br>*Copy* | Émission + Spécialisation | 20 | 10 s | Nen 20 | Reproduit, à 70 % de sa puissance, la dernière technique lancée près de toi (16 blocs). |
+| **Poing à distance** <br>*Remote Punch* | Émission | 200 | 4 s | — | Un poing d'aura jaillit d'un portail à côté de la cible (10 blocs). |
+| **Copie** <br>*Copy* | Émission + Spécialisation | 200 | 10 s | Nen 20 | Reproduit, à 70 % de sa puissance, la dernière technique lancée près de toi (16 blocs). |
 
 #### Cheadle Yorkshire — Manipulation
 
@@ -205,7 +205,7 @@ Secrétaire puis présidente de l'Association.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Règlement** <br>*Rules* | Manipulation | 35 | 25 s | Nen 10 | Zone de 8 blocs pendant 8 s : les ennemis sont ralentis et ne peuvent plus se téléporter. |
+| **Règlement** <br>*Rules* | Manipulation | 350 | 25 s | Nen 10 | Zone de 8 blocs pendant 8 s : les ennemis sont ralentis et ne peuvent plus se téléporter. |
 
 #### Botobai Gigante — Renforcement
 
@@ -216,7 +216,7 @@ Membre du Zodiaque, vétéran imposant.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Pression** <br>*Pressure* | Renforcement | 30 | 12 s | — | Une onde de 6 blocs écrase les ennemis : lenteur et faiblesse. |
+| **Pression** <br>*Pressure* | Renforcement | 300 | 12 s | — | Une onde de 6 blocs écrase les ennemis : lenteur et faiblesse. |
 
 #### Biscuit Krueger — Transformation
 
@@ -228,7 +228,7 @@ Maîtresse du Shingen-ryu, experte en pierres précieuses.
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
 | **Changer de forme** <br>*Switch Form* | Transformation | 0 | 2 s | — | Passe de la petite à la grande forme, ou l'inverse. |
-| **Cookie, la masseuse** <br>*Cookie, the Masseuse* | Transformation + Matérialisation | 30 | 20 s | — | Cookie soigne Biscuit et ses alliés à 3 blocs, régénération et un peu de satiété. |
+| **Cookie, la masseuse** <br>*Cookie, the Masseuse* | Transformation + Matérialisation | 300 | 20 s | — | Cookie soigne Biscuit et ses alliés à 3 blocs, régénération et un peu de satiété. |
 
 #### Menchi — Transformation
 
@@ -239,7 +239,7 @@ Hunter gastronome, examinatrice de l'Examen Hunter.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Repas de gourmet** <br>*Gourmet Meal* | Transformation | 30 | 30 s | — | Un plat partagé avec les alliés à 6 blocs : soin, régénération, Force. |
+| **Repas de gourmet** <br>*Gourmet Meal* | Transformation | 300 | 30 s | — | Un plat partagé avec les alliés à 6 blocs : soin, régénération, Force. |
 
 #### Bushidora Ambitious — Renforcement
 
@@ -250,7 +250,7 @@ Membre du Zodiaque, sabreur.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Lame d'aura** <br>*Aura Blade* | Renforcement + Transformation | 25 | 6 s | — | La lame s'allonge et tranche en arc tout ce qui est devant (6 blocs). |
+| **Lame d'aura** <br>*Aura Blade* | Renforcement + Transformation | 250 | 6 s | — | La lame s'allonge et tranche en arc tout ce qui est devant (6 blocs). |
 
 #### Tsezguerra — Renforcement
 
@@ -261,7 +261,7 @@ Hunter chasseur de primes, chef d'équipe à Greed Island.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Frappe chargée** <br>*Charged Strike* | Renforcement | 25 | 8 s | — | Un coup de poing très puissant au corps à corps. |
+| **Frappe chargée** <br>*Charged Strike* | Renforcement | 250 | 8 s | — | Un coup de poing très puissant au corps à corps. |
 
 ### Famille Zoldyck
 
@@ -274,8 +274,8 @@ Chef de la famille d'assassins Zoldyck.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Grande boule** <br>*Great Orb* | Émission + Transformation | 10 | 8 s | — | Silva forme en une seconde une grosse boule d'aura et la propulse : elle emporte la cible et explose, sans creuser le terrain. |
-| **Orbes explosifs** <br>*Explosive Orbs* | Émission + Transformation | 35 | 10 s | — | Trois sphères d'aura violettes, l'une après l'autre, vers la cible (16 blocs). |
+| **Grande boule** <br>*Great Orb* | Émission + Transformation | 100 | 8 s | — | Silva forme en une seconde une grosse boule d'aura et la propulse : elle emporte la cible et explose, sans creuser le terrain. |
+| **Orbes explosifs** <br>*Explosive Orbs* | Émission + Transformation | 350 | 10 s | — | Trois sphères d'aura violettes, l'une après l'autre, vers la cible (16 blocs). |
 
 #### Zeno Zoldyck — Émission
 
@@ -286,8 +286,8 @@ Grand-père de Killua, assassin légendaire.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Tête de dragon** <br>*Dragon Head* | Émission + Transformation | 30 | 8 s | — | Un dragon d'aura doré jaillit de la main et frappe la cible (14 blocs). |
-| **Plongée du dragon** ★ <br>*Dragon Dive* | Émission + Transformation | 60 | 30 s | Nen 30 | Le dragon se scinde en dizaines de petits dragons qui pleuvent autour du point visé. |
+| **Tête de dragon** <br>*Dragon Head* | Émission + Transformation | 300 | 8 s | — | Un dragon d'aura doré jaillit de la main et frappe la cible (14 blocs). |
+| **Plongée du dragon** ★ <br>*Dragon Dive* | Émission + Transformation | 600 | 30 s | Nen 30 | Le dragon se scinde en dizaines de petits dragons qui pleuvent autour du point visé. |
 
 #### Kalluto Zoldyck — Manipulation
 
@@ -298,7 +298,7 @@ Le plus jeune Zoldyck, danse des papiers.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Danse des papiers** <br>*Paper Dance* | Manipulation | 35 | 15 s | — | Un tourbillon de papiers coupants balaie l'avant pendant 2 s. |
+| **Danse des papiers** <br>*Paper Dance* | Manipulation | 350 | 15 s | — | Un tourbillon de papiers coupants balaie l'avant pendant 2 s. |
 
 ### Brigade Fantôme
 
@@ -311,7 +311,7 @@ Chef de la Brigade fantôme.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Chasseur de compétences** <br>*Skill Hunter* | Spécialisation + Matérialisation | 30 | 10 s | Nen 20 | Livre vide : vole la dernière technique lancée par la cible (10 blocs). Page pleine : la lance une fois, puis la page s'efface. |
+| **Chasseur de compétences** <br>*Skill Hunter* | Spécialisation + Matérialisation | 300 | 10 s | Nen 20 | Livre vide : vole la dernière technique lancée par la cible (10 blocs). Page pleine : la lance une fois, puis la page s'efface. |
 
 #### Feitan Portor — Transformation
 
@@ -323,7 +323,7 @@ Membre de la Brigade, tortionnaire.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Soleil levant** <br>*Rising Sun* | Transformation + Matérialisation | 40 + 100 Douleur | 30 s | Nen 20 | Douleur pleine : un soleil de feu surgit au-dessus de Feitan et brûle tout à 8 blocs. |
+| **Soleil levant** <br>*Rising Sun* | Transformation + Matérialisation | 400 + 100 Douleur | 30 s | Nen 20 | Douleur pleine : un soleil de feu surgit au-dessus de Feitan et brûle tout à 8 blocs. |
 
 #### Nobunaga Hazama — Renforcement
 
@@ -334,7 +334,7 @@ Membre de la Brigade, samouraï.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Iai** | Renforcement | 25 | 7 s | — | Une coupe instantanée sur tout ce qui est dans ton En (4 blocs). |
+| **Iai** | Renforcement | 250 | 7 s | — | Une coupe instantanée sur tout ce qui est dans ton En (4 blocs). |
 
 #### Phinks Magcub — Renforcement
 
@@ -345,7 +345,7 @@ Membre de la Brigade, bagarreur.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Ripper Cyclotron** | Renforcement | 4 | 0,3 s | — | Un tour de bras de plus. Maximum : 1 tour par tranche de 10 niveaux de Nen (10 au plus). |
+| **Ripper Cyclotron** | Renforcement | 40 | 0,3 s | — | Un tour de bras de plus. Maximum : 1 tour par tranche de 10 niveaux de Nen (10 au plus). |
 
 #### Uvogin — Renforcement
 
@@ -356,7 +356,7 @@ Membre de la Brigade, force brute pure.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Big Bang Impact** | Renforcement | 30 | 20 s | Nen 20 | Uvogin charge son poing (maintenir jusqu'à 2 s) puis frappe le sol devant lui : plus la charge est pleine, plus le cratère est grand (1 à 6 blocs), plus il fait mal et projette loin. |
+| **Big Bang Impact** | Renforcement | 300 | 20 s | Nen 20 | Uvogin charge son poing (maintenir jusqu'à 2 s) puis frappe le sol devant lui : plus la charge est pleine, plus le cratère est grand (1 à 6 blocs), plus il fait mal et projette loin. |
 
 #### Franklin Bordeau — Émission
 
@@ -367,7 +367,7 @@ Membre de la Brigade, colosse.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Double mitrailleuse** <br>*Double Machine Gun* | Émission | 40 | 15 s | — | Ses dix doigts tirent une rafale d'aura sur la cible (18 blocs). |
+| **Double mitrailleuse** <br>*Double Machine Gun* | Émission | 400 | 15 s | — | Ses dix doigts tirent une rafale d'aura sur la cible (18 blocs). |
 
 #### Shalnark — Manipulation
 
@@ -378,8 +378,8 @@ Membre de la Brigade, manipulateur par antenne.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Voix noire** <br>*Black Voice* | Manipulation | 35 | 20 s | Nen 10 | Une antenne plantée dans un mob (8 blocs) : pendant 30 s il attaque tes ennemis. Échoue si la cible a plus de 10 niveaux de Nen de plus que toi. |
-| **Pilote automatique** ★ <br>*Autopilot* | Manipulation | 45 | 45 s | Nen 30 | Il se contrôle lui-même : 15 s surpuissant, puis 10 s épuisé. |
+| **Voix noire** <br>*Black Voice* | Manipulation | 350 | 20 s | Nen 10 | Une antenne plantée dans un mob (8 blocs) : pendant 30 s il attaque tes ennemis. Échoue si la cible a plus de 10 niveaux de Nen de plus que toi. |
+| **Pilote automatique** ★ <br>*Autopilot* | Manipulation | 450 | 45 s | Nen 30 | Il se contrôle lui-même : 15 s surpuissant, puis 10 s épuisé. |
 
 #### Machi Komacine — Transformation
 
@@ -390,7 +390,7 @@ Membre de la Brigade, maîtresse des fils.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Fils de Nen** <br>*Nen Threads* | Transformation + Manipulation | 25 | 10 s | — | Des fils fins enserrent la cible (10 blocs) : très ralentie, ne peut plus sauter. |
+| **Fils de Nen** <br>*Nen Threads* | Transformation + Manipulation | 250 | 10 s | — | Des fils fins enserrent la cible (10 blocs) : très ralentie, ne peut plus sauter. |
 
 #### Shizuku Murasaki — Matérialisation
 
@@ -401,7 +401,7 @@ Membre de la Brigade, distraite.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Blinky** | Matérialisation | 30 | 12 s | — | L'aspirateur aspire devant toi : projectiles détruits, objets ramassés, ennemis attirés. |
+| **Blinky** | Matérialisation | 300 | 12 s | — | L'aspirateur aspire devant toi : projectiles détruits, objets ramassés, ennemis attirés. |
 
 #### Pakunoda — Spécialisation
 
@@ -412,7 +412,7 @@ Membre de la Brigade, lit les souvenirs.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Bombe de mémoire** <br>*Memory Bomb* | Spécialisation | 30 | 12 s | — | Une balle d'aura (16 blocs) : la cible est désorientée, ralentie, aveuglée un instant. |
+| **Bombe de mémoire** <br>*Memory Bomb* | Spécialisation | 300 | 12 s | — | Une balle d'aura (16 blocs) : la cible est désorientée, ralentie, aveuglée un instant. |
 
 ### York Shin et Greed Island
 
@@ -425,7 +425,7 @@ Fille de chef mafieux, voyante.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Lovely Ghostwriter** | Spécialisation | 20 | 30 s | — | Un poème annonce les dangers à 32 blocs (nombre, direction) et les fait briller 10 s. |
+| **Lovely Ghostwriter** | Spécialisation | 200 | 30 s | — | Un poème annonce les dangers à 32 blocs (nombre, direction) et les fait briller 10 s. |
 
 #### Razor — Émission
 
@@ -436,8 +436,8 @@ Maître du jeu à Greed Island.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Balle d'aura** <br>*Aura Ball* | Émission | 25 | 7 s | — | Un ballon d'aura frappé très fort vers la cible (18 blocs), gros recul. |
-| **Quatorze démons** ★ <br>*Fourteen Devils* | Émission + Matérialisation | 60 | 30 s | Nen 30 | Quatorze démons d'aura bombardent la zone autour du point visé. |
+| **Balle d'aura** <br>*Aura Ball* | Émission | 250 | 7 s | — | Un ballon d'aura frappé très fort vers la cible (18 blocs), gros recul. |
+| **Quatorze démons** ★ <br>*Fourteen Devils* | Émission + Matérialisation | 600 | 30 s | Nen 30 | Quatorze démons d'aura bombardent la zone autour du point visé. |
 
 #### Genthru (le Bombardier) — Matérialisation
 
@@ -448,8 +448,8 @@ Le Bombardier de Greed Island.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Petite fleur** <br>*Little Flower* | Matérialisation | 30 | 10 s | — | Il saisit la cible et lui explose au visage (sa main encaisse un peu). |
-| **Compte à rebours** <br>*Countdown* | Matérialisation + Émission | 40 | 30 s | Nen 20 | Pose une bombe sur la cible : 3, 2, 1… elle explose. |
+| **Petite fleur** <br>*Little Flower* | Matérialisation | 300 | 10 s | — | Il saisit la cible et lui explose au visage (sa main encaisse un peu). |
+| **Compte à rebours** <br>*Countdown* | Matérialisation + Émission | 400 | 30 s | Nen 20 | Pose une bombe sur la cible : 3, 2, 1… elle explose. |
 
 ### Hunters de l'arc des Fourmis
 
@@ -462,7 +462,7 @@ Disciple de Ging, Hunter des espèces.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Crazy Slot** <br>*Crazy Slots* | Matérialisation + Spécialisation | 35 | 12 s | — | La roulette tire une arme au hasard : faux, fusil, bâton ou clown. |
+| **Crazy Slot** <br>*Crazy Slots* | Matérialisation + Spécialisation | 350 | 12 s | — | La roulette tire une arme au hasard : faux, fusil, bâton ou clown. |
 
 #### Knov — Émission
 
@@ -473,8 +473,8 @@ Hunter stratège de l'équipe d'extermination.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Marquer une porte** <br>*Mark a Door* | Émission + Matérialisation | 10 | 2 s | — | Marque la porte visée (5 blocs). Nombre de marques : 1, plus 1 par tranche de 20 niveaux de Nen (6 au plus) ; la plus ancienne s'efface. |
-| **Cache-cache** <br>*Hide and Seek* | Émission + Matérialisation | 30 | 10 s | Nen 10 | Un portail vers la pièce-refuge (abri, régénération). Dans le refuge : choisir par quelle porte marquée ressortir. |
+| **Marquer une porte** <br>*Mark a Door* | Émission + Matérialisation | 100 | 2 s | — | Marque la porte visée (5 blocs). Nombre de marques : 1, plus 1 par tranche de 20 niveaux de Nen (6 au plus) ; la plus ancienne s'efface. |
+| **Cache-cache** <br>*Hide and Seek* | Émission + Matérialisation | 300 | 10 s | Nen 10 | Un portail vers la pièce-refuge (abri, régénération). Dans le refuge : choisir par quelle porte marquée ressortir. |
 
 #### Knuckle Bine — Matérialisation
 
@@ -485,7 +485,7 @@ Hunter au grand cœur, élève de Morel.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Activer Pot-Clean** <br>*Activate Pot-Clean* | Matérialisation + Renforcement | 15 | 3 s | — | Pot-Clean s'attache à la cible devant toi (10 blocs) ; une seule à la fois. |
+| **Activer Pot-Clean** <br>*Activate Pot-Clean* | Matérialisation + Renforcement | 150 | 3 s | — | Pot-Clean s'attache à la cible devant toi (10 blocs) ; une seule à la fois. |
 | **Annuler Pot-Clean** <br>*Cancel Pot-Clean* | Matérialisation | 0 | 1 s | — | Pot-Clean se retire, la dette est effacée. |
 
 #### Morel Mackernasey — Manipulation
@@ -497,7 +497,7 @@ Hunter de l'équipe d'extermination, fumeur de pipe.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Deep Purple** | Manipulation + Transformation | 45 | 20 s | Nen 20 | Des soldats de fumée assaillent l'avant : coups et aveuglement. |
+| **Deep Purple** | Manipulation + Transformation | 450 | 20 s | Nen 20 | Des soldats de fumée assaillent l'avant : coups et aveuglement. |
 
 #### Palm Siberia — Renforcement
 
@@ -508,7 +508,7 @@ Hunter de l'équipe d'extermination, fumeur de pipe.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Veuve noire** <br>*Black Widow* | Renforcement + Transformation | 50 | 30 s | Nen 20 | Armure noire, cheveux en lames : Force II, Résistance, vitesse pendant 20 s. |
+| **Veuve noire** <br>*Black Widow* | Renforcement + Transformation | 500 | 30 s | Nen 20 | Armure noire, cheveux en lames : Force II, Résistance, vitesse pendant 20 s. |
 
 ### Fourmis-Chimères
 
@@ -521,8 +521,8 @@ Le roi des fourmis-chimères.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Rafale de rage** <br>*Rage Blast* | Émission + Renforcement | 40 | 15 s | — | Une onde d'aura sombre dévastatrice autour de lui (7 blocs). |
-| **Photon** ★ | Émission + Renforcement | 50 | 20 s | Nen 30 | Un rayon d'aura blanc concentré (20 blocs). |
+| **Rafale de rage** <br>*Rage Blast* | Émission + Renforcement | 400 | 15 s | — | Une onde d'aura sombre dévastatrice autour de lui (7 blocs). |
+| **Photon** ★ | Émission + Renforcement | 500 | 20 s | Nen 30 | Un rayon d'aura blanc concentré (20 blocs). |
 
 #### Shaiapouf — Manipulation
 
@@ -533,8 +533,8 @@ Garde royal du roi, manipulateur.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Message spirituel** <br>*Spiritual Message* | Manipulation | 30 | 15 s | — | Une poudre dorée à 8 blocs : les ennemis brillent, ralentis et désorientés. |
-| **Belzébuth** <br>*Beelzebub* | Manipulation + Transformation | 45 | 30 s | Nen 20 | Il se divise en nuée : invisible et rapide 6 s, les mini-Pouf harcèlent les ennemis proches. |
+| **Message spirituel** <br>*Spiritual Message* | Manipulation | 300 | 15 s | — | Une poudre dorée à 8 blocs : les ennemis brillent, ralentis et désorientés. |
+| **Belzébuth** <br>*Beelzebub* | Manipulation + Transformation | 450 | 30 s | Nen 20 | Il se divise en nuée : invisible et rapide 6 s, les mini-Pouf harcèlent les ennemis proches. |
 
 #### Menthuthuyoupi — Transformation
 
@@ -545,8 +545,8 @@ Garde royal du roi, monstre de puissance.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Métamorphose** <br>*Metamorphosis* | Transformation | 40 | 25 s | — | Bras en armes : Force II et Résistance pendant 15 s. |
-| **Rafale de rage** <br>*Rage Blast* | Transformation + Émission | 45 | 20 s | Nen 20 | Une explosion de colère autour de lui (6 blocs). |
+| **Métamorphose** <br>*Metamorphosis* | Transformation | 400 | 25 s | — | Bras en armes : Force II et Résistance pendant 15 s. |
+| **Rafale de rage** <br>*Rage Blast* | Transformation + Émission | 450 | 20 s | Nen 20 | Une explosion de colère autour de lui (6 blocs). |
 
 ### Autres
 
@@ -559,7 +559,7 @@ Garde royal du roi, monstre de puissance.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Poing de Ren** <br>*Ren Punch* | Manipulation | 15 | 4 s | — | Un coup renforcé par le Ren au corps à corps. |
+| **Poing de Ren** <br>*Ren Punch* | Manipulation | 150 | 4 s | — | Un coup renforcé par le Ren au corps à corps. |
 
 #### Senritsu — Émission
 
@@ -570,7 +570,7 @@ Musicienne, entend les battements de cœur.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Mélodie** <br>*Melody* | Émission + Manipulation | 35 | 20 s | — | Sa flûte soigne les alliés à 8 blocs, ralentit et affaiblit les ennemis. |
+| **Mélodie** <br>*Melody* | Émission + Manipulation | 350 | 20 s | — | Sa flûte soigne les alliés à 8 blocs, ralentit et affaiblit les ennemis. |
 
 #### Wing — Renforcement
 
@@ -581,7 +581,7 @@ Maître de Gon et Killua, Shingen-ryu.
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Shingen-ryû** <br>*Shingen-ryu* | Renforcement | 25 | 15 s | — | 10 s en garde : coups reçus divisés par deux, chaque assaillant reçoit 4 dégâts. |
+| **Shingen-ryû** <br>*Shingen-ryu* | Renforcement | 250 | 15 s | — | 10 s en garde : coups reçus divisés par deux, chaque assaillant reçoit 4 dégâts. |
 
 ## 5. Serments communs
 
@@ -605,20 +605,20 @@ Un mob de Minecraft qui s'éveille au Nen sans incarner de personnage reçoit le
 
 | Hatsu | Espèces | Type | Technique | Aura | Recharge | Ce qu'elle fait |
 |---|---|---|---|---|---|---|
-| **Squelette au Nen** | squelette, vagabond, embourbé | Émission | Flèches de Nen | 20 | 4,5 s | Trois flèches d'aura en éventail qui filent droit, sans retomber. |
-| **Creeper au Nen** | creeper | Émission | Mines d'aura | 30 | 6 s | Quatre mines autour de la cible éclatent un instant plus tard ; le creeper, lui, n'explose plus. |
-| **Zombie au Nen** | zombie, zombie momifié, noyé, zombie villageois | Matérialisation | Horde de Nen | 40 | 20 s | Deux zombies d'aura sortent du sol et attaquent ; ils se dissipent au bout de 15 s. |
-| **Araignée au Nen** | araignée, araignée venimeuse | Manipulation | Toile d'aura | 20 | 7 s | Un fil d'aura colle la cible au sol : très ralentie, elle ne peut plus sauter. |
-| **Enderman au Nen** | enderman | Spécialisation | Pas éclair | 25 | 6 s | Apparaît dans le dos de la cible et frappe. |
-| **Cochon au Nen** | cochon, hoglin | Renforcement | Charge de sanglier | 15 | 5 s | Fonce sur la cible et la renverse. |
-| **Vache au Nen** | vache, champimeuh, chèvre | Renforcement | Lait d'aura | 25 | 15 s | Soigne ses alliés autour de lui. |
-| **Mouton au Nen** | mouton, lama | Matérialisation | Laine-bouclier | 20 | 15 s | Une laine d'aura protège ses alliés. |
-| **Poule au Nen** | poule | Émission | Œufs explosifs | 15 | 6 s | Une volée d'œufs d'aura qui éclatent autour de la cible. |
-| **Loup au Nen** | loup, renard, chat, ocelot | Renforcement | Croc d'aura | 15 | 4,5 s | Bond et morsure qui fait saigner. |
-| **Slime au Nen** | slime, cube de magma, grenouille | Renforcement | Rebond écrasant | 20 | 6 s | Saute très haut et retombe en onde de choc. |
-| **Sorcière au Nen** | sorcière, évocateur | Transformation | Potion de Nen | 25 | 8 s | Affaiblit et ralentit tout ce qui l'entoure. |
-| **Golem au Nen** | golem de fer, ravageur | Renforcement | Séisme | 25 | 7 s | Frappe le sol : tout autour est projeté. |
-| **Blaze au Nen** | blaze, ghast | Transformation | Pluie de feu | 30 | 8 s | Des boules de feu d'aura tombent autour de la cible. |
+| **Squelette au Nen** | squelette, vagabond, embourbé | Émission | Flèches de Nen | 200 | 4,5 s | Trois flèches d'aura en éventail qui filent droit, sans retomber. |
+| **Creeper au Nen** | creeper | Émission | Mines d'aura | 300 | 6 s | Quatre mines autour de la cible éclatent un instant plus tard ; le creeper, lui, n'explose plus. |
+| **Zombie au Nen** | zombie, zombie momifié, noyé, zombie villageois | Matérialisation | Horde de Nen | 400 | 20 s | Deux zombies d'aura sortent du sol et attaquent ; ils se dissipent au bout de 15 s. |
+| **Araignée au Nen** | araignée, araignée venimeuse | Manipulation | Toile d'aura | 200 | 7 s | Un fil d'aura colle la cible au sol : très ralentie, elle ne peut plus sauter. |
+| **Enderman au Nen** | enderman | Spécialisation | Pas éclair | 250 | 6 s | Apparaît dans le dos de la cible et frappe. |
+| **Cochon au Nen** | cochon, hoglin | Renforcement | Charge de sanglier | 150 | 5 s | Fonce sur la cible et la renverse. |
+| **Vache au Nen** | vache, champimeuh, chèvre | Renforcement | Lait d'aura | 250 | 15 s | Soigne ses alliés autour de lui. |
+| **Mouton au Nen** | mouton, lama | Matérialisation | Laine-bouclier | 200 | 15 s | Une laine d'aura protège ses alliés. |
+| **Poule au Nen** | poule | Émission | Œufs explosifs | 150 | 6 s | Une volée d'œufs d'aura qui éclatent autour de la cible. |
+| **Loup au Nen** | loup, renard, chat, ocelot | Renforcement | Croc d'aura | 150 | 4,5 s | Bond et morsure qui fait saigner. |
+| **Slime au Nen** | slime, cube de magma, grenouille | Renforcement | Rebond écrasant | 200 | 6 s | Saute très haut et retombe en onde de choc. |
+| **Sorcière au Nen** | sorcière, évocateur | Transformation | Potion de Nen | 250 | 8 s | Affaiblit et ralentit tout ce qui l'entoure. |
+| **Golem au Nen** | golem de fer, ravageur | Renforcement | Séisme | 250 | 7 s | Frappe le sol : tout autour est projeté. |
+| **Blaze au Nen** | blaze, ghast | Transformation | Pluie de feu | 300 | 8 s | Des boules de feu d'aura tombent autour de la cible. |
 
 ## 7. Combattants nommés de la Tour Céleste
 
@@ -629,28 +629,28 @@ Au-delà du 200e étage, selon l'étage du combat. Leurs Hatsu ne sont pas propo
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Toupies tourbillon** <br>*Whirlwind Tops* | Manipulation | 25 | 6 s | — | Une nuée de toupies d'aura balaie tout autour (3,5 blocs) et repousse. |
-| **Danse de la tornade** <br>*Tornado Dance* | Manipulation | 30 | 20 s | — | Gido tourne sur sa jambe de bois : Résistance et Vitesse 6 s. |
+| **Toupies tourbillon** <br>*Whirlwind Tops* | Manipulation | 250 | 6 s | — | Une nuée de toupies d'aura balaie tout autour (3,5 blocs) et repousse. |
+| **Danse de la tornade** <br>*Tornado Dance* | Manipulation | 300 | 20 s | — | Gido tourne sur sa jambe de bois : Résistance et Vitesse 6 s. |
 
 **Sadaso** — Émission, étages 210–219
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Main fantôme** <br>*Phantom Hand* | Émission | 25 | 7 s | — | Son bras gauche invisible agrippe la cible à 9 blocs et l'immobilise 3 s. |
+| **Main fantôme** <br>*Phantom Hand* | Émission | 250 | 7 s | — | Son bras gauche invisible agrippe la cible à 9 blocs et l'immobilise 3 s. |
 
 **Riehlvelt** — Transformation, étages 220–224
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Fouet électrique** <br>*Electric Whip* | Transformation | 20 | 5 s | — | Fouet chargé d'électricité (7 blocs) : dégâts et lenteur. |
-| **Canon à air** <br>*Air Cannon* | Transformation + Émission | 30 | 8 s | — | Air comprimé tiré depuis le fauteuil (14 blocs) : gros recul. |
+| **Fouet électrique** <br>*Electric Whip* | Transformation | 200 | 5 s | — | Fouet chargé d'électricité (7 blocs) : dégâts et lenteur. |
+| **Canon à air** <br>*Air Cannon* | Transformation + Émission | 300 | 8 s | — | Air comprimé tiré depuis le fauteuil (14 blocs) : gros recul. |
 
 **Kastro** — Renforcement, étages 225–234
 
 | Technique | Type | Aura | Recharge | Niveau requis | Ce qu'elle fait |
 |---|---|---|---|---|---|
-| **Morsure du tigre** <br>*Tiger Bite* | Renforcement | 20 | 4,5 s | — | Mains en gueule de tigre, au corps à corps : très gros dégâts. |
-| **Double** | Renforcement | 40 | 25 s | — | Son double attire les coups pendant que le vrai Kastro disparaît : Invisibilité et Force 4 s. |
+| **Morsure du tigre** <br>*Tiger Bite* | Renforcement | 200 | 4,5 s | — | Mains en gueule de tigre, au corps à corps : très gros dégâts. |
+| **Double** | Renforcement | 400 | 25 s | — | Son double attire les coups pendant que le vrai Kastro disparaît : Invisibilité et Force 4 s. |
 - **Hisoka Morow** (étages 235–240) : son vrai kit de personnage (voir sa fiche).
 <!-- FIN-GENERE -->
 
@@ -661,6 +661,51 @@ Au-delà du 200e étage, selon l'étage du combat. Leurs Hatsu ne sont pas propo
 Texte seulement, rien n'est codé. Pour chacune : nom, effet voulu, type de Nen. Avant de coder une proposition
 acceptée, vérifier qu'elle ne fait pas doublon avec une technique déjà listée plus haut.
 Les doublons éventuels avec les kits existants (docs/hatsu-et-techniques.md) seront vérifiés avant de coder celles qui sont acceptées.
+
+### Revue par rapport au jeu (20 nov)
+
+Chaque proposition ci-dessous comparée aux techniques déjà en jeu (parties 1 à 7). **Nouveau** = rien d'équivalent,
+à coder tel quel ; **Variante** = amélioration d'une technique existante (on la modifie, on n'ajoute pas) ;
+**Doublon** = déjà en jeu, à abandonner ou à fusionner. Rien n'est codé : Evan tranche la colonne « Suite ».
+
+| Perso | Proposition | Verdict | En jeu aujourd'hui | Suite proposée |
+|---|---|---|---|---|
+| Gon | Pierre en rafale | Nouveau | Pierre, Ciseaux, Papier, Pierre sans retenue | Coder |
+| Gon | Rage de Gon (adulte) | Nouveau | — | Coder (idéal pour le niveau 80+) |
+| Gon | Ren du chasseur (passif) | Nouveau | Passifs de personnage existants | Coder |
+| Killua | Foudre fatale | Variante | Foudre (paralysie presque totale) | Fusionner dans Foudre (portée courte, étourdissement) |
+| Killua | Godspeed enchaîné | Variante | Godspeed (vitesse III, 10 s) | Ajouter la règle de recharge à Godspeed |
+| Killua | Yo-yo d'aura | Nouveau | — | Coder |
+| Kurapika | Chaîne scellante | Nouveau | Prison de chaînes, Chaîne sacrée | Coder |
+| Kurapika | Détection de la chaîne de l'index | Nouveau | — | Coder |
+| Kurapika | Empereur du Temps | Doublon | Colère écarlate (coup secret des Kurta, 6 types à 100 %) | Abandonner ou la renommer |
+| Leorio | Poing à distance chargé | Variante | Coup à distance (12 blocs) | Ajouter la charge au Coup à distance |
+| Leorio | Sérum d'urgence | Nouveau | Aucun soin sur allié pour Leorio | Coder |
+| Leorio | Diagnostic | Variante | Gyo 40 et En 30 montrent déjà la vie des cibles | Ajouter seulement le type de Nen |
+| Hisoka | Trampoline | Nouveau | Bungee Gum (lien élastique) | Coder |
+| Hisoka | Leurre | Variante | Texture surprise (invisible 8 s) | Ajouter le faux Hisoka à Texture surprise |
+| Hisoka | Cartes en éventail | Variante | Cartes renforcées (une carte) | Mode éventail de Cartes renforcées |
+| Chrollo | Skill Hunter temporaire | Doublon | Chasseur de compétences (vole la dernière technique) ; Ging a Copie | Abandonner |
+| Chrollo | Livre ouvert | Nouveau | — | Coder |
+| Netero | Souffle de Kannon | Nouveau | Poings de Kannon, Bodhisattva, Main zéro | Coder |
+| Netero | Paumes de feu mille fois | Variante | Bodhisattva aux mille mains | Fusionner avec le Bodhisattva |
+| Meruem | Bouclier de membrane | Nouveau | Rafale de rage, Photon | Coder |
+| Meruem | Cri royal | Nouveau | — | Coder |
+| Feitan | Cage de Pain Packer | Nouveau | Soleil levant | Coder |
+| Feitan | Double soleil | Variante | Soleil levant | Option du Soleil levant |
+| Illumi | Aiguille de contrôle | Nouveau | Aiguille (lenteur + nausée), Aiguille de métamorphose | Coder |
+| Illumi | Visage d'emprunt | Nouveau | — | Coder |
+| Biscuit | Pierre massue | Nouveau | Changer de forme, Cookie | Coder |
+| Biscuit | Sérénité de Cookie | Doublon | Cookie, la masseuse (soin de zone, régénération) | Abandonner |
+| Pitou | Poupée de vie | Doublon | Doctor Blythe maintenu (poupée qui soigne) | Abandonner |
+| Pitou | Aura dormante | Variante | Zetsu et In (même maîtrise) | Abandonner ou lier au Zetsu |
+| Kite | Lance de chasse | Nouveau | Crazy Slot | Coder |
+| Kite | Œil d'aura | Doublon | En et Gyo | Abandonner |
+| Zeno / Silva | Dragon Dive | Doublon | Plongée du dragon (déjà là, niveau 30+) | Abandonner (la version en ligne pourrait être un mode) |
+| Zeno / Silva | Poids des ancêtres | Nouveau | Tête de dragon, Orbes explosifs | Coder |
+
+Bilan : 18 nouveaux, 9 variantes, 6 doublons (Empereur du Temps, Skill Hunter temporaire, Sérénité de Cookie, Poupée de vie, Œil d'aura, Dragon Dive).
+Les montants d'aura écrits dans les propositions sont en unités du jeu telles qu'affichées (×10 depuis le 20 nov) : à ajuster au moment de coder.
 
 ### Gon (Renforcement)
 1. **Jajanken : Pierre en rafale** — trois petites boules enchaînées sur 1 s, chacune à 40 % des dégâts : bonne contre plusieurs cibles, mauvaise contre un mur.

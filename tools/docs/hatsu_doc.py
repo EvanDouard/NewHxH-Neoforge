@@ -114,6 +114,18 @@ def secondary_types():
 SECOND, PHYSICAL = secondary_types()
 
 
+# L'aura est affichée ×10 en jeu (NenCost.DISPLAY_UNIT) : le code garde les anciennes unités
+AURA_DISPLAY = 10
+
+
+def mob_cost(cost):
+    try:
+        c = float(str(cost).rstrip('fF'))
+    except ValueError:
+        return cost
+    return f'{c * AURA_DISPLAY:g}'
+
+
 def num(expr):
     expr = expr.strip().rstrip('fF')
     try:
@@ -149,7 +161,7 @@ def technique_line(tid):
         return f'| **{name}**{" (" + en + ")" if en and en != name else ""} | ? | ? | ? | — | {desc} |'
     cost = st['cost']
     c = num(cost)
-    cost = ('0' if c == 0 else f'{c:g}') if c is not None else cost
+    cost = ('0' if c == 0 else f'{c * AURA_DISPLAY:g}') if c is not None else cost
     if st['res']:
         amt = num(st['res_amt'] or '0')
         cost += f' + {amt:g} {BARS.get(st["res"], st["res"])}' if amt is not None else f' + {BARS.get(st["res"], st["res"])}'
@@ -316,7 +328,7 @@ def section_mobs(lines):
         st = STATS.get(tid, {})
         species = ', '.join(MOBS.get(t, t.lower()) for t in re.findall(r'EntityType\.(\w+)', types))
         lines.append(f'| **{fr("kit.hxh." + kid, kid)}** | {species} | {TYPES[typ]} | {fr("technique.hxh." + tid, tid)} | '
-                     f'{st.get("cost", "?")} | {seconds(st.get("cd", "0"))} | {clean(fr("technique.hxh." + tid + ".desc", ""))} |')
+                     f'{mob_cost(st.get("cost", "?"))} | {seconds(st.get("cd", "0"))} | {clean(fr("technique.hxh." + tid + ".desc", ""))} |')
     used = {const_id('MobTechniques.' + c, 'MobTechniques') for c in re.findall(r'MobTechniques\.(\w+)', SRC['MobKits'])}
     others = [t for t, st in STATS.items() if st['cls'] == 'MobTechniques' and t not in used]
     if others:
@@ -353,7 +365,7 @@ def generate():
     lines = []
     total_t = sum(1 for t in STATS)
     lines.append(f'*Généré depuis le code par `tools/docs/hatsu_doc.py` — {total_t} techniques enregistrées. '
-                 'Aura = coût d\'aura au lancement ; recharge en secondes ; une technique ratée coûte quand même.*\n')
+                 'Aura = coût d\'aura au lancement, tel qu\'affiché en jeu (×10 par rapport aux unités du code) ; recharge en secondes ; une technique ratée coûte quand même.*\n')
     section_nen(lines)
     section_base(lines)
     section_families(lines)
