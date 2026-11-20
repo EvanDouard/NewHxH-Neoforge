@@ -130,7 +130,7 @@ public final class HxHConfig {
 
     public static final ModConfigSpec.IntValue MEDITATION_SECONDS_TO_AWAKEN = BUILDER
             .comment("Éveil par la méditation : secondes de méditation cumulées nécessaires")
-            .defineInRange("awakening.meditationSeconds", 1200, 1, 1_000_000);
+            .defineInRange("awakening.meditationSeconds", 20, 1, 1_000_000);
 
     public static final ModConfigSpec.DoubleValue ACCIDENTAL_AWAKENING_CHANCE = BUILDER
             .comment("Éveil par accident : chance qu'un coup d'un utilisateur de Nen ouvre les pores de la victime")
