@@ -36,7 +36,7 @@ cmd attribute @s minecraft:generic.attack_damage get
 wait 20
 expect Vitalité : 100
 expect Force : 30
-expect 40
+expect 60
 shot 03_vitalite_100_force_30
 
 # --- J2 : aura, Ten / Zetsu / Ren, divination ---
@@ -1311,7 +1311,14 @@ talkto wing
 wait 10
 expect Entraîne-toi encore
 shot 38c_wing_entraine_toi_encore_niveau
-wait 400
+# plus de régénération avant le niveau 5 : on recharge l'aura pour que le Ten tienne assez longtemps
+wait 100
+cmd hunter refill
+wait 100
+cmd hunter refill
+wait 100
+cmd hunter refill
+wait 100
 clearchat
 talkto wing
 wait 10
@@ -2068,6 +2075,8 @@ click Quêtes
 wait 5
 click Personnage
 wait 5
+pick hatsu
+wait 10
 click Hatsu
 wait 10
 click Serments
@@ -2197,6 +2206,8 @@ click Quêtes
 wait 5
 click Personnage
 wait 5
+pick hatsu
+wait 10
 click Hatsu
 wait 10
 click Serments

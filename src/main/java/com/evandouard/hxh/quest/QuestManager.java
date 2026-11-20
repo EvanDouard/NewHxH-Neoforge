@@ -631,6 +631,27 @@ public final class QuestManager {
     private static void tickStep(ServerPlayer player, QuestData d) {
         Quest.Step step = currentStep(d);
         if (step == null) return;
+        // Ces deux étapes tournent en parallèle de l'Examen : avant les dangers des lieux (qui ne doivent pas être coupés par elles)
+        // Découvrir la Tour Céleste : la voir de près (ou avoir déjà franchi son guichet)
+        if (step.type().equals("arena_discover")) {
+            if (player.tickCount % 20 == 0 && arenaDiscovered(player)) advance(player);
+            return;
+        }
+        // Méditer près d'une pierre de méditation (sanctuaire) : le compteur avance seconde après seconde
+        if (step.type().equals("stone_meditation")) {
+            if (player.tickCount % 20 != 0) return;
+            com.evandouard.hxh.data.HunterData h = com.evandouard.hxh.stats.HunterStats.get(player);
+            if (h.nenUnlocked()) { // déjà éveillé : rien à trouver
+                advance(player);
+                return;
+            }
+            if (h.meditating() && com.evandouard.hxh.meditation.MeditationShrines.stoneTier(player) > 0) {
+                d.progress++;
+                if (d.progress >= step.seconds()) advance(player);
+                else sync(player);
+            }
+            return;
+        }
         // Dangers des lieux de l'Examen (tempête, brouillard…)
         if (com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level()) && com.evandouard.hxh.exam.ExamHazards.tick(player, step, d)) return;
         // Quiz « silence » : la bonne réponse est de ne rien dire pendant le temps donné
@@ -673,26 +694,6 @@ public final class QuestManager {
         // Quête de Netero (soin) : paumes de Kannon, méditation blessé
         if (step.type().equals("kannon")) {
             NeteroTraining.kannon(player, step, d);
-            return;
-        }
-        // Découvrir la Tour Céleste : la voir de près (ou avoir déjà franchi son guichet)
-        if (step.type().equals("arena_discover")) {
-            if (player.tickCount % 20 == 0 && arenaDiscovered(player)) advance(player);
-            return;
-        }
-        // Méditer près d'une pierre de méditation (sanctuaire) : le compteur avance seconde après seconde
-        if (step.type().equals("stone_meditation")) {
-            if (player.tickCount % 20 != 0) return;
-            com.evandouard.hxh.data.HunterData h = com.evandouard.hxh.stats.HunterStats.get(player);
-            if (h.nenUnlocked()) { // déjà éveillé : rien à trouver
-                advance(player);
-                return;
-            }
-            if (h.meditating() && com.evandouard.hxh.meditation.MeditationShrines.stoneTier(player) > 0) {
-                d.progress++;
-                if (d.progress >= step.seconds()) advance(player);
-                else sync(player);
-            }
             return;
         }
         if (step.type().equals("wounded_meditation")) {
