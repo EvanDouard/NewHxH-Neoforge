@@ -62,7 +62,7 @@ public class ProfileScreen extends Screen {
         int bw = (w - 4 * (keys.length - 1)) / keys.length;
         for (int i = 0; i < keys.length; i++) {
             int index = i;
-            tabs.add(addRenderableWidget(Button.builder(Component.translatable(keys[i]), b -> select(index))
+            tabs.add(addRenderableWidget(Button.builder(Component.translatable(keys[i]), b -> { lastTab = index; select(index); })
                     .bounds(left + i * (bw + 4), 28, bw, 20).build()));
         }
         if (!selected.isEmpty() && (tab == 0 || tab == 3 || tab == 4)) {
@@ -133,7 +133,6 @@ public class ProfileScreen extends Screen {
     private void select(int index) {
         boolean changed = tab != index;
         tab = index;
-        lastTab = index;
         scroll = 0;
         if (changed) selected = "";
         for (int i = 0; i < tabs.size(); i++) tabs.get(i).active = i != index;
