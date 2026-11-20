@@ -210,8 +210,8 @@ public final class MangaHud {
         Component nen = manga(Component.translatable("hud.hxh.nen_level", data.nenLevel()));
         outlined(g, nen, x + tabW + 4, tabY + 2, PAPER, 1f);
         int nenRight = x + tabW + 4 + font.width(nen);
-        Component value = manga((int) data.aura() + "/" + data.auraMax());
-        if (nenRight + 6 + font.width(value) > x + barW) value = manga(String.valueOf((int) data.aura()));
+        Component value = manga(com.evandouard.hxh.nen.NenCost.shown(data.aura()) + "/" + com.evandouard.hxh.nen.NenCost.shown(data.auraMax()));
+        if (nenRight + 6 + font.width(value) > x + barW) value = manga(String.valueOf(com.evandouard.hxh.nen.NenCost.shown(data.aura())));
         if (nenRight + 6 + font.width(value) <= x + barW + 4) {
             outlined(g, value, x + barW - font.width(value), tabY + 2, PAPER, 1f);
         }

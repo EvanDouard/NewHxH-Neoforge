@@ -80,7 +80,7 @@ public final class TowerPlacer {
         ServerLevel level = server.overworld();
         Data data = Data.get(level);
         if (data.placed) return;
-        BlockPos spot = findSpot(level, level.getRandom());
+        BlockPos spot = findDrySpot(level, findSpot(level, level.getRandom()));
         BlockPos at = place(level, spot);
         if (at == null) return;
         data.placed = true;
@@ -100,6 +100,50 @@ public final class TowerPlacer {
             plains = level.findClosestBiome3d(h -> h.is(com.evandouard.hxh.arena.TowerPlacer.LAND), start, SEARCH_RADIUS, 32, 64);
         }
         return plains != null ? plains.getFirst() : start;
+    }
+
+    /** Demi-taille de l'emprise de la tour utilisée pour juger un terrain (en blocs, repli si la structure manque). */
+    private static final int FOOTPRINT_HALF = 24;
+
+    /**
+     * Le terrain autour de (x, z) est-il de la terre ferme ? Sur toute l'emprise de la tour (grille de sondes), la
+     * surface doit être du sol sec (ni eau, ni glace, ni lave, ni arbre qui flotte) au-dessus du niveau de la mer,
+     * et le relief ne doit pas varier de plus de 8 blocs.
+     */
+    public static boolean isDryLand(ServerLevel level, int cx, int cz, int half) {
+        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        for (int dx = -half; dx <= half; dx += half / 2 == 0 ? half : half / 2) {
+            for (int dz = -half; dz <= half; dz += half / 2 == 0 ? half : half / 2) {
+                int x = cx + dx, z = cz + dz;
+                level.getChunk(x >> 4, z >> 4);
+                int top = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z);
+                int floor = level.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, x, z);
+                if (top != floor) return false; // quelque chose (eau…) recouvre le sol
+                BlockState ground = level.getBlockState(new BlockPos(x, top - 1, z));
+                if (!ground.getFluidState().isEmpty() || ground.is(Blocks.ICE) || ground.is(Blocks.PACKED_ICE)
+                        || ground.is(Blocks.BLUE_ICE) || ground.is(Blocks.MAGMA_BLOCK)) return false;
+                if (top <= level.getSeaLevel()) return false; // au niveau de la mer ou sous l'eau
+                min = Math.min(min, top);
+                max = Math.max(max, top);
+            }
+        }
+        return max - min <= 8;
+    }
+
+    /** Premier terrain sec en spirale autour de {@code around} (pas de 16, jusqu'à ~700 blocs) ; sinon le point de départ. */
+    public static BlockPos findDrySpot(ServerLevel level, BlockPos around) {
+        if (isDryLand(level, around.getX(), around.getZ(), FOOTPRINT_HALF)) return around;
+        for (int ring = 1; ring <= 44; ring++) {
+            int r = ring * 16;
+            for (int i = 0; i < ring * 8; i++) {
+                double a = Math.PI * 2 * i / (ring * 8);
+                int x = around.getX() + (int) Math.round(Math.cos(a) * r);
+                int z = around.getZ() + (int) Math.round(Math.sin(a) * r);
+                if (isDryLand(level, x, z, FOOTPRINT_HALF)) return new BlockPos(x, around.getY(), z);
+            }
+        }
+        HxHMod.LOGGER.warn("[HxH] Aucune terre ferme trouvée autour de {} : tour posée au point d'origine", around);
+        return around;
     }
 
     /** Biomes de repli si aucune plaine n'existe (monde très particulier). */

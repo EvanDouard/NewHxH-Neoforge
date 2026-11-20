@@ -510,7 +510,7 @@ public final class Characters {
             if (owner instanceof Player p) {
                 HunterData d = data(target);
                 p.displayClientMessage(Component.translatable("message.hxh.pakunoda_read", target.getDisplayName(),
-                        (int) target.getHealth(), (int) target.getMaxHealth(), d.nenLevel(), (int) d.aura()).withStyle(ChatFormatting.AQUA), true);
+                        (int) target.getHealth(), (int) target.getMaxHealth(), d.nenLevel(), com.evandouard.hxh.nen.NenCost.shown(d.aura())).withStyle(ChatFormatting.AQUA), true);
             }
             return amount;
         }

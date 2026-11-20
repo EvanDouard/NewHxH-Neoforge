@@ -94,7 +94,7 @@ Valeurs posées par Claude pour avancer. Elles marchent en jeu, mais on les revo
 
 ## Graphe des techniques du Nen (19 nov)
 Techniques de base enseignées par Wing : Ten, In, Ren, Hatsu. Le reste se débloque aux niveaux de maîtrise (plafond de verre : niveau de Nen, minimum 5). Valeurs **proposées**, à trancher (`NenTree.nodes()`) :
-- Zetsu : In 5 (`senses.zetsuUnlockInLevel`) · Shu : Ten 8 (Ken + 3) · Ken : Ten 5 (`senses.kenUnlockTenLevel`) + Ren 3 · En : Ten 10 + Ren 8 · Gyo : Ren 5.
+- Zetsu : In 5 (`senses.zetsuUnlockInLevel`) · Shu : Ten 8 (Ken + 3) · Ken : Ten 5 (`senses.kenUnlockTenLevel`) + Ren 3 · En : Ten 10 + Ren 8 · Gyo : Ren 5 + In 3 (le Gyo révèle l'In, vrai prérequis depuis le 20 nov).
 - Ko : Ten 10, In 10, Ren 10, Gyo 5, Hatsu appris. Ryu : Gyo 15, Ko 10, Ken 10 (le lien Ken → Ryu est incertain dans le schéma de référence).
 - Ces niveaux au-dessus de 5 demandent un niveau de Nen équivalent.
 
@@ -110,3 +110,17 @@ Techniques de base enseignées par Wing : Ten, In, Ren, Hatsu. Le reste se débl
 - Ten et In : maintien payant de 0 à 5 (`aura.novicePostureDrain` = 5 aura/s à 0, nul à 5 ; la régénération rend 2/s) ; un joueur à court d'aura retombe en posture neutre sans pénalité. Ne s'applique qu'aux joueurs en apprentissage.
 - Coup de pied fort : portée sur les blocs 8 + 0,15 × Force (24 au plus), dégâts ×1,8 pour les éclats/trous ; écrasement au sol dès 0,8 bloc/tick de chute, cuvette de 1 à 3,2 blocs selon la vitesse.
 - Les valeurs affichées dans les fiches du carnet viennent des mêmes formules (donc de la configuration du serveur).
+
+## Aura ×10, régénération et rééquilibrage du niveau max (20 nov)
+| Quoi | Valeur actuelle | Où |
+|---|---|---|
+| Aura maximale | (100 + 4 × Volonté) × talent (Prometteur ×1 = 1000 affichés ; ×0,8 à ×4 selon le talent) | `NenModes.computeAuraMax` |
+| Échelle d'affichage | ×10 (`NenCost.DISPLAY_UNIT`), coûts internes inchangés | `NenCost` |
+| Ten / In débutant | 4 internes = 40 aura/s affichés à la maîtrise 0, nul au niveau 5 | `aura.novicePostureDrain` |
+| Régénération d'aura | 0 jusqu'au niveau 4 ; (niveau − 4)/16 de la base du niveau 5 à 19 ; ×1 au niveau 20 ; ×3 au niveau 100 | `NenCost.regenFactor`, maîtrise `REGEN` |
+| Sommeil | rend 100 % de l'aura, +80 XP de régénération | `NenModes.sleepAndEmpty` |
+| Méditation | +1 XP de régénération toutes les 10 s ; avant l'éveil, la pierre multiplie le compteur par son palier (3/5/8/12/20) | `NenAwakening` |
+| Force | +0,5 dégât/niveau (était 0,1) : +50 au niveau 100 | `stats.strengthDamagePerLevel` |
+| Vitalité | +0,4 PV/niveau (était 0,2) : +40 au niveau 100 | `stats.vitalityHealthPerLevel` |
+| Endurance | 0,1 PV plat/niveau (était 0,05) : 10 au niveau 100 | `stats.enduranceFlatPerLevel` |
+| Repères | niveau 100 ≈ Meruem / Gon adulte ; Netero ≈ niveau 80–90 (comme les gardes royaux) | à régler avec les PNJ |

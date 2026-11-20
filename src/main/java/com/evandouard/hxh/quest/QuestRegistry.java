@@ -20,6 +20,7 @@ public final class QuestRegistry extends SimpleJsonResourceReloadListener {
     private static final Map<ResourceLocation, Quest> QUESTS = new HashMap<>();
     public static final ResourceLocation HUNTER_EXAM = HxHMod.id("hunter_exam");
     public static final ResourceLocation HEAVENS_ARENA = HxHMod.id("heavens_arena");
+    public static final ResourceLocation DISCOVER_ARENA = HxHMod.id("discover_heavens_arena");
 
     private QuestRegistry() {
         super(new Gson(), "quests");

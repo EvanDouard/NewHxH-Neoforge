@@ -62,28 +62,34 @@ public class ProfileScreen extends Screen {
         int bw = (w - 4 * (keys.length - 1)) / keys.length;
         for (int i = 0; i < keys.length; i++) {
             int index = i;
-            tabs.add(addRenderableWidget(Button.builder(Component.translatable(keys[i]), b -> select(index))
+            tabs.add(addRenderableWidget(Button.builder(Component.translatable(keys[i]), b -> { lastTab = index; select(index); })
                     .bounds(left + i * (bw + 4), 28, bw, 20).build()));
         }
         if (!selected.isEmpty() && (tab == 0 || tab == 3 || tab == 4)) {
             addRenderableWidget(Button.builder(Component.translatable("screen.hxh.detail.back"), b -> closeDetail())
                     .bounds(left + w - 64, 53, 60, 14).build());
+            // Hatsu et Ryu : leur bouton de réglage est dans leur fiche (catégorie Nen)
+            net.minecraft.client.Minecraft mcd = net.minecraft.client.Minecraft.getInstance();
+            com.evandouard.hxh.data.HunterData hd = mcd.player.getData(com.evandouard.hxh.data.ModAttachments.HUNTER);
+            if (selected.equals("hatsu")) {
+                addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.hatsu"), b -> NenClient.openHatsuMenu(mcd))
+                        .bounds(left + w - 64 - 134, 53, 130, 14).build());
+            } else if (selected.equals("ryu")) {
+                Button ryuB = addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.ryu"), b -> NenClient.openRyu(mcd))
+                        .bounds(left + w - 64 - 134, 53, 130, 14).build());
+                ryuB.active = hd.nenUnlocked();
+            }
         } else if (tab == 1) addTrackButtons(left, w);
         else if (tab == 0 || tab == 2) {
-            // Actions (2 lignes de 2) : Hatsu, méditation, Ryu, ouverture des pores de la cible visée
+            // Actions : méditation et ouverture des pores de la cible visée (Hatsu et Ryu sont dans leur fiche, onglet Nen)
             int aw = (w - 4) / 2;
             int ay = height - 76;
             net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
             com.evandouard.hxh.data.HunterData hunter = mc.player.getData(com.evandouard.hxh.data.ModAttachments.HUNTER);
-            addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.hatsu"), b -> NenClient.openHatsuMenu(mc))
-                    .bounds(left, ay, aw, 20).build());
             addRenderableWidget(Button.builder(Component.translatable("netero".equals(hunter.kit()) ? "screen.hxh.profile.pray" : "screen.hxh.profile.meditate"), b -> {
                 onClose();
                 NenClient.meditate();
-            }).bounds(left + aw + 4, ay, aw, 20).build());
-            Button ryu = addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.ryu"), b -> NenClient.openRyu(mc))
-                    .bounds(left, ay + 24, aw, 20).build());
-            ryu.active = hunter.nenUnlocked();
+            }).bounds(left, ay + 24, aw, 20).build());
             Button pores = addRenderableWidget(Button.builder(Component.translatable("screen.hxh.profile.open_pores"), b -> {
                 onClose();
                 NenClient.openPores();
@@ -127,7 +133,6 @@ public class ProfileScreen extends Screen {
     private void select(int index) {
         boolean changed = tab != index;
         tab = index;
-        lastTab = index;
         scroll = 0;
         if (changed) selected = "";
         for (int i = 0; i < tabs.size(); i++) tabs.get(i).active = i != index;
@@ -388,11 +393,12 @@ public class ProfileScreen extends Screen {
         if (!text && !subjects.containsKey(id)) return false;
         int target = text || com.evandouard.hxh.stats.ProfileDetails.STATS.contains(id) ? 0
                 : com.evandouard.hxh.stats.ProfileDetails.AURA.contains(id) ? 4 : 3;
+        int keepTab = lastTab; // le carnet se rouvrira sur l'onglet que le joueur a choisi, pas sur celui de la fiche
         tab = target;
-        lastTab = target;
         selected = id;
         scroll = 0;
         rebuildWidgets();
+        lastTab = keepTab;
         return true;
     }
 

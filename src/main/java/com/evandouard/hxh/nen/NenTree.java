@@ -47,7 +47,7 @@ public final class NenTree {
         n.add(new Node(Ability.SHU, ADVANCED, List.of(new Req(Mastery.TEN, kenTen + 3)), false, null));
         n.add(new Node(Ability.KEN, ADVANCED, List.of(new Req(Mastery.TEN, kenTen), new Req(Mastery.REN, 3)), false, null));
         n.add(new Node(Ability.EN, ADVANCED, List.of(new Req(Mastery.TEN, kenTen + 5), new Req(Mastery.REN, 8)), false, null));
-        n.add(new Node(Ability.GYO, ADVANCED, List.of(new Req(Mastery.REN, 5)), false, null));
+        n.add(new Node(Ability.GYO, ADVANCED, List.of(new Req(Mastery.REN, 5), new Req(Mastery.IN, 3)), false, null));
         n.add(new Node(Ability.KO, COMBO, List.of(new Req(Mastery.TEN, 10), new Req(Mastery.IN, zetsuIn + 5),
                 new Req(Mastery.REN, 10), new Req(Mastery.GYO, 5)), true, null));
         n.add(new Node(Ability.RYU, MASTERY, List.of(new Req(Mastery.GYO, 15), new Req(Mastery.KO, 10),
@@ -64,7 +64,7 @@ public final class NenTree {
                 new Edge(Ability.TEN, Ability.SHU, false),
                 new Edge(Ability.TEN, Ability.KEN, false), new Edge(Ability.REN, Ability.KEN, false),
                 new Edge(Ability.TEN, Ability.EN, false), new Edge(Ability.REN, Ability.EN, false),
-                new Edge(Ability.REN, Ability.GYO, false),
+                new Edge(Ability.REN, Ability.GYO, false), new Edge(Ability.IN, Ability.GYO, false),
                 new Edge(Ability.TEN, Ability.KO, false), new Edge(Ability.ZETSU, Ability.KO, false),
                 new Edge(Ability.REN, Ability.KO, false), new Edge(Ability.HATSU, Ability.KO, false),
                 new Edge(Ability.GYO, Ability.KO, false),

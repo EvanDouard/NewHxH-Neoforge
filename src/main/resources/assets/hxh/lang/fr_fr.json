@@ -1476,7 +1476,7 @@
   "detail.hxh.desc.nen": "Niveau de Nen global : plafonne toutes les maîtrises et réduit le coût des Hatsu. Monte en utilisant le Nen.",
   "detail.hxh.desc.aura": "Ton aura maximale dépend de la Volonté. Pour l'augmenter : monte la Volonté en tenant le Ren et le Ken.",
   "detail.hxh.desc.heal": "Convertit de l'aura en vie tant que la touche est maintenue. Plus le niveau monte, plus c'est rapide et économe. Monte en soignant des PV.",
-  "detail.hxh.desc.regen": "Régénération de l'aura : constante hors Ren et Ken, bien plus rapide en Zetsu (selon sa maîtrise), doublée en méditation.",
+  "detail.hxh.desc.regen": "Régénération de l'aura : aucune avant le niveau 5 (il faut dormir : le sommeil rend 100 % de l'aura et fait progresser cette maîtrise, la méditation aussi). Ensuite constante hors Ren et Ken, bien plus rapide en Zetsu.",
   "detail.hxh.eff.str_damage": "Dégâts au corps à corps : +%s",
   "detail.hxh.eff.str_kick_push": "Poussée du coup de pied fort : %s",
   "detail.hxh.eff.str_kick_reach": "Portée du coup de pied fort sur les blocs : %s blocs",
@@ -1485,7 +1485,7 @@
   "detail.hxh.eff.speed_step": "Tu montes les blocs d'un coup",
   "detail.hxh.eff.end_resist": "Dégâts retirés à chaque coup : %s PV",
   "detail.hxh.eff.vit_health": "PV max en plus : +%s",
-  "detail.hxh.eff.wp_aura": "Aura maximale : %s",
+  "detail.hxh.eff.wp_aura": "Aura maximale : %s (× talent de Nen)",
   "detail.hxh.eff.wp_fall": "Dégâts de chute : %s %% de la normale",
   "detail.hxh.eff.aura_regen": "Régénération d'aura : %s/s",
   "detail.hxh.eff.heal_rate": "Soin : %s PV/s",
@@ -1538,5 +1538,12 @@
   "screen.hxh.aura.aura": "Aura maximale",
   "screen.hxh.aura.heal": "Soin par le Nen",
   "screen.hxh.aura.regen": "Régénération d'aura",
-  "screen.hxh.aura.title": "Aura et régénérations : clique une fiche pour les paliers."
+  "screen.hxh.aura.title": "Aura et régénérations : clique une fiche pour les paliers.",
+  "message.hxh.sleep_refill": "Tu te réveilles reposé : ton aura est entièrement revenue.",
+  "message.hxh.aura_empty_sleep": "Ton aura est à plat. Entre le niveau 0 et 5 de la régénération, elle ne revient pas toute seule : va dormir dans un lit pour la récupérer (100 %).",
+  "message.hxh.aura_empty": "Ton aura est à plat.",
+  "mastery.hxh.regen": "Régénération d'aura",
+  "detail.hxh.eff.regen_none": "Aucune régénération naturelle (dormir remplit l'aura)",
+  "detail.hxh.eff.regen_sleep": "Dormir : aura rendue à 100 % et XP de régénération",
+  "quest.hxh.discover_arena.hint": "Rumeur : la Tour Céleste se dresse vers X %s, Z %s. (/hunter tower pour la retrouver)"
 }

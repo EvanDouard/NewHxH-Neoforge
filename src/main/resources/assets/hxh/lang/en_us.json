@@ -1476,7 +1476,7 @@
   "detail.hxh.desc.nen": "Overall Nen level: caps every mastery and lowers Hatsu costs. Rises by using Nen.",
   "detail.hxh.desc.aura": "Your maximum aura depends on Willpower. To raise it: train Willpower by holding Ren and Ken.",
   "detail.hxh.desc.heal": "Converts aura into health while the key is held. The higher the level, the faster and cheaper it gets. Rises by healing HP.",
-  "detail.hxh.desc.regen": "Aura regeneration: constant outside Ren and Ken, much faster in Zetsu (depending on its mastery), doubled while meditating.",
+  "detail.hxh.desc.regen": "Aura regeneration: none before level 5 (you must sleep: sleep restores 100% of your aura and trains this mastery, and so does meditation). After that it is constant outside Ren and Ken, and much faster in Zetsu.",
   "detail.hxh.eff.str_damage": "Melee damage: +%s",
   "detail.hxh.eff.str_kick_push": "Strong kick push: %s",
   "detail.hxh.eff.str_kick_reach": "Strong kick reach on blocks: %s blocks",
@@ -1485,7 +1485,7 @@
   "detail.hxh.eff.speed_step": "You step up blocks at once",
   "detail.hxh.eff.end_resist": "Damage removed from every hit: %s HP",
   "detail.hxh.eff.vit_health": "Extra max HP: +%s",
-  "detail.hxh.eff.wp_aura": "Maximum aura: %s",
+  "detail.hxh.eff.wp_aura": "Maximum aura: %s (× Nen talent)",
   "detail.hxh.eff.wp_fall": "Fall damage: %s%% of normal",
   "detail.hxh.eff.aura_regen": "Aura regeneration: %s/s",
   "detail.hxh.eff.heal_rate": "Healing: %s HP/s",
@@ -1538,5 +1538,12 @@
   "screen.hxh.aura.aura": "Max aura",
   "screen.hxh.aura.heal": "Nen healing",
   "screen.hxh.aura.regen": "Aura regeneration",
-  "screen.hxh.aura.title": "Aura and regeneration: click a card for the tiers."
+  "screen.hxh.aura.title": "Aura and regeneration: click a card for the tiers.",
+  "message.hxh.sleep_refill": "You wake up rested: your aura is fully restored.",
+  "message.hxh.aura_empty_sleep": "Your aura is empty. Below aura regeneration level 5 it does not come back on its own: go sleep in a bed to recover it (100%).",
+  "message.hxh.aura_empty": "Your aura is empty.",
+  "mastery.hxh.regen": "Aura regeneration",
+  "detail.hxh.eff.regen_none": "No natural regeneration (sleeping refills the aura)",
+  "detail.hxh.eff.regen_sleep": "Sleeping: aura restored to 100% and regeneration XP",
+  "quest.hxh.discover_arena.hint": "Rumor: the Heavens Arena tower stands around X %s, Z %s. (/hunter tower to find it again)"
 }

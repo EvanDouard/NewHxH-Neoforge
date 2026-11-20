@@ -1,0 +1,21 @@
+{
+  "title": {
+    "fr": "Découvrir la Heaven Arena",
+    "en": "Discover Heavens Arena"
+  },
+  "intro": {
+    "fr": "On raconte qu'une immense tour de combat se dresse quelque part dans les plaines.",
+    "en": "They say a huge fighting tower rises somewhere in the plains."
+  },
+  "steps": [
+    {
+      "id": "find",
+      "type": "arena_discover",
+      "reward_jenny": 200,
+      "objective": {
+        "fr": "Trouver la Tour Céleste (la Heaven Arena) : approche-toi d'elle",
+        "en": "Find the Heavens Arena tower: get close to it"
+      }
+    }
+  ]
+}

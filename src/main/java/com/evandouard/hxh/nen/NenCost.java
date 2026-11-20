@@ -14,6 +14,37 @@ import com.evandouard.hxh.hatsu.Technique;
 public final class NenCost {
     private NenCost() {}
 
+    /**
+     * L'aura est comptée en interne par petits nombres (un débutant : 100) ; tout ce qui s'affiche (barre, coûts,
+     * régénération) est multiplié par cette unité, pour des nombres plus parlants : 1 000 d'aura au départ.
+     */
+    public static final float DISPLAY_UNIT = 10f;
+
+    /** Valeur d'aura telle qu'on l'affiche. */
+    public static int shown(double internal) {
+        return (int) Math.round(internal * DISPLAY_UNIT);
+    }
+
+    /** Idem, en texte sans décimales inutiles (coûts par seconde, par PV…). */
+    public static String shownText(double internal) {
+        double v = internal * DISPLAY_UNIT;
+        String s = Math.abs(v) >= 100 ? String.format(java.util.Locale.ROOT, "%.0f", v) : String.format(java.util.Locale.ROOT, "%.1f", v);
+        return s.contains(".") ? s.replaceAll("0+$", "").replaceAll("\\.$", "") : s;
+    }
+
+    /** Régénération d'aura : nulle avant ce niveau de la maîtrise « Régénération d'aura ». */
+    public static final int REGEN_FROM = 5;
+
+    /**
+     * Part de la régénération de base obtenue à ce niveau de régénération : rien jusqu'au niveau 4, puis ça monte
+     * jusqu'à ×1 au niveau 20, ×3 au niveau 100.
+     */
+    public static double regenFactor(int level) {
+        if (level < REGEN_FROM) return 0;
+        if (level < 20) return (level - REGEN_FROM + 1) / 16.0;
+        return 1.0 + (level - 20) / 40.0;
+    }
+
     /** Fin de la phase brutale : jusqu'à ce niveau, le surcoût s'effondre. */
     public static final int BRUTAL_UNTIL = 5;
 
@@ -39,7 +70,7 @@ public final class NenCost {
         try {
             base = HxHConfig.NOVICE_POSTURE_DRAIN.get();
         } catch (IllegalStateException e) {
-            base = 5.0;
+            base = 4.0;
         }
         return base * (1.0 - Math.max(0, level) / (double) BRUTAL_UNTIL);
     }

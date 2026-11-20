@@ -171,4 +171,34 @@ public final class HunterStatsTests {
         }
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void auraMaxScalesWithNenTalent(GameTestHelper helper) {
+        HunterData data = new HunterData();
+        data.setTalent(com.evandouard.hxh.data.NenTalent.PROMISING);
+        int x1 = com.evandouard.hxh.nen.NenModes.computeAuraMax(data);
+        helper.assertTrue(com.evandouard.hxh.nen.NenCost.shown(x1) >= 1000, "Prometteur (x1) : au moins 1000 d'aura affichée, obtenu " + x1);
+        data.setTalent(com.evandouard.hxh.data.NenTalent.PRODIGY);
+        helper.assertTrue(com.evandouard.hxh.nen.NenModes.computeAuraMax(data) == 2 * x1, "Prodige (x2) : le double de l'aura");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void auraRegenIsNullBeforeLevelFive(GameTestHelper helper) {
+        for (int l = 0; l < com.evandouard.hxh.nen.NenCost.REGEN_FROM; l++)
+            helper.assertTrue(com.evandouard.hxh.nen.NenCost.regenFactor(l) == 0, "Aucune régénération au niveau " + l);
+        helper.assertTrue(com.evandouard.hxh.nen.NenCost.regenFactor(5) > 0, "La régénération démarre au niveau 5");
+        helper.assertTrue(com.evandouard.hxh.nen.NenCost.regenFactor(20) == 1.0, "Régénération normale au niveau 20");
+        helper.assertTrue(com.evandouard.hxh.nen.NenCost.regenFactor(100) > com.evandouard.hxh.nen.NenCost.regenFactor(20), "Elle continue de monter");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void strengthIsMuchStrongerAtMaxLevel(GameTestHelper helper) {
+        Zombie z = zombie(helper);
+        double base = z.getAttributeValue(Attributes.ATTACK_DAMAGE);
+        HunterStats.setLevel(z, Stat.STRENGTH, 100);
+        helper.assertTrue(z.getAttributeValue(Attributes.ATTACK_DAMAGE) >= base + 40, "Force 100 : au moins +40 de dégâts (Meruem / Gon adulte)");
+        helper.succeed();
+    }
 }

@@ -108,7 +108,7 @@ public class TechniqueListScreen extends Screen {
                         .withStyle(data.nenLevel() >= t.minNenLevel() ? ChatFormatting.GRAY : ChatFormatting.RED), 8, false);
             }
             if (t.implemented()) {
-                add(Component.translatable("screen.hxh.techniques.stats", com.evandouard.hxh.nen.NenCost.cost(data, t),
+                add(Component.translatable("screen.hxh.techniques.stats", com.evandouard.hxh.nen.NenCost.shown(com.evandouard.hxh.nen.NenCost.cost(data, t)),
                         String.format(Locale.ROOT, "%.1f", t.cooldownTicks() / 20f)).withStyle(ChatFormatting.GRAY), 8, false);
             }
             add(Component.translatable("screen.hxh.techniques.conditions", t.conditions()).withStyle(ChatFormatting.GRAY), 8, false);

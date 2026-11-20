@@ -36,7 +36,7 @@ cmd attribute @s minecraft:generic.attack_damage get
 wait 20
 expect Vitalité : 100
 expect Force : 30
-expect 40
+expect 60
 shot 03_vitalite_100_force_30
 
 # --- J2 : aura, Ten / Zetsu / Ren, divination ---
@@ -302,6 +302,8 @@ cmd hunter nen reveal
 wait 10
 key key.hxh.profile
 wait 15
+pick hatsu
+wait 10
 click Hatsu
 wait 20
 shot 16_choix_du_hatsu
@@ -357,6 +359,8 @@ wait 10
 shot 20_technique_suivante
 key key.hxh.profile
 wait 15
+pick hatsu
+wait 10
 click Hatsu
 wait 10
 shot 21_ma_fiche_illumi
@@ -777,6 +781,8 @@ cmd kill @e[tag=hxh_en_probe]
 key key.hxh.en
 key key.hxh.profile
 wait 15
+pick ryu
+wait 10
 click Ryu
 wait 10
 shot 27_ecran_ryu
@@ -1305,7 +1311,20 @@ talkto wing
 wait 10
 expect Entraîne-toi encore
 shot 38c_wing_entraine_toi_encore_niveau
-wait 400
+# plus de régénération avant le niveau 5 : on recharge l'aura pour que le Ten tienne assez longtemps
+wait 100
+cmd hunter refill
+wait 100
+cmd hunter refill
+wait 100
+cmd hunter refill
+wait 100
+# diagnostic : maîtrises et aura après l'entraînement
+cmd hunter show @s
+wait 10
+# le gain d'XP est probabiliste selon le talent (Ordinaire ×0,8) : on assure le niveau 1 pour la suite du scénario
+cmd hunter nen mastery ten 1
+wait 10
 clearchat
 talkto wing
 wait 10
@@ -1650,6 +1669,8 @@ camera first
 look 0 10
 key key.hxh.profile
 wait 15
+pick hatsu
+wait 10
 click Hatsu
 wait 15
 click Serments
@@ -2060,6 +2081,8 @@ click Quêtes
 wait 5
 click Personnage
 wait 5
+pick hatsu
+wait 10
 click Hatsu
 wait 10
 click Serments
@@ -2189,6 +2212,8 @@ click Quêtes
 wait 5
 click Personnage
 wait 5
+pick hatsu
+wait 10
 click Hatsu
 wait 10
 click Serments
@@ -2418,6 +2443,18 @@ shot 99p_fiche_soin_par_le_nen
 pick regen
 wait 10
 shot 99q_fiche_regeneration_aura
+pick txt:family
+wait 10
+shot 99r_famille_coup_secret_explique
+pick hatsu
+wait 10
+shot 99s_fiche_hatsu_avec_bouton
+pick ryu
+wait 10
+shot 99t_fiche_ryu_avec_bouton
+click Quêtes
+wait 15
+shot 99u_quetes_decouvrir_heaven_arena
 closescreen
 cmd time set noon
 camera first

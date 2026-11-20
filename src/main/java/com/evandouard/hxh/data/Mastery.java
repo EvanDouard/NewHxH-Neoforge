@@ -7,7 +7,9 @@ import java.util.Locale;
  * et ne peut pas dépasser le niveau de Nen (plafond de verre).
  */
 public enum Mastery {
-    TEN, ZETSU, IN, REN, KEN, KO, RYU, GYO, EN, SHU;
+    TEN, ZETSU, IN, REN, KEN, KO, RYU, GYO, EN, SHU,
+    /** Régénération d'aura : nulle avant le niveau 5 ; monte en dormant (sommeil = aura pleine) et en méditant. */
+    REGEN;
 
     public static final int MAX_LEVEL = 100;
     /** Plafond minimal : même un débutant peut monter ses maîtrises jusqu'à ce niveau. */
