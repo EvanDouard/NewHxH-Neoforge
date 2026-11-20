@@ -1581,39 +1581,48 @@ expect [Association Hunter]
 expect manieur de Nen errant
 shot 52_evenement_prime_association
 cmd difficulty peaceful
-# --- Modèles GeckoLib : Gon (pilote), vues de contrôle rapprochées (face, trois-quarts, profil, dos, dessus) ---
+# --- Modèles GeckoLib : Gon (pilote), vues de contrôle rapprochées sans interface ---
 cmd kill @e[tag=geo_ci]
+cmd gamerule sendCommandFeedback false
 cmd fill ~-6 ~30 ~-3 ~6 ~30 ~9 minecraft:smooth_stone
 cmd tp @s ~ ~31 ~ 0 0
+hud off
 look 0 14
 cmd summon hxh:npc ~ ~ ~2.8 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
-wait 40
+wait 25
 clearchat
 shot 60a_gon_face
-cmd kill @e[tag=geo_ci]
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
 cmd summon hxh:npc ~ ~ ~2.8 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
-wait 20
+wait 25
+clearchat
 shot 60b_gon_trois_quarts
-cmd kill @e[tag=geo_ci]
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
 cmd summon hxh:npc ~ ~ ~2.8 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
-wait 20
+wait 25
+clearchat
 shot 60c_gon_profil
-cmd kill @e[tag=geo_ci]
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
 cmd summon hxh:npc ~ ~ ~2.8 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
-wait 20
+wait 25
+clearchat
 shot 60d_gon_dos
-cmd kill @e[tag=geo_ci]
-cmd summon hxh:npc ~ ~ ~2.0 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
-look 0 58
-wait 20
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 62
+cmd summon hxh:npc ~ ~ ~1.6 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
 shot 60e_gon_dessus
-cmd kill @e[tag=geo_ci]
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 6
 cmd summon hxh:npc ~-1.0 ~ ~4 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[160f,0f],Tags:["geo_ci"]}
 cmd summon hxh:npc ~1.2 ~ ~4 {npc:"cook",NoAI:1b,Silent:1b,Rotation:[200f,0f],Tags:["geo_ci"]}
-wait 20
+wait 25
+clearchat
 shot 60f_gon_echelle
+hud on
 cmd kill @e[tag=geo_ci]
+cmd gamerule sendCommandFeedback true
 # --- Apparences des personnages (skins, tailles, cheveux/barbes en 3D) ---
 cmd kill @e[type=hxh:npc]
 camera first

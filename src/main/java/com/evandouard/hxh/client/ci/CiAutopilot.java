@@ -238,6 +238,11 @@ public final class CiAutopilot {
                     log("ECHEC : pas de fiche '" + arg + "' à l'écran");
                     return false;
                 }
+                case "hud" -> {
+                    // « hud off » : captures sans interface (comme F1), « hud on » pour la remettre
+                    mc.options.hideGui = arg.equals("off");
+                    return true;
+                }
                 case "camera" -> {
                     mc.options.setCameraType(switch (arg) {
                         case "back" -> CameraType.THIRD_PERSON_BACK;
