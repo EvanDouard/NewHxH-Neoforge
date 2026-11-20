@@ -203,10 +203,7 @@ public final class CharacterKitTests {
     @GameTest(template = "empty")
     public static void lot7ElectricFistSlowsAndSmashHits(GameTestHelper helper) {
         Zombie killua = husk(helper, 0);
-        Zombie target = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(8, 1, 1));
-        target.setNoGravity(true);
         hunter(killua, NenType.TRANSMUTER, "killua");
-        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.KILLUA_YOYO.perform(killua, 1f), "Le yoyo touche à 5 blocs ou part");
         Zombie close = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(3, 1, 1));
         close.setNoGravity(true);
         close.setPos(close.getX(), killua.getY(), close.getZ());

@@ -291,6 +291,7 @@ public final class CombatTests {
         for (int x = 0; x <= 2; x++) for (int y = 1; y <= 7; y++) for (int z = 0; z <= 8; z++)
             helper.setBlock(new BlockPos(x, y, z), net.minecraft.world.level.block.Blocks.AIR);
         Zombie shot = helper.spawnWithNoFreeWill(EntityType.HUSK, new BlockPos(1, 4, 4));
+        shot.setInvulnerable(true); // sinon il meurt étouffé dans la pierre et le tunnel s'arrête
         shot.setNoGravity(true); // pas de frottement du sol : la course ne dépend que de la vitesse de départ
         shot.setDeltaMovement(2.2, 0.0, 0);
         shot.hurtMarked = true;
