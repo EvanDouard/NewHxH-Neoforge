@@ -213,6 +213,21 @@ public final class CharacterKitTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty")
+    public static void lot8CloudBlindsAndGuardResists(GameTestHelper helper) {
+        Zombie morel = husk(helper, 0);
+        Zombie near = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(3, 1, 1));
+        near.setNoGravity(true);
+        hunter(morel, NenType.MANIPULATOR, "morel");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.MOREL_BLINDING_CLOUD.perform(morel, 1f), "Le nuage part");
+        helper.assertTrue(near.hasEffect(net.minecraft.world.effect.MobEffects.BLINDNESS), "L'ennemi proche est aveuglé");
+        Zombie guard = husk(helper, 6);
+        hunter(guard, NenType.ENHANCER, "tsezguerra");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.TSEZGUERRA_INSTANT_GUARD.perform(guard, 1f), "La défense part");
+        helper.assertTrue(guard.hasEffect(net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE), "Résistance active");
+        helper.succeed();
+    }
+
     /** Chaque technique de chaque personnage jouable part sans erreur, lancée par un mob sur une cible devant lui. */
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void everyTechniqueOfEveryKitRuns(GameTestHelper helper) {

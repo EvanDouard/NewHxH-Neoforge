@@ -306,3 +306,8 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [x] CI : `lot7ElectricFistSlowsAndSmashHits` + `everyTechniqueOfEveryKitRuns`.
 - [ ] En jeu : Silva Frappe du patriarche (20 aura, 5 s) ; Zeno Aura Blast (30, 13 s) ; Razor Smash (30, 8 s, ralentit) ; Kalluto Éventail de papier (20, 6 s, affaiblit) ; Killua Coup de yoyo (10, 3 s, 5 blocs) et Poing électrique (20, 7 s, quasi paralysie 2 s).
 - Valeurs proposées par moi : corrige-les dans `docs/a-trancher.md`.
+
+## Lot 8 des techniques de ton fichier (20 nov)
+- [x] CI : `lot8CloudBlindsAndGuardResists` + `everyTechniqueOfEveryKitRuns`.
+- [ ] En jeu : Pitou Griffure (15 aura, 3 s) ; Illumi Pluie d'aiguilles (35, 12 s) ; Leorio Percussion interne (20, 6 s) ; Hisoka Poing élastique (20, 5 s, portée 6 blocs) ; Tsezguerra Défense instantanée (20, 12 s, Résistance II 3 s) ; Morel Nuage aveuglant (30, 15 s) ; Machi Fil étrangleur (25, 9 s).
+- Valeurs proposées par moi : corrige-les dans `docs/a-trancher.md`.

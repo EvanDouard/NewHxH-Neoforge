@@ -821,6 +821,40 @@ public final class Characters {
             3.5, 0.85, 9f, 0.3f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 40, 4)),
             new Look(Style.CRACKLE, NenFx.TRANSMUTER, 1.4f), SoundEvents.LIGHTNING_BOLT_THUNDER));
 
+    /** Griffure de Pitou : trois coups de griffe rapides, qui saignent (Poison). */
+    public static final Technique PITOU_CLAWS = register(new Techniques.Strike("pitou_claws", NenType.SPECIALIST, 15, 60,
+            3.5, 0.85, 8f, 0.4f, List.of(new Effect(MobEffects.POISON, 60, 0)),
+            new Look(Style.SLASH, NenFx.SPECIALIST, 1.4f), SoundEvents.PLAYER_ATTACK_SWEEP));
+
+    /** Pluie d'aiguilles d'Illumi : une salve d'aiguilles devant lui. */
+    public static final Technique ILLUMI_NEEDLE_BARRAGE = register(new Kinds.Burst("illumi_needle_barrage", NenType.MANIPULATOR, 35, 240,
+            16, 8, 2, 1.6f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 40, 0)),
+            new Look(Style.NEEDLE, NenFx.MANIPULATOR, 0.6f), SoundEvents.ARROW_SHOOT));
+
+    /** Percussion interne de Leorio : un coup qui ignore l'armure (nausée et faiblesse). */
+    public static final Technique LEORIO_INNER_BLOW = register(new Techniques.Strike("leorio_inner_blow", EMITTER, 20, 120,
+            3.5, 0.85, 7f, 0.2f, List.of(new Effect(MobEffects.CONFUSION, 100, 0), new Effect(MobEffects.WEAKNESS, 100, 0)),
+            new Look(Style.IMPACT, NenFx.EMITTER, 1.4f), SoundEvents.PLAYER_ATTACK_CRIT));
+
+    /** Poing élastique de Hisoka : le poing part à 6 blocs au bout d'un fil de Bungee Gum. */
+    public static final Technique HISOKA_ELASTIC_FIST = register(new Techniques.Strike("hisoka_elastic_fist", TRANSMUTER, 20, 100,
+            6.0, 0.9, 9f, 0f, List.of(), new Look(Style.WARP_FIST, NenFx.TRANSMUTER, 1.2f), SoundEvents.SLIME_BLOCK_HIT));
+
+    /** Défense instantanée de Tsezguerra : Résistance II pendant 3 s. */
+    public static final Technique TSEZGUERRA_INSTANT_GUARD = register(new Techniques.SelfBuff("tsezguerra_instant_guard", ENHANCER, 20, 240,
+            List.of(new Effect(MobEffects.DAMAGE_RESISTANCE, 60, 1)),
+            new Look(Style.FLARE, NenFx.ENHANCER, 1f), SoundEvents.ARMOR_EQUIP_IRON.value()));
+
+    /** Nuage aveuglant de Morel : un nuage de fumée (6 blocs) qui aveugle et ralentit. */
+    public static final Technique MOREL_BLINDING_CLOUD = register(new Kinds.Pulse("morel_blinding_cloud", MANIPULATOR, 30, 300,
+            6, 0f, 0f, List.of(new Effect(MobEffects.BLINDNESS, 80, 0), new Effect(MobEffects.MOVEMENT_SLOWDOWN, 80, 1)),
+            new Look(Style.SHOCKWAVE, NenFx.MANIPULATOR, 1.2f), SoundEvents.FIRE_EXTINGUISH));
+
+    /** Fil étrangleur de Machi : un fil d'aura qui ralentit et affaiblit à 8 blocs. */
+    public static final Technique MACHI_STRANGLE = register(new Techniques.Strike("machi_strangle", TRANSMUTER, 25, 180,
+            8.0, 0.95, 6f, 0f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 80, 2), new Effect(MobEffects.WEAKNESS, 80, 0)),
+            new Look(Style.CHAIN, NenFx.TRANSMUTER, 1f), SoundEvents.CHAIN_PLACE));
+
     /** Frappe du Roi : un coup de poing royal, lourd et précis. */
     public static final Technique MERUEM_KING_STRIKE = register(new Techniques.Strike("meruem_king_strike", EMITTER, 20, 100,
             3.5, 0.85, 14f, 1.8f, List.of(), new Look(Style.IMPACT, NenFx.DARK, 1.8f), SoundEvents.PLAYER_ATTACK_STRONG));

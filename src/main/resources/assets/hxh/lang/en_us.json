@@ -1590,5 +1590,19 @@
   "technique.hxh.killua_yoyo": "Yo-yo Strike",
   "technique.hxh.killua_yoyo.desc": "The yo-yo flies out and hits at 5 blocks.",
   "technique.hxh.killua_electric_fist": "Electric Fist",
-  "technique.hxh.killua_electric_fist.desc": "An electrified punch: nearly paralyzes the enemy for 2 s."
+  "technique.hxh.killua_electric_fist.desc": "An electrified punch: nearly paralyzes the enemy for 2 s.",
+  "technique.hxh.pitou_claws": "Claws",
+  "technique.hxh.pitou_claws.desc": "Three quick claw swipes that cause bleeding.",
+  "technique.hxh.illumi_needle_barrage": "Needle Barrage",
+  "technique.hxh.illumi_needle_barrage.desc": "A volley of needles in front of you (16 blocks) that slows.",
+  "technique.hxh.leorio_inner_blow": "Inner Blow",
+  "technique.hxh.leorio_inner_blow.desc": "A blow that causes nausea and weakness.",
+  "technique.hxh.hisoka_elastic_fist": "Elastic Fist",
+  "technique.hxh.hisoka_elastic_fist.desc": "Your fist flies out 6 blocks on a Bungee Gum thread.",
+  "technique.hxh.tsezguerra_instant_guard": "Instant Guard",
+  "technique.hxh.tsezguerra_instant_guard.desc": "Resistance II for 3 s.",
+  "technique.hxh.morel_blinding_cloud": "Blinding Cloud",
+  "technique.hxh.morel_blinding_cloud.desc": "A smoke cloud (6 blocks) that blinds and slows.",
+  "technique.hxh.machi_strangle": "Strangling Thread",
+  "technique.hxh.machi_strangle.desc": "An aura thread that slows and weakens at 8 blocks."
 }

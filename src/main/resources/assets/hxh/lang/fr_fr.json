@@ -1590,5 +1590,19 @@
   "technique.hxh.killua_yoyo": "Coup de yoyo",
   "technique.hxh.killua_yoyo.desc": "Le yoyo file et frappe à 5 blocs.",
   "technique.hxh.killua_electric_fist": "Poing électrique",
-  "technique.hxh.killua_electric_fist.desc": "Un coup chargé d'électricité : paralyse presque l'ennemi 2 s."
+  "technique.hxh.killua_electric_fist.desc": "Un coup chargé d'électricité : paralyse presque l'ennemi 2 s.",
+  "technique.hxh.pitou_claws": "Griffure",
+  "technique.hxh.pitou_claws.desc": "Trois coups de griffe rapides qui font saigner.",
+  "technique.hxh.illumi_needle_barrage": "Pluie d'aiguilles",
+  "technique.hxh.illumi_needle_barrage.desc": "Une salve d'aiguilles devant toi (16 blocs) qui ralentit.",
+  "technique.hxh.leorio_inner_blow": "Percussion interne",
+  "technique.hxh.leorio_inner_blow.desc": "Un coup qui donne la nausée et affaiblit.",
+  "technique.hxh.hisoka_elastic_fist": "Poing élastique",
+  "technique.hxh.hisoka_elastic_fist.desc": "Le poing part à 6 blocs au bout d'un fil de Bungee Gum.",
+  "technique.hxh.tsezguerra_instant_guard": "Défense instantanée",
+  "technique.hxh.tsezguerra_instant_guard.desc": "Résistance II pendant 3 s.",
+  "technique.hxh.morel_blinding_cloud": "Nuage aveuglant",
+  "technique.hxh.morel_blinding_cloud.desc": "Un nuage de fumée (6 blocs) qui aveugle et ralentit.",
+  "technique.hxh.machi_strangle": "Fil étrangleur",
+  "technique.hxh.machi_strangle.desc": "Un fil d'aura qui ralentit et affaiblit à 8 blocs."
 }
