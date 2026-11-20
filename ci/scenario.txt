@@ -2133,6 +2133,7 @@ closescreen
 # --- PNJ : exorciste, archéologue, Hunter gourmet, commissaire-priseur ---
 cmd tp @s ~30 -60 ~ -90 10
 wait 10
+cmd effect clear @s hxh:nen_curse
 cmd summon hxh:npc ~2 ~ ~ {npc:"exorciste",NoAI:1b}
 wait 5
 clearchat

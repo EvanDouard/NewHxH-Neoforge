@@ -28,6 +28,12 @@ PREVIEWS = os.path.join(ROOT, 'build', 'model-previews')
 FACES = ('north', 'south', 'east', 'west', 'up', 'down')
 
 
+def to_geckolib(rot):
+    """Rotation de l'aperçu -> rotation écrite dans le fichier. GeckoLib inverse les axes X et Z par rapport à
+    notre aperçu (vérifié en jeu sur les mèches de Gon) : on les inverse ici pour que le jeu montre l'aperçu."""
+    return [-rot[0], rot[1], -rot[2]]
+
+
 # ---------------------------------------------------------------------------------------------------------------
 # Couleurs
 
@@ -200,7 +206,7 @@ class Model:
             if b.parent:
                 jb['parent'] = b.parent
             if b.rotation:
-                jb['rotation'] = list(b.rotation)
+                jb['rotation'] = to_geckolib(b.rotation)
             cubes = []
             for c in b.cubes:
                 jc = {'origin': [round(v, 4) for v in c.origin], 'size': [round(v, 4) for v in c.size]}
@@ -208,7 +214,7 @@ class Model:
                     jc['inflate'] = c.inflate
                 if c.rotation:
                     jc['pivot'] = [round(v, 4) for v in (c.pivot or [c.origin[i] + c.size[i] / 2 for i in range(3)])]
-                    jc['rotation'] = list(c.rotation)
+                    jc['rotation'] = to_geckolib(c.rotation)
                 jc['uv'] = {f: {'uv': [c.uv[f][0], c.uv[f][1]], 'uv_size': [c.uv[f][2], c.uv[f][3]]} for f in FACES}
                 cubes.append(jc)
             if cubes:
@@ -238,8 +244,13 @@ class Model:
             os.makedirs(os.path.dirname(p), exist_ok=True)
         with open(geo, 'w') as f:
             json.dump(self.geo_json(), f, separators=(',', ':'))
+        anims = json.loads(json.dumps(self.animations))
+        for a in anims.values():
+            for bone in a.get('bones', {}).values():
+                if 'rotation' in bone:
+                    bone['rotation'] = {t: to_geckolib(v) for t, v in bone['rotation'].items()}
         with open(anim, 'w') as f:
-            json.dump({'format_version': '1.8.0', 'animations': self.animations}, f, indent=1)
+            json.dump({'format_version': '1.8.0', 'animations': anims}, f, indent=1)
         self.texture.save(tex)
         preview(self, os.path.join(PREVIEWS, self.id + '.png'))
         n = sum(len(b.cubes) for b in self.bones.values())
