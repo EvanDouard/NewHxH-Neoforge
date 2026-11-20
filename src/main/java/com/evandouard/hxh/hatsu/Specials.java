@@ -108,6 +108,7 @@ public final class Specials {
             setModifier(owner, Attributes.SCALE, HxHMod.id("biscuit_form"), big ? BIG_SCALE : SMALL_SCALE,
                     AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
             if (owner.tickCount % 20 == 0) {
+                if (big) owner.addEffect(Kinds.quiet(MobEffects.MOVEMENT_SLOWDOWN, 60, 0));
                 HunterData d = data(owner);
                 // grande forme : l'aura s'use un peu ; petite forme : elle remonte plus vite
                 d.setAura(Math.max(0, Math.min(d.auraMax(), d.aura() + (big ? -0.5f : 1f))));
@@ -209,17 +210,29 @@ public final class Specials {
     // =====================================================================
     // Feitan (Transformation) — Douleur
     // =====================================================================
+    /** Dégâts reçus depuis le début du combat : ils nourrissent le Soleil levant. */
+    public static final String DAMAGE_TAKEN = "damage_taken_in_fight";
+    public static final float SUN_BASE_DAMAGE = 8f, SUN_MAX_BONUS = 40f;
+
+    /** Dégâts totaux du Soleil levant : 8 de base + les dégâts reçus pendant le combat (40 de plus au plus). */
+    public static float sunDamage(LivingEntity caster) {
+        return SUN_BASE_DAMAGE + Math.min(SUN_MAX_BONUS, data(caster).kitValue(DAMAGE_TAKEN));
+    }
+
     /** Douleur : chaque PV perdu remplit la jauge (×5) ; elle redescend de 2/s hors combat ; jusqu'à +50 % de dégâts. */
     public static final Passive FEITAN_PAIN = new Passive("feitan_pain", true) {
         @Override
         public void tick(LivingEntity owner) {
-            if (owner.tickCount % 20 == 0 && owner.tickCount - owner.getLastHurtByMobTimestamp() > 100)
+            if (owner.tickCount % 20 == 0 && owner.tickCount - owner.getLastHurtByMobTimestamp() > 100) {
                 data(owner).addKitValue(KitBars.PAIN, -2, KitBars.PAIN_MAX);
+                data(owner).setKitValue(DAMAGE_TAKEN, 0); // le combat est fini
+            }
         }
 
         @Override
         public float modifyIncoming(LivingEntity owner, DamageSource source, float amount) {
             data(owner).addKitValue(KitBars.PAIN, amount * 5, KitBars.PAIN_MAX);
+            data(owner).setKitValue(DAMAGE_TAKEN, data(owner).kitValue(DAMAGE_TAKEN) + amount);
             return amount;
         }
 
@@ -229,7 +242,7 @@ public final class Specials {
         }
     };
 
-    /** Soleil levant : Douleur pleine : un soleil de feu brûle tout à 8 blocs (16 dégâts, en feu 6 s). */
+    /** Soleil levant : Douleur pleine : un soleil de feu brûle tout à 8 blocs (dégâts selon ceux reçus pendant le combat, en feu 6 s). */
     public static final Technique FEITAN_RISING_SUN = register(new Technique("feitan_rising_sun", TRANSMUTER, 40, 600) {
         @Override
         public Component conditions() {
@@ -246,11 +259,13 @@ public final class Specials {
             if (!(caster.level() instanceof ServerLevel level)) return false;
             NenFx.sprite(level, NenFx.Sprite.SUN, caster, caster.position(), 3f, 0xFFFF6A1E, 60);
             NenFx.flare(caster, 2f, 0xFFFF6A1E);
+            final float total = sunDamage(caster);
+            data(caster).setKitValue(DAMAGE_TAKEN, 0);
             for (int i = 0; i < 3; i++) {
                 NenTasks.later(i * 15, () -> {
                     NenFx.shockwave(caster, 8f, 0xFFFF6A1E);
                     for (LivingEntity t : Kinds.enemiesAround(caster, caster.position().add(0, 1, 0), 8)) {
-                        Kinds.hurt(caster, t, 16f / 3 * power);
+                        Kinds.hurt(caster, t, total / 3 * power);
                         t.igniteForSeconds(6);
                     }
                 });

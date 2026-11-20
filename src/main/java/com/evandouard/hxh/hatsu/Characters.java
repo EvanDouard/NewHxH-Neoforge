@@ -338,6 +338,8 @@ public final class Characters {
                 if (!t.isAlive()) return;
                 Kinds.hurt(caster, t, 10f * power);
                 t.knockback(1.4 * power, caster.getX() - t.getX(), caster.getZ() - t.getZ());
+                // les mâchoires le retiennent un instant
+                t.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 4, false, false, true), caster);
                 NenFx.impactAt(level, t.getBoundingBox().getCenter(), 1.6f, NenFx.GOLD);
             });
             return true;
@@ -514,9 +516,35 @@ public final class Characters {
         }
     };
 
+    /** Balles tirées depuis le dernier rechargement, et heure du dernier tir. */
+    public static final String MEMORY_SPENT = "memory_bombs_spent", MEMORY_LAST = "memory_bombs_last";
+    public static final int MEMORY_BULLETS = 6, MEMORY_IDLE_RELOAD = 1200;
+
+    /**
+     * Bombe de mémoire : 6 balles tirées sans recharge ; la 6e déclenche le rechargement (12 s), qui se fait aussi tout
+     * seul après 60 s sans tir.
+     */
     public static final Technique PAKUNODA_MEMORY_BOMB = register(new Techniques.Strike("pakunoda_memory_bomb", SPECIALIST, 30, 240,
             16, 0.97, 6f, 0.4f, List.of(new Effect(MobEffects.CONFUSION, 100, 0), new Effect(MobEffects.MOVEMENT_SLOWDOWN, 80, 2),
-            new Effect(MobEffects.BLINDNESS, 30, 0)), new Look(Style.ORB, 0xFFD8D0FF, 0.7f), SoundEvents.CROSSBOW_SHOOT));
+            new Effect(MobEffects.BLINDNESS, 30, 0)), new Look(Style.ORB, 0xFFD8D0FF, 0.7f), SoundEvents.CROSSBOW_SHOOT) {
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            if (!super.perform(caster, power)) return false;
+            HunterData d = data(caster);
+            long now = caster.level().getGameTime();
+            if (now - (long) d.kitValue(MEMORY_LAST) > MEMORY_IDLE_RELOAD) d.setKitValue(MEMORY_SPENT, 0);
+            d.setKitValue(MEMORY_SPENT, d.kitValue(MEMORY_SPENT) + 1);
+            d.setKitValue(MEMORY_LAST, now);
+            return true;
+        }
+
+        @Override
+        public int cooldownFor(HunterData d) {
+            if (d.kitValue(MEMORY_SPENT) < MEMORY_BULLETS) return 0;
+            d.setKitValue(MEMORY_SPENT, 0);
+            return super.cooldownFor(d);
+        }
+    });
 
     /** Divination : chaque jour de jeu, une petite chance (Chance I pour la journée). */
     public static final Passive NEON_FORTUNE = new Passive("neon_fortune", true) {

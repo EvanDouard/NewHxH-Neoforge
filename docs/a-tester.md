@@ -275,3 +275,12 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu : Silva, Zeno ou Kalluto frappent +25 % une cible seule (rien d'autre à 6 blocs) ; Killua n'a pas encore ce bonus.
 - [ ] En jeu : Netero n'a plus les Poings de Kannon ; Bodhisattva coûte 10 de Prière ; Main zéro : dégâts selon l'aura qui restait (aura vide après), blocs détruits le long du rayon si `hxhNenDestruction`.
 - [ ] En jeu : Botobai en forme (≥ 70 % PV) a Force I et Résistance I ; Cookie donne aussi Force I aux alliés ; Pierre sans retenue de Gon demande Nen 60 ; aiguille d'Illumi : 2 s.
+
+## Lot 3 des techniques de ton fichier (20 nov)
+- [x] CI : `godspeedSlowsTheWorldExceptFastOnes`, `memoryBombFiresSixBulletsThenReloads`, `risingSunGrowsWithDamageTaken`.
+- [ ] En jeu : Godspeed de Killua : tout ce qui est à 50 blocs ralentit 10 s, sauf un autre Godspeed ou une cible de Vitesse 90+ ; plus de minage rapide.
+- [ ] En jeu : Tête de dragon de Zeno : la cible est mordue, repoussée puis retenue environ 2 s.
+- [ ] En jeu : Bombe de mémoire de Pakunoda : 6 tirs à la suite sans recharge, puis 12 s ; elle se recharge aussi après 60 s sans tir.
+- [ ] En jeu : Soleil levant de Feitan : se faire frapper avant le lancer ; plus on a reçu de dégâts, plus le soleil fait mal (8 à 48 au total).
+- [ ] En jeu : Biscuit en grande forme est un peu ralentie.
+- Déjà dans le jeu comme tu le décris, donc rien à changer : Big Bang Impact (charge, cratère) et Ripper Cyclotron (tours de bras). Pas encore faits : Double mitrailleuse en continu (c'est une rafale fixe), Compte à rebours au hasard avec désamorçage.

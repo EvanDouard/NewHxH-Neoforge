@@ -109,6 +109,48 @@ public final class CharacterKitTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty")
+    public static void godspeedSlowsTheWorldExceptFastOnes(GameTestHelper helper) {
+        Zombie killua = husk(helper, 0);
+        hunter(killua, NenType.TRANSMUTER, "killua");
+        Zombie slow = husk(helper, 5);
+        Zombie fast = husk(helper, 6);
+        com.evandouard.hxh.stats.HunterStats.setLevel(fast, com.evandouard.hxh.data.Stat.SPEED, 90);
+        helper.assertTrue(com.evandouard.hxh.hatsu.Techniques.KILLUA_GODSPEED.perform(killua, 1f), "Le Godspeed part");
+        helper.assertTrue(killua.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED), "Killua file");
+        helper.assertTrue(!killua.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN), "Killua n'est pas ralenti");
+        helper.assertTrue(slow.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN), "Le monde autour est ralenti");
+        helper.assertTrue(!fast.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN), "Vitesse 90 : pas ralenti");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void memoryBombFiresSixBulletsThenReloads(GameTestHelper helper) {
+        Zombie pakunoda = husk(helper, 0);
+        Zombie target = husk(helper, 3);
+        HunterData d = hunter(pakunoda, NenType.SPECIALIST, "pakunoda");
+        var bomb = com.evandouard.hxh.hatsu.Characters.PAKUNODA_MEMORY_BOMB;
+        for (int i = 1; i <= 5; i++) {
+            helper.assertTrue(bomb.perform(pakunoda, 1f), "Balle " + i);
+            helper.assertTrue(bomb.cooldownFor(d) == 0, "Balle " + i + " : pas de recharge");
+        }
+        helper.assertTrue(bomb.perform(pakunoda, 1f), "6e balle");
+        helper.assertTrue(bomb.cooldownFor(d) > 0, "Après la 6e : rechargement");
+        helper.assertTrue(bomb.perform(pakunoda, 1f) && bomb.cooldownFor(d) == 0, "Rechargé : la série repart");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void risingSunGrowsWithDamageTaken(GameTestHelper helper) {
+        Zombie feitan = husk(helper, 0);
+        HunterData d = hunter(feitan, NenType.TRANSMUTER, "feitan");
+        float calm = com.evandouard.hxh.hatsu.Specials.sunDamage(feitan);
+        com.evandouard.hxh.hatsu.Specials.FEITAN_PAIN.modifyIncoming(feitan, feitan.damageSources().generic(), 12f);
+        float hurt = com.evandouard.hxh.hatsu.Specials.sunDamage(feitan);
+        helper.assertTrue(hurt >= calm + 11.9f, "Le Soleil levant monte avec les dégâts reçus : " + calm + " → " + hurt);
+        helper.succeed();
+    }
+
     /** Chaque technique de chaque personnage jouable part sans erreur, lancée par un mob sur une cible devant lui. */
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void everyTechniqueOfEveryKitRuns(GameTestHelper helper) {

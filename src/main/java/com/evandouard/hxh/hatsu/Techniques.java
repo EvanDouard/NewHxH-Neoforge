@@ -88,9 +88,31 @@ public final class Techniques {
     // ---------- Killua : électricité ----------
     /** Thunderbolt : maintenu, l'électricité frappe en continu ; plus on tient, plus ça coûte (voir {@link ThunderHold}). */
     public static final Technique KILLUA_THUNDERBOLT = register(new ThunderHold.Technique_("killua_thunderbolt", NenType.TRANSMUTER, 10, 120));
+    /** Rayon, durée (ticks) et vitesse (niveau de la stat) au-delà de laquelle on échappe au ralentissement du Godspeed. */
+    public static final double GODSPEED_RADIUS = 50;
+    public static final int GODSPEED_TICKS = 200, GODSPEED_IMMUNE_SPEED = 90;
+
+    /**
+     * Godspeed : Killua file (Vitesse III) et le monde autour de lui se ralentit (50 blocs, Lenteur IV 10 s), sauf ceux
+     * qui sont eux-mêmes en Godspeed ou dont la Vitesse est de 90 ou plus.
+     */
     public static final Technique KILLUA_GODSPEED = register(new SelfBuff("killua_godspeed", NenType.TRANSMUTER, 50, 600,
-            List.of(new Effect(MobEffects.MOVEMENT_SPEED, 200, 2), new Effect(MobEffects.DIG_SPEED, 200, 1)),
-            new Look(Style.CRACKLE, NenFx.TRANSMUTER, 1f), SoundEvents.LIGHTNING_BOLT_THUNDER)).requiresNenLevel(10);
+            List.of(new Effect(MobEffects.MOVEMENT_SPEED, GODSPEED_TICKS, 2)),
+            new Look(Style.CRACKLE, NenFx.TRANSMUTER, 1f), SoundEvents.LIGHTNING_BOLT_THUNDER) {
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            super.perform(caster, power);
+            for (LivingEntity e : caster.level().getEntitiesOfClass(LivingEntity.class,
+                    caster.getBoundingBox().inflate(GODSPEED_RADIUS), x -> x != caster && x.isAlive() && !x.isSpectator())) {
+                var speed = e.getEffect(MobEffects.MOVEMENT_SPEED);
+                boolean inGodspeed = speed != null && speed.getAmplifier() >= 2;
+                if (inGodspeed || com.evandouard.hxh.stats.HunterStats.get(e).level(com.evandouard.hxh.data.Stat.SPEED) >= GODSPEED_IMMUNE_SPEED)
+                    continue;
+                e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, GODSPEED_TICKS, 3, false, false, true), caster);
+            }
+            return true;
+        }
+    }).requiresNenLevel(10);
 
     // ---------- Kurapika : chaînes ----------
     public static final Technique KURAPIKA_CHAIN_JAIL = register(new Strike("kurapika_chain_jail", NenType.CONJURER, 45, 400,
@@ -386,7 +408,7 @@ public final class Techniques {
     }
 
     /** Frappe une cible devant soi (au corps à corps ou à distance). */
-    static final class Strike extends Technique {
+    static class Strike extends Technique {
         private final double range, minDot;
         private final float damage, knockback;
         private final List<Effect> effects;
@@ -684,7 +706,7 @@ public final class Techniques {
     }
 
     /** Renforcement sur soi. */
-    static final class SelfBuff extends Technique {
+    static class SelfBuff extends Technique {
         private final List<Effect> effects;
         private final Look look;
         private final SoundEvent sound;
