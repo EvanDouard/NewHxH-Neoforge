@@ -228,6 +228,16 @@ public final class CharacterKitTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty")
+    public static void lot9ChargeBuffsUvogin(GameTestHelper helper) {
+        Zombie uvogin = husk(helper, 0);
+        hunter(uvogin, NenType.ENHANCER, "uvogin");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.UVOGIN_CHARGE.perform(uvogin, 1f), "La charge part");
+        helper.assertTrue(uvogin.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED), "Vitesse active");
+        helper.assertTrue(uvogin.hasEffect(net.minecraft.world.effect.MobEffects.DAMAGE_BOOST), "Force active");
+        helper.succeed();
+    }
+
     /** Chaque technique de chaque personnage jouable part sans erreur, lancée par un mob sur une cible devant lui. */
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void everyTechniqueOfEveryKitRuns(GameTestHelper helper) {

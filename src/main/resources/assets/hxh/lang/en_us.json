@@ -1604,5 +1604,13 @@
   "technique.hxh.morel_blinding_cloud": "Blinding Cloud",
   "technique.hxh.morel_blinding_cloud.desc": "A smoke cloud (6 blocks) that blinds and slows.",
   "technique.hxh.machi_strangle": "Strangling Thread",
-  "technique.hxh.machi_strangle.desc": "An aura thread that slows and weakens at 8 blocks."
+  "technique.hxh.machi_strangle.desc": "An aura thread that slows and weakens at 8 blocks.",
+  "technique.hxh.biscuit_big_punch": "Big Punch",
+  "technique.hxh.biscuit_big_punch.desc": "A single enormous blow.",
+  "technique.hxh.phinks_ram": "Ram",
+  "technique.hxh.phinks_ram.desc": "A shoulder charge that sends the enemy flying and slows it.",
+  "technique.hxh.uvogin_charge": "Charge",
+  "technique.hxh.uvogin_charge.desc": "Speed II and Strength II for 5 s.",
+  "technique.hxh.knuckle_toritaten": "Toritaten",
+  "technique.hxh.knuckle_toritaten.desc": "A solid punch that stuns."
 }

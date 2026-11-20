@@ -1604,5 +1604,13 @@
   "technique.hxh.morel_blinding_cloud": "Nuage aveuglant",
   "technique.hxh.morel_blinding_cloud.desc": "Un nuage de fumée (6 blocs) qui aveugle et ralentit.",
   "technique.hxh.machi_strangle": "Fil étrangleur",
-  "technique.hxh.machi_strangle.desc": "Un fil d'aura qui ralentit et affaiblit à 8 blocs."
+  "technique.hxh.machi_strangle.desc": "Un fil d'aura qui ralentit et affaiblit à 8 blocs.",
+  "technique.hxh.biscuit_big_punch": "Gros coup de poing",
+  "technique.hxh.biscuit_big_punch.desc": "Un seul coup, énorme.",
+  "technique.hxh.phinks_ram": "Coup de bélier",
+  "technique.hxh.phinks_ram.desc": "Un coup d'épaule qui projette et ralentit.",
+  "technique.hxh.uvogin_charge": "Charge",
+  "technique.hxh.uvogin_charge.desc": "Vitesse II et Force II pendant 5 s.",
+  "technique.hxh.knuckle_toritaten": "Toritaten",
+  "technique.hxh.knuckle_toritaten.desc": "Un coup de poing franc qui étourdit."
 }

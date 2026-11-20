@@ -311,3 +311,8 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [x] CI : `lot8CloudBlindsAndGuardResists` + `everyTechniqueOfEveryKitRuns`.
 - [ ] En jeu : Pitou Griffure (15 aura, 3 s) ; Illumi Pluie d'aiguilles (35, 12 s) ; Leorio Percussion interne (20, 6 s) ; Hisoka Poing élastique (20, 5 s, portée 6 blocs) ; Tsezguerra Défense instantanée (20, 12 s, Résistance II 3 s) ; Morel Nuage aveuglant (30, 15 s) ; Machi Fil étrangleur (25, 9 s).
 - Valeurs proposées par moi : corrige-les dans `docs/a-trancher.md`.
+
+## Lot 9 des techniques de ton fichier (20 nov)
+- [x] CI : `lot9ChargeBuffsUvogin` + `everyTechniqueOfEveryKitRuns`.
+- [ ] En jeu : Biscuit Gros coup de poing (30 aura, 10 s) ; Phinks Coup de bélier (20, 6 s) ; Uvogin Charge (25, 14 s, Vitesse II + Force II 5 s) ; Knuckle Toritaten (20, 7 s, étourdit).
+- Valeurs proposées par moi : corrige-les dans `docs/a-trancher.md`.

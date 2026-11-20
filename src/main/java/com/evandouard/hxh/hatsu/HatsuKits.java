@@ -76,7 +76,8 @@ public final class HatsuKits {
             Characters.KALLUTO_RAZOR_FAN);
     public static final HatsuKit NOBUNAGA = playable("nobunaga", ENHANCER, List.of(Characters.NOBUNAGA_EN), Characters.NOBUNAGA_IAI,
             Characters.NOBUNAGA_QUICK_CUT, Characters.NOBUNAGA_STANCE, Characters.NOBUNAGA_SWORD_STEP);
-    public static final HatsuKit UVOGIN = playable("uvogin", ENHANCER, List.of(Characters.UVOGIN_IRON_BODY), Characters.UVOGIN_BIG_BANG_IMPACT);
+    public static final HatsuKit UVOGIN = playable("uvogin", ENHANCER, List.of(Characters.UVOGIN_IRON_BODY), Characters.UVOGIN_BIG_BANG_IMPACT,
+            Characters.UVOGIN_CHARGE);
     public static final HatsuKit FRANKLIN = playable("franklin", EMITTER, List.of(Characters.FRANKLIN_STURDY), Characters.FRANKLIN_DOUBLE_MACHINE_GUN,
             Characters.FRANKLIN_FOCUSED_SHOT, Characters.FRANKLIN_PIERCING_SHOT);
     public static final HatsuKit MACHI = playable("machi", TRANSMUTER, List.of(Characters.MACHI_SUTURE), Characters.MACHI_NEN_THREADS,
@@ -97,14 +98,17 @@ public final class HatsuKits {
             Characters.YOUPI_GIANT_FIST, Characters.YOUPI_BLADES, Characters.YOUPI_WINGS);
     public static final HatsuKit ZUSHI = playable("zushi", MANIPULATOR, List.of(Characters.ZUSHI_DILIGENT), Characters.ZUSHI_REN_PUNCH);
     public static final HatsuKit SENRITSU = playable("senritsu", EMITTER, List.of(Characters.SENRITSU_HEART_SOUND), Characters.SENRITSU_MELODY);
-    public static final HatsuKit BISCUIT = playable("biscuit", TRANSMUTER, List.of(Specials.BISCUIT_TWO_FORMS), Specials.BISCUIT_SWITCH_FORM, Specials.BISCUIT_ESTHETICIAN);
+    public static final HatsuKit BISCUIT = playable("biscuit", TRANSMUTER, List.of(Specials.BISCUIT_TWO_FORMS), Specials.BISCUIT_SWITCH_FORM, Specials.BISCUIT_ESTHETICIAN,
+            Characters.BISCUIT_BIG_PUNCH);
     public static final HatsuKit CHROLLO = playable("chrollo", SPECIALIST, List.of(Specials.CHROLLO_HEAD), Specials.CHROLLO_SKILL_HUNTER);
     public static final HatsuKit FEITAN = playable("feitan", TRANSMUTER, List.of(Specials.FEITAN_PAIN), Specials.FEITAN_RISING_SUN,
             Characters.FEITAN_HEAT_WAVE, Characters.FEITAN_SOLAR_BURST, Characters.FEITAN_PHANTOM_STEP);
-    public static final HatsuKit PHINKS = playable("phinks", ENHANCER, List.of(Specials.PHINKS_BRAWLER), Specials.PHINKS_RIPPER_CYCLOTRON);
+    public static final HatsuKit PHINKS = playable("phinks", ENHANCER, List.of(Specials.PHINKS_BRAWLER), Specials.PHINKS_RIPPER_CYCLOTRON,
+            Characters.PHINKS_RAM);
     public static final HatsuKit SHALNARK = playable("shalnark", MANIPULATOR, List.of(Specials.SHALNARK_TECH), Specials.SHALNARK_BLACK_VOICE, Specials.SHALNARK_AUTOPILOT);
     public static final HatsuKit KNOV = playable("knov", EMITTER, List.of(Specials.KNOV_STRATEGIST), Specials.KNOV_MARK_DOOR, Specials.KNOV_HIDE_AND_SEEK);
-    public static final HatsuKit KNUCKLE = playable("knuckle", CONJURER, List.of(Specials.KNUCKLE_HAKOWARE), Specials.KNUCKLE_POT_CLEAN, Specials.KNUCKLE_CANCEL);
+    public static final HatsuKit KNUCKLE = playable("knuckle", CONJURER, List.of(Specials.KNUCKLE_HAKOWARE), Specials.KNUCKLE_POT_CLEAN, Specials.KNUCKLE_CANCEL,
+            Characters.KNUCKLE_TORITATEN);
     public static final HatsuKit SHAIAPOUF = playable("shaiapouf", MANIPULATOR, List.of(Specials.POUF_WINGS), Specials.POUF_SPIRITUAL_MESSAGE, Specials.POUF_BEELZEBUB);
     public static final HatsuKit WING = playable("wing", ENHANCER, List.of(Characters.WING_TEACHER), Characters.WING_SHINGEN_RYU);
 

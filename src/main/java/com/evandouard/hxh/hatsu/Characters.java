@@ -855,6 +855,25 @@ public final class Characters {
             8.0, 0.95, 6f, 0f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 80, 2), new Effect(MobEffects.WEAKNESS, 80, 0)),
             new Look(Style.CHAIN, NenFx.TRANSMUTER, 1f), SoundEvents.CHAIN_PLACE));
 
+    /** Gros coup de poing de Biscuit : un seul coup, énorme. */
+    public static final Technique BISCUIT_BIG_PUNCH = register(new Techniques.Strike("biscuit_big_punch", TRANSMUTER, 30, 200,
+            3.5, 0.85, 16f, 2.6f, List.of(), new Look(Style.IMPACT, NenFx.TRANSMUTER, 2.2f), SoundEvents.PLAYER_ATTACK_STRONG));
+
+    /** Coup de bélier de Phinks : un coup d'épaule qui projette. */
+    public static final Technique PHINKS_RAM = register(new Techniques.Strike("phinks_ram", ENHANCER, 20, 120,
+            3.5, 0.8, 10f, 2.8f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 30, 1)),
+            new Look(Style.IMPACT, NenFx.ENHANCER, 1.6f), SoundEvents.PLAYER_ATTACK_KNOCKBACK));
+
+    /** Charge d'Uvogin : Vitesse II et Force II pendant 5 s. */
+    public static final Technique UVOGIN_CHARGE = register(new Techniques.SelfBuff("uvogin_charge", ENHANCER, 25, 280,
+            List.of(new Effect(MobEffects.MOVEMENT_SPEED, 100, 1), new Effect(MobEffects.DAMAGE_BOOST, 100, 1)),
+            new Look(Style.FLARE, NenFx.ENHANCER, 1.2f), SoundEvents.RAVAGER_ROAR));
+
+    /** Toritaten de Knuckle : un coup de poing franc qui étourdit (Lenteur, Nausée). */
+    public static final Technique KNUCKLE_TORITATEN = register(new Techniques.Strike("knuckle_toritaten", CONJURER, 20, 140,
+            3.5, 0.85, 9f, 1.2f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 40, 1), new Effect(MobEffects.CONFUSION, 80, 0)),
+            new Look(Style.IMPACT, NenFx.CONJURER, 1.4f), SoundEvents.PLAYER_ATTACK_CRIT));
+
     /** Frappe du Roi : un coup de poing royal, lourd et précis. */
     public static final Technique MERUEM_KING_STRIKE = register(new Techniques.Strike("meruem_king_strike", EMITTER, 20, 100,
             3.5, 0.85, 14f, 1.8f, List.of(), new Look(Style.IMPACT, NenFx.DARK, 1.8f), SoundEvents.PLAYER_ATTACK_STRONG));
