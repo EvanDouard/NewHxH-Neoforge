@@ -593,6 +593,19 @@ public final class Characters {
     public static final Passive GENTHRU_BOMBER = new Passive("genthru_bomber", true) {
         @Override
         public float modifyIncoming(LivingEntity owner, DamageSource source, float amount) {
+            // Une cible qui a la bombe de Genthru et le touche trop (coups, techniques) la désamorce
+            if (source.getEntity() instanceof LivingEntity attacker) {
+                var tag = attacker.getPersistentData();
+                if (tag.contains(com.evandouard.hxh.nen.Exorcism.BOMB) && tag.hasUUID(Kinds.BOMB_OWNER)
+                        && tag.getUUID(Kinds.BOMB_OWNER).equals(owner.getUUID())) {
+                    int contacts = tag.getInt(Kinds.BOMB_CONTACTS) + 1;
+                    tag.putInt(Kinds.BOMB_CONTACTS, contacts);
+                    if (contacts >= Kinds.BOMB_DEFUSE_CONTACTS) {
+                        tag.remove(com.evandouard.hxh.nen.Exorcism.BOMB);
+                        if (owner instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.countdown_defused"), true);
+                    }
+                }
+            }
             return source.is(DamageTypeTags.IS_EXPLOSION) ? amount * 0.5f : amount;
         }
     };
@@ -630,7 +643,7 @@ public final class Characters {
     });
 
     public static final Technique GENTHRU_COUNTDOWN = register(new Kinds.TimeBomb("genthru_countdown", CONJURER, 40, 600,
-            8, 60, 14f, 3, 0xFFFF5A2A)).requiresNenLevel(20);
+            8, 20, 24f, 3, 0xFFFF5A2A).withJitter(80)).requiresNenLevel(20);
 
     // =====================================================================
     // Hunters de l'arc des Fourmis : Kite, Morel, Palm

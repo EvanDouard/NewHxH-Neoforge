@@ -284,3 +284,7 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu : Soleil levant de Feitan : se faire frapper avant le lancer ; plus on a reçu de dégâts, plus le soleil fait mal (8 à 48 au total).
 - [ ] En jeu : Biscuit en grande forme est un peu ralentie.
 - Déjà dans le jeu comme tu le décris, donc rien à changer : Big Bang Impact (charge, cratère) et Ripper Cyclotron (tours de bras). Pas encore faits : Double mitrailleuse en continu (c'est une rafale fixe), Compte à rebours au hasard avec désamorçage.
+
+## Lot 4 des techniques de ton fichier (20 nov)
+- [x] CI : `countdownBombIsRandomAndDefusedByContact`.
+- [ ] En jeu : Compte à rebours de Genthru : délai au hasard de 1 à 5 s, explosion plus forte (24) ; si la cible frappe Genthru trois fois avant l'explosion, la bombe est désamorcée (message).

@@ -461,11 +461,23 @@ public final class Kinds {
     // ---------- Bombe à retardement ----------
 
     /** Marque la cible devant soi ; après {@code delay} ticks, elle explose (compte à rebours de Genthru). */
+    /** Poseur de la bombe et contacts de la cible avec lui (3 contacts et la bombe est désamorcée). */
+    public static final String BOMB_OWNER = "hxh_countdown_owner", BOMB_CONTACTS = "hxh_countdown_contacts";
+    public static final int BOMB_DEFUSE_CONTACTS = 3;
+
     public static class TimeBomb extends Technique {
         final double range, radius;
         final int delay;
         final float damage;
         final int color;
+
+        /** Délai au hasard (rythme cardiaque de la cible) : entre {@code delay} et {@code delay + jitter} ticks. */
+        int jitter;
+
+        TimeBomb withJitter(int ticks) {
+            this.jitter = ticks;
+            return this;
+        }
 
         TimeBomb(String id, NenType category, int cost, int cooldown, double range, int delay, float damage, double radius, int color) {
             super(id, category, cost, cooldown);
@@ -491,12 +503,15 @@ public final class Kinds {
         public boolean perform(LivingEntity caster, float power) {
             LivingEntity target = Targeting.inFront(caster, range, 0.92);
             if (target == null) return false;
+            final int delay = this.delay + (jitter > 0 ? caster.getRandom().nextInt(jitter + 1) : 0);
             double radius = this.radius * NenAffinity.sizeFactor(caster, this);
             NenFx.impactOn(caster, target, 0.8f, color);
             // bombe dessinée collée à la cible, chiffres du compte à rebours
             if (caster.level() instanceof ServerLevel lv) NenFx.sprite(lv, NenFx.Sprite.BOMB, target, target.position(), 1.5f, color, delay);
             // marque de la bombe : un exorciste peut la retirer avant l'explosion
             target.getPersistentData().putLong(com.evandouard.hxh.nen.Exorcism.BOMB, caster.level().getGameTime() + delay);
+            target.getPersistentData().putUUID(BOMB_OWNER, caster.getUUID());
+            target.getPersistentData().putInt(BOMB_CONTACTS, 0);
             int seconds = Math.max(1, delay / 20);
             for (int s = seconds; s >= 1; s--) {
                 final int left = s;

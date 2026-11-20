@@ -152,6 +152,24 @@ public final class CharacterKitTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty")
+    public static void countdownBombIsRandomAndDefusedByContact(GameTestHelper helper) {
+        Zombie genthru = husk(helper, 0);
+        Zombie target = husk(helper, 4);
+        hunter(genthru, NenType.CONJURER, "genthru");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.GENTHRU_COUNTDOWN.perform(genthru, 1f), "La bombe est posée");
+        long now = helper.getLevel().getGameTime();
+        long at = target.getPersistentData().getLong(com.evandouard.hxh.nen.Exorcism.BOMB);
+        helper.assertTrue(at - now >= 20 && at - now <= 100, "Délai entre 1 et 5 s : " + (at - now));
+        var hit = genthru.damageSources().mobAttack(target);
+        for (int i = 0; i < com.evandouard.hxh.hatsu.Kinds.BOMB_DEFUSE_CONTACTS; i++) {
+            helper.assertTrue(target.getPersistentData().contains(com.evandouard.hxh.nen.Exorcism.BOMB), "Contact " + i + " : encore armée");
+            com.evandouard.hxh.hatsu.Characters.GENTHRU_BOMBER.modifyIncoming(genthru, hit, 1f);
+        }
+        helper.assertTrue(!target.getPersistentData().contains(com.evandouard.hxh.nen.Exorcism.BOMB), "Trois contacts : désamorcée");
+        helper.succeed();
+    }
+
     /** Chaque technique de chaque personnage jouable part sans erreur, lancée par un mob sur une cible devant lui. */
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void everyTechniqueOfEveryKitRuns(GameTestHelper helper) {

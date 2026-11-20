@@ -6,6 +6,7 @@ Taille : **S** = réglage ou variante d'une technique existante · **M** = nouve
 
 ## Faits : lots 1 à 3 (20 nov)
 - Lot 2 : corps d'assassin (Silva, Zeno, Kalluto), Poings de Kannon retirés, Bodhisattva 10 Prière, Main zéro (aura dépensée, blocs détruits), Vétéran, bonus de Cookie.
+- Lot 4 : Compte à rebours (délai au hasard, désamorçage).
 - Lot 3 : Godspeed (monde ralenti), Tête de dragon (immobilise), Bombe de mémoire (6 balles), Soleil levant (selon les dégâts reçus), Biscuit grande forme ralentie. Déjà présents : Big Bang Impact, Ripper Cyclotron.
 - Lot 1 :
 - Jajanken : Pierre sans retenue : niveau de Nen requis 30 → **60**.
