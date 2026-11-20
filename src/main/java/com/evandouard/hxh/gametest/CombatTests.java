@@ -269,7 +269,8 @@ public final class CombatTests {
         helper.succeed();
     }
 
-    @GameTest(template = "empty", timeoutTicks = 120)
+    // Lot à part : le mur de pierre de 40 blocs déborde sur les cases des autres tests, qui tournent en parallèle
+    @GameTest(template = "empty", timeoutTicks = 120, batch = "tunnel")
     public static void maxStrengthKickTunnelsThroughHalfTheFlightDistance(GameTestHelper helper) {
         var level = helper.getLevel();
         level.getGameRules().getRule(com.evandouard.hxh.HxHGameRules.NEN_DESTRUCTION).set(true, level.getServer());

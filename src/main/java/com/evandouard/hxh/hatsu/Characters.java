@@ -529,13 +529,14 @@ public final class Characters {
             new Effect(MobEffects.BLINDNESS, 30, 0)), new Look(Style.ORB, 0xFFD8D0FF, 0.7f), SoundEvents.CROSSBOW_SHOOT) {
         @Override
         public boolean perform(LivingEntity caster, float power) {
-            if (!super.perform(caster, power)) return false;
+            boolean hit = super.perform(caster, power);
+            // une balle ratée part quand même
             HunterData d = data(caster);
             long now = caster.level().getGameTime();
             if (now - (long) d.kitValue(MEMORY_LAST) > MEMORY_IDLE_RELOAD) d.setKitValue(MEMORY_SPENT, 0);
             d.setKitValue(MEMORY_SPENT, d.kitValue(MEMORY_SPENT) + 1);
             d.setKitValue(MEMORY_LAST, now);
-            return true;
+            return hit;
         }
 
         @Override

@@ -127,7 +127,7 @@ public final class CharacterKitTests {
     @GameTest(template = "empty")
     public static void memoryBombFiresSixBulletsThenReloads(GameTestHelper helper) {
         Zombie pakunoda = husk(helper, 0);
-        Zombie target = husk(helper, 3);
+        Zombie target = husk(helper, 8);
         HunterData d = hunter(pakunoda, NenType.SPECIALIST, "pakunoda");
         var bomb = com.evandouard.hxh.hatsu.Characters.PAKUNODA_MEMORY_BOMB;
         for (int i = 1; i <= 5; i++) {
