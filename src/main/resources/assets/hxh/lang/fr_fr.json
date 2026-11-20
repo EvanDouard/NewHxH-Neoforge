@@ -503,7 +503,7 @@
   "technique.hxh.kurapika_holy_chain.desc": "La chaîne du pouce soigne 8 PV.",
   "technique.hxh.pitou_terpsichora.desc": "Le corps manipulé comme une marionnette : force II, vitesse II et saut II pendant 10 s.",
   "technique.hxh.pitou_doctor_blythe.desc": "La poupée-chirurgienne apparaît au-dessus du blessé devant toi (ou de toi-même) et le recoud : 16 PV en 4 s. Tu restes immobile pendant l'opération.",
-  "technique.hxh.illumi_needle.desc": "Une aiguille qui dérègle le corps : lenteur III et nausée pendant 5 s.",
+  "technique.hxh.illumi_needle.desc": "Une aiguille qui dérègle le corps : lenteur III et nausée pendant 2 s.",
   "technique.hxh.illumi_transform.desc": "Se plante des aiguilles pour remodeler son corps : résistance et force pendant 15 s.",
   "technique.hxh.leorio_remote_punch.desc": "Le poing frappe le sol et ressort sous la cible, jusqu'à 12 blocs.",
   "technique.hxh.leorio_shockwave.desc": "Frappe le sol : onde qui blesse et repousse tout autour.",

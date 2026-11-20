@@ -74,7 +74,7 @@ public final class Techniques {
      * moins 30 à charger), plus de dégâts, explosion et trace 1,6 fois plus grosses.
      */
     public static final Technique GON_ROCK_EPIC = register(new ChargedOrb("gon_rock_epic", NenType.ENHANCER, 40, 400,
-            1.5f, 80, 30f, 10f, 0.25f, NenFx.ENHANCER).epic(1.6f)).requiresNenLevel(30);
+            1.5f, 80, 30f, 10f, 0.25f, NenFx.ENHANCER).epic(1.6f)).requiresNenLevel(60);
     /** Jajanken : Ciseaux. Lame d'aura qui file tout droit (14 blocs) jusqu'à toucher un bloc ou une cible. */
     public static final Technique GON_SCISSORS = register(new Blade("gon_scissors", NenType.TRANSMUTER, 25, 100,
             7f, NenFx.TRANSMUTER)).requiresNenLevel(5);
@@ -107,7 +107,7 @@ public final class Techniques {
 
     // ---------- Illumi : aiguilles ----------
     public static final Technique ILLUMI_NEEDLE = register(new Strike("illumi_needle", NenType.MANIPULATOR, 25, 100,
-            12, 0.97, 3f, 0f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 100, 2), new Effect(MobEffects.CONFUSION, 100, 0)),
+            12, 0.97, 3f, 0f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 40, 2), new Effect(MobEffects.CONFUSION, 40, 0)),
             new Look(Style.NEEDLE, NenFx.MANIPULATOR, 1f), SoundEvents.ARROW_HIT));
     public static final Technique ILLUMI_TRANSFORM = register(new SelfBuff("illumi_transform", NenType.MANIPULATOR, 50, 600,
             List.of(new Effect(MobEffects.DAMAGE_RESISTANCE, 300, 0), new Effect(MobEffects.DAMAGE_BOOST, 300, 0)),

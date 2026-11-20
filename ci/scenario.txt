@@ -453,6 +453,7 @@ shot 22f5b_papier_vague
 wait 4
 shot 22f5c_papier_cibles_projetees
 wait 10
+cmd hunter nen level 60
 cmd hunter hatsu select gon_rock_epic
 cmd hunter nen refill
 camera front
