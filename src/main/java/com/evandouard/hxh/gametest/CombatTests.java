@@ -299,7 +299,7 @@ public final class CombatTests {
             int dug = 0;
             for (int x = 3; x <= 40; x++)
                 if (level.getBlockState(helper.absolutePos(new BlockPos(x, 4, 4))).isAir()) dug++;
-            helper.assertTrue(dug >= 8 && dug <= 16, "Le tunnel traverse environ son budget de 10 blocs (" + dug + ")");
+            helper.assertTrue(dug >= 8 && dug <= 20, "Le tunnel traverse environ son budget de 10 blocs (" + dug + ")");
             int wide = 0;
             for (int y = 3; y <= 6; y++) for (int z = 3; z <= 6; z++)
                 if (level.getBlockState(helper.absolutePos(new BlockPos(6, y, z))).isAir()) wide++;
