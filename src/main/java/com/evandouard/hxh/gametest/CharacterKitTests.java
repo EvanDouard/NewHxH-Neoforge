@@ -173,7 +173,8 @@ public final class CharacterKitTests {
     @GameTest(template = "empty")
     public static void lot5RoyalPressureStanceAndFocusedShot(GameTestHelper helper) {
         Zombie meruem = husk(helper, 0);
-        Zombie near = husk(helper, 3);
+        Zombie near = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(3, 1, 1));
+        near.setNoGravity(true);
         hunter(meruem, NenType.EMITTER, "meruem");
         helper.assertTrue(com.evandouard.hxh.hatsu.Characters.MERUEM_PRESSURE.perform(meruem, 1f), "Pression royale part");
         helper.assertTrue(near.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN), "L'ennemi proche est ralenti");
