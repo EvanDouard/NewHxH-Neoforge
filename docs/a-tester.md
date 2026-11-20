@@ -295,3 +295,9 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu, Nobunaga : Coupe instantanée (15, 3 s), Posture du samouraï (20, 15 s, Résistance + Force 8 s), Pas du sabreur (15, 10 s, Vitesse III 4 s).
 - [ ] En jeu, Franklin : Tir concentré (25, 8 s, niveau Nen 10), Tir perforant (35, 12 s, niveau Nen 20).
 - Valeurs proposées par moi : corrige-les dans `docs/a-trancher.md`.
+
+## Lot 6 des techniques de ton fichier (20 nov)
+- [x] CI : `lot6HeatWaveBurnsAndPhantomStepHides` + `everyTechniqueOfEveryKitRuns`.
+- [ ] En jeu, Feitan : Vague de chaleur (20 aura, 10 s, 6 blocs, enflamme), Éclat solaire (30, 15 s, niveau Nen 15), Pas fantôme (20, 12 s, Vitesse III + invisible 3 s).
+- [ ] En jeu, Youpi : Poing colossal (25, 7 s), Lames organiques (20, 5 s, poison), Ailes monstrueuses (25, 15 s, chute lente + Vitesse II 8 s).
+- Valeurs proposées par moi : corrige-les dans `docs/a-trancher.md`.

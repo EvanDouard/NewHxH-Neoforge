@@ -1566,5 +1566,17 @@
   "technique.hxh.meruem_royal_speed": "Royal Acceleration",
   "technique.hxh.meruem_royal_speed.desc": "Speed III and Strength for 6 s.",
   "technique.hxh.meruem_pressure": "Royal Pressure",
-  "technique.hxh.meruem_pressure.desc": "A crushing aura wave: slows and weakens everything around (8 blocks)."
+  "technique.hxh.meruem_pressure.desc": "A crushing aura wave: slows and weakens everything around (8 blocks).",
+  "technique.hxh.feitan_heat_wave": "Heat Wave",
+  "technique.hxh.feitan_heat_wave.desc": "A scorching wave (6 blocks) that sets enemies on fire.",
+  "technique.hxh.feitan_solar_burst": "Solar Burst",
+  "technique.hxh.feitan_solar_burst.desc": "An explosive fireball in front of you.",
+  "technique.hxh.feitan_phantom_step": "Phantom Step",
+  "technique.hxh.feitan_phantom_step.desc": "Speed III and invisibility for 3 s.",
+  "technique.hxh.youpi_giant_fist": "Giant Fist",
+  "technique.hxh.youpi_giant_fist.desc": "Your arm swells and crushes the enemy in front of you.",
+  "technique.hxh.youpi_blades": "Organic Blades",
+  "technique.hxh.youpi_blades.desc": "Your arm becomes a blade: it cuts and poisons.",
+  "technique.hxh.youpi_wings": "Monstrous Wings",
+  "technique.hxh.youpi_wings.desc": "Slow Falling and Speed II for 8 s."
 }

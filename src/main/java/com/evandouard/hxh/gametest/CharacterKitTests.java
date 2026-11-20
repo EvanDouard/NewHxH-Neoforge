@@ -187,6 +187,19 @@ public final class CharacterKitTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty")
+    public static void lot6HeatWaveBurnsAndPhantomStepHides(GameTestHelper helper) {
+        Zombie feitan = husk(helper, 0);
+        Zombie near = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(3, 1, 1));
+        near.setNoGravity(true);
+        hunter(feitan, NenType.TRANSMUTER, "feitan");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.FEITAN_HEAT_WAVE.perform(feitan, 1f), "Vague de chaleur part");
+        helper.assertTrue(near.getRemainingFireTicks() > 0 || near.isDeadOrDying(), "L'ennemi proche brûle");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.FEITAN_PHANTOM_STEP.perform(feitan, 1f), "Pas fantôme part");
+        helper.assertTrue(feitan.hasEffect(net.minecraft.world.effect.MobEffects.INVISIBILITY), "Feitan est invisible");
+        helper.succeed();
+    }
+
     /** Chaque technique de chaque personnage jouable part sans erreur, lancée par un mob sur une cible devant lui. */
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void everyTechniqueOfEveryKitRuns(GameTestHelper helper) {

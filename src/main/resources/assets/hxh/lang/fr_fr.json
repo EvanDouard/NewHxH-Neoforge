@@ -1566,5 +1566,17 @@
   "technique.hxh.meruem_royal_speed": "Accélération royale",
   "technique.hxh.meruem_royal_speed.desc": "Vitesse III et Force pendant 6 s.",
   "technique.hxh.meruem_pressure": "Pression royale",
-  "technique.hxh.meruem_pressure.desc": "Une onde d'aura écrasante : ralentit et affaiblit tout autour (8 blocs)."
+  "technique.hxh.meruem_pressure.desc": "Une onde d'aura écrasante : ralentit et affaiblit tout autour (8 blocs).",
+  "technique.hxh.feitan_heat_wave": "Vague de chaleur",
+  "technique.hxh.feitan_heat_wave.desc": "Une onde brûlante (6 blocs) qui enflamme les ennemis.",
+  "technique.hxh.feitan_solar_burst": "Éclat solaire",
+  "technique.hxh.feitan_solar_burst.desc": "Une boule de feu explosive devant toi.",
+  "technique.hxh.feitan_phantom_step": "Pas fantôme",
+  "technique.hxh.feitan_phantom_step.desc": "Vitesse III et invisibilité pendant 3 s.",
+  "technique.hxh.youpi_giant_fist": "Poing colossal",
+  "technique.hxh.youpi_giant_fist.desc": "Le bras enfle et écrase l'ennemi devant toi.",
+  "technique.hxh.youpi_blades": "Lames organiques",
+  "technique.hxh.youpi_blades.desc": "Le bras devient lame : entaille et empoisonne.",
+  "technique.hxh.youpi_wings": "Ailes monstrueuses",
+  "technique.hxh.youpi_wings.desc": "Chute lente et Vitesse II pendant 8 s."
 }

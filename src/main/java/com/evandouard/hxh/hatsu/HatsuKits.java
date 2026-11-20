@@ -81,12 +81,14 @@ public final class HatsuKits {
     public static final HatsuKit PALM = playable("palm", ENHANCER, List.of(Characters.PALM_WINK_BLUE), Characters.PALM_BLACK_WIDOW);
     public static final HatsuKit MERUEM = playable("meruem", EMITTER, List.of(Characters.MERUEM_KING), Characters.MERUEM_RAGE_BLAST, Characters.MERUEM_PHOTON,
             Characters.MERUEM_KING_STRIKE, Characters.MERUEM_TAIL, Characters.MERUEM_ROYAL_SPEED, Characters.MERUEM_PRESSURE);
-    public static final HatsuKit YOUPI = playable("youpi", TRANSMUTER, List.of(Characters.YOUPI_VITALITY), Characters.YOUPI_METAMORPHOSIS, Characters.YOUPI_RAGE_BLAST);
+    public static final HatsuKit YOUPI = playable("youpi", TRANSMUTER, List.of(Characters.YOUPI_VITALITY), Characters.YOUPI_METAMORPHOSIS, Characters.YOUPI_RAGE_BLAST,
+            Characters.YOUPI_GIANT_FIST, Characters.YOUPI_BLADES, Characters.YOUPI_WINGS);
     public static final HatsuKit ZUSHI = playable("zushi", MANIPULATOR, List.of(Characters.ZUSHI_DILIGENT), Characters.ZUSHI_REN_PUNCH);
     public static final HatsuKit SENRITSU = playable("senritsu", EMITTER, List.of(Characters.SENRITSU_HEART_SOUND), Characters.SENRITSU_MELODY);
     public static final HatsuKit BISCUIT = playable("biscuit", TRANSMUTER, List.of(Specials.BISCUIT_TWO_FORMS), Specials.BISCUIT_SWITCH_FORM, Specials.BISCUIT_ESTHETICIAN);
     public static final HatsuKit CHROLLO = playable("chrollo", SPECIALIST, List.of(Specials.CHROLLO_HEAD), Specials.CHROLLO_SKILL_HUNTER);
-    public static final HatsuKit FEITAN = playable("feitan", TRANSMUTER, List.of(Specials.FEITAN_PAIN), Specials.FEITAN_RISING_SUN);
+    public static final HatsuKit FEITAN = playable("feitan", TRANSMUTER, List.of(Specials.FEITAN_PAIN), Specials.FEITAN_RISING_SUN,
+            Characters.FEITAN_HEAT_WAVE, Characters.FEITAN_SOLAR_BURST, Characters.FEITAN_PHANTOM_STEP);
     public static final HatsuKit PHINKS = playable("phinks", ENHANCER, List.of(Specials.PHINKS_BRAWLER), Specials.PHINKS_RIPPER_CYCLOTRON);
     public static final HatsuKit SHALNARK = playable("shalnark", MANIPULATOR, List.of(Specials.SHALNARK_TECH), Specials.SHALNARK_BLACK_VOICE, Specials.SHALNARK_AUTOPILOT);
     public static final HatsuKit KNOV = playable("knov", EMITTER, List.of(Specials.KNOV_STRATEGIST), Specials.KNOV_MARK_DOOR, Specials.KNOV_HIDE_AND_SEEK);

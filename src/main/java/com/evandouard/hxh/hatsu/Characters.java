@@ -760,6 +760,40 @@ public final class Characters {
     public static final Technique MERUEM_PHOTON = register(new Kinds.Beam("meruem_photon", EMITTER, 50, 400,
             20, 1.2, 18f, NenFx.WHITE, SoundEvents.BEACON_ACTIVATE)).requiresNenLevel(30);
 
+    /** Vague de chaleur : une onde brûlante autour de Feitan (6 blocs), qui enflamme les ennemis. */
+    public static final Technique FEITAN_HEAT_WAVE = register(new Kinds.Pulse("feitan_heat_wave", TRANSMUTER, 20, 200,
+            6, 5f, 0.4f, List.of(new Effect(MobEffects.WEAKNESS, 60, 0)),
+            new Look(Style.SHOCKWAVE, NenFx.TRANSMUTER, 1.2f), SoundEvents.BLAZE_SHOOT) {
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            for (LivingEntity t : Kinds.enemiesAround(caster, caster.position().add(0, 1, 0), radius)) t.setRemainingFireTicks(100);
+            return super.perform(caster, power);
+        }
+    });
+
+    /** Éclat solaire : une boule de feu explosive devant soi. */
+    public static final Technique FEITAN_SOLAR_BURST = register(new Techniques.Blast("feitan_solar_burst", TRANSMUTER, 30, 300,
+            6, 10f, 1.2f, new Look(Style.FLARE, NenFx.TRANSMUTER, 1.6f), SoundEvents.FIRECHARGE_USE)).requiresNenLevel(15);
+
+    /** Pas fantôme : Vitesse III et invisibilité pendant 3 s. */
+    public static final Technique FEITAN_PHANTOM_STEP = register(new Techniques.SelfBuff("feitan_phantom_step", TRANSMUTER, 20, 240,
+            List.of(new Effect(MobEffects.MOVEMENT_SPEED, 60, 2), new Effect(MobEffects.INVISIBILITY, 60, 0)),
+            new Look(Style.FLARE, NenFx.WHITE, 0.8f), SoundEvents.ENDERMAN_TELEPORT));
+
+    /** Poing colossal : le bras de Youpi enfle et écrase. */
+    public static final Technique YOUPI_GIANT_FIST = register(new Techniques.Strike("youpi_giant_fist", TRANSMUTER, 25, 140,
+            3.5, 0.85, 15f, 2.2f, List.of(), new Look(Style.IMPACT, NenFx.TRANSMUTER, 2f), SoundEvents.PLAYER_ATTACK_STRONG));
+
+    /** Lames organiques : le bras devient lame ; elle entaille et empoisonne. */
+    public static final Technique YOUPI_BLADES = register(new Techniques.Strike("youpi_blades", TRANSMUTER, 20, 100,
+            3.5, 0.85, 9f, 0.5f, List.of(new Effect(MobEffects.POISON, 80, 1)),
+            new Look(Style.SLASH, NenFx.TRANSMUTER, 1.4f), SoundEvents.PLAYER_ATTACK_SWEEP));
+
+    /** Ailes monstrueuses : Chute lente et Vitesse II pendant 8 s. */
+    public static final Technique YOUPI_WINGS = register(new Techniques.SelfBuff("youpi_wings", TRANSMUTER, 25, 300,
+            List.of(new Effect(MobEffects.SLOW_FALLING, 160, 0), new Effect(MobEffects.MOVEMENT_SPEED, 160, 1)),
+            new Look(Style.FLARE, NenFx.TRANSMUTER, 1.2f), SoundEvents.PHANTOM_FLAP));
+
     /** Frappe du Roi : un coup de poing royal, lourd et précis. */
     public static final Technique MERUEM_KING_STRIKE = register(new Techniques.Strike("meruem_king_strike", EMITTER, 20, 100,
             3.5, 0.85, 14f, 1.8f, List.of(), new Look(Style.IMPACT, NenFx.DARK, 1.8f), SoundEvents.PLAYER_ATTACK_STRONG));
