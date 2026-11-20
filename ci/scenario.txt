@@ -1319,14 +1319,12 @@ cmd hunter refill
 wait 100
 cmd hunter refill
 wait 100
-cmd hunter refill
-wait 100
-cmd hunter refill
-wait 100
-cmd hunter refill
-wait 100
-cmd hunter refill
-wait 100
+# diagnostic : maîtrises et aura après l'entraînement
+cmd hunter show @s
+wait 10
+# le gain d'XP est probabiliste selon le talent (Ordinaire ×0,8) : on assure le niveau 1 pour la suite du scénario
+cmd hunter nen mastery ten 1
+wait 10
 clearchat
 talkto wing
 wait 10
