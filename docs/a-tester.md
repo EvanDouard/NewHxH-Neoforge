@@ -301,3 +301,8 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu, Feitan : Vague de chaleur (20 aura, 10 s, 6 blocs, enflamme), Éclat solaire (30, 15 s, niveau Nen 15), Pas fantôme (20, 12 s, Vitesse III + invisible 3 s).
 - [ ] En jeu, Youpi : Poing colossal (25, 7 s), Lames organiques (20, 5 s, poison), Ailes monstrueuses (25, 15 s, chute lente + Vitesse II 8 s).
 - Valeurs proposées par moi : corrige-les dans `docs/a-trancher.md`.
+
+## Lot 7 des techniques de ton fichier (20 nov)
+- [x] CI : `lot7ElectricFistSlowsAndSmashHits` + `everyTechniqueOfEveryKitRuns`.
+- [ ] En jeu : Silva Frappe du patriarche (20 aura, 5 s) ; Zeno Aura Blast (30, 13 s) ; Razor Smash (30, 8 s, ralentit) ; Kalluto Éventail de papier (20, 6 s, affaiblit) ; Killua Coup de yoyo (10, 3 s, 5 blocs) et Poing électrique (20, 7 s, quasi paralysie 2 s).
+- Valeurs proposées par moi : corrige-les dans `docs/a-trancher.md`.

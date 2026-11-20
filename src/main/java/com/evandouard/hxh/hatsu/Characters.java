@@ -794,6 +794,33 @@ public final class Characters {
             List.of(new Effect(MobEffects.SLOW_FALLING, 160, 0), new Effect(MobEffects.MOVEMENT_SPEED, 160, 1)),
             new Look(Style.FLARE, NenFx.TRANSMUTER, 1.2f), SoundEvents.PHANTOM_FLAP));
 
+    /** Frappe du patriarche : un coup de poing sec de Silva, sans fioriture. */
+    public static final Technique SILVA_PATRIARCH_STRIKE = register(new Techniques.Strike("silva_patriarch_strike", EMITTER, 20, 100,
+            3.5, 0.85, 13f, 1.6f, List.of(), new Look(Style.IMPACT, NenFx.EMITTER, 1.8f), SoundEvents.PLAYER_ATTACK_STRONG));
+
+    /** Aura Blast de Zeno : une explosion d'aura devant lui. */
+    public static final Technique ZENO_AURA_BLAST = register(new Techniques.Blast("zeno_aura_blast", EMITTER, 30, 260,
+            7, 11f, 1.8f, new Look(Style.SHOCKWAVE, NenFx.EMITTER, 1.4f), SoundEvents.GENERIC_EXPLODE.value()));
+
+    /** Smash de Razor : un coup écrasant. */
+    public static final Technique RAZOR_SMASH = register(new Techniques.Strike("razor_smash", EMITTER, 30, 160,
+            4.0, 0.85, 14f, 2.4f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 40, 1)),
+            new Look(Style.IMPACT, NenFx.EMITTER, 2f), SoundEvents.PLAYER_ATTACK_STRONG));
+
+    /** Éventail de papier de Kalluto : une gerbe de lames de papier devant lui. */
+    public static final Technique KALLUTO_RAZOR_FAN = register(new Techniques.Strike("kalluto_razor_fan", MANIPULATOR, 20, 120,
+            5.0, 0.7, 8f, 0.6f, List.of(new Effect(MobEffects.WEAKNESS, 60, 0)),
+            new Look(Style.SLASH, NenFx.MANIPULATOR, 1.4f), SoundEvents.PLAYER_ATTACK_SWEEP));
+
+    /** Coup de yoyo de Killua : le yoyo file et frappe à 5 blocs. */
+    public static final Technique KILLUA_YOYO = register(new Techniques.Strike("killua_yoyo", TRANSMUTER, 10, 60,
+            5.0, 0.9, 7f, 0.8f, List.of(), new Look(Style.BOLT, NenFx.TRANSMUTER, 1f), SoundEvents.PLAYER_ATTACK_KNOCKBACK));
+
+    /** Poing électrique de Killua : un coup chargé d'électricité qui paralyse un instant. */
+    public static final Technique KILLUA_ELECTRIC_FIST = register(new Techniques.Strike("killua_electric_fist", TRANSMUTER, 20, 140,
+            3.5, 0.85, 9f, 0.3f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 40, 4)),
+            new Look(Style.CRACKLE, NenFx.TRANSMUTER, 1.4f), SoundEvents.LIGHTNING_BOLT_THUNDER));
+
     /** Frappe du Roi : un coup de poing royal, lourd et précis. */
     public static final Technique MERUEM_KING_STRIKE = register(new Techniques.Strike("meruem_king_strike", EMITTER, 20, 100,
             3.5, 0.85, 14f, 1.8f, List.of(), new Look(Style.IMPACT, NenFx.DARK, 1.8f), SoundEvents.PLAYER_ATTACK_STRONG));

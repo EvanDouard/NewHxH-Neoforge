@@ -39,7 +39,8 @@ public final class HatsuKits {
     public static final HatsuKit GON = playable("gon", ENHANCER, List.of(Passives.GON_WILD_INSTINCT),
             Techniques.GON_ROCK, Techniques.GON_SCISSORS, Techniques.GON_PAPER, Techniques.GON_ROCK_EPIC);
     public static final HatsuKit KILLUA = playable("killua", TRANSMUTER, List.of(Passives.ZOLDYCK_BODY),
-            Techniques.KILLUA_THUNDERBOLT, Techniques.KILLUA_GODSPEED);
+            Techniques.KILLUA_THUNDERBOLT, Techniques.KILLUA_GODSPEED,
+            Characters.KILLUA_YOYO, Characters.KILLUA_ELECTRIC_FIST);
     public static final HatsuKit KURAPIKA = playable("kurapika", CONJURER, List.of(Passives.DOWSING_CHAIN),
             Techniques.KURAPIKA_CHAIN_JAIL, Techniques.KURAPIKA_HOLY_CHAIN);
     public static final HatsuKit NEFERPITOU = playable("neferpitou", SPECIALIST, List.of(Passives.FELINE_AGILITY),
@@ -62,9 +63,12 @@ public final class HatsuKits {
     public static final HatsuKit MENCHI = playable("menchi", TRANSMUTER, List.of(Characters.MENCHI_GASTRONOME), Characters.MENCHI_GOURMET_MEAL);
     public static final HatsuKit BUSHIDORA = playable("bushidora", ENHANCER, List.of(Characters.BUSHIDORA_SWORDSMAN), Characters.BUSHIDORA_AURA_BLADE);
     public static final HatsuKit TSEZGUERRA = playable("tsezguerra", ENHANCER, List.of(Characters.TSEZGUERRA_LEADER), Characters.TSEZGUERRA_CHARGED_STRIKE);
-    public static final HatsuKit SILVA = playable("silva", EMITTER, List.of(Passives.ZOLDYCK_ASSASSIN), Characters.SILVA_GREAT_ORB, Characters.SILVA_EXPLOSIVE_ORBS);
-    public static final HatsuKit ZENO = playable("zeno", EMITTER, List.of(Passives.ZOLDYCK_ASSASSIN), Characters.ZENO_DRAGON_HEAD, Characters.ZENO_DRAGON_DIVE);
-    public static final HatsuKit KALLUTO = playable("kalluto", MANIPULATOR, List.of(Passives.ZOLDYCK_ASSASSIN), Characters.KALLUTO_PAPER_DANCE);
+    public static final HatsuKit SILVA = playable("silva", EMITTER, List.of(Passives.ZOLDYCK_ASSASSIN), Characters.SILVA_GREAT_ORB, Characters.SILVA_EXPLOSIVE_ORBS,
+            Characters.SILVA_PATRIARCH_STRIKE);
+    public static final HatsuKit ZENO = playable("zeno", EMITTER, List.of(Passives.ZOLDYCK_ASSASSIN), Characters.ZENO_DRAGON_HEAD, Characters.ZENO_DRAGON_DIVE,
+            Characters.ZENO_AURA_BLAST);
+    public static final HatsuKit KALLUTO = playable("kalluto", MANIPULATOR, List.of(Passives.ZOLDYCK_ASSASSIN), Characters.KALLUTO_PAPER_DANCE,
+            Characters.KALLUTO_RAZOR_FAN);
     public static final HatsuKit NOBUNAGA = playable("nobunaga", ENHANCER, List.of(Characters.NOBUNAGA_EN), Characters.NOBUNAGA_IAI,
             Characters.NOBUNAGA_QUICK_CUT, Characters.NOBUNAGA_STANCE, Characters.NOBUNAGA_SWORD_STEP);
     public static final HatsuKit UVOGIN = playable("uvogin", ENHANCER, List.of(Characters.UVOGIN_IRON_BODY), Characters.UVOGIN_BIG_BANG_IMPACT);
@@ -74,7 +78,8 @@ public final class HatsuKits {
     public static final HatsuKit SHIZUKU = playable("shizuku", CONJURER, List.of(Characters.SHIZUKU_CLEANER), Characters.SHIZUKU_BLINKY);
     public static final HatsuKit PAKUNODA = playable("pakunoda", SPECIALIST, List.of(Characters.PAKUNODA_MIND_READER), Characters.PAKUNODA_MEMORY_BOMB);
     public static final HatsuKit NEON = playable("neon", SPECIALIST, List.of(Characters.NEON_FORTUNE), Characters.NEON_LOVELY_GHOSTWRITER);
-    public static final HatsuKit RAZOR = playable("razor", EMITTER, List.of(Characters.RAZOR_GAME_MASTER), Characters.RAZOR_AURA_BALL, Characters.RAZOR_FOURTEEN_DEVILS);
+    public static final HatsuKit RAZOR = playable("razor", EMITTER, List.of(Characters.RAZOR_GAME_MASTER), Characters.RAZOR_AURA_BALL, Characters.RAZOR_FOURTEEN_DEVILS,
+            Characters.RAZOR_SMASH);
     public static final HatsuKit GENTHRU = playable("genthru", CONJURER, List.of(Characters.GENTHRU_BOMBER), Characters.GENTHRU_LITTLE_FLOWER, Characters.GENTHRU_COUNTDOWN);
     public static final HatsuKit KITE = playable("kite", CONJURER, List.of(Characters.KITE_HUNTER), Characters.KITE_CRAZY_SLOTS);
     public static final HatsuKit MOREL = playable("morel", MANIPULATOR, List.of(Characters.MOREL_SMOKE), Characters.MOREL_DEEP_PURPLE);

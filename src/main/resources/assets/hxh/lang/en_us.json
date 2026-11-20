@@ -1578,5 +1578,17 @@
   "technique.hxh.youpi_blades": "Organic Blades",
   "technique.hxh.youpi_blades.desc": "Your arm becomes a blade: it cuts and poisons.",
   "technique.hxh.youpi_wings": "Monstrous Wings",
-  "technique.hxh.youpi_wings.desc": "Slow Falling and Speed II for 8 s."
+  "technique.hxh.youpi_wings.desc": "Slow Falling and Speed II for 8 s.",
+  "technique.hxh.silva_patriarch_strike": "Patriarch's Strike",
+  "technique.hxh.silva_patriarch_strike.desc": "A sharp, heavy punch.",
+  "technique.hxh.zeno_aura_blast": "Aura Blast",
+  "technique.hxh.zeno_aura_blast.desc": "An aura explosion in front of you (7 blocks).",
+  "technique.hxh.razor_smash": "Smash",
+  "technique.hxh.razor_smash.desc": "A crushing blow that slows the enemy.",
+  "technique.hxh.kalluto_razor_fan": "Razor Fan",
+  "technique.hxh.kalluto_razor_fan.desc": "A spray of paper blades in front of you (5 blocks): weakens.",
+  "technique.hxh.killua_yoyo": "Yo-yo Strike",
+  "technique.hxh.killua_yoyo.desc": "The yo-yo flies out and hits at 5 blocks.",
+  "technique.hxh.killua_electric_fist": "Electric Fist",
+  "technique.hxh.killua_electric_fist.desc": "An electrified punch: nearly paralyzes the enemy for 2 s."
 }

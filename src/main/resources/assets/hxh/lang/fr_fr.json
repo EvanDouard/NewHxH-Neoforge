@@ -1578,5 +1578,17 @@
   "technique.hxh.youpi_blades": "Lames organiques",
   "technique.hxh.youpi_blades.desc": "Le bras devient lame : entaille et empoisonne.",
   "technique.hxh.youpi_wings": "Ailes monstrueuses",
-  "technique.hxh.youpi_wings.desc": "Chute lente et Vitesse II pendant 8 s."
+  "technique.hxh.youpi_wings.desc": "Chute lente et Vitesse II pendant 8 s.",
+  "technique.hxh.silva_patriarch_strike": "Frappe du patriarche",
+  "technique.hxh.silva_patriarch_strike.desc": "Un coup de poing sec et lourd.",
+  "technique.hxh.zeno_aura_blast": "Aura Blast",
+  "technique.hxh.zeno_aura_blast.desc": "Une explosion d'aura devant toi (7 blocs).",
+  "technique.hxh.razor_smash": "Smash",
+  "technique.hxh.razor_smash.desc": "Un coup écrasant qui ralentit l'ennemi.",
+  "technique.hxh.kalluto_razor_fan": "Éventail de papier",
+  "technique.hxh.kalluto_razor_fan.desc": "Une gerbe de lames de papier devant toi (5 blocs) : affaiblit.",
+  "technique.hxh.killua_yoyo": "Coup de yoyo",
+  "technique.hxh.killua_yoyo.desc": "Le yoyo file et frappe à 5 blocs.",
+  "technique.hxh.killua_electric_fist": "Poing électrique",
+  "technique.hxh.killua_electric_fist.desc": "Un coup chargé d'électricité : paralyse presque l'ennemi 2 s."
 }

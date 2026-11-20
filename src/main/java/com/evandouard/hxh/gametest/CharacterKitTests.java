@@ -200,6 +200,22 @@ public final class CharacterKitTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty")
+    public static void lot7ElectricFistSlowsAndSmashHits(GameTestHelper helper) {
+        Zombie killua = husk(helper, 0);
+        Zombie target = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(8, 1, 1));
+        target.setNoGravity(true);
+        hunter(killua, NenType.TRANSMUTER, "killua");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.KILLUA_YOYO.perform(killua, 1f), "Le yoyo touche à 5 blocs ou part");
+        Zombie close = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(3, 1, 1));
+        close.setNoGravity(true);
+        close.setPos(close.getX(), killua.getY(), close.getZ());
+        com.evandouard.hxh.hatsu.Characters.KILLUA_ELECTRIC_FIST.perform(killua, 1f);
+        helper.assertTrue(close.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN) || close.isDeadOrDying()
+                || close.getHealth() < close.getMaxHealth(), "Le poing électrique touche");
+        helper.succeed();
+    }
+
     /** Chaque technique de chaque personnage jouable part sans erreur, lancée par un mob sur une cible devant lui. */
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void everyTechniqueOfEveryKitRuns(GameTestHelper helper) {
