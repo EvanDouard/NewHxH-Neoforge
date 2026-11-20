@@ -345,14 +345,14 @@ def render(model, yaw=0, pitch=0, px=11, canvas=(300, 520), pose=None):
     W, H = canvas
     img = Image.new('RGBA', (W, H), (0, 0, 0, 0))
     dr = ImageDraw.Draw(img)
-    light = (0.3, 0.75, -0.6)
+    light = (-0.45, 0.7, -0.55)
     ll = math.sqrt(sum(a * a for a in light))
     light = tuple(a / ll for a in light)
     quads.sort(key=lambda q: -sum(p[2] for p in q[0]))
     for pts, col, n in quads:
         if n[2] > 0.05:
             continue  # face tournée vers l'arrière
-        k = 0.62 + 0.38 * max(0.0, n[0] * light[0] + n[1] * light[1] + n[2] * light[2])
+        k = 0.55 + 0.45 * max(0.0, n[0] * light[0] + n[1] * light[1] + n[2] * light[2])
         c = (int(col[0] * k), int(col[1] * k), int(col[2] * k), 255)
         # X de l'écran : +X du modèle (côté gauche du personnage) à droite de l'image, vu de face
         poly = [(W / 2 + p[0] * px, H - 18 - p[1] * px) for p in pts]
@@ -360,15 +360,23 @@ def render(model, yaw=0, pitch=0, px=11, canvas=(300, 520), pose=None):
     return img
 
 
-def preview(model, path):
-    views = [render(model, a, p) for a, p in ((0, 0), (-35, 10), (-90, 0), (180, 0))]
+VIEWS = ((0, -4, 'face'), (-35, -14, 'trois-quarts'), (-90, -4, 'profil'), (145, -14, 'trois-quarts dos'),
+         (180, -4, 'dos'), (0, -70, 'dessus'))
+
+
+def preview(model, path, px=11, canvas=(300, 520)):
+    views = []
+    for a, p, label in VIEWS:
+        v = render(model, a, p, px=px, canvas=canvas)
+        ImageDraw.Draw(v).text((6, 4), label, fill=(230, 230, 230, 255))
+        views.append(v)
     W, H = views[0].size
     tw = min(512, model.texture.width)
     th = int(model.texture.height * tw / model.texture.width)
-    sheet = Image.new('RGBA', (W * 4 + tw + 16, max(H, th + 16)), (58, 62, 70, 255))
+    sheet = Image.new('RGBA', (W * len(views) + tw + 16, max(H, th + 16)), (58, 62, 70, 255))
     for i, v in enumerate(views):
         sheet.alpha_composite(v, (i * W, 0))
-    sheet.alpha_composite(model.texture.resize((tw, th), Image.NEAREST), (W * 4 + 8, 8))
+    sheet.alpha_composite(model.texture.resize((tw, th), Image.NEAREST), (W * len(views) + 8, 8))
     os.makedirs(os.path.dirname(path), exist_ok=True)
     sheet.save(path)
 
