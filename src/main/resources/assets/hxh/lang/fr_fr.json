@@ -1545,21 +1545,5 @@
   "mastery.hxh.regen": "Régénération d'aura",
   "detail.hxh.eff.regen_none": "Aucune régénération naturelle (dormir remplit l'aura)",
   "detail.hxh.eff.regen_sleep": "Dormir : aura rendue à 100 % et XP de régénération",
-  "quest.hxh.discover_arena.hint": "Rumeur : la Tour Céleste se dresse vers X %s, Z %s. (/hunter tower pour la retrouver)",
-  "technique.hxh.gon_rage": "Rage de Gon",
-  "technique.hxh.gon_rage.desc": "Gon adulte laisse sa colère l'envahir : Force IV et Vitesse III pendant 8 s.",
-  "technique.hxh.leorio_serum": "Sérum d'urgence",
-  "technique.hxh.leorio_serum.desc": "Projette un soin sur la cible visée (12 blocs) : soin immédiat puis régénération.",
-  "technique.hxh.zeno_ancestor_weight": "Poids des ancêtres",
-  "technique.hxh.zeno_ancestor_weight.desc": "Alourdit la cible visée (14 blocs) : très lente et presque incapable de sauter pendant 8 s.",
-  "technique.hxh.feitan_cage": "Pain Packer : cage",
-  "technique.hxh.feitan_cage.desc": "Un cercle de flammes noires retient la cible visée (10 blocs) 3 s : quasi immobile et affaiblie.",
-  "technique.hxh.meruem_membrane": "Bouclier de membrane",
-  "technique.hxh.meruem_membrane.desc": "Une enveloppe d'aura absorbe 20 PV de dégâts pendant 6 s.",
-  "technique.hxh.meruem_royal_cry": "Cri royal",
-  "technique.hxh.meruem_royal_cry.desc": "Une onde de peur repousse et blesse tout ce qui est à 8 blocs.",
-  "technique.hxh.biscuit_club_stone": "Pierre massue",
-  "technique.hxh.biscuit_club_stone.desc": "Un coup de poing au sol : l'onde de choc secoue et repousse tout à 5 blocs.",
-  "technique.hxh.netero_kannon_breath": "Souffle de Kannon",
-  "technique.hxh.netero_kannon_breath.desc": "Une onde sacrée en cône (10 blocs) repousse tout le monde. Consomme de la Prière."
+  "quest.hxh.discover_arena.hint": "Rumeur : la Tour Céleste se dresse vers X %s, Z %s. (/hunter tower pour la retrouver)"
 }

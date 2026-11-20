@@ -1545,21 +1545,5 @@
   "mastery.hxh.regen": "Aura regeneration",
   "detail.hxh.eff.regen_none": "No natural regeneration (sleeping refills the aura)",
   "detail.hxh.eff.regen_sleep": "Sleeping: aura restored to 100% and regeneration XP",
-  "quest.hxh.discover_arena.hint": "Rumor: the Heavens Arena tower stands around X %s, Z %s. (/hunter tower to find it again)",
-  "technique.hxh.gon_rage": "Gon's Rage",
-  "technique.hxh.gon_rage.desc": "Adult Gon lets his anger take over: Strength IV and Speed III for 8 s.",
-  "technique.hxh.leorio_serum": "Emergency Serum",
-  "technique.hxh.leorio_serum.desc": "Throws a heal at the targeted entity (12 blocks): instant healing, then regeneration.",
-  "technique.hxh.zeno_ancestor_weight": "Weight of the Ancestors",
-  "technique.hxh.zeno_ancestor_weight.desc": "Weighs down the targeted entity (14 blocks): very slow and barely able to jump for 8 s.",
-  "technique.hxh.feitan_cage": "Pain Packer: Cage",
-  "technique.hxh.feitan_cage.desc": "A ring of black flames holds the targeted entity (10 blocks) for 3 s: nearly immobile and weakened.",
-  "technique.hxh.meruem_membrane": "Membrane Shield",
-  "technique.hxh.meruem_membrane.desc": "A shell of aura absorbs 20 HP of damage for 6 s.",
-  "technique.hxh.meruem_royal_cry": "Royal Cry",
-  "technique.hxh.meruem_royal_cry.desc": "A wave of dread pushes back and hurts everything within 8 blocks.",
-  "technique.hxh.biscuit_club_stone": "Club Stone",
-  "technique.hxh.biscuit_club_stone.desc": "A punch to the ground: the shockwave shakes and pushes back everything within 5 blocks.",
-  "technique.hxh.netero_kannon_breath": "Kannon's Breath",
-  "technique.hxh.netero_kannon_breath.desc": "A sacred wave in a cone (10 blocks) pushes everyone back. Consumes Prayer."
+  "quest.hxh.discover_arena.hint": "Rumor: the Heavens Arena tower stands around X %s, Z %s. (/hunter tower to find it again)"
 }

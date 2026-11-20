@@ -37,7 +37,7 @@ public final class HatsuKits {
 
     // ---------- Premier lot jouable ----------
     public static final HatsuKit GON = playable("gon", ENHANCER, List.of(Passives.GON_WILD_INSTINCT),
-            Techniques.GON_ROCK, Techniques.GON_SCISSORS, Techniques.GON_PAPER, Techniques.GON_ROCK_EPIC, Techniques.GON_RAGE);
+            Techniques.GON_ROCK, Techniques.GON_SCISSORS, Techniques.GON_PAPER, Techniques.GON_ROCK_EPIC);
     public static final HatsuKit KILLUA = playable("killua", TRANSMUTER, List.of(Passives.ZOLDYCK_BODY),
             Techniques.KILLUA_THUNDERBOLT, Techniques.KILLUA_GODSPEED);
     public static final HatsuKit KURAPIKA = playable("kurapika", CONJURER, List.of(Passives.DOWSING_CHAIN),
@@ -47,9 +47,9 @@ public final class HatsuKits {
     public static final HatsuKit ILLUMI = playable("illumi", MANIPULATOR, List.of(Passives.POISON_TRAINING),
             Techniques.ILLUMI_NEEDLE, Techniques.ILLUMI_TRANSFORM);
     public static final HatsuKit LEORIO = playable("leorio", EMITTER, List.of(Passives.DOCTOR),
-            Techniques.LEORIO_REMOTE_PUNCH, Techniques.LEORIO_SHOCKWAVE, Techniques.LEORIO_SERUM);
+            Techniques.LEORIO_REMOTE_PUNCH, Techniques.LEORIO_SHOCKWAVE);
     public static final HatsuKit NETERO = playable("netero", ENHANCER, List.of(Netero.PRAYER),
-            Netero.KANNON_FISTS, Netero.KANNON, Netero.ZERO_HAND, Techniques.NETERO_KANNON_BREATH);
+            Netero.KANNON_FISTS, Netero.KANNON, Netero.ZERO_HAND);
     public static final HatsuKit HISOKA = playable("hisoka", TRANSMUTER, List.of(Passives.HISOKA_THRILL),
             Techniques.HISOKA_BUNGEE_GUM, Techniques.HISOKA_CARDS, Techniques.HISOKA_TEXTURE_SURPRISE);
 
@@ -63,7 +63,7 @@ public final class HatsuKits {
     public static final HatsuKit BUSHIDORA = playable("bushidora", ENHANCER, List.of(Characters.BUSHIDORA_SWORDSMAN), Characters.BUSHIDORA_AURA_BLADE);
     public static final HatsuKit TSEZGUERRA = playable("tsezguerra", ENHANCER, List.of(Characters.TSEZGUERRA_LEADER), Characters.TSEZGUERRA_CHARGED_STRIKE);
     public static final HatsuKit SILVA = playable("silva", EMITTER, List.of(Passives.ZOLDYCK_BODY), Characters.SILVA_GREAT_ORB, Characters.SILVA_EXPLOSIVE_ORBS);
-    public static final HatsuKit ZENO = playable("zeno", EMITTER, List.of(Passives.ZOLDYCK_BODY), Characters.ZENO_DRAGON_HEAD, Characters.ZENO_DRAGON_DIVE, Techniques.ZENO_ANCESTOR_WEIGHT);
+    public static final HatsuKit ZENO = playable("zeno", EMITTER, List.of(Passives.ZOLDYCK_BODY), Characters.ZENO_DRAGON_HEAD, Characters.ZENO_DRAGON_DIVE);
     public static final HatsuKit KALLUTO = playable("kalluto", MANIPULATOR, List.of(Passives.ZOLDYCK_BODY), Characters.KALLUTO_PAPER_DANCE);
     public static final HatsuKit NOBUNAGA = playable("nobunaga", ENHANCER, List.of(Characters.NOBUNAGA_EN), Characters.NOBUNAGA_IAI);
     public static final HatsuKit UVOGIN = playable("uvogin", ENHANCER, List.of(Characters.UVOGIN_IRON_BODY), Characters.UVOGIN_BIG_BANG_IMPACT);
@@ -77,13 +77,13 @@ public final class HatsuKits {
     public static final HatsuKit KITE = playable("kite", CONJURER, List.of(Characters.KITE_HUNTER), Characters.KITE_CRAZY_SLOTS);
     public static final HatsuKit MOREL = playable("morel", MANIPULATOR, List.of(Characters.MOREL_SMOKE), Characters.MOREL_DEEP_PURPLE);
     public static final HatsuKit PALM = playable("palm", ENHANCER, List.of(Characters.PALM_WINK_BLUE), Characters.PALM_BLACK_WIDOW);
-    public static final HatsuKit MERUEM = playable("meruem", EMITTER, List.of(Characters.MERUEM_KING), Characters.MERUEM_RAGE_BLAST, Characters.MERUEM_PHOTON, Techniques.MERUEM_MEMBRANE, Techniques.MERUEM_ROYAL_CRY);
+    public static final HatsuKit MERUEM = playable("meruem", EMITTER, List.of(Characters.MERUEM_KING), Characters.MERUEM_RAGE_BLAST, Characters.MERUEM_PHOTON);
     public static final HatsuKit YOUPI = playable("youpi", TRANSMUTER, List.of(Characters.YOUPI_VITALITY), Characters.YOUPI_METAMORPHOSIS, Characters.YOUPI_RAGE_BLAST);
     public static final HatsuKit ZUSHI = playable("zushi", MANIPULATOR, List.of(Characters.ZUSHI_DILIGENT), Characters.ZUSHI_REN_PUNCH);
     public static final HatsuKit SENRITSU = playable("senritsu", EMITTER, List.of(Characters.SENRITSU_HEART_SOUND), Characters.SENRITSU_MELODY);
-    public static final HatsuKit BISCUIT = playable("biscuit", TRANSMUTER, List.of(Specials.BISCUIT_TWO_FORMS), Specials.BISCUIT_SWITCH_FORM, Specials.BISCUIT_ESTHETICIAN, Techniques.BISCUIT_CLUB_STONE);
+    public static final HatsuKit BISCUIT = playable("biscuit", TRANSMUTER, List.of(Specials.BISCUIT_TWO_FORMS), Specials.BISCUIT_SWITCH_FORM, Specials.BISCUIT_ESTHETICIAN);
     public static final HatsuKit CHROLLO = playable("chrollo", SPECIALIST, List.of(Specials.CHROLLO_HEAD), Specials.CHROLLO_SKILL_HUNTER);
-    public static final HatsuKit FEITAN = playable("feitan", TRANSMUTER, List.of(Specials.FEITAN_PAIN), Specials.FEITAN_RISING_SUN, Techniques.FEITAN_CAGE);
+    public static final HatsuKit FEITAN = playable("feitan", TRANSMUTER, List.of(Specials.FEITAN_PAIN), Specials.FEITAN_RISING_SUN);
     public static final HatsuKit PHINKS = playable("phinks", ENHANCER, List.of(Specials.PHINKS_BRAWLER), Specials.PHINKS_RIPPER_CYCLOTRON);
     public static final HatsuKit SHALNARK = playable("shalnark", MANIPULATOR, List.of(Specials.SHALNARK_TECH), Specials.SHALNARK_BLACK_VOICE, Specials.SHALNARK_AUTOPILOT);
     public static final HatsuKit KNOV = playable("knov", EMITTER, List.of(Specials.KNOV_STRATEGIST), Specials.KNOV_MARK_DOOR, Specials.KNOV_HIDE_AND_SEEK);
