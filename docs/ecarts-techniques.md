@@ -35,13 +35,13 @@ Taille : **S** = réglage ou variante d'une technique existante · **M** = nouve
 ## 2. Passifs modifiés
 - **Killua – Corps Zoldyck** : aura électrique, nouvelle barre d'électricité (chaque coup et technique en consomme), taser, recharge en se « tazant » de temps en temps. **L**
 - **Pitou – Garde royal** : +20 % d'aura max, +20 en vitesse, regen d'aura accrue, En plus grand, Nen post mortem (Terpsichora reprend le corps, +10–20 % de stats). **L**
-- **Gyro / archéologue – Archéologue** : imite les techniques de frappe déjà reçues (malus), kit sans technique de base, menu pour retirer. **L**
+- **Ging – Archéologue** : imite les techniques de frappe déjà reçues (malus), kit sans technique de base, menu pour retirer. **L**
 - **Botobai – Vétéran** : bonus de résistance et de puissance quand les PV sont hauts (au lieu de moins de faiblesse). **S**
 - **Biscuit – Deux formes** : grande = Lenteur légère et aura qui remonte moins vite ; peut enseigner les bases du Nen. **M**
 - **Tsezguerra – Meneur** : doubles sauts (jusqu'à 5 selon la Volonté). **M**
-- **Silva ou Zeno (Zoldyck) – Corps** : dégâts bonus sur cible isolée. **S**
+- **Corps Zoldyck de Silva et Zeno (et Kalluto)** : passage de « immunisé » à « immunisé + dégâts bonus sur cible isolée » (une des trois fiches, à confirmer). **S**
 - **Nobunaga – En** : En limité à 4 blocs, la taille en plus devient dégâts de l'Iaijutsu. **M**
-- **Bagarreur / Pitou / Illumi / Meruem / Pouf / Youpi / Morel / Palm** : plusieurs passifs nouveaux détaillés dans ton fichier (Garde royal, Corps du Roi, Génie du combat, Ailes de papillon, Colère grandissante, Capacité pulmonaire, Wink Blue…). **M–L**
+- **Phinks – Bagarreur** (dégâts à mains nues, résistance au recul), **Machi – Suture** (sens du fil), **Meruem** (Synthèse d'aura, Corps du Roi, Génie du combat), **Pouf** (Ailes de papillon, Esprit calculateur, Régénération cellulaire), **Youpi** (Corps monstrueux, Colère grandissante), **Morel** (Maître de la fumée, Capacité pulmonaire), **Palm** (Wink Blue), **Knuckle** (Hakoware). **M–L**
 
 ## 3. Nouvelles techniques (dans ton fichier, pas dans le jeu)
 Celles où ton fichier donne tout ce qu'il faut sont marquées ✔. Les autres ont des « ? » (coût, recharge, niveau) : je proposerai des valeurs.
@@ -63,13 +63,13 @@ Celles où ton fichier donne tout ce qu'il faut sont marquées ✔. Les autres o
 | Silva | Frappe du patriarche | M |
 | Zeno | Dragon Lance, Dragon Dive – Pluie d'étoiles, Dragon Rider (monture), Aura Blast | M / L / L / M |
 | Razor | Invocation des Quatorze démons (puissance par nombre), Smash de Razor | L / M |
-| Gon (papiers de Razor)… | Danse du serpent, Surveillance Paper Dolls, Paper Storm, Paper Cocoon, Razor Fan | M ×5 |
+| Kalluto | Dance of the Serpent's Bite, Surveillance Paper Dolls, Paper Storm, Paper Cocoon, Razor Fan | M ×5 |
 | Chrollo | Indoor Fish, Fun Fun Cloth, Order Stamp, Convert Hands, The Sun and Moon, Lovely Ghostwriter, Téléportation, Love Dial 6700 | M–L ×8 |
 | Feitan | Pain Packer, Heat Wave, Solar Burst, Phantom Step | M ×4 |
 | Nobunaga | Iaijutsu : Dégainage mortel (✔), Coupe instantanée, Posture du samouraï, Pas du sabreur | M ×4 |
 | Phinks / Uvogin | Coup dévastateur · Cri destructeur, Force monstrueuse, Projeter | M ×4 |
 | Franklin | Tir concentré, Déluge de balles, Tir perforant | M ×3 |
-| Shalnark (fils) | Nen Threads, Marionnettiste, Toile invisible, Fil étrangleur, Nen Stitches | M ×5 |
+| Machi | Nen Threads, Marionnettiste, Toile invisible, Fil étrangleur, Nen Stitches | M ×5 |
 | Shizuku | Aspiration massive, Extraction sanguine, Frappe de Blinky, Extraction médicale, Restitution | M ×5 |
 | Pakunoda | Lecture mémorielle | S |
 | Knuckle | Activer / Annuler Hakoware, Toritaten (banqueroute automatique) | L ×3 |
