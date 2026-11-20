@@ -170,6 +170,22 @@ public final class CharacterKitTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty")
+    public static void lot5RoyalPressureStanceAndFocusedShot(GameTestHelper helper) {
+        Zombie meruem = husk(helper, 0);
+        Zombie near = husk(helper, 3);
+        hunter(meruem, NenType.EMITTER, "meruem");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.MERUEM_PRESSURE.perform(meruem, 1f), "Pression royale part");
+        helper.assertTrue(near.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN), "L'ennemi proche est ralenti");
+        helper.assertTrue(near.hasEffect(net.minecraft.world.effect.MobEffects.WEAKNESS), "L'ennemi proche est affaibli");
+        Zombie nobunaga = husk(helper, 6);
+        hunter(nobunaga, NenType.ENHANCER, "nobunaga");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.NOBUNAGA_STANCE.perform(nobunaga, 1f), "Posture du samouraï part");
+        helper.assertTrue(nobunaga.hasEffect(net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE), "Résistance en posture");
+        helper.assertTrue(nobunaga.hasEffect(net.minecraft.world.effect.MobEffects.DAMAGE_BOOST), "Force en posture");
+        helper.succeed();
+    }
+
     /** Chaque technique de chaque personnage jouable part sans erreur, lancée par un mob sur une cible devant lui. */
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void everyTechniqueOfEveryKitRuns(GameTestHelper helper) {

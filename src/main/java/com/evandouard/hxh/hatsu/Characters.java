@@ -368,6 +368,20 @@ public final class Characters {
     public static final Technique NOBUNAGA_IAI = register(new Kinds.Pulse("nobunaga_iai", ENHANCER, 25, 140,
             4, 12f, 0.2f, List.of(), new Look(Style.SLASH, NenFx.WHITE, 1.4f), SoundEvents.PLAYER_ATTACK_SWEEP));
 
+    /** Coupe instantanée : un coup de sabre sec et très rapide devant soi. */
+    public static final Technique NOBUNAGA_QUICK_CUT = register(new Techniques.Strike("nobunaga_quick_cut", ENHANCER,
+            15, 60, 3.5, 0.85, 9f, 0.4f, List.of(), new Look(Style.SLASH, NenFx.WHITE, 1.2f), SoundEvents.PLAYER_ATTACK_SWEEP));
+
+    /** Posture du samouraï : immobile et concentré, Résistance et Force pendant 8 s. */
+    public static final Technique NOBUNAGA_STANCE = register(new Techniques.SelfBuff("nobunaga_stance", ENHANCER, 20, 300,
+            List.of(new Effect(MobEffects.DAMAGE_RESISTANCE, 160, 0), new Effect(MobEffects.DAMAGE_BOOST, 160, 0)),
+            new Look(Style.FLARE, NenFx.WHITE, 1f), SoundEvents.ARMOR_EQUIP_IRON.value()));
+
+    /** Pas du sabreur : fente rapide, Vitesse III pendant 4 s. */
+    public static final Technique NOBUNAGA_SWORD_STEP = register(new Techniques.SelfBuff("nobunaga_sword_step", ENHANCER, 15, 200,
+            List.of(new Effect(MobEffects.MOVEMENT_SPEED, 80, 2)),
+            new Look(Style.FLARE, NenFx.WHITE, 0.8f), SoundEvents.PLAYER_ATTACK_SWEEP));
+
     /** Corps d'acier : dégâts physiques −25 %. */
     public static final Passive UVOGIN_IRON_BODY = new Passive("uvogin_iron_body", true) {
         @Override
@@ -435,6 +449,14 @@ public final class Characters {
 
     public static final Technique FRANKLIN_DOUBLE_MACHINE_GUN = register(new Kinds.Burst("franklin_double_machine_gun", EMITTER,
             40, 300, 18, 10, 2, 2.2f, List.of(), new Look(Style.ORB, NenFx.EMITTER, 0.6f), SoundEvents.FIREWORK_ROCKET_BLAST));
+
+    /** Tir concentré : une seule balle d'aura, fine et lourde (24 blocs). */
+    public static final Technique FRANKLIN_FOCUSED_SHOT = register(new Kinds.Beam("franklin_focused_shot", EMITTER, 25, 160,
+            24, 0.5, 14f, NenFx.EMITTER, SoundEvents.FIREWORK_ROCKET_BLAST)).requiresNenLevel(10);
+
+    /** Tir perforant : un tir plus large qui traverse tout sur 16 blocs. */
+    public static final Technique FRANKLIN_PIERCING_SHOT = register(new Kinds.Beam("franklin_piercing_shot", EMITTER, 35, 240,
+            16, 1.0, 10f, NenFx.EMITTER, SoundEvents.FIREWORK_ROCKET_BLAST)).requiresNenLevel(20);
 
     /** Suture : se soigne d'1 PV toutes les 4 s, et ses alliés à 3 blocs aussi. */
     public static final Passive MACHI_SUTURE = new Passive("machi_suture", true) {
@@ -737,6 +759,25 @@ public final class Characters {
 
     public static final Technique MERUEM_PHOTON = register(new Kinds.Beam("meruem_photon", EMITTER, 50, 400,
             20, 1.2, 18f, NenFx.WHITE, SoundEvents.BEACON_ACTIVATE)).requiresNenLevel(30);
+
+    /** Frappe du Roi : un coup de poing royal, lourd et précis. */
+    public static final Technique MERUEM_KING_STRIKE = register(new Techniques.Strike("meruem_king_strike", EMITTER, 20, 100,
+            3.5, 0.85, 14f, 1.8f, List.of(), new Look(Style.IMPACT, NenFx.DARK, 1.8f), SoundEvents.PLAYER_ATTACK_STRONG));
+
+    /** Queue du Roi : un coup de queue qui jette l'ennemi en arrière et le ralentit. */
+    public static final Technique MERUEM_TAIL = register(new Techniques.Strike("meruem_tail", EMITTER, 25, 160,
+            4.0, 0.8, 10f, 3.0f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 60, 1)),
+            new Look(Style.SLASH, NenFx.DARK, 1.6f), SoundEvents.PLAYER_ATTACK_KNOCKBACK));
+
+    /** Accélération royale : Vitesse III et Force pendant 6 s. */
+    public static final Technique MERUEM_ROYAL_SPEED = register(new Techniques.SelfBuff("meruem_royal_speed", EMITTER, 30, 300,
+            List.of(new Effect(MobEffects.MOVEMENT_SPEED, 120, 2), new Effect(MobEffects.DAMAGE_BOOST, 120, 0)),
+            new Look(Style.FLARE, NenFx.DARK, 1.2f), SoundEvents.WARDEN_ROAR));
+
+    /** Pression royale : une onde d'aura écrasante qui ralentit et affaiblit tout autour (8 blocs). */
+    public static final Technique MERUEM_PRESSURE = register(new Kinds.Pulse("meruem_pressure", EMITTER, 30, 260,
+            8, 4f, 0.5f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 100, 2), new Effect(MobEffects.WEAKNESS, 100, 1)),
+            new Look(Style.SHOCKWAVE, NenFx.DARK, 1.6f), SoundEvents.WARDEN_HEARTBEAT));
 
     /** Vitalité : +20 PV max. */
     public static final Passive YOUPI_VITALITY = new Passive("youpi_vitality", true) {

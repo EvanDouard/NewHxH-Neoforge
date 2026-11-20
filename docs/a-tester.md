@@ -288,3 +288,10 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 ## Lot 4 des techniques de ton fichier (20 nov)
 - [x] CI : `countdownBombIsRandomAndDefusedByContact`.
 - [ ] En jeu : Compte à rebours de Genthru : délai au hasard de 1 à 5 s, explosion plus forte (24) ; si la cible frappe Genthru trois fois avant l'explosion, la bombe est désamorcée (message).
+
+## Lot 5 des techniques de ton fichier (20 nov)
+- [x] CI : `lot5RoyalPressureStanceAndFocusedShot` + `everyTechniqueOfEveryKitRuns`.
+- [ ] En jeu, Meruem : Frappe du Roi (20 aura, 5 s), Queue du Roi (25, 8 s, projette + ralentit), Accélération royale (30, 15 s, Vitesse III + Force 6 s), Pression royale (30, 13 s, 8 blocs, ralentit + affaiblit).
+- [ ] En jeu, Nobunaga : Coupe instantanée (15, 3 s), Posture du samouraï (20, 15 s, Résistance + Force 8 s), Pas du sabreur (15, 10 s, Vitesse III 4 s).
+- [ ] En jeu, Franklin : Tir concentré (25, 8 s, niveau Nen 10), Tir perforant (35, 12 s, niveau Nen 20).
+- Valeurs proposées par moi : corrige-les dans `docs/a-trancher.md`.

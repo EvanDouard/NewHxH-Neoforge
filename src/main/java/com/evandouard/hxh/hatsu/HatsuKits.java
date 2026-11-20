@@ -65,9 +65,11 @@ public final class HatsuKits {
     public static final HatsuKit SILVA = playable("silva", EMITTER, List.of(Passives.ZOLDYCK_ASSASSIN), Characters.SILVA_GREAT_ORB, Characters.SILVA_EXPLOSIVE_ORBS);
     public static final HatsuKit ZENO = playable("zeno", EMITTER, List.of(Passives.ZOLDYCK_ASSASSIN), Characters.ZENO_DRAGON_HEAD, Characters.ZENO_DRAGON_DIVE);
     public static final HatsuKit KALLUTO = playable("kalluto", MANIPULATOR, List.of(Passives.ZOLDYCK_ASSASSIN), Characters.KALLUTO_PAPER_DANCE);
-    public static final HatsuKit NOBUNAGA = playable("nobunaga", ENHANCER, List.of(Characters.NOBUNAGA_EN), Characters.NOBUNAGA_IAI);
+    public static final HatsuKit NOBUNAGA = playable("nobunaga", ENHANCER, List.of(Characters.NOBUNAGA_EN), Characters.NOBUNAGA_IAI,
+            Characters.NOBUNAGA_QUICK_CUT, Characters.NOBUNAGA_STANCE, Characters.NOBUNAGA_SWORD_STEP);
     public static final HatsuKit UVOGIN = playable("uvogin", ENHANCER, List.of(Characters.UVOGIN_IRON_BODY), Characters.UVOGIN_BIG_BANG_IMPACT);
-    public static final HatsuKit FRANKLIN = playable("franklin", EMITTER, List.of(Characters.FRANKLIN_STURDY), Characters.FRANKLIN_DOUBLE_MACHINE_GUN);
+    public static final HatsuKit FRANKLIN = playable("franklin", EMITTER, List.of(Characters.FRANKLIN_STURDY), Characters.FRANKLIN_DOUBLE_MACHINE_GUN,
+            Characters.FRANKLIN_FOCUSED_SHOT, Characters.FRANKLIN_PIERCING_SHOT);
     public static final HatsuKit MACHI = playable("machi", TRANSMUTER, List.of(Characters.MACHI_SUTURE), Characters.MACHI_NEN_THREADS);
     public static final HatsuKit SHIZUKU = playable("shizuku", CONJURER, List.of(Characters.SHIZUKU_CLEANER), Characters.SHIZUKU_BLINKY);
     public static final HatsuKit PAKUNODA = playable("pakunoda", SPECIALIST, List.of(Characters.PAKUNODA_MIND_READER), Characters.PAKUNODA_MEMORY_BOMB);
@@ -77,7 +79,8 @@ public final class HatsuKits {
     public static final HatsuKit KITE = playable("kite", CONJURER, List.of(Characters.KITE_HUNTER), Characters.KITE_CRAZY_SLOTS);
     public static final HatsuKit MOREL = playable("morel", MANIPULATOR, List.of(Characters.MOREL_SMOKE), Characters.MOREL_DEEP_PURPLE);
     public static final HatsuKit PALM = playable("palm", ENHANCER, List.of(Characters.PALM_WINK_BLUE), Characters.PALM_BLACK_WIDOW);
-    public static final HatsuKit MERUEM = playable("meruem", EMITTER, List.of(Characters.MERUEM_KING), Characters.MERUEM_RAGE_BLAST, Characters.MERUEM_PHOTON);
+    public static final HatsuKit MERUEM = playable("meruem", EMITTER, List.of(Characters.MERUEM_KING), Characters.MERUEM_RAGE_BLAST, Characters.MERUEM_PHOTON,
+            Characters.MERUEM_KING_STRIKE, Characters.MERUEM_TAIL, Characters.MERUEM_ROYAL_SPEED, Characters.MERUEM_PRESSURE);
     public static final HatsuKit YOUPI = playable("youpi", TRANSMUTER, List.of(Characters.YOUPI_VITALITY), Characters.YOUPI_METAMORPHOSIS, Characters.YOUPI_RAGE_BLAST);
     public static final HatsuKit ZUSHI = playable("zushi", MANIPULATOR, List.of(Characters.ZUSHI_DILIGENT), Characters.ZUSHI_REN_PUNCH);
     public static final HatsuKit SENRITSU = playable("senritsu", EMITTER, List.of(Characters.SENRITSU_HEART_SOUND), Characters.SENRITSU_MELODY);
