@@ -762,7 +762,11 @@ public final class QuestTests {
             QuestManager.tick(player);
             helper.assertTrue(h.learned("zetsu"), "In au palier : Zetsu débloqué sans voir Wing");
             helper.assertTrue(d.isCompleted(HxHMod.id("nen_adv_zetsu").toString()), "La quête du Zetsu est terminée d'office");
+            h.setMasteryLevel(IN, 2);
             h.setMasteryLevel(REN, 5);
+            QuestManager.tick(player);
+            helper.assertTrue(!h.learned("gyo"), "Ren 5 mais In 2 : pas de Gyo (le Gyo révèle l'In)");
+            h.setMasteryLevel(IN, com.evandouard.hxh.HxHConfig.ZETSU_UNLOCK_IN_LEVEL.get());
             QuestManager.tick(player);
             helper.assertTrue(h.learned("gyo") && !h.learned("en"), "Ren 5 : Gyo, mais pas encore En");
             h.setMasteryLevel(TEN, 10);

@@ -94,7 +94,7 @@ Valeurs posées par Claude pour avancer. Elles marchent en jeu, mais on les revo
 
 ## Graphe des techniques du Nen (19 nov)
 Techniques de base enseignées par Wing : Ten, In, Ren, Hatsu. Le reste se débloque aux niveaux de maîtrise (plafond de verre : niveau de Nen, minimum 5). Valeurs **proposées**, à trancher (`NenTree.nodes()`) :
-- Zetsu : In 5 (`senses.zetsuUnlockInLevel`) · Shu : Ten 8 (Ken + 3) · Ken : Ten 5 (`senses.kenUnlockTenLevel`) + Ren 3 · En : Ten 10 + Ren 8 · Gyo : Ren 5.
+- Zetsu : In 5 (`senses.zetsuUnlockInLevel`) · Shu : Ten 8 (Ken + 3) · Ken : Ten 5 (`senses.kenUnlockTenLevel`) + Ren 3 · En : Ten 10 + Ren 8 · Gyo : Ren 5 + In 3 (le Gyo révèle l'In, vrai prérequis depuis le 20 nov).
 - Ko : Ten 10, In 10, Ren 10, Gyo 5, Hatsu appris. Ryu : Gyo 15, Ko 10, Ken 10 (le lien Ken → Ryu est incertain dans le schéma de référence).
 - Ces niveaux au-dessus de 5 demandent un niveau de Nen équivalent.
 
