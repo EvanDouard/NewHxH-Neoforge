@@ -316,3 +316,8 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [x] CI : `lot9ChargeBuffsUvogin` + `everyTechniqueOfEveryKitRuns`.
 - [ ] En jeu : Biscuit Gros coup de poing (30 aura, 10 s) ; Phinks Coup de bélier (20, 6 s) ; Uvogin Charge (25, 14 s, Vitesse II + Force II 5 s) ; Knuckle Toritaten (20, 7 s, étourdit).
 - Valeurs proposées par moi : corrige-les dans `docs/a-trancher.md`.
+
+## Lot 10 des techniques de ton fichier (21 nov)
+- [x] CI : `lot10UltrasoundRevealsAndPounceLeaps` + `everyTechniqueOfEveryKitRuns`.
+- [ ] En jeu : Kurapika Lancer de chaîne (20 aura, 6 s, 10 blocs) ; Leorio Détection par ultrasons (15, 20 s, 16 blocs, Lueur 6 s) ; Machi Toile invisible (30, 16 s, 5 blocs) ; Pitou Bond (20, 7 s, 6 blocs vers l'avant).
+- Valeurs proposées par moi : corrige-les dans `docs/a-trancher.md`.

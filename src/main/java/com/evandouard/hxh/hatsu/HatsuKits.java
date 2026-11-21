@@ -42,16 +42,19 @@ public final class HatsuKits {
             Techniques.KILLUA_THUNDERBOLT, Techniques.KILLUA_GODSPEED,
             Characters.KILLUA_YOYO, Characters.KILLUA_ELECTRIC_FIST);
     public static final HatsuKit KURAPIKA = playable("kurapika", CONJURER, List.of(Passives.DOWSING_CHAIN),
-            Techniques.KURAPIKA_CHAIN_JAIL, Techniques.KURAPIKA_HOLY_CHAIN);
+            Techniques.KURAPIKA_CHAIN_JAIL, Techniques.KURAPIKA_HOLY_CHAIN,
+            Characters.KURAPIKA_CHAIN_THROW);
     public static final HatsuKit NEFERPITOU = playable("neferpitou", SPECIALIST, List.of(Passives.FELINE_AGILITY),
             Techniques.PITOU_TERPSICHORA, Techniques.PITOU_DOCTOR_BLYTHE,
-            Characters.PITOU_CLAWS);
+            Characters.PITOU_CLAWS,
+            Characters.PITOU_POUNCE);
     public static final HatsuKit ILLUMI = playable("illumi", MANIPULATOR, List.of(Passives.POISON_TRAINING),
             Techniques.ILLUMI_NEEDLE, Techniques.ILLUMI_TRANSFORM,
             Characters.ILLUMI_NEEDLE_BARRAGE);
     public static final HatsuKit LEORIO = playable("leorio", EMITTER, List.of(Passives.DOCTOR),
             Techniques.LEORIO_REMOTE_PUNCH, Techniques.LEORIO_SHOCKWAVE,
-            Characters.LEORIO_INNER_BLOW);
+            Characters.LEORIO_INNER_BLOW,
+            Characters.LEORIO_ULTRASOUND);
     public static final HatsuKit NETERO = playable("netero", ENHANCER, List.of(Netero.PRAYER),
             Netero.KANNON, Netero.ZERO_HAND);
     public static final HatsuKit HISOKA = playable("hisoka", TRANSMUTER, List.of(Passives.HISOKA_THRILL),
@@ -81,7 +84,8 @@ public final class HatsuKits {
     public static final HatsuKit FRANKLIN = playable("franklin", EMITTER, List.of(Characters.FRANKLIN_STURDY), Characters.FRANKLIN_DOUBLE_MACHINE_GUN,
             Characters.FRANKLIN_FOCUSED_SHOT, Characters.FRANKLIN_PIERCING_SHOT);
     public static final HatsuKit MACHI = playable("machi", TRANSMUTER, List.of(Characters.MACHI_SUTURE), Characters.MACHI_NEN_THREADS,
-            Characters.MACHI_STRANGLE);
+            Characters.MACHI_STRANGLE,
+            Characters.MACHI_INVISIBLE_WEB);
     public static final HatsuKit SHIZUKU = playable("shizuku", CONJURER, List.of(Characters.SHIZUKU_CLEANER), Characters.SHIZUKU_BLINKY);
     public static final HatsuKit PAKUNODA = playable("pakunoda", SPECIALIST, List.of(Characters.PAKUNODA_MIND_READER), Characters.PAKUNODA_MEMORY_BOMB);
     public static final HatsuKit NEON = playable("neon", SPECIALIST, List.of(Characters.NEON_FORTUNE), Characters.NEON_LOVELY_GHOSTWRITER);

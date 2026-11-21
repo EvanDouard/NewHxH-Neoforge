@@ -874,6 +874,36 @@ public final class Characters {
             3.5, 0.85, 9f, 1.2f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 40, 1), new Effect(MobEffects.CONFUSION, 80, 0)),
             new Look(Style.IMPACT, NenFx.CONJURER, 1.4f), SoundEvents.PLAYER_ATTACK_CRIT));
 
+    /** Lancer de chaîne de Kurapika : la chaîne file à 10 blocs et entrave la cible. */
+    public static final Technique KURAPIKA_CHAIN_THROW = register(new Techniques.Strike("kurapika_chain_throw", CONJURER, 20, 120,
+            10.0, 0.95, 7f, 0f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 60, 1)),
+            new Look(Style.CHAIN, NenFx.CONJURER, 1f), SoundEvents.CHAIN_PLACE));
+
+    /** Détection par ultrasons de Leorio : révèle les êtres vivants dans un rayon de 16 blocs (Lueur 6 s). */
+    public static final Technique LEORIO_ULTRASOUND = register(new Kinds.Pulse("leorio_ultrasound", EMITTER, 15, 400,
+            16, 0f, 0f, List.of(new Effect(MobEffects.GLOWING, 120, 0)),
+            new Look(Style.SHOCKWAVE, NenFx.EMITTER, 1.6f), SoundEvents.AMETHYST_BLOCK_RESONATE));
+
+    /** Toile invisible de Machi : des fils tendus autour d'elle (5 blocs) qui ralentissent fortement. */
+    public static final Technique MACHI_INVISIBLE_WEB = register(new Kinds.Pulse("machi_invisible_web", TRANSMUTER, 30, 320,
+            5, 2f, 0f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 100, 3)),
+            new Look(Style.CHAIN, NenFx.TRANSMUTER, 1.2f), SoundEvents.CHAIN_PLACE));
+
+    /** Bond de Pitou : un bond éclair de 6 blocs vers l'avant qui frappe ce qu'il croise. */
+    public static final Technique PITOU_POUNCE = register(new Technique("pitou_pounce", NenType.SPECIALIST, 20, 140) {
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            net.minecraft.world.phys.Vec3 look = caster.getLookAngle();
+            net.minecraft.world.phys.Vec3 dir = new net.minecraft.world.phys.Vec3(look.x, 0, look.z).normalize();
+            for (LivingEntity t : Kinds.enemiesAround(caster, caster.position().add(dir.scale(2.5)).add(0, 1, 0), 3.0))
+                Kinds.hurt(caster, t, 9f * power);
+            caster.setDeltaMovement(dir.x * 1.8, 0.3, dir.z * 1.8);
+            caster.hurtMarked = true;
+            Kinds.sound(caster, SoundEvents.PHANTOM_SWOOP);
+            return true;
+        }
+    });
+
     /** Frappe du Roi : un coup de poing royal, lourd et précis. */
     public static final Technique MERUEM_KING_STRIKE = register(new Techniques.Strike("meruem_king_strike", EMITTER, 20, 100,
             3.5, 0.85, 14f, 1.8f, List.of(), new Look(Style.IMPACT, NenFx.DARK, 1.8f), SoundEvents.PLAYER_ATTACK_STRONG));

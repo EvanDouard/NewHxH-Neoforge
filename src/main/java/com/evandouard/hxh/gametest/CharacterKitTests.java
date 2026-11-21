@@ -238,6 +238,21 @@ public final class CharacterKitTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty")
+    public static void lot10UltrasoundRevealsAndPounceLeaps(GameTestHelper helper) {
+        Zombie leorio = husk(helper, 0);
+        Zombie near = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(5, 1, 1));
+        near.setNoGravity(true);
+        hunter(leorio, NenType.EMITTER, "leorio");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.LEORIO_ULTRASOUND.perform(leorio, 1f), "Les ultrasons partent");
+        helper.assertTrue(near.hasEffect(net.minecraft.world.effect.MobEffects.GLOWING), "L'ennemi proche est révélé");
+        Zombie pitou = husk(helper, 10);
+        hunter(pitou, NenType.SPECIALIST, "neferpitou");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.PITOU_POUNCE.perform(pitou, 1f), "Le bond part");
+        helper.assertTrue(pitou.getDeltaMovement().x > 0.5, "Pitou bondit vers l'avant (est) : " + pitou.getDeltaMovement().x);
+        helper.succeed();
+    }
+
     /** Chaque technique de chaque personnage jouable part sans erreur, lancée par un mob sur une cible devant lui. */
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void everyTechniqueOfEveryKitRuns(GameTestHelper helper) {

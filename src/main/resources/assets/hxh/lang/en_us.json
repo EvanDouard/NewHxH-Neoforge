@@ -1612,5 +1612,13 @@
   "technique.hxh.uvogin_charge": "Charge",
   "technique.hxh.uvogin_charge.desc": "Speed II and Strength II for 5 s.",
   "technique.hxh.knuckle_toritaten": "Toritaten",
-  "technique.hxh.knuckle_toritaten.desc": "A solid punch that stuns."
+  "technique.hxh.knuckle_toritaten.desc": "A solid punch that stuns.",
+  "technique.hxh.kurapika_chain_throw": "Chain Throw",
+  "technique.hxh.kurapika_chain_throw.desc": "The chain flies out 10 blocks and binds the target.",
+  "technique.hxh.leorio_ultrasound": "Ultrasound Detection",
+  "technique.hxh.leorio_ultrasound.desc": "Reveals living beings within 16 blocks (Glowing 6 s).",
+  "technique.hxh.machi_invisible_web": "Invisible Web",
+  "technique.hxh.machi_invisible_web.desc": "Threads stretched around you (5 blocks) slow enemies heavily.",
+  "technique.hxh.pitou_pounce": "Pounce",
+  "technique.hxh.pitou_pounce.desc": "A lightning leap forward that strikes whatever it passes."
 }

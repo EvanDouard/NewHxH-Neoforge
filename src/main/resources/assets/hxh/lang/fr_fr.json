@@ -1612,5 +1612,13 @@
   "technique.hxh.uvogin_charge": "Charge",
   "technique.hxh.uvogin_charge.desc": "Vitesse II et Force II pendant 5 s.",
   "technique.hxh.knuckle_toritaten": "Toritaten",
-  "technique.hxh.knuckle_toritaten.desc": "Un coup de poing franc qui étourdit."
+  "technique.hxh.knuckle_toritaten.desc": "Un coup de poing franc qui étourdit.",
+  "technique.hxh.kurapika_chain_throw": "Lancer de chaîne",
+  "technique.hxh.kurapika_chain_throw.desc": "La chaîne file à 10 blocs et entrave la cible.",
+  "technique.hxh.leorio_ultrasound": "Détection par ultrasons",
+  "technique.hxh.leorio_ultrasound.desc": "Révèle les êtres vivants dans 16 blocs (Lueur 6 s).",
+  "technique.hxh.machi_invisible_web": "Toile invisible",
+  "technique.hxh.machi_invisible_web.desc": "Des fils tendus autour de toi (5 blocs) ralentissent fortement.",
+  "technique.hxh.pitou_pounce": "Bond",
+  "technique.hxh.pitou_pounce.desc": "Un bond éclair de 6 blocs vers l'avant qui frappe ce qu'il croise."
 }
