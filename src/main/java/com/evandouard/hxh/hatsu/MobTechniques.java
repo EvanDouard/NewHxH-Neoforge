@@ -332,6 +332,23 @@ public final class MobTechniques {
         }
     });
 
+
+    // ---------- Autres espèces (lot 1 de ton fichier du 20 nov) ----------
+    public static final Technique GUARDIAN_BEAM = Techniques.register(new Kinds.Beam("mob_guardian_beam", EMITTER, 20, 120, 14, 1.0, 8f, NenFx.EMITTER, SoundEvents.GUARDIAN_ATTACK));
+    public static final Technique SHULKER_BOLT = Techniques.register(new Techniques.Strike("mob_shulker_bolt", SPECIALIST, 15, 100, 12.0, 0.9, 4f, 0f, List.of(new Techniques.Effect(MobEffects.LEVITATION, 80, 0)), new Techniques.Look(Techniques.Style.ORB, NenFx.SPECIALIST, 0.8f), SoundEvents.SHULKER_SHOOT));
+    public static final Technique PHANTOM_DIVE = Techniques.register(new Techniques.Strike("mob_phantom_dive", SPECIALIST, 15, 100, 8.0, 0.8, 7f, 1f, List.of(), new Techniques.Look(Techniques.Style.SLASH, NenFx.SPECIALIST, 1.2f), SoundEvents.PHANTOM_SWOOP));
+    public static final Technique BEE_STING = Techniques.register(new Techniques.Strike("mob_bee_sting", ENHANCER, 10, 80, 3.5, 0.8, 3f, 0f, List.of(new Techniques.Effect(MobEffects.POISON, 100, 1)), new Techniques.Look(Techniques.Style.NEEDLE, NenFx.ENHANCER, 0.8f), SoundEvents.BEE_STING));
+    public static final Technique PILLAGER_VOLLEY = Techniques.register(new Kinds.Burst("mob_pillager_volley", EMITTER, 30, 200, 16, 5, 3, 2.2f, List.of(), new Techniques.Look(Techniques.Style.ORB, NenFx.EMITTER, 0.6f), SoundEvents.CROSSBOW_SHOOT));
+    public static final Technique PIGLIN_GREED = Techniques.register(new Techniques.SelfBuff("mob_piglin_greed", ENHANCER, 20, 300, List.of(new Techniques.Effect(MobEffects.DAMAGE_BOOST, 160, 0), new Techniques.Effect(MobEffects.MOVEMENT_SPEED, 160, 0)), new Techniques.Look(Techniques.Style.FLARE, NenFx.GOLD, 1f), SoundEvents.PIGLIN_ANGRY));
+    public static final Technique VEX_BLADE = Techniques.register(new Techniques.Strike("mob_vex_blade", SPECIALIST, 10, 60, 3.5, 0.8, 6f, 0.2f, List.of(), new Techniques.Look(Techniques.Style.SLASH, NenFx.SPECIALIST, 1f), SoundEvents.VEX_CHARGE));
+    public static final Technique WARDEN_SONIC = Techniques.register(new Kinds.Beam("mob_warden_sonic", EMITTER, 40, 300, 20, 1.2, 16f, NenFx.DARK, SoundEvents.WARDEN_SONIC_BOOM));
+    public static final Technique WITHER_DECAY = Techniques.register(new Kinds.Pulse("mob_wither_decay", SPECIALIST, 30, 240, 8, 4f, 0.3f, List.of(new Techniques.Effect(MobEffects.WITHER, 100, 1)), new Techniques.Look(Techniques.Style.SHOCKWAVE, NenFx.DARK, 1.4f), SoundEvents.WITHER_SHOOT));
+    public static final Technique DRAGON_BREATH = Techniques.register(new Kinds.Pulse("mob_dragon_breath", SPECIALIST, 40, 300, 10, 10f, 0.8f, List.of(new Techniques.Effect(MobEffects.WEAKNESS, 100, 1)), new Techniques.Look(Techniques.Style.SHOCKWAVE, NenFx.SPECIALIST, 1.8f), SoundEvents.ENDER_DRAGON_GROWL));
+    public static final Technique TURTLE_SHELL = Techniques.register(new Techniques.SelfBuff("mob_turtle_shell", ENHANCER, 15, 300, List.of(new Techniques.Effect(MobEffects.DAMAGE_RESISTANCE, 160, 1), new Techniques.Effect(MobEffects.MOVEMENT_SLOWDOWN, 160, 0)), new Techniques.Look(Techniques.Style.FLARE, NenFx.ENHANCER, 1f), SoundEvents.TURTLE_SHAMBLE));
+    public static final Technique DOLPHIN_GRACE = Techniques.register(new Techniques.SelfBuff("mob_dolphin_grace", TRANSMUTER, 15, 240, List.of(new Techniques.Effect(MobEffects.MOVEMENT_SPEED, 120, 2), new Techniques.Effect(MobEffects.DOLPHINS_GRACE, 120, 0)), new Techniques.Look(Techniques.Style.FLARE, NenFx.TRANSMUTER, 1f), SoundEvents.DOLPHIN_JUMP));
+    public static final Technique PANDA_ROLL = Techniques.register(new Techniques.Strike("mob_panda_roll", ENHANCER, 15, 120, 3.5, 0.8, 8f, 2f, List.of(), new Techniques.Look(Techniques.Style.IMPACT, NenFx.ENHANCER, 1.4f), SoundEvents.PANDA_BITE));
+    public static final Technique INK_CLOUD = Techniques.register(new Kinds.Pulse("mob_ink_cloud", TRANSMUTER, 20, 240, 5, 0f, 0f, List.of(new Techniques.Effect(MobEffects.BLINDNESS, 80, 0)), new Techniques.Look(Techniques.Style.SHOCKWAVE, NenFx.DARK, 1.2f), SoundEvents.SQUID_SQUIRT));
+
     /** Force le chargement de la classe (enregistrement des techniques). */
     public static void init() {}
 }

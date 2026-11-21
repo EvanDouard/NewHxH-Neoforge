@@ -49,6 +49,20 @@ public final class MobKits {
         kit("mob_witch", TRANSMUTER, MobTechniques.NEN_BREW, EntityType.WITCH, EntityType.EVOKER);
         kit("mob_golem", ENHANCER, MobTechniques.QUAKE_STOMP, EntityType.IRON_GOLEM, EntityType.RAVAGER);
         kit("mob_blaze", TRANSMUTER, MobTechniques.FIRE_RAIN, EntityType.BLAZE, EntityType.GHAST);
+        kit("mob_guardian", EMITTER, MobTechniques.GUARDIAN_BEAM, EntityType.GUARDIAN, EntityType.ELDER_GUARDIAN);
+        kit("mob_shulker", SPECIALIST, MobTechniques.SHULKER_BOLT, EntityType.SHULKER);
+        kit("mob_phantom", SPECIALIST, MobTechniques.PHANTOM_DIVE, EntityType.PHANTOM);
+        kit("mob_bee", ENHANCER, MobTechniques.BEE_STING, EntityType.BEE);
+        kit("mob_pillager", EMITTER, MobTechniques.PILLAGER_VOLLEY, EntityType.PILLAGER);
+        kit("mob_piglin", ENHANCER, MobTechniques.PIGLIN_GREED, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE, EntityType.ZOMBIFIED_PIGLIN);
+        kit("mob_vex", SPECIALIST, MobTechniques.VEX_BLADE, EntityType.VEX);
+        kit("mob_warden", EMITTER, MobTechniques.WARDEN_SONIC, EntityType.WARDEN);
+        kit("mob_wither", SPECIALIST, MobTechniques.WITHER_DECAY, EntityType.WITHER, EntityType.WITHER_SKELETON);
+        kit("mob_dragon", SPECIALIST, MobTechniques.DRAGON_BREATH, EntityType.ENDER_DRAGON);
+        kit("mob_turtle", ENHANCER, MobTechniques.TURTLE_SHELL, EntityType.TURTLE);
+        kit("mob_dolphin", TRANSMUTER, MobTechniques.DOLPHIN_GRACE, EntityType.DOLPHIN);
+        kit("mob_panda", ENHANCER, MobTechniques.PANDA_ROLL, EntityType.PANDA);
+        kit("mob_squid", TRANSMUTER, MobTechniques.INK_CLOUD, EntityType.SQUID, EntityType.GLOW_SQUID);
     }
 
     @Nullable

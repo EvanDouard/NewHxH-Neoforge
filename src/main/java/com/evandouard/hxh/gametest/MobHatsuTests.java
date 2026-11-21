@@ -67,6 +67,20 @@ public final class MobHatsuTests {
     }
 
     @GameTest(template = "empty")
+    public static void newSpeciesGetTheirOwnKit(GameTestHelper helper) {
+        var panda = helper.spawnWithNoFreeWill(EntityType.PANDA, new BlockPos(1, 1, 1));
+        var warden = helper.spawnWithNoFreeWill(EntityType.WARDEN, new BlockPos(3, 1, 1));
+        helper.assertTrue("mob_panda".equals(MobKits.idFor(panda)), "Le panda a son Hatsu : " + MobKits.idFor(panda));
+        helper.assertTrue("mob_warden".equals(MobKits.idFor(warden)), "Le warden a son Hatsu : " + MobKits.idFor(warden));
+        helper.assertTrue(MobKits.all().size() >= 29, "Au moins 29 Hatsu de mobs : " + MobKits.all().size());
+        Zombie victim = helper.spawnWithNoFreeWill(EntityType.HUSK, new BlockPos(5, 1, 1));
+        var squid = helper.spawnWithNoFreeWill(EntityType.SQUID, new BlockPos(6, 1, 1));
+        MobTechniques.INK_CLOUD.perform(squid, 1f);
+        helper.assertTrue(victim.hasEffect(net.minecraft.world.effect.MobEffects.BLINDNESS), "Le nuage d'encre aveugle");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void nenZombiesLeaveNoLoot(GameTestHelper helper) {
         Zombie z = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(1, 1, 1));
         awaken(z);

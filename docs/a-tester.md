@@ -321,3 +321,8 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [x] CI : `lot10UltrasoundRevealsAndPounceLeaps` + `everyTechniqueOfEveryKitRuns`.
 - [ ] En jeu : Kurapika Lancer de chaîne (20 aura, 6 s, 10 blocs) ; Leorio Détection par ultrasons (15, 20 s, 16 blocs, Lueur 6 s) ; Machi Toile invisible (30, 16 s, 5 blocs) ; Pitou Bond (20, 7 s, 6 blocs vers l'avant).
 - Valeurs proposées par moi : corrige-les dans `docs/a-trancher.md`.
+
+## Hatsu des mobs, lot 1 (21 nov)
+- [x] CI : `newSpeciesGetTheirOwnKit` + `eachMobGetsItsOwnHatsu` (lance toutes les techniques de mob).
+- [ ] En jeu : 15 nouveaux Hatsu, un par espèce : gardien (Rayon), shulker (Projectile lévitant), phantom (Piqué), abeille (Dard), pillard (Salve), piglin (Cupidité), vex (Lame spectrale), warden (Onde sonique), wither (Dépérissement), Ender Dragon (Souffle), tortue (Carapace), dauphin (Grâce), panda (Roulade), poulpe (Nuage d'encre). Le grand gardien partage celui du gardien.
+- Pas encore : poisson d'argent, chauve-souris, araignée des cavernes (garde celui de l'araignée), warden à deux techniques. Coûts et recharges proposés par moi : corrige-les dans `docs/a-trancher.md`.
