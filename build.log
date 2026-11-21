@@ -1,0 +1,277 @@
+Starting a Gradle Daemon (subsequent builds will be faster)
+Calculating task graph as no cached configuration is available for tasks: build
+
+> Configure project :
+Creating Minecraft artifacts without recompilation.
+
+> Task :processTestResources NO-SOURCE
+> Task :jarJar NO-SOURCE
+> Task :generateModMetadata
+> Task :processResources
+
+> Task :createMinecraftArtifacts
+Loaded 131 artifacts from /home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/build/tmp/createMinecraftArtifacts/nfrt_artifact_manifest.properties
+[1m*** Started working on [4mdownloadJson[23;0m[23;0m
+ [1m[92m✓[23;0m Completed [4mdownloadJson[23;0m in 0.03s
+[1m*** Started working on [4mdownloadClientMappings[23;0m[23;0m
+[1m*** Started working on [4mdownloadClient[23;0m[23;0m
+[1m*** Started working on [4mdownloadServer[23;0m[23;0m
+ [1m[92m✓[23;0m Completed [4mdownloadServer[23;0m in 0.04s
+ [1m[92m✓[23;0m Completed [4mdownloadClient[23;0m in 0.04s
+ [1m[92m✓[23;0m Completed [4mdownloadClientMappings[23;0m in 0.04s
+[1m*** Started working on [4mstripClient[23;0m[23;0m
+ [1m[92m♻[23;0m Used cache of [4mstripClient[23;0m in 0.00s
+[1m*** Started working on [4mmergeMappings[23;0m[23;0m
+ [1m[92m♻[23;0m Used cache of [4mmergeMappings[23;0m in 0.00s
+[1m*** Started working on [4mextractServer[23;0m[23;0m
+ [1m[92m♻[23;0m Used cache of [4mextractServer[23;0m in 0.00s
+[1m*** Started working on [4mstripServer[23;0m[23;0m
+ [1m[92m♻[23;0m Used cache of [4mstripServer[23;0m in 0.00s
+[1m*** Started working on [4mmerge[23;0m[23;0m
+ [1m[92m♻[23;0m Used cache of [4mmerge[23;0m in 0.00s
+[1m*** Started working on [4mrename[23;0m[23;0m
+ [1m[92m♻[23;0m Used cache of [4mrename[23;0m in 0.00s
+[1m*** Started working on [4mbinaryPatch[23;0m[23;0m
+ [1m[92m♻[23;0m Used cache of [4mbinaryPatch[23;0m in 0.00s
+[1m*** Started working on [4mcopyUnpatchedClasses[23;0m[23;0m
+ [1m[92m♻[23;0m Used cache of [4mcopyUnpatchedClasses[23;0m in 0.00s
+[1m*** Started working on [4mapplyDevTransforms[23;0m[23;0m
+ [1m[92m♻[23;0m Used cache of [4mapplyDevTransforms[23;0m in 0.00s
+[1m*** Started working on [4mbinaryWithNeoForge[23;0m[23;0m
+ [1m[92m♻[23;0m Used cache of [4mbinaryWithNeoForge[23;0m in 0.00s
+Total runtime: 1.38s
+
+
+> Task :compileJava
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/CombatTests.java:39: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        var player = helper.makeMockServerPlayerInLevel();
+                           ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/CombatTests.java:213: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/CombatTests.java:362: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/HunterStatsTests.java:145: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer p = helper.makeMockServerPlayerInLevel();
+                                                          ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/ComputerTests.java:28: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/ComputerTests.java:42: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/HatsuTests.java:258: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        var player = helper.makeMockServerPlayerInLevel();
+                           ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/HatsuTests.java:418: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer pitou = helper.makeMockServerPlayerInLevel();
+                                                              ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/TrainingTests.java:50: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/TrainingTests.java:71: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/TrainingTests.java:110: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/TrainingTests.java:132: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/TrainingTests.java:161: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer p = helper.makeMockServerPlayerInLevel();
+                                                          ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/TrainingTests.java:197: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/TrainingTests.java:216: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/ArenaTests.java:212: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/ArenaTests.java:234: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/ArenaTests.java:260: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/ArenaTests.java:295: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/ArenaTests.java:326: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/ArenaTests.java:357: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+                helper.assertTrue(com.evandouard.hxh.hatsu.Hatsu.choose(helper.makeMockServerPlayerInLevel(), e[1]) != null, "Kit non proposé au joueur");
+                                                                              ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/ArenaTests.java:381: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:92: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:152: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:178: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:190: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:319: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:348: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:358: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:389: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:412: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:428: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:447: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:474: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:484: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:513: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:528: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:548: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:570: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:592: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:630: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:667: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:733: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:747: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+            net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                                                   ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:801: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:817: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:852: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+            net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                                                   ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:901: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:940: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:966: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer a = helper.makeMockServerPlayerInLevel();
+                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:967: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer b = helper.makeMockServerPlayerInLevel();
+                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:984: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:1006: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:1050: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:1081: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:1128: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:1155: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/QuestTests.java:1171: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+            net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                                                   ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/NenAdvancedTests.java:162: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        net.minecraft.server.level.ServerPlayer p = helper.makeMockServerPlayerInLevel();
+                                                          ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/ShopTests.java:31: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/ShopTests.java:49: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/ShopTests.java:69: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/ShopTests.java:110: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+                               ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/WildlifeTests.java:51: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/WildlifeTests.java:105: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+                                    ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/MobHatsuTests.java:48: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        helper.assertTrue(Hatsu.choose(helper.makeMockServerPlayerInLevel(), "mob_zombie") != null, "Un joueur ne peut pas le choisir");
+                                             ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/MobHatsuTests.java:183: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        var player = helper.makeMockServerPlayerInLevel();
+                           ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/MobHatsuTests.java:194: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        helper.assertTrue(!com.evandouard.hxh.combat.DeathFx.handles(helper.makeMockServerPlayerInLevel()), "Joueur jamais retiré");
+                                                                           ^
+/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/src/main/java/com/evandouard/hxh/gametest/MobHatsuTests.java:218: warning: [removal] makeMockServerPlayerInLevel() in GameTestHelper has been deprecated and marked for removal
+        var player = helper.makeMockServerPlayerInLevel();
+                           ^
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+69 warnings
+
+> Task :classes
+> Task :compileTestJava NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :jar
+> Task :assemble
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/build-1795259566234.json
+
+[Incubating] Problems report is available at: file:///home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.2.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 23s
+5 actionable tasks: 5 executed
+Configuration cache entry stored.
