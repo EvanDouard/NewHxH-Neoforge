@@ -36,8 +36,10 @@ public final class CharacterMobTests {
             // on frappe Gon : il riposte, et Killua vient l'aider
             Zombie zombie = helper.spawn(EntityType.ZOMBIE, 2, 1, 4);
             zombie.setNoAi(true);
-            zombie.setInvulnerable(true); // reste en vie : on vérifie juste qui le prend pour cible
-            gon.hurt(gon.damageSources().mobAttack(zombie), 1f);
+            // beaucoup de vie (pas invulnérable : un mob invulnérable ne peut pas être pris pour cible)
+            zombie.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1000);
+            zombie.setHealth(1000);
+            gon.hurt(gon.damageSources().mobAttack(zombie), 2f);
         });
         helper.runAfterDelay(30, () -> helper.succeedWhen(() -> {
             Zombie zombie = helper.getLevel().getEntitiesOfClass(Zombie.class, gon.getBoundingBox().inflate(10)).stream()
