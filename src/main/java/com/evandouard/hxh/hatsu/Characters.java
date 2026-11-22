@@ -680,6 +680,13 @@ public final class Characters {
 
     /** Fumée : touché, une chance sur cinq de disparaître 2 s dans un nuage. */
     public static final Passive MOREL_SMOKE = new Passive("morel_smoke", true) {
+        /** Capacité pulmonaire : respire sous l'eau. */
+        @Override
+        public void tick(LivingEntity owner) {
+            if (owner.tickCount % 20 == 0 && owner.isEyeInFluid(net.minecraft.tags.FluidTags.WATER))
+                owner.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.WATER_BREATHING, 60, 0, true, false));
+        }
+
         @Override
         public float modifyIncoming(LivingEntity owner, DamageSource source, float amount) {
             if (owner.getRandom().nextInt(5) == 0) {
@@ -748,6 +755,17 @@ public final class Characters {
     // =====================================================================
     /** Roi : chaque ennemi vaincu le renforce (+0,5 % de dégâts, 25 % au plus). Compte = ressource « king ». */
     public static final Passive MERUEM_KING = new Passive("meruem_king", true) {
+        /** Corps du Roi : régénération naturelle (1 PV toutes les 2 s) et dégâts physiques −15 %. */
+        @Override
+        public void tick(LivingEntity owner) {
+            if (owner.tickCount % 40 == 0) owner.heal(1f);
+        }
+
+        @Override
+        public float modifyIncoming(LivingEntity owner, DamageSource source, float amount) {
+            return source.is(DamageTypeTags.BYPASSES_ARMOR) ? amount : amount * 0.85f;
+        }
+
         @Override
         public float modifyOutgoingMelee(LivingEntity owner, LivingEntity target, float amount) {
             return amount * (1f + Math.min(0.25f, data(owner).kitValue("king") * 0.005f));
@@ -939,6 +957,13 @@ public final class Characters {
 
     /** Vitalité : +20 PV max. */
     public static final Passive YOUPI_VITALITY = new Passive("youpi_vitality", true) {
+        /** Corps monstrueux : dégâts physiques −15 %, explosions −50 %. */
+        @Override
+        public float modifyIncoming(LivingEntity owner, DamageSource source, float amount) {
+            if (source.is(DamageTypeTags.IS_EXPLOSION)) return amount * 0.5f;
+            return source.is(DamageTypeTags.BYPASSES_ARMOR) ? amount : amount * 0.85f;
+        }
+
         @Override
         public void tick(LivingEntity owner) {
             if (owner.tickCount % 20 != 0) return;

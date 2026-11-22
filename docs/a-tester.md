@@ -330,3 +330,8 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 ## Poing élastique de Hisoka : ramène la cible (22 nov)
 - [x] CI : `elasticFistPullsTheTargetBack`.
 - [ ] En jeu : le Poing élastique tire maintenant l'ennemi touché vers Hisoka.
+
+## Passifs de ton fichier, lot 1 (22 nov)
+- [x] CI : `passivesOfTheFileReduceDamageAndBoostFists`.
+- [ ] En jeu : Phinks Bagarreur (+15 % à mains nues, résistance au recul 0,4) ; Meruem Corps du Roi (1 PV / 2 s, dégâts physiques −15 %) ; Youpi Corps monstrueux (physiques −15 %, explosions −50 %) ; Morel Capacité pulmonaire (respire sous l'eau). Valeurs proposées par moi.
+- Pas encore : Synthèse d'aura et Génie du combat (Meruem), Esprit calculateur (Pouf), Colère grandissante (Youpi), sens du fil (Machi), Wink Blue (Palm).

@@ -287,9 +287,16 @@ public final class Specials {
     }
 
     /** Bagarreur : le prochain coup de poing libère les tours accumulés (+2,5 dégâts par tour). */
+    static final net.minecraft.resources.ResourceLocation BRAWLER_KB = com.evandouard.hxh.HxHMod.id("phinks_brawler_kb");
     public static final Passive PHINKS_BRAWLER = new Passive("phinks_brawler", true) {
         @Override
         public void tick(LivingEntity owner) {
+            if (owner.tickCount % 20 == 0) {
+                var kb = owner.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE);
+                if (kb != null && kb.getModifier(BRAWLER_KB) == null)
+                    kb.addTransientModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(BRAWLER_KB, 0.4,
+                            net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE));
+            }
             // les tours se perdent au bout de 10 s sans frapper
             if (owner.tickCount % 200 == 0 && data(owner).kitValue(TURNS) > 0
                     && owner.tickCount - owner.getLastHurtMobTimestamp() > 200) data(owner).setKitValue(TURNS, 0);
@@ -297,13 +304,15 @@ public final class Specials {
 
         @Override
         public float modifyOutgoingMelee(LivingEntity owner, LivingEntity target, float amount) {
+            // à mains nues : +15 % de dégâts
+            float base = owner.getMainHandItem().isEmpty() ? amount * 1.15f : amount;
             int turns = (int) data(owner).kitValue(TURNS);
-            if (turns <= 0) return amount;
+            if (turns <= 0) return base;
             data(owner).setKitValue(TURNS, 0);
             NenFx.impactOn(owner, target, 1f + turns * 0.25f, NenFx.ENHANCER);
             if (turns >= 5) NenFx.impactFrame(owner, target, 10);
             target.knockback(0.3 * turns, owner.getX() - target.getX(), owner.getZ() - target.getZ());
-            return amount + turns * 2.5f;
+            return base + turns * 2.5f;
         }
     };
 

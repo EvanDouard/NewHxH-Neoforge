@@ -265,6 +265,22 @@ public final class CharacterKitTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty")
+    public static void passivesOfTheFileReduceDamageAndBoostFists(GameTestHelper helper) {
+        Zombie meruem = husk(helper, 0);
+        hunter(meruem, NenType.EMITTER, "meruem");
+        float kept = com.evandouard.hxh.hatsu.Characters.MERUEM_KING.modifyIncoming(meruem, helper.getLevel().damageSources().generic(), 10f);
+        helper.assertTrue(Math.abs(kept - 8.5f) < 0.01f, "Corps du Roi : 10 → 8,5 (" + kept + ")");
+        float boom = com.evandouard.hxh.hatsu.Characters.YOUPI_VITALITY.modifyIncoming(meruem, helper.getLevel().damageSources().explosion(null, null), 10f);
+        helper.assertTrue(Math.abs(boom - 5f) < 0.01f, "Corps monstrueux : explosion 10 → 5 (" + boom + ")");
+        Zombie phinks = husk(helper, 4);
+        hunter(phinks, NenType.ENHANCER, "phinks");
+        Zombie dummy = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(6, 1, 1));
+        float punch = com.evandouard.hxh.hatsu.Specials.PHINKS_BRAWLER.modifyOutgoingMelee(phinks, dummy, 10f);
+        helper.assertTrue(Math.abs(punch - 11.5f) < 0.01f, "Bagarreur à mains nues : 10 → 11,5 (" + punch + ")");
+        helper.succeed();
+    }
+
     /** Chaque technique de chaque personnage jouable part sans erreur, lancée par un mob sur une cible devant lui. */
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void everyTechniqueOfEveryKitRuns(GameTestHelper helper) {
