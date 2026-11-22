@@ -62,39 +62,39 @@ def build_hair(m):
     # Itération 6 : moins de pointes, bases plus larges, corps plus épais (belly), formes déjetées (skew) et
     # extrémités pas toujours très pointues (tip). Côtés et arrière orientés de façon cohérente : vers le haut et
     # l'arrière.
+    # Itération 7 — hiérarchie : 5 grandes mèches nettement plus longues et plus larges (et un peu plus claires)
+    # portent la silhouette ; 5 intermédiaires épaisses font les transitions sommet / côtés / arrière ; 4 petites
+    # seulement. Directions variées (pas de couronne radiale), côtés moins écartés, plus tournés vers l'arrière.
     dominant = [
-        ('k_top', 0.4, 25.8, -0.6, 9.4, 6.8, -2, -10, 14, 0.65, 16, 0.06, dict(skew=-0.1, tip=0.08, root=1.35)),
-        ('k_top_r', -2.6, 25.6, 0.6, 8.6, 6.4, 16, 28, -18, 0.55, 18, 0.02, dict(skew=0.12, tip=0.1, root=1.35)),
-        ('k_top_l', 2.8, 25.2, 0.2, 7.6, 6.0, 10, -36, 22, 0.75, 16, 0.0, dict(skew=-0.08, tip=0.12, root=1.35)),
-        ('k_back', 0.6, 24.8, 2.6, 9.0, 6.8, 46, -6, 6, 0.55, 18, -0.04, dict(skew=0.08, tip=0.08, root=1.35)),
-        ('k_side_r', -4.2, 24.0, 0.4, 6.4, 5.8, 34, 52, 10, 0.55, 20, 0.0, dict(skew=0.1, tip=0.12, root=1.35)),
-        ('k_side_l', 4.2, 23.8, 0.8, 6.0, 5.6, 38, -54, -12, 0.6, 18, -0.04, dict(skew=-0.1, tip=0.12, root=1.35)),
+        ('k_top', 0.4, 25.8, -0.6, 10.6, 7.4, -4, -10, 14, 0.68, 16, 0.1, dict(skew=-0.1, tip=0.08, root=1.35)),
+        ('k_top_r', -2.6, 25.6, 0.6, 9.4, 7.0, 20, 26, -22, 0.55, 18, 0.06, dict(skew=0.12, tip=0.12, root=1.35)),
+        ('k_top_l', 2.8, 25.2, 0.0, 8.4, 6.6, 8, -32, 28, 0.78, 14, 0.04, dict(skew=-0.08, tip=0.14, root=1.35)),
+        ('k_back', 0.6, 24.8, 2.6, 9.8, 7.4, 52, -10, 6, 0.55, 18, 0.0, dict(skew=0.08, tip=0.1, root=1.35)),
+        ('k_side_r', -4.1, 24.0, 0.8, 7.2, 6.2, 44, 40, 16, 0.58, 18, 0.04, dict(skew=0.1, tip=0.16, root=1.4)),
     ]
     intermediate = [
-        ('k_i_front', -0.8, 25.6, -2.8, 6.0, 5.2, -24, 16, -10, 0.6, 12, 0.08, dict(tip=0.12, skew=0.06)),
-        ('k_i1', 2.0, 25.5, -2.0, 5.4, 4.8, -10, -26, 10, 0.6, 12, 0.06, dict(tip=0.14)),
-        ('k_i2', -3.2, 25.0, -1.2, 5.2, 4.8, 10, 42, -8, 0.55, 14, 0.04, dict(tip=0.14)),
-        ('k_i3', -2.8, 23.6, 3.2, 6.2, 5.4, 64, 30, 20, 0.5, 14, -0.06, dict(skew=0.08, tip=0.1)),
-        ('k_i4', 3.0, 23.4, 3.0, 5.8, 5.2, 60, -34, -18, 0.5, 14, -0.06, dict(skew=-0.08, tip=0.1)),
-        ('k_i5', -1.2, 25.2, 1.6, 6.0, 5.0, 26, 12, 26, 0.65, 14, 0.0, dict(tip=0.12)),
+        ('k_i_front', -0.8, 25.6, -2.8, 5.6, 5.4, -22, 18, -12, 0.72, 10, 0.06, dict(tip=0.18, skew=0.06)),
+        ('k_i1', 2.2, 25.4, -1.8, 5.0, 5.2, -6, -30, 6, 0.75, 12, 0.04, dict(tip=0.2)),
+        ('k_i_side_l', 4.1, 23.8, 1.0, 5.4, 5.4, 48, -42, -20, 0.7, 14, 0.0, dict(skew=-0.1, tip=0.18, root=1.4)),
+        ('k_i3', -2.8, 23.6, 3.2, 5.6, 5.6, 70, 26, 24, 0.62, 12, -0.04, dict(skew=0.08, tip=0.16)),
+        ('k_i4', 3.0, 23.4, 3.0, 5.2, 5.4, 64, -30, -24, 0.62, 12, -0.06, dict(skew=-0.08, tip=0.16)),
     ]
     small = [
-        ('k_s1', -4.9, 22.4, -3.0, 3.2, 3.0, -6, 150, 0, 0.55, 8, 0.04, dict(tip=0.15)),   # encadrent le visage
-        ('k_s2', 4.9, 22.2, -2.8, 2.8, 2.8, -6, -148, 0, 0.55, 8, 0.0, dict(tip=0.15)),
-        # arrière en couches : mèches larges et plates qui retombent vers la nuque
-        ('k_bl1', -2.0, 25.6, 4.2, 6.6, 5.8, 160, 12, 0, 0.34, 10, -0.04, dict(tip=0.12)),
-        ('k_bl2', 2.2, 25.2, 4.3, 6.0, 5.4, 164, -16, 0, 0.34, 10, -0.1, dict(tip=0.12)),
-        ('k_bl3', 0.2, 22.6, 4.7, 4.6, 5.6, 156, 2, 0, 0.36, 8, -0.06, dict(tip=0.14)),
+        ('k_s1', -4.9, 22.4, -3.0, 3.0, 3.0, -6, 150, 0, 0.55, 8, 0.02, dict(tip=0.18)),   # encadrent le visage
+        ('k_s2', 4.9, 22.2, -2.8, 2.6, 2.8, -6, -148, 0, 0.55, 8, -0.02, dict(tip=0.18)),
+        # arrière : deux couches plates qui retombent vers la nuque, continuité avec le sommet
+        ('k_bl1', -1.6, 25.4, 4.2, 6.4, 6.0, 158, 10, 0, 0.36, 10, -0.06, dict(tip=0.16)),
+        ('k_bl2', 2.0, 24.2, 4.4, 5.4, 5.6, 162, -14, 0, 0.36, 10, -0.1, dict(tip=0.18)),
     ]
     arched(m, dominant, mk, segs=3)
     arched(m, intermediate, mk, segs=2)
     arched(m, small, mk, segs=2)
     # frange simplifiée : 3 mèches principales bien identifiables, longueurs différentes, qui se chevauchent
     # (profondeurs décalées) et retombent en se courbant ; sourcils dégagés
-    for name, x, z, L, W, rz, arc, skew in (('kb_1', -2.6, -4.9, 3.0, 3.8, -18, 10, 0.12),
-                                             ('kb_2', 0.4, -5.12, 3.8, 4.0, 6, 12, -0.08),
-                                             ('kb_3', 3.0, -4.98, 2.6, 3.4, 24, 10, -0.12)):
-        lock(m, name, [x, 25.8, z], L, W, 168, rz, mk(0.1), flat=0.5, curve=(-arc, arc * (1 if rz > 0 else -1) * 0.5),
+    for name, x, z, L, W, rz, arc, skew in (('kb_1', -2.5, -4.92, 3.0, 4.0, -18, 10, 0.12),
+                                             ('kb_2', 0.2, -5.18, 3.9, 4.2, 6, 12, -0.08),
+                                             ('kb_3', 2.9, -5.0, 2.5, 3.6, 24, 10, -0.12)):
+        lock(m, name, [x, 25.8, z], L, W, 168, rz, mk(0.1), flat=0.6, curve=(-arc, arc * (1 if rz > 0 else -1) * 0.5),
              segs=2, root=1.15, tip=0.1, skew=skew)
 
 

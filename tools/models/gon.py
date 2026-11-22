@@ -127,41 +127,42 @@ def build_hair(m):
     # aplaties ou volumineuses). (nom, x, y, z, longueur, largeur, rx, rz, ry, aplatissement, courbure, éclairage)
     # Itération 6 : bases plus larges, corps plus épais, formes déjetées, extrémités moins systématiquement
     # pointues, plusieurs mèches couchées vers l'arrière, côtés mieux intégrés.
+    # Itération 7 — hiérarchie : grandes mèches élargies (aucune lame fine), intermédiaires qui font la
+    # transition sommet / côtés, peu de petites mèches ; arrière en mèches séparées aux reflets différents.
     dominant = [
-        ('g_top', 0.8, 26.2, -0.2, 13.0, 7.4, 8, -8, 8, 0.65, 14, 0.2, dict(skew=-0.08, tip=0.06, root=1.4)),
-        ('g_top_r', -2.6, 25.8, 0.9, 10.8, 6.8, 26, 26, -14, 0.5, 18, 0.08, dict(skew=0.12, tip=0.1, root=1.4)),
-        ('g_top_l', 3.2, 25.3, 0.4, 9.0, 6.4, 16, -36, 20, 0.72, 16, 0.04, dict(skew=-0.1, tip=0.12, root=1.4)),
-        ('g_front', -1.0, 25.6, -2.7, 7.8, 6.2, -22, 12, -6, 0.55, 14, 0.26, dict(skew=0.08, tip=0.1, root=1.35)),
-        ('g_back', 0.2, 25.0, 2.8, 11.2, 7.2, 50, -6, 4, 0.52, 18, 0.0, dict(skew=0.06, tip=0.08, root=1.4)),
-        ('g_back_r', -2.9, 23.8, 3.4, 8.8, 6.2, 63, 34, 18, 0.45, 16, -0.04, dict(skew=0.1, tip=0.1)),
-        ('g_back_l', 3.1, 24.4, 2.6, 7.6, 6.0, 58, -42, -16, 0.55, 14, -0.1, dict(skew=-0.1, tip=0.1)),
-        ('g_side_r', -4.4, 23.8, 0.4, 6.4, 5.6, 34, 46, 10, 0.5, 18, 0.06, dict(skew=0.1, tip=0.12, root=1.45)),
+        ('g_top', 0.8, 26.2, -0.2, 13.0, 8.0, 8, -8, 8, 0.68, 14, 0.22, dict(skew=-0.08, tip=0.1, root=1.4)),
+        ('g_top_r', -2.6, 25.8, 0.9, 10.8, 7.4, 26, 26, -14, 0.55, 18, 0.1, dict(skew=0.12, tip=0.12, root=1.4)),
+        ('g_top_l', 3.2, 25.3, 0.4, 9.2, 7.0, 16, -36, 20, 0.74, 16, 0.06, dict(skew=-0.1, tip=0.14, root=1.4)),
+        ('g_front', -1.0, 25.6, -2.7, 7.8, 6.8, -22, 12, -6, 0.58, 14, 0.26, dict(skew=0.08, tip=0.12, root=1.35)),
+        ('g_back', 0.2, 25.0, 2.8, 11.2, 7.8, 50, -6, 4, 0.55, 18, 0.04, dict(skew=0.06, tip=0.1, root=1.4)),
+        ('g_back_r', -3.3, 23.8, 3.4, 8.8, 6.6, 66, 38, 18, 0.48, 16, 0.2, dict(skew=0.1, tip=0.12)),
+        ('g_back_l', 3.5, 24.4, 2.6, 7.6, 6.4, 60, -46, -16, 0.58, 14, -0.12, dict(skew=-0.1, tip=0.12)),
+        ('g_side_r', -4.4, 23.8, 0.4, 6.6, 6.2, 34, 46, 10, 0.52, 18, 0.06, dict(skew=0.1, tip=0.14, root=1.45)),
     ]
-    intermediate = [
-        ('g_i1', 1.9, 25.6, -2.1, 6.0, 4.8, -10, -24, 12, 0.55, 12, 0.2, dict(tip=0.12)),
-        ('g_i2', -3.3, 25.0, -1.4, 5.4, 4.6, 4, 42, -10, 0.5, 12, 0.16, dict(tip=0.12, skew=0.08)),
-        ('g_i3', 4.4, 24.0, 1.0, 5.2, 4.8, 40, -48, -8, 0.55, 14, 0.02, dict(tip=0.12, root=1.45)),
-        ('g_i4', -1.2, 25.2, 1.6, 6.4, 5.0, 30, 16, 26, 0.6, 14, 0.06, dict(tip=0.1)),
-        ('g_i5', 1.6, 23.2, 3.6, 5.6, 5.0, 76, -18, 0, 0.45, 12, -0.08, dict(tip=0.12)),
+    intermediate = [                                    # transitions sommet → côtés, plus épaisses
+        ('g_i1', 1.9, 25.6, -2.1, 5.6, 5.2, -10, -24, 12, 0.62, 12, 0.18, dict(tip=0.16)),
+        ('g_i2', -3.4, 25.0, -0.8, 5.4, 5.2, 12, 38, -10, 0.6, 12, 0.12, dict(tip=0.16, skew=0.08, root=1.4)),
+        ('g_i3', 4.3, 24.2, 1.0, 5.4, 5.4, 40, -46, -8, 0.6, 14, 0.0, dict(tip=0.16, root=1.45)),
+        ('g_i5', 0.2, 23.0, 3.8, 5.4, 5.4, 80, -4, 0, 0.5, 12, 0.1, dict(tip=0.16)),
     ]
     small = [
-        ('g_temple_r', -4.9, 22.8, -2.3, 3.0, 3.2, -4, 118, 0, 0.55, 8, 0.12, dict(tip=0.15)),
-        ('g_temple_l', 4.9, 22.6, -2.1, 2.6, 3.0, -6, -122, 0, 0.55, 8, 0.08, dict(tip=0.15)),
-        # nuque : couches de mèches plates bien distinctes (positions et reflets différents)
-        ('g_bl1', -2.3, 25.2, 4.2, 6.2, 5.2, 156, 14, 0, 0.34, 10, -0.02, dict(tip=0.12, skew=0.1)),
-        ('g_bl2', 2.4, 24.8, 4.3, 5.6, 4.8, 162, -18, 0, 0.34, 10, -0.16, dict(tip=0.12, skew=-0.1)),
-        ('g_bl3', 0.0, 21.8, 4.6, 4.2, 4.8, 148, 4, 0, 0.36, 8, -0.06, dict(tip=0.14)),
+        ('g_temple_r', -4.9, 22.8, -2.3, 2.8, 3.2, -4, 118, 0, 0.55, 8, 0.1, dict(tip=0.18)),
+        ('g_temple_l', 4.9, 22.6, -2.1, 2.4, 3.0, -6, -122, 0, 0.55, 8, 0.06, dict(tip=0.18)),
+        # nuque : deux mèches plates séparées (positions, angles et reflets différents)
+        ('g_bl1', -2.6, 24.6, 4.3, 5.8, 5.0, 154, 18, 0, 0.36, 10, 0.18, dict(tip=0.14, skew=0.1)),
+        ('g_bl2', 2.6, 24.2, 4.4, 5.0, 4.6, 164, -22, 0, 0.36, 10, -0.18, dict(tip=0.16, skew=-0.1)),
     ]
     arched(m, dominant, mk, segs=2)
     arched(m, intermediate, mk, segs=2)
     arched(m, small, mk, segs=2)
     # frange : 4 mèches individuelles qui retombent en se courbant, longueurs variées, profondeurs décalées
     # (elles se chevauchent) ; le front et les sourcils restent visibles
-    for name, x, z, L, W, rz, arc, sk in (('b_1', -3.3, -4.75, 2.9, 3.4, -22, 10, 0.12),
-                                           ('b_2', -0.9, -5.0, 3.9, 3.6, -6, 12, -0.06),
-                                           ('b_3', 1.5, -4.82, 2.3, 3.2, 12, 8, 0.1),
-                                           ('b_4', 3.5, -5.05, 3.1, 3.0, 28, 10, -0.12)):
-        lock(m, name, [x, 25.7, z], L, W, 168, rz, mk(0.18), flat=0.5, curve=(-arc, arc * (1 if rz > 0 else -1) * 0.5),
+    # frange individualisée : longueurs, largeurs, inclinaisons (rx) et profondeurs toutes différentes
+    for name, x, z, L, W, rz, arc, sk, rxb, lt in (('b_1', -3.3, -4.75, 2.6, 3.4, -24, 10, 0.12, 164, 0.14),
+                                                    ('b_2', -0.9, -5.1, 4.0, 3.8, -6, 12, -0.06, 170, 0.24),
+                                                    ('b_3', 1.5, -4.85, 2.1, 3.0, 14, 8, 0.1, 176, 0.1),
+                                                    ('b_4', 3.5, -5.0, 3.2, 3.0, 30, 10, -0.12, 166, 0.18)):
+        lock(m, name, [x, 25.7, z], L, W, rxb, rz, mk(lt), flat=0.5, curve=(-arc, arc * (1 if rz > 0 else -1) * 0.5),
              segs=2, root=1.15, tip=0.1, skew=sk)
 
 
