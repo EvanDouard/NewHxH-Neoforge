@@ -270,7 +270,7 @@ public final class HunterEvents {
         if (event.getEntity() instanceof net.minecraft.world.entity.Mob victimMob
                 && !(victimMob instanceof net.minecraft.world.entity.monster.Enemy)
                 && attacker instanceof LivingEntity livingAggressor && livingAggressor != victimMob
-                && trains(victimMob)) {
+                && !victimMob.isAlliedTo(livingAggressor) && trains(victimMob)) {
             victimMob.setTarget(livingAggressor);
         }
         if (!(event.getEntity() instanceof Player) && trains(event.getEntity())) {

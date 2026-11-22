@@ -100,6 +100,13 @@ public class CharacterEntity extends PathfinderMob implements GeoEntity {
         return other instanceof CharacterEntity || super.isAlliedTo(other);
     }
 
+    /** Pas de tir ami : les techniques de zone d'un personnage n'abîment pas ses alliés. */
+    @Override
+    public boolean hurt(net.minecraft.world.damagesource.DamageSource source, float amount) {
+        if (source.getEntity() instanceof CharacterEntity && source.getEntity() != this) return false;
+        return super.hurt(source, amount);
+    }
+
     @Override
     public boolean removeWhenFarAway(double distance) {
         return false;
