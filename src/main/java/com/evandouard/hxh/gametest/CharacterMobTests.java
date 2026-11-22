@@ -23,6 +23,7 @@ public final class CharacterMobTests {
     public static void gonAndKilluaGetTheirHatsuAndStayNeutral(GameTestHelper helper) {
         CharacterEntity gon = helper.spawn(ModEntities.GON.get(), 1, 1, 1);
         CharacterEntity killua = helper.spawn(ModEntities.KILLUA.get(), 3, 1, 1);
+        Zombie[] attacker = new Zombie[1];
         helper.runAfterDelay(5, () -> {
             for (CharacterEntity c : new CharacterEntity[]{gon, killua}) {
                 HunterData data = HunterStats.get(c);
@@ -35,6 +36,7 @@ public final class CharacterMobTests {
             }
             // on frappe Gon : il riposte, et Killua vient l'aider
             Zombie zombie = helper.spawn(EntityType.ZOMBIE, 2, 1, 4);
+            attacker[0] = zombie;
             zombie.setNoAi(true);
             // beaucoup de vie (pas invulnérable : un mob invulnérable ne peut pas être pris pour cible)
             zombie.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1000);
@@ -45,9 +47,8 @@ public final class CharacterMobTests {
             gon.setLastHurtByMob(zombie);
         });
         helper.runAfterDelay(30, () -> helper.succeedWhen(() -> {
-            Zombie zombie = helper.getLevel().getEntitiesOfClass(Zombie.class, gon.getBoundingBox().inflate(10)).stream()
-                    .findFirst().orElse(null);
-            helper.assertTrue(zombie != null, "Le zombie est là");
+            Zombie zombie = attacker[0]; // (les tests voisins peuvent avoir leurs propres zombies)
+            helper.assertTrue(zombie != null && zombie.isAlive(), "Le zombie est là");
             helper.assertTrue(gon.getTarget() == zombie, "Gon riposte (cible : " + gon.getTarget() + ", dernier agresseur : " + gon.getLastHurtByMob() + ")");
             helper.assertTrue(killua.getTarget() == zombie, "Killua vient aider Gon (cible : " + killua.getTarget() + ")");
         }));
