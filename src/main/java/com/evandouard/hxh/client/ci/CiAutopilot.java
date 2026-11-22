@@ -350,13 +350,13 @@ public final class CiAutopilot {
         String name = mc.screen.getClass().getSimpleName();
         log("menu : écran " + name);
         if (mc.screen instanceof CreateWorldScreen) {
-            if (clickMenuButton(mc, "Créer un monde", "Create New World")) {
+            if (clickMenuButton(mc, "Créer un nouveau monde", "Create New World")) {
                 worldRequested = true;
                 worldClickMs = now;
                 lastLoadLogMs = now;
             }
         } else if (mc.screen instanceof SelectWorldScreen) {
-            clickMenuButton(mc, "Créer un monde", "Create New World");
+            clickMenuButton(mc, "Créer un nouveau monde", "Create New World");
         } else if (mc.screen instanceof TitleScreen) {
             clickMenuButton(mc, "Solo", "Singleplayer");
         }
