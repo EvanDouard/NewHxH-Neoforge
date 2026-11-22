@@ -98,6 +98,17 @@ neoForge {
             jvmArguments.addAll('-Xmx3G')
         }
 
+        // Variante qui crée le monde par les vrais menus de Minecraft (Solo → Créer un monde),
+        // pour détecter un chargement en boucle. Lancer avec ./gradlew runCiMenuClient
+        ciMenuClient {
+            client()
+            gameDirectory = project.file('run-ci-menu')
+            systemProperty 'hxh.ci.scenario', project.file('ci/scenario-menu.txt').absolutePath
+            systemProperty 'hxh.ci.viaMenu', 'true'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            jvmArguments.addAll('-Xmx3G')
+        }
+
         data {
             data()
             // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it

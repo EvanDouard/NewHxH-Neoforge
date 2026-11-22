@@ -335,3 +335,7 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [x] CI : `passivesOfTheFileReduceDamageAndBoostFists`.
 - [ ] En jeu : Phinks Bagarreur (+15 % à mains nues, résistance au recul 0,4) ; Meruem Corps du Roi (1 PV / 2 s, dégâts physiques −15 %) ; Youpi Corps monstrueux (physiques −15 %, explosions −50 %) ; Morel Capacité pulmonaire (respire sous l'eau). Valeurs proposées par moi.
 - Pas encore : Synthèse d'aura et Génie du combat (Meruem), Esprit calculateur (Pouf), Colère grandissante (Youpi), sens du fil (Machi), Wink Blue (Palm).
+
+## Monde créé par les menus (23 nov)
+- [x] CI : second client `runCiMenuClient` (ci/scenario-menu.txt) : écran titre → Solo → Créer un monde → Créer un monde, puis surveillance du chargement (capture toutes les 20 s, échec après 150 s). Résultats : `ci-report-menu.txt`, `menu-screenshots/`, `client-menu-latest.log` sur la branche ci-results.
+- [ ] Chez toi : si le jeu charge en boucle, dis-moi à quel écran (barre de chargement, « Préparation du monde »…) et colle-moi la fin de `logs/latest.log`.

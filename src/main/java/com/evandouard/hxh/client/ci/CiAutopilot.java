@@ -6,6 +6,9 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.client.gui.screens.PauseScreen;
+import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
+import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -70,6 +73,10 @@ public final class CiAutopilot {
     private boolean worldRequested = false;
     private boolean worldLoggedIn = false;
     private boolean quitting = false;
+    /** Crée le monde en passant par les vrais menus (Solo, Créer un monde) au lieu de l'API. */
+    private static final boolean VIA_MENU = Boolean.getBoolean("hxh.ci.viaMenu");
+    private long worldClickMs = 0;
+    private long lastLoadLogMs = 0;
 
     private CiAutopilot(List<String> lines, Path report) {
         this.lines = lines;
@@ -109,6 +116,10 @@ public final class CiAutopilot {
 
         // Étape 1 : attendre la fin du chargement puis créer le monde.
         if (mc.level == null || mc.player == null) {
+            if (VIA_MENU) {
+                driveMenus(mc);
+                return;
+            }
             if (!worldRequested && mc.getOverlay() == null && mc.screen != null && ++menuTicks > 40) {
                 worldRequested = true;
                 log("Création du monde plat");
@@ -314,6 +325,58 @@ public final class CiAutopilot {
             log("ECHEC : '" + line + "' -> " + e);
             return false;
         }
+    }
+
+    /** Parcourt les vrais menus : écran titre → Solo → Créer un monde → Créer un monde, puis surveille le chargement. */
+    private void driveMenus(Minecraft mc) {
+        long now = System.currentTimeMillis();
+        if (worldRequested) {
+            long waited = now - worldClickMs;
+            if (now - lastLoadLogMs > 20_000) {
+                lastLoadLogMs = now;
+                String screen = mc.screen == null ? "aucun" : mc.screen.getClass().getSimpleName();
+                log("chargement du monde depuis " + waited / 1000 + " s, écran : " + screen);
+                Screenshot.grab(mc.gameDirectory, "menu_chargement_" + waited / 1000 + "s.png", mc.getMainRenderTarget(),
+                        msg -> log("capture chargement : " + msg.getString()));
+            }
+            if (waited > 150_000) {
+                log("ECHEC : le monde créé par le menu ne se charge pas (chargement en boucle ?)");
+                quit(mc);
+            }
+            return;
+        }
+        if (mc.getOverlay() != null || mc.screen == null) return;
+        if (++menuTicks % 30 != 0) return;
+        String name = mc.screen.getClass().getSimpleName();
+        log("menu : écran " + name);
+        if (mc.screen instanceof CreateWorldScreen) {
+            if (clickMenuButton(mc, "Créer un monde", "Create New World")) {
+                worldRequested = true;
+                worldClickMs = now;
+                lastLoadLogMs = now;
+            }
+        } else if (mc.screen instanceof SelectWorldScreen) {
+            clickMenuButton(mc, "Créer un monde", "Create New World");
+        } else if (mc.screen instanceof TitleScreen) {
+            clickMenuButton(mc, "Solo", "Singleplayer");
+        }
+    }
+
+    private boolean clickMenuButton(Minecraft mc, String... labels) {
+        for (var child : mc.screen.children()) {
+            if (child instanceof net.minecraft.client.gui.components.AbstractButton button && button.active) {
+                String text = button.getMessage().getString();
+                for (String label : labels) {
+                    if (text.contains(label)) {
+                        log("menu : clic sur '" + text + "'");
+                        button.onPress();
+                        return true;
+                    }
+                }
+            }
+        }
+        log("menu : aucun bouton actif parmi " + String.join(" / ", labels));
+        return false;
     }
 
     private void createWorld(Minecraft mc) {

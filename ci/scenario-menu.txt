@@ -1,0 +1,8 @@
+# Scénario joué après création du monde par les vrais menus (voir CiAutopilot, hxh.ci.viaMenu).
+# Le monde est un monde normal en survie, créé avec les réglages par défaut : pas de commandes.
+wait 200
+shot menu_01_monde_charge
+log monde créé par le menu et chargé
+wait 100
+shot menu_02_apres_attente
+quit

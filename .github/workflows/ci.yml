@@ -63,11 +63,29 @@ jobs:
           grep -q "Fin du scénario" run-ci/ci-report.txt
           ! grep -q "ECHEC" run-ci/ci-report.txt
 
+      - name: Client automatique (monde créé par les menus)
+        id: menuclient
+        if: always() && steps.build.outcome == 'success'
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: |
+          mkdir -p run-ci-menu
+          printf '%s\n' 'onboardAccessibility:false' 'pauseOnLostFocus:false' 'renderDistance:6' \
+            'tutorialStep:none' 'joinedFirstServer:true' 'skipMultiplayerWarning:true' \
+            'soundCategory_master:0.0' 'lang:fr_fr' > run-ci-menu/options.txt
+          xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runCiMenuClient --stacktrace 2>&1 | tee ci-out/client-menu.log
+          grep -q "Fin du scénario" run-ci-menu/ci-report.txt
+          ! grep -q "ECHEC" run-ci-menu/ci-report.txt
+
       - name: Rassembler les résultats
         if: always()
         run: |
           cp -r run-ci/screenshots ci-out/ 2>/dev/null || true
           cp run-ci/ci-report.txt ci-out/ 2>/dev/null || true
+          mkdir -p ci-out/menu-screenshots
+          cp run-ci-menu/screenshots/* ci-out/menu-screenshots/ 2>/dev/null || true
+          cp run-ci-menu/ci-report.txt ci-out/ci-report-menu.txt 2>/dev/null || true
+          cp run-ci-menu/logs/latest.log ci-out/client-menu-latest.log 2>/dev/null || true
           cp run-ci/logs/latest.log ci-out/client-latest.log 2>/dev/null || true
           cp run/logs/latest.log ci-out/gametest-latest.log 2>/dev/null || true
           mkdir -p ci-out/crash-reports
@@ -80,6 +98,7 @@ jobs:
             echo "- Compilation : ${{ steps.build.outcome }}"
             echo "- GameTests : ${{ steps.gametest.outcome }}"
             echo "- Client : ${{ steps.client.outcome }}"
+            echo "- Monde créé par les menus : ${{ steps.menuclient.outcome }}"
           } > ci-out/SUMMARY.md
           cat ci-out/SUMMARY.md >> "$GITHUB_STEP_SUMMARY"
 
