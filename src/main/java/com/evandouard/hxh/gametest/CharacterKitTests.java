@@ -269,7 +269,7 @@ public final class CharacterKitTests {
     public static void passivesOfTheFileReduceDamageAndBoostFists(GameTestHelper helper) {
         Zombie meruem = husk(helper, 0);
         hunter(meruem, NenType.EMITTER, "meruem");
-        float kept = com.evandouard.hxh.hatsu.Characters.MERUEM_KING.modifyIncoming(meruem, helper.getLevel().damageSources().generic(), 10f);
+        float kept = com.evandouard.hxh.hatsu.Characters.MERUEM_KING.modifyIncoming(meruem, helper.getLevel().damageSources().mobAttack(helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(8, 1, 1))), 10f);
         helper.assertTrue(Math.abs(kept - 8.5f) < 0.01f, "Corps du Roi : 10 → 8,5 (" + kept + ")");
         float boom = com.evandouard.hxh.hatsu.Characters.YOUPI_VITALITY.modifyIncoming(meruem, helper.getLevel().damageSources().explosion(null, null), 10f);
         helper.assertTrue(Math.abs(boom - 5f) < 0.01f, "Corps monstrueux : explosion 10 → 5 (" + boom + ")");
@@ -343,7 +343,7 @@ public final class CharacterKitTests {
         for (int i = 0; i < 4; i++) if (com.evandouard.hxh.hatsu.Specials.PHINKS_RIPPER_CYCLOTRON.perform(a, 1f)) ok++;
         helper.assertTrue(ok == 2, "Nen 25 : 2 tours au plus (obtenu " + ok + ")");
         float punch = com.evandouard.hxh.hatsu.Hatsu.modifyOutgoingMelee(a, b, 4f);
-        helper.assertTrue(Math.abs(punch - 9f) < 0.01f, "Le coup libère les tours : 4 + 2 × 2,5 = 9 (" + punch + ")");
+        helper.assertTrue(Math.abs(punch - 9.6f) < 0.01f, "Le coup libère les tours : 4 × 1,15 (mains nues) + 2 × 2,5 = 9,6 (" + punch + ")");
         // Feitan : la douleur monte avec les coups reçus
         d = hunter(a, NenType.TRANSMUTER, "feitan");
         a.hurt(helper.getLevel().damageSources().generic(), 4f);
