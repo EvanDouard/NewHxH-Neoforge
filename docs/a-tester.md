@@ -325,4 +325,4 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 ## Hatsu des mobs, lot 1 (21 nov)
 - [x] CI : `newSpeciesGetTheirOwnKit` + `eachMobGetsItsOwnHatsu` (lance toutes les techniques de mob).
 - [ ] En jeu : 15 nouveaux Hatsu, un par espèce : gardien (Rayon), shulker (Projectile lévitant), phantom (Piqué), abeille (Dard), pillard (Salve), piglin (Cupidité), vex (Lame spectrale), warden (Onde sonique), wither (Dépérissement), Ender Dragon (Souffle), tortue (Carapace), dauphin (Grâce), panda (Roulade), poulpe (Nuage d'encre). Le grand gardien partage celui du gardien.
-- Pas encore : poisson d'argent, chauve-souris, araignée des cavernes (garde celui de l'araignée), warden à deux techniques. Coûts et recharges proposés par moi : corrige-les dans `docs/a-trancher.md`.
+- Ajoutés ensuite : poisson d'argent (Frénésie) et chauve-souris (Cri strident). Pas encore : warden à deux techniques ; l'araignée des cavernes garde celui de l'araignée. Coûts et recharges proposés par moi : corrige-les dans `docs/a-trancher.md`.

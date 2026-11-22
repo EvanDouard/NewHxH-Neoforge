@@ -348,6 +348,8 @@ public final class MobTechniques {
     public static final Technique DOLPHIN_GRACE = Techniques.register(new Techniques.SelfBuff("mob_dolphin_grace", TRANSMUTER, 15, 240, List.of(new Techniques.Effect(MobEffects.MOVEMENT_SPEED, 120, 2), new Techniques.Effect(MobEffects.DOLPHINS_GRACE, 120, 0)), new Techniques.Look(Techniques.Style.FLARE, NenFx.TRANSMUTER, 1f), SoundEvents.DOLPHIN_JUMP));
     public static final Technique PANDA_ROLL = Techniques.register(new Techniques.Strike("mob_panda_roll", ENHANCER, 15, 120, 3.5, 0.8, 8f, 2f, List.of(), new Techniques.Look(Techniques.Style.IMPACT, NenFx.ENHANCER, 1.4f), SoundEvents.PANDA_BITE));
     public static final Technique INK_CLOUD = Techniques.register(new Kinds.Pulse("mob_ink_cloud", TRANSMUTER, 20, 240, 5, 0f, 0f, List.of(new Techniques.Effect(MobEffects.BLINDNESS, 80, 0)), new Techniques.Look(Techniques.Style.SHOCKWAVE, NenFx.DARK, 1.2f), SoundEvents.SQUID_SQUIRT));
+    public static final Technique SILVERFISH_FRENZY = Techniques.register(new Techniques.SelfBuff("mob_silverfish_frenzy", ENHANCER, 10, 200, List.of(new Techniques.Effect(MobEffects.MOVEMENT_SPEED, 100, 1), new Techniques.Effect(MobEffects.DAMAGE_BOOST, 100, 0)), new Techniques.Look(Techniques.Style.FLARE, NenFx.ENHANCER, 0.8f), SoundEvents.SILVERFISH_AMBIENT));
+    public static final Technique BAT_SCREECH = Techniques.register(new Kinds.Pulse("mob_bat_screech", EMITTER, 15, 200, 8, 0f, 0f, List.of(new Techniques.Effect(MobEffects.MOVEMENT_SLOWDOWN, 60, 0), new Techniques.Effect(MobEffects.CONFUSION, 80, 0)), new Techniques.Look(Techniques.Style.SHOCKWAVE, NenFx.EMITTER, 1f), SoundEvents.BAT_TAKEOFF));
 
     /** Force le chargement de la classe (enregistrement des techniques). */
     public static void init() {}

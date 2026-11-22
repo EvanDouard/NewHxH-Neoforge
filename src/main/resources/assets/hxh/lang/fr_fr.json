@@ -1662,5 +1662,11 @@
   "kit.hxh.mob_panda": "Panda au Nen",
   "technique.hxh.mob_ink_cloud": "Nuage d'encre",
   "technique.hxh.mob_ink_cloud.desc": "Un nuage d'encre (5 blocs) qui aveugle.",
-  "kit.hxh.mob_squid": "Poulpe au Nen"
+  "kit.hxh.mob_squid": "Poulpe au Nen",
+  "technique.hxh.mob_silverfish_frenzy": "Frénésie",
+  "technique.hxh.mob_silverfish_frenzy.desc": "Vitesse II et Force pendant 5 s.",
+  "kit.hxh.mob_silverfish": "Poisson d'argent au Nen",
+  "technique.hxh.mob_bat_screech": "Cri strident",
+  "technique.hxh.mob_bat_screech.desc": "Un cri (8 blocs) qui ralentit et étourdit.",
+  "kit.hxh.mob_bat": "Chauve-souris au Nen"
 }

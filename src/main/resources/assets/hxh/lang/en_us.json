@@ -1662,5 +1662,11 @@
   "kit.hxh.mob_panda": "Panda with Nen",
   "technique.hxh.mob_ink_cloud": "Ink Cloud",
   "technique.hxh.mob_ink_cloud.desc": "An ink cloud (5 blocks) that blinds.",
-  "kit.hxh.mob_squid": "Squid with Nen"
+  "kit.hxh.mob_squid": "Squid with Nen",
+  "technique.hxh.mob_silverfish_frenzy": "Frenzy",
+  "technique.hxh.mob_silverfish_frenzy.desc": "Speed II and Strength for 5 s.",
+  "kit.hxh.mob_silverfish": "Silverfish with Nen",
+  "technique.hxh.mob_bat_screech": "Screech",
+  "technique.hxh.mob_bat_screech.desc": "A screech (8 blocks) that slows and dazes.",
+  "kit.hxh.mob_bat": "Bat with Nen"
 }

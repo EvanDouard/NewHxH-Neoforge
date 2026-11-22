@@ -63,6 +63,8 @@ public final class MobKits {
         kit("mob_dolphin", TRANSMUTER, MobTechniques.DOLPHIN_GRACE, EntityType.DOLPHIN);
         kit("mob_panda", ENHANCER, MobTechniques.PANDA_ROLL, EntityType.PANDA);
         kit("mob_squid", TRANSMUTER, MobTechniques.INK_CLOUD, EntityType.SQUID, EntityType.GLOW_SQUID);
+        kit("mob_silverfish", ENHANCER, MobTechniques.SILVERFISH_FRENZY, EntityType.SILVERFISH, EntityType.ENDERMITE);
+        kit("mob_bat", EMITTER, MobTechniques.BAT_SCREECH, EntityType.BAT);
     }
 
     @Nullable
