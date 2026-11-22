@@ -1608,11 +1608,20 @@ wait 25
 clearchat
 shot 60d_gon_dos
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
-look 0 62
-cmd summon hxh:npc ~ ~ ~1.6 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 60g_gon_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~2.2 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.2 ~1.3 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
 wait 25
 clearchat
 shot 60e_gon_dessus
+cmd tp @s ~ ~-2.2 ~
+cmd gamemode survival
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 6
 cmd summon hxh:npc ~-1.0 ~ ~4 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[160f,0f],Tags:["geo_ci"]}
@@ -1648,11 +1657,15 @@ wait 25
 clearchat
 shot 61d_killua_dos
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
-look 0 62
-cmd summon hxh:npc ~ ~ ~1.6 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd gamemode spectator
+cmd tp @s ~ ~2.2 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.2 ~1.3 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
 wait 25
 clearchat
 shot 61f_killua_dessus
+cmd tp @s ~ ~-2.2 ~
+cmd gamemode survival
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 22
 cmd summon hxh:npc ~ ~ ~1.7 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
