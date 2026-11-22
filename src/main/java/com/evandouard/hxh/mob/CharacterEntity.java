@@ -66,7 +66,7 @@ public class CharacterEntity extends PathfinderMob implements GeoEntity {
         goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 10f));
         goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         // neutre : riposte seulement, et les autres personnages proches viennent l'aider
-        targetSelector.addGoal(1, new HurtByTargetGoal(this, CharacterEntity.class).setAlertOthers(CharacterEntity.class));
+        targetSelector.addGoal(1, new HurtByTargetGoal(this, CharacterEntity.class).setAlertOthers());
     }
 
     @Override
