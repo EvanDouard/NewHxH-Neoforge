@@ -253,6 +253,18 @@ public final class CharacterKitTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty")
+    public static void elasticFistPullsTheTargetBack(GameTestHelper helper) {
+        Zombie hisoka = husk(helper, 0);
+        Zombie target = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(5, 1, 1));
+        target.setNoGravity(true);
+        target.setPos(target.getX(), hisoka.getY(), target.getZ());
+        hunter(hisoka, NenType.TRANSMUTER, "hisoka");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.HISOKA_ELASTIC_FIST.perform(hisoka, 1f), "Le poing touche à 5 blocs");
+        helper.assertTrue(target.getDeltaMovement().x < -0.3, "La cible est ramenée vers Hisoka (ouest) : " + target.getDeltaMovement().x);
+        helper.succeed();
+    }
+
     /** Chaque technique de chaque personnage jouable part sans erreur, lancée par un mob sur une cible devant lui. */
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void everyTechniqueOfEveryKitRuns(GameTestHelper helper) {

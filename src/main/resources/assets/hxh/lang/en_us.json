@@ -1598,7 +1598,7 @@
   "technique.hxh.leorio_inner_blow": "Inner Blow",
   "technique.hxh.leorio_inner_blow.desc": "A blow that causes nausea and weakness.",
   "technique.hxh.hisoka_elastic_fist": "Elastic Fist",
-  "technique.hxh.hisoka_elastic_fist.desc": "Your fist flies out 6 blocks on a Bungee Gum thread.",
+  "technique.hxh.hisoka_elastic_fist.desc": "Your fist flies out 6 blocks on a Bungee Gum thread and pulls the enemy back to you.",
   "technique.hxh.tsezguerra_instant_guard": "Instant Guard",
   "technique.hxh.tsezguerra_instant_guard.desc": "Resistance II for 3 s.",
   "technique.hxh.morel_blinding_cloud": "Blinding Cloud",

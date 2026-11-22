@@ -326,3 +326,7 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [x] CI : `newSpeciesGetTheirOwnKit` + `eachMobGetsItsOwnHatsu` (lance toutes les techniques de mob).
 - [ ] En jeu : 15 nouveaux Hatsu, un par espèce : gardien (Rayon), shulker (Projectile lévitant), phantom (Piqué), abeille (Dard), pillard (Salve), piglin (Cupidité), vex (Lame spectrale), warden (Onde sonique), wither (Dépérissement), Ender Dragon (Souffle), tortue (Carapace), dauphin (Grâce), panda (Roulade), poulpe (Nuage d'encre). Le grand gardien partage celui du gardien.
 - Ajoutés ensuite : poisson d'argent (Frénésie) et chauve-souris (Cri strident). Pas encore : warden à deux techniques ; l'araignée des cavernes garde celui de l'araignée. Coûts et recharges proposés par moi : corrige-les dans `docs/a-trancher.md`.
+
+## Poing élastique de Hisoka : ramène la cible (22 nov)
+- [x] CI : `elasticFistPullsTheTargetBack`.
+- [ ] En jeu : le Poing élastique tire maintenant l'ennemi touché vers Hisoka.

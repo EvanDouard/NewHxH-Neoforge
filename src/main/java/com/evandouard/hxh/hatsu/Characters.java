@@ -838,7 +838,21 @@ public final class Characters {
 
     /** Poing élastique de Hisoka : le poing part à 6 blocs au bout d'un fil de Bungee Gum. */
     public static final Technique HISOKA_ELASTIC_FIST = register(new Techniques.Strike("hisoka_elastic_fist", TRANSMUTER, 20, 100,
-            6.0, 0.9, 9f, 0f, List.of(), new Look(Style.WARP_FIST, NenFx.TRANSMUTER, 1.2f), SoundEvents.SLIME_BLOCK_HIT));
+            6.0, 0.9, 9f, 0f, List.of(), new Look(Style.WARP_FIST, NenFx.TRANSMUTER, 1.2f), SoundEvents.SLIME_BLOCK_HIT) {
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            LivingEntity t = Targeting.inFront(caster, 6.0, 0.9);
+            boolean hit = super.perform(caster, power);
+            if (hit && t != null && t.isAlive()) {
+                // le fil de Bungee Gum ramène la cible vers Hisoka
+                net.minecraft.world.phys.Vec3 pull = caster.position().subtract(t.position());
+                pull = new net.minecraft.world.phys.Vec3(pull.x, 0, pull.z).normalize().scale(1.1);
+                t.setDeltaMovement(pull.x, 0.2, pull.z);
+                t.hurtMarked = true;
+            }
+            return hit;
+        }
+    });
 
     /** Défense instantanée de Tsezguerra : Résistance II pendant 3 s. */
     public static final Technique TSEZGUERRA_INSTANT_GUARD = register(new Techniques.SelfBuff("tsezguerra_instant_guard", ENHANCER, 20, 240,
