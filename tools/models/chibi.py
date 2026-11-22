@@ -147,6 +147,95 @@ def strand(m, name, base, length, width, rx, rz, paint_for, ry=0, depth=None, be
     for i in range(n):
         t = (i + 0.5) / n
         w = max(min_w, width * (1 - t) ** taper)
-        d = max(min_w * 0.8, depth * (1 - 0.7 * t) ** 1.0)
+        # épaisseur constante sur l'essentiel de la mèche (les replis d'épaisseur faisaient des rayures en travers
+        # des faces larges), affinée seulement près de la pointe
+        d = max(min_w * 0.8, depth * (1 - 0.65 * max(0.0, (t - 0.7) / 0.3)))
         ox, oz = bend[0] * t * t, bend[1] * t * t
         m.cube(name, [x + ox - w / 2, y + i * h - 0.02, z + oz - d / 2], [w, h + 0.04, d], paint_for(t))
+
+
+_STRAND_PAINTS = {}
+
+# contraste volontairement réduit : sur des cheveux clairs, les petits replis (« up ») ne doivent pas faire de rayures
+PALE_LIGHT = {'north': 0.8, 'up': 0.7, 'west': 0.9, 'east': 0.62, 'south': 0.56, 'down': 0.5}
+
+
+def strand_paint(dark, light, t, lit=0.0, lit_map=PALE_LIGHT, edge=0.9, rim=None, rim_k=0.35, up_k=0.72):
+    """Peinture d'une tranche de `strand` : couleur uniforme sur chaque face (aucun dégradé propre à la tranche),
+    qui ne dépend que de l'orientation de la face, de t (un peu plus clair vers la pointe) et de `lit`. Bords
+    longs légèrement assombris ; liseré `rim` sur les faces éclairées. Mise en cache."""
+    key = (tuple(rgb(dark)), tuple(rgb(light)), round(t, 2), round(lit, 2), edge, tuple(rgb(rim)) if rim else None,
+           up_k)
+    if key in _STRAND_PAINTS:
+        return _STRAND_PAINTS[key]
+    dark, light = rgb(dark), rgb(light)
+    rim = rgb(rim) if rim else None
+    rnd = random.Random(hash(key) & 0xffff)
+
+    def paint(ctx):
+        px = ctx.img.load()
+        k = min(1.0, max(0.0, lit_map[ctx.face] * (0.85 + 0.25 * t) + lit))
+        c = mix(dark, light, k)
+        if ctx.face == 'up':
+            # le moteur éclaire les faces du dessus bien plus que les côtés : on assombrit les petits replis pour
+            # qu'ils se fondent dans les flancs au lieu de dessiner des rayures claires (effet « escalier »)
+            c = shade(c, up_k)
+        side = ctx.face in ('north', 'south', 'east', 'west')
+        for yy in range(ctx.h):
+            for xx in range(ctx.w):
+                cc = c
+                if side and ctx.w > 2 and (xx == 0 or xx == ctx.w - 1):
+                    cc = shade(c, edge)
+                elif rim and side and ctx.face in ('north', 'west') and xx == 1:
+                    cc = mix(c, rim, rim_k)
+                d = rnd.randint(-2, 2)
+                px[xx, yy] = (max(0, min(255, cc[0] + d)), max(0, min(255, cc[1] + d)),
+                              max(0, min(255, cc[2] + d)), 255)
+    _STRAND_PAINTS[key] = paint
+    return paint
+
+
+def _fin(m, bone, x, y, z, L, W, d, paint_for, segments):
+    """Triangle plein vu de face (largeur W à la base, pointe à L), d'épaisseur d qui s'affine par tronçons.
+    Les flancs sont deux longues plaques inclinées : des droites, pas des marches. Noyaux en retrait derrière."""
+    import math
+    half = W / 2
+    theta = math.degrees(math.atan2(half, L))
+    ls = math.hypot(half, L)
+    tip = [x, y + L, z]
+    for i, (h0, h1, t_seg, dk) in enumerate(segments):
+        a_, b_ = (1 - h1) * ls, (1 - h0) * ls + (0.3 if i == 0 else 0.0)
+        ds = d * dk
+        side = paint_for(0.4 + 0.5 * h1)
+        m.cube(bone, [x - t_seg, y + L - b_, z - ds / 2], [t_seg, b_ - a_, ds], side, pivot=tip, rotation=[0, 0, theta])
+        m.cube(bone, [x, y + L - b_, z - ds / 2], [t_seg, b_ - a_, ds], side, pivot=tip, rotation=[0, 0, -theta])
+        step = min(0.2, 1.8 * t_seg / W)
+        hh = h0
+        while hh < h1 - 1e-6:
+            hh = min(h1, hh + step)
+            if hh >= 0.97:
+                break
+            w = W * (1 - hh)
+            dc = ds * 0.94
+            m.cube(bone, [x - w / 2, y - 0.3, z - dc / 2], [w, hh * L + 0.3, dc], paint_for(hh * 0.8))
+
+
+def spire(m, name, base, length, width, rx, rz, paint_for, ry=0, depth=None, bend=(0.0, 0.0), parent='hair',
+          **_ignored):
+    """Mèche continue sans escalier (itération 4) : deux « ailettes » triangulaires croisées à angle droit. Vue de
+    face on voit un triangle de largeur `width`, de profil un triangle de largeur `depth` : la mèche s'effile dans
+    les deux sens et se lit comme un volume pointu facetté sous tous les angles. Chaque ailette a des flancs
+    droits (plaques inclinées, voir _fin). `bend` incline légèrement toute la mèche (degrés : x, z)."""
+    m.bone(name, base, parent, rotation=[rx + bend[1] * 4, ry, rz - bend[0] * 4])
+    x, y, z = base
+    L, W = length, width
+    D = depth if depth is not None else W * 0.5
+    t_a = max(0.4, 0.1 * W + 0.05)
+    th_a = max(0.9, 0.4 * W)                 # épaisseur de l'ailette principale (cachée de profil par l'autre)
+    _fin(m, name, x, y, z, L, W, th_a, paint_for,
+         ((0.0, 0.45, t_a, 1.0), (0.45, 0.75, 0.3, 0.55), (0.75, 1.0, 0.2, 0.3)))
+    m.bone(name + '_b', base, name, rotation=[0, 90, 0])
+    t_b = max(0.35, 0.1 * D + 0.05)
+    th_b = max(0.8, 0.6 * th_a)
+    _fin(m, name + '_b', x, y, z, L * 0.97, D, th_b, paint_for,
+         ((0.0, 0.45, t_b, 1.0), (0.45, 0.75, 0.25, 0.55), (0.75, 1.0, 0.18, 0.3)))

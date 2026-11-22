@@ -6,7 +6,7 @@ posture nonchalante : épaules basses, mains dans les poches.
 """
 from __future__ import annotations
 
-from chibi import (HEAD, HEAD_Y, FaceGrid, blade, cloth, flat, hair_paint, skeleton, skin_mat)
+from chibi import (HEAD, HEAD_Y, FaceGrid, cloth, flat, hair_paint, skeleton, skin_mat, spire, strand_paint)
 from geolib import Model, humanoid_animations, material, mix, rgb, shade
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -33,52 +33,60 @@ def hair_for(lit):
 
 
 # ---------------------------------------------------------------------------------------------------------------
-# Étape 1 — cheveux. Une masse qui épouse le crâne, puis 11 grandes mèches dominantes effilées (sommet vers le
-# haut et l'arrière, côtés balayés vers l'arrière, nuque) et quelques mèches intermédiaires plus courtes.
-# Silhouette asymétrique, en flamme, pas en boule. Les oreilles restent dégagées.
+# Étape 1 — cheveux (itération 3 : mèches continues). Trois niveaux : 1) masse qui épouse le crâne ; 2) 9 grandes
+# mèches continues (base large, pointe effilée, courbure et torsion propres, bases décalées en hauteur et en
+# profondeur) ; 3) 6 petites mèches de relief. Côtés relevés vers le haut-arrière (pas de couronne), espaces entre
+# les mèches de l'arrière, frange en mèches indépendantes qui dégagent les sourcils.
+
+def mk(lit):
+    return lambda t: strand_paint(HAIR_SHADOW, HAIR_LIGHT, t, lit=lit, rim=HAIR_RIM)
+
 
 def build_hair(m):
     m.bone('hair', [0, 25.0, 0], 'head')
     cap = hair_for(0.2)(0.3)
     back = hair_for(0.0)(0.2)
-    m.cube('hair', [-5.0, 23.3, -4.75], [10.0, 2.9, 9.5], cap)                # calotte qui épouse le crâne
-    m.cube('hair', [-4.3, 25.9, -3.9], [8.6, 1.1, 7.6], hair_for(0.35)(0.4))   # dessus bombé
+    m.cube('hair', [-5.0, 24.7, -4.75], [10.0, 1.6, 9.5], cap)                # calotte (au-dessus du front)
+    m.cube('hair', [-5.0, 22.6, -2.9], [10.0, 2.4, 7.6], cap)                 # pourtour, en retrait du front
+    m.cube('hair', [-4.2, 25.7, -3.6], [8.4, 1.3, 7.2], hair_for(0.35)(0.4))   # masse centrale d'ancrage
     m.cube('hair', [-5.0, 18.8, 1.5], [10.0, 4.8, 3.4], back)                 # arrière du crâne
-    m.cube('hair', [-4.6, 17.6, 2.6], [9.2, 1.4, 2.2], back)                  # bas de la nuque
-    for sx in (-1, 1):                                                         # tempes, au-dessus des oreilles
+    m.cube('hair', [-4.6, 17.6, 2.6], [9.2, 1.4, 2.2], back)                  # nuque
+    for sx in (-1, 1):                                                         # tempes, oreilles dégagées
         m.cube('hair', [sx * 5.0 - 0.5, 21.9, -3.7], [1.0, 1.6, 5.4], cap)
-        m.cube('hair', [sx * 5.0 - 0.5, 19.0, 0.6], [1.0, 3.0, 1.2], back)    # derrière l'oreille
+        m.cube('hair', [sx * 5.0 - 0.5, 19.0, 0.6], [1.0, 3.0, 1.2], back)
 
+    # (nom, x, y, z, longueur, largeur, rx, rz, ry, courbure (x, z), éclairage)
     dominant = [
-        # (nom, x, y, z, longueur, largeur, rx, rz, éclairage)
-        ('k_top', 0.6, 25.6, -0.6, 10.5, 5.6, 10, -5, 0.34),        # la plus haute, légèrement vers l'arrière
-        ('k_top_r', -2.6, 25.4, 0.4, 8.8, 5.0, 18, 26, 0.24),       # vers la droite du perso (-X)
-        ('k_top_l', 3.0, 25.2, 0.8, 7.6, 4.8, 24, -34, 0.2),        # plus courte : asymétrie
-        ('k_front', -1.2, 25.4, -2.8, 6.4, 4.6, -22, 14, 0.38),     # pointe avant, au-dessus de la frange
-        ('k_side_r', -4.4, 24.0, -0.2, 8.0, 4.6, 34, 64, 0.22),     # côtés balayés vers l'arrière
-        ('k_side_l', 4.4, 23.6, 0.8, 6.8, 4.4, 42, -70, 0.12),
-        ('k_back', 0.2, 24.8, 3.2, 9.4, 5.8, 56, 4, 0.06),          # arrière, longue
-        ('k_back_r', -3.2, 22.8, 3.8, 7.8, 5.0, 74, 34, 0.02),
-        ('k_back_l', 3.2, 22.4, 3.8, 6.6, 4.8, 82, -30, 0.0),
-        ('k_nape', 0.8, 19.4, 4.0, 4.4, 4.6, 126, -8, -0.08),       # vers la nuque
-        ('k_nape_r', -2.8, 20.0, 3.8, 3.8, 3.8, 118, 26, -0.08),
+        ('k_top', 0.4, 26.4, -0.8, 9.6, 5.6, -4, -10, 14, (-1.0, 0.6), 0.06),
+        ('k_top_r', -2.6, 26.0, 0.4, 8.6, 5.2, 12, 30, -18, (1.2, 1.0), 0.02),
+        ('k_top_l', 2.8, 25.5, 0.0, 7.8, 5.0, 4, -40, 22, (-0.8, 0.8), 0.0),
+        ('k_front', -0.6, 25.8, -3.0, 6.6, 4.8, -34, 18, -10, (-0.6, -0.8), 0.08),
+        ('k_back', 0.6, 25.0, 2.8, 9.0, 5.6, 52, -8, 6, (0.8, 1.4), -0.04),
+        ('k_back_r', -3.0, 23.4, 3.4, 7.4, 4.8, 76, 36, 20, (0.6, 1.0), -0.08),
+        ('k_back_l', 3.2, 23.0, 3.0, 6.8, 4.6, 70, -42, -18, (-0.6, 1.0), -0.08),
+        ('k_side_r', -4.4, 24.2, -0.6, 6.0, 4.4, 18, 62, 10, (0.0, 1.0), 0.0),    # relevées, pas horizontales
+        ('k_side_l', 4.4, 23.8, 0.6, 5.4, 4.2, 26, -64, -12, (0.0, 1.0), -0.04),
     ]
-    for name, x, y, z, L, W, rx, rz, lit in dominant:
-        blade(m, name, [x, y, z], L, W, rx, rz, hair_for(lit), depth=W * 0.55, step=1.9 if rx > 45 else 1.6, min_w=0.9)
-    secondary = [                                                    # mèches intermédiaires (chevauchements)
-        ('k_mid_1', 1.6, 25.4, -1.8, 5.0, 3.4, -6, -18, 0.34),
-        ('k_mid_2', -1.0, 25.4, 1.6, 5.6, 3.6, 30, 10, 0.2),
-        ('k_mid_3', -3.8, 24.6, -2.0, 4.4, 3.2, -10, 48, 0.3),
-        ('k_mid_4', 3.8, 24.4, -1.6, 4.0, 3.0, -4, -54, 0.22),
-        ('k_mid_5', 2.0, 23.6, 3.6, 4.6, 3.4, 64, -52, 0.02),
+    for name, x, y, z, L, W, rx, rz, ry, bend, lit in dominant:
+        spire(m, name, [x, y, z], L, W, rx, rz, mk(lit), ry=ry, depth=W * 0.5, bend=bend)
+    secondary = [
+        ('k_mid_1', 1.8, 25.6, -2.4, 4.4, 3.2, -20, -26, 10, (0.3, 0), 0.06),
+        ('k_mid_2', -3.6, 25.0, -1.6, 4.0, 3.0, -10, 48, -8, (-0.3, 0.3), 0.04),
+        ('k_cheek_r', -4.9, 22.4, -3.0, 3.2, 2.8, -6, 150, 0, (0.3, 0), 0.04),    # encadrent le visage
+        ('k_cheek_l', 4.9, 22.2, -2.8, 2.8, 2.6, -6, -148, 0, (-0.3, 0), 0.0),
+        ('k_nape', 0.4, 19.6, 4.0, 3.6, 4.4, 122, -6, 0, (0, 0.4), -0.1),
+        ('k_nape_l', 2.8, 20.4, 3.8, 3.0, 3.4, 108, -34, 0, (0, 0.3), -0.1),
+        # mèches couchées sur l'arrière et les côtés : cassent les arêtes de la masse (pas d'effet casque)
+        ('k_lay_r', -5.0, 24.6, 1.6, 3.8, 3.6, 40, 140, 0, (0, 0), 0.0),
+        ('k_lay_l', 5.0, 24.4, -0.6, 3.6, 3.4, 20, -142, 0, (0, 0), -0.02),
     ]
-    for name, x, y, z, L, W, rx, rz, lit in secondary:
-        blade(m, name, [x, y, z], L, W, rx, rz, hair_for(lit), depth=W * 0.5, step=1.4, min_w=0.7)
-    # frange : mèches distinctes de longueurs différentes ; la plus longue passe entre les yeux, les autres
-    # s'arrêtent au-dessus des sourcils
-    for name, x, L, W, rz in (('kb_1', -3.3, 2.6, 2.8, -24), ('kb_2', -1.4, 2.0, 2.4, -8), ('kb_3', 0.3, 3.7, 2.6, 4),
-                              ('kb_4', 2.2, 2.2, 2.4, 14), ('kb_5', 3.8, 2.8, 2.4, 30)):
-        blade(m, name, [x, 25.7, -4.85], L, W, 172, rz, hair_for(0.4), depth=1.1, step=0.9, min_w=0.5)
+    for name, x, y, z, L, W, rx, rz, ry, bend, lit in secondary:
+        spire(m, name, [x, y, z], L, W, rx, rz, mk(lit), ry=ry, depth=W * 0.45, bend=bend)
+    # frange : mèches indépendantes, pointes irrégulières ; la plus longue passe entre les yeux
+    for name, x, L, W, rz, bx in (('kb_1', -3.4, 2.5, 2.7, -24, 0.3), ('kb_2', -1.5, 1.9, 2.3, -8, -0.2),
+                                  ('kb_3', 0.3, 3.6, 2.5, 4, 0.3), ('kb_4', 2.2, 2.1, 2.3, 15, -0.2),
+                                  ('kb_5', 3.9, 2.7, 2.3, 30, 0.2)):
+        spire(m, name, [x, 25.7, -4.85], L, W, 172, rz, mk(0.1), depth=1.2, bend=(bx, 0), step=0.45, min_w=0.3)
 
 
 # ---------------------------------------------------------------------------------------------------------------
