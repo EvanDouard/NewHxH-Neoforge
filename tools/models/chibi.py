@@ -147,9 +147,7 @@ def strand(m, name, base, length, width, rx, rz, paint_for, ry=0, depth=None, be
     for i in range(n):
         t = (i + 0.5) / n
         w = max(min_w, width * (1 - t) ** taper)
-        # épaisseur constante sur l'essentiel de la mèche (les replis d'épaisseur faisaient des rayures en travers
-        # des faces larges), affinée seulement près de la pointe
-        d = max(min_w * 0.8, depth * (1 - 0.65 * max(0.0, (t - 0.7) / 0.3)))
+        d = max(min_w * 0.8, depth * (1 - 0.7 * t) ** 1.0)
         ox, oz = bend[0] * t * t, bend[1] * t * t
         m.cube(name, [x + ox - w / 2, y + i * h - 0.02, z + oz - d / 2], [w, h + 0.04, d], paint_for(t))
 
