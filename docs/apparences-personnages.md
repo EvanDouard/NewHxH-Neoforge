@@ -29,11 +29,16 @@ Sans fichier d'apparence, un PNJ utilise `textures/entity/npc/<id>.png`, sinon S
 ## Modèles sur mesure (GeckoLib)
 
 Les personnages refaits au niveau décrit dans `docs/Analyse_model.md` ont un vrai modèle GeckoLib, qui remplace le
-rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Premier personnage : **Gon**.
+rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote) et **Killua**.
 
 ```
 python3 tools/models/gon.py
+python3 tools/models/killua.py
 ```
+
+`tools/models/chibi.py` regroupe ce qui est commun au style « Minecraft anime » : squelette chibi (mêmes os,
+donc mêmes animations), tissus, peau, mèches en lames triangulaires en escalier (`blade`), peinture des cheveux
+(couleurs ombre / lumière / reflet au choix) et grille de dessin du visage. Chaque nouveau personnage part de là.
 
 Le script (`tools/models/geolib.py` + un fichier par personnage) écrit :
 

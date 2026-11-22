@@ -1620,6 +1620,35 @@ cmd summon hxh:npc ~1.2 ~ ~4 {npc:"cook",NoAI:1b,Silent:1b,Rotation:[200f,0f],Ta
 wait 25
 clearchat
 shot 60f_gon_echelle
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Killua (même style que Gon)
+look 0 14
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 61a_killua_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 61b_killua_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 61c_killua_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 61d_killua_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~-1.0 ~ ~4 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[160f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~1.0 ~ ~4 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[200f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 61e_gon_killua
 hud on
 cmd kill @e[tag=geo_ci]
 cmd gamerule sendCommandFeedback true
