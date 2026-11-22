@@ -39,6 +39,9 @@ public class NpcEntity extends PathfinderMob implements software.bernie.geckolib
 
     private static final EntityDataAccessor<String> NPC_ID =
             SynchedEntityData.defineId(NpcEntity.class, EntityDataSerializers.STRING);
+    /** Expression du visage forcée (« froid » pour le regard d'assassin de Killua…), vide = automatique. */
+    private static final EntityDataAccessor<String> EXPRESSION =
+            SynchedEntityData.defineId(NpcEntity.class, EntityDataSerializers.STRING);
 
     private BlockPos home = BlockPos.ZERO;
 
@@ -58,12 +61,27 @@ public class NpcEntity extends PathfinderMob implements software.bernie.geckolib
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(NPC_ID, "navigator");
+        builder.define(EXPRESSION, "");
     }
 
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8f));
         goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+    }
+
+    /**
+     * Expression du visage : celle imposée en NBT ({@code expression}), sinon « froid » quand le personnage
+     * combat, sinon l'expression habituelle (chaîne vide). Le rendu cherche une texture {@code <id>_<expression>}.
+     */
+    public String expression() {
+        String forced = entityData.get(EXPRESSION);
+        if (!forced.isEmpty()) return forced;
+        return isAggressive() || getTarget() != null ? "froid" : "";
+    }
+
+    public void setExpression(String expression) {
+        entityData.set(EXPRESSION, expression == null ? "" : expression);
     }
 
     public String npcId() {
@@ -167,6 +185,7 @@ public class NpcEntity extends PathfinderMob implements software.bernie.geckolib
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putString("npc", npcId());
+        if (!entityData.get(EXPRESSION).isEmpty()) tag.putString("expression", entityData.get(EXPRESSION));
         tag.put("home", NbtUtils.writeBlockPos(home));
         if (!route.isEmpty()) {
             tag.putLongArray("route", route.stream().mapToLong(BlockPos::asLong).toArray());
@@ -178,6 +197,7 @@ public class NpcEntity extends PathfinderMob implements software.bernie.geckolib
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("npc")) setNpcId(tag.getString("npc"));
+        setExpression(tag.getString("expression"));
         if (tag.contains("route")) {
             route = java.util.Arrays.stream(tag.getLongArray("route")).mapToObj(BlockPos::of).toList();
             routeIndex = tag.getInt("route_index");

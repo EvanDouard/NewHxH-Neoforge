@@ -22,9 +22,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class NpcGeoModel extends GeoModel<NpcEntity> {
     private static final Map<String, Boolean> EXISTS = new ConcurrentHashMap<>();
+    private static final Map<String, Boolean> TEXTURES = new ConcurrentHashMap<>();
 
     static {
         CharacterLooks.onReload(EXISTS::clear);
+        CharacterLooks.onReload(TEXTURES::clear);
     }
 
     /** Le personnage a-t-il un modèle GeckoLib ? Sinon on garde le rendu provisoire (modèle du joueur). */
@@ -45,7 +47,19 @@ public class NpcGeoModel extends GeoModel<NpcEntity> {
 
     @Override
     public ResourceLocation getTextureResource(NpcEntity npc) {
-        return HxHMod.id("textures/entity/npc_geo/" + npc.npcId() + ".png");
+        String expression = npc.expression();
+        if (!expression.isEmpty()) {
+            ResourceLocation variant = texture(npc.npcId() + "_" + expression);
+            boolean present = TEXTURES.computeIfAbsent(variant.toString(), k ->
+                    Minecraft.getInstance().getResourceManager().getResource(variant).isPresent());
+            if (present) return variant;
+        }
+        return texture(npc.npcId());
+    }
+
+    /** Texture d'un personnage ; une variante {@code <id>_<expression>} ne change que le visage (mêmes UV). */
+    static ResourceLocation texture(String name) {
+        return HxHMod.id("textures/entity/npc_geo/" + name + ".png");
     }
 
     @Override

@@ -1185,4 +1185,20 @@ public final class QuestTests {
             com.evandouard.hxh.nen.NenLearning.forceInTests = false;
         }
     }
+
+    @GameTest(template = "empty")
+    public static void npcExpressionIsSavedAndFallsBackToAutomatic(GameTestHelper helper) {
+        NpcEntity killua = npc(helper, "killua", 1);
+        helper.assertTrue(killua.expression().isEmpty(), "Expression habituelle par défaut");
+        killua.setExpression("froid");
+        net.minecraft.nbt.CompoundTag tag = new net.minecraft.nbt.CompoundTag();
+        killua.addAdditionalSaveData(tag);
+        helper.assertTrue("froid".equals(tag.getString("expression")), "L'expression forcée est sauvegardée");
+        NpcEntity copy = npc(helper, "gon", 2);
+        copy.readAdditionalSaveData(tag);
+        helper.assertTrue("froid".equals(copy.expression()), "L'expression forcée est relue");
+        copy.setExpression("");
+        helper.assertTrue(copy.expression().isEmpty(), "Sans expression forcée ni combat : visage habituel");
+        helper.succeed();
+    }
 }

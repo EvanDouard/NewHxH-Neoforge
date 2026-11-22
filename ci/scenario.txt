@@ -1621,7 +1621,7 @@ wait 25
 clearchat
 shot 60f_gon_echelle
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
-# Killua (même style que Gon)
+# Killua (même style que Gon) : 6 angles + expression froide
 look 0 14
 cmd summon hxh:npc ~ ~ ~2.8 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
 wait 25
@@ -1638,10 +1638,27 @@ wait 25
 clearchat
 shot 61c_killua_profil
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 61g_killua_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
 cmd summon hxh:npc ~ ~ ~2.8 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
 wait 25
 clearchat
 shot 61d_killua_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 62
+cmd summon hxh:npc ~ ~ ~1.6 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 61f_killua_dessus
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 22
+cmd summon hxh:npc ~ ~ ~1.7 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 61h_killua_expression_froide
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 6
 cmd summon hxh:npc ~-1.0 ~ ~4 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[160f,0f],Tags:["geo_ci"]}

@@ -40,6 +40,11 @@ python3 tools/models/killua.py
 donc mêmes animations), tissus, peau, mèches en lames triangulaires en escalier (`blade`), peinture des cheveux
 (couleurs ombre / lumière / reflet au choix) et grille de dessin du visage. Chaque nouveau personnage part de là.
 
+**Expressions.** Une texture `npc_geo/<id>_<expression>.png` (mêmes UV, seul le visage change) remplace la
+texture habituelle quand le PNJ a cette expression : imposée en NBT (`{expression:"froid"}`), sinon `froid`
+automatiquement quand il combat. Killua a `killua_froid.png` (regard d'assassin : paupières baissées, iris
+sombre, pupille réduite à un point).
+
 Le script (`tools/models/geolib.py` + un fichier par personnage) écrit :
 
 - `assets/hxh/geo/entity/npc/<id>.geo.json` — os (corps, torse, tête, cheveux, bras, avant-bras, mains, os
