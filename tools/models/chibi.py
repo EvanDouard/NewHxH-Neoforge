@@ -131,3 +131,22 @@ class FaceGrid:
 
     def poly(self, pts, color):
         self.d.polygon(self.P(*pts), fill=rgb(color))
+
+
+def strand(m, name, base, length, width, rx, rz, paint_for, ry=0, depth=None, bend=(0.0, 0.0), step=0.55,
+           taper=0.85, min_w=0.35, parent='hair'):
+    """Mèche continue (itération 3) : au lieu de quelques étages bien visibles, la section diminue par tranches
+    très fines (≈ 0,5 px) pour que les bords lisent comme des diagonales continues jusqu'à une vraie pointe. La
+    mèche peut se courber (`bend` : décalage x, z de la pointe, en px, réparti en t²) et se tordre (`ry`).
+    `paint_for(t)` doit peindre sans dégradé propre à la tranche (sinon on revoit les étages)."""
+    m.bone(name, base, parent, rotation=[rx, ry, rz])
+    x, y, z = base
+    depth = depth if depth is not None else width * 0.5
+    n = max(4, round(length / step))
+    h = length / n
+    for i in range(n):
+        t = (i + 0.5) / n
+        w = max(min_w, width * (1 - t) ** taper)
+        d = max(min_w * 0.8, depth * (1 - 0.7 * t) ** 1.0)
+        ox, oz = bend[0] * t * t, bend[1] * t * t
+        m.cube(name, [x + ox - w / 2, y + i * h - 0.02, z + oz - d / 2], [w, h + 0.04, d], paint_for(t))

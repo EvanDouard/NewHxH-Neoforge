@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import random
 
+from chibi import strand
 from geolib import Model, humanoid_animations, layered, material, only, rgb, shade, mix
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -77,51 +78,79 @@ def spike(m, name, base, length, width, rx, rz, ry=0, lit=0.0, depth=None, paren
         m.cube(name, [x - w / 2, y + i * step - 0.4, z - d / 2], [w, step + 0.4, d], hair_paint(lit + 0.08 * t))
 
 
+_STRAND_CACHE = {}
+
+
+def strand_paint(t, lit=0.0):
+    """Peinture d'une tranche de mèche continue : couleur uniforme sur la face (aucun dégradé propre à la tranche,
+    aucun liseré haut/bas), qui ne dépend que de l'orientation de la face et de la position t le long de la mèche.
+    Les petits replis du dessus (faces « up ») prennent la couleur de la face avant : on ne voit plus d'étages."""
+    key = (round(t, 2), round(lit, 2))
+    if key in _STRAND_CACHE:
+        return _STRAND_CACHE[key]
+    rnd = random.Random(hash(key) & 0xffff)
+
+    def paint(ctx):
+        px = ctx.img.load()
+        lit_face = {'north': 0.5, 'up': 0.3, 'west': 0.7, 'east': 0.14, 'south': 0.1, 'down': 0.0}[ctx.face]
+        k = lit_face * (0.22 + 0.3 * t) * (0.55 + lit)
+        c = mix(HAIR, HAIR_LIT, min(1, k))
+        for yy in range(ctx.h):
+            for xx in range(ctx.w):
+                cc = c
+                if ctx.face in ('north', 'south', 'east', 'west') and (xx == 0 or xx == ctx.w - 1) and ctx.w > 2:
+                    cc = shade(c, 0.82)
+                d = rnd.randint(-2, 2)
+                px[xx, yy] = (max(0, cc[0] + d), max(0, cc[1] + d), max(0, cc[2] + d), 255)
+    _STRAND_CACHE[key] = paint
+    return paint
+
+
 def build_hair(m):
-    """Silhouette de Gon : le volume est concentré sur le dessus. Une base compacte qui épouse le crâne, 7 grandes
-    mèches dominantes (larges à la base, très effilées, hauteurs et inclinaisons très différentes) ancrées au
-    sommet et qui continuent vers l'arrière, puis des mèches secondaires courtes sur les côtés et à la nuque."""
+    """Itération 3 : trois niveaux. 1) masse qui épouse le crâne ; 2) 7 grandes mèches continues (base large,
+    pointe effilée, légère courbure, torsion variée, bases décalées en hauteur et en profondeur) qui portent la
+    silhouette ; 3) quelques mèches secondaires plus petites qui ne dépassent jamais les grandes."""
     m.bone('hair', [0, 25.0, 0], 'head')
     cap = hair_paint(0.05)
     m.cube('hair', [-5.0, 23.3, -4.7], [10.0, 3.0, 9.4], cap)                # calotte
-    m.cube('hair', [-4.4, 25.8, -3.7], [8.8, 1.6, 7.6], hair_paint(0.15))    # masse centrale d'ancrage
+    m.cube('hair', [-4.3, 25.7, -3.6], [8.6, 1.5, 7.4], hair_paint(0.12))    # masse centrale d'ancrage
     m.cube('hair', [-5.0, 18.6, 1.6], [10.0, 5.0, 3.2], cap)                 # arrière du crâne
     m.cube('hair', [-4.4, 17.6, 2.6], [8.8, 1.4, 2.0], hair_paint(-0.1))     # nuque
     for sx in (-1, 1):                                                        # tempes, oreilles dégagées
         m.cube('hair', [sx * 5.0 - 0.55, 21.8, -3.4], [1.1, 1.8, 5.0], cap)
         m.cube('hair', [sx * 5.0 - 0.55, 19.0, 0.6], [1.1, 3.0, 1.2], cap)
 
-    # (nom, x, y, z, longueur, largeur, rx, rz, éclairage)
-    dominant = [
-        ('g_top', 0.6, 26.4, -0.4, 13.0, 6.8, 4, -6, 0.2),          # la plus haute
-        ('g_top_r', -2.8, 26.0, 0.6, 11.0, 6.2, 14, 24, 0.08),      # vers la droite du perso
-        ('g_top_l', 3.0, 25.8, 0.4, 9.4, 5.8, 10, -31, 0.04),       # plus courte : asymétrie
-        ('g_front', -0.8, 26.0, -2.6, 8.0, 5.6, -20, 14, 0.24),     # vers l'avant et le haut
-        ('g_back', 0.4, 25.6, 2.6, 11.5, 6.6, 42, -4, 0.0),         # le dessus continue vers l'arrière
-        ('g_back_r', -2.6, 24.6, 3.0, 9.0, 5.6, 58, 30, -0.04),
-        ('g_back_l', 3.0, 24.2, 3.0, 7.8, 5.4, 64, -36, -0.06),
-    ]
-    for name, x, y, z, L, W, rx, rz, lit in dominant:
-        spike(m, name, [x, y, z], L, W, rx, rz, lit=lit, depth=W * 0.5, step=1.9)
-    secondary = [
-        ('g_mid_1', 1.8, 25.8, -2.0, 5.6, 4.0, -12, -22, 0.2),      # entre les grandes mèches, vers l'avant
-        ('g_mid_2', -3.4, 25.2, -1.6, 5.0, 3.8, -8, 42, 0.16),
-        ('g_side_r', -4.6, 23.6, 0.0, 5.2, 4.4, 22, 58, 0.06),      # côtés : courts, vers le haut et l'arrière
-        ('g_side_l', 4.6, 23.4, 0.6, 4.6, 4.2, 28, -62, 0.02),
-        ('g_temple_r', -4.9, 22.8, -2.4, 3.4, 3.2, -6, 120, 0.12),
-        ('g_temple_l', 4.9, 22.6, -2.2, 3.0, 3.0, -8, -124, 0.08),
-        ('g_nape', 0.4, 19.8, 3.8, 3.8, 5.2, 118, 0, -0.12),        # nuque nette
-        ('g_nape_r', -3.0, 20.6, 3.6, 3.4, 4.0, 106, 34, -0.12),
-        ('g_nape_l', 3.0, 20.8, 3.6, 3.2, 4.0, 102, -34, -0.12),
-    ]
-    for name, x, y, z, L, W, rx, rz, lit in secondary:
-        spike(m, name, [x, y, z], L, W, rx, rz, lit=lit, depth=W * 0.45, step=1.5)
+    def mk(lit):
+        return lambda t: strand_paint(t, lit)
 
-    # frange : 4 mèches épaisses et distinctes, pointes anguleuses, longueurs variées ; le haut du front reste
-    # visible et la frange est séparée des grandes mèches
-    for name, x, L, W, rz in (('b_1', -3.3, 2.8, 3.2, -22), ('b_2', -0.9, 3.7, 3.4, -4), ('b_3', 1.5, 2.3, 3.0, 10),
-                              ('b_4', 3.6, 3.0, 2.8, 28)):
-        spike(m, name, [x, 25.6, -4.75], L, W, 170, rz, lit=0.18, depth=1.4, step=0.95)
+    # (nom, x, y, z, longueur, largeur, rx, rz, ry, courbure (x, z), éclairage)
+    dominant = [
+        ('g_top', 0.8, 26.6, -0.2, 13.0, 6.6, 6, -7, 8, (-1.2, 1.0), 0.2),       # la plus haute
+        ('g_top_r', -2.6, 26.1, 0.9, 10.6, 6.0, 18, 27, -14, (1.0, 1.4), 0.08),   # plus ouverte, vers l'arrière
+        ('g_top_l', 3.2, 25.5, 0.1, 9.0, 5.6, 6, -38, 20, (0.8, 0.6), 0.04),      # courte, plus couchée
+        ('g_front', -1.0, 25.9, -2.7, 7.6, 5.4, -26, 12, -6, (-0.6, -0.4), 0.26), # vers l'avant
+        ('g_back', 0.2, 25.2, 2.8, 11.2, 6.4, 46, -6, 4, (0.6, 1.6), 0.0),        # le dessus continue vers l'arrière
+        ('g_back_r', -2.9, 24.0, 3.4, 8.6, 5.4, 63, 34, 18, (0.8, 1.2), -0.04),
+        ('g_back_l', 3.1, 24.6, 2.6, 7.4, 5.2, 54, -44, -16, (-0.6, 1.0), -0.06),
+    ]
+    for name, x, y, z, L, W, rx, rz, ry, bend, lit in dominant:
+        strand(m, name, [x, y, z], L, W, rx, rz, mk(lit), ry=ry, depth=W * 0.52, bend=bend)
+    secondary = [
+        ('g_mid_1', 1.9, 25.6, -2.1, 5.2, 3.8, -14, -24, 12, (0.4, 0), 0.2),    # relief entre les grandes mèches
+        ('g_mid_2', -3.3, 25.0, -1.4, 4.6, 3.6, -6, 46, -10, (-0.3, 0.4), 0.16),
+        ('g_side_r', -4.6, 23.4, 0.4, 4.4, 4.0, 30, 56, 10, (0, 0.8), 0.06),     # côtés : courts, vers le haut-arrière
+        ('g_side_l', 4.6, 23.8, 1.0, 3.8, 3.8, 38, -58, -8, (0, 0.8), 0.02),
+        ('g_temple_r', -4.9, 22.8, -2.3, 2.8, 3.0, -4, 118, 0, (0, 0), 0.12),
+        ('g_nape', 0.3, 19.8, 3.8, 3.4, 5.0, 116, 2, 0, (0, 0.4), -0.12),       # nuque
+        ('g_nape_r', -3.0, 20.8, 3.6, 3.0, 3.8, 100, 36, 0, (0, 0.3), -0.12),
+    ]
+    for name, x, y, z, L, W, rx, rz, ry, bend, lit in secondary:
+        strand(m, name, [x, y, z], L, W, rx, rz, mk(lit), ry=ry, depth=W * 0.46, bend=bend)
+
+    # frange : 4 mèches épaisses et distinctes, longueurs variées, pointes anguleuses ; le front reste visible
+    for name, x, L, W, rz, bx in (('b_1', -3.3, 2.7, 3.1, -22, 0.3), ('b_2', -0.9, 3.6, 3.3, -5, -0.3),
+                                  ('b_3', 1.5, 2.2, 2.9, 11, 0.2), ('b_4', 3.6, 2.9, 2.7, 28, -0.2)):
+        strand(m, name, [x, 25.6, -4.75], L, W, 170, rz, mk(0.18), depth=1.4, bend=(bx, 0), step=0.45, min_w=0.3)
 
 
 # ---------------------------------------------------------------------------------------------------------------

@@ -37,7 +37,8 @@ python3 tools/models/killua.py
 ```
 
 `tools/models/chibi.py` regroupe ce qui est commun au style « Minecraft anime » : squelette chibi (mêmes os,
-donc mêmes animations), tissus, peau, mèches en lames triangulaires en escalier (`blade`), peinture des cheveux
+donc mêmes animations), tissus, peau, mèches en lames triangulaires en escalier (`blade`) ou continues (`strand` : tranches de ≈ 0,5 px, courbure et
+torsion, pointe effilée ; c'est la méthode à privilégier, utilisée par Gon), peinture des cheveux
 (couleurs ombre / lumière / reflet au choix) et grille de dessin du visage. Chaque nouveau personnage part de là.
 
 **Expressions.** Une texture `npc_geo/<id>_<expression>.png` (mêmes UV, seul le visage change) remplace la
