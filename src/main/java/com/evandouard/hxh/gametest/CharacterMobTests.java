@@ -1,0 +1,50 @@
+package com.evandouard.hxh.gametest;
+
+import com.evandouard.hxh.HxHMod;
+import com.evandouard.hxh.data.HunterData;
+import com.evandouard.hxh.mob.CharacterEntity;
+import com.evandouard.hxh.registry.ModEntities;
+import com.evandouard.hxh.stats.HunterStats;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Zombie;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+
+/** Personnages du manga en mob (Gon, Killua) : Hatsu de leur kit, neutres, s'entraident. */
+@GameTestHolder(HxHMod.MODID)
+@PrefixGameTestTemplate(false)
+public final class CharacterMobTests {
+    private CharacterMobTests() {}
+
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void gonAndKilluaGetTheirHatsuAndStayNeutral(GameTestHelper helper) {
+        CharacterEntity gon = helper.spawn(ModEntities.GON.get(), 1, 1, 1);
+        CharacterEntity killua = helper.spawn(ModEntities.KILLUA.get(), 3, 1, 1);
+        helper.runAfterDelay(5, () -> {
+            for (CharacterEntity c : new CharacterEntity[]{gon, killua}) {
+                HunterData data = HunterStats.get(c);
+                helper.assertTrue(c.isPrepared(), c.characterId() + " : mob d'exemple appliqué");
+                helper.assertTrue(data.nenUnlocked(), c.characterId() + " : maîtrise le Nen");
+                helper.assertTrue(data.kit().equals(c.characterId()), c.characterId() + " : kit " + data.kit());
+                helper.assertTrue(!(c instanceof Enemy), c.characterId() + " : neutre, pas hostile");
+                helper.assertTrue(c.getTarget() == null, c.characterId() + " : n'attaque personne de lui-même");
+                helper.assertTrue(c.getCustomName() != null, c.characterId() + " : nom affiché");
+            }
+            // on frappe Gon : il riposte, et Killua vient l'aider
+            Zombie zombie = helper.spawn(EntityType.ZOMBIE, 2, 1, 4);
+            zombie.setNoAi(true);
+            zombie.setInvulnerable(true); // reste en vie : on vérifie juste qui le prend pour cible
+            gon.hurt(gon.damageSources().mobAttack(zombie), 1f);
+        });
+        helper.runAfterDelay(30, () -> helper.succeedWhen(() -> {
+            Zombie zombie = helper.getLevel().getEntitiesOfClass(Zombie.class, gon.getBoundingBox().inflate(10)).stream()
+                    .findFirst().orElse(null);
+            helper.assertTrue(zombie != null, "Le zombie est là");
+            helper.assertTrue(gon.getTarget() == zombie, "Gon riposte");
+            helper.assertTrue(killua.getTarget() == zombie, "Killua vient aider Gon");
+        }));
+    }
+}

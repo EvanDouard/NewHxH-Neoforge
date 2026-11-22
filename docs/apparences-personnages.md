@@ -65,3 +65,15 @@ Le script (`tools/models/geolib.py` + un fichier par personnage) écrit :
 Les fichiers s'ouvrent aussi dans Blockbench (format « GeckoLib animated model ») pour les retoucher à la main.
 Repère : Y vers le haut, pieds à 0, l'avant vers -Z, le côté gauche du personnage en +X. GeckoLib inverse les
 rotations X et Z par rapport à l'aperçu : le script les inverse à l'écriture (`to_geckolib`).
+
+
+## Personnages en mob (Gon, Killua)
+
+Types d'entité `hxh:gon` et `hxh:killua` (classe `mob/CharacterEntity`), avec un œuf d'apparition chacun dans
+l'onglet du mod. Même modèle GeckoLib que le PNJ du même nom, plus une animation `attack` (coup de poing) jouée
+quand ils frappent ; en combat, Killua prend sa texture `killua_froid`. Stats, Nen et Hatsu viennent du mob
+d'exemple `data/hxh/mob_presets/<id>.json` (kit `gon` : Jajanken ; kit `killua` : Kanmuru, Shippu Jinrai, yo-yo,
+poing électrique) et l'IA lance les techniques comme pour tout mob au Nen (`NenMobAI`). Neutres pour l'instant :
+ils se promènent, regardent les joueurs, ne ripostent qu'à qui les frappe, et les autres personnages proches
+viennent aider. Pour ajouter un personnage : un type dans `ModEntities.character(id)`, son œuf, son mob
+d'exemple, ses traductions et son modèle `tools/models/<id>.py`.

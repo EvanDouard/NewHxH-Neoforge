@@ -17,6 +17,8 @@ public final class ModCreativeTabs {
                     .icon(() -> ModItems.HUNTER_CARD.get().getDefaultInstance())
                     .displayItems((params, output) -> {
                         output.accept(ModItems.HUNTER_CARD.get());
+                        output.accept(ModItems.GON_SPAWN_EGG.get());
+                        output.accept(ModItems.KILLUA_SPAWN_EGG.get());
                         output.accept(ModItems.FOXBEAR_SPAWN_EGG.get());
                         output.accept(ModItems.SPIDER_EAGLE_SPAWN_EGG.get());
                         output.accept(ModItems.MAN_FACED_APE_SPAWN_EGG.get());

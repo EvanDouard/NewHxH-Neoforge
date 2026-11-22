@@ -30,6 +30,12 @@ public final class ModItems {
             ITEMS.register("chimera_ant_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.CHIMERA_ANT, 0x2E3A2A, 0x9E2B25, new Item.Properties()));
 
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> GON_SPAWN_EGG =
+            ITEMS.register("gon_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.GON, 0x3EA64C, 0x141414, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> KILLUA_SPAWN_EGG =
+            ITEMS.register("killua_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.KILLUA, 0xECEAF2, 0x7B5CC2, new Item.Properties()));
     public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> KIRIKO_SPAWN_EGG =
             ITEMS.register("kiriko_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.KIRIKO, 0x3D5A2A, 0xE8D9B0, new Item.Properties()));

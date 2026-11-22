@@ -52,6 +52,15 @@ public final class ModEntities {
             ENTITIES.register("chimera_ant", () -> EntityType.Builder.of(com.evandouard.hxh.beast.ChimeraAntEntity::new,
                     MobCategory.MONSTER).sized(2.0f, 1.3f).clientTrackingRange(8).build("chimera_ant"));
 
+    /** Personnages du manga en mob (modèle GeckoLib, stats / Nen / Hatsu depuis data/hxh/mob_presets/<id>.json). */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> GON = character("gon");
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> KILLUA = character("killua");
+
+    private static DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> character(String id) {
+        return ENTITIES.register(id, () -> EntityType.Builder.of(com.evandouard.hxh.mob.CharacterEntity::new,
+                MobCategory.CREATURE).sized(0.6f, 1.5f).eyeHeight(1.3f).clientTrackingRange(10).build(id));
+    }
+
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.beast.KirikoEntity>> KIRIKO =
             ENTITIES.register("kiriko", () -> EntityType.Builder.of(com.evandouard.hxh.beast.KirikoEntity::new,
                     MobCategory.CREATURE).sized(1.4f, 2.4f).clientTrackingRange(10).build("kiriko"));
@@ -90,6 +99,8 @@ public final class ModEntities {
         event.put(GREAT_STAMP.get(), com.evandouard.hxh.beast.GreatStampEntity.createAttributes().build());
         event.put(SPIDER_EAGLE.get(), com.evandouard.hxh.beast.SpiderEagleEntity.createAttributes().build());
         event.put(KIRIKO.get(), com.evandouard.hxh.beast.KirikoEntity.createAttributes().build());
+        event.put(GON.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
+        event.put(KILLUA.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(MAN_FACED_APE.get(), com.evandouard.hxh.beast.ManFacedApeEntity.createAttributes().build());
         event.put(CHIMERA_ANT.get(), com.evandouard.hxh.beast.ChimeraAntEntity.createAttributes().build());
     }

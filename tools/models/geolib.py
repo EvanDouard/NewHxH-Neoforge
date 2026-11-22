@@ -412,4 +412,14 @@ def humanoid_animations(arm_swing=28, leg_swing=30, breath=1.6):
                 'torso': {'rotation': {'0.0': [3, 0, 0], '0.8': [3, 0, 0]}},
             },
         },
+        # coup de poing du bras droit (joué une fois, déclenché par le serveur quand le mob frappe)
+        'attack': {
+            'loop': False, 'animation_length': 0.4,
+            'bones': {
+                'right_arm': {'rotation': {'0.0': [0, 0, 0], '0.12': [85, 0, -8], '0.4': [0, 0, 0]}},
+                'right_forearm': {'rotation': {'0.0': [0, 0, 0], '0.12': [5, 0, 0], '0.4': [0, 0, 0]}},
+                'left_arm': {'rotation': {'0.0': [0, 0, 0], '0.12': [-20, 0, 0], '0.4': [0, 0, 0]}},
+                'torso': {'rotation': {'0.0': [0, 0, 0], '0.12': [6, -16, 0], '0.4': [0, 0, 0]}},
+            },
+        },
     }

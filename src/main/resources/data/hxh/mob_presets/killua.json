@@ -1,0 +1,5 @@
+{
+  "entity": "hxh:killua",
+  "stats": { "all": 45, "speed": 60 },
+  "nen": { "level": 50, "kit": "killua", "mastery": 40 }
+}

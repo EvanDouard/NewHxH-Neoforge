@@ -1679,6 +1679,16 @@ cmd summon hxh:npc ~1.0 ~ ~4 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[200f,0f],
 wait 25
 clearchat
 shot 61e_gon_killua
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Gon et Killua en mobs (œufs d'apparition) : même modèle, nom, Hatsu
+hud on
+look 0 8
+cmd summon hxh:gon ~-1.0 ~ ~3.6 {NoAI:1b,Rotation:[165f,0f],Tags:["geo_ci"]}
+cmd summon hxh:killua ~1.0 ~ ~3.6 {NoAI:1b,Rotation:[195f,0f],Tags:["geo_ci"]}
+wait 30
+clearchat
+shot 62a_mobs_gon_killua
+hud off
 hud on
 cmd kill @e[tag=geo_ci]
 cmd gamerule sendCommandFeedback true
