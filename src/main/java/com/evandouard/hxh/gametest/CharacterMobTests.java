@@ -39,7 +39,10 @@ public final class CharacterMobTests {
             // beaucoup de vie (pas invulnérable : un mob invulnérable ne peut pas être pris pour cible)
             zombie.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1000);
             zombie.setHealth(1000);
+            // le coup peut être entièrement absorbé (Ten, passifs) : on enregistre l'agresseur comme le ferait un
+            // coup qui porte, c'est ce que lit l'IA de riposte
             gon.hurt(gon.damageSources().mobAttack(zombie), 2f);
+            gon.setLastHurtByMob(zombie);
         });
         helper.runAfterDelay(30, () -> helper.succeedWhen(() -> {
             Zombie zombie = helper.getLevel().getEntitiesOfClass(Zombie.class, gon.getBoundingBox().inflate(10)).stream()
