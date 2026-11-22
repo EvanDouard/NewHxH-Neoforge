@@ -48,8 +48,8 @@ public final class CharacterMobTests {
             Zombie zombie = helper.getLevel().getEntitiesOfClass(Zombie.class, gon.getBoundingBox().inflate(10)).stream()
                     .findFirst().orElse(null);
             helper.assertTrue(zombie != null, "Le zombie est là");
-            helper.assertTrue(gon.getTarget() == zombie, "Gon riposte");
-            helper.assertTrue(killua.getTarget() == zombie, "Killua vient aider Gon");
+            helper.assertTrue(gon.getTarget() == zombie, "Gon riposte (cible : " + gon.getTarget() + ", dernier agresseur : " + gon.getLastHurtByMob() + ")");
+            helper.assertTrue(killua.getTarget() == zombie, "Killua vient aider Gon (cible : " + killua.getTarget() + ")");
         }));
     }
 }

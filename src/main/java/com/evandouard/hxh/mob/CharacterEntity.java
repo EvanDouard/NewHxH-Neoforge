@@ -66,7 +66,7 @@ public class CharacterEntity extends PathfinderMob implements GeoEntity {
         goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 10f));
         goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         // neutre : riposte seulement, et les autres personnages proches viennent l'aider
-        targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers(CharacterEntity.class));
+        targetSelector.addGoal(1, new HurtByTargetGoal(this, CharacterEntity.class).setAlertOthers(CharacterEntity.class));
     }
 
     @Override
@@ -92,6 +92,12 @@ public class CharacterEntity extends PathfinderMob implements GeoEntity {
         boolean hit = super.doHurtTarget(target);
         triggerAnim("attack", "punch");
         return hit;
+    }
+
+    /** Les personnages sont alliés entre eux : pas de riposte si l'un touche l'autre par mégarde (Hatsu de zone). */
+    @Override
+    public boolean isAlliedTo(Entity other) {
+        return other instanceof CharacterEntity || super.isAlliedTo(other);
     }
 
     @Override
