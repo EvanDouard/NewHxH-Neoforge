@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import random
 
-from chibi import strand
+from chibi import arched, lock
 from geolib import Model, humanoid_animations, layered, material, only, rgb, shade, mix
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -123,34 +123,42 @@ def build_hair(m):
     def mk(lit):
         return lambda t: strand_paint(t, lit)
 
-    # (nom, x, y, z, longueur, largeur, rx, rz, ry, courbure (x, z), éclairage)
+    # Itération 5 (organique) : mèches `lock` (tronçons qui se courbent, racine évasée qui sort de la masse,
+    # aplaties ou volumineuses). (nom, x, y, z, longueur, largeur, rx, rz, ry, aplatissement, courbure, éclairage)
     dominant = [
-        ('g_top', 0.8, 26.6, -0.2, 13.0, 6.6, 6, -7, 8, (-1.2, 1.0), 0.2),       # la plus haute
-        ('g_top_r', -2.6, 26.1, 0.9, 10.6, 6.0, 18, 27, -14, (1.0, 1.4), 0.08),   # plus ouverte, vers l'arrière
-        ('g_top_l', 3.2, 25.5, 0.1, 9.0, 5.6, 6, -38, 20, (0.8, 0.6), 0.04),      # courte, plus couchée
-        ('g_front', -1.0, 25.9, -2.7, 7.6, 5.4, -26, 12, -6, (-0.6, -0.4), 0.26), # vers l'avant
-        ('g_back', 0.2, 25.2, 2.8, 11.2, 6.4, 46, -6, 4, (0.6, 1.6), 0.0),        # le dessus continue vers l'arrière
-        ('g_back_r', -2.9, 24.0, 3.4, 8.6, 5.4, 63, 34, 18, (0.8, 1.2), -0.04),
-        ('g_back_l', 3.1, 24.6, 2.6, 7.4, 5.2, 54, -44, -16, (-0.6, 1.0), -0.06),
+        ('g_top', 0.8, 26.2, -0.2, 13.0, 7.0, 6, -8, 8, 0.6, 14, 0.2),          # la plus haute, épaisse
+        ('g_top_r', -2.6, 25.8, 0.9, 10.8, 6.4, 18, 28, -14, 0.42, 18, 0.08),   # plus ouverte, aplatie
+        ('g_top_l', 3.2, 25.3, 0.1, 9.0, 6.0, 6, -38, 20, 0.7, 16, 0.04),       # courte, volumineuse
+        ('g_front', -1.0, 25.6, -2.7, 7.8, 5.8, -26, 12, -6, 0.5, 14, 0.26),
+        ('g_back', 0.2, 25.0, 2.8, 11.2, 6.8, 46, -6, 4, 0.48, 18, 0.0),        # continue le sommet vers l'arrière
+        ('g_back_r', -2.9, 23.8, 3.4, 8.8, 5.8, 63, 34, 18, 0.4, 16, -0.04),
+        ('g_back_l', 3.1, 24.4, 2.6, 7.6, 5.6, 54, -44, -16, 0.55, 14, -0.06),
+        ('g_side_r', -4.5, 23.6, 0.2, 6.4, 5.0, 26, 56, 10, 0.45, 18, 0.06),    # grande mèche latérale
     ]
-    for name, x, y, z, L, W, rx, rz, ry, bend, lit in dominant:
-        strand(m, name, [x, y, z], L, W, rx, rz, mk(lit), ry=ry, depth=W * 0.52, bend=bend)
-    secondary = [
-        ('g_mid_1', 1.9, 25.6, -2.1, 5.2, 3.8, -14, -24, 12, (0.4, 0), 0.2),    # relief entre les grandes mèches
-        ('g_mid_2', -3.3, 25.0, -1.4, 4.6, 3.6, -6, 46, -10, (-0.3, 0.4), 0.16),
-        ('g_side_r', -4.6, 23.4, 0.4, 4.4, 4.0, 30, 56, 10, (0, 0.8), 0.06),     # côtés : courts, vers le haut-arrière
-        ('g_side_l', 4.6, 23.8, 1.0, 3.8, 3.8, 38, -58, -8, (0, 0.8), 0.02),
-        ('g_temple_r', -4.9, 22.8, -2.3, 2.8, 3.0, -4, 118, 0, (0, 0), 0.12),
-        ('g_nape', 0.3, 19.8, 3.8, 3.4, 5.0, 116, 2, 0, (0, 0.4), -0.12),       # nuque
-        ('g_nape_r', -3.0, 20.8, 3.6, 3.0, 3.8, 100, 36, 0, (0, 0.3), -0.12),
+    intermediate = [
+        ('g_i1', 1.9, 25.6, -2.1, 6.0, 4.4, -14, -24, 12, 0.5, 12, 0.2),
+        ('g_i2', -3.3, 25.0, -1.4, 5.4, 4.2, -6, 46, -10, 0.45, 12, 0.16),
+        ('g_i3', 4.5, 23.9, 1.0, 5.2, 4.4, 36, -58, -8, 0.5, 14, 0.02),
+        ('g_i4', -1.2, 25.2, 1.6, 6.4, 4.6, 26, 16, 26, 0.6, 14, 0.06),
+        ('g_i5', 1.6, 23.2, 3.6, 5.6, 4.6, 76, -18, 0, 0.42, 12, -0.08),
     ]
-    for name, x, y, z, L, W, rx, rz, ry, bend, lit in secondary:
-        strand(m, name, [x, y, z], L, W, rx, rz, mk(lit), ry=ry, depth=W * 0.46, bend=bend)
-
-    # frange : 4 mèches épaisses et distinctes, longueurs variées, pointes anguleuses ; le front reste visible
-    for name, x, L, W, rz, bx in (('b_1', -3.3, 2.7, 3.1, -22, 0.3), ('b_2', -0.9, 3.6, 3.3, -5, -0.3),
-                                  ('b_3', 1.5, 2.2, 2.9, 11, 0.2), ('b_4', 3.6, 2.9, 2.7, 28, -0.2)):
-        strand(m, name, [x, 25.6, -4.75], L, W, 170, rz, mk(0.18), depth=1.4, bend=(bx, 0), step=0.45, min_w=0.3)
+    small = [
+        ('g_temple_r', -4.9, 22.8, -2.3, 3.0, 3.0, -4, 118, 0, 0.5, 8, 0.12),
+        ('g_temple_l', 4.9, 22.6, -2.1, 2.6, 2.8, -6, -122, 0, 0.5, 8, 0.08),
+        # nuque : mèches larges et plates qui retombent en couches
+        ('g_bl1', -2.0, 25.2, 4.2, 6.2, 5.6, 158, 12, 0, 0.32, 10, -0.1),
+        ('g_bl2', 2.2, 24.8, 4.3, 5.6, 5.2, 162, -16, 0, 0.32, 10, -0.12),
+        ('g_bl3', 0.2, 21.8, 4.6, 4.2, 5.4, 150, 2, 0, 0.34, 8, -0.12),
+    ]
+    arched(m, dominant, mk, segs=2)
+    arched(m, intermediate, mk, segs=2)
+    arched(m, small, mk, segs=2)
+    # frange : 4 mèches individuelles qui retombent en se courbant, longueurs variées, profondeurs décalées
+    # (elles se chevauchent) ; le front et les sourcils restent visibles
+    for name, x, z, L, W, rz, arc in (('b_1', -3.3, -4.75, 2.9, 3.2, -22, 10), ('b_2', -1.0, -4.95, 3.8, 3.4, -6, 12),
+                                       ('b_3', 1.4, -4.8, 2.4, 3.0, 12, 8), ('b_4', 3.5, -4.95, 3.0, 2.8, 28, 10)):
+        lock(m, name, [x, 25.7, z], L, W, 168, rz, mk(0.18), flat=0.5, curve=(-arc, arc * (1 if rz > 0 else -1) * 0.5),
+             segs=2, root=1.1)
 
 
 # ---------------------------------------------------------------------------------------------------------------

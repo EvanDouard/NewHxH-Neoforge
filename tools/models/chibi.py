@@ -237,3 +237,96 @@ def spire(m, name, base, length, width, rx, rz, paint_for, ry=0, depth=None, ben
     th_b = max(0.8, 0.6 * th_a)
     _fin(m, name + '_b', x, y, z, L * 0.97, D, th_b, paint_for,
          ((0.0, 0.45, t_b, 1.0), (0.45, 0.75, 0.25, 0.55), (0.75, 1.0, 0.18, 0.3)))
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# Itération 5 — mèches organiques (`lock`)
+
+def _trap_fin(m, bone, x, y0, z, h, wb, wt, th, paint_for, t0, t1):
+    """Ailette en trapèze (largeur wb en bas, wt en haut, wt = 0 → pointe) d'épaisseur th. Flancs droits : deux
+    plaques inclinées dont l'arête extérieure suit exactement le côté du trapèze ; noyaux en retrait derrière."""
+    import math
+    dx = (wb - wt) / 2
+    theta = math.degrees(math.atan2(dx, h))
+    ls = math.hypot(dx, h)
+    tp = max(0.32, min(0.12 * wb + 0.08, 0.9)) if wt > 0 else max(0.24, min(0.08 * wb + 0.06, 0.4))
+    y1 = y0 + h
+    side = paint_for((t0 + t1) / 2)
+    for sx in (1, -1):
+        px = x + sx * wt / 2
+        ox = px - tp if sx > 0 else px
+        m.cube(bone, [ox, y1 - ls, z - th / 2], [tp, ls, th], side, pivot=[px, y1, z], rotation=[0, 0, sx * theta])
+    n = max(1, math.ceil(dx / (tp * 0.85)))
+    for k in range(1, n + 1):
+        f = k / (n + 1)
+        w = wb - (wb - wt) * f
+        if w < 0.25:
+            break
+        hh = h * f
+        dc = th * 0.92
+        m.cube(bone, [x - w / 2, y0 - 0.2, z - dc / 2], [w, hh + 0.2, dc], paint_for(t0 + (t1 - t0) * f))
+
+
+def lock(m, name, base, length, width, rx, rz, paint_for, ry=0, flat=0.5, curve=(0.0, 0.0), segs=3, root=1.25,
+         parent='hair'):
+    """Mèche organique : plusieurs tronçons enchaînés (un os chacun) dont la direction change un peu à chaque
+    jonction (`curve` = virage total en degrés : x vers l'avant/arrière, z vers les côtés), comme une mèche qui se
+    courbe. Le premier tronçon (« racine ») est plus large (`root`) et court : la mèche sort en s'évasant de la
+    masse au lieu d'y être plantée. Chaque tronçon = deux ailettes en trapèze croisées : vue de face la largeur,
+    de profil `flat` × la largeur (mèche aplatie si petit, volumineuse si proche de 1). Le dernier tronçon finit
+    en pointe."""
+    fr = {2: (0.4, 0.6), 3: (0.3, 0.3, 0.4), 4: (0.24, 0.26, 0.24, 0.26)}[segs]
+    widths = [width * root] + [width * (1 - sum(fr[:k + 1])) ** 0.75 for k in range(segs)]
+    widths[-1] = 0.0
+    widths[1] = min(widths[1], width * 0.98)
+    m.bone(f'{name}_0', base, parent, rotation=[rx, ry, rz])
+    x, y, z = base
+    yc, t0 = y, 0.0
+    for k in range(segs):
+        bone = f'{name}_{k}'
+        if k > 0:
+            m.bone(bone, [x, yc, z], f'{name}_{k - 1}', rotation=[curve[0] / (segs - 1), 0, -curve[1] / (segs - 1)])
+        h = length * fr[k]
+        wb, wt = widths[k] * (1.06 if k > 0 else 1.0), widths[k + 1]
+        t1 = t0 + fr[k]
+        y0 = yc - (0.35 if k > 0 else 0.0)
+        hh = h + (0.35 if k > 0 else 0.0)
+        th_a = max(0.45, (wt if wt > 0 else wb * 0.45) * flat * 0.95)
+        th_b = max(0.4, (wt if wt > 0 else wb * 0.4) * 0.9)
+        b2 = bone + 'b'
+        m.bone(b2, [x, yc, z], bone, rotation=[0, 90, 0])
+        # le dernier tronçon s'affine aussi en épaisseur (sinon l'ailette croisée laisse un bout plat)
+        bands = ((0.0, 1.0, 1.0),) if wt > 0 else ((0.0, 0.45, 1.0), (0.45, 0.75, 0.58), (0.75, 1.0, 0.3))
+        for f0, f1, kt in bands:
+            w0, w1 = wb + (wt - wb) * f0, wb + (wt - wb) * f1
+            ya, hb = y0 + hh * f0, hh * (f1 - f0) + (0.15 if f0 > 0 else 0.0)
+            ya -= 0.15 if f0 > 0 else 0.0
+            ta, tb = t0 + (t1 - t0) * f0, t0 + (t1 - t0) * f1
+            _trap_fin(m, bone, x, ya, z, hb, w0, w1, max(0.22, th_a * kt), paint_for, ta, tb)
+            _trap_fin(m, b2, x, ya, z, hb, w0 * flat, w1 * flat, max(0.2, th_b * kt), paint_for, ta, tb)
+        yc += h
+        t0 = t1
+
+
+def chamfered_cap(m, paint_top, paint_back, x0=-5.0, x1=5.0, y_top=26.2, z0=-4.75, z1=4.75, s=2.0, bone='hair'):
+    """Arêtes supérieures de la masse capillaire adoucies par des pans à 45° (plus d'effet « boîte » ou casque)."""
+    L = z1 - z0
+    for sx in (x0, x1):                                         # arêtes gauche/droite (le long de Z)
+        m.cube(bone, [sx - s / 2, y_top - s / 2, z0 + 0.6], [s, s, L - 1.2], paint_top,
+               pivot=[sx, y_top, (z0 + z1) / 2], rotation=[0, 0, 45])
+    m.cube(bone, [x0 + 0.6, y_top - s / 2, z1 - s / 2], [x1 - x0 - 1.2, s, s], paint_back,       # arête arrière
+           pivot=[(x0 + x1) / 2, y_top, z1], rotation=[45, 0, 0])
+
+
+def arched(m, spec, paint, parent='hair', segs=3):
+    """Pose une liste de mèches organiques. Chaque entrée : (nom, x, y, z, longueur, largeur, rx, rz, ry, flat,
+    arc, éclairage). La racine penche un peu plus vers l'extérieur que la direction voulue, puis la mèche se
+    redresse d'`arc` degrés : elle sort de la masse en douceur et se courbe vers le haut."""
+    def sgn(v):
+        return (v > 0) - (v < 0)
+    for name, x, y, z, L, W, rx, rz, ry, flat, arc, lit in spec:
+        fx = min(1.0, abs(rx) / 25.0) if abs(rx) < 100 else 0.6
+        fz = min(1.0, abs(rz) / 25.0) if abs(rz) < 100 else 0.6
+        ax, az = arc * fx * sgn(rx), arc * fz * sgn(rz)
+        lock(m, name, [x, y, z], L, W, rx + ax * 0.5, rz + az * 0.5, paint(lit), ry=ry, flat=flat,
+             curve=(-ax, az), segs=segs, parent=parent)

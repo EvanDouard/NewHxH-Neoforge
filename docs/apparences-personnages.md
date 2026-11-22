@@ -40,7 +40,13 @@ python3 tools/models/killua.py
 donc mêmes animations), tissus, peau, mèches en lames triangulaires en escalier (`blade`) ou continues (`strand` : tranches de ≈ 0,5 px, courbure et
 torsion, pointe effilée ; utilisée par Gon) ou en ailettes croisées (`spire` : deux triangles pleins croisés à angle droit, flancs
 formés par des plaques inclinées, donc sans marches, effilés de face comme de profil ; utilisée par Killua), peinture des cheveux
-(couleurs ombre / lumière / reflet au choix) et grille de dessin du visage. Chaque nouveau personnage part de là.
+(couleurs ombre / lumière / reflet au choix) et grille de dessin du visage. **Mèches organiques (`lock`, méthode actuelle de Gon et Killua).** Une mèche = 2 ou 3 tronçons enchaînés
+(un os chacun) qui changent un peu de direction à chaque jonction (courbure) ; la racine est plus large et sort
+de la masse en s'évasant ; chaque tronçon = deux ailettes en trapèze croisées (flancs droits, pas de marches),
+aplatissement réglable par mèche ; la pointe s'affine en largeur et en épaisseur. `arched` pose une liste de
+mèches (racine qui penche vers l'extérieur puis se redresse). Hiérarchie : grandes, intermédiaires, petites.
+
+Chaque nouveau personnage part de là.
 
 **Expressions.** Une texture `npc_geo/<id>_<expression>.png` (mêmes UV, seul le visage change) remplace la
 texture habituelle quand le PNJ a cette expression : imposée en NBT (`{expression:"froid"}`), sinon `froid`

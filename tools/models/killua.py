@@ -6,7 +6,8 @@ posture nonchalante : épaules basses, mains dans les poches.
 """
 from __future__ import annotations
 
-from chibi import (HEAD, HEAD_Y, FaceGrid, cloth, flat, hair_paint, skeleton, skin_mat, spire, strand_paint)
+from chibi import (HEAD, HEAD_Y, FaceGrid, arched, chamfered_cap, cloth, flat, hair_paint, lock, skeleton, skin_mat,
+                   strand_paint)
 from geolib import Model, humanoid_animations, material, mix, rgb, shade
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -43,50 +44,57 @@ def mk(lit):
 
 
 def build_hair(m):
+    """Itération 5 (organique) : masse aux arêtes adoucies, puis trois niveaux de mèches organiques (`lock` :
+    tronçons qui se courbent, racine évasée qui sort de la masse, aplaties ou volumineuses selon la mèche)."""
     m.bone('hair', [0, 25.0, 0], 'head')
     cap = hair_for(0.2)(0.3)
     back = hair_for(0.0)(0.2)
-    m.cube('hair', [-5.0, 24.7, -4.75], [10.0, 1.6, 9.5], cap)                # calotte (au-dessus du front)
+    m.cube('hair', [-5.0, 24.7, -4.75], [10.0, 1.5, 9.5], cap)                # calotte (au-dessus du front)
     m.cube('hair', [-5.0, 22.6, -2.9], [10.0, 2.4, 7.6], cap)                 # pourtour, en retrait du front
-    m.cube('hair', [-4.2, 25.7, -3.6], [8.4, 1.3, 7.2], hair_for(0.35)(0.4))   # masse centrale d'ancrage
+    m.cube('hair', [-4.0, 26.0, -3.4], [8.0, 1.0, 6.8], hair_for(0.35)(0.4))   # dessus bombé
     m.cube('hair', [-5.0, 18.8, 1.5], [10.0, 4.8, 3.4], back)                 # arrière du crâne
     m.cube('hair', [-4.6, 17.6, 2.6], [9.2, 1.4, 2.2], back)                  # nuque
     for sx in (-1, 1):                                                         # tempes, oreilles dégagées
         m.cube('hair', [sx * 5.0 - 0.5, 21.9, -3.7], [1.0, 1.6, 5.4], cap)
         m.cube('hair', [sx * 5.0 - 0.5, 19.0, 0.6], [1.0, 3.0, 1.2], back)
 
-    # (nom, x, y, z, longueur, largeur, rx, rz, ry, courbure (x, z), éclairage)
+    # (nom, x, y, z, longueur, largeur, rx, rz, ry, aplatissement, courbure, éclairage)
     dominant = [
-        ('k_top', 0.4, 26.4, -0.8, 9.6, 5.6, -4, -10, 14, (-1.0, 0.6), 0.06),
-        ('k_top_r', -2.6, 26.0, 0.4, 8.6, 5.2, 12, 30, -18, (1.2, 1.0), 0.02),
-        ('k_top_l', 2.8, 25.5, 0.0, 7.8, 5.0, 4, -40, 22, (-0.8, 0.8), 0.0),
-        ('k_front', -0.6, 25.8, -3.0, 6.6, 4.8, -34, 18, -10, (-0.6, -0.8), 0.08),
-        ('k_back', 0.6, 25.0, 2.8, 9.0, 5.6, 52, -8, 6, (0.8, 1.4), -0.04),
-        ('k_back_r', -3.0, 23.4, 3.4, 7.4, 4.8, 76, 36, 20, (0.6, 1.0), -0.08),
-        ('k_back_l', 3.2, 23.0, 3.0, 6.8, 4.6, 70, -42, -18, (-0.6, 1.0), -0.08),
-        ('k_side_r', -4.4, 24.2, -0.6, 6.0, 4.4, 18, 62, 10, (0.0, 1.0), 0.0),    # relevées, pas horizontales
-        ('k_side_l', 4.4, 23.8, 0.6, 5.4, 4.2, 26, -64, -12, (0.0, 1.0), -0.04),
+        ('k_top', 0.4, 25.8, -0.8, 9.8, 5.8, -6, -12, 14, 0.55, 16, 0.06),
+        ('k_top_r', -2.6, 25.6, 0.5, 8.8, 5.6, 12, 30, -18, 0.38, 18, 0.02),     # large et aplatie
+        ('k_top_l', 2.8, 25.2, 0.0, 7.6, 5.0, 4, -40, 22, 0.7, 14, 0.0),         # plus volumineuse
+        ('k_front', -0.8, 25.6, -2.9, 6.4, 4.8, -32, 20, -10, 0.5, 12, 0.08),
+        ('k_back', 0.6, 24.8, 2.8, 9.0, 5.8, 50, -8, 6, 0.45, 18, -0.04),
+        ('k_back_r', -3.0, 23.2, 3.3, 7.2, 5.2, 74, 34, 20, 0.36, 14, -0.08),
+        ('k_side_r', -4.3, 24.0, -0.4, 6.2, 4.8, 20, 60, 10, 0.4, 20, 0.0),      # relevées, pas horizontales
+        ('k_side_l', 4.3, 23.6, 0.8, 5.6, 4.6, 28, -62, -12, 0.55, 18, -0.04),
     ]
-    for name, x, y, z, L, W, rx, rz, ry, bend, lit in dominant:
-        spire(m, name, [x, y, z], L, W, rx, rz, mk(lit), ry=ry, depth=W * 0.5, bend=bend)
-    secondary = [
-        ('k_mid_1', 1.8, 25.6, -2.4, 4.4, 3.2, -20, -26, 10, (0.3, 0), 0.06),
-        ('k_mid_2', -3.6, 25.0, -1.6, 4.0, 3.0, -10, 48, -8, (-0.3, 0.3), 0.04),
-        ('k_cheek_r', -4.9, 22.4, -3.0, 3.2, 2.8, -6, 150, 0, (0.3, 0), 0.04),    # encadrent le visage
-        ('k_cheek_l', 4.9, 22.2, -2.8, 2.8, 2.6, -6, -148, 0, (-0.3, 0), 0.0),
-        ('k_nape', 0.4, 19.6, 4.0, 3.6, 4.4, 122, -6, 0, (0, 0.4), -0.1),
-        ('k_nape_l', 2.8, 20.4, 3.8, 3.0, 3.4, 108, -34, 0, (0, 0.3), -0.1),
-        # mèches couchées sur l'arrière et les côtés : cassent les arêtes de la masse (pas d'effet casque)
-        ('k_lay_r', -5.0, 24.6, 1.6, 3.8, 3.6, 40, 140, 0, (0, 0), 0.0),
-        ('k_lay_l', 5.0, 24.4, -0.6, 3.6, 3.4, 20, -142, 0, (0, 0), -0.02),
+    intermediate = [                                                    # assurent la transition grandes / petites
+        ('k_i1', 1.9, 25.6, -2.0, 5.4, 3.8, -18, -26, 10, 0.5, 12, 0.06),
+        ('k_i2', -3.3, 25.0, -1.4, 5.0, 3.6, -8, 46, -8, 0.45, 12, 0.04),
+        ('k_i3', 3.2, 23.0, 3.0, 5.6, 4.2, 70, -42, -18, 0.4, 14, -0.08),
+        ('k_i4', -1.4, 25.4, 1.8, 5.8, 4.0, 28, 14, 30, 0.6, 14, 0.0),
+        ('k_i5', 4.4, 24.8, -1.6, 4.6, 3.6, -14, -52, 0, 0.5, 12, 0.02),
     ]
-    for name, x, y, z, L, W, rx, rz, ry, bend, lit in secondary:
-        spire(m, name, [x, y, z], L, W, rx, rz, mk(lit), ry=ry, depth=W * 0.45, bend=bend)
-    # frange : mèches indépendantes, pointes irrégulières ; la plus longue passe entre les yeux
-    for name, x, L, W, rz, bx in (('kb_1', -3.4, 2.5, 2.7, -24, 0.3), ('kb_2', -1.5, 1.9, 2.3, -8, -0.2),
-                                  ('kb_3', 0.3, 3.6, 2.5, 4, 0.3), ('kb_4', 2.2, 2.1, 2.3, 15, -0.2),
-                                  ('kb_5', 3.9, 2.7, 2.3, 30, 0.2)):
-        spire(m, name, [x, 25.7, -4.85], L, W, 172, rz, mk(0.1), depth=1.2, bend=(bx, 0), step=0.45, min_w=0.3)
+    small = [
+        ('k_s1', -4.9, 22.4, -3.0, 3.2, 2.8, -6, 150, 0, 0.5, 8, 0.04),        # encadrent le visage
+        ('k_s2', 4.9, 22.2, -2.8, 2.8, 2.6, -6, -148, 0, 0.5, 8, 0.0),
+        # arrière en couches : mèches larges et plates qui retombent depuis le sommet jusqu'à la nuque
+        ('k_bl1', -2.0, 25.6, 4.2, 6.6, 5.4, 160, 12, 0, 0.3, 10, -0.06),
+        ('k_bl2', 2.2, 25.2, 4.3, 6.0, 5.0, 164, -16, 0, 0.3, 10, -0.08),
+        ('k_bl3', 0.2, 22.6, 4.7, 4.6, 5.2, 156, 2, 0, 0.32, 8, -0.1),
+        ('k_s5', -5.0, 24.4, 1.6, 3.4, 3.4, 40, 128, 0, 0.4, 10, 0.0),         # couchées sur les côtés
+    ]
+    arched(m, dominant, mk, segs=2)
+    arched(m, intermediate, mk, segs=2)
+    arched(m, small, mk, segs=2)
+    # frange : mèches individuelles qui retombent en se courbant, longueurs variées, qui se chevauchent
+    # (profondeurs décalées) ; sourcils dégagés, la plus longue passe entre les yeux
+    for name, x, z, L, W, rz, arc in (('kb_1', -3.4, -4.85, 2.7, 2.8, -22, 10), ('kb_2', -1.6, -5.0, 2.1, 2.5, -10, 8),
+                                       ('kb_3', 0.2, -4.9, 3.7, 2.7, 6, 12), ('kb_4', 2.0, -5.05, 2.3, 2.5, 18, 8),
+                                       ('kb_5', 3.8, -4.85, 2.9, 2.4, 32, 10)):
+        lock(m, name, [x, 25.8, z], L, W, 168, rz, mk(0.1), flat=0.45, curve=(-arc, arc * (1 if rz > 0 else -1) * 0.5),
+             segs=2, root=1.1)
 
 
 # ---------------------------------------------------------------------------------------------------------------
