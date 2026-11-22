@@ -242,42 +242,43 @@ def spire(m, name, base, length, width, rx, rz, paint_for, ry=0, depth=None, ben
 # ---------------------------------------------------------------------------------------------------------------
 # Itération 5 — mèches organiques (`lock`)
 
-def _trap_fin(m, bone, x, y0, z, h, wb, wt, th, paint_for, t0, t1):
-    """Ailette en trapèze (largeur wb en bas, wt en haut, wt = 0 → pointe) d'épaisseur th. Flancs droits : deux
-    plaques inclinées dont l'arête extérieure suit exactement le côté du trapèze ; noyaux en retrait derrière."""
+def _trap_fin(m, bone, x, y0, z, h, wb, wt, th, paint_for, t0, t1, off=0.0, pointed=False):
+    """Ailette en trapèze, éventuellement déjeté : largeur wb en bas (centrée sur x), wt en haut (centrée sur
+    x + off) ; épaisseur th. Flancs droits : deux plaques inclinées dont l'arête extérieure suit exactement chaque
+    côté (angles différents à gauche et à droite si off ≠ 0) ; noyaux en retrait derrière."""
     import math
-    dx = (wb - wt) / 2
-    theta = math.degrees(math.atan2(dx, h))
-    ls = math.hypot(dx, h)
-    tp = max(0.32, min(0.12 * wb + 0.08, 0.9)) if wt > 0 else max(0.24, min(0.08 * wb + 0.06, 0.4))
+    tp = max(0.24, min(0.08 * wb + 0.06, 0.4)) if pointed else max(0.32, min(0.12 * wb + 0.08, 0.9))
     y1 = y0 + h
     side = paint_for((t0 + t1) / 2)
     for sx in (1, -1):
-        px = x + sx * wt / 2
-        ox = px - tp if sx > 0 else px
-        m.cube(bone, [ox, y1 - ls, z - th / 2], [tp, ls, th], side, pivot=[px, y1, z], rotation=[0, 0, sx * theta])
-    n = max(1, math.ceil(dx / (tp * 0.85)))
+        top_x = x + off + sx * wt / 2
+        dx = (x + sx * wb / 2) - top_x            # décalage horizontal bas - haut de ce flanc
+        theta = math.degrees(math.atan2(dx, h))
+        ls = math.hypot(dx, h)
+        ox = top_x - tp if sx > 0 else top_x
+        m.cube(bone, [ox, y1 - ls, z - th / 2], [tp, ls, th], side, pivot=[top_x, y1, z], rotation=[0, 0, theta])
+    n = max(1, math.ceil(max(abs(wb / 2 - off - wt / 2), abs(wb / 2 + off - wt / 2)) / (tp * 0.85)))
     for k in range(1, n + 1):
         f = k / (n + 1)
         w = wb - (wb - wt) * f
         if w < 0.25:
             break
-        hh = h * f
+        cx = x + off * f
         dc = th * 0.92
-        m.cube(bone, [x - w / 2, y0 - 0.2, z - dc / 2], [w, hh + 0.2, dc], paint_for(t0 + (t1 - t0) * f))
+        m.cube(bone, [cx - w / 2, y0 - 0.2, z - dc / 2], [w, h * f + 0.2, dc], paint_for(t0 + (t1 - t0) * f))
 
 
 def lock(m, name, base, length, width, rx, rz, paint_for, ry=0, flat=0.5, curve=(0.0, 0.0), segs=3, root=1.25,
-         parent='hair'):
+         parent='hair', tip=0.0, skew=0.0, belly=1.15):
     """Mèche organique : plusieurs tronçons enchaînés (un os chacun) dont la direction change un peu à chaque
-    jonction (`curve` = virage total en degrés : x vers l'avant/arrière, z vers les côtés), comme une mèche qui se
-    courbe. Le premier tronçon (« racine ») est plus large (`root`) et court : la mèche sort en s'évasant de la
-    masse au lieu d'y être plantée. Chaque tronçon = deux ailettes en trapèze croisées : vue de face la largeur,
-    de profil `flat` × la largeur (mèche aplatie si petit, volumineuse si proche de 1). Le dernier tronçon finit
-    en pointe."""
+    jonction (`curve` = virage total en degrés : x vers l'avant/arrière, z vers les côtés). Le premier tronçon
+    (« racine ») est plus large (`root`) : la mèche sort en s'évasant de la masse. Chaque tronçon = deux ailettes
+    en trapèze croisées : vue de face la largeur, de profil `flat` × la largeur. `belly` épaissit le corps de la
+    mèche (plus épais au milieu qu'à la racine). `skew` déjette la mèche dans son plan (fraction de la largeur :
+    forme non symétrique). `tip` = largeur de l'extrémité (fraction de la largeur ; 0 = très pointue)."""
     fr = {2: (0.4, 0.6), 3: (0.3, 0.3, 0.4), 4: (0.24, 0.26, 0.24, 0.26)}[segs]
     widths = [width * root] + [width * (1 - sum(fr[:k + 1])) ** 0.75 for k in range(segs)]
-    widths[-1] = 0.0
+    widths[-1] = width * tip
     widths[1] = min(widths[1], width * 0.98)
     m.bone(f'{name}_0', base, parent, rotation=[rx, ry, rz])
     x, y, z = base
@@ -286,24 +287,36 @@ def lock(m, name, base, length, width, rx, rz, paint_for, ry=0, flat=0.5, curve=
         bone = f'{name}_{k}'
         if k > 0:
             m.bone(bone, [x, yc, z], f'{name}_{k - 1}', rotation=[curve[0] / (segs - 1), 0, -curve[1] / (segs - 1)])
+        last = k == segs - 1
         h = length * fr[k]
         wb, wt = widths[k] * (1.06 if k > 0 else 1.0), widths[k + 1]
+        off = skew * width * fr[k] * (1.6 if last else 1.0)
         t1 = t0 + fr[k]
         y0 = yc - (0.35 if k > 0 else 0.0)
         hh = h + (0.35 if k > 0 else 0.0)
-        th_a = max(0.45, (wt if wt > 0 else wb * 0.45) * flat * 0.95)
-        th_b = max(0.4, (wt if wt > 0 else wb * 0.4) * 0.9)
+        bel = belly if (0 < k or segs == 2) and not last else (1.0 if k == 0 else belly)
+        ref = wt if not last else wb * 0.5
+        th_a = max(0.45, ref * flat * 0.95 * bel)
+        th_b = max(0.4, ref * 0.9 * min(1.0, bel))
         b2 = bone + 'b'
-        m.bone(b2, [x, yc, z], bone, rotation=[0, 90, 0])
-        # le dernier tronçon s'affine aussi en épaisseur (sinon l'ailette croisée laisse un bout plat)
-        bands = ((0.0, 1.0, 1.0),) if wt > 0 else ((0.0, 0.45, 1.0), (0.45, 0.75, 0.58), (0.75, 1.0, 0.3))
+        import math
+        lean = -math.degrees(math.atan2(off, hh)) if off else 0.0   # l'ailette croisée suit le déjettement
+        m.bone(b2, [x, yc, z], bone, rotation=[0, 90, lean])
+        bands = ((0.0, 1.0, 1.0),) if not last else ((0.0, 0.45, 1.0), (0.45, 0.75, 0.62), (0.75, 1.0, 0.36))
         for f0, f1, kt in bands:
             w0, w1 = wb + (wt - wb) * f0, wb + (wt - wb) * f1
             ya, hb = y0 + hh * f0, hh * (f1 - f0) + (0.15 if f0 > 0 else 0.0)
             ya -= 0.15 if f0 > 0 else 0.0
+            xa = x + off * f0
             ta, tb = t0 + (t1 - t0) * f0, t0 + (t1 - t0) * f1
-            _trap_fin(m, bone, x, ya, z, hb, w0, w1, max(0.22, th_a * kt), paint_for, ta, tb)
-            _trap_fin(m, b2, x, ya, z, hb, w0 * flat, w1 * flat, max(0.2, th_b * kt), paint_for, ta, tb)
+            pointed = last and f1 >= 1.0 and tip < 0.08
+            _trap_fin(m, bone, xa, ya, z, hb, w0, w1, max(0.22, th_a * kt), paint_for, ta, tb,
+                      off=off * (f1 - f0), pointed=pointed)
+            _trap_fin(m, b2, x, ya, z, hb, w0 * flat, w1 * flat, max(0.2, th_b * kt), paint_for, ta, tb,
+                      pointed=pointed)
+        x_next = x + off
+        # le tronçon suivant part du sommet déjeté de celui-ci
+        x = x_next
         yc += h
         t0 = t1
 
@@ -324,9 +337,11 @@ def arched(m, spec, paint, parent='hair', segs=3):
     redresse d'`arc` degrés : elle sort de la masse en douceur et se courbe vers le haut."""
     def sgn(v):
         return (v > 0) - (v < 0)
-    for name, x, y, z, L, W, rx, rz, ry, flat, arc, lit in spec:
+    for entry in spec:
+        name, x, y, z, L, W, rx, rz, ry, flat, arc, lit = entry[:12]
+        extra = entry[12] if len(entry) > 12 else {}
         fx = min(1.0, abs(rx) / 25.0) if abs(rx) < 100 else 0.6
         fz = min(1.0, abs(rz) / 25.0) if abs(rz) < 100 else 0.6
         ax, az = arc * fx * sgn(rx), arc * fz * sgn(rz)
         lock(m, name, [x, y, z], L, W, rx + ax * 0.5, rz + az * 0.5, paint(lit), ry=ry, flat=flat,
-             curve=(-ax, az), segs=segs, parent=parent)
+             curve=(-ax, az), segs=segs, parent=parent, **extra)
