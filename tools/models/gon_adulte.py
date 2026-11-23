@@ -132,65 +132,69 @@ def build_hair(m):
     # (un peu plus claires, qui débordent du contour). Mèches longitudinales de section presque constante
     # (taper_pow faible), légèrement courbées et déjetées, longueurs variées ; quelques-unes s'étirent bien plus
     # haut que les autres.
-    # 3e passe : étirement extrême (hauteur +30 %, largeur inchangée). Masse centrale très dense en trois étages
-    # qui s'affinent (cachée derrière les mèches), puis de longues mèches qui partent de zones différentes du
-    # crâne (front, tempes, sommet, arrière) et s'arrêtent à des hauteurs différentes ; chacune est faite de 5
-    # tronçons légèrement décalés (déjettement progressif) et se sépare peu à peu de la masse en montant.
-    m.cube('hair', [-3.2, top - 1.2, -2.4], [6.4, 36.0, 5.0], hair_paint(-0.16))
-    m.cube('hair', [-2.4, top + 34.0, -1.8], [4.8, 7.0, 3.6], hair_paint(-0.16))
-    col = dict(taper_pow=0.3, root=1.3, belly=1.05)
-    # (nom, x, y, z, longueur, largeur, rx, rz, ry, aplatissement, courbure, éclairage, options)
-    main = [   # mèches principales : parcourent presque toute la hauteur (premier plan)
-        ('c_f1', -2.2, top - 1.0, -3.3, 58.0, 3.4, -4, 4, 6, 0.75, 7, 0.26, dict(col, skew=0.08, tip=0.05)),
-        ('c_f2', 1.0, top - 0.6, -3.5, 63.0, 3.6, -3, -2, -8, 0.7, 6, 0.32, dict(col, skew=-0.06, tip=0.04)),
-        ('c_f3', 3.6, top - 1.6, -2.6, 50.0, 3.0, -5, -4, 10, 0.75, 8, 0.22, dict(col, skew=-0.04, tip=0.08)),
-        ('c_s1', -4.6, top - 3.4, -0.6, 55.0, 3.0, 2, 4, 4, 0.9, 9, 0.2, dict(col, skew=0.03, tip=0.06)),
-        ('c_s2', 4.6, top - 3.6, 0.6, 60.0, 3.0, 2, -4, -6, 0.9, 9, 0.12, dict(col, skew=-0.03, tip=0.05)),
-        ('c_b1', -1.6, top - 2.2, 3.6, 61.0, 3.6, 7, 3, 0, 0.7, 7, 0.06, dict(col, skew=0.06, tip=0.04)),
-        ('c_b2', 2.0, top - 2.6, 3.4, 53.0, 3.2, 8, -4, 8, 0.7, 8, 0.0, dict(col, skew=-0.08, tip=0.08)),
+    # Dernière passe : des cheveux qui « coulent » vers le ciel, comme une flamme noire. Base large (couronne de
+    # mèches qui partent du crâne en s'évasant puis se redressent et rentrent vers l'axe), corps qui s'affine en
+    # montant, cœur de mèches très hautes. Chaque mèche : base plus épaisse, pointe effilée, courbure continue
+    # (inclinaison vers l'extérieur à la racine, puis virage vers l'axe sur toute sa longueur). Trois plans :
+    # arrière (sombre), centre, avant (reflets vert très foncé). Rien de rayonnant : toutes montent.
+    import math
+    import random
+    rnd = random.Random(23)
+    m.cube('hair', [-3.0, top - 1.2, -2.3], [6.0, 22.0, 4.6], hair_paint(-0.16))      # cœur dense (caché)
+    m.cube('hair', [-2.2, top + 20.0, -1.6], [4.4, 10.0, 3.2], hair_paint(-0.16))
+
+    def flow(name, x, z, y0, L, W, lean, bend, lit, segs, flat=0.8, twist=0.0, tip=0.05):
+        """Mèche ascendante : penche de `lean` degrés vers l'extérieur à la racine (direction du point (x, z)),
+        puis tourne de `bend` degrés vers l'axe le long de la mèche (bend > lean : elle finit par rentrer)."""
+        r = math.hypot(x, z) or 1.0
+        ux, uz = x / r, z / r
+        rz, rx = -lean * ux, lean * uz
+        curve = (-bend * uz, -bend * ux)
+        lock(m, name, [x, y0, z], L, W, rx + rnd.uniform(-1.5, 1.5), rz + rnd.uniform(-1.5, 1.5), mk(lit),
+             ry=twist, flat=flat, curve=curve, segs=segs, root=1.35, tip=tip, taper_pow=0.55,
+             skew=rnd.uniform(-0.05, 0.05), belly=1.08)
+
+    # (x, z, longueur, largeur, inclinaison racine, virage, éclairage)
+    core = [   # cœur : les plus hautes, presque verticales
+        (-0.6, -0.8, 72, 3.2, 2, 3, 0.2), (1.0, 0.4, 66, 3.0, 3, 4, 0.14), (-1.2, 1.2, 62, 3.0, 3, 4, 0.06),
+        (0.6, -1.8, 68, 2.8, 3, 4, 0.26), (1.8, 1.8, 58, 2.8, 4, 6, 0.04), (-2.0, -0.2, 64, 2.8, 4, 6, 0.16),
     ]
-    secondary = [   # en retrait, plus sombres ; commencent plus bas ou s'arrêtent avant le sommet
-        ('c_r1', -0.6, top - 0.4, -2.0, 50.0, 3.0, -1, 3, 14, 0.8, 5, 0.06, dict(col, tip=0.1)),
-        ('c_r2', -3.4, top - 2.6, 1.8, 46.0, 3.2, 4, 7, -10, 0.8, 6, -0.02, dict(col, tip=0.12, skew=0.04)),
-        ('c_r3', 3.4, top - 2.8, -0.8, 48.0, 3.0, 0, -6, 12, 0.8, 6, 0.04, dict(col, tip=0.1, skew=-0.04)),
-        ('c_r4', 0.4, top - 1.8, 2.0, 52.0, 3.2, 3, 1, -12, 0.8, 5, -0.06, dict(col, tip=0.08)),
-        ('c_r5', 3.8, top - 3.6, 2.6, 41.0, 2.8, 6, -5, 6, 0.8, 7, -0.04, dict(col, tip=0.12)),
-        ('c_r6', -3.8, top - 3.0, -2.4, 43.0, 2.8, -3, 5, -6, 0.8, 7, 0.1, dict(col, tip=0.12)),
+    middle = [   # anneau intermédiaire : s'inclinent un peu vers l'extérieur puis rentrent vers l'axe
+        (-3.2, -2.4, 54, 2.8, 7, 12, 0.24), (-0.8, -3.4, 60, 3.0, 6, 10, 0.3), (1.8, -3.2, 52, 2.8, 7, 12, 0.28),
+        (3.4, -1.6, 48, 2.6, 8, 14, 0.18), (3.6, 1.2, 56, 2.8, 7, 12, 0.08), (2.4, 3.2, 50, 2.8, 8, 13, 0.0),
+        (-0.2, 3.6, 58, 3.0, 6, 10, -0.04), (-2.6, 3.0, 46, 2.6, 8, 14, -0.02), (-3.8, 0.8, 52, 2.8, 7, 12, 0.1),
+        (-3.6, -1.0, 44, 2.6, 9, 15, 0.2),
     ]
-    stretched = [   # mèches qui se séparent de la masse en montant et s'étirent plus loin que les autres
-        ('c_x1', -0.8, top + 10.0, -0.6, 58.0, 2.4, -2, 4, 0, 0.9, 6, 0.18, dict(col, tip=0.03, root=1.0, skew=0.05)),
-        ('c_x2', 2.4, top + 8.0, 0.8, 50.0, 2.2, 3, -5, 0, 0.9, 8, 0.1, dict(col, tip=0.03, root=1.0, skew=-0.05)),
-        ('c_x3', -3.2, top + 6.0, 1.4, 46.0, 2.2, 2, 6, 0, 0.9, 8, 0.12, dict(col, tip=0.04, root=1.0, skew=0.05)),
-        ('c_x4', 1.2, top + 14.0, 2.4, 48.0, 2.0, 5, -3, 0, 0.9, 6, 0.04, dict(col, tip=0.03, root=1.0, skew=0.1)),
+    outer = [   # couronne de base : partent du pourtour du crâne en s'évasant (volume), puis se redressent
+        (-4.4, -2.8, 34, 2.6, 16, 26, 0.22), (-1.8, -4.0, 30, 2.4, 14, 24, 0.28), (2.6, -3.8, 36, 2.6, 15, 25, 0.24),
+        (4.5, -2.2, 30, 2.4, 17, 28, 0.14), (4.6, 0.8, 40, 2.6, 15, 25, 0.06), (4.0, 3.2, 32, 2.4, 16, 27, -0.02),
+        (1.2, 4.2, 38, 2.6, 14, 23, -0.06), (-1.8, 4.2, 34, 2.6, 15, 25, -0.04), (-4.0, 2.8, 42, 2.6, 15, 25, 0.0),
+        (-4.7, 0.2, 36, 2.4, 17, 28, 0.12),
     ]
-    sides = [   # irrégularités des contours : mèches qui débordent un peu des côtés, longueurs différentes
-        ('c_e1', -5.2, top - 4.2, 1.6, 34.0, 2.4, 3, 12, 0, 0.9, 10, 0.08, dict(col, tip=0.06, skew=0.06)),
-        ('c_e2', 5.2, top - 4.0, -1.6, 28.0, 2.4, -2, -13, 0, 0.9, 10, 0.12, dict(col, tip=0.06, skew=-0.12)),
-        ('c_e3', 5.0, top + 18.0, 2.0, 30.0, 2.2, 4, -10, 0, 0.9, 8, 0.0, dict(col, tip=0.05, root=1.0)),
-        ('c_e4', -4.8, top + 24.0, -1.0, 26.0, 2.2, -2, 10, 0, 0.9, 8, 0.16, dict(col, tip=0.05, root=1.0)),
+    fillers = [   # mèches secondaires plus courtes entre les grandes
+        (-2.4, -1.6, 22, 2.2, 6, 9, 0.18), (2.6, -0.4, 18, 2.0, 7, 10, 0.12), (0.4, 2.4, 24, 2.2, 5, 8, 0.02),
+        (-1.0, -2.8, 16, 2.0, 8, 12, 0.3), (3.0, 2.4, 20, 2.0, 8, 12, 0.04), (-3.0, 1.8, 18, 2.0, 8, 12, 0.06),
+        (1.4, -2.6, 26, 2.2, 6, 9, 0.24), (-0.6, 3.4, 15, 2.0, 9, 13, -0.04),
     ]
-    streaks = [   # fines mèches de surface : séparations, et sensation de cheveux qui s'allongent
-        ('c_l1', -0.6, top + 4.0, -3.9, 40.0, 1.6, -3, 2, 0, 0.8, 4, 0.36, dict(col, tip=0.05, root=1.0)),
-        ('c_l2', 2.6, top + 12.0, -3.4, 34.0, 1.5, -4, -4, 0, 0.8, 4, 0.3, dict(col, tip=0.05, root=1.0)),
-        ('c_l3', -2.9, top + 18.0, -3.2, 30.0, 1.5, -3, 5, 0, 0.8, 4, 0.3, dict(col, tip=0.05, root=1.0)),
-        ('c_l4', 0.4, top + 8.0, 4.2, 38.0, 1.6, 4, 2, 0, 0.8, 4, 0.12, dict(col, tip=0.05, root=1.0)),
+    wisps = [   # quelques mèches fines qui s'étirent nettement plus haut que les autres
+        (0.2, 0.2, 80, 1.8, 1, 2, 0.18), (-1.6, 0.8, 75, 1.6, 2, 3, 0.1), (1.6, -0.8, 77, 1.6, 2, 3, 0.22),
     ]
-    arched(m, secondary, mk, segs=5)
-    arched(m, main, mk, segs=5)
-    arched(m, stretched, mk, segs=4)
-    arched(m, sides, mk, segs=4)
-    arched(m, streaks, mk, segs=3)
-    # base : mèches courtes et évasées qui épousent le crâne puis partent vers le haut (volume à la base)
-    base_locks = [
-        ('b_l', -4.4, top - 3.6, -2.4, 7.0, 4.2, -2, 22, 0, 0.6, 18, 0.16, dict(tip=0.25, root=1.3)),
-        ('b_r', 4.4, top - 3.6, -2.2, 6.6, 4.0, -2, -22, 0, 0.6, 18, 0.06, dict(tip=0.25, root=1.3)),
-        ('b_bl', -3.4, top - 4.6, 3.6, 7.4, 4.4, 16, 16, 0, 0.6, 16, 0.0, dict(tip=0.25, root=1.3)),
-        ('b_br', 3.4, top - 4.6, 3.6, 7.0, 4.4, 16, -16, 0, 0.6, 16, -0.04, dict(tip=0.25, root=1.3)),
-        ('b_n', 0.0, top - 5.8, 4.0, 6.0, 5.0, 22, 0, 0, 0.6, 14, -0.06, dict(tip=0.3, root=1.3)),
-        ('b_fl', -2.0, top - 1.4, -3.9, 5.0, 3.6, -14, 12, 0, 0.6, 14, 0.2, dict(tip=0.3, root=1.2)),
-        ('b_fr', 2.6, top - 1.6, -3.8, 4.6, 3.4, -14, -12, 0, 0.6, 14, 0.14, dict(tip=0.3, root=1.2)),
-    ]
-    arched(m, base_locks, mk, segs=2)
+    for i, (x, z, L, W, lean, bend, lit) in enumerate(outer):
+        front = z < -2.5          # au-dessus du front : plus haut et moins penchées (le visage reste dégagé)
+        if front:
+            z, lean, bend = max(z, -3.3), lean * 0.5, bend * 0.6
+        flow(f'fo_{i}', x, z, (top - 1.0) if front else (top - 2.6 - rnd.uniform(0, 1.4)), L, W, lean,
+             bend - 6, lit, 3, flat=0.75,
+             twist=rnd.uniform(-12, 12), tip=0.06)
+    for i, (x, z, L, W, lean, bend, lit) in enumerate(middle):
+        flow(f'fm_{i}', x, z, top - 1.4 - rnd.uniform(0, 1.0), L, W, lean, bend - 4, lit, 4,
+             twist=rnd.uniform(-10, 10))
+    for i, (x, z, L, W, lean, bend, lit) in enumerate(core):
+        flow(f'fc_{i}', x, z, top - 0.6, L, W, lean, bend, lit, 4, twist=rnd.uniform(-8, 8), tip=0.04)
+    for i, (x, z, L, W, lean, bend, lit) in enumerate(fillers):
+        flow(f'ff_{i}', x, z, top - 0.8, L, W, lean, bend, lit, 2, twist=rnd.uniform(-15, 15), tip=0.08)
+    for i, (x, z, L, W, lean, bend, lit) in enumerate(wisps):
+        flow(f'fw_{i}', x, z, top - 0.4, L, W, lean, bend, lit, 4, flat=0.9, tip=0.03)
     for name, x, z, L, W, rz, arc, sk, rxb, lt in (('ab_1', -2.6, -4.2, 2.8, 3.2, -22, 10, 0.12, 166, 0.14),
                                                     ('ab_2', -0.4, -4.45, 3.6, 3.4, -6, 12, -0.06, 170, 0.24),
                                                     ('ab_3', 1.8, -4.25, 2.2, 3.0, 14, 8, 0.1, 176, 0.1),
