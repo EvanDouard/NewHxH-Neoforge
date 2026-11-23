@@ -25,6 +25,8 @@ public final class HxHMod {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public HxHMod(IEventBus modEventBus, ModContainer modContainer) {
+        com.evandouard.hxh.registry.ModWorldgen.DENSITY_FUNCTIONS.register(modEventBus);
+        com.evandouard.hxh.registry.ModWorldgen.BIOME_SOURCES.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         com.evandouard.hxh.registry.ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);

@@ -1,0 +1,142 @@
+package com.evandouard.hxh.world;
+
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
+import net.minecraft.world.level.levelgen.synth.PerlinNoise;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * La carte du monde de Hunter x Hunter, en grille : 1 case = 32 blocs, origine (0, 0) en haut à gauche, x vers l'est, z vers le sud.
+ * Lue depuis {@code data/hxh/world/cells.txt} (modifiable à la main) : {@code ~} mer, {@code .} terre, et une lettre par région.
+ * Le relief s'en déduit : plus on s'éloigne de la côte, plus le terrain monte (terre) ou descend (mer), avec du bruit par-dessus.
+ * Tout ce qui est hors de la carte est de l'océan profond.
+ */
+public final class HxHWorldMap {
+    public static final int CELL = 32;
+    public static final int SEA_LEVEL = 63;
+
+    private static volatile HxHWorldMap instance;
+
+    private final int width, height;
+    private final char[][] cells;
+    private final float[][] target;
+    private final PerlinNoise hills = PerlinNoise.create(new XoroshiroRandomSource(1337L), -5, 1.0, 1.0, 0.5, 0.5);
+
+    public static HxHWorldMap get() {
+        HxHWorldMap m = instance;
+        if (m == null) {
+            synchronized (HxHWorldMap.class) {
+                if (instance == null) instance = load();
+                m = instance;
+            }
+        }
+        return m;
+    }
+
+    private static HxHWorldMap load() {
+        List<String> rows = new ArrayList<>();
+        try (InputStream in = HxHWorldMap.class.getResourceAsStream("/data/hxh/world/cells.txt")) {
+            if (in == null) throw new IllegalStateException("data/hxh/world/cells.txt introuvable");
+            BufferedReader r = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            for (String line; (line = r.readLine()) != null; ) if (!line.isBlank()) rows.add(line.strip());
+        } catch (java.io.IOException e) {
+            throw new IllegalStateException(e);
+        }
+        return new HxHWorldMap(rows);
+    }
+
+    private HxHWorldMap(List<String> rows) {
+        height = rows.size();
+        width = rows.stream().mapToInt(String::length).max().orElse(0);
+        cells = new char[height][width];
+        for (int z = 0; z < height; z++)
+            for (int x = 0; x < width; x++) cells[z][x] = x < rows.get(z).length() ? rows.get(z).charAt(x) : '~';
+        target = new float[height][width];
+        int[][] toWater = distances(true), toLand = distances(false);
+        for (int z = 0; z < height; z++)
+            for (int x = 0; x < width; x++) {
+                target[z][x] = isLand(cells[z][x])
+                        ? 64f + Math.min(toWater[z][x], 12) * 2.0f
+                        : 62f - Math.min(toLand[z][x], 8) * 4.5f;
+            }
+    }
+
+    /** Distance (en cases, 8 voisins) jusqu'à la mer (pour la terre) ou jusqu'à la terre (pour la mer) ; le bord de la carte compte comme mer. */
+    private int[][] distances(boolean forLand) {
+        int[][] d = new int[height][width];
+        java.util.ArrayDeque<int[]> queue = new java.util.ArrayDeque<>();
+        for (int z = 0; z < height; z++)
+            for (int x = 0; x < width; x++) {
+                boolean source = forLand ? !isLand(cells[z][x]) : isLand(cells[z][x]);
+                d[z][x] = source ? 0 : Integer.MAX_VALUE;
+                if (source) queue.add(new int[]{x, z});
+                else if (forLand && (x == 0 || z == 0 || x == width - 1 || z == height - 1)) d[z][x] = 1;
+            }
+        if (forLand) for (int z = 0; z < height; z++) for (int x = 0; x < width; x++) if (d[z][x] == 1) queue.add(new int[]{x, z});
+        while (!queue.isEmpty()) {
+            int[] c = queue.poll();
+            for (int dz = -1; dz <= 1; dz++)
+                for (int dx = -1; dx <= 1; dx++) {
+                    int nx = c[0] + dx, nz = c[1] + dz;
+                    if (nx < 0 || nz < 0 || nx >= width || nz >= height) continue;
+                    if (d[nz][nx] > d[c[1]][c[0]] + 1) {
+                        d[nz][nx] = d[c[1]][c[0]] + 1;
+                        queue.add(new int[]{nx, nz});
+                    }
+                }
+        }
+        return d;
+    }
+
+    public static boolean isLand(char c) {
+        return c != '~';
+    }
+
+    public int widthBlocks() {
+        return width * CELL;
+    }
+
+    public int heightBlocks() {
+        return height * CELL;
+    }
+
+    /** Lettre de la case qui contient ce bloc ({@code ~} hors de la carte). */
+    public char cellAt(int blockX, int blockZ) {
+        int cx = Math.floorDiv(blockX, CELL), cz = Math.floorDiv(blockZ, CELL);
+        if (cx < 0 || cz < 0 || cx >= width || cz >= height) return '~';
+        return cells[cz][cx];
+    }
+
+    private float targetAt(int cx, int cz) {
+        if (cx < 0 || cz < 0 || cx >= width || cz >= height) return 20f;
+        return target[cz][cx];
+    }
+
+    /** Hauteur du sol (ou du fond marin) en un point : interpolation entre les cases, plus du relief sur la terre. */
+    public double height(double x, double z) {
+        double fx = x / CELL - 0.5, fz = z / CELL - 0.5;
+        int ix = Mth.floor(fx), iz = Mth.floor(fz);
+        double tx = smooth(fx - ix), tz = smooth(fz - iz);
+        double base = Mth.lerp(tz, Mth.lerp(tx, targetAt(ix, iz), targetAt(ix + 1, iz)), Mth.lerp(tx, targetAt(ix, iz + 1), targetAt(ix + 1, iz + 1)));
+        double n = hills.getValue(x, 0, z);
+        if (base > SEA_LEVEL) {
+            double inland = Mth.clamp((base - SEA_LEVEL - 1.5) / 4.0, 0, 1);
+            base += n * inland * (2.0 + (base - SEA_LEVEL) * 0.9);
+        } else {
+            base += n * 2.5;
+        }
+        return Math.max(base, -20);
+    }
+
+    private static double smooth(double t) {
+        return t * t * (3 - 2 * t);
+    }
+}

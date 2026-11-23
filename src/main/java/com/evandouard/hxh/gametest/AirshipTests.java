@@ -43,6 +43,7 @@ public final class AirshipTests {
         helper.assertTrue(d.jenny() == 7, "Le billet est prélevé, reste " + d.jenny());
         helper.assertTrue(Math.abs(player.getX() - (dest.x() + 0.5)) < 1 && Math.abs(player.getZ() - (dest.z() + 0.5)) < 1,
                 "Arrivée à la destination : " + player.position());
+        helper.assertTrue(player.level().dimension().equals(Airship.WORLD), "Arrivée dans la dimension du monde HxH : " + player.level().dimension().location());
         BlockPos terminal = BlockPos.containing(dest.x() + 2, player.getY(), dest.z());
         helper.assertTrue(player.level().getBlockState(terminal).is(ModBlocks.AIRSHIP_TERMINAL.get()), "Une borne attend à l'arrivée pour repartir");
         helper.assertTrue(player.level().getBlockState(player.blockPosition().below()).isSolid(), "Le joueur arrive sur une plateforme solide");

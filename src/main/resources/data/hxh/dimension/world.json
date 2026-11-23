@@ -1,0 +1,20 @@
+{
+  "type": "hxh:world",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "hxh:world",
+    "biome_source": {
+      "type": "hxh:world_map",
+      "ocean": "minecraft:ocean",
+      "deep_ocean": "minecraft:deep_ocean",
+      "beach": "minecraft:beach",
+      "land": "minecraft:plains",
+      "minbo": "minecraft:taiga",
+      "kukanyu": "minecraft:swamp",
+      "saherta": "minecraft:forest",
+      "kakin": "minecraft:dark_forest",
+      "ochima": "minecraft:jungle",
+      "begerosse": "minecraft:savanna"
+    }
+  }
+}

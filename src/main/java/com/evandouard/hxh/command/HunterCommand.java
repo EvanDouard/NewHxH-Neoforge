@@ -438,7 +438,13 @@ public final class HunterCommand {
                         .executes(ctx -> {
                             com.evandouard.hxh.airship.Airship.open(ctx.getSource().getPlayerOrException());
                             return 1;
-                        }))
+                        })
+                        .then(Commands.argument("destination", StringArgumentType.word()).executes(ctx -> {
+                            String refusal = com.evandouard.hxh.airship.Airship.travel(ctx.getSource().getPlayerOrException(),
+                                    "hxh:" + StringArgumentType.getString(ctx, "destination"), false);
+                            if (refusal != null) ctx.getSource().sendFailure(Component.translatable(refusal));
+                            return refusal == null ? 1 : 0;
+                        })))
                 // Jenny du carnet (tests des boutiques)
                 .then(Commands.literal("jenny").requires(s -> s.hasPermission(2))
                         .then(Commands.literal("add").then(Commands.argument("amount", IntegerArgumentType.integer())

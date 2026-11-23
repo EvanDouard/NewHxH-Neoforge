@@ -27,6 +27,9 @@ public final class Airship {
     /** Distance maximale à une borne pour réserver un billet. */
     public static final int TERMINAL_RANGE = 6;
     private static final int PAD_HALF = 2;
+    /** La dimension du monde de Hunter x Hunter. */
+    public static final net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> WORLD =
+            net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.DIMENSION, com.evandouard.hxh.HxHMod.id("world"));
 
     private Airship() {}
 
@@ -58,7 +61,8 @@ public final class Airship {
         if (needTerminal && !nearTerminal(player)) return "message.hxh.airship.no_terminal";
         var data = QuestManager.data(player);
         if (data.jenny() < dest.price()) return "message.hxh.airship.not_enough";
-        ServerLevel level = player.serverLevel();
+        ServerLevel level = player.server.getLevel(WORLD);
+        if (level == null) level = player.serverLevel();
         BlockPos landing = buildPad(level, dest.x(), dest.z());
         data.addJenny(-dest.price());
         player.teleportTo(level, landing.getX() + 0.5, landing.getY(), landing.getZ() + 0.5, player.getYRot(), 0f);
