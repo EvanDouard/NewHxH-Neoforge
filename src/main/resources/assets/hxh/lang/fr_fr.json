@@ -1691,5 +1691,7 @@
   "technique.hxh.pouf_cocoon": "Cocon de renaissance",
   "technique.hxh.pouf_cocoon.desc": "Enferme la cible à 3 blocs dans un cocon : immobile, protégée et régénérée 8 s (incubation).",
   "technique.hxh.kurapika_steal_chain": "Chaîne voleuse",
-  "technique.hxh.kurapika_steal_chain.desc": "Aspire la moitié de l'aura de la cible (8 blocs) pour te la donner ; elle est affaiblie 5 s."
+  "technique.hxh.kurapika_steal_chain.desc": "Aspire la moitié de l'aura de la cible (8 blocs) pour te la donner ; elle est affaiblie 5 s.",
+  "technique.hxh.mob_warden_quake": "Cœur du séisme",
+  "technique.hxh.mob_warden_quake.desc": "Il frappe le sol : une onde circulaire (7 blocs) projette et ralentit les ennemis."
 }

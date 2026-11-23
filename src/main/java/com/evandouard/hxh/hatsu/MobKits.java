@@ -57,6 +57,8 @@ public final class MobKits {
         kit("mob_piglin", ENHANCER, MobTechniques.PIGLIN_GREED, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE, EntityType.ZOMBIFIED_PIGLIN);
         kit("mob_vex", SPECIALIST, MobTechniques.VEX_BLADE, EntityType.VEX);
         kit("mob_warden", EMITTER, MobTechniques.WARDEN_SONIC, EntityType.WARDEN);
+        // Le Warden a deux Hatsu : Rugissement dévastateur (Émission) et Cœur du séisme (Renforcement)
+        BY_ID.put("mob_warden", new HatsuKit("mob_warden", EMITTER, true, List.of(MobTechniques.WARDEN_SONIC.id(), MobTechniques.WARDEN_QUAKE.id()), List.of(), true));
         kit("mob_wither", SPECIALIST, MobTechniques.WITHER_DECAY, EntityType.WITHER, EntityType.WITHER_SKELETON);
         kit("mob_dragon", SPECIALIST, MobTechniques.DRAGON_BREATH, EntityType.ENDER_DRAGON);
         kit("mob_turtle", ENHANCER, MobTechniques.TURTLE_SHELL, EntityType.TURTLE);

@@ -72,6 +72,7 @@ public final class MobHatsuTests {
         var warden = helper.spawnWithNoFreeWill(EntityType.WARDEN, new BlockPos(3, 1, 1));
         helper.assertTrue("mob_panda".equals(MobKits.idFor(panda)), "Le panda a son Hatsu : " + MobKits.idFor(panda));
         helper.assertTrue("mob_warden".equals(MobKits.idFor(warden)), "Le warden a son Hatsu : " + MobKits.idFor(warden));
+        helper.assertTrue(MobKits.all().stream().filter(kk -> kk.id().equals("mob_warden")).findFirst().orElseThrow().techniques().size() == 2, "Le warden a deux Hatsu");
         helper.assertTrue(MobKits.all().size() >= 31, "Au moins 31 Hatsu de mobs : " + MobKits.all().size());
         Zombie victim = helper.spawnWithNoFreeWill(EntityType.HUSK, new BlockPos(5, 1, 1));
         var squid = helper.spawnWithNoFreeWill(EntityType.SQUID, new BlockPos(6, 1, 1));

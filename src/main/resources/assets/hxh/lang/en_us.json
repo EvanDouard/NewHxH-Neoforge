@@ -1691,5 +1691,7 @@
   "technique.hxh.pouf_cocoon": "Rebirth Cocoon",
   "technique.hxh.pouf_cocoon.desc": "Encases the target within 3 blocks in a cocoon: immobile, protected and regenerating for 8 s (incubation).",
   "technique.hxh.kurapika_steal_chain": "Stealing Chain",
-  "technique.hxh.kurapika_steal_chain.desc": "Drains half of the target's aura (8 blocks) and gives it to you; the target is weakened for 5 s."
+  "technique.hxh.kurapika_steal_chain.desc": "Drains half of the target's aura (8 blocks) and gives it to you; the target is weakened for 5 s.",
+  "technique.hxh.mob_warden_quake": "Heart of the Quake",
+  "technique.hxh.mob_warden_quake.desc": "He pounds the ground: a circular shockwave (7 blocks) throws back and slows enemies."
 }
