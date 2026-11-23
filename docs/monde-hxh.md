@@ -39,20 +39,30 @@ Tailles = propositions (en blocs), à corriger.
 | **Forêt de Kite** | Kakin | forêt dense avec nids, grottes, bêtes sauvages | P2 |
 | **Greed Island** | îles de l'est | île de jeu (voir §4) | P1 |
 
-## 3. Lieux de l'anime et du manga qui ne sont pas sur la carte (à placer)
+## 3. Lieux de l'anime et du manga hors carte : placements provisoires
 
-Placements = à décider ; je propose le pays le plus cohérent.
+Décisions d'Evan (23 nov) : Continent Noir plus tard ; 10 lieux + île de la Baleine pour la première version, c'est bien ; carte redessinée en style Minecraft / style du mod (voir §9) ; les lieux au placement inconnu sont mis à l'endroit le plus plausible en attendant mieux.
+Coordonnées = blocs (x, z) sur la carte 8 000 × 5 650, (0, 0) = coin nord-ouest, déduites de la carte d'Evan.
+Fiabilité : **confirmé** = trouvé sur le net ; **théorie** = placement plausible, pas officiel ; **libre** = aucune info, choix à moi. Mes recherches web n'ont renvoyé presque que des sites peu fiables ; l'accès aux pages Hunterpedia m'a été refusé (permission non accordée), donc beaucoup de placements viennent de mes connaissances de l'œuvre : à vérifier.
 
-- **Île de la Baleine** (maison de Gon, Mito, port, forêt, Grand Père) : petite île isolée à l'est. **[P1]**
-- **Zaban City et le tunnel de l'examen** (1re phase), **marais de Numéré** (Wetlands, Mafia Mount, Hisoka), **Mebun City** (Menchi, Buhara), **Tour des Épreuves** (Trick Tower), **île Zevil** (4e phase) : les phases de l'examen. Le mod en a déjà une partie dans sa dimension d'examen. Ici, versions « en monde ouvert » reliées par dirigeable. **[P2]**
-- **Meteor City** (ville décharge, Brigade Fantôme) : centre de Yorbian, désert/décharge. **[P2]**
-- **Domaine Nostrade, quartier mafieux (Yorknew)** : dans Yorknew. **[P2]**
-- **Siège de l'Association des Hunters** *(à confirmer : emplacement)* : à choisir. **[P2]**
-- **Île de Greed — villes** (Antokiba, Masadora, Soufrabi, Aiai, Reibusa, Limeiro *(à confirmer : liste exacte)*) : voir §4. **[P1]**
-- **Bateau géant de Kakin** et **îles du Continent Noir**, **navire de l'expédition** : liés au Black Whale. **[P3]**
-- **NGL (Neo Green Life)** : pays autonome, forêt, zone sans technologie, laboratoires *(à confirmer : détails)*. **[P3]**
-- **Dirigeables / aéroports** : une plateforme de dirigeable dans chaque zone (système voulu). **[P1]**
-- **Forêts denses avec « choses à l'intérieur »** : voir §5. **[P2]**
+| Lieu | Placement proposé (x, z) | Fiabilité | Remarque |
+|---|---|---|---|
+| Greed Island | ~ (3 370, 4 110) | confirmé | à l'est du continent Yorbian, à l'est de Yorknew (Hunterpedia). Déjà sur ta carte |
+| Yorknew City | ~ (695, 3 915) | confirmé | États-Unis de Saherta, continent Yorbian |
+| Île de la Baleine | ~ (4 400, 4 140) | libre | îlot isolé à l'ouest de Begerosse ; l'œuvre ne la situe pas précisément. Autre choix possible : près de Greed Island |
+| Zaban City (départ de l'examen) | ~ (1 100, 1 100) | théorie | côte ouest de Padokea, près de la montagne Kukuroo |
+| Marécage de Numéré | ~ (800, 1 900) | libre | nord de Kukan'yu, près de la côte |
+| Mebun City | ~ (1 800, 1 400) | libre | sud de Padokea |
+| Tour des Épreuves | ~ (1 000, 2 300) | libre | entre Padokea et Kukan'yu (vol de nuit depuis la 2e épreuve) |
+| Île Zevil | ~ (1 950, 2 100) | libre | îlot à l'ouest de Jappon |
+| Hôtel de la 5e phase | ~ (900, 1 680) | confirmé | pin de ta carte, Kukan'yu |
+| Meteor City | ~ (1 990, 4 110) | théorie | centre du continent Yorbian, hors de toute carte officielle |
+| Siège de l'Association des Hunters | ~ (1 930, 1 285) | libre | centre de Minbo, près de la Tour Céleste ; aucun emplacement officiel trouvé |
+| Glam Gas Land | ~ (1 375, 3 130) | confirmé (sur ta carte) | je ne connais pas ce lieu dans l'œuvre : à toi de me dire ce que tu veux y mettre |
+| Île-anneau | ~ (4 460, 770) | libre | île en anneau avec lagon, au nord-est de Kakin ; contenu à décider |
+| NGL (Neo Green Life) | Union de Mitene, sud | confirmé | pays autonome, aujourd'hui réserve naturelle sous l'Association |
+
+Déjà sur ta carte, coordonnées calculées : montagne Kukuroo ~ (1 520, 760), Heavens Arena ~ (2 770, 1 445), bras de la Reine ~ (800, 4 585), Peijin ~ (2 445, 5 085), départ du Black Whale ~ (5 430, 2 180), forêt de Kite ~ (6 420, 2 260).
 
 ## 4. Greed Island (taille proposée ~500 × 400)
 
@@ -93,8 +103,14 @@ Une liste JSON par type, sous `data/hxh/world/` :
 
 Images : `heightmap.png` (relief), `biomes.png` (une couleur par biome).
 
+## 9. Carte brouillon en style Minecraft
+`docs/monde-hxh/carte-brouillon.png` : première version générée à partir de ta carte (terre/mer et pays, une case = 32 blocs, grille blanche = 1 000 blocs). Ce n'est pas encore la carte finale :
+- les pays sont colorés par région (Minbo bleu, Kukan'yu violet, Saherta rouge, Kakin jaune, Ochima vert, Begerosse orange) ;
+- les petits îlots et les détails des côtes sont approximatifs (le texte de la carte d'origine a laissé des artefacts) ;
+- il faudra la retoucher à la main, puis en tirer l'image de relief et l'image de biomes.
+
 ## 8. À trancher
-- Où placer l'île de la Baleine, Meteor City, le siège de l'Association, Glam Gas Land, l'île-anneau ?
-- La carte de référence est-elle définitive (formes), ou on la redessine « à la Minecraft » ?
-- Combien de lieux dans la première version (je propose les 10 du §2, plus l'île de la Baleine) ?
-- Continent Noir : jamais, plus tard, ou dimension à part ?
+- Valider ou corriger les placements du §3 (surtout ceux marqués « libre » et « théorie »).
+- Que mettre à Glam Gas Land et sur l'île-anneau ?
+- Retoucher la carte brouillon (§9) : quelles côtes ou quels pays redessiner ?
+- (Décidé : Continent Noir plus tard ; 10 lieux + île de la Baleine pour la première version.)
