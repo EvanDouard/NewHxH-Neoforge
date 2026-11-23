@@ -289,7 +289,7 @@
   "kit.hxh.tsezguerra": "Tsezguerra",
   "kit.hxh.tsezguerra.desc": "Hunter chasseur de primes, chef d'équipe à Greed Island.",
   "passive.hxh.tsezguerra_leader": "Leader",
-  "passive.hxh.tsezguerra_leader.desc": "Allies within 8 blocks gain Strength I.",
+  "passive.hxh.tsezguerra_leader.desc": "Allies within 8 blocks gain Strength I. Can jump in mid-air: 1 extra jump per 20 Willpower (max 5).",
   "technique.hxh.tsezguerra_charged_strike": "Charged Strike",
   "technique.hxh.tsezguerra_charged_strike.desc": "A very powerful melee punch.",
   "kit.hxh.silva": "Silva Zoldyck",

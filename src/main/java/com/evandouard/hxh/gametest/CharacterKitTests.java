@@ -337,6 +337,24 @@ public final class CharacterKitTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void leaderJumpsInTheAirWithinItsLimit(GameTestHelper helper) {
+        Zombie tsez = husk(helper, 2);
+        hunter(tsez, NenType.ENHANCER, "tsezguerra");
+        tsez.setNoGravity(false);
+        tsez.setPos(tsez.getX(), tsez.getY() + 3, tsez.getZ());
+        tsez.setOnGround(false);
+        int allowed = com.evandouard.hxh.hatsu.Characters.airJumpsAllowed(tsez);
+        helper.assertTrue(allowed == 1, "Volonté 0 : un seul saut en l'air (" + allowed + ")");
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.airJump(tsez), "Le premier saut en l'air est accordé");
+        helper.assertTrue(!com.evandouard.hxh.hatsu.Characters.airJump(tsez), "Le second est refusé (limite)");
+        Zombie other = husk(helper, 4);
+        other.setPos(other.getX(), other.getY() + 3, other.getZ());
+        other.setOnGround(false);
+        helper.assertTrue(!com.evandouard.hxh.hatsu.Characters.airJump(other), "Sans le Meneur : pas de saut en l'air");
+        helper.succeed();
+    }
+
     /** Chaque technique de chaque personnage jouable part sans erreur, lancée par un mob sur une cible devant lui. */
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void everyTechniqueOfEveryKitRuns(GameTestHelper helper) {

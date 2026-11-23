@@ -291,15 +291,35 @@ public final class Characters {
     // =====================================================================
     // Tsezguerra (Renforcement*)
     // =====================================================================
-    /** Meneur : les alliés à 8 blocs gagnent Force I. */
+    /** Meneur : les alliés à 8 blocs gagnent Force I, et il peut sauter en l'air (1 saut de plus par tranche de 20 de Volonté, 5 au plus). */
     public static final Passive TSEZGUERRA_LEADER = new Passive("tsezguerra_leader", true) {
         @Override
         public void tick(LivingEntity owner) {
+            if (owner.onGround()) owner.getPersistentData().putInt("hxh_air_jumps", 0);
             if (owner.tickCount % 40 != 0) return;
             for (LivingEntity e : Targeting.around(owner, 8))
                 if (Kinds.isAlly(owner, e)) e.addEffect(Kinds.quiet(MobEffects.DAMAGE_BOOST, 60, 0), owner);
         }
     };
+
+    /** Nombre de sauts en l'air permis (Meneur) : 1 + Volonté / 20, 5 au plus. */
+    public static int airJumpsAllowed(LivingEntity e) {
+        return Math.min(5, 1 + HunterStats.get(e).level(com.evandouard.hxh.data.Stat.WILLPOWER) / 20);
+    }
+
+    /** Saut en l'air demandé par le client (ou l'IA) : accordé aux porteurs du Meneur, dans la limite permise. @return vrai si le saut a eu lieu */
+    public static boolean airJump(LivingEntity e) {
+        if (!"tsezguerra".equals(HunterStats.get(e).kit()) || e.onGround() || e.isInWater() || e.isPassenger()) return false;
+        int used = e.getPersistentData().getInt("hxh_air_jumps");
+        if (used >= airJumpsAllowed(e)) return false;
+        e.getPersistentData().putInt("hxh_air_jumps", used + 1);
+        net.minecraft.world.phys.Vec3 v = e.getDeltaMovement();
+        e.setDeltaMovement(v.x, 0.55, v.z);
+        e.hurtMarked = true;
+        e.resetFallDistance();
+        NenFx.flare(e, 0.5f, NenFx.ENHANCER);
+        return true;
+    }
 
     public static final Technique TSEZGUERRA_CHARGED_STRIKE = register(new Techniques.Strike("tsezguerra_charged_strike", ENHANCER,
             25, 160, 3.5, 0.85, 13f, 1.6f, List.of(), new Look(Style.IMPACT, NenFx.ENHANCER, 2f), SoundEvents.PLAYER_ATTACK_STRONG));

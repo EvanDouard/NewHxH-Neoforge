@@ -289,7 +289,7 @@
   "kit.hxh.tsezguerra": "Tsezguerra",
   "kit.hxh.tsezguerra.desc": "Hunter chasseur de primes, chef d'équipe à Greed Island.",
   "passive.hxh.tsezguerra_leader": "Meneur",
-  "passive.hxh.tsezguerra_leader.desc": "Les alliés à 8 blocs gagnent Force I.",
+  "passive.hxh.tsezguerra_leader.desc": "Les alliés à 8 blocs gagnent Force I. Saute en l'air : 1 saut de plus par tranche de 20 de Volonté (5 au plus).",
   "technique.hxh.tsezguerra_charged_strike": "Frappe chargée",
   "technique.hxh.tsezguerra_charged_strike.desc": "Un coup de poing très puissant au corps à corps.",
   "kit.hxh.silva": "Silva Zoldyck",
