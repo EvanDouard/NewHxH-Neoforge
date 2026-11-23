@@ -269,15 +269,16 @@ def _trap_fin(m, bone, x, y0, z, h, wb, wt, th, paint_for, t0, t1, off=0.0, poin
 
 
 def lock(m, name, base, length, width, rx, rz, paint_for, ry=0, flat=0.5, curve=(0.0, 0.0), segs=3, root=1.25,
-         parent='hair', tip=0.0, skew=0.0, belly=1.15):
+         parent='hair', tip=0.0, skew=0.0, belly=1.15, taper_pow=0.75):
     """Mèche organique : plusieurs tronçons enchaînés (un os chacun) dont la direction change un peu à chaque
     jonction (`curve` = virage total en degrés : x vers l'avant/arrière, z vers les côtés). Le premier tronçon
     (« racine ») est plus large (`root`) : la mèche sort en s'évasant de la masse. Chaque tronçon = deux ailettes
     en trapèze croisées : vue de face la largeur, de profil `flat` × la largeur. `belly` épaissit le corps de la
     mèche (plus épais au milieu qu'à la racine). `skew` déjette la mèche dans son plan (fraction de la largeur :
-    forme non symétrique). `tip` = largeur de l'extrémité (fraction de la largeur ; 0 = très pointue)."""
+    forme non symétrique). `tip` = largeur de l'extrémité (fraction de la largeur ; 0 = très pointue).
+    `taper_pow` : < 0,75 garde la mèche large plus longtemps (longues mèches de section presque constante)."""
     fr = {2: (0.4, 0.6), 3: (0.3, 0.3, 0.4), 4: (0.24, 0.26, 0.24, 0.26)}[segs]
-    widths = [width * root] + [width * (1 - sum(fr[:k + 1])) ** 0.75 for k in range(segs)]
+    widths = [width * root] + [width * (1 - sum(fr[:k + 1])) ** taper_pow for k in range(segs)]
     widths[-1] = width * tip
     widths[1] = min(widths[1], width * 0.98)
     m.bone(f'{name}_0', base, parent, rotation=[rx, ry, rz])

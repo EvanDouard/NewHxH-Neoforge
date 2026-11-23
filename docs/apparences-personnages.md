@@ -84,7 +84,7 @@ d'exemple, ses traductions et son modèle `tools/models/<id>.py`.
 Jajanken ultime, qui demande le niveau 60). Sous 30 % de vie, il passe une fois pour toutes en **mode adulte** :
 stats ×3 (plafonnées à 100), Nen 100 et maîtrises 80 (Jajanken ultime accessible, et c'est sa prochaine technique),
 aura et vie pleines, modèle `gon_adulte` (`tools/models/gon_adulte.py` : torse nu musclé, épaules très larges,
-short déchiré, chevelure en immense colonne verticale : 14 longues mèches verticales serrées, chacune un fût de
-section constante puis une pointe effilée, autour d'un noyau sombre, sommet irrégulier ; transition par des mèches
-courtes sur le crâne), boîte de collision 0,95 × 2,5, explosion
+short déchiré, chevelure qui s'étire vers le ciel : masse centrale sombre, 7 longues mèches de premier plan, 6 mèches
+secondaires en retrait et 3 mèches fines qui s'étirent au-delà du contour, toutes de section presque constante
+(`lock(..., taper_pow=0.32)`), légèrement courbées ; base évasée par des mèches courtes qui se redressent), boîte de collision 0,95 × 2,5, explosion
 d'aura, rugissement et message aux joueurs proches. NBT `HxhAdult:1b` pour le faire apparaître déjà adulte.
