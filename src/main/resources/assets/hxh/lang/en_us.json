@@ -1680,5 +1680,7 @@
   "passive.hxh.machi_thread_sense": "Thread Sense",
   "passive.hxh.machi_thread_sense.desc": "Enemies caught in her threads (slowed) within 16 blocks glow. An enemy within 4 blocks gives her reflexes (Speed I).",
   "passive.hxh.pouf_calculating": "Calculating Mind",
-  "passive.hxh.pouf_calculating.desc": "An enemy he has observed (hit or hitter) deals 15% less damage afterwards. Remembers 8 enemies."
+  "passive.hxh.pouf_calculating.desc": "An enemy he has observed (hit or hitter) deals 15% less damage afterwards. Remembers 8 enemies.",
+  "passive.hxh.pitou_royal_guard": "Royal Guard",
+  "passive.hxh.pitou_royal_guard.desc": "Speed +20%, aura regenerates an extra 1.5 per second, physical damage −10%."
 }

@@ -300,6 +300,10 @@ public final class CharacterKitTests {
             com.evandouard.hxh.hatsu.Characters.PALM_WINK_BLUE.modifyOutgoingMelee(palm, z, 1f);
         }
         helper.assertTrue(com.evandouard.hxh.hatsu.Characters.palmTracked(palm).size() == 3, "Wink Blue : 3 cibles suivies au plus");
+        Zombie pitou = husk(helper, 6);
+        hunter(pitou, NenType.SPECIALIST, "neferpitou");
+        float guarded = com.evandouard.hxh.hatsu.Characters.PITOU_ROYAL_GUARD.modifyIncoming(pitou, helper.getLevel().damageSources().mobAttack(foe), 10f);
+        helper.assertTrue(Math.abs(guarded - 9f) < 0.01f, "Garde royal : 10 → 9 (" + guarded + ")");
         Zombie phinks = husk(helper, 4);
         hunter(phinks, NenType.ENHANCER, "phinks");
         Zombie dummy = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(6, 1, 1));

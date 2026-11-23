@@ -44,7 +44,7 @@ public final class HatsuKits {
     public static final HatsuKit KURAPIKA = playable("kurapika", CONJURER, List.of(Passives.DOWSING_CHAIN),
             Techniques.KURAPIKA_CHAIN_JAIL, Techniques.KURAPIKA_HOLY_CHAIN,
             Characters.KURAPIKA_CHAIN_THROW);
-    public static final HatsuKit NEFERPITOU = playable("neferpitou", SPECIALIST, List.of(Passives.FELINE_AGILITY),
+    public static final HatsuKit NEFERPITOU = playable("neferpitou", SPECIALIST, List.of(Passives.FELINE_AGILITY, Characters.PITOU_ROYAL_GUARD),
             Techniques.PITOU_TERPSICHORA, Techniques.PITOU_DOCTOR_BLYTHE,
             Characters.PITOU_CLAWS,
             Characters.PITOU_POUNCE);

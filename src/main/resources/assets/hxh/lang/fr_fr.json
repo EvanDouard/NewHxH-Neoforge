@@ -1680,5 +1680,7 @@
   "passive.hxh.machi_thread_sense": "Sens du fil",
   "passive.hxh.machi_thread_sense.desc": "Les ennemis pris dans ses fils (ralentis) à 16 blocs brillent. Un ennemi à 4 blocs lui donne des réflexes (Vitesse I).",
   "passive.hxh.pouf_calculating": "Esprit calculateur",
-  "passive.hxh.pouf_calculating.desc": "Un ennemi qu'il a observé (frappé ou frappeur) lui fait 15 % de dégâts en moins ensuite. Retient 8 ennemis."
+  "passive.hxh.pouf_calculating.desc": "Un ennemi qu'il a observé (frappé ou frappeur) lui fait 15 % de dégâts en moins ensuite. Retient 8 ennemis.",
+  "passive.hxh.pitou_royal_guard": "Garde royal",
+  "passive.hxh.pitou_royal_guard.desc": "Vitesse +20 %, aura qui remonte de 1,5 par seconde en plus, dégâts physiques −10 %."
 }

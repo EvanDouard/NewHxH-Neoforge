@@ -454,6 +454,24 @@ public final class Characters {
     public static final Technique FRANKLIN_FOCUSED_SHOT = register(new Kinds.Beam("franklin_focused_shot", EMITTER, 25, 160,
             24, 0.5, 14f, NenFx.EMITTER, SoundEvents.FIREWORK_ROCKET_BLAST)).requiresNenLevel(10);
 
+    /** Garde royal : vitesse +20 %, aura qui remonte plus vite (+1,5 par seconde) et résistance physique de 10 %. */
+    public static final Passive PITOU_ROYAL_GUARD = new Passive("pitou_royal_guard", true) {
+        @Override
+        public void tick(LivingEntity owner) {
+            Specials.setModifier(owner, net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, com.evandouard.hxh.HxHMod.id("pitou_royal_guard"),
+                    0.2, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            if (owner.tickCount % 20 == 0) {
+                var d = data(owner);
+                d.setAura(Math.min(d.auraMax(), d.aura() + 1.5f));
+            }
+        }
+
+        @Override
+        public float modifyIncoming(LivingEntity owner, DamageSource source, float amount) {
+            return source.is(DamageTypeTags.BYPASSES_ARMOR) ? amount : amount * 0.9f;
+        }
+    };
+
     /** Tir perforant : un tir plus large qui traverse tout sur 16 blocs. */
     public static final Technique FRANKLIN_PIERCING_SHOT = register(new Kinds.Beam("franklin_piercing_shot", EMITTER, 35, 240,
             16, 1.0, 10f, NenFx.EMITTER, SoundEvents.FIREWORK_ROCKET_BLAST)).requiresNenLevel(20);
