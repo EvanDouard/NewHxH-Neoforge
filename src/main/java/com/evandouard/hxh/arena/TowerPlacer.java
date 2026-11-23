@@ -115,11 +115,13 @@ public final class TowerPlacer {
         for (int dx = -half; dx <= half; dx += half / 2 == 0 ? half : half / 2) {
             for (int dz = -half; dz <= half; dz += half / 2 == 0 ? half : half / 2) {
                 int x = cx + dx, z = cz + dz;
-                level.getChunk(x >> 4, z >> 4);
-                int top = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z);
-                int floor = level.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, x, z);
+                // Sondage par le bruit du générateur : aucune génération de tronçon (sinon le chargement du monde se bloque)
+                var gen = level.getChunkSource().getGenerator();
+                var rs = level.getChunkSource().randomState();
+                int top = gen.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, level, rs);
+                int floor = gen.getBaseHeight(x, z, Heightmap.Types.OCEAN_FLOOR_WG, level, rs);
                 if (top != floor) return false; // quelque chose (eau…) recouvre le sol
-                BlockState ground = level.getBlockState(new BlockPos(x, top - 1, z));
+                BlockState ground = gen.getBaseColumn(x, z, level, rs).getBlock(top - 1);
                 if (!ground.getFluidState().isEmpty() || ground.is(Blocks.ICE) || ground.is(Blocks.PACKED_ICE)
                         || ground.is(Blocks.BLUE_ICE) || ground.is(Blocks.MAGMA_BLOCK)) return false;
                 if (top <= level.getSeaLevel()) return false; // au niveau de la mer ou sous l'eau
