@@ -332,6 +332,11 @@ public final class CiAutopilot {
         long now = System.currentTimeMillis();
         if (worldRequested) {
             long waited = now - worldClickMs;
+            // Avertissement « fonctionnalités expérimentales » : on répond Oui (comme le ferait le joueur)
+            if (mc.screen instanceof net.minecraft.client.gui.screens.ConfirmScreen && ++menuTicks % 30 == 0) {
+                log("menu : avertissement (ConfirmScreen) affiché après la création, on répond Oui");
+                clickMenuButton(mc, "Oui", "Yes");
+            }
             if (now - lastLoadLogMs > 20_000) {
                 lastLoadLogMs = now;
                 String screen = mc.screen == null ? "aucun" : mc.screen.getClass().getSimpleName();
