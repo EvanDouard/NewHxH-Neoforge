@@ -335,8 +335,18 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [x] CI : `passivesOfTheFileReduceDamageAndBoostFists` (inclut la rage de Youpi).
 - [ ] En jeu : Phinks Bagarreur (+15 % à mains nues, résistance au recul 0,4) ; Meruem Corps du Roi (1 PV / 2 s, dégâts physiques −15 %) ; Youpi Corps monstrueux (physiques −15 %, explosions −50 %) ; Morel Capacité pulmonaire (respire sous l'eau). Valeurs proposées par moi.
 - [ ] En jeu : Youpi Colère grandissante : la jauge de rage monte en encaissant (dégâts ×2, −2/s), poings +10/+25/+40 % dès 20/50/80, la Rafale de rage la consomme (jusqu'à ×2). Valeurs proposées par moi.
-- Pas encore : Synthèse d'aura et Génie du combat (Meruem), Esprit calculateur (Pouf), sens du fil (Machi), Wink Blue (Palm).
+- [ ] En jeu (passifs lot 2, valeurs proposées par moi) : Meruem Génie du combat (+5 % par coup déjà porté au même ennemi, 20 % au plus) et Synthèse d'aura (achever un utilisateur du Nen rend 25 % d'aura) ; Pouf Esprit calculateur (ennemi observé : −15 % de dégâts reçus, 8 retenus) ; Machi Sens du fil (ennemis ralentis à 16 blocs brillent, Vitesse I si un ennemi à 4 blocs) ; Palm Wink Blue (3 cibles suivies, la plus ancienne remplacée) ; Neferpitou Garde royal (vitesse +20 %, aura +1,5/s, physiques −10 %).
+- Pas encore : récupération des capacités de Pouf et Youpi par Meruem ; +20 % d'aura max, taille de En et Nen post mortem de Pitou.
 
 ## Monde créé par les menus (23 nov)
 - [x] CI : second client `runCiMenuClient` (ci/scenario-menu.txt) : écran titre → Solo → Créer un monde → Créer un monde, puis surveillance du chargement (capture toutes les 20 s, échec après 150 s). Résultats : `ci-report-menu.txt`, `menu-screenshots/`, `client-menu-latest.log` sur la branche ci-results.
 - [ ] Chez toi : si le jeu charge en boucle, dis-moi à quel écran (barre de chargement, « Préparation du monde »…) et colle-moi la fin de `logs/latest.log`.
+
+## Dernières techniques et corrections (23 nov)
+- [x] CI : `stealChainDrainsAuraAndCocoonImmobilizes`, `leaderJumpsInTheAirWithinItsLimit`, `newSpeciesGetTheirOwnKit` (Warden à deux Hatsu), `strongKickSlamsIntoTheGround`.
+- [ ] En jeu : Cocon de renaissance (Pouf, 3 blocs : cible immobile, protégée et régénérée 8 s) ; Chaîne voleuse (Kurapika, 8 blocs : vole la moitié de l'aura de la cible) ; Cœur du séisme (second Hatsu du Warden, onde de 7 blocs).
+- [ ] En jeu : doubles sauts du Meneur (Tsezguerra) : appuie sur saut en l'air ; 1 saut + 1 par 20 de Volonté, 5 au plus ; le compteur revient au sol. Le paquet client n'est testé qu'en jeu.
+- [ ] En jeu : coup de pied dans le vide : n'abîme plus que les blocs à portée de pied (3 blocs), plus rien au loin.
+- [ ] En jeu : monde créé par le menu : se charge en ~50 s (la Tour Céleste n'est plus cherchée en générant des chunks).
+- Pas encore : Cocon (éveil au Nen, hybride), Chaîne voleuse (vol temporaire d'un Hatsu), changement d'apparence de l'Aiguille de métamorphose d'Illumi.
+- CI : un run commencé n'est plus annulé par un push suivant (il attend).

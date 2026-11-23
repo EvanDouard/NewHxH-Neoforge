@@ -124,3 +124,19 @@ Techniques de base enseignées par Wing : Ten, In, Ren, Hatsu. Le reste se débl
 | Vitalité | +0,4 PV/niveau (était 0,2) : +40 au niveau 100 | `stats.vitalityHealthPerLevel` |
 | Endurance | 0,1 PV plat/niveau (était 0,05) : 10 au niveau 100 | `stats.enduranceFlatPerLevel` |
 | Repères | niveau 100 ≈ Meruem / Gon adulte ; Netero ≈ niveau 80–90 (comme les gardes royaux) | à régler avec les PNJ |
+
+## Passifs et techniques ajoutés le 22–23 nov (valeurs proposées, à corriger dans `a-trancher.md`)
+| Élément | Valeur | Où |
+|---|---|---|
+| Colère grandissante (Youpi) | rage = 2 × dégâts reçus (0–100), −2/s ; poings +10/+25/+40 % dès 20/50/80 ; Rafale ×(1 + rage/100) | `Characters.YOUPI_GROWING_RAGE` |
+| Génie du combat (Meruem) | +5 % par coup déjà porté au même ennemi, 20 % au plus (16 ennemis retenus) | `Characters.MERUEM_KING` |
+| Synthèse d'aura (Meruem) | +25 % d'aura max en achevant un utilisateur du Nen | `Characters.MERUEM_KING` |
+| Esprit calculateur (Pouf) | −15 % de dégâts d'un ennemi observé, 8 retenus | `Characters.POUF_CALCULATING` |
+| Sens du fil (Machi) | 16 blocs (ennemis ralentis brillent) ; Vitesse I si ennemi à 4 blocs | `Characters.MACHI_THREAD_SENSE` |
+| Wink Blue (Palm) | 3 cibles suivies, lueur renouvelée chaque seconde | `Characters.PALM_WINK_BLUE` |
+| Garde royal (Pitou) | vitesse +20 %, aura +1,5/s, physiques −10 % | `Characters.PITOU_ROYAL_GUARD` |
+| Cocon de renaissance (Pouf) | 70 aura, 90 s, Nen 30, 3 blocs, 8 s d'incubation | `Characters.POUF_COCOON` |
+| Chaîne voleuse (Kurapika) | 40 aura, 30 s, Nen 20, 8 blocs, vole 50 % de l'aura de la cible | `Characters.KURAPIKA_STEAL_CHAIN` |
+| Cœur du séisme (Warden) | 40 aura, 12 s, 7 blocs, 9 dégâts, recul 1,6 | `MobTechniques.WARDEN_QUAKE` |
+| Sauts en l'air du Meneur | 1 + Volonté/20, 5 au plus | `Characters.airJumpsAllowed` |
+| Coup de pied dans le vide | portée sur le décor 3 blocs (était jusqu'à 24) | `Combat.KICK_BLOCK_REACH` |
