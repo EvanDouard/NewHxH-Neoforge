@@ -277,7 +277,7 @@ def lock(m, name, base, length, width, rx, rz, paint_for, ry=0, flat=0.5, curve=
     mèche (plus épais au milieu qu'à la racine). `skew` déjette la mèche dans son plan (fraction de la largeur :
     forme non symétrique). `tip` = largeur de l'extrémité (fraction de la largeur ; 0 = très pointue).
     `taper_pow` : < 0,75 garde la mèche large plus longtemps (longues mèches de section presque constante)."""
-    fr = {2: (0.4, 0.6), 3: (0.3, 0.3, 0.4), 4: (0.24, 0.26, 0.24, 0.26)}[segs]
+    fr = {2: (0.4, 0.6), 3: (0.3, 0.3, 0.4), 4: (0.24, 0.26, 0.24, 0.26), 5: (0.2, 0.2, 0.2, 0.2, 0.2)}[segs]
     widths = [width * root] + [width * (1 - sum(fr[:k + 1])) ** taper_pow for k in range(segs)]
     widths[-1] = width * tip
     widths[1] = min(widths[1], width * 0.98)
