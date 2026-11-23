@@ -1680,11 +1680,56 @@ wait 25
 clearchat
 shot 61e_gon_killua
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Kurapika (même style) : 6 angles + yeux écarlates
+hud off
+look 0 14
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 64a_kurapika_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 64b_kurapika_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 64c_kurapika_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 64g_kurapika_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 64d_kurapika_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 22
+cmd summon hxh:npc ~ ~ ~1.7 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 64h_kurapika_yeux_ecarlates
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~2.2 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.2 ~1.3 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 64f_kurapika_dessus
+cmd tp @s ~ ~-2.2 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
 # Gon et Killua en mobs (œufs d'apparition) : même modèle, nom, Hatsu
 hud on
 look 0 8
 cmd summon hxh:gon ~-1.0 ~ ~3.6 {NoAI:1b,Rotation:[165f,0f],Tags:["geo_ci"]}
 cmd summon hxh:killua ~1.0 ~ ~3.6 {NoAI:1b,Rotation:[195f,0f],Tags:["geo_ci"]}
+cmd summon hxh:kurapika ~0 ~ ~4.6 {NoAI:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
 wait 30
 clearchat
 shot 62a_mobs_gon_killua

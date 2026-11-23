@@ -29,7 +29,7 @@ Sans fichier d'apparence, un PNJ utilise `textures/entity/npc/<id>.png`, sinon S
 ## Modèles sur mesure (GeckoLib)
 
 Les personnages refaits au niveau décrit dans `docs/Analyse_model.md` ont un vrai modèle GeckoLib, qui remplace le
-rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote) et **Killua**.
+rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua** et **Kurapika**.
 
 ```
 python3 tools/models/gon.py
@@ -114,3 +114,12 @@ Répartition prévue pour éviter les conflits (dans GeckoLib 4, deux contrôleu
 s'additionnent pas : le dernier gagne) : `hair_transform` sur `hair_growth_root`, `hair_aura` et `hair_burst` sur
 les couches et les racines `<mèche>_0`, dans un second contrôleur `hair_fx_controller`. Le mouvement passif ne
 touche jamais ces os, donc les effets se composent par la hiérarchie.
+
+### Kurapika
+
+`tools/models/kurapika.py` : carré blond lisse (calotte aux arêtes adoucies, pans continus sur les côtés et à
+l'arrière qui rentrent vers la mâchoire, quelques mèches plates en surface, frange droite en 5 mèches), visage fin,
+yeux gris-brun qui deviennent écarlates en combat (`kurapika_froid.png`), boucle d'oreille rouge, tenue Kurta
+(tunique blanche, tabard bleu brodé d'or devant et dos jusqu'aux genoux, col doré, pantalon blanc, chaussures bleu
+foncé) et cinq chaînes à la main droite avec leurs embouts (os `chains`). Mob `hxh:kurapika` (œuf, kit `kurapika`,
+neutre, allié de Gon et Killua) et PNJ `kurapika` avec le même modèle.

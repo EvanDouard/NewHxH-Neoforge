@@ -53,4 +53,16 @@ public final class CharacterMobTests {
             helper.assertTrue(killua.getTarget() == zombie, "Killua vient aider Gon (cible : " + killua.getTarget() + ")");
         }));
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void kurapikaGetsHisChainsKit(GameTestHelper helper) {
+        CharacterEntity kurapika = helper.spawn(ModEntities.KURAPIKA.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            HunterData data = HunterStats.get(kurapika);
+            helper.assertTrue(kurapika.isPrepared(), "Mob d'exemple appliqué");
+            helper.assertTrue("kurapika".equals(data.kit()), "Kit de Kurapika (" + data.kit() + ")");
+            helper.assertTrue(!(kurapika instanceof Enemy), "Neutre");
+            helper.assertTrue(kurapika.isAlliedTo(helper.spawn(ModEntities.GON.get(), 3, 1, 1)), "Allié de Gon");
+        }));
+    }
 }
