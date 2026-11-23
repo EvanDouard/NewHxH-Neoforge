@@ -43,7 +43,7 @@ public final class HatsuKits {
             Characters.KILLUA_YOYO, Characters.KILLUA_ELECTRIC_FIST);
     public static final HatsuKit KURAPIKA = playable("kurapika", CONJURER, List.of(Passives.DOWSING_CHAIN),
             Techniques.KURAPIKA_CHAIN_JAIL, Techniques.KURAPIKA_HOLY_CHAIN,
-            Characters.KURAPIKA_CHAIN_THROW);
+            Characters.KURAPIKA_CHAIN_THROW, Characters.KURAPIKA_STEAL_CHAIN);
     public static final HatsuKit NEFERPITOU = playable("neferpitou", SPECIALIST, List.of(Passives.FELINE_AGILITY, Characters.PITOU_ROYAL_GUARD),
             Techniques.PITOU_TERPSICHORA, Techniques.PITOU_DOCTOR_BLYTHE,
             Characters.PITOU_CLAWS,
@@ -113,7 +113,7 @@ public final class HatsuKits {
     public static final HatsuKit KNOV = playable("knov", EMITTER, List.of(Specials.KNOV_STRATEGIST), Specials.KNOV_MARK_DOOR, Specials.KNOV_HIDE_AND_SEEK);
     public static final HatsuKit KNUCKLE = playable("knuckle", CONJURER, List.of(Specials.KNUCKLE_HAKOWARE), Specials.KNUCKLE_POT_CLEAN, Specials.KNUCKLE_CANCEL,
             Characters.KNUCKLE_TORITATEN);
-    public static final HatsuKit SHAIAPOUF = playable("shaiapouf", MANIPULATOR, List.of(Specials.POUF_WINGS, Characters.POUF_CALCULATING), Specials.POUF_SPIRITUAL_MESSAGE, Specials.POUF_BEELZEBUB);
+    public static final HatsuKit SHAIAPOUF = playable("shaiapouf", MANIPULATOR, List.of(Specials.POUF_WINGS, Characters.POUF_CALCULATING), Specials.POUF_SPIRITUAL_MESSAGE, Specials.POUF_BEELZEBUB, Characters.POUF_COCOON);
     public static final HatsuKit WING = playable("wing", ENHANCER, List.of(Characters.WING_TEACHER), Characters.WING_SHINGEN_RYU);
 
     /**

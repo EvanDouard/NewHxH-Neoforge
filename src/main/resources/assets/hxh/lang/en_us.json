@@ -1687,5 +1687,9 @@
   "passive.hxh.pouf_calculating": "Calculating Mind",
   "passive.hxh.pouf_calculating.desc": "An enemy he has observed (hit or hitter) deals 15% less damage afterwards. Remembers 8 enemies.",
   "passive.hxh.pitou_royal_guard": "Royal Guard",
-  "passive.hxh.pitou_royal_guard.desc": "Speed +20%, aura regenerates an extra 1.5 per second, physical damage −10%."
+  "passive.hxh.pitou_royal_guard.desc": "Speed +20%, aura regenerates an extra 1.5 per second, physical damage −10%.",
+  "technique.hxh.pouf_cocoon": "Rebirth Cocoon",
+  "technique.hxh.pouf_cocoon.desc": "Encases the target within 3 blocks in a cocoon: immobile, protected and regenerating for 8 s (incubation).",
+  "technique.hxh.kurapika_steal_chain": "Stealing Chain",
+  "technique.hxh.kurapika_steal_chain.desc": "Drains half of the target's aura (8 blocks) and gives it to you; the target is weakened for 5 s."
 }

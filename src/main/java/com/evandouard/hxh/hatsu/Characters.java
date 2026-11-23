@@ -969,6 +969,31 @@ public final class Characters {
         }
     });
 
+    /** Cocon de renaissance de Pouf : la cible visée (3 blocs) est enfermée, immobile et protégée, le temps de l'incubation (8 s), et se régénère. */
+    public static final Technique POUF_COCOON = register(new Techniques.Strike("pouf_cocoon", MANIPULATOR, 70, 1800,
+            3.0, 0.8, 1f, 0f, List.of(new Effect(MobEffects.MOVEMENT_SLOWDOWN, 160, 9), new Effect(MobEffects.DAMAGE_RESISTANCE, 160, 3),
+                    new Effect(MobEffects.REGENERATION, 160, 2), new Effect(MobEffects.WEAKNESS, 160, 4)),
+            new Look(Style.FLARE, 0xFFE8F4FF, 1.4f), SoundEvents.SILVERFISH_AMBIENT)).requiresNenLevel(30);
+
+    /** Chaîne voleuse de Kurapika : aspire la moitié de l'aura de la cible (8 blocs) et la lui donne ; la cible est affaiblie 5 s. */
+    public static final Technique KURAPIKA_STEAL_CHAIN = register(new Techniques.Strike("kurapika_steal_chain", CONJURER, 40, 600,
+            8.0, 0.95, 3f, 0f, List.of(new Effect(MobEffects.WEAKNESS, 100, 1)),
+            new Look(Style.CHAIN, NenFx.CONJURER, 1.2f), SoundEvents.CHAIN_PLACE) {
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            LivingEntity t = Targeting.inFront(caster, 8.0, 0.95);
+            boolean hit = super.perform(caster, power);
+            if (hit && t != null) {
+                var td = data(t);
+                float taken = td.aura() * 0.5f;
+                td.setAura(td.aura() - taken);
+                var cd = data(caster);
+                cd.setAura(Math.min(cd.auraMax(), cd.aura() + taken));
+            }
+            return hit;
+        }
+    }).requiresNenLevel(20);
+
     /** Défense instantanée de Tsezguerra : Résistance II pendant 3 s. */
     public static final Technique TSEZGUERRA_INSTANT_GUARD = register(new Techniques.SelfBuff("tsezguerra_instant_guard", ENHANCER, 20, 240,
             List.of(new Effect(MobEffects.DAMAGE_RESISTANCE, 60, 1)),

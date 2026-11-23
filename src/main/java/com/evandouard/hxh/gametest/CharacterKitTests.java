@@ -312,6 +312,31 @@ public final class CharacterKitTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void stealChainDrainsAuraAndCocoonImmobilizes(GameTestHelper helper) {
+        Zombie kura = husk(helper, 0);
+        HunterData kd = hunter(kura, NenType.CONJURER, "kurapika");
+        Zombie victim = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(4, 1, 1));
+        victim.setNoGravity(true);
+        var vd = com.evandouard.hxh.stats.HunterStats.get(victim);
+        vd.setAuraMax(100);
+        vd.setAura(80f);
+        float before = kd.aura();
+        kd.setAura(Math.max(0f, before - 50f));
+        float mid = kd.aura();
+        boolean ok = com.evandouard.hxh.hatsu.Characters.KURAPIKA_STEAL_CHAIN.perform(kura, 1f);
+        helper.assertTrue(ok, "La chaîne voleuse touche la cible");
+        helper.assertTrue(vd.aura() < 60f, "La cible perd de l'aura (" + vd.aura() + ")");
+        helper.assertTrue(kd.aura() > mid, "Kurapika en gagne (" + mid + " → " + kd.aura() + ")");
+        Zombie pouf = husk(helper, 8);
+        hunter(pouf, NenType.MANIPULATOR, "shaiapouf");
+        Zombie prey = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(10, 1, 1));
+        prey.setNoGravity(true);
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.POUF_COCOON.perform(pouf, 1f), "Le cocon part sur la cible");
+        helper.assertTrue(prey.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN), "La cible est immobilisée dans le cocon");
+        helper.succeed();
+    }
+
     /** Chaque technique de chaque personnage jouable part sans erreur, lancée par un mob sur une cible devant lui. */
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void everyTechniqueOfEveryKitRuns(GameTestHelper helper) {
