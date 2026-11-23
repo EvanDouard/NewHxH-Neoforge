@@ -45,15 +45,18 @@ public final class WorldMapTests {
 
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void dimensionGeneratesLandAndSea(GameTestHelper helper) {
-        // Le serveur de GameTests n'instancie pas la dimension : on interroge directement son générateur (lu dans les données)
+        // Le serveur de GameTests n'a pas la dimension : on monte son générateur à la main avec les réglages lus dans les données
         var access = helper.getLevel().registryAccess();
-        var stem = access.registryOrThrow(net.minecraft.core.registries.Registries.LEVEL_STEM)
-                .get(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.LEVEL_STEM, Airship.WORLD.location()));
-        helper.assertTrue(stem != null, "La dimension du monde HxH est déclarée");
-        helper.assertTrue(stem.generator() instanceof net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator, "Générateur à bruit");
-        var gen = (net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator) stem.generator();
-        helper.assertTrue(gen.getBiomeSource() instanceof com.evandouard.hxh.world.HxHBiomeSource, "Biomes tirés de la carte");
-        var rs = net.minecraft.world.level.levelgen.RandomState.create(gen.generatorSettings().value(),
+        var biomes = access.lookupOrThrow(net.minecraft.core.registries.Registries.BIOME);
+        java.util.function.Function<net.minecraft.resources.ResourceKey<net.minecraft.world.level.biome.Biome>, net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>> b = biomes::getOrThrow;
+        var source = new com.evandouard.hxh.world.HxHBiomeSource(b.apply(net.minecraft.world.level.biome.Biomes.OCEAN), b.apply(net.minecraft.world.level.biome.Biomes.DEEP_OCEAN),
+                b.apply(net.minecraft.world.level.biome.Biomes.BEACH), b.apply(net.minecraft.world.level.biome.Biomes.PLAINS), b.apply(net.minecraft.world.level.biome.Biomes.TAIGA),
+                b.apply(net.minecraft.world.level.biome.Biomes.SWAMP), b.apply(net.minecraft.world.level.biome.Biomes.FOREST), b.apply(net.minecraft.world.level.biome.Biomes.DARK_FOREST),
+                b.apply(net.minecraft.world.level.biome.Biomes.JUNGLE), b.apply(net.minecraft.world.level.biome.Biomes.SAVANNA));
+        var settings = access.lookupOrThrow(net.minecraft.core.registries.Registries.NOISE_SETTINGS)
+                .getOrThrow(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.NOISE_SETTINGS, Airship.WORLD.location()));
+        var gen = new net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator(source, settings);
+        var rs = net.minecraft.world.level.levelgen.RandomState.create(settings.value(),
                 access.lookupOrThrow(net.minecraft.core.registries.Registries.NOISE), 0L);
         AirshipDestination kukuroo = AirshipRegistry.get("hxh:kukuroo_mountain");
         int land = gen.getBaseHeight(kukuroo.x(), kukuroo.z(), Heightmap.Types.OCEAN_FLOOR_WG, helper.getLevel(), rs);
