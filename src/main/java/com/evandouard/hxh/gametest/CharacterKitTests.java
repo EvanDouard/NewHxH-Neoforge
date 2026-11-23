@@ -273,6 +273,13 @@ public final class CharacterKitTests {
         helper.assertTrue(Math.abs(kept - 8.5f) < 0.01f, "Corps du Roi : 10 → 8,5 (" + kept + ")");
         float boom = com.evandouard.hxh.hatsu.Characters.YOUPI_VITALITY.modifyIncoming(meruem, helper.getLevel().damageSources().explosion(null, null), 10f);
         helper.assertTrue(Math.abs(boom - 5f) < 0.01f, "Corps monstrueux : explosion 10 → 5 (" + boom + ")");
+        Zombie youpi = husk(helper, 10);
+        hunter(youpi, NenType.TRANSMUTER, "youpi");
+        var rageP = com.evandouard.hxh.hatsu.Characters.YOUPI_GROWING_RAGE;
+        rageP.modifyIncoming(youpi, helper.getLevel().damageSources().mobAttack(meruem), 15f);
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.rage(youpi) == 30, "Rage : 15 dégâts → 30 (" + com.evandouard.hxh.hatsu.Characters.rage(youpi) + ")");
+        float angry = rageP.modifyOutgoingMelee(youpi, meruem, 10f);
+        helper.assertTrue(Math.abs(angry - 11f) < 0.01f, "Rage 30 : poings +10 % (" + angry + ")");
         Zombie phinks = husk(helper, 4);
         hunter(phinks, NenType.ENHANCER, "phinks");
         Zombie dummy = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(6, 1, 1));

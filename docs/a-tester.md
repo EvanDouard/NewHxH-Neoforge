@@ -332,9 +332,10 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu : le Poing élastique tire maintenant l'ennemi touché vers Hisoka.
 
 ## Passifs de ton fichier, lot 1 (22 nov)
-- [x] CI : `passivesOfTheFileReduceDamageAndBoostFists`.
+- [x] CI : `passivesOfTheFileReduceDamageAndBoostFists` (inclut la rage de Youpi).
 - [ ] En jeu : Phinks Bagarreur (+15 % à mains nues, résistance au recul 0,4) ; Meruem Corps du Roi (1 PV / 2 s, dégâts physiques −15 %) ; Youpi Corps monstrueux (physiques −15 %, explosions −50 %) ; Morel Capacité pulmonaire (respire sous l'eau). Valeurs proposées par moi.
-- Pas encore : Synthèse d'aura et Génie du combat (Meruem), Esprit calculateur (Pouf), Colère grandissante (Youpi), sens du fil (Machi), Wink Blue (Palm).
+- [ ] En jeu : Youpi Colère grandissante : la jauge de rage monte en encaissant (dégâts ×2, −2/s), poings +10/+25/+40 % dès 20/50/80, la Rafale de rage la consomme (jusqu'à ×2). Valeurs proposées par moi.
+- Pas encore : Synthèse d'aura et Génie du combat (Meruem), Esprit calculateur (Pouf), sens du fil (Machi), Wink Blue (Palm).
 
 ## Monde créé par les menus (23 nov)
 - [x] CI : second client `runCiMenuClient` (ci/scenario-menu.txt) : écran titre → Solo → Créer un monde → Créer un monde, puis surveillance du chargement (capture toutes les 20 s, échec après 150 s). Résultats : `ci-report-menu.txt`, `menu-screenshots/`, `client-menu-latest.log` sur la branche ci-results.

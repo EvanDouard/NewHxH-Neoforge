@@ -98,7 +98,7 @@ public final class HatsuKits {
     public static final HatsuKit PALM = playable("palm", ENHANCER, List.of(Characters.PALM_WINK_BLUE), Characters.PALM_BLACK_WIDOW);
     public static final HatsuKit MERUEM = playable("meruem", EMITTER, List.of(Characters.MERUEM_KING), Characters.MERUEM_RAGE_BLAST, Characters.MERUEM_PHOTON,
             Characters.MERUEM_KING_STRIKE, Characters.MERUEM_TAIL, Characters.MERUEM_ROYAL_SPEED, Characters.MERUEM_PRESSURE);
-    public static final HatsuKit YOUPI = playable("youpi", TRANSMUTER, List.of(Characters.YOUPI_VITALITY), Characters.YOUPI_METAMORPHOSIS, Characters.YOUPI_RAGE_BLAST,
+    public static final HatsuKit YOUPI = playable("youpi", TRANSMUTER, List.of(Characters.YOUPI_VITALITY, Characters.YOUPI_GROWING_RAGE), Characters.YOUPI_METAMORPHOSIS, Characters.YOUPI_RAGE_BLAST,
             Characters.YOUPI_GIANT_FIST, Characters.YOUPI_BLADES, Characters.YOUPI_WINGS);
     public static final HatsuKit ZUSHI = playable("zushi", MANIPULATOR, List.of(Characters.ZUSHI_DILIGENT), Characters.ZUSHI_REN_PUNCH);
     public static final HatsuKit SENRITSU = playable("senritsu", EMITTER, List.of(Characters.SENRITSU_HEART_SOUND), Characters.SENRITSU_MELODY);

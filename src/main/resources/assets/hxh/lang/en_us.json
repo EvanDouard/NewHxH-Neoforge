@@ -1674,5 +1674,7 @@
   "kit.hxh.mob_silverfish": "Silverfish with Nen",
   "technique.hxh.mob_bat_screech": "Screech",
   "technique.hxh.mob_bat_screech.desc": "A screech (8 blocks) that slows and dazes.",
-  "kit.hxh.mob_bat": "Bat with Nen"
+  "kit.hxh.mob_bat": "Bat with Nen",
+  "passive.hxh.youpi_growing_rage": "Growing Rage",
+  "passive.hxh.youpi_growing_rage.desc": "The more damage Youpi takes, the higher his rage gauge climbs (it slowly fades). At 20/50/80: fists +10/+25/+40%. Rage Blast consumes the gauge: up to ×2 power."
 }

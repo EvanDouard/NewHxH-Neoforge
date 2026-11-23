@@ -1674,5 +1674,7 @@
   "kit.hxh.mob_silverfish": "Poisson d'argent au Nen",
   "technique.hxh.mob_bat_screech": "Cri strident",
   "technique.hxh.mob_bat_screech.desc": "Un cri (8 blocs) qui ralentit et étourdit.",
-  "kit.hxh.mob_bat": "Chauve-souris au Nen"
+  "kit.hxh.mob_bat": "Chauve-souris au Nen",
+  "passive.hxh.youpi_growing_rage": "Colère grandissante",
+  "passive.hxh.youpi_growing_rage.desc": "Plus Youpi encaisse de dégâts, plus sa jauge de rage monte (elle retombe lentement). Dès 20/50/80 : poings +10/+25/+40 %. La Rafale de rage consomme la jauge : jusqu'à ×2 de puissance."
 }

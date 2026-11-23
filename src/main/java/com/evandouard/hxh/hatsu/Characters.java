@@ -979,8 +979,45 @@ public final class Characters {
             List.of(new Effect(MobEffects.DAMAGE_BOOST, 300, 1), new Effect(MobEffects.DAMAGE_RESISTANCE, 300, 0)),
             new Look(Style.FLARE, 0xFFE0402A, 1.6f), SoundEvents.RAVAGER_ROAR));
 
+    /** Jauge de rage (0–100) : gagnée en encaissant des dégâts, qui retombe doucement ; seuils 20/50/80 → +10/+25/+40 % aux poings. */
+    public static final Passive YOUPI_GROWING_RAGE = new Passive("youpi_growing_rage", true) {
+        @Override
+        public float modifyIncoming(LivingEntity owner, DamageSource source, float amount) {
+            addRage(owner, Math.round(amount * 2f));
+            return amount;
+        }
+
+        @Override
+        public float modifyOutgoingMelee(LivingEntity owner, LivingEntity target, float amount) {
+            int r = rage(owner);
+            return amount * (r >= 80 ? 1.4f : r >= 50 ? 1.25f : r >= 20 ? 1.1f : 1f);
+        }
+
+        @Override
+        public void tick(LivingEntity owner) {
+            if (owner.tickCount % 20 == 0 && rage(owner) > 0) addRage(owner, -2);
+        }
+    };
+
+    /** Rage actuelle de l'entité (0–100). */
+    public static int rage(LivingEntity e) {
+        return e.getPersistentData().getInt("hxh_rage");
+    }
+
+    public static void addRage(LivingEntity e, int delta) {
+        e.getPersistentData().putInt("hxh_rage", Math.max(0, Math.min(100, rage(e) + delta)));
+    }
+
+    /** Rafale de rage : plus la jauge est haute, plus l'explosion est puissante (jusqu'à ×2) ; la jauge est consommée. */
     public static final Technique YOUPI_RAGE_BLAST = register(new Techniques.Blast("youpi_rage_blast", TRANSMUTER, 45, 400,
-            6, 11f, 2.2f, new Look(Style.SHOCKWAVE, 0xFFE0402A, 1.4f), SoundEvents.WARDEN_ROAR)).requiresNenLevel(20);
+            6, 11f, 2.2f, new Look(Style.SHOCKWAVE, 0xFFE0402A, 1.4f), SoundEvents.WARDEN_ROAR) {
+        @Override
+        public boolean perform(LivingEntity caster, float power) {
+            int r = rage(caster);
+            addRage(caster, -r);
+            return super.perform(caster, power * (1f + r / 100f));
+        }
+    }).requiresNenLevel(20);
 
     // =====================================================================
     // Autres : Zushi, Senritsu, Wing

@@ -467,7 +467,7 @@ public final class Techniques {
     }
 
     /** Onde de choc autour du lanceur. */
-    static final class Blast extends Technique {
+    static class Blast extends Technique {
         private final double radius;
         private final float damage, knockback;
         private final Look look;
