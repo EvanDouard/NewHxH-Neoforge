@@ -350,3 +350,9 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu : monde créé par le menu : se charge en ~50 s (la Tour Céleste n'est plus cherchée en générant des chunks).
 - Pas encore : Cocon (éveil au Nen, hybride), Chaîne voleuse (vol temporaire d'un Hatsu), changement d'apparence de l'Aiguille de métamorphose d'Illumi.
 - CI : un run commencé n'est plus annulé par un push suivant (il attend).
+
+## Dirigeable (carte du monde)
+- Poser une « Borne du dirigeable » (onglet créatif), clic droit : la carte s'ouvre avec 11 repères (gris = pas assez de Jenny).
+- Clic sur un repère → confirmation avec le prix → téléportation sur une plateforme (sol de briques + borne pour repartir). Le billet est retiré des Jenny.
+- Sans borne à portée (6 blocs), le serveur refuse ; `/hunter airship` (opérateur) ouvre la carte de n'importe où.
+- Pour l'instant la destination est dans le même monde (coordonnées de la carte) ; la dimension « monde HxH » viendra ensuite.

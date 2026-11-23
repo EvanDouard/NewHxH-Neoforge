@@ -114,3 +114,6 @@ Images : `heightmap.png` (relief), `biomes.png` (une couleur par biome).
 - Que mettre à Glam Gas Land et sur l'île-anneau ?
 - Retoucher la carte brouillon (§9) : quelles côtes ou quels pays redessiner ?
 - (Décidé : Continent Noir plus tard ; 10 lieux + île de la Baleine pour la première version.)
+
+## 10. Dirigeable — état (23 nov)
+Fait : destinations en données (`data/hxh/airship_destinations/*.json`, x/z en blocs + prix), écran de carte (`world_map.png` = carte brouillon), confirmation, voyage validé par le serveur, borne, plateforme d'arrivée, GameTests, capture CI. Les coordonnées sont celles du §3 (provisoires). À faire : dimension dédiée, vraie carte finale, destinations Mebun/Zaban/QG/Meteor City.
