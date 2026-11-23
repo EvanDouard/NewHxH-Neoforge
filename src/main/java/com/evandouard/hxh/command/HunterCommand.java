@@ -433,6 +433,12 @@ public final class HunterCommand {
                                                 .executes(ctx -> spawnPreset(ctx.getSource(), StringArgumentType.getString(ctx, "preset"),
                                                         net.minecraft.commands.arguments.coordinates.Vec3Argument.getVec3(ctx, "pos"),
                                                         IntegerArgumentType.getInteger(ctx, "count")))))))
+                // Dirigeable : ouvre la carte (opérateur), ou voyage directement sans borne ni billet à portée
+                .then(Commands.literal("airship").requires(s -> s.hasPermission(2))
+                        .executes(ctx -> {
+                            com.evandouard.hxh.airship.Airship.open(ctx.getSource().getPlayerOrException());
+                            return 1;
+                        }))
                 // Jenny du carnet (tests des boutiques)
                 .then(Commands.literal("jenny").requires(s -> s.hasPermission(2))
                         .then(Commands.literal("add").then(Commands.argument("amount", IntegerArgumentType.integer())

@@ -75,6 +75,8 @@ public final class ModItems {
 
     public static final DeferredItem<BlockItem> HUNTER_COMPUTER =
             ITEMS.registerSimpleBlockItem("hunter_computer", ModBlocks.HUNTER_COMPUTER);
+    public static final DeferredItem<BlockItem> AIRSHIP_TERMINAL =
+            ITEMS.registerSimpleBlockItem("airship_terminal", ModBlocks.AIRSHIP_TERMINAL);
     public static final DeferredItem<BlockItem> WATER_DIVINATION =
             ITEMS.registerSimpleBlockItem("water_divination", ModBlocks.WATER_DIVINATION);
 

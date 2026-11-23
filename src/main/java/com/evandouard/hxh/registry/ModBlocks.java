@@ -15,6 +15,10 @@ public final class ModBlocks {
     public static final DeferredBlock<com.evandouard.hxh.block.HunterComputerBlock> HUNTER_COMPUTER = BLOCKS.register("hunter_computer",
             () -> new com.evandouard.hxh.block.HunterComputerBlock(BlockBehaviour.Properties.of()
                     .strength(1.5f).sound(SoundType.METAL).noOcclusion().lightLevel(s -> 6)));
+    /** Borne du dirigeable : ouvre la carte du monde pour réserver un voyage. */
+    public static final DeferredBlock<com.evandouard.hxh.block.AirshipTerminalBlock> AIRSHIP_TERMINAL = BLOCKS.register("airship_terminal",
+            () -> new com.evandouard.hxh.block.AirshipTerminalBlock(BlockBehaviour.Properties.of()
+                    .strength(1.5f).sound(SoundType.METAL).noOcclusion().lightLevel(s -> 6)));
     public static final DeferredBlock<WaterDivinationBlock> WATER_DIVINATION = BLOCKS.register("water_divination",
             () -> new WaterDivinationBlock(BlockBehaviour.Properties.of()
                     .strength(0.3f)

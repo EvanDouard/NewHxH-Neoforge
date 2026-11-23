@@ -31,6 +31,7 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.GOURMET_RECIPE.get());
                         output.accept(ModItems.WATER_DIVINATION.get());
                         output.accept(ModItems.HUNTER_COMPUTER.get());
+                        output.accept(ModItems.AIRSHIP_TERMINAL.get());
                         output.accept(ModItems.EXAM_BADGE.get());
                         output.accept(ModItems.EXAM_PLATE.get());
                         output.accept(ModItems.TARGET_PLATE.get());

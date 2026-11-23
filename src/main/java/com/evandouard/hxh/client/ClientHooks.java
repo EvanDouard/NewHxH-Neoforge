@@ -36,6 +36,10 @@ public final class ClientHooks {
         else if (payload.result() == 0) mc.setScreen(new ArmWrestleScreen(payload));
     }
 
+    public static void openAirship(com.evandouard.hxh.network.OpenAirshipPayload payload) {
+        Minecraft.getInstance().setScreen(new AirshipMapScreen(payload));
+    }
+
     public static void openComputer(com.evandouard.hxh.network.OpenComputerPayload payload) {
         Minecraft.getInstance().setScreen(new HunterComputerScreen(payload));
     }

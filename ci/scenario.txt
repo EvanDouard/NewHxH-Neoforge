@@ -2604,6 +2604,12 @@ wait 15
 shot 99u_quetes_decouvrir_heaven_arena
 closescreen
 camera first
+cmd hunter jenny set 1500
+cmd hunter airship
+wait 10
+shot 99v_dirigeable_carte
+closescreen
+cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative
 quit
