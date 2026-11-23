@@ -1720,6 +1720,8 @@ clearchat
 shot 63e_gon_ultime_transformation
 wait 40
 shot 63f_gon_ultime_adulte
+wait 30
+shot 63g_gon_adulte_cheveux_1s5
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 hud off
 hud on

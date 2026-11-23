@@ -89,3 +89,28 @@ short déchiré, chevelure qui « coule » vers le ciel comme une flamme noire :
 large, anneau intermédiaire, cœur très haut, mèches courtes de remplissage et 3 mèches fines qui dépassent ;
 base épaisse, pointe effilée, trois plans de profondeur), boîte de collision 0,95 × 2,5, explosion
 d'aura, rugissement et message aux joueurs proches. NBT `HxhAdult:1b` pour le faire apparaître déjà adulte.
+
+### Animations des cheveux (Gon adulte)
+
+Rig généré par `tools/models/gon_adulte.py` (il n'y a pas de fichier Blockbench : le modèle est produit par le
+script) :
+
+```
+head
+└ hair_root            base fixe : calotte, frange (ab_*)
+  └ hair_growth_root   déploiement / croissance (réservé à hair_transform)
+    ├ hair_back        couche arrière
+    ├ hair_core        cœur : masse centrale + mèches du milieu
+    └ hair_front       couche avant
+       └ <mèche>_0 → <mèche>_1 → … → <mèche>_n   base → milieu → pointe (pivots à l'origine de chaque tronçon)
+```
+
+Contrôleur `hair_motion_controller` (GeckoLib 4.6.6, dans `GonUltimeEntity`, actif seulement en adulte) :
+`animation.gon.hair_idle`, boucle de 4 s, n'anime que les tronçons `<mèche>_1…n` (85 os) : racines immobiles,
+amplitude croissante vers la pointe (rotations cumulées le long de la chaîne), phase et axe propres à chaque
+mèche, 2 à 3° au plus pour garder la silhouette verticale.
+
+Répartition prévue pour éviter les conflits (dans GeckoLib 4, deux contrôleurs qui animent le même os ne
+s'additionnent pas : le dernier gagne) : `hair_transform` sur `hair_growth_root`, `hair_aura` et `hair_burst` sur
+les couches et les racines `<mèche>_0`, dans un second contrôleur `hair_fx_controller`. Le mouvement passif ne
+touche jamais ces os, donc les effets se composent par la hiérarchie.

@@ -113,19 +113,75 @@ def build_head(m):
 # Cheveux : masse qui épouse le crâne, très grandes mèches qui montent très haut et vers l'arrière, longues
 # mèches qui retombent dans le dos
 
+STRANDS = []   # (nom, tronçons, longueur) des mèches animées, rempli par build_hair
+
+
+def hair_idle(period=6.0, step=0.25):
+    """animation.gon.hair_idle : mouvement permanent, lent et très rigide (énergie verticale, pas de physique).
+
+    - Racines (<mèche>_0) : jamais animées → la base reste fixée au crâne.
+    - Tronçons intermédiaires : oscillation angulaire très faible ; pointe (dernier tronçon) un peu plus mobile.
+      Les rotations s'additionnent le long de la chaîne, donc l'amplitude croît naturellement vers la pointe.
+    - Chaque mèche a sa phase, son axe (part avant/arrière vs gauche/droite) et une 2e harmonique propre :
+      mouvement asymétrique, jamais uniforme, mais toujours lent (boucle parfaite de 6 s).
+    - Pointe : très légère respiration d'étirement vertical (échelle Y 1 → 1,012) : les cheveux semblent
+      continuer leur ascension sans que la silhouette change.
+    N'anime que les tronçons <mèche>_1…n : hair_growth_root et les couches restent libres pour les animations
+    à venir (voir docs/apparences-personnages.md, « Animations des cheveux »)."""
+    import math
+    import random
+    rnd = random.Random(5)
+    n = int(round(period / step))
+    bones = {}
+    for name, segs, length in STRANDS:
+        phase = rnd.uniform(0, 2 * math.pi)
+        phase2 = rnd.uniform(0, 2 * math.pi)
+        axis = rnd.uniform(0.35, 0.65)
+        amp = 0.45 + min(0.45, length / 120.0)       # degrés par tronçon (pointe), 0,45 à 0,9
+        for k in range(1, segs):
+            last = k == segs - 1
+            a = amp * (k / (segs - 1)) ** 1.5           # milieu presque immobile, pointe un peu plus
+            frames, scales = {}, {}
+            for i in range(n + 1):
+                t = i * step
+                w = 2 * math.pi * t / period + phase + 0.5 * k      # léger retard d'un tronçon à l'autre
+                wave = math.sin(w) + 0.3 * math.sin(2 * w + phase2)
+                wave2 = math.cos(w) + 0.3 * math.cos(2 * w + phase2)
+                key = f'{t:.2f}'
+                frames[key] = [round(a * axis * wave, 3), 0.0, round(a * (1 - axis) * wave2, 3)]
+                if last:
+                    sy = 1 + 0.006 * (1 + math.sin(2 * math.pi * t / period + phase2))
+                    scales[key] = [1.0, round(sy, 4), 1.0]
+            bone = {'rotation': frames}
+            if last:
+                bone['scale'] = scales
+            bones[f'{name}_{k}'] = bone
+    return {'loop': True, 'animation_length': period, 'bones': bones}
+
+
 def mk(lit):
     return lambda t: strand_paint(t, lit)
 
 
 def build_hair(m):
     top = HEAD_Y + HEAD[1]
-    m.bone('hair', [0, top, 0], 'head')
+    # Rig des cheveux (animation) :
+    #   hair_root          base fixe (calotte, frange) — enfant de head
+    #   └ hair_growth_root déploiement / croissance (transformation) — échelle et translation globales
+    #     ├ hair_back      couche arrière
+    #     ├ hair_core      cœur (masse centrale + mèches du milieu)
+    #     └ hair_front     couche avant
+    # Chaque mèche est une chaîne d'os <nom>_0 (base), <nom>_1… (milieu), dernier (pointe), pivot à son origine.
+    m.bone('hair_root', [0, top, 0], 'head')
+    m.bone('hair_growth_root', [0, top, 0], 'hair_root')
+    for layer in ('hair_back', 'hair_core', 'hair_front'):
+        m.bone(layer, [0, top, 0], 'hair_growth_root')
     cap = hair_paint(0.05)
-    m.cube('hair', [-4.2, top - 2.0, -4.2], [8.4, 2.6, 8.4], cap)
-    m.cube('hair', [-3.6, top + 0.4, -3.4], [7.2, 1.4, 6.8], hair_paint(0.12))
-    m.cube('hair', [-4.2, HEAD_Y + 1.0, 1.2], [8.4, 5.4, 3.2], cap)
+    m.cube('hair_root', [-4.2, top - 2.0, -4.2], [8.4, 2.6, 8.4], cap)
+    m.cube('hair_root', [-3.6, top + 0.4, -3.4], [7.2, 1.4, 6.8], hair_paint(0.12))
+    m.cube('hair_root', [-4.2, HEAD_Y + 1.0, 1.2], [8.4, 5.4, 3.2], cap)
     for sx in (-1, 1):
-        m.cube('hair', [sx * 4.1 - 0.5, top - 3.4, -3.0], [1.0, 1.8, 4.4], cap)
+        m.cube('hair_root', [sx * 4.1 - 0.5, top - 3.4, -3.0], [1.0, 1.8, 4.4], cap)
     # Colonne de Gon adulte (2e passe) : chevelure qui s'étire vers le ciel. Base plus volumineuse (racines évasées
     # qui penchent vers l'extérieur puis se redressent), partie intermédiaire plus étroite, sommet irrégulier.
     # Trois plans : masse centrale sombre, mèches secondaires en retrait (plus sombres), mèches de premier plan
@@ -140,8 +196,8 @@ def build_hair(m):
     import math
     import random
     rnd = random.Random(23)
-    m.cube('hair', [-3.0, top - 1.2, -2.3], [6.0, 22.0, 4.6], hair_paint(-0.16))      # cœur dense (caché)
-    m.cube('hair', [-2.2, top + 20.0, -1.6], [4.4, 10.0, 3.2], hair_paint(-0.16))
+    m.cube('hair_core', [-3.0, top - 1.2, -2.3], [6.0, 22.0, 4.6], hair_paint(-0.16))      # cœur dense (caché)
+    m.cube('hair_core', [-2.2, top + 20.0, -1.6], [4.4, 10.0, 3.2], hair_paint(-0.16))
 
     def flow(name, x, z, y0, L, W, lean, bend, lit, segs, flat=0.8, twist=0.0, tip=0.05):
         """Mèche ascendante : penche de `lean` degrés vers l'extérieur à la racine (direction du point (x, z)),
@@ -150,9 +206,11 @@ def build_hair(m):
         ux, uz = x / r, z / r
         rz, rx = -lean * ux, lean * uz
         curve = (-bend * uz, -bend * ux)
+        layer = 'hair_front' if z < -1.5 else 'hair_back' if z > 1.5 else 'hair_core'
         lock(m, name, [x, y0, z], L, W, rx + rnd.uniform(-1.5, 1.5), rz + rnd.uniform(-1.5, 1.5), mk(lit),
              ry=twist, flat=flat, curve=curve, segs=segs, root=1.35, tip=tip, taper_pow=0.55,
-             skew=rnd.uniform(-0.05, 0.05), belly=1.08)
+             skew=rnd.uniform(-0.05, 0.05), belly=1.08, parent=layer)
+        STRANDS.append((name, segs, L))
 
     # (x, z, longueur, largeur, inclinaison racine, virage, éclairage)
     core = [   # cœur : les plus hautes, presque verticales
@@ -200,7 +258,7 @@ def build_hair(m):
                                                     ('ab_3', 1.8, -4.25, 2.2, 3.0, 14, 8, 0.1, 176, 0.1),
                                                     ('ab_4', 3.4, -4.4, 2.8, 2.6, 28, 10, -0.12, 166, 0.18)):
         lock(m, name, [x, top + 0.2, z], L, W, rxb, rz, mk(lt), flat=0.5, curve=(-arc, arc * (1 if rz > 0 else -1) * 0.5),
-             segs=2, root=1.15, tip=0.1, skew=sk)
+             segs=2, root=1.15, tip=0.1, skew=sk, parent='hair_root')
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -249,6 +307,7 @@ def build_body(m):
 
 
 def build():
+    STRANDS.clear()
     m = Model('gon_adulte', density=4, tex_width=1024)
     m.bone('body', [0, 18.0, 0])
     m.bone('torso', [0, WAIST_Y, 0], 'body')
@@ -264,6 +323,7 @@ def build():
     build_hair(m)
     build_body(m)
     m.animations = humanoid_animations(arm_swing=24, leg_swing=26, breath=2.0)
+    m.animations['animation.gon.hair_idle'] = hair_idle()
     return m
 
 

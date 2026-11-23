@@ -124,6 +124,31 @@ public class GonUltimeEntity extends CharacterEntity {
         }
     }
 
+    // ---------- Animation des cheveux (adulte) ----------
+    /**
+     * Animations des cheveux de Gon adulte, dans leur propre contrôleur (indépendant du corps). Répartition des os
+     * pour éviter que deux contrôleurs écrivent sur les mêmes os :
+     * <ul>
+     *   <li>{@code hair_motion_controller} : mouvement passif, uniquement les tronçons des mèches
+     *       ({@code <mèche>_1}, {@code _2}…) — {@code animation.gon.hair_idle} ;</li>
+     *   <li>à venir, {@code hair_fx_controller} : {@code hair_transform} sur {@code hair_growth_root} (déploiement),
+     *       {@code hair_aura} et {@code hair_burst} sur les couches {@code hair_back / hair_core / hair_front} et
+     *       les racines {@code <mèche>_0}. Ces os ne sont jamais touchés par le mouvement passif : les deux
+     *       s'additionnent le long de la chaîne d'os.</li>
+     * </ul>
+     * Purement visuel côté client ; seul l'état adulte vient du serveur (donnée synchronisée {@link #ADULT}).
+     */
+    public static final String HAIR_CONTROLLER = "hair_motion_controller";
+    private static final software.bernie.geckolib.animation.RawAnimation HAIR_IDLE =
+            software.bernie.geckolib.animation.RawAnimation.begin().thenLoop("animation.gon.hair_idle");
+
+    @Override
+    public void registerControllers(software.bernie.geckolib.animation.AnimatableManager.ControllerRegistrar controllers) {
+        super.registerControllers(controllers);
+        controllers.add(new software.bernie.geckolib.animation.AnimationController<>(this, HAIR_CONTROLLER, 10,
+                state -> isAdult() ? state.setAndContinue(HAIR_IDLE) : software.bernie.geckolib.animation.PlayState.STOP));
+    }
+
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
