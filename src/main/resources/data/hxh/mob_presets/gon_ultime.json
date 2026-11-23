@@ -1,0 +1,5 @@
+{
+  "entity": "hxh:gon_ultime",
+  "stats": { "all": 45, "strength": 55, "endurance": 50 },
+  "nen": { "level": 50, "kit": "gon", "mastery": 35 }
+}

@@ -77,3 +77,12 @@ poing électrique) et l'IA lance les techniques comme pour tout mob au Nen (`Nen
 ils se promènent, regardent les joueurs, ne ripostent qu'à qui les frappe, et les autres personnages proches
 viennent aider. Pour ajouter un personnage : un type dans `ModEntities.character(id)`, son œuf, son mob
 d'exemple, ses traductions et son modèle `tools/models/<id>.py`.
+
+### Gon ultime et Gon adulte
+
+`hxh:gon_ultime` (œuf « Gon (ultime) », classe `mob/GonUltimeEntity`) se bat comme Gon enfant (Nen 50 : pas de
+Jajanken ultime, qui demande le niveau 60). Sous 30 % de vie, il passe une fois pour toutes en **mode adulte** :
+stats ×3 (plafonnées à 100), Nen 100 et maîtrises 80 (Jajanken ultime accessible, et c'est sa prochaine technique),
+aura et vie pleines, modèle `gon_adulte` (`tools/models/gon_adulte.py` : torse nu musclé, épaules très larges,
+short déchiré, chevelure qui monte très haut et retombe dans le dos), boîte de collision 0,95 × 2,5, explosion
+d'aura, rugissement et message aux joueurs proches. NBT `HxhAdult:1b` pour le faire apparaître déjà adulte.

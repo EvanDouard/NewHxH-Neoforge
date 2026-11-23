@@ -58,6 +58,11 @@ public class CharacterEntity extends PathfinderMob implements GeoEntity {
         return key.getPath();
     }
 
+    /** Modèle GeckoLib à afficher (par défaut celui du personnage ; Gon ultime change de modèle en adulte). */
+    public String modelId() {
+        return characterId();
+    }
+
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));

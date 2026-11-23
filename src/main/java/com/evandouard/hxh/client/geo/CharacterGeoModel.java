@@ -18,21 +18,21 @@ import software.bernie.geckolib.model.data.EntityModelData;
 public class CharacterGeoModel extends GeoModel<CharacterEntity> {
     @Override
     public ResourceLocation getModelResource(CharacterEntity e) {
-        return NpcGeoModel.geo(e.characterId());
+        return NpcGeoModel.geo(e.modelId());
     }
 
     @Override
     public ResourceLocation getTextureResource(CharacterEntity e) {
         if (e.isAggressive()) {
-            ResourceLocation cold = NpcGeoModel.texture(e.characterId() + "_froid");
+            ResourceLocation cold = NpcGeoModel.texture(e.modelId() + "_froid");
             if (Minecraft.getInstance().getResourceManager().getResource(cold).isPresent()) return cold;
         }
-        return NpcGeoModel.texture(e.characterId());
+        return NpcGeoModel.texture(e.modelId());
     }
 
     @Override
     public ResourceLocation getAnimationResource(CharacterEntity e) {
-        return HxHMod.id("animations/entity/npc/" + e.characterId() + ".animation.json");
+        return HxHMod.id("animations/entity/npc/" + e.modelId() + ".animation.json");
     }
 
     @Override

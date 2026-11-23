@@ -56,6 +56,11 @@ public final class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> GON = character("gon");
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> KILLUA = character("killua");
 
+    /** Gon « ultime » : passe en Gon adulte quand sa vie tombe sous 30 % (stats ×3, Jajanken ultime). */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.GonUltimeEntity>> GON_ULTIME =
+            ENTITIES.register("gon_ultime", () -> EntityType.Builder.of(com.evandouard.hxh.mob.GonUltimeEntity::new,
+                    MobCategory.CREATURE).sized(0.6f, 1.5f).eyeHeight(1.3f).clientTrackingRange(10).build("gon_ultime"));
+
     private static DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> character(String id) {
         return ENTITIES.register(id, () -> EntityType.Builder.of(com.evandouard.hxh.mob.CharacterEntity::new,
                 MobCategory.CREATURE).sized(0.6f, 1.5f).eyeHeight(1.3f).clientTrackingRange(10).build(id));
@@ -101,6 +106,7 @@ public final class ModEntities {
         event.put(KIRIKO.get(), com.evandouard.hxh.beast.KirikoEntity.createAttributes().build());
         event.put(GON.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(KILLUA.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
+        event.put(GON_ULTIME.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(MAN_FACED_APE.get(), com.evandouard.hxh.beast.ManFacedApeEntity.createAttributes().build());
         event.put(CHIMERA_ANT.get(), com.evandouard.hxh.beast.ChimeraAntEntity.createAttributes().build());
     }
