@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false  # un run commencé va au bout (sinon chaque push annule le précédent et rien n'est jamais validé)
 
 jobs:
   build-test-play:

@@ -252,7 +252,7 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] À juger : intensité du liseré de Gyo (opacité 0xB0 au bord, renforcée après la 1re capture trop pâle).
 
 ## Retours du 19 novembre (soir) — carnet, coût d'aura, coup de pied, examen
-- [x] CI : GameTests `costCollapsesBrutallyBeforeLevelFive` (coût ×5 à la maîtrise 0, ×2 au niveau 5, ×1 au niveau 20 ; Ten et In coûtent de l'aura à tenir de 0 à 5, rien ensuite), `strongKickReachesFarBlocksAndSlamsIntoTheGround` (portée du coup de pied fort sur les blocs, cuvette au sol), `profileDetailsShowEffectsAndEfficiencyPerLevel` (fiches par niveau, efficacité marquée, paquet du carnet).
+- [x] CI : GameTests `costCollapsesBrutallyBeforeLevelFive` (coût ×5 à la maîtrise 0, ×2 au niveau 5, ×1 au niveau 20 ; Ten et In coûtent de l'aura à tenir de 0 à 5, rien ensuite), `strongKickSlamsIntoTheGround` (cuvette au sol ; le coup de pied dans le vide n'abîme que les blocs à portée de pied), `profileDetailsShowEffectsAndEfficiencyPerLevel` (fiches par niveau, efficacité marquée, paquet du carnet).
 - [x] CI : captures 99g à 99q — fiches Ten, Gyo, Hatsu, Niveau de Nen ; onglet Personnage (cartes de stats), fiches Force, Volonté, Type de Nen ; onglet Aura, fiches Soin et Régénération.
 - [ ] En jeu : tenir le Ten au niveau 0 vide l'aura en ≈ 30 s (5/s − 2/s de régénération) ; à 5 il ne coûte plus rien. Trop dur / trop doux ?
 - [ ] En jeu : coup de pied fort visé vers le bas → la cible s'écrase et creuse une cuvette ; coup de pied dans le vide vers un mur lointain → éclats, trou à partir d'un certain niveau de Force (règle hxhNenDestruction).
