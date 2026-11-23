@@ -2656,10 +2656,10 @@ shot 99v_dirigeable_carte
 closescreen
 cmd hunter jenny set 6000
 cmd hunter airship whale_island
-wait 25
+wait 400
 shot 99w_monde_hxh_ile_de_la_baleine
 cmd hunter airship kukuroo_mountain
-wait 25
+wait 400
 shot 99x_monde_hxh_montagne_kukuroo
 cmd hunter jenny set 0
 cmd difficulty peaceful
