@@ -126,30 +126,58 @@ def build_hair(m):
     m.cube('hair', [-4.2, HEAD_Y + 1.0, 1.2], [8.4, 5.4, 3.2], cap)
     for sx in (-1, 1):
         m.cube('hair', [sx * 4.1 - 0.5, top - 3.4, -3.0], [1.0, 1.8, 4.4], cap)
-    # (nom, x, y, z, longueur, largeur, rx, rz, ry, aplatissement, courbure, éclairage, options)
-    dominant = [
-        ('a_top', 0.6, top + 0.6, -0.4, 33.0, 10.4, 8, -6, 8, 0.62, 10, 0.22, dict(skew=-0.06, tip=0.08, root=1.35)),
-        ('a_top_r', -2.6, top + 0.2, 0.8, 27.0, 9.4, 20, 20, -14, 0.5, 14, 0.1, dict(skew=0.1, tip=0.1, root=1.35)),
-        ('a_top_l', 2.8, top, 0.4, 24.0, 9.0, 14, -26, 18, 0.66, 12, 0.06, dict(skew=-0.1, tip=0.12, root=1.35)),
-        ('a_back', 0.2, top - 0.4, 2.6, 28.0, 10.2, 36, -4, 4, 0.5, 14, 0.04, dict(skew=0.06, tip=0.1, root=1.35)),
-        ('a_back_r', -2.8, top - 1.4, 3.0, 21.0, 8.6, 48, 26, 18, 0.45, 12, 0.16, dict(skew=0.1, tip=0.12)),
-        ('a_back_l', 3.0, top - 1.2, 2.6, 19.0, 8.2, 44, -32, -16, 0.55, 12, -0.08, dict(skew=-0.1, tip=0.12)),
-        ('a_front', -0.8, top + 0.2, -2.4, 16.0, 7.8, -14, 10, -6, 0.55, 12, 0.24, dict(skew=0.08, tip=0.12)),
+    # Colonne de Gon adulte : une immense masse verticale, étroite (largeur presque constante), faite de longues
+    # mèches verticales serrées qui se chevauchent ; sommet irrégulier (hauteurs variées, quelques pointes qui
+    # dépassent), pas de pics radiaux. Chaque mèche : un long fût de section constante (sa propre largeur et
+    # profondeur) puis une pointe effilée (mèche organique courte). Un noyau sombre bouche les interstices.
+    import random
+    rnd = random.Random(11)
+    m.cube('hair', [-3.5, top - 1.2, -2.6], [7.0, 33.0, 5.4], hair_paint(-0.1))          # noyau
+    # (x, z, largeur, profondeur, hauteur totale, base y, inclinaison rx, rz, éclairage)
+    strands = [
+        # rangée avant (au-dessus du front)
+        (-3.5, -3.1, 2.9, 2.8, 39, top - 1.0, -2, 2, 0.26),
+        (-1.2, -3.3, 3.1, 2.9, 43, top - 0.8, -3, 0, 0.3),
+        (1.2, -3.2, 3.0, 2.8, 41, top - 0.8, -2, -1, 0.24),
+        (3.5, -3.0, 2.8, 2.7, 37, top - 1.0, -1, -2, 0.2),
+        # côtés : partent des tempes, montent à la verticale (parois de la colonne)
+        (-4.5, -1.2, 2.6, 3.2, 40, top - 3.0, 0, 2, 0.22),
+        (-4.6, 1.4, 2.6, 3.2, 36, top - 3.2, 1, 3, 0.12),
+        (4.5, -1.0, 2.6, 3.2, 38, top - 3.0, 0, -2, 0.08),
+        (4.6, 1.6, 2.6, 3.2, 41, top - 3.2, 1, -3, 0.04),
+        # milieu (au-dessus du noyau) : les plus hautes, pour une masse centrale dense
+        (-1.4, 0.2, 3.4, 3.4, 47, top - 0.4, 1, 1, 0.18),
+        (1.6, -0.4, 3.2, 3.2, 45, top - 0.4, 0, -1, 0.14),
+        # rangée arrière
+        (-3.3, 3.2, 3.0, 2.8, 38, top - 2.0, 3, 2, 0.02),
+        (-1.0, 3.5, 3.2, 2.8, 42, top - 1.6, 4, 0, -0.04),
+        (1.4, 3.4, 3.0, 2.8, 40, top - 1.6, 3, -1, 0.1),
+        (3.6, 3.1, 2.8, 2.8, 36, top - 2.0, 2, -2, -0.06),
     ]
-    intermediate = [
-        ('a_i1', 1.8, top, -1.8, 10.0, 6.4, -6, -22, 12, 0.6, 12, 0.18, dict(tip=0.14)),
-        ('a_i2', -3.0, top - 0.4, -1.0, 9.6, 6.2, 6, 32, -10, 0.55, 12, 0.12, dict(tip=0.14, skew=0.08, root=1.4)),
-        ('a_i3', 3.6, top - 1.2, 1.0, 9.0, 6.0, 30, -40, -8, 0.55, 12, 0.02, dict(tip=0.14, root=1.4)),
-        ('a_i4', -3.6, top - 1.4, 1.2, 9.0, 6.0, 30, 38, 8, 0.55, 12, 0.06, dict(tip=0.14, root=1.4)),
+    for i, (x, z, w, d, H, y0, rx, rz, lit) in enumerate(strands):
+        bone = f'col_{i}'
+        m.bone(bone, [x, y0, z], 'hair', rotation=[rx, rnd.uniform(-6, 6), rz])
+        body = H * rnd.uniform(0.74, 0.8)
+        m.cube(bone, [x - w / 2, y0, z - d / 2], [w, body, d], mk(lit)(0.45))
+        # pointe : courte mèche effilée, légèrement déjetée, qui prolonge le fût
+        lock(m, f'col_{i}_tip', [x, y0 + body - 0.4, z], H - body + 0.4, w * 1.04, rnd.uniform(-5, 5),
+             rnd.uniform(-7, 7), mk(lit + 0.04), flat=d / w, curve=(rnd.uniform(-6, 6), rnd.uniform(-6, 6)),
+             segs=2, root=1.0, tip=rnd.choice((0.06, 0.1, 0.16)), skew=rnd.uniform(-0.12, 0.12), parent=bone)
+    # quelques mèches fines qui dépassent du sommet (irrégularités)
+    for name, x, z, y_off, L, W, rx, rz, lit in (('col_x1', -0.4, -0.6, 40.0, 9.0, 2.6, -3, 5, 0.2),
+                                                  ('col_x2', 2.4, 1.0, 37.5, 7.0, 2.4, 4, -8, 0.1),
+                                                  ('col_x3', -2.8, 1.6, 34.0, 7.5, 2.4, 2, 9, 0.12)):
+        lock(m, name, [x, top + y_off - 6, z], L + 6, W, rx, rz, mk(lit), flat=0.9, curve=(2, 3), segs=2,
+             root=1.0, tip=0.08)
+    # transition à la base : mèches courtes qui épousent le crâne puis se redressent vers la colonne
+    base_locks = [
+        ('b_l', -4.3, top - 3.4, -2.6, 5.0, 3.4, -4, 12, 0, 0.6, 10, 0.16, dict(tip=0.3, root=1.2)),
+        ('b_r', 4.3, top - 3.4, -2.4, 4.6, 3.2, -4, -12, 0, 0.6, 10, 0.06, dict(tip=0.3, root=1.2)),
+        ('b_bl', -3.2, top - 4.4, 3.6, 5.4, 3.6, 10, 10, 0, 0.6, 10, 0.0, dict(tip=0.3, root=1.2)),
+        ('b_br', 3.2, top - 4.4, 3.6, 5.0, 3.6, 10, -10, 0, 0.6, 10, -0.04, dict(tip=0.3, root=1.2)),
+        ('b_n', 0.0, top - 5.6, 4.0, 4.4, 4.4, 14, 0, 0, 0.6, 8, -0.06, dict(tip=0.3, root=1.2)),
     ]
-    flowing = [   # longues mèches qui retombent dans le dos
-        ('a_down1', -1.8, top - 2.4, 4.0, 15.0, 7.4, 172, 8, 0, 0.34, 8, -0.02, dict(tip=0.12, skew=0.08)),
-        ('a_down2', 2.2, top - 3.0, 4.0, 13.0, 6.8, 168, -10, 0, 0.34, 8, 0.14, dict(tip=0.14, skew=-0.08)),
-        ('a_down3', 0.2, top - 4.6, 4.2, 10.0, 6.6, 164, 2, 0, 0.36, 6, -0.1, dict(tip=0.16)),
-    ]
-    arched(m, dominant, mk, segs=4)
-    arched(m, intermediate, mk, segs=3)
-    arched(m, flowing, mk, segs=3)
+    arched(m, base_locks, mk, segs=2)
     for name, x, z, L, W, rz, arc, sk, rxb, lt in (('ab_1', -2.6, -4.2, 2.8, 3.2, -22, 10, 0.12, 166, 0.14),
                                                     ('ab_2', -0.4, -4.45, 3.6, 3.4, -6, 12, -0.06, 170, 0.24),
                                                     ('ab_3', 1.8, -4.25, 2.2, 3.0, 14, 8, 0.1, 176, 0.1),
