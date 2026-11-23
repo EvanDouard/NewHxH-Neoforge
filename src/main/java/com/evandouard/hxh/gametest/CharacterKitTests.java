@@ -280,6 +280,26 @@ public final class CharacterKitTests {
         helper.assertTrue(com.evandouard.hxh.hatsu.Characters.rage(youpi) == 30, "Rage : 15 dégâts → 30 (" + com.evandouard.hxh.hatsu.Characters.rage(youpi) + ")");
         float angry = rageP.modifyOutgoingMelee(youpi, meruem, 10f);
         helper.assertTrue(Math.abs(angry - 11f) < 0.01f, "Rage 30 : poings +10 % (" + angry + ")");
+        Zombie foe = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(12, 1, 1));
+        var genius = com.evandouard.hxh.hatsu.Characters.MERUEM_KING;
+        float first = genius.modifyOutgoingMelee(meruem, foe, 10f);
+        genius.modifyOutgoingMelee(meruem, foe, 10f);
+        float third = genius.modifyOutgoingMelee(meruem, foe, 10f);
+        helper.assertTrue(third > first * 1.09f, "Génie du combat : le 3e coup frappe plus fort (" + first + " → " + third + ")");
+        Zombie pouf = husk(helper, 14);
+        hunter(pouf, NenType.MANIPULATOR, "shaiapouf");
+        var calc = com.evandouard.hxh.hatsu.Characters.POUF_CALCULATING;
+        var hitByFoe = helper.getLevel().damageSources().mobAttack(foe);
+        float unseen = calc.modifyIncoming(pouf, hitByFoe, 10f);
+        float seen = calc.modifyIncoming(pouf, hitByFoe, 10f);
+        helper.assertTrue(unseen == 10f && Math.abs(seen - 8.5f) < 0.01f, "Esprit calculateur : 10 puis 8,5 (" + unseen + ", " + seen + ")");
+        Zombie palm = husk(helper, 16);
+        hunter(palm, NenType.ENHANCER, "palm");
+        for (int i = 0; i < 4; i++) {
+            Zombie z = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(18 + i, 1, 1));
+            com.evandouard.hxh.hatsu.Characters.PALM_WINK_BLUE.modifyOutgoingMelee(palm, z, 1f);
+        }
+        helper.assertTrue(com.evandouard.hxh.hatsu.Characters.palmTracked(palm).size() == 3, "Wink Blue : 3 cibles suivies au plus");
         Zombie phinks = husk(helper, 4);
         hunter(phinks, NenType.ENHANCER, "phinks");
         Zombie dummy = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(6, 1, 1));

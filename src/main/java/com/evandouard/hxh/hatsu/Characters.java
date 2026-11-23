@@ -736,12 +736,77 @@ public final class Characters {
     /** Données persistantes de Palm : la cible espionnée (Wink Blue). */
     public static final String PALM_MARK = "hxh_palm_mark";
 
-    /** Wink Blue : le dernier ennemi frappé reste visible (brille) pendant 30 s. */
+    /** Wink Blue : suit jusqu'à 3 ennemis observés (frappés) ; ils brillent même à travers les murs. Un nouveau remplace le plus ancien. */
     public static final Passive PALM_WINK_BLUE = new Passive("palm_wink_blue", true) {
         @Override
         public float modifyOutgoingMelee(LivingEntity owner, LivingEntity target, float amount) {
+            var list = owner.getPersistentData().getList(PALM_MARK, net.minecraft.nbt.Tag.TAG_STRING);
+            String id = target.getUUID().toString();
+            for (int i = 0; i < list.size(); i++) if (list.getString(i).equals(id)) { list.remove(i); break; }
+            list.add(net.minecraft.nbt.StringTag.valueOf(id));
+            while (list.size() > 3) list.remove(0);
+            owner.getPersistentData().put(PALM_MARK, list);
             NenFx.mark(owner, target, 0xFF6FA8FF, 600);
             return amount;
+        }
+
+        @Override
+        public void tick(LivingEntity owner) {
+            if (owner.tickCount % 20 != 0 || !(owner.level() instanceof net.minecraft.server.level.ServerLevel sl)) return;
+            var list = owner.getPersistentData().getList(PALM_MARK, net.minecraft.nbt.Tag.TAG_STRING);
+            for (int i = 0; i < list.size(); i++) {
+                if (sl.getEntity(java.util.UUID.fromString(list.getString(i))) instanceof LivingEntity t && t.isAlive())
+                    t.addEffect(Kinds.quiet(MobEffects.GLOWING, 40, 0), owner);
+            }
+        }
+    };
+
+    /** Ennemis suivis par Palm (Wink Blue), du plus ancien au plus récent. */
+    public static java.util.List<java.util.UUID> palmTracked(LivingEntity owner) {
+        var list = owner.getPersistentData().getList(PALM_MARK, net.minecraft.nbt.Tag.TAG_STRING);
+        java.util.List<java.util.UUID> out = new java.util.ArrayList<>();
+        for (int i = 0; i < list.size(); i++) out.add(java.util.UUID.fromString(list.getString(i)));
+        return out;
+    }
+
+    /** Sens du fil : les ennemis pris dans ses fils (ralentis) à 16 blocs brillent ; un ennemi à 4 blocs lui donne des réflexes (Vitesse). */
+    public static final Passive MACHI_THREAD_SENSE = new Passive("machi_thread_sense", true) {
+        @Override
+        public void tick(LivingEntity owner) {
+            if (owner.tickCount % 20 != 0) return;
+            boolean near = false;
+            for (LivingEntity e : Targeting.around(owner, 16)) {
+                if (Kinds.isAlly(owner, e)) continue;
+                if (e.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)) e.addEffect(Kinds.quiet(MobEffects.GLOWING, 40, 0), owner);
+                if (owner.distanceTo(e) <= 4) near = true;
+            }
+            if (near) owner.addEffect(Kinds.quiet(MobEffects.MOVEMENT_SPEED, 40, 0), owner);
+        }
+    };
+
+    /** Esprit calculateur : un ennemi observé (qui l'a frappé ou qu'il a frappé) fait 15 % de dégâts en moins ensuite. Retient 8 ennemis. */
+    public static final Passive POUF_CALCULATING = new Passive("pouf_calculating", true) {
+        @Override
+        public float modifyIncoming(LivingEntity owner, DamageSource source, float amount) {
+            if (source.getEntity() == null) return amount;
+            boolean known = observed(owner, source.getEntity().getUUID());
+            return known ? amount * 0.85f : amount;
+        }
+
+        @Override
+        public float modifyOutgoingMelee(LivingEntity owner, LivingEntity target, float amount) {
+            observed(owner, target.getUUID());
+            return amount;
+        }
+
+        /** Vrai si déjà observé ; sinon le retient. */
+        private boolean observed(LivingEntity owner, java.util.UUID id) {
+            var list = owner.getPersistentData().getList("hxh_pouf_seen", net.minecraft.nbt.Tag.TAG_STRING);
+            for (int i = 0; i < list.size(); i++) if (list.getString(i).equals(id.toString())) return true;
+            list.add(net.minecraft.nbt.StringTag.valueOf(id.toString()));
+            while (list.size() > 8) list.remove(0);
+            owner.getPersistentData().put("hxh_pouf_seen", list);
+            return false;
         }
     };
 
@@ -768,7 +833,21 @@ public final class Characters {
 
         @Override
         public float modifyOutgoingMelee(LivingEntity owner, LivingEntity target, float amount) {
-            return amount * (1f + Math.min(0.25f, data(owner).kitValue("king") * 0.005f));
+            float out = amount * (1f + Math.min(0.25f, data(owner).kitValue("king") * 0.005f));
+            // Génie du combat : +5 % par coup déjà porté au même ennemi (20 % au plus)
+            var study = owner.getPersistentData().getCompound("hxh_meruem_study");
+            String id = target.getUUID().toString();
+            int seen = study.getInt(id);
+            out *= 1f + Math.min(0.2f, seen * 0.05f);
+            study.putInt(id, seen + 1);
+            if (study.size() > 16) study.remove(study.getAllKeys().iterator().next());
+            owner.getPersistentData().put("hxh_meruem_study", study);
+            // Synthèse d'aura : achever un utilisateur du Nen rend 25 % d'aura
+            if (target.getHealth() - out <= 0 && data(target).nenUnlocked()) {
+                var d = data(owner);
+                d.setAura(Math.min(d.auraMax(), d.aura() + d.auraMax() * 0.25f));
+            }
+            return out;
         }
     };
 

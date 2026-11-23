@@ -83,7 +83,7 @@ public final class HatsuKits {
             Characters.UVOGIN_CHARGE);
     public static final HatsuKit FRANKLIN = playable("franklin", EMITTER, List.of(Characters.FRANKLIN_STURDY), Characters.FRANKLIN_DOUBLE_MACHINE_GUN,
             Characters.FRANKLIN_FOCUSED_SHOT, Characters.FRANKLIN_PIERCING_SHOT);
-    public static final HatsuKit MACHI = playable("machi", TRANSMUTER, List.of(Characters.MACHI_SUTURE), Characters.MACHI_NEN_THREADS,
+    public static final HatsuKit MACHI = playable("machi", TRANSMUTER, List.of(Characters.MACHI_SUTURE, Characters.MACHI_THREAD_SENSE), Characters.MACHI_NEN_THREADS,
             Characters.MACHI_STRANGLE,
             Characters.MACHI_INVISIBLE_WEB);
     public static final HatsuKit SHIZUKU = playable("shizuku", CONJURER, List.of(Characters.SHIZUKU_CLEANER), Characters.SHIZUKU_BLINKY);
@@ -113,7 +113,7 @@ public final class HatsuKits {
     public static final HatsuKit KNOV = playable("knov", EMITTER, List.of(Specials.KNOV_STRATEGIST), Specials.KNOV_MARK_DOOR, Specials.KNOV_HIDE_AND_SEEK);
     public static final HatsuKit KNUCKLE = playable("knuckle", CONJURER, List.of(Specials.KNUCKLE_HAKOWARE), Specials.KNUCKLE_POT_CLEAN, Specials.KNUCKLE_CANCEL,
             Characters.KNUCKLE_TORITATEN);
-    public static final HatsuKit SHAIAPOUF = playable("shaiapouf", MANIPULATOR, List.of(Specials.POUF_WINGS), Specials.POUF_SPIRITUAL_MESSAGE, Specials.POUF_BEELZEBUB);
+    public static final HatsuKit SHAIAPOUF = playable("shaiapouf", MANIPULATOR, List.of(Specials.POUF_WINGS, Characters.POUF_CALCULATING), Specials.POUF_SPIRITUAL_MESSAGE, Specials.POUF_BEELZEBUB);
     public static final HatsuKit WING = playable("wing", ENHANCER, List.of(Characters.WING_TEACHER), Characters.WING_SHINGEN_RYU);
 
     /**

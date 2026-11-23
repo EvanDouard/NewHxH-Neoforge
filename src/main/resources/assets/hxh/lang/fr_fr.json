@@ -385,7 +385,7 @@
   "kit.hxh.meruem": "Meruem",
   "kit.hxh.meruem.desc": "Le roi des fourmis-chimères.",
   "passive.hxh.meruem_king": "Roi",
-  "passive.hxh.meruem_king.desc": "Chaque ennemi vaincu le renforce (+0,5 % de dégâts, 25 % au plus). Corps du Roi : régénère 1 PV toutes les 2 s, dégâts physiques −15 %.",
+  "passive.hxh.meruem_king.desc": "Chaque ennemi vaincu le renforce (+0,5 % de dégâts, 25 % au plus). Corps du Roi : 1 PV / 2 s, physiques −15 %. Génie du combat : +5 % par coup déjà porté au même ennemi (20 % au plus). Synthèse d'aura : achever un utilisateur du Nen rend 25 % d'aura.",
   "technique.hxh.meruem_rage_blast": "Rafale de rage",
   "technique.hxh.meruem_rage_blast.desc": "Une onde d'aura sombre dévastatrice autour de lui (7 blocs).",
   "technique.hxh.meruem_photon": "Photon",
@@ -468,7 +468,7 @@
   "kit.hxh.palm": "Palm Siberia",
   "kit.hxh.palm.desc": "Élève de Knov, voyante, devenue fourmi-chimère.",
   "passive.hxh.palm_wink_blue": "Wink Blue",
-  "passive.hxh.palm_wink_blue.desc": "Le dernier ennemi frappé reste visible (il brille 30 s).",
+  "passive.hxh.palm_wink_blue.desc": "Suit jusqu'à 3 ennemis frappés : ils brillent à distance. Un nouveau remplace le plus ancien.",
   "technique.hxh.palm_black_widow": "Veuve noire",
   "technique.hxh.palm_black_widow.desc": "Armure noire, cheveux en lames : Force II, Résistance, vitesse pendant 20 s.",
   "kit.hxh.wing": "Wing",
@@ -1676,5 +1676,9 @@
   "technique.hxh.mob_bat_screech.desc": "Un cri (8 blocs) qui ralentit et étourdit.",
   "kit.hxh.mob_bat": "Chauve-souris au Nen",
   "passive.hxh.youpi_growing_rage": "Colère grandissante",
-  "passive.hxh.youpi_growing_rage.desc": "Plus Youpi encaisse de dégâts, plus sa jauge de rage monte (elle retombe lentement). Dès 20/50/80 : poings +10/+25/+40 %. La Rafale de rage consomme la jauge : jusqu'à ×2 de puissance."
+  "passive.hxh.youpi_growing_rage.desc": "Plus Youpi encaisse de dégâts, plus sa jauge de rage monte (elle retombe lentement). Dès 20/50/80 : poings +10/+25/+40 %. La Rafale de rage consomme la jauge : jusqu'à ×2 de puissance.",
+  "passive.hxh.machi_thread_sense": "Sens du fil",
+  "passive.hxh.machi_thread_sense.desc": "Les ennemis pris dans ses fils (ralentis) à 16 blocs brillent. Un ennemi à 4 blocs lui donne des réflexes (Vitesse I).",
+  "passive.hxh.pouf_calculating": "Esprit calculateur",
+  "passive.hxh.pouf_calculating.desc": "Un ennemi qu'il a observé (frappé ou frappeur) lui fait 15 % de dégâts en moins ensuite. Retient 8 ennemis."
 }

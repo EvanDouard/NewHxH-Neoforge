@@ -385,7 +385,7 @@
   "kit.hxh.meruem": "Meruem",
   "kit.hxh.meruem.desc": "Le roi des fourmis-chimères.",
   "passive.hxh.meruem_king": "King",
-  "passive.hxh.meruem_king.desc": "Each defeated enemy strengthens him (+0.5% damage, 25% max). King's Body: regenerates 1 HP every 2 s, physical damage −15%.",
+  "passive.hxh.meruem_king.desc": "Each defeated enemy strengthens him (+0.5% damage, max 25%). King's Body: 1 HP / 2 s, physical −15%. Combat Genius: +5% per hit already landed on the same enemy (max 20%). Aura Synthesis: finishing a Nen user restores 25% aura.",
   "technique.hxh.meruem_rage_blast": "Rage Blast",
   "technique.hxh.meruem_rage_blast.desc": "A devastating dark aura wave around him (7 blocks).",
   "technique.hxh.meruem_photon": "Photon",
@@ -468,7 +468,7 @@
   "kit.hxh.palm": "Palm Siberia",
   "kit.hxh.palm.desc": "Élève de Knov, voyante, devenue fourmi-chimère.",
   "passive.hxh.palm_wink_blue": "Wink Blue",
-  "passive.hxh.palm_wink_blue.desc": "The last enemy you hit stays visible (glows for 30 s).",
+  "passive.hxh.palm_wink_blue.desc": "Tracks up to 3 struck enemies: they glow at range. A new one replaces the oldest.",
   "technique.hxh.palm_black_widow": "Black Widow",
   "technique.hxh.palm_black_widow.desc": "Black armor, blade-like hair: Strength II, Resistance, speed for 20 s.",
   "kit.hxh.wing": "Wing",
@@ -1676,5 +1676,9 @@
   "technique.hxh.mob_bat_screech.desc": "A screech (8 blocks) that slows and dazes.",
   "kit.hxh.mob_bat": "Bat with Nen",
   "passive.hxh.youpi_growing_rage": "Growing Rage",
-  "passive.hxh.youpi_growing_rage.desc": "The more damage Youpi takes, the higher his rage gauge climbs (it slowly fades). At 20/50/80: fists +10/+25/+40%. Rage Blast consumes the gauge: up to ×2 power."
+  "passive.hxh.youpi_growing_rage.desc": "The more damage Youpi takes, the higher his rage gauge climbs (it slowly fades). At 20/50/80: fists +10/+25/+40%. Rage Blast consumes the gauge: up to ×2 power.",
+  "passive.hxh.machi_thread_sense": "Thread Sense",
+  "passive.hxh.machi_thread_sense.desc": "Enemies caught in her threads (slowed) within 16 blocks glow. An enemy within 4 blocks gives her reflexes (Speed I).",
+  "passive.hxh.pouf_calculating": "Calculating Mind",
+  "passive.hxh.pouf_calculating.desc": "An enemy he has observed (hit or hitter) deals 15% less damage afterwards. Remembers 8 enemies."
 }
