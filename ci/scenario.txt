@@ -1692,27 +1692,27 @@ cmd tp @e[tag=geo_ci] ~ ~-40 ~
 # Gon adulte (modèle) sous plusieurs angles, puis transformation du Gon ultime
 hud off
 look 0 6
-cmd summon hxh:gon_ultime ~ ~ ~6 {HxhAdult:1b,HxhPrepared:1b,NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:gon_ultime ~ ~ ~6 {HxhAdult:1b,NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
 wait 25
 clearchat
 shot 63a_gon_adulte_face
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
-cmd summon hxh:gon_ultime ~ ~ ~6 {HxhAdult:1b,HxhPrepared:1b,NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+cmd summon hxh:gon_ultime ~ ~ ~6 {HxhAdult:1b,NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
 wait 25
 clearchat
 shot 63b_gon_adulte_trois_quarts
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
-cmd summon hxh:gon_ultime ~ ~ ~6 {HxhAdult:1b,HxhPrepared:1b,NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:gon_ultime ~ ~ ~6 {HxhAdult:1b,NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
 wait 25
 clearchat
 shot 63c_gon_adulte_profil
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
-cmd summon hxh:gon_ultime ~ ~ ~6 {HxhAdult:1b,HxhPrepared:1b,NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:gon_ultime ~ ~ ~6 {HxhAdult:1b,NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
 wait 25
 clearchat
 shot 63d_gon_adulte_dos
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
-cmd summon hxh:gon_ultime ~ ~ ~5 {NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci","gon_ult"]}
+cmd summon hxh:gon_ultime ~ ~ ~9 {NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci","gon_ult"]}
 wait 20
 cmd data merge entity @e[tag=gon_ult,limit=1] {Health:4f}
 wait 12
