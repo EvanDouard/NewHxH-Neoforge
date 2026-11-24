@@ -117,3 +117,7 @@ Images : `heightmap.png` (relief), `biomes.png` (une couleur par biome).
 
 ## 10. Dirigeable — état (23 nov)
 Fait : destinations en données (`data/hxh/airship_destinations/*.json`, x/z en blocs + prix), écran de carte (`world_map.png` = carte brouillon), confirmation, voyage validé par le serveur, borne, plateforme d'arrivée, GameTests, capture CI. Les coordonnées sont celles du §3 (provisoires). À faire : dimension dédiée, vraie carte finale, destinations Mebun/Zaban/QG/Meteor City.
+
+## 11. Dimension « monde HxH » — état (24 nov)
+Fait : dimension `hxh:world` (génération à bruit, grottes/minerais/mobs de Minecraft conservés), relief, mer et biomes tirés de `data/hxh/world/cells.txt` (grille 249×176, 1 case = 32 blocs ; `~` mer, `.` terre, lettres = régions m/k/s/K/o/b ; modifiable à la main). Biomes par région dans `data/hxh/dimension/world.json`. Le dirigeable téléporte dans cette dimension. GameTests + captures CI (île de la Baleine, montagne Kukuroo).
+Limites : relief simple (pas encore de montagnes/rivières propres à chaque pays), structures vanilla (villages…) encore générées, pas encore de gamerule de spawn ni de structures HxH.

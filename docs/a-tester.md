@@ -356,3 +356,4 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - Clic sur un repère → confirmation avec le prix → téléportation sur une plateforme (sol de briques + borne pour repartir). Le billet est retiré des Jenny.
 - Sans borne à portée (6 blocs), le serveur refuse ; `/hunter airship` (opérateur) ouvre la carte de n'importe où.
 - Pour l'instant la destination est dans le même monde (coordonnées de la carte) ; la dimension « monde HxH » viendra ensuite.
+- Le dirigeable mène maintenant dans la dimension « monde HxH » (`/hunter airship <destination>` en opérateur pour y aller directement, ex. `whale_island`). Vérifier : mer autour des îles, plages, biomes par pays, grottes sous terre.
