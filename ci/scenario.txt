@@ -2206,7 +2206,7 @@ shot 73_contrat_zoldyck_bulle_et_boussole
 cmd kill @e[type=hxh:npc]
 clearchat
 cmd hunter contract goto
-wait 3
+wait 40
 shot 74_contrat_zoldyck_cible_proche
 cmd damage @e[tag=hxh_contract,limit=1,sort=nearest] 1000 minecraft:player_attack by @s
 wait 10
