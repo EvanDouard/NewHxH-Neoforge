@@ -15,6 +15,10 @@ public final class ModBlocks {
     public static final DeferredBlock<com.evandouard.hxh.block.HunterComputerBlock> HUNTER_COMPUTER = BLOCKS.register("hunter_computer",
             () -> new com.evandouard.hxh.block.HunterComputerBlock(BlockBehaviour.Properties.of()
                     .strength(1.5f).sound(SoundType.METAL).noOcclusion().lightLevel(s -> 6)));
+    /** Portes de l'épreuve du domaine Zoldyck (n°1 à 7, de plus en plus lourdes). */
+    public static final DeferredBlock<com.evandouard.hxh.block.HeavyDoorBlock> HEAVY_DOOR = BLOCKS.register("heavy_door",
+            () -> new com.evandouard.hxh.block.HeavyDoorBlock(BlockBehaviour.Properties.of()
+                    .strength(-1.0f, 3600000.0f).sound(SoundType.NETHERITE_BLOCK).noOcclusion().isViewBlocking((s, l, p) -> false)));
     /** Borne du dirigeable : ouvre la carte du monde pour réserver un voyage. */
     public static final DeferredBlock<com.evandouard.hxh.block.AirshipTerminalBlock> AIRSHIP_TERMINAL = BLOCKS.register("airship_terminal",
             () -> new com.evandouard.hxh.block.AirshipTerminalBlock(BlockBehaviour.Properties.of()

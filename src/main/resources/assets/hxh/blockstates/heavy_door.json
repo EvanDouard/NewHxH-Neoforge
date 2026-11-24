@@ -1,0 +1,46 @@
+{
+ "variants": {
+  "door=1,open=false": {
+   "model": "hxh:block/heavy_door_1"
+  },
+  "door=1,open=true": {
+   "model": "hxh:block/heavy_door_open"
+  },
+  "door=2,open=false": {
+   "model": "hxh:block/heavy_door_2"
+  },
+  "door=2,open=true": {
+   "model": "hxh:block/heavy_door_open"
+  },
+  "door=3,open=false": {
+   "model": "hxh:block/heavy_door_3"
+  },
+  "door=3,open=true": {
+   "model": "hxh:block/heavy_door_open"
+  },
+  "door=4,open=false": {
+   "model": "hxh:block/heavy_door_4"
+  },
+  "door=4,open=true": {
+   "model": "hxh:block/heavy_door_open"
+  },
+  "door=5,open=false": {
+   "model": "hxh:block/heavy_door_5"
+  },
+  "door=5,open=true": {
+   "model": "hxh:block/heavy_door_open"
+  },
+  "door=6,open=false": {
+   "model": "hxh:block/heavy_door_6"
+  },
+  "door=6,open=true": {
+   "model": "hxh:block/heavy_door_open"
+  },
+  "door=7,open=false": {
+   "model": "hxh:block/heavy_door_7"
+  },
+  "door=7,open=true": {
+   "model": "hxh:block/heavy_door_open"
+  }
+ }
+}

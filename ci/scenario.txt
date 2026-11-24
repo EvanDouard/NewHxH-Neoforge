@@ -2678,6 +2678,9 @@ shot 99z3_kukuroo_manoir
 cmd tp @s 1588 80 782 -40 15
 wait 60
 shot 99z4_kukuroo_maison_zebro
+cmd tp @s 1560 73 806 0 2
+wait 80
+shot 99z5_kukuroo_sept_portes
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative
