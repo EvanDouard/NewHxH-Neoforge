@@ -2658,6 +2658,10 @@ cmd hunter jenny set 6000
 cmd hunter airship whale_island
 wait 400
 shot 99w_monde_hxh_ile_de_la_baleine
+cmd tp @s 4338 80 4122 -45 25
+cmd effect give @s minecraft:slow_falling 10 0 true
+wait 60
+shot 99y_monde_hxh_village_baleine
 cmd hunter airship kukuroo_mountain
 wait 400
 shot 99x_monde_hxh_montagne_kukuroo
