@@ -69,52 +69,106 @@ def mk(lit):
 # retombent tout autour de la tête, coupées net (extrémités larges : tip élevé), et qui se courbent vers
 # l'intérieur en bas comme un vrai carré. Frange droite faite de mèches distinctes de longueurs un peu différentes.
 
-def build_hair(m):
-    """Refonte : chevelure arrondie en trois plans. 1) Coque intérieure sombre (cachée) qui épouse le crâne.
-    2) Dôme : mèches plates couchées qui partent de l'épi au sommet et suivent l'arrondi de la tête jusqu'au bord.
-    3) Mèches du carré qui retombent depuis ce bord (côtés qui encadrent le visage, arrière jusqu'à la nuque) en deux
-    couches décalées, pointes effilées et irrégulières ; frange de mèches de longueurs et d'orientations
-    différentes."""
+def _shell_panel(m, name, c, R, az, phi, w, h, t, paint, parent='hair'):
+    """Plaque tangente à une sphère (centre c, rayon R) au point (azimut az, élévation phi) : os de lacet puis os
+    d'élévation, la plaque étant posée face à +Z. Assemblées en anneaux, ces plaques donnent un volume arrondi
+    sans marches horizontales."""
+    m.bone(f'{name}_az', list(c), parent, rotation=[0, az, 0])
+    m.bone(name, list(c), f'{name}_az', rotation=[-phi, 0, 0])
+    m.cube(name, [c[0] - w / 2, c[1] - h / 2, c[2] + R - t], [w, h, t], paint)
+
+
+def build_hair(m, stage=3):
+    """Refonte (silhouette d'abord). 1) Volume arrondi : coque de plaques tangentes à une sphère qui épouse le
+    crâne (anneaux d'élévation, plaques décalées d'un anneau à l'autre), plus haute et plus pleine à l'arrière ;
+    rien sur le front. 2) Mèches du carré qui sortent de cette coque : côtés qui encadrent le visage, arrière en
+    couches qui suivent l'arrondi jusqu'à la nuque. 3) Frange de mèches distinctes et mèches secondaires."""
+    import math
+    import random
+    rnd = random.Random(31)
     top = HEAD_Y + HEAD[1]
     hx, hz = HEAD[0] / 2, HEAD[2] / 2
     m.bone('hair', [0, top, 0], 'head')
-    inner = hair_paint(HAIR_DARK, HAIR_LIGHT, HAIR_RIM, lit=-0.2, seed=4)
-    m.cube('hair', [-hx - 0.1, top - 6.6, -1.0], [HEAD[0] + 0.2, 4.8, hz + 1.1], inner)       # coque (cachée)
-    # dôme arrondi : calotte puis plateaux de plus en plus en retrait (arrondi « voxel », comme un crâne de
-    # Minecraft adouci) ; les mèches du carré partent du bord et recouvrent les premières marches
-    w, d = HEAD[0] + 0.6, HEAD[2] + 0.6
-    m.cube('hair', [-w / 2, top - 2.2, -d / 2], [w, 2.2, d], inner)
-    y = top
-    for inset, h, k in ((0.3, 0.5, 0.25), (0.8, 0.45, 0.3), (1.6, 0.4, 0.36), (2.8, 0.3, 0.42)):
-        m.cube('hair', [-w / 2 + inset, y, -d / 2 + inset - 0.15], [w - 2 * inset, h, d - 2 * inset],
-               hair_paint(HAIR_DARK, HAIR_LIGHT, HAIR_RIM, lit=k, seed=7))
-        y += h
+    inner = hair_paint(HAIR_DARK, HAIR_LIGHT, HAIR_RIM, lit=-0.25, seed=4)
+    m.cube('hair', [-hx + 0.2, top - 1.0, -hz + 0.2], [HEAD[0] - 0.4, 1.4, HEAD[2] - 0.4], inner)   # bouche-trous
+    m.cube('hair', [-hx - 0.1, top - 6.4, -0.6], [HEAD[0] + 0.2, 5.6, hz + 0.9], inner)
 
-    side = dict(flat=0.5, segs=3, root=1.08, taper_pow=0.3, belly=1.05)
+    # 1) coque arrondie : centre un peu en arrière (volume à l'arrière du crâne)
+    c, R = (0.0, top - 3.4, 0.55), 5.15
+    rings = ((-34, 14, -0.02), (-14, 14, 0.04), (8, 14, 0.12), (30, 12, 0.22), (52, 9, 0.3), (72, 5, 0.38))
+    for ri, (phi, n, k) in enumerate(rings):
+        dphi = 22
+        for j in range(n):
+            az = (j + 0.5 * (ri % 2)) * 360 / n + rnd.uniform(-4, 4)
+            front = abs(((az - 180) + 180) % 360 - 180) < 62
+            if front and phi < 40:
+                continue                                    # le front et le visage restent libres
+            circ = 2 * math.pi * R * math.cos(math.radians(phi))
+            w = circ / n * 1.3
+            h = R * math.radians(dphi) * 1.3
+            kk = k + rnd.uniform(-0.05, 0.05) - (0.06 if not front and abs(az % 360 - 0) < 70 else 0)
+            _shell_panel(m, f'hc_{ri}_{j}', (c[0], c[1], c[2]), R + rnd.uniform(-0.15, 0.25), az, phi, w, h,
+                         1.4, mk(kk - 0.1)(0.5))
+    m.bone('hc_cap', list(c), 'hair')
+    m.cube('hc_cap', [-1.8, c[1] + R - 1.2, c[2] - 1.8], [3.6, 1.2, 3.6], hair_paint(HAIR_DARK, HAIR_LIGHT, HAIR_RIM,
+                                                                                     lit=0.42, seed=9))
+    if stage < 2:
+        return
+
+    # 2) carré : mèches larges qui sortent du bas de la coque et tombent autour de la tête
+    side = dict(flat=0.5, segs=3, root=1.1, taper_pow=0.35, belly=1.05)
     for sx, sd in ((-1, 'r'), (1, 'l')):
-        x = sx * (hx + 0.25)
-        # couche extérieure : trois mèches larges (devant, qui encadre le visage jusqu'au menton ; milieu, sur
-        # l'oreille ; arrière), longueurs et pointes irrégulières ; elles tombent droit puis rentrent
-        for j, (z, L, W, k, tip, sk) in enumerate(((-2.7, 8.6, 4.4, 0.24, 0.3, -0.12), (0.2, 7.4, 4.8, 0.12, 0.5, 0.1),
-                                                   (3.0, 6.6, 4.6, 0.04, 0.4, -0.06))):
-            lock(m, f'hs_{sd}{j}', [x, top - 0.7, z], L, W, 0, -sx * 177, mk(k if sx < 0 else k - 0.08),
-                 curve=(0, -sx * 10), tip=tip, skew=sk * sx, **side)
-        # couche intérieure plus sombre, décalée : se voit entre les mèches (profondeur)
-        lock(m, f'hi_{sd}0', [x - sx * 0.3, top - 0.6, -1.2], 7.4, 4.2, 0, -sx * 178, mk(-0.08),
-             curve=(0, -sx * 8), tip=0.5, **side)
-    # arrière : trois mèches larges vers la nuque, longueurs variées, et une couche intérieure
-    for j, (x, L, W, rz, k, tip, sk) in enumerate(((-2.9, 7.6, 4.6, 3, -0.02, 0.36, 0.1), (0.1, 8.2, 4.8, 0, -0.06, 0.24, -0.06),
-                                                   (3.0, 7.4, 4.6, -3, -0.04, 0.42, 0.08))):
-        lock(m, f'hb_{j}', [x, top - 0.5, hz + 0.45], L, W, 182, rz, mk(k), curve=(-10, 0), tip=tip, skew=sk, **side)
-    lock(m, 'hbi_0', [-1.4, top - 0.6, hz + 0.1], 6.8, 4.6, 181, 0, mk(-0.14), curve=(-8, 0), tip=0.5, **side)
-    lock(m, 'hbi_1', [1.6, top - 0.6, hz + 0.1], 6.4, 4.4, 181, 0, mk(-0.14), curve=(-8, 0), tip=0.5, **side)
-    # frange : mèches distinctes ; la plus longue passe entre les yeux, légèrement décalée à gauche
-    for j, (x, z, L, W, rz, k, tip) in enumerate(((-3.3, -4.5, 2.8, 3.2, -14, 0.28, 0.3),
-                                                  (-1.2, -4.7, 3.5, 3.4, -5, 0.34, 0.2),
-                                                  (0.9, -4.55, 4.3, 3.4, 5, 0.38, 0.12),
-                                                  (3.1, -4.7, 3.1, 3.2, 14, 0.3, 0.26))):
-        lock(m, f'hf_{j}', [x, top + 0.1, z], L, W, 186, rz, mk(k), flat=0.5, segs=2, root=1.1, tip=tip,
-             taper_pow=0.6, curve=(-10, rz * 0.4), skew=-0.04 * (1 if rz > 0 else -1))
+        x = sx * (hx + 0.15)
+        for j, (z, y0, L, W, k, tip, rz) in enumerate(((-2.8, top - 1.2, 8.8, 3.6, 0.24, 0.24, 176),
+                                                       (-0.5, top - 1.5, 8.0, 4.2, 0.14, 0.4, 178),
+                                                       (1.9, top - 1.4, 7.6, 4.2, 0.06, 0.32, 172))):
+            lock(m, f'hs_{sd}{j}', [x, y0, z], L, W, 4 * j - 2, -sx * 181, mk(k if sx < 0 else k - 0.08),
+                 curve=(0, sx * 4), tip=tip, skew=0.1 * sx * (1 if j % 2 else -1), **side)
+        # couche intérieure, plus sombre et décalée : bouche les interstices et donne de la profondeur
+        for j, (z, L, W) in enumerate(((-1.7, 7.4, 3.8), (0.7, 7.0, 4.0), (3.0, 6.4, 4.0))):
+            lock(m, f'hi_{sd}{j}', [x - sx * 0.35, top - 2.0, z], L, W, 2, -sx * 180, mk(-0.1), curve=(0, sx * 3),
+                 tip=0.45, **side)
+    # arrière : deux couches qui suivent l'arrondi (la couche haute part de plus haut sur la coque)
+    for j, (x, L, W, rz, k, tip) in enumerate(((-3.1, 6.8, 4.0, 5, -0.02, 0.3), (-1.0, 7.4, 4.2, 2, -0.06, 0.22),
+                                               (1.2, 7.1, 4.2, -2, -0.03, 0.36), (3.2, 6.5, 3.8, -6, -0.08, 0.28))):
+        lock(m, f'hb_{j}', [x, top - 2.5, 5.2], L, W, 179, rz * 0.3, mk(k), curve=(10, 0), tip=tip,
+             skew=0.08 * (1 if j % 2 else -1), **side)
+    for j, (x, L, W, rz, k) in enumerate(((-2.1, 5.2, 4.2, 1, -0.02), (0.1, 5.8, 4.4, -1, -0.05), (2.3, 5.0, 4.0, -2, -0.03))):
+        lock(m, f'hbt_{j}', [x, top + 0.6, 3.4], L, W, 128, rz, mk(k), curve=(34, 0), tip=0.4, flat=0.4,
+             segs=3, root=1.1, taper_pow=0.4, belly=1.05)
+    if stage < 3:
+        return
+
+    # 3) frange : 4 mèches principales (longueurs et inclinaisons différentes, profondeurs décalées) et 2 fines
+    for j, (x, z, L, W, rz, k, tip, sk) in enumerate(((-3.0, -4.55, 3.2, 3.0, -16, 0.28, 0.2, 0.1),
+                                                      (-0.9, -4.8, 4.4, 3.4, -4, 0.36, 0.1, -0.06),
+                                                      (1.4, -4.6, 3.6, 3.2, 10, 0.32, 0.18, 0.08),
+                                                      (3.4, -4.75, 3.0, 2.8, 20, 0.26, 0.24, -0.1))):
+        lock(m, f'hf_{j}', [x, top + 0.4, z], L, W, 188, rz, mk(k), flat=0.5, segs=2, root=1.15, tip=tip,
+             taper_pow=0.55, curve=(-12, rz * 0.4), skew=sk)
+    for j, (x, z, L, rz) in enumerate(((0.3, -4.95, 3.0, 2), (-2.2, -4.95, 2.4, -10))):
+        lock(m, f'hff_{j}', [x, top + 0.3, z], L, 1.6, 186, rz, mk(0.4), flat=0.6, segs=2, root=1.0, tip=0.1,
+             taper_pow=0.6, curve=(-8, 0))
+    # mèches des tempes qui descendent devant les oreilles et encadrent le visage
+    for sx, sd in ((-1, 'r'), (1, 'l')):
+        lock(m, f'ht_{sd}', [sx * (hx - 0.2), top - 0.6, -hz - 0.1], 7.2, 2.6, -6, -sx * 177, mk(0.3), flat=0.5,
+             segs=3, root=1.1, tip=0.15, taper_pow=0.5, curve=(4, -sx * 8))
+
+
+def build_hair_stage1():
+    m = Model('kurapika_tete', density=4, tex_width=512)
+    skeleton(m)
+    build_face(m)
+    build_hair(m, stage=1)
+    return m
+
+
+def build_hair_stage2():
+    m = Model('kurapika_tete', density=4, tex_width=512)
+    skeleton(m)
+    build_face(m)
+    build_hair(m, stage=2)
+    return m
 
 
 # ---------------------------------------------------------------------------------------------------------------

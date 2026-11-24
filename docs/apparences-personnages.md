@@ -120,8 +120,11 @@ touche jamais ces os, donc les effets se composent par la hiérarchie.
 `tools/models/kurapika.py`, deux versions : `kurapika` (avec le tabard) et `kurapika_sans_tunique`.
 - Proportions propres, plus élancées que Gon et Killua : tête 8,6 × 8 × 8, jambes plus longues (hanches à 10 px),
   épaules plus étroites ; ≈ 1,85 bloc (boîte de collision 0,6 × 1,85).
-- Cheveux : coque cachée, dôme arrondi en plateaux, carré en mèches larges sur deux couches (côtés qui encadrent
-  le visage jusqu'au menton, arrière vers la nuque), pointes irrégulières, frange en 4 mèches épaisses.
+- Cheveux (refonte, silhouette d'abord) : volume arrondi fait de plaques tangentes à une sphère qui épouse le
+  crâne (anneaux d'élévation décalés, `_shell_panel` : os de lacet puis os d'élévation, donc aucune marche
+  horizontale), plus plein à l'arrière ; carré en mèches larges sur deux couches qui sortent de ce volume (côtés
+  qui encadrent le visage, arrière qui suit l'arrondi jusqu'à la nuque), frange de 4 mèches principales et 2 fines,
+  mèches des tempes. Aperçus par étape : `build_hair_stage1`, `build_hair_stage2`, `build_head_preview`.
 - Version A : tabard bleu épais par-dessus la tunique (panneaux qui s'écartent du corps en descendant, côtés
   ouverts, épaules qui enveloppent, grand col relevé ouvert devant, bordures et filets dorés en relief, broderie,
   doublure, plis), manches blanches amples avec revers bleu et or.
