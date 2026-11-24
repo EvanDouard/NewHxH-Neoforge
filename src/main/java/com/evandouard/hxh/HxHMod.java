@@ -45,6 +45,7 @@ public final class HxHMod {
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.airship.AirshipRegistry::register);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.world.WorldPlaces::register);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.world.WorldPlaces::onChunkLoad);
+        NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.world.WorldPlaces::onServerTick);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.auction.Auctions::register);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.org.Organizations::register);
         NeoForge.EVENT_BUS.addListener(com.evandouard.hxh.family.Families::register);

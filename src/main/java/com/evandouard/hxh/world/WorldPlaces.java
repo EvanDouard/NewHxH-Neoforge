@@ -83,7 +83,45 @@ public final class WorldPlaces extends SimpleJsonResourceReloadListener {
             if ((p.x() >> 4) != cx || (p.z() >> 4) != cz) continue;
             Placed placed = Placed.get(level);
             if (!placed.add(p.id().toString())) continue;
-            level.getServer().execute(() -> build(level, p, p.x(), p.z()));
+            PENDING.add(new Pending(level, p));
+        }
+    }
+
+    /** Lieux en attente : on force le chargement de leur zone, puis on bâtit quand tout est là (jamais d'attente bloquante dans un tick). */
+    private static final java.util.List<Pending> PENDING = new java.util.ArrayList<>();
+
+    private static final class Pending {
+        final ServerLevel level;
+        final Place place;
+        final java.util.List<net.minecraft.world.level.ChunkPos> chunks = new java.util.ArrayList<>();
+        int waited;
+        boolean requested;
+
+        Pending(ServerLevel level, Place place) {
+            this.level = level;
+            this.place = place;
+            int[] c = place.json().has("clear") ? ints(place.json().getAsJsonArray("clear")) : new int[]{-16, 0, -16, 16, 0, 16};
+            for (int cx = (place.x() + Math.min(c[0], c[3])) >> 4; cx <= (place.x() + Math.max(c[0], c[3])) >> 4; cx++)
+                for (int cz = (place.z() + Math.min(c[2], c[5])) >> 4; cz <= (place.z() + Math.max(c[2], c[5])) >> 4; cz++)
+                    chunks.add(new net.minecraft.world.level.ChunkPos(cx, cz));
+        }
+    }
+
+    public static void onServerTick(net.neoforged.neoforge.event.tick.ServerTickEvent.Post event) {
+        if (PENDING.isEmpty()) return;
+        for (java.util.Iterator<Pending> it = PENDING.iterator(); it.hasNext(); ) {
+            Pending p = it.next();
+            if (!p.requested) {
+                for (var c : p.chunks) p.level.setChunkForced(c.x, c.z, true);
+                p.requested = true;
+            }
+            boolean ready = p.chunks.stream().allMatch(c -> p.level.getChunkSource().getChunkNow(c.x, c.z) != null);
+            if (ready || ++p.waited > 2400) {
+                if (ready) build(p.level, p.place, p.place.x(), p.place.z());
+                else HxHMod.LOGGER.warn("Lieu {} : zone non chargée à temps, abandonné", p.place.id());
+                for (var c : p.chunks) p.level.setChunkForced(c.x, c.z, false);
+                it.remove();
+            }
         }
     }
 
