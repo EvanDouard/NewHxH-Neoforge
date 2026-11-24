@@ -148,7 +148,75 @@ public final class WorldPlaces extends SimpleJsonResourceReloadListener {
             int[] pos = ints(o.getAsJsonArray("pos"));
             level.setBlock(new BlockPos(ax + pos[0], gy + pos[1], az + pos[2]), parse(blocks, o.get("state").getAsString()), Block.UPDATE_CLIENTS);
         }
+        if (j.has("entities")) for (JsonElement e : j.getAsJsonArray("entities")) {
+            JsonObject o = e.getAsJsonObject();
+            try {
+                CompoundTag tag = o.has("nbt") ? net.minecraft.nbt.TagParser.parseTag(o.get("nbt").getAsString()) : new CompoundTag();
+                tag.putString("id", o.get("type").getAsString());
+                int[] pos = ints(o.getAsJsonArray("pos"));
+                float yaw = o.has("yaw") ? o.get("yaw").getAsFloat() : 0f;
+                double px = ax + pos[0] + 0.5, py = gy + pos[1], pz = az + pos[2] + 0.5;
+                net.minecraft.world.entity.Entity ent = net.minecraft.world.entity.EntityType.loadEntityRecursive(tag, level, en -> {
+                    en.moveTo(px, py, pz, yaw, 0f);
+                    return en;
+                });
+                if (ent != null) level.addFreshEntityWithPassengers(ent);
+                else HxHMod.LOGGER.warn("Lieu {} : entité inconnue {}", p.id(), o.get("type").getAsString());
+            } catch (com.mojang.brigadier.exceptions.CommandSyntaxException ex) {
+                HxHMod.LOGGER.warn("Lieu {} : NBT invalide : {}", p.id(), ex.getMessage());
+            }
+        }
         return gy;
+    }
+
+    /**
+     * Exporte une construction (boîte entre deux coins) en fichier de lieu : y = 0 est la couche du coin le plus bas.
+     * Le fichier est écrit dans {@code hxh_exports/<nom>.json} (dossier du serveur) ; à copier dans {@code data/hxh/world_places/}
+     * après avoir réglé « x » et « z » (là où le lieu doit apparaître dans le monde HxH).
+     * @return le nombre de blocs exportés
+     */
+    public static int export(ServerLevel level, String name, BlockPos a, BlockPos b, java.nio.file.Path dir) throws java.io.IOException {
+        int x0 = Math.min(a.getX(), b.getX()), y0 = Math.min(a.getY(), b.getY()), z0 = Math.min(a.getZ(), b.getZ());
+        int x1 = Math.max(a.getX(), b.getX()), y1 = Math.max(a.getY(), b.getY()), z1 = Math.max(a.getZ(), b.getZ());
+        JsonObject out = new JsonObject();
+        out.addProperty("x", x0);
+        out.addProperty("z", z0);
+        JsonArray clear = new JsonArray();
+        for (int v : new int[]{0, 0, 0, x1 - x0, y1 - y0, z1 - z0}) clear.add(v);
+        out.add("clear", clear);
+        JsonArray blocks = new JsonArray();
+        int count = 0;
+        for (BlockPos p : BlockPos.betweenClosed(x0, y0, z0, x1, y1, z1)) {
+            BlockState st = level.getBlockState(p);
+            if (st.isAir()) continue;
+            JsonObject o = new JsonObject();
+            JsonArray pos = new JsonArray();
+            pos.add(p.getX() - x0); pos.add(p.getY() - y0); pos.add(p.getZ() - z0);
+            o.add("pos", pos);
+            o.addProperty("state", BlockStateParser.serialize(st));
+            blocks.add(o);
+            count++;
+        }
+        out.add("blocks", blocks);
+        JsonArray entities = new JsonArray();
+        for (net.minecraft.world.entity.Entity e : level.getEntities((net.minecraft.world.entity.Entity) null,
+                new net.minecraft.world.phys.AABB(x0, y0, z0, x1 + 1, y1 + 1, z1 + 1), en -> !(en instanceof net.minecraft.world.entity.player.Player))) {
+            CompoundTag tag = new CompoundTag();
+            e.saveWithoutId(tag);
+            for (String k : new String[]{"UUID", "Pos", "Motion", "Rotation", "Air", "FallDistance", "Fire", "OnGround", "PortalCooldown", "Brain"}) tag.remove(k);
+            JsonObject o = new JsonObject();
+            o.addProperty("type", net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(e.getType()).toString());
+            JsonArray pos = new JsonArray();
+            pos.add((int) Math.floor(e.getX()) - x0); pos.add((int) Math.floor(e.getY()) - y0); pos.add((int) Math.floor(e.getZ()) - z0);
+            o.add("pos", pos);
+            o.addProperty("yaw", e.getYRot());
+            o.addProperty("nbt", tag.toString());
+            entities.add(o);
+        }
+        out.add("entities", entities);
+        java.nio.file.Files.createDirectories(dir);
+        java.nio.file.Files.writeString(dir.resolve(name + ".json"), new com.google.gson.GsonBuilder().setPrettyPrinting().create().toJson(out));
+        return count;
     }
 
     private static int[] ints(JsonArray a) {

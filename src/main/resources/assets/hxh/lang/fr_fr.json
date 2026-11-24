@@ -1719,5 +1719,11 @@
   "message.hxh.airship.unknown": "Destination inconnue.",
   "message.hxh.airship.no_terminal": "Il faut être près d'une borne du dirigeable.",
   "message.hxh.airship.not_enough": "Pas assez de Jenny pour ce billet.",
-  "message.hxh.airship.arrived": "Arrivée : %s"
+  "message.hxh.airship.arrived": "Arrivée : %s",
+  "npc.hxh.zebro": "Zebro, gardien de la porte",
+  "npc.hxh.gotoh": "Gotoh, majordome",
+  "npc.hxh.canary": "Canary, apprentie majordome",
+  "dialog.hxh.zebro.idle": "La petite porte est pour les visiteurs. Si tu veux entrer par la grande porte, il te faudra de la force : chaque battant pèse le double du précédent. Et ne t'approche pas de Mike.",
+  "dialog.hxh.gotoh.idle": "Le maître Silva est occupé. Si vous avez un contrat à confier, adressez-vous au majordome.",
+  "dialog.hxh.canary.idle": "Je m'entraîne pour devenir majordome ! Un jour je serai aussi forte que Gotoh."
 }

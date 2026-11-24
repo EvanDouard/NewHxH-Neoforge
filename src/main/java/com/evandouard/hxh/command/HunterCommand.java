@@ -434,6 +434,27 @@ public final class HunterCommand {
                                                         net.minecraft.commands.arguments.coordinates.Vec3Argument.getVec3(ctx, "pos"),
                                                         IntegerArgumentType.getInteger(ctx, "count")))))))
                 // Dirigeable : ouvre la carte (opérateur), ou voyage directement sans borne ni billet à portée
+                // Exporte une construction en fichier de lieu du monde HxH (coin = couche de sol)
+                .then(Commands.literal("place").requires(s -> s.hasPermission(2))
+                        .then(Commands.literal("export")
+                                .then(Commands.argument("name", StringArgumentType.word())
+                                        .then(Commands.argument("from", net.minecraft.commands.arguments.coordinates.BlockPosArgument.blockPos())
+                                                .then(Commands.argument("to", net.minecraft.commands.arguments.coordinates.BlockPosArgument.blockPos())
+                                                        .executes(ctx -> {
+                                                            var src = ctx.getSource();
+                                                            String name = StringArgumentType.getString(ctx, "name");
+                                                            java.nio.file.Path dir = src.getServer().getServerDirectory().resolve("hxh_exports");
+                                                            try {
+                                                                int n = com.evandouard.hxh.world.WorldPlaces.export(src.getLevel(), name,
+                                                                        net.minecraft.commands.arguments.coordinates.BlockPosArgument.getLoadedBlockPos(ctx, "from"),
+                                                                        net.minecraft.commands.arguments.coordinates.BlockPosArgument.getLoadedBlockPos(ctx, "to"), dir);
+                                                                src.sendSuccess(() -> Component.literal(n + " blocs exportés dans " + dir.resolve(name + ".json")), true);
+                                                                return n;
+                                                            } catch (java.io.IOException e) {
+                                                                src.sendFailure(Component.literal("Export impossible : " + e.getMessage()));
+                                                                return 0;
+                                                            }
+                                                        }))))))
                 .then(Commands.literal("airship").requires(s -> s.hasPermission(2))
                         .executes(ctx -> {
                             com.evandouard.hxh.airship.Airship.open(ctx.getSource().getPlayerOrException());

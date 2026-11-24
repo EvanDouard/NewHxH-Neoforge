@@ -29,4 +29,25 @@ public final class WorldPlacesTests {
         helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 11, ground, origin.getZ() + 11)).is(Blocks.WATER), "Le puits contient de l'eau");
         helper.succeed();
     }
+
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void kukurooEstateHasGateKeeperAndMike(GameTestHelper helper) {
+        var place = WorldPlaces.get("hxh:kukuroo_domaine_zoldyck");
+        helper.assertTrue(place != null, "Le domaine Zoldyck est chargé");
+        BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+        var level = helper.getLevel();
+        int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() - 9, ground, origin.getZ() + 1)).is(Blocks.IRON_DOOR), "Porte des visiteurs");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX(), ground + 2, origin.getZ())).is(Blocks.IRON_BLOCK), "Grande porte fermée");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 19, ground, origin.getZ() - 11)).is(Blocks.BOOKSHELF), "Maison de Zebro meublée");
+        var box = new net.minecraft.world.phys.AABB(origin.getX() - 40, ground - 5, origin.getZ() - 60, origin.getX() + 70, ground + 20, origin.getZ() + 130);
+        var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+        for (String id : new String[]{"zebro", "gotoh", "canary", "majordome_zoldyck"})
+            helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals(id)), "PNJ présent : " + id);
+        var mike = level.getEntitiesOfClass(net.minecraft.world.entity.animal.Wolf.class, box).stream()
+                .filter(w -> w.hasCustomName() && w.getCustomName().getString().equals("Mike")).findFirst();
+        helper.assertTrue(mike.isPresent(), "Mike, le chien géant, est là");
+        helper.assertTrue(mike.get().getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.SCALE) > 2.0, "Mike est géant");
+        helper.succeed();
+    }
 }

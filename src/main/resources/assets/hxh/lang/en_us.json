@@ -1719,5 +1719,11 @@
   "message.hxh.airship.unknown": "Unknown destination.",
   "message.hxh.airship.no_terminal": "You must be near an airship terminal.",
   "message.hxh.airship.not_enough": "Not enough Jenny for this ticket.",
-  "message.hxh.airship.arrived": "Arrived: %s"
+  "message.hxh.airship.arrived": "Arrived: %s",
+  "npc.hxh.zebro": "Zebro, Gatekeeper",
+  "npc.hxh.gotoh": "Gotoh, Butler",
+  "npc.hxh.canary": "Canary, Trainee Butler",
+  "dialog.hxh.zebro.idle": "The small door is for visitors. If you want the main gate, you'll need strength: each door weighs twice as much as the last. And stay away from Mike.",
+  "dialog.hxh.gotoh.idle": "Master Silva is busy. If you have a contract, speak to the butler.",
+  "dialog.hxh.canary.idle": "I'm training to become a butler! One day I'll be as strong as Gotoh."
 }

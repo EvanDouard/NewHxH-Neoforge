@@ -28,6 +28,8 @@ public final class HxHWorldMap {
     private final int width, height;
     private final char[][] cells;
     private final float[][] target;
+    /** Zones aplanies (data/hxh/world/flats.txt : « x z rayon y ») pour poser de grands lieux sur un sol plat. */
+    private final java.util.List<double[]> flats = new ArrayList<>();
     private final PerlinNoise hills = PerlinNoise.create(new XoroshiroRandomSource(1337L), -5, 1.0, 1.0, 0.5, 0.5);
 
     public static HxHWorldMap get() {
@@ -50,7 +52,21 @@ public final class HxHWorldMap {
         } catch (java.io.IOException e) {
             throw new IllegalStateException(e);
         }
-        return new HxHWorldMap(rows);
+        HxHWorldMap m = new HxHWorldMap(rows);
+        try (InputStream in = HxHWorldMap.class.getResourceAsStream("/data/hxh/world/flats.txt")) {
+            if (in != null) {
+                BufferedReader r = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+                for (String line; (line = r.readLine()) != null; ) {
+                    line = line.strip();
+                    if (line.isEmpty() || line.startsWith("#")) continue;
+                    String[] t = line.split("\\s+");
+                    m.flats.add(new double[]{Double.parseDouble(t[0]), Double.parseDouble(t[1]), Double.parseDouble(t[2]), Double.parseDouble(t[3])});
+                }
+            }
+        } catch (java.io.IOException e) {
+            throw new IllegalStateException(e);
+        }
+        return m;
     }
 
     private HxHWorldMap(List<String> rows) {
@@ -132,6 +148,14 @@ public final class HxHWorldMap {
             base += n * inland * (2.0 + (base - SEA_LEVEL) * 0.9);
         } else {
             base += n * 2.5;
+        }
+        if (base >= SEA_LEVEL - 1) {
+            for (double[] f : flats) {
+                double d = Math.hypot(x - f[0], z - f[1]);
+                if (d >= f[2]) continue;
+                double w = Mth.clamp((f[2] - d) / (f[2] * 0.25), 0, 1);
+                base = Mth.lerp(smooth(w), base, f[3]);
+            }
         }
         return Math.max(base, -20);
     }
