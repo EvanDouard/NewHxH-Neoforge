@@ -358,3 +358,5 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - Pour l'instant la destination est dans le même monde (coordonnées de la carte) ; la dimension « monde HxH » viendra ensuite.
 - Le dirigeable mène maintenant dans la dimension « monde HxH » (`/hunter airship <destination>` en opérateur pour y aller directement, ex. `whale_island`). Vérifier : mer autour des îles, plages, biomes par pays, grottes sous terre.
 - Règle `hxhSpawnInWorld` (vrai par défaut) : un nouveau joueur apparaît sur l'île de la Baleine dans le monde HxH (et y réapparaît). Faux : il reste dans le monde normal. À tester en créant un monde neuf.
+- Montagne Kukuroo : `/hunter airship kukuroo_mountain` puis aller vers le sud-est (domaine Zoldyck). Vérifier la porte de fer fermée, la petite porte des visiteurs (boutons), Zebro et sa maison, Mike (loup géant, enclos à l'ouest), le manoir et ses majordomes, le cimetière. Liste complète : `docs/kukuroo.md`.
+- `/hunter place export <nom> <de> <à>` (opérateur) : exporte une construction en fichier de lieu (coin « de » = couche de sol).

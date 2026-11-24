@@ -121,3 +121,7 @@ Fait : destinations en données (`data/hxh/airship_destinations/*.json`, x/z en 
 ## 11. Dimension « monde HxH » — état (24 nov)
 Fait : dimension `hxh:world` (génération à bruit, grottes/minerais/mobs de Minecraft conservés), relief, mer et biomes tirés de `data/hxh/world/cells.txt` (grille 249×176, 1 case = 32 blocs ; `~` mer, `.` terre, lettres = régions m/k/s/K/o/b ; modifiable à la main). Biomes par région dans `data/hxh/dimension/world.json`. Le dirigeable téléporte dans cette dimension. GameTests + captures CI (île de la Baleine, montagne Kukuroo).
 Limites : relief simple (pas encore de montagnes/rivières propres à chaque pays), structures vanilla (villages…) encore générées, pas encore de gamerule de spawn ni de structures HxH.
+
+## 12. Lieux — état (24 nov)
+Système de lieux (`data/hxh/world_places/*.json` : zone dégagée, remplissages, blocs, **entités**), posés une fois au chargement de la zone. `/hunter place export <nom> <de> <à>` exporte une construction faite à la main (fichier dans `hxh_exports/`, à copier dans `world_places/` après réglage de x/z). Zones aplanies : `data/hxh/world/flats.txt`.
+Lieux faits : village de l'île de la Baleine, domaine Zoldyck de la montagne Kukuroo (détails et reste à faire : `docs/kukuroo.md`).
