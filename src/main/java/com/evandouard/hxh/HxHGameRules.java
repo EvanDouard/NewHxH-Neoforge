@@ -36,6 +36,10 @@ public final class HxHGameRules {
     public static final GameRules.Key<GameRules.BooleanValue> RANDOM_FAMILY =
             GameRules.register("randomFamily", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
 
+    /** Si vrai, un nouveau joueur apparaît sur l'île de la Baleine, dans le monde de Hunter x Hunter ; faux : il reste dans le monde normal. */
+    public static final GameRules.Key<GameRules.BooleanValue> SPAWN_IN_HXH_WORLD =
+            GameRules.register("hxhSpawnInWorld", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
+
     /** Tests : si vrai, aucune technique ni coup n'a de recharge. */
     public static final GameRules.Key<GameRules.BooleanValue> NO_COOLDOWNS =
             GameRules.register("hxhNoCooldowns", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false));

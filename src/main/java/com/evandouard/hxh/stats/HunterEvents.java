@@ -99,6 +99,7 @@ public final class HunterEvents {
         unlockModRecipes(player);
         restoreHealthLater(player, data.lastHealth());
         HxHNetwork.syncFull(player);
+        com.evandouard.hxh.airship.Airship.welcome(player);
     }
 
     /** À la déconnexion : on retient la vie (les PV bonus de Vitalité ou de personnage ne sont rendus qu'après le chargement). */

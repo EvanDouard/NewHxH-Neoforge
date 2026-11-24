@@ -29,6 +29,19 @@ public final class AirshipTests {
     }
 
     @GameTest(template = "empty")
+    public static void arrivalIsFreeAndWelcomeHappensOnce(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(player);
+        int before = d.jenny();
+        Airship.arrive(player, AirshipRegistry.get("hxh:whale_island"));
+        helper.assertTrue(d.jenny() == before, "L'arrivée automatique ne coûte rien");
+        helper.assertTrue(helper.getLevel().getGameRules().getBoolean(com.evandouard.hxh.HxHGameRules.SPAWN_IN_HXH_WORLD), "Règle hxhSpawnInWorld active par défaut");
+        player.getPersistentData().putBoolean(Airship.WELCOMED_TAG, true);
+        helper.assertTrue(!Airship.welcome(player), "Un joueur déjà accueilli n'est pas téléporté de nouveau");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void travelChecksThenCharges(GameTestHelper helper) {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
         QuestData d = QuestManager.data(player);

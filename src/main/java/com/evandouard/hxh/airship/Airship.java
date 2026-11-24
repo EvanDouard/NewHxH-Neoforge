@@ -61,16 +61,37 @@ public final class Airship {
         if (needTerminal && !nearTerminal(player)) return "message.hxh.airship.no_terminal";
         var data = QuestManager.data(player);
         if (data.jenny() < dest.price()) return "message.hxh.airship.not_enough";
+        data.addJenny(-dest.price());
+        arrive(player, dest);
+        return null;
+    }
+
+    /** Dépose le joueur sur la plateforme de la destination (dans le monde HxH, ou le monde courant s'il n'existe pas), sans rien débiter. */
+    public static void arrive(ServerPlayer player, AirshipDestination dest) {
         ServerLevel level = player.server.getLevel(WORLD);
         if (level == null) level = player.serverLevel();
         BlockPos landing = buildPad(level, dest.x(), dest.z());
-        data.addJenny(-dest.price());
         player.teleportTo(level, landing.getX() + 0.5, landing.getY(), landing.getZ() + 0.5, player.getYRot(), 0f);
         player.resetFallDistance();
         level.playSound(null, landing, SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.8f, 1.2f);
         player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.hxh.airship.arrived",
                 net.minecraft.network.chat.Component.translatable(dest.nameKey())), true);
-        return null;
+    }
+
+    /** Étiquette posée sur un joueur déjà accueilli dans le monde HxH (une seule arrivée automatique). */
+    public static final String WELCOMED_TAG = "hxh_welcomed";
+
+    /** Première connexion : si la règle est active, le joueur naît sur l'île de la Baleine (et y réapparaîtra). Jamais en CI. */
+    public static boolean welcome(ServerPlayer player) {
+        if (player.getPersistentData().getBoolean(WELCOMED_TAG)) return false;
+        player.getPersistentData().putBoolean(WELCOMED_TAG, true);
+        if (System.getProperty("hxh.ci.scenario") != null) return false;
+        if (!player.serverLevel().getGameRules().getBoolean(com.evandouard.hxh.HxHGameRules.SPAWN_IN_HXH_WORLD)) return false;
+        AirshipDestination home = AirshipRegistry.get("hxh:whale_island");
+        if (home == null || player.server.getLevel(WORLD) == null) return false;
+        arrive(player, home);
+        player.setRespawnPosition(WORLD, player.blockPosition(), player.getYRot(), true, false);
+        return true;
     }
 
     /** Plateforme d'arrivée posée sur le sol en (x, z) : sol de briques, air dégagé, borne pour repartir. @return le point d'arrivée */
