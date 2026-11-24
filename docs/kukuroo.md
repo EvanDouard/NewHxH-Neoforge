@@ -17,7 +17,8 @@ Repère : x vers l'est, z vers le sud ; la porte est au nord du domaine, le mano
 - [x] Cimetière Zoldyck (tombes)
 
 ## À faire plus tard (anime)
-- [ ] **Les 7 portes de l'épreuve** : vraies portes qui s'ouvrent avec la force (2 t, 4 t, 8 t… 128 t), tunnel intérieur, numéros gravés (panneaux)
+- [x] **Les 7 portes de l'épreuve** : bloc `heavy_door` (2 t à 128 t), s'ouvre selon la Force (4, 10, 18, 28, 42, 60, 80), se referme seule, entraîne la Force ; tunnel de 7 portes dans la grande porte
+- [ ] Numéros gravés (panneaux) sur chaque porte, textures dédiées, animation de coulissement, effet de poussée
 - [ ] **Mike en vrai mob** : IA de garde (poursuite des intrus, mord, arrêt devant les portes), nourri par Zebro, apprivoisement possible via quête (Gon/Killua)
 - [ ] Zebro : dialogue de visite, test d'entrée (« tu ne peux passer que si tu pousses la porte »), quête de Gon, Leorio, Kurapika
 - [ ] **Escalier et pièces du manoir** : hall, salle à manger, chambres, salle de torture, chambre de Killua, bureau de Silva, salle de Zeno
