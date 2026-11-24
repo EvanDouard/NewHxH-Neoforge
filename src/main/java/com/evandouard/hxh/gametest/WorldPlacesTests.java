@@ -47,7 +47,7 @@ public final class WorldPlacesTests {
         var mike = level.getEntitiesOfClass(net.minecraft.world.entity.animal.Wolf.class, box).stream()
                 .filter(w -> w.hasCustomName() && w.getCustomName().getString().equals("Mike")).findFirst();
         helper.assertTrue(mike.isPresent(), "Mike, le chien géant, est là");
-        helper.assertTrue(mike.get().getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.SCALE) > 2.0, "Mike est géant");
+        helper.assertTrue(mike.get().getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.SCALE) > 2.0, "Mike est géant : échelle " + mike.get().getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.SCALE) + ", PV max " + mike.get().getMaxHealth());
         helper.succeed();
     }
 }
