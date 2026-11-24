@@ -1728,5 +1728,8 @@
   "dialog.hxh.canary.idle": "Je m'entraîne pour devenir majordome ! Un jour je serai aussi forte que Gotoh.",
   "block.hxh.heavy_door": "Porte de l'épreuve",
   "message.hxh.heavy_door.too_heavy": "Porte n°%s : %s tonnes. Trop lourde pour toi (Force %s, il en faut %s).",
-  "message.hxh.heavy_door.opened": "La porte n°%s (%s tonnes) cède sous ta poussée."
+  "message.hxh.heavy_door.opened": "La porte n°%s (%s tonnes) cède sous ta poussée.",
+  "entity.hxh.mike": "Mike",
+  "message.hxh.mike.calmer": "Mike mange la viande et se calme un peu (%s/%s).",
+  "message.hxh.mike.friend": "Mike te reconnaît : tu es un ami, il ne t'attaquera plus."
 }

@@ -68,6 +68,7 @@ public final class NenClient {
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.EXAM_CANDIDATE.get(), ExamCandidateRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NEN_PROJECTILE.get(), NenProjectileRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.FOXBEAR.get(), FoxbearRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.MIKE.get(), net.minecraft.client.renderer.entity.WolfRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.SPIDER_EAGLE.get(), SpiderEagleRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.MAN_FACED_APE.get(), ManFacedApeRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.CHIMERA_ANT.get(), ChimeraAntRenderer::new);

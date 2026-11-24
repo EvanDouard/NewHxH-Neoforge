@@ -47,10 +47,10 @@ public final class WorldPlacesTests {
         var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
         for (String id : new String[]{"zebro", "gotoh", "canary", "majordome_zoldyck"})
             helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals(id)), "PNJ présent : " + id);
-        var mike = level.getEntitiesOfClass(net.minecraft.world.entity.animal.Wolf.class, box).stream()
-                .filter(w -> w.hasCustomName() && w.getCustomName().getString().equals("Mike")).findFirst();
+        var mike = level.getEntitiesOfClass(com.evandouard.hxh.beast.MikeEntity.class, box).stream().findFirst();
         helper.assertTrue(mike.isPresent(), "Mike, le chien géant, est là");
-        helper.assertTrue(mike.get().getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.SCALE) > 2.0, "Mike est géant : échelle " + mike.get().getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.SCALE) + ", PV max " + mike.get().getMaxHealth());
+        helper.assertTrue(mike.get().getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.SCALE) > 2.0, "Mike est géant : échelle " + mike.get().getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.SCALE));
+        helper.assertTrue(mike.get().getMaxHealth() >= 100, "Mike est coriace : " + mike.get().getMaxHealth() + " PV");
         helper.succeed();
     }
 
@@ -74,6 +74,23 @@ public final class WorldPlacesTests {
         helper.runAfterDelay(160, () -> {
             for (int x = 0; x < 3; x++) for (int y = 0; y < 4; y++)
                 helper.assertTrue(!level.getBlockState(base.offset(x, y, 0)).getValue(com.evandouard.hxh.block.HeavyDoorBlock.OPEN), "La plaque se referme seule");
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 300)
+    public static void mikeAttacksIntrudersUntilFedThreeTimes(GameTestHelper helper) {
+        var mike = helper.spawn(com.evandouard.hxh.registry.ModEntities.MIKE.get(), new BlockPos(2, 1, 2));
+        var player = helper.makeMockServerPlayerInLevel();
+        player.moveTo(mike.getX() + 4, mike.getY(), mike.getZ(), 0f, 0f);
+        helper.runAfterDelay(80, () -> {
+            helper.assertTrue(mike.getTarget() == player, "Mike prend l'intrus pour cible : " + mike.getTarget());
+            for (int i = 0; i < 3; i++) {
+                player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.BEEF, 1));
+                mike.interact(player, net.minecraft.world.InteractionHand.MAIN_HAND);
+            }
+            helper.assertTrue(player.getPersistentData().getBoolean(com.evandouard.hxh.beast.MikeEntity.FRIEND_TAG), "Après 3 offrandes, le joueur est un ami");
+            helper.assertTrue(mike.getTarget() != player, "Mike n'attaque plus son ami");
             helper.succeed();
         });
     }

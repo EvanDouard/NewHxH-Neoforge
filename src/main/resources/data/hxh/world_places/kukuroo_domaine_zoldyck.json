@@ -5008,14 +5008,14 @@
    "nbt": "{npc:\"majordome_zoldyck\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
   },
   {
-   "type": "minecraft:wolf",
+   "type": "hxh:mike",
    "pos": [
     -19,
     0,
     17
    ],
    "yaw": 90,
-   "nbt": "{CustomName:'{\"text\":\"Mike\"}',CustomNameVisible:1b,PersistenceRequired:1b,Health:150f,attributes:[{id:\"minecraft:generic.scale\",base:3.0d},{id:\"minecraft:generic.max_health\",base:150.0d},{id:\"minecraft:generic.attack_damage\",base:14.0d},{id:\"minecraft:generic.movement_speed\",base:0.4d}]}"
+   "nbt": "{PersistenceRequired:1b}"
   }
  ]
 }

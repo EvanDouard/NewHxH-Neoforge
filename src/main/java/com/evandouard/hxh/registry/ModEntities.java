@@ -35,6 +35,11 @@ public final class ModEntities {
             ENTITIES.register("foxbear", () -> EntityType.Builder.of(com.evandouard.hxh.beast.FoxbearEntity::new,
                     MobCategory.CREATURE).sized(1.8f, 1.9f).clientTrackingRange(10).build("foxbear"));
 
+    /** Mike : chien géant gardien du domaine Zoldyck. */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.beast.MikeEntity>> MIKE =
+            ENTITIES.register("mike", () -> EntityType.Builder.of(com.evandouard.hxh.beast.MikeEntity::new,
+                    MobCategory.CREATURE).sized(0.6f, 0.85f).clientTrackingRange(10).build("mike"));
+
     /** Great Stamp : cochon géant de la forêt de Biska (bestiaire). */
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.beast.GreatStampEntity>> GREAT_STAMP =
             ENTITIES.register("great_stamp", () -> EntityType.Builder.of(com.evandouard.hxh.beast.GreatStampEntity::new,
@@ -101,6 +106,7 @@ public final class ModEntities {
         event.put(NPC.get(), NpcEntity.createAttributes().build());
         event.put(ARENA_FIGHTER.get(), com.evandouard.hxh.arena.ArenaFighterEntity.createAttributes().build());
         event.put(EXAM_CANDIDATE.get(), com.evandouard.hxh.exam.ExamCandidate.createAttributes().build());
+        event.put(MIKE.get(), com.evandouard.hxh.beast.MikeEntity.createAttributes().build());
         event.put(FOXBEAR.get(), com.evandouard.hxh.beast.FoxbearEntity.createAttributes().build());
         event.put(GREAT_STAMP.get(), com.evandouard.hxh.beast.GreatStampEntity.createAttributes().build());
         event.put(SPIDER_EAGLE.get(), com.evandouard.hxh.beast.SpiderEagleEntity.createAttributes().build());

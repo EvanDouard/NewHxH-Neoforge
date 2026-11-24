@@ -1728,5 +1728,8 @@
   "dialog.hxh.canary.idle": "I'm training to become a butler! One day I'll be as strong as Gotoh.",
   "block.hxh.heavy_door": "Testing door",
   "message.hxh.heavy_door.too_heavy": "Door #%s: %s tons. Too heavy for you (Strength %s, need %s).",
-  "message.hxh.heavy_door.opened": "Door #%s (%s tons) gives way under your push."
+  "message.hxh.heavy_door.opened": "Door #%s (%s tons) gives way under your push.",
+  "entity.hxh.mike": "Mike",
+  "message.hxh.mike.calmer": "Mike eats the meat and calms down a little (%s/%s).",
+  "message.hxh.mike.friend": "Mike recognizes you: you are a friend, he will not attack you anymore."
 }

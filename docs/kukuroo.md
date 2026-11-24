@@ -19,7 +19,8 @@ Repère : x vers l'est, z vers le sud ; la porte est au nord du domaine, le mano
 ## À faire plus tard (anime)
 - [x] **Les 7 portes de l'épreuve** : bloc `heavy_door` (2 t à 128 t), s'ouvre selon la Force (4, 10, 18, 28, 42, 60, 80), se referme seule, entraîne la Force ; tunnel de 7 portes dans la grande porte
 - [ ] Numéros gravés (panneaux) sur chaque porte, textures dédiées, animation de coulissement, effet de poussée
-- [ ] **Mike en vrai mob** : IA de garde (poursuite des intrus, mord, arrêt devant les portes), nourri par Zebro, apprivoisement possible via quête (Gon/Killua)
+- [x] **Mike en vrai mob** (`hxh:mike`) : attaque les intrus, reste près de son poste, 150 PV, apaisé par 3 offrandes de viande (ami)
+- [ ] Mike : modèle propre (aujourd'hui loup ×3), nourri par Zebro, apprivoisement via quête (Gon/Killua), plusieurs Mike dans la forêt
 - [ ] Zebro : dialogue de visite, test d'entrée (« tu ne peux passer que si tu pousses la porte »), quête de Gon, Leorio, Kurapika
 - [ ] **Escalier et pièces du manoir** : hall, salle à manger, chambres, salle de torture, chambre de Killua, bureau de Silva, salle de Zeno
 - [ ] Famille Zoldyck : Silva, Zeno, Maha, Kikyo, Illumi, Milluki, Alluka/Nanika, Kalluto (PNJ/mobs dans le manoir)
