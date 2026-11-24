@@ -117,9 +117,16 @@ touche jamais ces os, donc les effets se composent par la hiérarchie.
 
 ### Kurapika
 
-`tools/models/kurapika.py` : carré blond lisse (calotte aux arêtes adoucies, pans continus sur les côtés et à
-l'arrière qui rentrent vers la mâchoire, quelques mèches plates en surface, frange droite en 5 mèches), visage fin,
-yeux gris-brun qui deviennent écarlates en combat (`kurapika_froid.png`), boucle d'oreille rouge, tenue Kurta
-(tunique blanche, tabard bleu brodé d'or devant et dos jusqu'aux genoux, col doré, pantalon blanc, chaussures bleu
-foncé) et cinq chaînes à la main droite avec leurs embouts (os `chains`). Mob `hxh:kurapika` (œuf, kit `kurapika`,
-neutre, allié de Gon et Killua) et PNJ `kurapika` avec le même modèle.
+`tools/models/kurapika.py`, deux versions : `kurapika` (avec le tabard) et `kurapika_sans_tunique`.
+- Proportions propres, plus élancées que Gon et Killua : tête 8,6 × 8 × 8, jambes plus longues (hanches à 10 px),
+  épaules plus étroites ; ≈ 1,85 bloc (boîte de collision 0,6 × 1,85).
+- Cheveux : coque cachée, dôme arrondi en plateaux, carré en mèches larges sur deux couches (côtés qui encadrent
+  le visage jusqu'au menton, arrière vers la nuque), pointes irrégulières, frange en 4 mèches épaisses.
+- Version A : tabard bleu épais par-dessus la tunique (panneaux qui s'écartent du corps en descendant, côtés
+  ouverts, épaules qui enveloppent, grand col relevé ouvert devant, bordures et filets dorés en relief, broderie,
+  doublure, plis), manches blanches amples avec revers bleu et or.
+- Version B : tunique blanche longue, col montant bordé de bleu, bande croisée et attaches dorées, ceinture bleue
+  nouée sur le côté, pans qui s'évasent fendus sur les côtés.
+- Yeux écarlates en combat (`<id>_froid.png`), boucle d'oreille, cinq chaînes à la main droite.
+- Mobs `hxh:kurapika` et `hxh:kurapika_sans_tunique` (un œuf chacun, kit `kurapika`, neutres, alliés de Gon et
+  Killua) ; PNJ `kurapika` et `kurapika_sans_tunique` avec les mêmes modèles.

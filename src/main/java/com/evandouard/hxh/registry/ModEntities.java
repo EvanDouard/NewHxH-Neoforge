@@ -60,7 +60,9 @@ public final class ModEntities {
     /** Personnages du manga en mob (modèle GeckoLib, stats / Nen / Hatsu depuis data/hxh/mob_presets/<id>.json). */
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> GON = character("gon");
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> KILLUA = character("killua");
-    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> KURAPIKA = character("kurapika");
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> KURAPIKA = character("kurapika", 0.6f, 1.85f);
+    /** Kurapika sans le tabard (tunique blanche et ceinture) : même personnage, même kit. */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> KURAPIKA_SANS_TUNIQUE = character("kurapika_sans_tunique", 0.6f, 1.85f);
 
     /** Gon « ultime » : passe en Gon adulte quand sa vie tombe sous 30 % (stats ×3, Jajanken ultime). */
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.GonUltimeEntity>> GON_ULTIME =
@@ -68,8 +70,13 @@ public final class ModEntities {
                     MobCategory.CREATURE).sized(0.6f, 1.5f).eyeHeight(1.3f).clientTrackingRange(10).build("gon_ultime"));
 
     private static DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> character(String id) {
+        return character(id, 0.6f, 1.5f);
+    }
+
+    private static DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> character(String id,
+            float width, float height) {
         return ENTITIES.register(id, () -> EntityType.Builder.of(com.evandouard.hxh.mob.CharacterEntity::new,
-                MobCategory.CREATURE).sized(0.6f, 1.5f).eyeHeight(1.3f).clientTrackingRange(10).build(id));
+                MobCategory.CREATURE).sized(width, height).eyeHeight(height * 0.87f).clientTrackingRange(10).build(id));
     }
 
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.beast.KirikoEntity>> KIRIKO =
@@ -114,6 +121,7 @@ public final class ModEntities {
         event.put(GON.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(KILLUA.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(KURAPIKA.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
+        event.put(KURAPIKA_SANS_TUNIQUE.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(GON_ULTIME.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(MAN_FACED_APE.get(), com.evandouard.hxh.beast.ManFacedApeEntity.createAttributes().build());
         event.put(CHIMERA_ANT.get(), com.evandouard.hxh.beast.ChimeraAntEntity.createAttributes().build());

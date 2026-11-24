@@ -1,0 +1,5 @@
+{
+  "entity": "hxh:kurapika_sans_tunique",
+  "stats": { "all": 45, "willpower": 60 },
+  "nen": { "level": 50, "kit": "kurapika", "mastery": 40 }
+}

@@ -63,6 +63,16 @@ public final class CharacterMobTests {
             helper.assertTrue("kurapika".equals(data.kit()), "Kit de Kurapika (" + data.kit() + ")");
             helper.assertTrue(!(kurapika instanceof Enemy), "Neutre");
             helper.assertTrue(kurapika.isAlliedTo(helper.spawn(ModEntities.GON.get(), 3, 1, 1)), "Allié de Gon");
+            helper.assertTrue(kurapika.getBbHeight() > 1.7f, "Plus grand que Gon et Killua");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void kurapikaWithoutTabardIsTheSameCharacter(GameTestHelper helper) {
+        CharacterEntity k = helper.spawn(ModEntities.KURAPIKA_SANS_TUNIQUE.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("kurapika".equals(HunterStats.get(k).kit()), "Même kit que Kurapika");
+            helper.assertTrue("kurapika_sans_tunique".equals(k.modelId()), "Modèle sans tunique");
         }));
     }
 }
