@@ -82,6 +82,7 @@ public final class WorldPlacesTests {
     public static void mikeAttacksIntrudersUntilFedThreeTimes(GameTestHelper helper) {
         var mike = helper.spawn(com.evandouard.hxh.registry.ModEntities.MIKE.get(), new BlockPos(2, 1, 2));
         var player = helper.makeMockServerPlayerInLevel();
+        player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
         player.moveTo(mike.getX() + 4, mike.getY(), mike.getZ(), 0f, 0f);
         helper.runAfterDelay(80, () -> {
             helper.assertTrue(mike.getTarget() == player, "Mike prend l'intrus pour cible : " + mike.getTarget());
