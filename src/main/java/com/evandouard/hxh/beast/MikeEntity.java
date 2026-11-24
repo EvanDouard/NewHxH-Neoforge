@@ -44,7 +44,12 @@ public class MikeEntity extends Wolf {
     protected void registerGoals() {
         super.registerGoals();
         targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false,
-                p -> p instanceof Player pl && !pl.getPersistentData().getBoolean(FRIEND_TAG)));
+                p -> p instanceof Player pl && isIntruder(pl)));
+    }
+
+    /** Un joueur est un intrus tant qu'il n'a pas gagné l'amitié de Mike. */
+    public static boolean isIntruder(Player player) {
+        return !player.getPersistentData().getBoolean(FRIEND_TAG);
     }
 
     @Override

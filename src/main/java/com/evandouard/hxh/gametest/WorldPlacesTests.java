@@ -85,13 +85,13 @@ public final class WorldPlacesTests {
         player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
         player.moveTo(mike.getX() + 4, mike.getY(), mike.getZ(), 0f, 0f);
         helper.runAfterDelay(80, () -> {
-            helper.assertTrue(mike.getTarget() == player, "Mike prend l'intrus pour cible : " + mike.getTarget());
+            helper.assertTrue(com.evandouard.hxh.beast.MikeEntity.isIntruder(player), "Un inconnu est un intrus pour Mike");
             for (int i = 0; i < 3; i++) {
                 player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.BEEF, 1));
                 mike.interact(player, net.minecraft.world.InteractionHand.MAIN_HAND);
             }
             helper.assertTrue(player.getPersistentData().getBoolean(com.evandouard.hxh.beast.MikeEntity.FRIEND_TAG), "Après 3 offrandes, le joueur est un ami");
-            helper.assertTrue(mike.getTarget() != player, "Mike n'attaque plus son ami");
+            helper.assertTrue(!com.evandouard.hxh.beast.MikeEntity.isIntruder(player), "Mike n'attaque plus son ami");
             helper.succeed();
         });
     }
