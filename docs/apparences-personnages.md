@@ -29,7 +29,7 @@ Sans fichier d'apparence, un PNJ utilise `textures/entity/npc/<id>.png`, sinon S
 ## Modèles sur mesure (GeckoLib)
 
 Les personnages refaits au niveau décrit dans `docs/Analyse_model.md` ont un vrai modèle GeckoLib, qui remplace le
-rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio** et **Hisoka**.
+rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva** et **Kite**.
 
 ```
 python3 tools/models/gon.py
@@ -153,3 +153,32 @@ sur la poitrine, pique dans le dos, bandes roses aux épaules et aux poignets ; 
 côté ; pantalon clair resserré aux chevilles, chaussures violettes à pointe relevée ; trois cartes en éventail dans
 la main droite (os `cards`). Expression `froid` : sourire carnassier. Mob `hxh:hisoka` (œuf, kit `hisoka`, neutre
 pour l'instant) et PNJ `hisoka` avec le même modèle.
+
+### Série « même style » : outils communs
+
+Les personnages suivants partagent `tools/models/adult.py` (`Body` : proportions ; `skeleton` : mêmes os que Gon ;
+`head_box`, `write_expression`) et `tools/models/integrate.py`, qui les branche en une commande
+(`python3 integrate.py <ids…>` : entité, attributs, œuf, onglet créatif, rendu, preset `mob_presets/<id>.json`, textes
+fr/en, GameTest `<Id>IsInTheGameWithHisKit`, bloc de captures 6 angles + expression dans `ci/scenario.txt`).
+Cheveux : sous-couche arrondie `chibi.scalp` (plaques tangentes qui bouchent les trous) + mèches `chibi.crown_lock`
+qui partent d'une sphère autour du crâne, suivent l'arrondi puis retombent (az 0 = arrière, 90 = gauche, 180 =
+devant) ; les rideaux de cheveux longs sont des `chibi.lock` qui pendent de l'équateur de la sphère.
+Tous sont des mobs neutres (alliés entre eux) avec leur kit Hatsu.
+
+| Personnage | Taille | Cheveux | Tenue / détails | Expression `froid` |
+|---|---|---|---|---|
+| Netero | 1,6 | crâne chauve, couronne blanche, chignon relevé | longue barbe, sourcils tombants, chemise 心 | regard de combat |
+| Meruem | 2,0 | crête de carapace à deux lobes, antennes | cape, queue | regard glacial |
+| Neferpitou | 1,8 | mèches ondulées blanches, frange, oreilles de chat | queue de chat | regard de prédateur |
+| Shaiapouf | 1,95 | mèches blondes, frange balayée | jabot, quatre ailes de papillon | colère |
+| Youpi | 2,4 | crête de cornes recourbées | gilet ouvert, colosse | rage, crocs |
+| Chrollo | 1,9 | noir plaqué vers l'arrière du front à la nuque | croix au front, boucles bleues, manteau à col de fourrure, croix inversée dans le dos | regard de chef |
+| Uvogin | 2,3 | crinière de lion châtain jusqu'au milieu du dos, front dégagé | torse nu, peau de bête en bandoulière | rugissement |
+| Illumi | 1,95 | noir raide jusqu'à la taille, frange droite, mèches devant les épaules | yeux noirs vides, tunique, aiguilles | yeux plus grands |
+| Zeno | 1,6 | pointes blanches, longue tresse dans le dos | moustache fine, tunique « 一日一殺 » | regard d'assassin |
+| Biscuit | 1,4 | blond, frange pointue, couettes hautes à rubans rouges | robe rose à volants | sourire de combattante |
+| Feitan | 1,55 | noir en bataille, longue frange entre les yeux | col montant à mâchoire de crâne, long manteau | pupilles rouges |
+| Nobunaga | 1,85 | tirés en chignon au sommet, queue dans le dos | kimono, hakama, katana à la ceinture | regard de duel |
+| Machi | 1,75 | queue de cheval haute rose, mèches qui encadrent le visage | haut de kimono indigo, obi, fils de Nen | regard tranchant |
+| Silva | 2,1 | immense crinière blanche jusqu'au bas du dos | tunique bleu nuit à col montant | regard du chef |
+| Kite | 1,85 | longs cheveux blancs jusqu'à la taille | casquette souple, long manteau | regard de chasseur |
