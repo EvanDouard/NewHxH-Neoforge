@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:youpi",
+  "stats": {
+    "all": 85,
+    "strength": 98
+  },
+  "nen": {
+    "level": 92,
+    "kit": "youpi",
+    "mastery": 80
+  }
+}

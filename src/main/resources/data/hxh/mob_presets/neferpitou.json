@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:neferpitou",
+  "stats": {
+    "all": 85,
+    "agility": 95
+  },
+  "nen": {
+    "level": 95,
+    "kit": "neferpitou",
+    "mastery": 90
+  }
+}

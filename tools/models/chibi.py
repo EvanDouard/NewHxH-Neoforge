@@ -346,3 +346,43 @@ def arched(m, spec, paint, parent='hair', segs=3):
         ax, az = arc * fx * sgn(rx), arc * fz * sgn(rz)
         lock(m, name, [x, y, z], L, W, rx + ax * 0.5, rz + az * 0.5, paint(lit), ry=ry, flat=flat,
              curve=(-ax, az), segs=segs, parent=parent, **extra)
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# Coiffures « qui poussent depuis le crâne » (méthode de Kurapika, généralisée)
+
+def shell_panel(m, name, c, R, az, phi, w, h, t, paint, parent='hair'):
+    """Plaque tangente à une sphère (centre c, rayon R) au point (azimut az, élévation phi)."""
+    m.bone(f'{name}_az', list(c), parent, rotation=[0, az, 0])
+    m.bone(name, list(c), f'{name}_az', rotation=[-phi, 0, 0])
+    m.cube(name, [c[0] - w / 2, c[1] - h / 2, c[2] + R - t], [w, h, t], paint)
+
+
+def scalp(m, c, R, paint_for, skip_front=62, front_phi=40, rings=None, prefix='hc', parent='hair'):
+    """Sous-couche arrondie sombre (anneaux de plaques tangentes) qui bouche les interstices entre les mèches.
+    Le front (azimut 180 ± skip_front, sous front_phi) reste libre. paint_for(k) donne la peinture."""
+    import math
+    rings = rings or ((-34, 14, -0.2), (-14, 14, -0.16), (8, 14, -0.12), (30, 12, -0.08), (52, 9, -0.04),
+                      (72, 5, 0.0))
+    for ri, (phi, n, k) in enumerate(rings):
+        for j in range(n):
+            az = (j + 0.5 * (ri % 2)) * 360 / n
+            front = abs(((az - 180) + 180) % 360 - 180) < skip_front
+            if front and phi < front_phi:
+                continue
+            circ = 2 * math.pi * R * math.cos(math.radians(phi))
+            shell_panel(m, f'{prefix}_{ri}_{j}', c, R, az, phi, circ / n * 1.3, R * math.radians(22) * 1.3, 1.4,
+                        paint_for(k), parent=parent)
+
+
+def crown_lock(m, name, c, rr, az, phi0, L, W, paint_for, flat=0.5, turn=90, tip=0.2, segs=4, lean=0.0,
+               twist=0.0, skew=0.0, root=1.15, taper_pow=0.45, parent='hair'):
+    """Mèche qui part du point (az, phi0) de la sphère (centre c, rayon rr), tangente à sa surface vers le bas,
+    et tourne de `turn` degrés répartis sur ses tronçons : elle suit l'arrondi du crâne puis retombe.
+    az : 0 = arrière, 90 = gauche du perso (+X), 180 = devant. lean : inclinaison latérale (degrés)."""
+    import math
+    m.bone(f'{name}_az', list(c), parent, rotation=[0, az, lean])
+    y = c[1] + rr * math.sin(math.radians(phi0))
+    z = c[2] + rr * math.cos(math.radians(phi0))
+    lock(m, name, [c[0], y, z], L, W, 180 - phi0, 0, paint_for, ry=twist, flat=flat, curve=(turn, 0), segs=segs,
+         root=root, tip=tip, taper_pow=taper_pow, skew=skew, belly=1.08, parent=f'{name}_az')

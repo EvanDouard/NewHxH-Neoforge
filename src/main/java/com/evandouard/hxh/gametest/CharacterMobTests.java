@@ -114,4 +114,34 @@ public final class CharacterMobTests {
             helper.assertTrue(Math.abs(c.getBbHeight() - 2.0f) < 0.01f, "Taille");
         }));
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void neferpitouIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.NEFERPITOU.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("neferpitou".equals(HunterStats.get(c).kit()), "Kit de Neferpitou (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() - 1.8f) < 0.01f, "Taille");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void shaiapoufIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.SHAIAPOUF.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("shaiapouf".equals(HunterStats.get(c).kit()), "Kit de Shaiapouf (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() - 1.95f) < 0.01f, "Taille");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void youpiIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.YOUPI.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("youpi".equals(HunterStats.get(c).kit()), "Kit de Menthuthuyoupi (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() - 2.4f) < 0.01f, "Taille");
+        }));
+    }
 }

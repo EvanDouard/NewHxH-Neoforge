@@ -54,6 +54,15 @@ public final class ModItems {
     public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> MERUEM_SPAWN_EGG =
             ITEMS.register("meruem_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.MERUEM, 0x4A7A3A, 0xE8D7A0, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> NEFERPITOU_SPAWN_EGG =
+            ITEMS.register("neferpitou_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.NEFERPITOU, 0xF2F2F4, 0x6E5A8E, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> SHAIAPOUF_SPAWN_EGG =
+            ITEMS.register("shaiapouf_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.SHAIAPOUF, 0xE9D27A, 0x2A2A44, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> YOUPI_SPAWN_EGG =
+            ITEMS.register("youpi_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.YOUPI, 0x3B4A8A, 0x9E3A3A, new Item.Properties()));
     public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> KILLUA_SPAWN_EGG =
             ITEMS.register("killua_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.KILLUA, 0xECEAF2, 0x7B5CC2, new Item.Properties()));

@@ -1923,6 +1923,138 @@ shot 70f_meruem_dessus
 cmd tp @s ~ ~-2.8 ~
 cmd gamemode survival
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Neferpitou (modèle GeckoLib) : 6 angles + expression
+hud off
+look 0 12
+cmd summon hxh:npc ~ ~ ~3.4 {npc:"neferpitou",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 71a_neferpitou_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.4 {npc:"neferpitou",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 71b_neferpitou_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.4 {npc:"neferpitou",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 71c_neferpitou_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.4 {npc:"neferpitou",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 71g_neferpitou_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.4 {npc:"neferpitou",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 71d_neferpitou_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~ ~ ~1.9 {npc:"neferpitou",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 71h_neferpitou_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~2.5 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.5 ~1.4 {npc:"neferpitou",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 71f_neferpitou_dessus
+cmd tp @s ~ ~-2.5 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Shaiapouf (modèle GeckoLib) : 6 angles + expression
+hud off
+look 0 11
+cmd summon hxh:npc ~ ~ ~3.7 {npc:"shaiapouf",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 73a_shaiapouf_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.7 {npc:"shaiapouf",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 73b_shaiapouf_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.7 {npc:"shaiapouf",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 73c_shaiapouf_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.7 {npc:"shaiapouf",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 73g_shaiapouf_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.7 {npc:"shaiapouf",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 73d_shaiapouf_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~ ~ ~2.0 {npc:"shaiapouf",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 73h_shaiapouf_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~2.7 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.7 ~1.4 {npc:"shaiapouf",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 73f_shaiapouf_dessus
+cmd tp @s ~ ~-2.7 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Menthuthuyoupi (modèle GeckoLib) : 6 angles + expression
+hud off
+look 0 9
+cmd summon hxh:npc ~ ~ ~4.6 {npc:"youpi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 75a_youpi_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~4.6 {npc:"youpi",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 75b_youpi_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~4.6 {npc:"youpi",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 75c_youpi_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~4.6 {npc:"youpi",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 75g_youpi_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~4.6 {npc:"youpi",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 75d_youpi_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~ ~ ~2.5 {npc:"youpi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 75h_youpi_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~3.4 ~
+look 0 68
+cmd summon hxh:npc ~ ~-3.4 ~1.4 {npc:"youpi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 75f_youpi_dessus
+cmd tp @s ~ ~-3.4 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
 # Gon et Killua en mobs (œufs d'apparition) : même modèle, nom, Hatsu
 hud on
 look 0 8
