@@ -34,6 +34,9 @@ add('nobunaga', 'Nobunaga Hazama', 'Nobunaga Hazama', 0.6, 1.85, 0xE6DCB0, 0x3A5
 add('machi', 'Machi Komacine', 'Machi Komacine', 0.55, 1.75, 0xC23A72, 0x2C3266, {"all": 74, "agility": 85}, 82, 85)
 add('silva', 'Silva Zoldyck', 'Silva Zoldyck', 0.75, 2.1, 0xEEF0F6, 0x1E2A44, {"all": 88, "strength": 92}, 94, 90)
 add('kite', 'Kite', 'Kite', 0.6, 1.85, 0xF2F2F6, 0x283050, {"all": 76}, 82, 80)
+add('kalluto', 'Kalluto Zoldyck', 'Kalluto Zoldyck', 0.5, 1.35, 0x5A3A7A, 0x121218, {"all": 66, "agility": 78}, 72, 70)
+add('shalnark', 'Shalnark', 'Shalnark', 0.55, 1.75, 0xC99A3A, 0x7A7448, {"all": 70}, 80, 82)
+add('pakunoda', 'Pakunoda', 'Pakunoda', 0.55, 1.85, 0xC8B47A, 0x1C1C22, {"all": 70}, 80, 80)
 
 
 def rep(p, a, b, once=True):

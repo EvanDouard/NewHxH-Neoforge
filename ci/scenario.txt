@@ -2495,6 +2495,138 @@ shot 71f_kite_dessus
 cmd tp @s ~ ~-2.6 ~
 cmd gamemode survival
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Kalluto Zoldyck (modèle GeckoLib) : 6 angles + expression
+hud off
+look 0 15
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"kalluto",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 71a_kalluto_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"kalluto",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 71b_kalluto_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"kalluto",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 71c_kalluto_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"kalluto",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 71g_kalluto_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"kalluto",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 71d_kalluto_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~ ~ ~1.7 {npc:"kalluto",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 71h_kalluto_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~1.9 ~
+look 0 68
+cmd summon hxh:npc ~ ~-1.9 ~1.4 {npc:"kalluto",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 71f_kalluto_dessus
+cmd tp @s ~ ~-1.9 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Shalnark (modèle GeckoLib) : 6 angles + expression
+hud off
+look 0 12
+cmd summon hxh:npc ~ ~ ~3.3 {npc:"shalnark",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 80a_shalnark_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.3 {npc:"shalnark",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 80b_shalnark_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.3 {npc:"shalnark",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 80c_shalnark_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.3 {npc:"shalnark",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 80g_shalnark_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.3 {npc:"shalnark",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 80d_shalnark_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~ ~ ~1.8 {npc:"shalnark",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 80h_shalnark_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~2.4 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.4 ~1.4 {npc:"shalnark",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 80f_shalnark_dessus
+cmd tp @s ~ ~-2.4 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Pakunoda (modèle GeckoLib) : 6 angles + expression
+hud off
+look 0 12
+cmd summon hxh:npc ~ ~ ~3.5 {npc:"pakunoda",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 78a_pakunoda_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.5 {npc:"pakunoda",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 78b_pakunoda_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.5 {npc:"pakunoda",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 78c_pakunoda_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.5 {npc:"pakunoda",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 78g_pakunoda_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.5 {npc:"pakunoda",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 78d_pakunoda_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~ ~ ~1.9 {npc:"pakunoda",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 78h_pakunoda_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~2.6 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.6 ~1.4 {npc:"pakunoda",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 78f_pakunoda_dessus
+cmd tp @s ~ ~-2.6 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
 # Gon et Killua en mobs (œufs d'apparition) : même modèle, nom, Hatsu
 hud on
 look 0 8

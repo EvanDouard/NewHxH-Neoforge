@@ -1,0 +1,11 @@
+{
+  "entity": "hxh:pakunoda",
+  "stats": {
+    "all": 70
+  },
+  "nen": {
+    "level": 80,
+    "kit": "pakunoda",
+    "mastery": 80
+  }
+}

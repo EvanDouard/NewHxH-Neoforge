@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:kalluto",
+  "stats": {
+    "all": 66,
+    "agility": 78
+  },
+  "nen": {
+    "level": 72,
+    "kit": "kalluto",
+    "mastery": 70
+  }
+}
