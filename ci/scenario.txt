@@ -2534,10 +2534,10 @@ wait 10
 expect Traque ouverte
 clearchat
 cmd hunter contract goto
-wait 8
+wait 80
 shot 93_traque_blacklist
 cmd damage @e[tag=hxh_contract,limit=1,sort=nearest] 1000 minecraft:player_attack by @s
-wait 10
+wait 20
 expect Contrat rempli
 # --- Hunter gourmet : sa quête jusqu'au bout, puis les plats débloqués en boutique ---
 cmd kill @e[type=!minecraft:player]
