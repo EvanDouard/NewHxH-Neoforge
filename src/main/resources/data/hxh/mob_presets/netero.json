@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:netero",
+  "stats": {
+    "all": 85,
+    "speed": 95
+  },
+  "nen": {
+    "level": 100,
+    "kit": "netero",
+    "mastery": 95
+  }
+}

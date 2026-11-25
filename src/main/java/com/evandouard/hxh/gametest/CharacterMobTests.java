@@ -94,4 +94,24 @@ public final class CharacterMobTests {
             helper.assertTrue(!(hisoka instanceof Enemy) && hisoka.getTarget() == null, "Neutre pour l'instant");
         }));
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void neteroIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.NETERO.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("netero".equals(HunterStats.get(c).kit()), "Kit de Isaac Netero (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() - 1.6f) < 0.01f, "Taille");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void meruemIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.MERUEM.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("meruem".equals(HunterStats.get(c).kit()), "Kit de Meruem (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() - 2.0f) < 0.01f, "Taille");
+        }));
+    }
 }
