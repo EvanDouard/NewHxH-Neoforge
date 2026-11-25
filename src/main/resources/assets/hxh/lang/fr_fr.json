@@ -1756,5 +1756,7 @@
   "npc.hxh.guide_greed_island": "Guide de Greed Island",
   "dialog.hxh.guide_greed_island.idle": "Bienvenue à Greed Island, le jeu dont personne ne ressort comme il est entré.",
   "npc.hxh.guide_foret_kite": "Guide de la forêt",
-  "dialog.hxh.guide_foret_kite.idle": "Ne vous éloignez pas du camp. Les nids, là-bas, abritent des bêtes qu'aucun naturaliste n'a jamais recensées."
+  "dialog.hxh.guide_foret_kite.idle": "Ne vous éloignez pas du camp. Les nids, là-bas, abritent des bêtes qu'aucun naturaliste n'a jamais recensées.",
+  "npc.hxh.survivant_atterrissage": "Survivant",
+  "dialog.hxh.survivant_atterrissage.idle": "C'est ici que « ça » est tombé. Depuis, plus rien ne pousse et on entend gratter sous la terre. Partez avant la nuit."
 }

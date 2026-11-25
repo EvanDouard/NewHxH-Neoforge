@@ -162,6 +162,21 @@ public final class WorldPlacesTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void queenArmSiteSketch(GameTestHelper helper) {
+        var place = WorldPlaces.get("hxh:chimera_ant_queen_arm");
+        helper.assertTrue(place != null, "Le site du Bras de la Reine est chargé");
+        BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+        var level = helper.getLevel();
+        int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 28, ground, origin.getZ() + 52)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 28, ground + 6, origin.getZ() + 28)).is(Blocks.BONE_BLOCK), "Bras d'os au centre");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 28, ground + 20, origin.getZ() + 28)).is(Blocks.NETHER_WART_BLOCK), "Sommet du bras");
+        var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 60, ground + 20, origin.getZ() + 60);
+        helper.assertTrue(level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box).stream().anyMatch(n -> n.npcId().equals("survivant_atterrissage")), "Survivant présent");
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void heavyDoorOpensOnlyWithEnoughStrengthThenCloses(GameTestHelper helper) {
         var level = helper.getLevel();

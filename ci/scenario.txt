@@ -2851,6 +2851,11 @@ cmd time set noon
 wait 450
 wait 100
 shot 99zo_kite_camp
+cmd hunter airship chimera_ant_queen_arm
+cmd time set noon
+wait 450
+wait 100
+shot 99zp_bras_reine
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative

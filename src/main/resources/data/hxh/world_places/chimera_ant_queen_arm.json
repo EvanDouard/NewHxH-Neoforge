@@ -1,0 +1,15095 @@
+{
+ "x": 772,
+ "z": 4557,
+ "clear": [
+  0,
+  0,
+  0,
+  56,
+  30,
+  56
+ ],
+ "fills": [
+  {
+   "box": [
+    0,
+    -1,
+    0,
+    56,
+    -1,
+    56
+   ],
+   "block": "minecraft:coarse_dirt"
+  },
+  {
+   "box": [
+    24,
+    0,
+    24,
+    32,
+    3,
+    32
+   ],
+   "block": "minecraft:bone_block[axis=y]"
+  },
+  {
+   "box": [
+    25,
+    4,
+    25,
+    31,
+    9,
+    31
+   ],
+   "block": "minecraft:bone_block[axis=y]"
+  },
+  {
+   "box": [
+    26,
+    10,
+    26,
+    30,
+    16,
+    30
+   ],
+   "block": "minecraft:red_nether_bricks"
+  },
+  {
+   "box": [
+    27,
+    17,
+    27,
+    29,
+    22,
+    29
+   ],
+   "block": "minecraft:nether_wart_block"
+  },
+  {
+   "box": [
+    31,
+    17,
+    27,
+    33,
+    19,
+    28
+   ],
+   "block": "minecraft:red_nether_bricks"
+  },
+  {
+   "box": [
+    31,
+    17,
+    29,
+    33,
+    20,
+    30
+   ],
+   "block": "minecraft:red_nether_bricks"
+  },
+  {
+   "box": [
+    30,
+    17,
+    31,
+    32,
+    21,
+    32
+   ],
+   "block": "minecraft:red_nether_bricks"
+  },
+  {
+   "box": [
+    29,
+    17,
+    31,
+    31,
+    22,
+    32
+   ],
+   "block": "minecraft:red_nether_bricks"
+  },
+  {
+   "box": [
+    8,
+    0,
+    10,
+    10,
+    4,
+    12
+   ],
+   "block": "minecraft:cracked_deepslate_bricks"
+  },
+  {
+   "box": [
+    44,
+    0,
+    12,
+    46,
+    5,
+    14
+   ],
+   "block": "minecraft:cracked_deepslate_bricks"
+  },
+  {
+   "box": [
+    10,
+    0,
+    44,
+    12,
+    3,
+    46
+   ],
+   "block": "minecraft:cracked_deepslate_bricks"
+  },
+  {
+   "box": [
+    46,
+    0,
+    46,
+    48,
+    6,
+    48
+   ],
+   "block": "minecraft:cracked_deepslate_bricks"
+  },
+  {
+   "box": [
+    4,
+    0,
+    28,
+    4,
+    6,
+    28
+   ],
+   "block": "minecraft:dark_oak_log[axis=y]"
+  },
+  {
+   "box": [
+    3,
+    5,
+    28,
+    5,
+    5,
+    28
+   ],
+   "block": "minecraft:dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    52,
+    0,
+    24,
+    52,
+    6,
+    24
+   ],
+   "block": "minecraft:dark_oak_log[axis=y]"
+  },
+  {
+   "box": [
+    51,
+    5,
+    24,
+    53,
+    5,
+    24
+   ],
+   "block": "minecraft:dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    28,
+    0,
+    4,
+    28,
+    6,
+    4
+   ],
+   "block": "minecraft:dark_oak_log[axis=y]"
+  },
+  {
+   "box": [
+    27,
+    5,
+    4,
+    29,
+    5,
+    4
+   ],
+   "block": "minecraft:dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    24,
+    0,
+    52,
+    24,
+    6,
+    52
+   ],
+   "block": "minecraft:dark_oak_log[axis=y]"
+  },
+  {
+   "box": [
+    23,
+    5,
+    52,
+    25,
+    5,
+    52
+   ],
+   "block": "minecraft:dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    14,
+    0,
+    18,
+    14,
+    6,
+    18
+   ],
+   "block": "minecraft:dark_oak_log[axis=y]"
+  },
+  {
+   "box": [
+    13,
+    5,
+    18,
+    15,
+    5,
+    18
+   ],
+   "block": "minecraft:dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    40,
+    0,
+    38,
+    40,
+    6,
+    38
+   ],
+   "block": "minecraft:dark_oak_log[axis=y]"
+  },
+  {
+   "box": [
+    39,
+    5,
+    38,
+    41,
+    5,
+    38
+   ],
+   "block": "minecraft:dark_oak_log[axis=x]"
+  }
+ ],
+ "blocks": [
+  {
+   "pos": [
+    10,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    11,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    11,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    11,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    11,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    11,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    11,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    11,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    11,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    11,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    11,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    11,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    13,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    11
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    45
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    11
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    45
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    11
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    45
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    11
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    45
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    11
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    45
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    10
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    11
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    45
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    46
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    11
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    45
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    11
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    45
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    11
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    45
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    11
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    45
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    11
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    45
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    12
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    44
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    13
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    43
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    14
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    42
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    15
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    41
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    16
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    40
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    17
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    18
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    38
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    39
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    19
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    43,
+    -1,
+    37
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    20
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    21
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    22
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    34
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    35
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    36
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    45,
+    -1,
+    23
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    45,
+    -1,
+    24
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    45,
+    -1,
+    25
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    45,
+    -1,
+    26
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    45,
+    -1,
+    27
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    45,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    45,
+    -1,
+    29
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    45,
+    -1,
+    30
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    45,
+    -1,
+    31
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    45,
+    -1,
+    32
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    45,
+    -1,
+    33
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    46,
+    -1,
+    28
+   ],
+   "state": "minecraft:blackstone"
+  },
+  {
+   "pos": [
+    14,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    15,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    17,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    19,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    21,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    22,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    15
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    23,
+    -1,
+    41
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    15
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    41
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    15
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    41
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    15
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    26,
+    -1,
+    41
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    15
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    27,
+    -1,
+    41
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    14
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    15
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    41
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    42
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    15
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    29,
+    -1,
+    41
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    15
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    30,
+    -1,
+    41
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    15
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    31,
+    -1,
+    41
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    15
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    41
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    15
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    33,
+    -1,
+    41
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    34,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    16
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    35,
+    -1,
+    40
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    17
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    39
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    18
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    37,
+    -1,
+    38
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    19
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    38,
+    -1,
+    37
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    20
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    39,
+    -1,
+    36
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    21
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    22
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    34
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    35
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    23
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    24
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    25
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    26
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    27
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    29
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    30
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    31
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    32
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    41,
+    -1,
+    33
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    42,
+    -1,
+    28
+   ],
+   "state": "minecraft:coarse_dirt"
+  },
+  {
+   "pos": [
+    18,
+    -2,
+    28
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    19,
+    -2,
+    25
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    19,
+    -2,
+    27
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    19,
+    -2,
+    29
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    19,
+    -2,
+    31
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    20,
+    -2,
+    22
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    20,
+    -2,
+    24
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    20,
+    -2,
+    26
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    20,
+    -2,
+    28
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    20,
+    -2,
+    30
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    20,
+    -2,
+    32
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    20,
+    -2,
+    34
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    21,
+    -2,
+    21
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    21,
+    -2,
+    23
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    21,
+    -2,
+    25
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    21,
+    -2,
+    27
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    21,
+    -2,
+    29
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    21,
+    -2,
+    31
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    21,
+    -2,
+    33
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    21,
+    -2,
+    35
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    22,
+    -2,
+    20
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    22,
+    -2,
+    22
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    22,
+    -2,
+    24
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    22,
+    -2,
+    26
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    22,
+    -2,
+    28
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    22,
+    -2,
+    30
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    22,
+    -2,
+    32
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    22,
+    -2,
+    34
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    22,
+    -2,
+    36
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    23,
+    -2,
+    21
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    23,
+    -2,
+    23
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    23,
+    -2,
+    25
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    23,
+    -2,
+    27
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    23,
+    -2,
+    29
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    23,
+    -2,
+    31
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    23,
+    -2,
+    33
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    23,
+    -2,
+    35
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    20
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    22
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    24
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    26
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    28
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    30
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    32
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    34
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    36
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    19
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    21
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    23
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    25
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    27
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    29
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    31
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    33
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    35
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    37
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    20
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    22
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    24
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    26
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    28
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    30
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    32
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    34
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    36
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    19
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    21
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    23
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    25
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    27
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    29
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    31
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    33
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    35
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    37
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    18
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    20
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    22
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    24
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    26
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    28
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    30
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    32
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    34
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    36
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    38
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    19
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    21
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    23
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    25
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    27
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    29
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    31
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    33
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    35
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    37
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    20
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    22
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    24
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    26
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    28
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    30
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    32
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    34
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    36
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    19
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    21
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    23
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    25
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    27
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    29
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    31
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    33
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    35
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    37
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    20
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    22
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    24
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    26
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    28
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    30
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    32
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    34
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    36
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    33,
+    -2,
+    21
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    33,
+    -2,
+    23
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    33,
+    -2,
+    25
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    33,
+    -2,
+    27
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    33,
+    -2,
+    29
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    33,
+    -2,
+    31
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    33,
+    -2,
+    33
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    33,
+    -2,
+    35
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    34,
+    -2,
+    20
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    34,
+    -2,
+    22
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    34,
+    -2,
+    24
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    34,
+    -2,
+    26
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    34,
+    -2,
+    28
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    34,
+    -2,
+    30
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    34,
+    -2,
+    32
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    34,
+    -2,
+    34
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    34,
+    -2,
+    36
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    35,
+    -2,
+    21
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    35,
+    -2,
+    23
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    35,
+    -2,
+    25
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    35,
+    -2,
+    27
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    35,
+    -2,
+    29
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    35,
+    -2,
+    31
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    35,
+    -2,
+    33
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    35,
+    -2,
+    35
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    36,
+    -2,
+    22
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    36,
+    -2,
+    24
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    36,
+    -2,
+    26
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    36,
+    -2,
+    28
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    36,
+    -2,
+    30
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    36,
+    -2,
+    32
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    36,
+    -2,
+    34
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    37,
+    -2,
+    25
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    37,
+    -2,
+    27
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    37,
+    -2,
+    29
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    37,
+    -2,
+    31
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    38,
+    -2,
+    28
+   ],
+   "state": "minecraft:soul_soil"
+  },
+  {
+   "pos": [
+    22,
+    -2,
+    28
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    23,
+    -2,
+    25
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    23,
+    -2,
+    27
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    23,
+    -2,
+    29
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    23,
+    -2,
+    31
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    24
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    26
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    28
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    30
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    24,
+    -2,
+    32
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    23
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    25
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    27
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    29
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    31
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    25,
+    -2,
+    33
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    24
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    26
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    28
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    30
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    26,
+    -2,
+    32
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    23
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    25
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    27
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    29
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    31
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    27,
+    -2,
+    33
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    22
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    24
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    26
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    28
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    30
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    32
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    28,
+    -2,
+    34
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    23
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    25
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    27
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    29
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    31
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    29,
+    -2,
+    33
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    24
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    26
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    28
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    30
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    30,
+    -2,
+    32
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    23
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    25
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    27
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    29
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    31
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    31,
+    -2,
+    33
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    24
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    26
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    28
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    30
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    32,
+    -2,
+    32
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    33,
+    -2,
+    25
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    33,
+    -2,
+    27
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    33,
+    -2,
+    29
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    33,
+    -2,
+    31
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    34,
+    -2,
+    28
+   ],
+   "state": "minecraft:magma_block"
+  },
+  {
+   "pos": [
+    9,
+    5,
+    11
+   ],
+   "state": "minecraft:soul_lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    45,
+    6,
+    13
+   ],
+   "state": "minecraft:soul_lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    11,
+    4,
+    45
+   ],
+   "state": "minecraft:soul_lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    47,
+    7,
+    47
+   ],
+   "state": "minecraft:soul_lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    52
+   ],
+   "state": "hxh:airship_terminal[facing=north]"
+  }
+ ],
+ "entities": [
+  {
+   "type": "hxh:npc",
+   "pos": [
+    30,
+    0,
+    50
+   ],
+   "yaw": 180,
+   "nbt": "{npc:\"survivant_atterrissage\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  }
+ ]
+}

@@ -1756,5 +1756,7 @@
   "npc.hxh.guide_greed_island": "Greed Island guide",
   "dialog.hxh.guide_greed_island.idle": "Welcome to Greed Island, the game nobody leaves the way they came in.",
   "npc.hxh.guide_foret_kite": "Forest guide",
-  "dialog.hxh.guide_foret_kite.idle": "Don't stray from camp. Those nests out there hold beasts no naturalist has ever catalogued."
+  "dialog.hxh.guide_foret_kite.idle": "Don't stray from camp. Those nests out there hold beasts no naturalist has ever catalogued.",
+  "npc.hxh.survivant_atterrissage": "Survivor",
+  "dialog.hxh.survivant_atterrissage.idle": "This is where \"it\" fell. Nothing has grown since, and you can hear scratching under the ground. Leave before nightfall."
 }

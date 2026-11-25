@@ -368,3 +368,4 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - Hôtel de l'examen : `/hunter airship hunter_exam_hotel`. Vérifier la façade blanche (6 étages avec chambres), le hall et la réception, et derrière, le pavillon japonais (tatamis verts, table basse, Netero et Beans) relié par un passage. Générateur : `tools/gen_hotel.py`.
 - Greed Island (ébauche) : `/hunter airship greed_island`. Petit village (6 maisons, place pavée, pupitre du Livre, guide). Générateur : `tools/gen_greed.py`. Structure volontairement simple : Evan la retouche à la main.
 - Forêt de Kite (ébauche) : `/hunter airship kite_forest`. Camp : cabane, feu de camp, 3 nids de foin, entrée de grotte, guide. Générateur : `tools/gen_kite.py`.
+- Bras de la Reine (ébauche) : `/hunter airship chimera_ant_queen_arm`. Cratère noir, grand « bras » d'os et de chair rouge au centre, épaves, arbres morts, survivant. Générateur : `tools/gen_queenarm.py`.
