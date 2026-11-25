@@ -5,3 +5,5 @@
 694 3924 80 68
 # Tour Céleste (Heavens Arena)
 2775 1445 85 70
+# Port du Black Whale (petite île)
+5435 2160 55 65

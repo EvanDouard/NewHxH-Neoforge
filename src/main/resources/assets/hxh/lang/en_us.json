@@ -1740,5 +1740,9 @@
   "npc.hxh.receptionniste_arene": "Tower receptionist",
   "dialog.hxh.receptionniste_arene.idle": "Welcome to Heavens Arena! Sign up here to climb the floors. Every win brings you closer to the top.",
   "npc.hxh.marchand_arene": "Merchant",
-  "dialog.hxh.marchand_arene.idle": "Supplies for fighters! Nothing like a good meal before a duel."
+  "dialog.hxh.marchand_arene.idle": "Supplies for fighters! Nothing like a good meal before a duel.",
+  "npc.hxh.capitaine_baleine_noire": "Black Whale captain",
+  "dialog.hxh.capitaine_baleine_noire.idle": "The Black Whale sails for the Dark Continent. Few return... Are you sure you want to board?",
+  "npc.hxh.docker_baleine_noire": "Dockworker",
+  "dialog.hxh.docker_baleine_noire.idle": "These containers are all headed out to sea. Don't touch anything, we're paid by weight."
 }

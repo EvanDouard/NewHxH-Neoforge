@@ -1,0 +1,2062 @@
+{
+ "x": 5385,
+ "z": 2130,
+ "clear": [
+  0,
+  0,
+  0,
+  82,
+  30,
+  62
+ ],
+ "fills": [
+  {
+   "box": [
+    0,
+    -1,
+    0,
+    80,
+    -1,
+    60
+   ],
+   "block": "minecraft:stone_bricks"
+  },
+  {
+   "box": [
+    0,
+    -1,
+    40,
+    80,
+    -1,
+    60
+   ],
+   "block": "minecraft:smooth_stone"
+  },
+  {
+   "box": [
+    70,
+    -1,
+    0,
+    84,
+    -1,
+    60
+   ],
+   "block": "minecraft:dark_oak_planks"
+  },
+  {
+   "box": [
+    70,
+    -2,
+    1,
+    84,
+    -2,
+    1
+   ],
+   "block": "minecraft:stripped_dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    70,
+    -2,
+    7,
+    84,
+    -2,
+    7
+   ],
+   "block": "minecraft:stripped_dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    70,
+    -2,
+    13,
+    84,
+    -2,
+    13
+   ],
+   "block": "minecraft:stripped_dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    70,
+    -2,
+    19,
+    84,
+    -2,
+    19
+   ],
+   "block": "minecraft:stripped_dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    70,
+    -2,
+    25,
+    84,
+    -2,
+    25
+   ],
+   "block": "minecraft:stripped_dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    70,
+    -2,
+    31,
+    84,
+    -2,
+    31
+   ],
+   "block": "minecraft:stripped_dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    70,
+    -2,
+    37,
+    84,
+    -2,
+    37
+   ],
+   "block": "minecraft:stripped_dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    70,
+    -2,
+    43,
+    84,
+    -2,
+    43
+   ],
+   "block": "minecraft:stripped_dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    70,
+    -2,
+    49,
+    84,
+    -2,
+    49
+   ],
+   "block": "minecraft:stripped_dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    70,
+    -2,
+    55,
+    84,
+    -2,
+    55
+   ],
+   "block": "minecraft:stripped_dark_oak_log[axis=x]"
+  },
+  {
+   "box": [
+    4,
+    0,
+    4,
+    20,
+    8,
+    18
+   ],
+   "block": "minecraft:gray_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    4,
+    9,
+    4,
+    20,
+    9,
+    18
+   ],
+   "block": "minecraft:smooth_stone_slab"
+  },
+  {
+   "box": [
+    11,
+    0,
+    18,
+    13,
+    4,
+    18
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    6,
+    5,
+    18,
+    7,
+    6,
+    18
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    17,
+    5,
+    18,
+    18,
+    6,
+    18
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    26,
+    0,
+    4,
+    42,
+    8,
+    18
+   ],
+   "block": "minecraft:gray_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    26,
+    9,
+    4,
+    42,
+    9,
+    18
+   ],
+   "block": "minecraft:smooth_stone_slab"
+  },
+  {
+   "box": [
+    33,
+    0,
+    18,
+    35,
+    4,
+    18
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    28,
+    5,
+    18,
+    29,
+    6,
+    18
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    39,
+    5,
+    18,
+    40,
+    6,
+    18
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    4,
+    0,
+    24,
+    20,
+    8,
+    38
+   ],
+   "block": "minecraft:gray_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    4,
+    9,
+    24,
+    20,
+    9,
+    38
+   ],
+   "block": "minecraft:smooth_stone_slab"
+  },
+  {
+   "box": [
+    11,
+    0,
+    38,
+    13,
+    4,
+    38
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    6,
+    5,
+    38,
+    7,
+    6,
+    38
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    17,
+    5,
+    38,
+    18,
+    6,
+    38
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    48,
+    0,
+    6,
+    52,
+    2,
+    8
+   ],
+   "block": "minecraft:red_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    48,
+    3,
+    6,
+    52,
+    3,
+    8
+   ],
+   "block": "minecraft:blue_concrete"
+  },
+  {
+   "box": [
+    54,
+    0,
+    6,
+    58,
+    2,
+    8
+   ],
+   "block": "minecraft:blue_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    54,
+    3,
+    6,
+    58,
+    3,
+    8
+   ],
+   "block": "minecraft:orange_concrete"
+  },
+  {
+   "box": [
+    60,
+    0,
+    6,
+    64,
+    2,
+    8
+   ],
+   "block": "minecraft:orange_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    60,
+    3,
+    6,
+    64,
+    3,
+    8
+   ],
+   "block": "minecraft:green_concrete"
+  },
+  {
+   "box": [
+    66,
+    0,
+    6,
+    70,
+    2,
+    8
+   ],
+   "block": "minecraft:green_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    66,
+    3,
+    6,
+    70,
+    3,
+    8
+   ],
+   "block": "minecraft:red_concrete"
+  },
+  {
+   "box": [
+    48,
+    0,
+    11,
+    52,
+    2,
+    13
+   ],
+   "block": "minecraft:red_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    48,
+    3,
+    11,
+    52,
+    3,
+    13
+   ],
+   "block": "minecraft:blue_concrete"
+  },
+  {
+   "box": [
+    54,
+    0,
+    11,
+    58,
+    2,
+    13
+   ],
+   "block": "minecraft:blue_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    54,
+    3,
+    11,
+    58,
+    3,
+    13
+   ],
+   "block": "minecraft:orange_concrete"
+  },
+  {
+   "box": [
+    60,
+    0,
+    11,
+    64,
+    2,
+    13
+   ],
+   "block": "minecraft:orange_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    60,
+    3,
+    11,
+    64,
+    3,
+    13
+   ],
+   "block": "minecraft:green_concrete"
+  },
+  {
+   "box": [
+    66,
+    0,
+    11,
+    70,
+    2,
+    13
+   ],
+   "block": "minecraft:green_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    66,
+    3,
+    11,
+    70,
+    3,
+    13
+   ],
+   "block": "minecraft:red_concrete"
+  },
+  {
+   "box": [
+    64,
+    0,
+    14,
+    64,
+    18,
+    14
+   ],
+   "block": "minecraft:iron_bars"
+  },
+  {
+   "box": [
+    65,
+    0,
+    14,
+    65,
+    18,
+    14
+   ],
+   "block": "minecraft:iron_bars"
+  },
+  {
+   "box": [
+    52,
+    19,
+    14,
+    78,
+    19,
+    14
+   ],
+   "block": "minecraft:yellow_concrete"
+  },
+  {
+   "box": [
+    76,
+    12,
+    14,
+    76,
+    18,
+    14
+   ],
+   "block": "minecraft:chain[axis=y]"
+  },
+  {
+   "box": [
+    64,
+    0,
+    36,
+    64,
+    18,
+    36
+   ],
+   "block": "minecraft:iron_bars"
+  },
+  {
+   "box": [
+    65,
+    0,
+    36,
+    65,
+    18,
+    36
+   ],
+   "block": "minecraft:iron_bars"
+  },
+  {
+   "box": [
+    52,
+    19,
+    36,
+    78,
+    19,
+    36
+   ],
+   "block": "minecraft:yellow_concrete"
+  },
+  {
+   "box": [
+    76,
+    12,
+    36,
+    76,
+    18,
+    36
+   ],
+   "block": "minecraft:chain[axis=y]"
+  },
+  {
+   "box": [
+    30,
+    0,
+    44,
+    42,
+    5,
+    54
+   ],
+   "block": "minecraft:spruce_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    30,
+    6,
+    44,
+    42,
+    6,
+    54
+   ],
+   "block": "minecraft:dark_oak_slab"
+  },
+  {
+   "box": [
+    35,
+    0,
+    44,
+    36,
+    2,
+    44
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    31,
+    3,
+    44,
+    33,
+    4,
+    44
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    84,
+    -4,
+    4,
+    98,
+    4,
+    58
+   ],
+   "block": "minecraft:black_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    84,
+    -4,
+    4,
+    98,
+    -4,
+    58
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    86,
+    -4,
+    2,
+    96,
+    4,
+    3
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    88,
+    -4,
+    0,
+    94,
+    4,
+    1
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    86,
+    -4,
+    59,
+    96,
+    4,
+    60
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    84,
+    5,
+    4,
+    98,
+    5,
+    58
+   ],
+   "block": "minecraft:dark_oak_planks"
+  },
+  {
+   "box": [
+    85,
+    5,
+    3,
+    97,
+    5,
+    3
+   ],
+   "block": "minecraft:dark_oak_planks"
+  },
+  {
+   "box": [
+    83,
+    6,
+    4,
+    83,
+    6,
+    58
+   ],
+   "block": "minecraft:iron_bars"
+  },
+  {
+   "box": [
+    99,
+    6,
+    4,
+    99,
+    6,
+    58
+   ],
+   "block": "minecraft:iron_bars"
+  },
+  {
+   "box": [
+    86,
+    5,
+    20,
+    96,
+    12,
+    44
+   ],
+   "block": "minecraft:gray_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    86,
+    13,
+    20,
+    96,
+    13,
+    44
+   ],
+   "block": "minecraft:smooth_stone_slab"
+  },
+  {
+   "box": [
+    86,
+    7,
+    22,
+    86,
+    7,
+    23
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    7,
+    22,
+    96,
+    7,
+    23
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    7,
+    25,
+    86,
+    7,
+    26
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    7,
+    25,
+    96,
+    7,
+    26
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    7,
+    28,
+    86,
+    7,
+    29
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    7,
+    28,
+    96,
+    7,
+    29
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    7,
+    31,
+    86,
+    7,
+    32
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    7,
+    31,
+    96,
+    7,
+    32
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    7,
+    34,
+    86,
+    7,
+    35
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    7,
+    34,
+    96,
+    7,
+    35
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    7,
+    37,
+    86,
+    7,
+    38
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    7,
+    37,
+    96,
+    7,
+    38
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    7,
+    40,
+    86,
+    7,
+    41
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    7,
+    40,
+    96,
+    7,
+    41
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    7,
+    43,
+    86,
+    7,
+    44
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    7,
+    43,
+    96,
+    7,
+    44
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    10,
+    22,
+    86,
+    10,
+    23
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    10,
+    22,
+    96,
+    10,
+    23
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    10,
+    25,
+    86,
+    10,
+    26
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    10,
+    25,
+    96,
+    10,
+    26
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    10,
+    28,
+    86,
+    10,
+    29
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    10,
+    28,
+    96,
+    10,
+    29
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    10,
+    31,
+    86,
+    10,
+    32
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    10,
+    31,
+    96,
+    10,
+    32
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    10,
+    34,
+    86,
+    10,
+    35
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    10,
+    34,
+    96,
+    10,
+    35
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    10,
+    37,
+    86,
+    10,
+    38
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    10,
+    37,
+    96,
+    10,
+    38
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    10,
+    40,
+    86,
+    10,
+    41
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    10,
+    40,
+    96,
+    10,
+    41
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    86,
+    10,
+    43,
+    86,
+    10,
+    44
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    96,
+    10,
+    43,
+    96,
+    10,
+    44
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    90,
+    6,
+    14,
+    92,
+    14,
+    16
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    90,
+    15,
+    14,
+    92,
+    15,
+    16
+   ],
+   "block": "minecraft:red_concrete"
+  },
+  {
+   "box": [
+    90,
+    6,
+    52,
+    92,
+    14,
+    54
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    90,
+    15,
+    52,
+    92,
+    15,
+    54
+   ],
+   "block": "minecraft:red_concrete"
+  },
+  {
+   "box": [
+    84,
+    5,
+    31,
+    84,
+    8,
+    33
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    84,
+    -1,
+    4,
+    84,
+    3,
+    58
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    75,
+    5,
+    30,
+    83,
+    5,
+    34
+   ],
+   "block": "minecraft:dark_oak_planks"
+  },
+  {
+   "box": [
+    75,
+    6,
+    30,
+    83,
+    6,
+    30
+   ],
+   "block": "minecraft:dark_oak_fence"
+  },
+  {
+   "box": [
+    75,
+    6,
+    34,
+    83,
+    6,
+    34
+   ],
+   "block": "minecraft:dark_oak_fence"
+  },
+  {
+   "box": [
+    86,
+    6,
+    21,
+    95,
+    10,
+    43
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    86,
+    5,
+    31,
+    86,
+    8,
+    33
+   ],
+   "block": "minecraft:air"
+  }
+ ],
+ "blocks": [
+  {
+   "pos": [
+    45,
+    0,
+    50
+   ],
+   "state": "hxh:airship_terminal[facing=north]"
+  },
+  {
+   "pos": [
+    7,
+    0,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    7,
+    1,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    7,
+    0,
+    13
+   ],
+   "state": "minecraft:chest[facing=south]"
+  },
+  {
+   "pos": [
+    10,
+    0,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    10,
+    1,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    10,
+    0,
+    13
+   ],
+   "state": "minecraft:chest[facing=south]"
+  },
+  {
+   "pos": [
+    13,
+    0,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    13,
+    1,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    13,
+    0,
+    13
+   ],
+   "state": "minecraft:chest[facing=south]"
+  },
+  {
+   "pos": [
+    16,
+    0,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    16,
+    1,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    16,
+    0,
+    13
+   ],
+   "state": "minecraft:chest[facing=south]"
+  },
+  {
+   "pos": [
+    12,
+    7,
+    11
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    29,
+    0,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    29,
+    1,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    29,
+    0,
+    13
+   ],
+   "state": "minecraft:chest[facing=south]"
+  },
+  {
+   "pos": [
+    32,
+    0,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    32,
+    1,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    32,
+    0,
+    13
+   ],
+   "state": "minecraft:chest[facing=south]"
+  },
+  {
+   "pos": [
+    35,
+    0,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    35,
+    1,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    35,
+    0,
+    13
+   ],
+   "state": "minecraft:chest[facing=south]"
+  },
+  {
+   "pos": [
+    38,
+    0,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    38,
+    1,
+    8
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    38,
+    0,
+    13
+   ],
+   "state": "minecraft:chest[facing=south]"
+  },
+  {
+   "pos": [
+    34,
+    7,
+    11
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    7,
+    0,
+    28
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    7,
+    1,
+    28
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    7,
+    0,
+    33
+   ],
+   "state": "minecraft:chest[facing=south]"
+  },
+  {
+   "pos": [
+    10,
+    0,
+    28
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    10,
+    1,
+    28
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    10,
+    0,
+    33
+   ],
+   "state": "minecraft:chest[facing=south]"
+  },
+  {
+   "pos": [
+    13,
+    0,
+    28
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    13,
+    1,
+    28
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    13,
+    0,
+    33
+   ],
+   "state": "minecraft:chest[facing=south]"
+  },
+  {
+   "pos": [
+    16,
+    0,
+    28
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    16,
+    1,
+    28
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    16,
+    0,
+    33
+   ],
+   "state": "minecraft:chest[facing=south]"
+  },
+  {
+   "pos": [
+    12,
+    7,
+    31
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    76,
+    11,
+    14
+   ],
+   "state": "minecraft:hopper[facing=down]"
+  },
+  {
+   "pos": [
+    76,
+    11,
+    36
+   ],
+   "state": "minecraft:hopper[facing=down]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    50
+   ],
+   "state": "minecraft:lectern[facing=south]"
+  },
+  {
+   "pos": [
+    32,
+    0,
+    52
+   ],
+   "state": "minecraft:red_bed[facing=south,part=foot]"
+  },
+  {
+   "pos": [
+    32,
+    0,
+    51
+   ],
+   "state": "minecraft:red_bed[facing=south,part=head]"
+  },
+  {
+   "pos": [
+    85,
+    6,
+    8
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    85,
+    6,
+    16
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    85,
+    6,
+    24
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    85,
+    6,
+    32
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    85,
+    6,
+    40
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    85,
+    6,
+    48
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    85,
+    6,
+    56
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    6,
+    0,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    6,
+    1,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    6,
+    2,
+    2
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    6,
+    0,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    6,
+    1,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    6,
+    2,
+    42
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    14,
+    0,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    14,
+    1,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    14,
+    2,
+    2
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    14,
+    0,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    14,
+    1,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    14,
+    2,
+    42
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    22,
+    0,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    22,
+    1,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    22,
+    2,
+    2
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    22,
+    0,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    22,
+    1,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    22,
+    2,
+    42
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    30,
+    0,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    30,
+    1,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    30,
+    2,
+    2
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    30,
+    0,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    30,
+    1,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    30,
+    2,
+    42
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    38,
+    0,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    38,
+    1,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    38,
+    2,
+    2
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    38,
+    0,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    38,
+    1,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    38,
+    2,
+    42
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    46,
+    0,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    46,
+    1,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    46,
+    2,
+    2
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    46,
+    0,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    46,
+    1,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    46,
+    2,
+    42
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    54,
+    0,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    54,
+    1,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    54,
+    2,
+    2
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    54,
+    0,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    54,
+    1,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    54,
+    2,
+    42
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    62,
+    0,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    62,
+    1,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    62,
+    2,
+    2
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    62,
+    0,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    62,
+    1,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    62,
+    2,
+    42
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  }
+ ],
+ "entities": [
+  {
+   "type": "hxh:npc",
+   "pos": [
+    36,
+    0,
+    49
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"capitaine_baleine_noire\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    56,
+    0,
+    20
+   ],
+   "yaw": 90,
+   "nbt": "{npc:\"docker_baleine_noire\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  }
+ ]
+}

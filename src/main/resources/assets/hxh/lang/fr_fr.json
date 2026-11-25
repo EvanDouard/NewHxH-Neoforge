@@ -1740,5 +1740,9 @@
   "npc.hxh.receptionniste_arene": "Réceptionniste de la Tour",
   "dialog.hxh.receptionniste_arene.idle": "Bienvenue à la Tour Céleste ! Inscrivez-vous ici pour grimper les étages. Chaque victoire vous rapproche du sommet.",
   "npc.hxh.marchand_arene": "Marchand",
-  "dialog.hxh.marchand_arene.idle": "Des vivres pour les combattants ! Rien de tel qu'un bon repas avant un duel."
+  "dialog.hxh.marchand_arene.idle": "Des vivres pour les combattants ! Rien de tel qu'un bon repas avant un duel.",
+  "npc.hxh.capitaine_baleine_noire": "Capitaine du Black Whale",
+  "dialog.hxh.capitaine_baleine_noire.idle": "Le Black Whale appareille vers le Continent Noir. Peu en reviennent… Êtes-vous sûr de vouloir monter à bord ?",
+  "npc.hxh.docker_baleine_noire": "Docker",
+  "dialog.hxh.docker_baleine_noire.idle": "Ces conteneurs partent tous pour le grand large. Ne touchez à rien, on est payés au poids."
 }

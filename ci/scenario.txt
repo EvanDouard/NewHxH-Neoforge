@@ -2724,12 +2724,23 @@ cmd time set noon
 wait 400
 shot 99ze_arene_place
 cmd effect give @s minecraft:slow_falling 60 0 true
-cmd tp @s 2770 75 1500 0 -20
+cmd tp @s 2770 75 1500 180 -20
 wait 120
 shot 99zf_arene_tour
 cmd tp @s 2770 72 1438 0 8
 wait 80
 shot 99zg_arene_hall
+cmd hunter airship black_whale_port
+cmd time set noon
+wait 400
+shot 99zh_baleine_noire_quai
+cmd effect give @s minecraft:slow_falling 60 0 true
+cmd tp @s 5430 80 2230 0 15
+wait 120
+shot 99zi_baleine_noire_navire
+cmd tp @s 5440 70 2165 -90 5
+wait 80
+shot 99zj_baleine_noire_ponton
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative

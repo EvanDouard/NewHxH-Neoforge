@@ -94,6 +94,24 @@ public final class WorldPlacesTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void blackWhalePortHasShipAndCranes(GameTestHelper helper) {
+        var place = WorldPlaces.get("hxh:black_whale_port");
+        helper.assertTrue(place != null, "Le port du Black Whale est chargé");
+        BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+        var level = helper.getLevel();
+        int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 45, ground, origin.getZ() + 50)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable sur le quai");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 98, ground + 2, origin.getZ() + 30)).is(Blocks.BLACK_CONCRETE), "Coque noire du Black Whale");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 91, ground + 15, origin.getZ() + 14)).is(Blocks.RED_CONCRETE), "Cheminée du navire");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 64, ground + 10, origin.getZ() + 14)).is(Blocks.IRON_BARS), "Grue du quai");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 36, ground, origin.getZ() + 50)).is(Blocks.LECTERN), "Pupitre de la billetterie");
+        var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 100, ground + 20, origin.getZ() + 65);
+        var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+        helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("capitaine_baleine_noire")), "Capitaine présent");
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void heavyDoorOpensOnlyWithEnoughStrengthThenCloses(GameTestHelper helper) {
         var level = helper.getLevel();
