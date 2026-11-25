@@ -177,6 +177,25 @@ public final class WorldPlacesTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void kakinPalaceSketch(GameTestHelper helper) {
+        var place = WorldPlaces.get("hxh:kakin_palace");
+        helper.assertTrue(place != null, "Le palais royal de Kakin est chargé");
+        BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+        var level = helper.getLevel();
+        int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 52, ground, origin.getZ() + 88)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable devant le palais");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 30, ground + 10, origin.getZ() + 40)).is(Blocks.RED_CONCRETE), "Mur de la salle du trône");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 50, ground + 5, origin.getZ() + 23)).is(Blocks.GOLD_BLOCK), "Trône doré");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 50, ground + 27, origin.getZ() + 40)).is(Blocks.GOLD_BLOCK), "Flèche dorée du toit");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 4, ground + 4, origin.getZ() + 50)).is(Blocks.RED_CONCRETE), "Mur d'enceinte");
+        var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 105, ground + 20, origin.getZ() + 105);
+        var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+        helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("chambellan_kakin")), "Chambellan présent");
+        helper.assertTrue(npcs.stream().filter(n -> n.npcId().equals("garde_royal_kakin")).count() >= 4, "Gardes royaux présents");
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void heavyDoorOpensOnlyWithEnoughStrengthThenCloses(GameTestHelper helper) {
         var level = helper.getLevel();

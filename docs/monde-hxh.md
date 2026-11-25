@@ -134,3 +134,4 @@ Lieux faits : village de l'île de la Baleine, domaine Zoldyck de la montagne Ku
 - Forêt de Kite (25 nov) : ébauche `kite_forest.json` (camp). À faire : forêt dense, nids géants, grottes, bêtes rares/insectes. Glam Gas Land : en attente de ta description (je ne connais pas ce lieu).
 - Bras de la Reine (25 nov) : ébauche `chimera_ant_queen_arm.json` (cratère, bras, épaves). À faire : nid souterrain, tunnels, forêt sombre, vestiges. Peijin : non fait (lieu que je connais mal) → à décrire par Evan. Glam Gas Land : idem.
 - Feuille de route des constructions (25 nov) : `docs/feuille-route-monde.md`. Décision d'Evan : pas de bâtiments liés à l'Examen Hunter (l'examen est dans une autre dimension).
+- Palais royal de Kakin (25 nov) : ébauche `kakin_palace.json` à (6000, 2500), destination du dirigeable ajoutée. À faire : intérieurs (salles des princes, parlement), souterrains, ville de Kakin autour.

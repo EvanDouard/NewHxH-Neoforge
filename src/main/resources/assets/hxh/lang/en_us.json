@@ -1773,5 +1773,10 @@
   "npc.hxh.guide_foret_kite": "Forest guide",
   "dialog.hxh.guide_foret_kite.idle": "Don't stray from camp. Those nests out there hold beasts no naturalist has ever catalogued.",
   "npc.hxh.survivant_atterrissage": "Survivor",
-  "dialog.hxh.survivant_atterrissage.idle": "This is where \"it\" fell. Nothing has grown since, and you can hear scratching under the ground. Leave before nightfall."
+  "dialog.hxh.survivant_atterrissage.idle": "This is where \"it\" fell. Nothing has grown since, and you can hear scratching under the ground. Leave before nightfall.",
+  "airship.hxh.dest.kakin_palace": "Kakin Royal Palace",
+  "npc.hxh.chambellan_kakin": "Royal chamberlain",
+  "dialog.hxh.chambellan_kakin.idle": "His Majesty is busy. Fourteen princes are vying for the throne: speak with care.",
+  "npc.hxh.garde_royal_kakin": "Royal guard",
+  "dialog.hxh.garde_royal_kakin.idle": "Move along. The palace is no place for a stroll."
 }

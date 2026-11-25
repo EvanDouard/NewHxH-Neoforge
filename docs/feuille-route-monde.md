@@ -39,3 +39,13 @@ Source : liste de propositions collée par Evan (analyse du monde actuel, régio
 ## Prérequis techniques
 - Meteor City, NGL, East Gorteau n'ont pas de destination de dirigeable ni de lieu sur la carte : placement à valider avec Evan (voir `docs/monde-hxh.md` §3), puis destination + zone aplatie.
 - Bibliothèque de bâtiments réutilisables : à prévoir dans le système de places (blocs de structure paramétrables / sous-places avec variantes), pour ne pas écrire chaque maison en JSON.
+
+## Emplacements proposés pour les régions sans lieu (25 nov) — à confirmer
+Propositions « libre/théorie » (non officielles) sur la carte 8 000 × 5 650, d'après les zones de `cells.txt` ; **à vérifier par Evan** (voir `docs/a-trancher.md`).
+
+| Lieu | Proposition (x, z) | Pourquoi |
+|---|---|---|
+| Palais royal de Kakin | (6 000, 2 500) — **construit (ébauche)** | centre de l'Empire de Kakin, terre ferme, entre le port et la forêt de Kite |
+| Meteor City | ~ (1 700, 3 900) | terres sauvages du continent Yorbian, entre Yorknew et Greed Island |
+| NGL | ~ (1 350, 4 950) | pointe sud (Union de Mitene), forêt/ferme isolée |
+| East Gorteau | ~ (2 000, 5 000) | côte sud de Mitene, vers Peijin (2 445, 5 085) |

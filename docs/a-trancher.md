@@ -29,3 +29,8 @@ Le détail chiffré est dans `equilibrage-final.md`.
 - [ ] Renard-ours et Great Stamp : vie, dégâts, apparition, butin (museau blindé ×0,3).
 - [ ] Hisoka et les combattants du 200e : étages et difficulté.
 - [ ] Paris, malédiction de Nen, enchères, contrats, Blacklist et rang Hunter, coups secrets, serments, seuils des impacts.
+
+## Monde HxH — emplacements à chercher (Evan)
+- [ ] Chercher l'emplacement officiel/souhaité de **Meteor City**, **NGL** et **East Gorteau** (propositions provisoires dans `docs/feuille-route-monde.md` : ~(1 700, 3 900), ~(1 350, 4 950), ~(2 000, 5 000)).
+- [ ] Valider ou déplacer le **Palais royal de Kakin** (6 000, 2 500).
+- [ ] Peijin et Glam Gas Land : décrire ce que tu veux y trouver.
