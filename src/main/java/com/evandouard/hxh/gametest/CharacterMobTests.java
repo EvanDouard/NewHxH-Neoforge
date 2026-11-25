@@ -75,4 +75,14 @@ public final class CharacterMobTests {
             helper.assertTrue("kurapika_sans_tunique".equals(k.modelId()), "Modèle sans tunique");
         }));
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void leorioGetsHisKitAndIsTall(GameTestHelper helper) {
+        CharacterEntity leorio = helper.spawn(ModEntities.LEORIO.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("leorio".equals(HunterStats.get(leorio).kit()), "Kit de Leorio");
+            helper.assertTrue(leorio.getBbHeight() > 1.9f, "Grand (" + leorio.getBbHeight() + ")");
+            helper.assertTrue(!(leorio instanceof Enemy), "Neutre");
+        }));
+    }
 }

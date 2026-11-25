@@ -42,6 +42,9 @@ public final class ModItems {
     public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> KURAPIKA_SANS_TUNIQUE_SPAWN_EGG =
             ITEMS.register("kurapika_sans_tunique_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.KURAPIKA_SANS_TUNIQUE, 0xEEF0F5, 0x2F5FB8, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> LEORIO_SPAWN_EGG =
+            ITEMS.register("leorio_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.LEORIO, 0x2F3A5E, 0x5B86C9, new Item.Properties()));
     public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> KILLUA_SPAWN_EGG =
             ITEMS.register("killua_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.KILLUA, 0xECEAF2, 0x7B5CC2, new Item.Properties()));

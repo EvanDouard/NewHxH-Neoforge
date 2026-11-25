@@ -1747,12 +1747,57 @@ wait 25
 clearchat
 shot 64l_kurapika_sans_tunique_dos
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Leorio (même style) : 6 angles + colère
+hud off
+look 0 10
+cmd summon hxh:npc ~ ~ ~3.6 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 65a_leorio_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.6 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 65b_leorio_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.6 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 65c_leorio_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.6 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 65g_leorio_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.6 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 65d_leorio_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 4
+cmd summon hxh:npc ~ ~ ~2.0 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 65h_leorio_colere
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~2.6 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.6 ~1.4 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 65f_leorio_dessus
+cmd tp @s ~ ~-2.6 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
 # Gon et Killua en mobs (œufs d'apparition) : même modèle, nom, Hatsu
 hud on
 look 0 8
 cmd summon hxh:gon ~-1.0 ~ ~3.6 {NoAI:1b,Rotation:[165f,0f],Tags:["geo_ci"]}
 cmd summon hxh:killua ~1.0 ~ ~3.6 {NoAI:1b,Rotation:[195f,0f],Tags:["geo_ci"]}
 cmd summon hxh:kurapika ~0 ~ ~4.6 {NoAI:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:leorio ~2.2 ~ ~5.2 {NoAI:1b,Rotation:[200f,0f],Tags:["geo_ci"]}
 wait 30
 clearchat
 shot 62a_mobs_gon_killua

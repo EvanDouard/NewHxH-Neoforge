@@ -29,7 +29,7 @@ Sans fichier d'apparence, un PNJ utilise `textures/entity/npc/<id>.png`, sinon S
 ## Modèles sur mesure (GeckoLib)
 
 Les personnages refaits au niveau décrit dans `docs/Analyse_model.md` ont un vrai modèle GeckoLib, qui remplace le
-rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua** et **Kurapika**.
+rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika** et **Leorio**.
 
 ```
 python3 tools/models/gon.py
@@ -133,3 +133,13 @@ touche jamais ces os, donc les effets se composent par la hiérarchie.
 - Yeux écarlates en combat (`<id>_froid.png`), boucle d'oreille, cinq chaînes à la main droite.
 - Mobs `hxh:kurapika` et `hxh:kurapika_sans_tunique` (un œuf chacun, kit `kurapika`, neutres, alliés de Gon et
   Killua) ; PNJ `kurapika` et `kurapika_sans_tunique` avec les mêmes modèles.
+
+### Leorio
+
+`tools/models/leorio.py` : grand (≈ 1,95 bloc, boîte 0,65 × 1,95), longues jambes, épaules larges ; cheveux noirs
+courts hérissés vers le haut et l'arrière (houppe devant, mèches organiques courtes et épaisses) ; visage allongé,
+mâchoire carrée, sourcils épais, grand sourire, petites lunettes rondes aux verres bleutés en relief (monture,
+pont, branches) ; costume bleu marine (veste ouverte à revers en relief, épaules carrées, pans et fente au dos qui
+suivent le bassin, gilet, chemise, cravate, pantalon à pli, chaussures de ville) ; mallette de médecin (os
+`briefcase`, fermoirs dorés). Expression `froid` = colère (il crie). Mob `hxh:leorio` (œuf, kit `leorio`, neutre,
+allié des autres personnages) et PNJ `leorio` avec le même modèle.

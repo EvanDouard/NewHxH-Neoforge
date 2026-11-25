@@ -1,0 +1,5 @@
+{
+  "entity": "hxh:leorio",
+  "stats": { "all": 42, "strength": 52, "endurance": 50 },
+  "nen": { "level": 40, "kit": "leorio", "mastery": 30 }
+}
