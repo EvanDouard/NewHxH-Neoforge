@@ -83,7 +83,7 @@ public final class WorldPlacesTests {
         var level = helper.getLevel();
         int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
         helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground, origin.getZ() + 45)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable sur la place");
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 21, ground + 50, origin.getZ() + 10)).is(Blocks.STONE_BRICKS), "Mur de la tour à 50 blocs");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 26, ground + 48, origin.getZ() + 20)).is(Blocks.STONE_BRICKS), "Mur du 2e étage de la tour");
         helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground + 3, origin.getZ() + 20)).isAir(), "Hall dégagé");
         helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground - 1, origin.getZ() + 20)).is(Blocks.SAND), "Ring de sable");
         helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground + 3, origin.getZ() + 35)).is(Blocks.LECTERN), "Guichet d'inscription");
