@@ -24,6 +24,7 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.KURAPIKA_SANS_TUNIQUE_SPAWN_EGG.get());
                         output.accept(ModItems.LEORIO_SPAWN_EGG.get());
                         output.accept(ModItems.HISOKA_SPAWN_EGG.get());
+                        output.accept(ModItems.KNUCKLE_SPAWN_EGG.get());
                         output.accept(ModItems.PHINKS_SPAWN_EGG.get());
                         output.accept(ModItems.GING_SPAWN_EGG.get());
                         output.accept(ModItems.PAKUNODA_SPAWN_EGG.get());

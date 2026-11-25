@@ -29,7 +29,7 @@ Sans fichier d'apparence, un PNJ utilise `textures/entity/npc/<id>.png`, sinon S
 ## Modèles sur mesure (GeckoLib)
 
 Les personnages refaits au niveau décrit dans `docs/Analyse_model.md` ont un vrai modèle GeckoLib, qui remplace le
-rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark**, **Pakunoda**, **Ging** et **Phinks**.
+rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark**, **Pakunoda**, **Ging**, **Phinks** et **Knuckle**.
 
 ```
 python3 tools/models/gon.py
@@ -159,7 +159,7 @@ pour l'instant) et PNJ `hisoka` avec le même modèle.
 Les personnages suivants partagent `tools/models/adult.py` (`Body` : proportions ; `skeleton` : mêmes os que Gon ;
 `head_box`, `write_expression`) et `tools/models/integrate.py`, qui les branche en une commande
 (`python3 integrate.py <ids…>` : entité, attributs, œuf, onglet créatif, rendu, preset `mob_presets/<id>.json`, textes
-fr/en, GameTest `<Id>IsInTheGameWithHisKit`, bloc de captures 6 angles + expression dans `ci/scenario.txt`).
+fr/en, GameTest `<Id>IsInTheGameWithHisKit`, captures CI groupées : rangées de 5 personnages de face, de profil, de dos et en expression froide, bloc « Série « même style » » de `ci/scenario.txt`, régénéré à chaque appel).
 Cheveux : sous-couche arrondie `chibi.scalp` (plaques tangentes qui bouchent les trous) + mèches `chibi.crown_lock`
 qui partent d'une sphère autour du crâne, suivent l'arrondi puis retombent (az 0 = arrière, 90 = gauche, 180 =
 devant) ; les rideaux de cheveux longs sont des `chibi.lock` qui pendent de l'équateur de la sphère.
@@ -187,3 +187,4 @@ Tous sont des mobs neutres (alliés entre eux) avec leur kit Hatsu.
 | Pakunoda | 1,85 | blond platine mi-long, raie sur le côté, pointes qui rebiquent | tailleur noir, chemise claire | regard grave |
 | Ging | 1,8 | pointes noires sauvages vers le haut et l'arrière (air de famille avec Gon) | turban clair noué, barbe de quelques jours, chemise ample, écharpe | sérieux |
 | Phinks | 1,85 | blond cendré court plaqué en arrière, nuque rasée | survêtement bleu marine à bandes blanches | rictus de colère |
+| Knuckle | 1,9 | noir gominé en grande banane, côtés plaqués, longs favoris | veste grise ouverte, t-shirt blanc | colère |

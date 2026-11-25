@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:knuckle",
+  "stats": {
+    "all": 74,
+    "strength": 84
+  },
+  "nen": {
+    "level": 82,
+    "kit": "knuckle",
+    "mastery": 76
+  }
+}

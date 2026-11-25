@@ -294,4 +294,14 @@ public final class CharacterMobTests {
             helper.assertTrue(Math.abs(c.getBbHeight() - 1.85f) < 0.01f, "Taille");
         }));
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void knuckleIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.KNUCKLE.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("knuckle".equals(HunterStats.get(c).kit()), "Kit de Knuckle Bine (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() - 1.9f) < 0.01f, "Taille");
+        }));
+    }
 }

@@ -39,6 +39,7 @@ add('shalnark', 'Shalnark', 'Shalnark', 0.55, 1.75, 0xC99A3A, 0x7A7448, {"all": 
 add('pakunoda', 'Pakunoda', 'Pakunoda', 0.55, 1.85, 0xC8B47A, 0x1C1C22, {"all": 70}, 80, 80)
 add('ging', 'Ging Freecss', 'Ging Freecss', 0.6, 1.8, 0x121214, 0xD8CCB0, {"all": 88}, 96, 94)
 add('phinks', 'Phinks Magcub', 'Phinks Magcub', 0.6, 1.85, 0x22305A, 0xA8946A, {"all": 76, "strength": 88}, 82, 78)
+add('knuckle', 'Knuckle Bine', 'Knuckle Bine', 0.65, 1.9, 0x6A6A72, 0x121216, {"all": 74, "strength": 84}, 82, 76)
 
 
 def rep(p, a, b, once=True):

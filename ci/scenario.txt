@@ -1997,6 +1997,30 @@ wait 30
 clearchat
 shot 67dd_serie_kalluto_shalnark_pakunoda_ging_phinks_expression
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 7
+cmd summon hxh:npc ~0.0 ~ ~4.5 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 30
+clearchat
+shot 67ea_serie_knuckle_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 7
+cmd summon hxh:npc ~0.0 ~ ~4.5 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 30
+clearchat
+shot 67eb_serie_knuckle_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 7
+cmd summon hxh:npc ~0.0 ~ ~4.5 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 30
+clearchat
+shot 67ec_serie_knuckle_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 7
+cmd summon hxh:npc ~0.0 ~ ~4.5 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 30
+clearchat
+shot 67ed_serie_knuckle_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
 # Fin de la série « même style »
 # Gon et Killua en mobs (œufs d'apparition) : même modèle, nom, Hatsu
 hud on

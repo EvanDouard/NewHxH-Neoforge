@@ -108,6 +108,9 @@ public final class ModItems {
     public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> PHINKS_SPAWN_EGG =
             ITEMS.register("phinks_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.PHINKS, 0x22305A, 0xA8946A, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> KNUCKLE_SPAWN_EGG =
+            ITEMS.register("knuckle_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.KNUCKLE, 0x6A6A72, 0x121216, new Item.Properties()));
     public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> KILLUA_SPAWN_EGG =
             ITEMS.register("killua_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.KILLUA, 0xECEAF2, 0x7B5CC2, new Item.Properties()));
