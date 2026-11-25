@@ -2627,6 +2627,94 @@ shot 78f_pakunoda_dessus
 cmd tp @s ~ ~-2.6 ~
 cmd gamemode survival
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Ging Freecss (modèle GeckoLib) : 6 angles + expression
+hud off
+look 0 12
+cmd summon hxh:npc ~ ~ ~3.4 {npc:"ging",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 70a_ging_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.4 {npc:"ging",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 70b_ging_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.4 {npc:"ging",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 70c_ging_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.4 {npc:"ging",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 70g_ging_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.4 {npc:"ging",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 70d_ging_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~ ~ ~1.9 {npc:"ging",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 70h_ging_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~2.5 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.5 ~1.4 {npc:"ging",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 70f_ging_dessus
+cmd tp @s ~ ~-2.5 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Phinks Magcub (modèle GeckoLib) : 6 angles + expression
+hud off
+look 0 12
+cmd summon hxh:npc ~ ~ ~3.5 {npc:"phinks",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 80a_phinks_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.5 {npc:"phinks",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 80b_phinks_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.5 {npc:"phinks",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 80c_phinks_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.5 {npc:"phinks",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 80g_phinks_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.5 {npc:"phinks",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 80d_phinks_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~ ~ ~1.9 {npc:"phinks",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 80h_phinks_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~2.6 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.6 ~1.4 {npc:"phinks",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 80f_phinks_dessus
+cmd tp @s ~ ~-2.6 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
 # Gon et Killua en mobs (œufs d'apparition) : même modèle, nom, Hatsu
 hud on
 look 0 8

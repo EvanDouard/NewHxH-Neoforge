@@ -29,7 +29,7 @@ Sans fichier d'apparence, un PNJ utilise `textures/entity/npc/<id>.png`, sinon S
 ## Modèles sur mesure (GeckoLib)
 
 Les personnages refaits au niveau décrit dans `docs/Analyse_model.md` ont un vrai modèle GeckoLib, qui remplace le
-rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark** et **Pakunoda**.
+rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark**, **Pakunoda**, **Ging** et **Phinks**.
 
 ```
 python3 tools/models/gon.py
@@ -185,3 +185,5 @@ Tous sont des mobs neutres (alliés entre eux) avec leur kit Hatsu.
 | Kalluto | 1,35 | carré noir lisse au menton, frange droite épaisse | kimono violet à fleurs, obi lavande, éventail | regard vide |
 | Shalnark | 1,75 | blond court et léger, frange en pointes | veste kaki ouverte, jean, téléphone à antenne | sourire figé (mode automatique) |
 | Pakunoda | 1,85 | blond platine mi-long, raie sur le côté, pointes qui rebiquent | tailleur noir, chemise claire | regard grave |
+| Ging | 1,8 | pointes noires sauvages vers le haut et l'arrière (air de famille avec Gon) | turban clair noué, barbe de quelques jours, chemise ample, écharpe | sérieux |
+| Phinks | 1,85 | blond cendré court plaqué en arrière, nuque rasée | survêtement bleu marine à bandes blanches | rictus de colère |
