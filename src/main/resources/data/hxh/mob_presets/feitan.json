@@ -1,0 +1,13 @@
+{
+  "entity": "hxh:feitan",
+  "stats": {
+    "all": 78,
+    "speed": 92,
+    "agility": 90
+  },
+  "nen": {
+    "level": 85,
+    "kit": "feitan",
+    "mastery": 82
+  }
+}

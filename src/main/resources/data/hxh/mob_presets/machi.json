@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:machi",
+  "stats": {
+    "all": 74,
+    "agility": 85
+  },
+  "nen": {
+    "level": 82,
+    "kit": "machi",
+    "mastery": 85
+  }
+}

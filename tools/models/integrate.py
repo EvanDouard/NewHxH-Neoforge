@@ -29,6 +29,11 @@ add('uvogin', 'Uvogin', 'Uvogin', 0.85, 2.3, 0x6B4A2E, 0x2A2A2A, {"all": 72, "st
 add('illumi', 'Illumi Zoldyck', 'Illumi Zoldyck', 0.62, 1.95, 0x111114, 0x6A5A8A, {"all": 78, "speed": 85}, 88, 85)
 add('zeno', 'Zeno Zoldyck', 'Zeno Zoldyck', 0.6, 1.6, 0xEDEDED, 0x7A6A4A, {"all": 85}, 95, 92)
 add('biscuit', 'Biscuit Krueger', 'Biscuit Krueger', 0.55, 1.4, 0xF2C94C, 0xE87AA4, {"all": 80, "strength": 90}, 92, 92)
+add('feitan', 'Feitan Portor', 'Feitan Portor', 0.55, 1.55, 0x1C2030, 0xECEBE4, {"all": 78, "speed": 92, "agility": 90}, 85, 82)
+add('nobunaga', 'Nobunaga Hazama', 'Nobunaga Hazama', 0.6, 1.85, 0xE6DCB0, 0x3A5A8A, {"all": 78, "strength": 85}, 82, 80)
+add('machi', 'Machi Komacine', 'Machi Komacine', 0.55, 1.75, 0xC23A72, 0x2C3266, {"all": 74, "agility": 85}, 82, 85)
+add('silva', 'Silva Zoldyck', 'Silva Zoldyck', 0.75, 2.1, 0xEEF0F6, 0x1E2A44, {"all": 88, "strength": 92}, 94, 90)
+add('kite', 'Kite', 'Kite', 0.6, 1.85, 0xF2F2F6, 0x283050, {"all": 76}, 82, 80)
 
 
 def rep(p, a, b, once=True):

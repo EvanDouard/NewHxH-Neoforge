@@ -85,6 +85,11 @@ public final class NenClient {
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.ILLUMI.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.ZENO.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.BISCUIT.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.FEITAN.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NOBUNAGA.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.MACHI.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.SILVA.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.KITE.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.HISOKA.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.LEORIO.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.KURAPIKA.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);

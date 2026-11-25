@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:nobunaga",
+  "stats": {
+    "all": 78,
+    "strength": 85
+  },
+  "nen": {
+    "level": 82,
+    "kit": "nobunaga",
+    "mastery": 80
+  }
+}
