@@ -29,7 +29,7 @@ Sans fichier d'apparence, un PNJ utilise `textures/entity/npc/<id>.png`, sinon S
 ## Modèles sur mesure (GeckoLib)
 
 Les personnages refaits au niveau décrit dans `docs/Analyse_model.md` ont un vrai modèle GeckoLib, qui remplace le
-rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark**, **Pakunoda**, **Ging**, **Phinks** et **Knuckle**.
+rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark**, **Pakunoda**, **Ging**, **Phinks**, **Knuckle**, **Wing** et **Zushi**.
 
 ```
 python3 tools/models/gon.py
@@ -188,3 +188,5 @@ Tous sont des mobs neutres (alliés entre eux) avec leur kit Hatsu.
 | Ging | 1,8 | pointes noires sauvages vers le haut et l'arrière (air de famille avec Gon) | turban clair noué, barbe de quelques jours, chemise ample, écharpe | sérieux |
 | Phinks | 1,85 | blond cendré court plaqué en arrière, nuque rasée | survêtement bleu marine à bandes blanches | rictus de colère |
 | Knuckle | 1,9 | noir gominé en grande banane, côtés plaqués, longs favoris | veste grise ouverte, t-shirt blanc | colère |
+| Wing | 1,8 | brun foncé en bataille, grand épi au sommet | lunettes rondes en relief, chemise à moitié rentrée | sévère |
+| Zushi | 1,3 | noir très court en brosse (pointes drues) | dogi blanc, ceinture noire, pieds nus | concentration |

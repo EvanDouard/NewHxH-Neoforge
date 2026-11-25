@@ -84,6 +84,8 @@ public final class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> GING = character("ging", 0.6f, 1.8f);
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> PHINKS = character("phinks", 0.6f, 1.85f);
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> KNUCKLE = character("knuckle", 0.65f, 1.9f);
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> WING = character("wing", 0.55f, 1.8f);
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> ZUSHI = character("zushi", 0.5f, 1.3f);
     /** Kurapika sans le tabard (tunique blanche et ceinture) : même personnage, même kit. */
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> KURAPIKA_SANS_TUNIQUE = character("kurapika_sans_tunique", 0.6f, 1.85f);
 
@@ -165,6 +167,8 @@ public final class ModEntities {
         event.put(GING.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(PHINKS.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(KNUCKLE.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
+        event.put(WING.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
+        event.put(ZUSHI.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(LEORIO.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(KURAPIKA.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(KURAPIKA_SANS_TUNIQUE.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());

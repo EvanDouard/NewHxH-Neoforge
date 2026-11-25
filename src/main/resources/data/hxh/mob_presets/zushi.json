@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:zushi",
+  "stats": {
+    "all": 50,
+    "willpower": 70
+  },
+  "nen": {
+    "level": 55,
+    "kit": "zushi",
+    "mastery": 50
+  }
+}
