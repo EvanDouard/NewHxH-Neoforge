@@ -125,3 +125,4 @@ Limites : relief simple (pas encore de montagnes/rivières propres à chaque pay
 ## 12. Lieux — état (24 nov)
 Système de lieux (`data/hxh/world_places/*.json` : zone dégagée, remplissages, blocs, **entités**), posés une fois au chargement de la zone. `/hunter place export <nom> <de> <à>` exporte une construction faite à la main (fichier dans `hxh_exports/`, à copier dans `world_places/` après réglage de x/z). Zones aplanies : `data/hxh/world/flats.txt`.
 Lieux faits : village de l'île de la Baleine, domaine Zoldyck de la montagne Kukuroo (détails et reste à faire : `docs/kukuroo.md`).
+- Yorknew City (25 nov) : `yorknew_city.json` (≈ 88×80, 2 avenues, 7 tours, maison de ventes, entrepôt de la Brigade, place du dirigeable), zone aplatie dans `flats.txt`. À faire : quartiers mafieux, hôtels, tour de l'Heure, vrais intérieurs des tours, PNJ de la Brigade et des Mafias.

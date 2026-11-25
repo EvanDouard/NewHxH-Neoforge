@@ -2704,6 +2704,19 @@ shot 99z4_kukuroo_maison_zebro
 cmd tp @s 1560 73 806 0 2
 wait 80
 shot 99z5_kukuroo_sept_portes
+cmd hunter airship yorknew_city
+wait 400
+shot 99za_yorknew_place
+cmd effect give @s minecraft:slow_falling 60 0 true
+cmd tp @s 695 110 3860 0 25
+wait 120
+shot 99zb_yorknew_vue_ville
+cmd tp @s 695 78 3925 0 5
+wait 80
+shot 99zc_yorknew_maison_ventes
+cmd tp @s 735 76 3950 -135 10
+wait 80
+shot 99zd_yorknew_entrepot_brigade
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative

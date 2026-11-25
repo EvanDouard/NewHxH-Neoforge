@@ -22,7 +22,8 @@ Repère : x vers l'est, z vers le sud ; la porte est au nord du domaine, le mano
 - [x] **Mike en vrai mob** (`hxh:mike`) : attaque les intrus, reste près de son poste, 150 PV, apaisé par 3 offrandes de viande (ami)
 - [ ] Mike : modèle propre (aujourd'hui loup ×3), nourri par Zebro, apprivoisement via quête (Gon/Killua), plusieurs Mike dans la forêt
 - [ ] Zebro : dialogue de visite, test d'entrée (« tu ne peux passer que si tu pousses la porte »), quête de Gon, Leorio, Kurapika
-- [ ] **Escalier et pièces du manoir** : hall, salle à manger, chambres, salle de torture, chambre de Killua, bureau de Silva, salle de Zeno
+- [ ] **Escalier et pièces du manoir** : salle à manger, chambres, salle de torture, bureau de Silva, salle de Zeno
+- [ ] **À construire par Evan (plus tard, à la main)** : le hall, l'escalier et la chambre de Killua. Ne pas les générer : les exporter ensuite avec `/hunter place export`.
 - [ ] Famille Zoldyck : Silva, Zeno, Maha, Kikyo, Illumi, Milluki, Alluka/Nanika, Kalluto (PNJ/mobs dans le manoir)
 - [ ] Butlers supplémentaires (Gotoh, Tsubone, Amane, Canary dans leur rôle), Shoot et Mimi
 - [ ] Sommet de la montagne Kukuroo (terrain montagneux, pic à y≈300), tunnel et accès par la montagne

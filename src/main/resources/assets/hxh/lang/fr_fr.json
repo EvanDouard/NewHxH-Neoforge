@@ -1161,7 +1161,7 @@
   "message.hxh.vow_single": "Serment : une seule technique",
   "message.hxh.vow_bare_hands": "Serment : mains nues",
   "message.hxh.vow_life_low": "Serment : pas assez de vie pour payer",
-  "npc.hxh.commissaire_priseur": "Commissaire-priseur de York Shin",
+  "npc.hxh.commissaire_priseur": "Commissaire-priseur",
   "auction.hxh.today": "Lots du jour (nouvelle vente chaque jour de jeu)",
   "auction.hxh.bid": "Enchérir %s J",
   "auction.hxh.sold": "Adjugé !",
@@ -1359,7 +1359,7 @@
   "dialog.hxh.merchant.idle": "Jette un œil à mes articles, Hunter.",
   "dialog.hxh.husband_1.idle": "Ma femme… je vous en prie, croyez-moi.",
   "dialog.hxh.husband_2.idle": "C'est lui l'imposteur, pas moi !",
-  "dialog.hxh.commissaire_priseur.idle": "Les enchères de York Shin reprennent chaque jour. Revenez voir les lots.",
+  "dialog.hxh.commissaire_priseur.idle": "Mesdames et messieurs, la vente de ce soir réunit les plus belles pièces du monde. Les enchères sont à partir de cent millions de Jenny.",
   "dialog.hxh.exorciste.idle": "Une aura étrangère s'accroche à quelqu'un ? Je m'en occupe.",
   "dialog.hxh.majordome_zoldyck.idle": "La famille Zoldyck accepte tous les contrats. Pour un prix.",
   "dialog.hxh.hunter_gourmet.idle": "Un plat n'est rien sans de bons ingrédients. Reviens quand tu seras Hunter, je te ferai goûter.",
@@ -1734,5 +1734,7 @@
   "message.hxh.heavy_door.opened": "La porte n°%s (%s tonnes) cède sous ta poussée.",
   "entity.hxh.mike": "Mike",
   "message.hxh.mike.calmer": "Mike mange la viande et se calme un peu (%s/%s).",
-  "message.hxh.mike.friend": "Mike te reconnaît : tu es un ami, il ne t'attaquera plus."
+  "message.hxh.mike.friend": "Mike te reconnaît : tu es un ami, il ne t'attaquera plus.",
+  "npc.hxh.passant_yorknew": "Passant",
+  "dialog.hxh.passant_yorknew.idle": "Yorknew ne dort jamais. Mais évite l'entrepôt au sud-est : on dit que des gens étranges s'y réunissent le soir."
 }

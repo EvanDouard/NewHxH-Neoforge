@@ -1161,7 +1161,7 @@
   "message.hxh.vow_single": "Vow: a single technique",
   "message.hxh.vow_bare_hands": "Vow: bare hands",
   "message.hxh.vow_life_low": "Vow: not enough health to pay",
-  "npc.hxh.commissaire_priseur": "York Shin Auctioneer",
+  "npc.hxh.commissaire_priseur": "Auctioneer",
   "auction.hxh.today": "Today's lots (new sale every game day)",
   "auction.hxh.bid": "Bid %s J",
   "auction.hxh.sold": "Sold!",
@@ -1359,7 +1359,7 @@
   "dialog.hxh.merchant.idle": "Take a look at my wares, Hunter.",
   "dialog.hxh.husband_1.idle": "My wife… please, believe me.",
   "dialog.hxh.husband_2.idle": "He's the impostor, not me!",
-  "dialog.hxh.commissaire_priseur.idle": "The York Shin auction resumes every day. Come back for the lots.",
+  "dialog.hxh.commissaire_priseur.idle": "Ladies and gentlemen, tonight's sale gathers the finest pieces in the world. Bidding starts at one hundred million Jenny.",
   "dialog.hxh.exorciste.idle": "A foreign aura clinging to someone? I'll deal with it.",
   "dialog.hxh.majordome_zoldyck.idle": "The Zoldyck family takes every contract. For a price.",
   "dialog.hxh.hunter_gourmet.idle": "A dish is nothing without good ingredients. Come back once you're a Hunter, I'll let you taste.",
@@ -1734,5 +1734,7 @@
   "message.hxh.heavy_door.opened": "Door #%s (%s tons) gives way under your push.",
   "entity.hxh.mike": "Mike",
   "message.hxh.mike.calmer": "Mike eats the meat and calms down a little (%s/%s).",
-  "message.hxh.mike.friend": "Mike recognizes you: you are a friend, he will not attack you anymore."
+  "message.hxh.mike.friend": "Mike recognizes you: you are a friend, he will not attack you anymore.",
+  "npc.hxh.passant_yorknew": "Passerby",
+  "dialog.hxh.passant_yorknew.idle": "Yorknew never sleeps. But avoid the warehouse to the south-east: they say strange people gather there at night."
 }

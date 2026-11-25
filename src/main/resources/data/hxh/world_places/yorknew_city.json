@@ -1,0 +1,7156 @@
+{
+ "x": 650,
+ "z": 3884,
+ "clear": [
+  -3,
+  0,
+  -3,
+  90,
+  46,
+  82
+ ],
+ "fills": [
+  {
+   "box": [
+    0,
+    -1,
+    0,
+    87,
+    -1,
+    79
+   ],
+   "block": "minecraft:smooth_stone"
+  },
+  {
+   "box": [
+    0,
+    -1,
+    18,
+    87,
+    -1,
+    21
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    0,
+    -1,
+    50,
+    87,
+    -1,
+    53
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    24,
+    -1,
+    0,
+    27,
+    -1,
+    79
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    60,
+    -1,
+    0,
+    63,
+    -1,
+    79
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    2,
+    0,
+    2,
+    22,
+    26,
+    16
+   ],
+   "block": "minecraft:blue_terracotta"
+  },
+  {
+   "box": [
+    2,
+    2,
+    2,
+    22,
+    3,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    2,
+    16,
+    22,
+    3,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    2,
+    2,
+    2,
+    3,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    2,
+    2,
+    22,
+    3,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    6,
+    2,
+    22,
+    7,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    6,
+    16,
+    22,
+    7,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    6,
+    2,
+    2,
+    7,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    6,
+    2,
+    22,
+    7,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    10,
+    2,
+    22,
+    11,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    10,
+    16,
+    22,
+    11,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    10,
+    2,
+    2,
+    11,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    10,
+    2,
+    22,
+    11,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    14,
+    2,
+    22,
+    15,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    14,
+    16,
+    22,
+    15,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    14,
+    2,
+    2,
+    15,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    14,
+    2,
+    22,
+    15,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    18,
+    2,
+    22,
+    19,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    18,
+    16,
+    22,
+    19,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    18,
+    2,
+    2,
+    19,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    18,
+    2,
+    22,
+    19,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    22,
+    2,
+    22,
+    23,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    22,
+    16,
+    22,
+    23,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    22,
+    2,
+    2,
+    23,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    22,
+    2,
+    22,
+    23,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    1,
+    27,
+    1,
+    23,
+    27,
+    17
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    12,
+    28,
+    9,
+    12,
+    32,
+    9
+   ],
+   "block": "minecraft:iron_bars"
+  },
+  {
+   "box": [
+    2,
+    0,
+    23,
+    22,
+    39,
+    48
+   ],
+   "block": "minecraft:stone_bricks"
+  },
+  {
+   "box": [
+    2,
+    2,
+    23,
+    22,
+    3,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    2,
+    48,
+    22,
+    3,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    2,
+    23,
+    2,
+    3,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    2,
+    23,
+    22,
+    3,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    6,
+    23,
+    22,
+    7,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    6,
+    48,
+    22,
+    7,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    6,
+    23,
+    2,
+    7,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    6,
+    23,
+    22,
+    7,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    10,
+    23,
+    22,
+    11,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    10,
+    48,
+    22,
+    11,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    10,
+    23,
+    2,
+    11,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    10,
+    23,
+    22,
+    11,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    14,
+    23,
+    22,
+    15,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    14,
+    48,
+    22,
+    15,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    14,
+    23,
+    2,
+    15,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    14,
+    23,
+    22,
+    15,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    18,
+    23,
+    22,
+    19,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    18,
+    48,
+    22,
+    19,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    18,
+    23,
+    2,
+    19,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    18,
+    23,
+    22,
+    19,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    22,
+    23,
+    22,
+    23,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    22,
+    48,
+    22,
+    23,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    22,
+    23,
+    2,
+    23,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    22,
+    23,
+    22,
+    23,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    26,
+    23,
+    22,
+    27,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    26,
+    48,
+    22,
+    27,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    26,
+    23,
+    2,
+    27,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    26,
+    23,
+    22,
+    27,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    30,
+    23,
+    22,
+    31,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    30,
+    48,
+    22,
+    31,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    30,
+    23,
+    2,
+    31,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    30,
+    23,
+    22,
+    31,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    34,
+    23,
+    22,
+    35,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    34,
+    48,
+    22,
+    35,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    34,
+    23,
+    2,
+    35,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    34,
+    23,
+    22,
+    35,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    38,
+    23,
+    22,
+    39,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    38,
+    48,
+    22,
+    39,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    38,
+    23,
+    2,
+    39,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    38,
+    23,
+    22,
+    39,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    1,
+    40,
+    22,
+    23,
+    40,
+    49
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    12,
+    41,
+    35,
+    12,
+    45,
+    35
+   ],
+   "block": "minecraft:iron_bars"
+  },
+  {
+   "box": [
+    2,
+    0,
+    55,
+    22,
+    26,
+    77
+   ],
+   "block": "minecraft:blue_terracotta"
+  },
+  {
+   "box": [
+    2,
+    2,
+    55,
+    22,
+    3,
+    55
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    2,
+    77,
+    22,
+    3,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    2,
+    55,
+    2,
+    3,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    2,
+    55,
+    22,
+    3,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    6,
+    55,
+    22,
+    7,
+    55
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    6,
+    77,
+    22,
+    7,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    6,
+    55,
+    2,
+    7,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    6,
+    55,
+    22,
+    7,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    10,
+    55,
+    22,
+    11,
+    55
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    10,
+    77,
+    22,
+    11,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    10,
+    55,
+    2,
+    11,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    10,
+    55,
+    22,
+    11,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    14,
+    55,
+    22,
+    15,
+    55
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    14,
+    77,
+    22,
+    15,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    14,
+    55,
+    2,
+    15,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    14,
+    55,
+    22,
+    15,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    18,
+    55,
+    22,
+    19,
+    55
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    18,
+    77,
+    22,
+    19,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    18,
+    55,
+    2,
+    19,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    18,
+    55,
+    22,
+    19,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    22,
+    55,
+    22,
+    23,
+    55
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    22,
+    77,
+    22,
+    23,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    2,
+    22,
+    55,
+    2,
+    23,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    22,
+    22,
+    55,
+    22,
+    23,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    1,
+    27,
+    54,
+    23,
+    27,
+    78
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    12,
+    28,
+    66,
+    12,
+    32,
+    66
+   ],
+   "block": "minecraft:iron_bars"
+  },
+  {
+   "box": [
+    29,
+    0,
+    2,
+    58,
+    18,
+    16
+   ],
+   "block": "minecraft:light_gray_concrete"
+  },
+  {
+   "box": [
+    29,
+    2,
+    2,
+    58,
+    3,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    2,
+    16,
+    58,
+    3,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    2,
+    2,
+    29,
+    3,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    2,
+    2,
+    58,
+    3,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    6,
+    2,
+    58,
+    7,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    6,
+    16,
+    58,
+    7,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    6,
+    2,
+    29,
+    7,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    6,
+    2,
+    58,
+    7,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    10,
+    2,
+    58,
+    11,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    10,
+    16,
+    58,
+    11,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    10,
+    2,
+    29,
+    11,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    10,
+    2,
+    58,
+    11,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    14,
+    2,
+    58,
+    15,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    14,
+    16,
+    58,
+    15,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    14,
+    2,
+    29,
+    15,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    14,
+    2,
+    58,
+    15,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    28,
+    19,
+    1,
+    59,
+    19,
+    17
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    43,
+    20,
+    9,
+    43,
+    24,
+    9
+   ],
+   "block": "minecraft:iron_bars"
+  },
+  {
+   "box": [
+    29,
+    0,
+    55,
+    58,
+    27,
+    77
+   ],
+   "block": "minecraft:cyan_terracotta"
+  },
+  {
+   "box": [
+    29,
+    2,
+    55,
+    58,
+    3,
+    55
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    2,
+    77,
+    58,
+    3,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    2,
+    55,
+    29,
+    3,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    2,
+    55,
+    58,
+    3,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    6,
+    55,
+    58,
+    7,
+    55
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    6,
+    77,
+    58,
+    7,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    6,
+    55,
+    29,
+    7,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    6,
+    55,
+    58,
+    7,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    10,
+    55,
+    58,
+    11,
+    55
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    10,
+    77,
+    58,
+    11,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    10,
+    55,
+    29,
+    11,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    10,
+    55,
+    58,
+    11,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    14,
+    55,
+    58,
+    15,
+    55
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    14,
+    77,
+    58,
+    15,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    14,
+    55,
+    29,
+    15,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    14,
+    55,
+    58,
+    15,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    18,
+    55,
+    58,
+    19,
+    55
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    18,
+    77,
+    58,
+    19,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    18,
+    55,
+    29,
+    19,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    18,
+    55,
+    58,
+    19,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    22,
+    55,
+    58,
+    23,
+    55
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    22,
+    77,
+    58,
+    23,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    22,
+    55,
+    29,
+    23,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    22,
+    55,
+    58,
+    23,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    26,
+    55,
+    58,
+    27,
+    55
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    26,
+    77,
+    58,
+    27,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    26,
+    55,
+    29,
+    27,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    26,
+    55,
+    58,
+    27,
+    77
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    28,
+    28,
+    54,
+    59,
+    28,
+    78
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    43,
+    29,
+    66,
+    43,
+    33,
+    66
+   ],
+   "block": "minecraft:iron_bars"
+  },
+  {
+   "box": [
+    65,
+    0,
+    2,
+    85,
+    31,
+    16
+   ],
+   "block": "minecraft:light_gray_concrete"
+  },
+  {
+   "box": [
+    65,
+    2,
+    2,
+    85,
+    3,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    2,
+    16,
+    85,
+    3,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    2,
+    2,
+    65,
+    3,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    85,
+    2,
+    2,
+    85,
+    3,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    6,
+    2,
+    85,
+    7,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    6,
+    16,
+    85,
+    7,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    6,
+    2,
+    65,
+    7,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    85,
+    6,
+    2,
+    85,
+    7,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    10,
+    2,
+    85,
+    11,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    10,
+    16,
+    85,
+    11,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    10,
+    2,
+    65,
+    11,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    85,
+    10,
+    2,
+    85,
+    11,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    14,
+    2,
+    85,
+    15,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    14,
+    16,
+    85,
+    15,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    14,
+    2,
+    65,
+    15,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    85,
+    14,
+    2,
+    85,
+    15,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    18,
+    2,
+    85,
+    19,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    18,
+    16,
+    85,
+    19,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    18,
+    2,
+    65,
+    19,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    85,
+    18,
+    2,
+    85,
+    19,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    22,
+    2,
+    85,
+    23,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    22,
+    16,
+    85,
+    23,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    22,
+    2,
+    65,
+    23,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    85,
+    22,
+    2,
+    85,
+    23,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    26,
+    2,
+    85,
+    27,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    26,
+    16,
+    85,
+    27,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    26,
+    2,
+    65,
+    27,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    85,
+    26,
+    2,
+    85,
+    27,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    30,
+    2,
+    85,
+    31,
+    2
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    30,
+    16,
+    85,
+    31,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    30,
+    2,
+    65,
+    31,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    85,
+    30,
+    2,
+    85,
+    31,
+    16
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    64,
+    32,
+    1,
+    86,
+    32,
+    17
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    75,
+    33,
+    9,
+    75,
+    37,
+    9
+   ],
+   "block": "minecraft:iron_bars"
+  },
+  {
+   "box": [
+    65,
+    0,
+    23,
+    85,
+    15,
+    48
+   ],
+   "block": "minecraft:stone_bricks"
+  },
+  {
+   "box": [
+    65,
+    2,
+    23,
+    85,
+    3,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    2,
+    48,
+    85,
+    3,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    2,
+    23,
+    65,
+    3,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    85,
+    2,
+    23,
+    85,
+    3,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    6,
+    23,
+    85,
+    7,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    6,
+    48,
+    85,
+    7,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    6,
+    23,
+    65,
+    7,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    85,
+    6,
+    23,
+    85,
+    7,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    10,
+    23,
+    85,
+    11,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    10,
+    48,
+    85,
+    11,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    10,
+    23,
+    65,
+    11,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    85,
+    10,
+    23,
+    85,
+    11,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    14,
+    23,
+    85,
+    15,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    14,
+    48,
+    85,
+    15,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    65,
+    14,
+    23,
+    65,
+    15,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    85,
+    14,
+    23,
+    85,
+    15,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    64,
+    16,
+    22,
+    86,
+    16,
+    49
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    75,
+    17,
+    35,
+    75,
+    21,
+    35
+   ],
+   "block": "minecraft:iron_bars"
+  },
+  {
+   "box": [
+    11,
+    0,
+    16,
+    13,
+    2,
+    16
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    11,
+    3,
+    16,
+    13,
+    3,
+    16
+   ],
+   "block": "minecraft:smooth_quartz"
+  },
+  {
+   "box": [
+    11,
+    0,
+    48,
+    13,
+    2,
+    48
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    11,
+    3,
+    48,
+    13,
+    3,
+    48
+   ],
+   "block": "minecraft:smooth_quartz"
+  },
+  {
+   "box": [
+    11,
+    0,
+    55,
+    13,
+    2,
+    55
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    11,
+    3,
+    55,
+    13,
+    3,
+    55
+   ],
+   "block": "minecraft:smooth_quartz"
+  },
+  {
+   "box": [
+    42,
+    0,
+    16,
+    44,
+    2,
+    16
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    42,
+    3,
+    16,
+    44,
+    3,
+    16
+   ],
+   "block": "minecraft:smooth_quartz"
+  },
+  {
+   "box": [
+    42,
+    0,
+    55,
+    44,
+    2,
+    55
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    42,
+    3,
+    55,
+    44,
+    3,
+    55
+   ],
+   "block": "minecraft:smooth_quartz"
+  },
+  {
+   "box": [
+    74,
+    0,
+    16,
+    76,
+    2,
+    16
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    74,
+    3,
+    16,
+    76,
+    3,
+    16
+   ],
+   "block": "minecraft:smooth_quartz"
+  },
+  {
+   "box": [
+    74,
+    0,
+    48,
+    76,
+    2,
+    48
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    74,
+    3,
+    48,
+    76,
+    3,
+    48
+   ],
+   "block": "minecraft:smooth_quartz"
+  },
+  {
+   "box": [
+    29,
+    0,
+    23,
+    58,
+    17,
+    48
+   ],
+   "block": "minecraft:quartz_bricks"
+  },
+  {
+   "box": [
+    28,
+    18,
+    22,
+    59,
+    18,
+    49
+   ],
+   "block": "minecraft:smooth_quartz_slab"
+  },
+  {
+   "box": [
+    33,
+    19,
+    27,
+    54,
+    22,
+    44
+   ],
+   "block": "minecraft:quartz_bricks"
+  },
+  {
+   "box": [
+    32,
+    23,
+    26,
+    55,
+    23,
+    45
+   ],
+   "block": "minecraft:smooth_quartz_slab"
+  },
+  {
+   "box": [
+    29,
+    4,
+    23,
+    58,
+    5,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    4,
+    48,
+    58,
+    5,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    4,
+    23,
+    29,
+    5,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    4,
+    23,
+    58,
+    5,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    10,
+    23,
+    58,
+    11,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    10,
+    48,
+    58,
+    11,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    10,
+    23,
+    29,
+    11,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    10,
+    23,
+    58,
+    11,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    14,
+    23,
+    58,
+    15,
+    23
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    14,
+    48,
+    58,
+    15,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    29,
+    14,
+    23,
+    29,
+    15,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    58,
+    14,
+    23,
+    58,
+    15,
+    48
+   ],
+   "block": "minecraft:light_blue_stained_glass"
+  },
+  {
+   "box": [
+    39,
+    0,
+    48,
+    47,
+    7,
+    48
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    37,
+    0,
+    49,
+    37,
+    8,
+    49
+   ],
+   "block": "minecraft:quartz_pillar[axis=y]"
+  },
+  {
+   "box": [
+    40,
+    0,
+    49,
+    40,
+    8,
+    49
+   ],
+   "block": "minecraft:quartz_pillar[axis=y]"
+  },
+  {
+   "box": [
+    46,
+    0,
+    49,
+    46,
+    8,
+    49
+   ],
+   "block": "minecraft:quartz_pillar[axis=y]"
+  },
+  {
+   "box": [
+    49,
+    0,
+    49,
+    49,
+    8,
+    49
+   ],
+   "block": "minecraft:quartz_pillar[axis=y]"
+  },
+  {
+   "box": [
+    36,
+    9,
+    48,
+    50,
+    9,
+    50
+   ],
+   "block": "minecraft:smooth_quartz"
+  },
+  {
+   "box": [
+    39,
+    0,
+    50,
+    47,
+    0,
+    50
+   ],
+   "block": "minecraft:quartz_stairs[facing=north]"
+  },
+  {
+   "box": [
+    42,
+    0,
+    50,
+    44,
+    0,
+    50
+   ],
+   "block": "minecraft:red_carpet"
+  },
+  {
+   "box": [
+    42,
+    0,
+    40,
+    44,
+    0,
+    48
+   ],
+   "block": "minecraft:red_carpet"
+  },
+  {
+   "box": [
+    30,
+    0,
+    24,
+    57,
+    15,
+    47
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    30,
+    -1,
+    24,
+    57,
+    -1,
+    47
+   ],
+   "block": "minecraft:polished_diorite"
+  },
+  {
+   "box": [
+    39,
+    0,
+    25,
+    47,
+    1,
+    28
+   ],
+   "block": "minecraft:dark_oak_planks"
+  },
+  {
+   "box": [
+    65,
+    0,
+    55,
+    85,
+    9,
+    77
+   ],
+   "block": "minecraft:cracked_stone_bricks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    65,
+    10,
+    55,
+    85,
+    10,
+    77
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    66,
+    -1,
+    56,
+    84,
+    -1,
+    76
+   ],
+   "block": "minecraft:cobblestone"
+  },
+  {
+   "box": [
+    73,
+    0,
+    55,
+    77,
+    6,
+    55
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    65,
+    3,
+    61,
+    65,
+    6,
+    64
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    85,
+    5,
+    67,
+    85,
+    8,
+    71
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    68,
+    11,
+    58,
+    82,
+    11,
+    74
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    43,
+    -1,
+    29,
+    47,
+    -1,
+    33
+   ],
+   "block": "minecraft:stone_bricks"
+  },
+  {
+   "box": [
+    43,
+    0,
+    29,
+    47,
+    3,
+    33
+   ],
+   "block": "minecraft:air"
+  }
+ ],
+ "blocks": [
+  {
+   "pos": [
+    0,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    4,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    8,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    48,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    52,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    56,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    60,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    64,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    68,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    72,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    76,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    80,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    84,
+    -1,
+    19
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    0,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    4,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    8,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    12,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    16,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    20,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    24,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    28,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    32,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    36,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    40,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    44,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    48,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    52,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    56,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    60,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    64,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    68,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    72,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    76,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    80,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    84,
+    -1,
+    51
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    0
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    4
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    8
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    12
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    16
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    20
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    24
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    28
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    32
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    36
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    40
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    44
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    48
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    52
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    56
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    60
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    64
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    68
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    72
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    25,
+    -1,
+    76
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    0
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    4
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    8
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    12
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    16
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    20
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    24
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    28
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    32
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    36
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    40
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    44
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    48
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    52
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    56
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    60
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    64
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    68
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    72
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    61,
+    -1,
+    76
+   ],
+   "state": "minecraft:white_concrete"
+  },
+  {
+   "pos": [
+    12,
+    33,
+    9
+   ],
+   "state": "minecraft:lightning_rod[facing=up]"
+  },
+  {
+   "pos": [
+    12,
+    46,
+    35
+   ],
+   "state": "minecraft:lightning_rod[facing=up]"
+  },
+  {
+   "pos": [
+    12,
+    33,
+    66
+   ],
+   "state": "minecraft:lightning_rod[facing=up]"
+  },
+  {
+   "pos": [
+    43,
+    25,
+    9
+   ],
+   "state": "minecraft:lightning_rod[facing=up]"
+  },
+  {
+   "pos": [
+    43,
+    34,
+    66
+   ],
+   "state": "minecraft:lightning_rod[facing=up]"
+  },
+  {
+   "pos": [
+    75,
+    38,
+    9
+   ],
+   "state": "minecraft:lightning_rod[facing=up]"
+  },
+  {
+   "pos": [
+    75,
+    22,
+    35
+   ],
+   "state": "minecraft:lightning_rod[facing=up]"
+  },
+  {
+   "pos": [
+    43,
+    2,
+    26
+   ],
+   "state": "minecraft:lectern[facing=south]"
+  },
+  {
+   "pos": [
+    32,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    33,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    34,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    35,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    37,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    38,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    39,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    40,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    41,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    45,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    46,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    47,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    48,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    49,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    51,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    52,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    53,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    54,
+    0,
+    31
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    32,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    33,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    34,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    35,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    37,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    38,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    39,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    40,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    41,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    45,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    46,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    47,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    48,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    49,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    51,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    52,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    53,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    54,
+    0,
+    33
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    32,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    33,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    34,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    35,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    37,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    38,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    39,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    40,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    41,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    45,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    46,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    47,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    48,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    49,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    51,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    52,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    53,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    54,
+    0,
+    35
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    32,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    33,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    34,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    35,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    37,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    38,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    39,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    40,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    41,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    45,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    46,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    47,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    48,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    49,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    51,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    52,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    53,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    54,
+    0,
+    37
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    32,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    33,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    34,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    35,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    37,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    38,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    39,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    40,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    41,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    45,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    46,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    47,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    48,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    49,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    51,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    52,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    53,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    54,
+    0,
+    39
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    32,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    33,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    34,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    35,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    37,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    38,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    39,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    40,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    41,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    45,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    46,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    47,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    48,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    49,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    51,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    52,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    53,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    54,
+    0,
+    41
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    32,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    33,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    34,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    35,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    37,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    38,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    39,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    40,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    41,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    45,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    46,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    47,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    48,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    49,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    51,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    52,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    53,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    54,
+    0,
+    43
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    32,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    33,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    34,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    35,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    37,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    38,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    39,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    40,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    41,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    45,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    46,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    47,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    48,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    49,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    51,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    52,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    53,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    54,
+    0,
+    45
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    37,
+    14,
+    31
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    37,
+    14,
+    43
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    43,
+    14,
+    31
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    43,
+    14,
+    43
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    50,
+    14,
+    31
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    50,
+    14,
+    43
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    80,
+    0,
+    66
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    79,
+    0,
+    68
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    78,
+    0,
+    70
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=west]"
+  },
+  {
+   "pos": [
+    76,
+    0,
+    71
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=west]"
+  },
+  {
+   "pos": [
+    73,
+    0,
+    71
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=west]"
+  },
+  {
+   "pos": [
+    71,
+    0,
+    69
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    70,
+    0,
+    67
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    70,
+    0,
+    65
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    71,
+    0,
+    63
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=north]"
+  },
+  {
+   "pos": [
+    73,
+    0,
+    61
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=east]"
+  },
+  {
+   "pos": [
+    76,
+    0,
+    61
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=east]"
+  },
+  {
+   "pos": [
+    78,
+    0,
+    62
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=east]"
+  },
+  {
+   "pos": [
+    79,
+    0,
+    64
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    75,
+    0,
+    66
+   ],
+   "state": "minecraft:campfire[lit=true]"
+  },
+  {
+   "pos": [
+    68,
+    0,
+    58
+   ],
+   "state": "minecraft:cobweb"
+  },
+  {
+   "pos": [
+    68,
+    1,
+    58
+   ],
+   "state": "minecraft:cobweb"
+  },
+  {
+   "pos": [
+    82,
+    0,
+    74
+   ],
+   "state": "minecraft:cobweb"
+  },
+  {
+   "pos": [
+    82,
+    1,
+    74
+   ],
+   "state": "minecraft:cobweb"
+  },
+  {
+   "pos": [
+    69,
+    0,
+    73
+   ],
+   "state": "minecraft:cobweb"
+  },
+  {
+   "pos": [
+    69,
+    1,
+    73
+   ],
+   "state": "minecraft:cobweb"
+  },
+  {
+   "pos": [
+    67,
+    0,
+    63
+   ],
+   "state": "minecraft:mossy_cobblestone"
+  },
+  {
+   "pos": [
+    83,
+    0,
+    67
+   ],
+   "state": "minecraft:mossy_cobblestone"
+  },
+  {
+   "pos": [
+    83,
+    0,
+    60
+   ],
+   "state": "minecraft:mossy_cobblestone"
+  },
+  {
+   "pos": [
+    47,
+    0,
+    31
+   ],
+   "state": "minecraft:air"
+  },
+  {
+   "pos": [
+    47,
+    0,
+    31
+   ],
+   "state": "hxh:airship_terminal[facing=west]"
+  },
+  {
+   "pos": [
+    2,
+    0,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    2,
+    1,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    2,
+    2,
+    17
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    2,
+    0,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    2,
+    1,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    2,
+    2,
+    22
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    10,
+    0,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    10,
+    1,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    10,
+    2,
+    17
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    10,
+    0,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    10,
+    1,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    10,
+    2,
+    22
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    18,
+    0,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    18,
+    1,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    18,
+    2,
+    17
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    18,
+    0,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    18,
+    1,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    18,
+    2,
+    22
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    26,
+    0,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    26,
+    1,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    26,
+    2,
+    17
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    26,
+    0,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    26,
+    1,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    26,
+    2,
+    22
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    34,
+    0,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    34,
+    1,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    34,
+    2,
+    17
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    34,
+    0,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    34,
+    1,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    34,
+    2,
+    22
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    42,
+    0,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    1,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    2,
+    17
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    42,
+    0,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    1,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    2,
+    22
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    50,
+    1,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    50,
+    2,
+    17
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    50,
+    1,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    50,
+    2,
+    22
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    58,
+    0,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    58,
+    1,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    58,
+    2,
+    17
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    58,
+    0,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    58,
+    1,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    58,
+    2,
+    22
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    66,
+    0,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    66,
+    1,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    66,
+    2,
+    17
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    66,
+    0,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    66,
+    1,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    66,
+    2,
+    22
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    74,
+    0,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    74,
+    1,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    74,
+    2,
+    17
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    74,
+    0,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    74,
+    1,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    74,
+    2,
+    22
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    82,
+    0,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    82,
+    1,
+    17
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    82,
+    2,
+    17
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    82,
+    0,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    82,
+    1,
+    22
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    82,
+    2,
+    22
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    2,
+    0,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    2,
+    1,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    2,
+    2,
+    49
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    2,
+    0,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    2,
+    1,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    2,
+    2,
+    54
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    10,
+    0,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    10,
+    1,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    10,
+    2,
+    49
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    10,
+    0,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    10,
+    1,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    10,
+    2,
+    54
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    18,
+    0,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    18,
+    1,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    18,
+    2,
+    49
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    18,
+    0,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    18,
+    1,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    18,
+    2,
+    54
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    26,
+    0,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    26,
+    1,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    26,
+    2,
+    49
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    26,
+    0,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    26,
+    1,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    26,
+    2,
+    54
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    34,
+    0,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    34,
+    1,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    34,
+    2,
+    49
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    34,
+    0,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    34,
+    1,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    34,
+    2,
+    54
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    42,
+    0,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    1,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    2,
+    49
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    42,
+    0,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    1,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    2,
+    54
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    50,
+    1,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    50,
+    2,
+    49
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    50,
+    1,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    50,
+    2,
+    54
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    58,
+    0,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    58,
+    1,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    58,
+    2,
+    49
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    58,
+    0,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    58,
+    1,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    58,
+    2,
+    54
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    66,
+    0,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    66,
+    1,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    66,
+    2,
+    49
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    66,
+    0,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    66,
+    1,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    66,
+    2,
+    54
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    74,
+    0,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    74,
+    1,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    74,
+    2,
+    49
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    74,
+    0,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    74,
+    1,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    74,
+    2,
+    54
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    82,
+    0,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    82,
+    1,
+    49
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    82,
+    2,
+    49
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    82,
+    0,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    82,
+    1,
+    54
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    82,
+    2,
+    54
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    23,
+    0,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    1,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    2,
+    2
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    2
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    23,
+    0,
+    10
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    1,
+    10
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    2,
+    10
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    10
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    10
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    10
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    23,
+    0,
+    18
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    1,
+    18
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    2,
+    18
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    18
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    18
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    18
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    23,
+    0,
+    26
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    1,
+    26
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    2,
+    26
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    26
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    26
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    26
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    23,
+    0,
+    34
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    1,
+    34
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    2,
+    34
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    34
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    34
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    34
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    23,
+    0,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    1,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    2,
+    42
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    42
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    23,
+    0,
+    50
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    1,
+    50
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    2,
+    50
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    50
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    50
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    50
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    23,
+    0,
+    58
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    1,
+    58
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    2,
+    58
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    58
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    58
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    58
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    23,
+    0,
+    66
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    1,
+    66
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    2,
+    66
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    66
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    66
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    66
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    23,
+    0,
+    74
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    1,
+    74
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    23,
+    2,
+    74
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    74
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    74
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    74
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    59,
+    0,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    1,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    2,
+    2
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    64,
+    0,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    1,
+    2
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    2,
+    2
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    59,
+    0,
+    10
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    1,
+    10
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    2,
+    10
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    64,
+    0,
+    10
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    1,
+    10
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    2,
+    10
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    59,
+    0,
+    18
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    1,
+    18
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    2,
+    18
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    64,
+    0,
+    18
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    1,
+    18
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    2,
+    18
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    59,
+    0,
+    26
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    1,
+    26
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    2,
+    26
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    64,
+    0,
+    26
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    1,
+    26
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    2,
+    26
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    59,
+    0,
+    34
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    1,
+    34
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    2,
+    34
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    64,
+    0,
+    34
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    1,
+    34
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    2,
+    34
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    59,
+    0,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    1,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    2,
+    42
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    64,
+    0,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    1,
+    42
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    2,
+    42
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    59,
+    0,
+    50
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    1,
+    50
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    2,
+    50
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    64,
+    0,
+    50
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    1,
+    50
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    2,
+    50
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    59,
+    0,
+    58
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    1,
+    58
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    2,
+    58
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    64,
+    0,
+    58
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    1,
+    58
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    2,
+    58
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    59,
+    0,
+    66
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    1,
+    66
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    2,
+    66
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    64,
+    0,
+    66
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    1,
+    66
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    2,
+    66
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    59,
+    0,
+    74
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    1,
+    74
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    59,
+    2,
+    74
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    64,
+    0,
+    74
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    1,
+    74
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    64,
+    2,
+    74
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  }
+ ],
+ "entities": [
+  {
+   "type": "hxh:npc",
+   "pos": [
+    43,
+    2,
+    27
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"commissaire_priseur\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    40,
+    0,
+    20
+   ],
+   "yaw": 90,
+   "nbt": "{npc:\"passant_yorknew\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    56,
+    0,
+    52
+   ],
+   "yaw": 270,
+   "nbt": "{npc:\"passant_yorknew\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  }
+ ]
+}

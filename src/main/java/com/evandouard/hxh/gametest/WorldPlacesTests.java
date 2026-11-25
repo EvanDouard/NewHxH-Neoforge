@@ -54,6 +54,27 @@ public final class WorldPlacesTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void yorknewCityHasAuctionHouseAndTroupeHideout(GameTestHelper helper) {
+        var place = WorldPlaces.get("hxh:yorknew_city");
+        helper.assertTrue(place != null, "Yorknew City est chargée");
+        BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+        var level = helper.getLevel();
+        int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 47, ground, origin.getZ() + 31)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable sur la place");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 10, ground - 1, origin.getZ() + 19)).is(Blocks.BLACK_CONCRETE), "Avenue goudronnée");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 43, ground + 17, origin.getZ() + 30)).is(Blocks.QUARTZ_BRICKS), "Maison de ventes en quartz");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 43, ground + 2, origin.getZ() + 26)).is(Blocks.LECTERN), "Pupitre du commissaire-priseur");
+        int seats = 0;
+        for (int dx = -7; dx <= 7; dx++) for (int dz = -7; dz <= 7; dz++)
+            if (level.getBlockState(new BlockPos(origin.getX() + 75 + dx, ground, origin.getZ() + 66 + dz)).is(Blocks.DARK_OAK_STAIRS)) seats++;
+        helper.assertTrue(seats >= 12, "Treize sièges pour la Brigade (trouvés : " + seats + ")");
+        var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 90, ground + 20, origin.getZ() + 85);
+        var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+        helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("commissaire_priseur")), "Commissaire-priseur présent");
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void heavyDoorOpensOnlyWithEnoughStrengthThenCloses(GameTestHelper helper) {
         var level = helper.getLevel();
