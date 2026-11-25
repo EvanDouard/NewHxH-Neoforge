@@ -147,6 +147,21 @@ public final class WorldPlacesTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void kiteForestCampSketch(GameTestHelper helper) {
+        var place = WorldPlaces.get("hxh:kite_forest");
+        helper.assertTrue(place != null, "Le camp de la forêt de Kite est chargé");
+        BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+        var level = helper.getLevel();
+        int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 21, ground, origin.getZ() + 24)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 20, ground, origin.getZ() + 20)).is(Blocks.CAMPFIRE), "Feu de camp");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 30, ground, origin.getZ() + 8)).is(Blocks.HAY_BLOCK), "Nid de bête");
+        var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 45, ground + 20, origin.getZ() + 45);
+        helper.assertTrue(level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box).stream().anyMatch(n -> n.npcId().equals("guide_foret_kite")), "Guide présent");
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void heavyDoorOpensOnlyWithEnoughStrengthThenCloses(GameTestHelper helper) {
         var level = helper.getLevel();

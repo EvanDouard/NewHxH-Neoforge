@@ -11,3 +11,5 @@
 905 1658 65 66
 # Greed Island (ébauche)
 3370 4110 40 66
+# Forêt de Kite, camp (ébauche)
+6420 2260 24 68

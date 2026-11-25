@@ -1,0 +1,330 @@
+{
+ "x": 6400,
+ "z": 2240,
+ "clear": [
+  0,
+  0,
+  0,
+  40,
+  12,
+  40
+ ],
+ "fills": [
+  {
+   "box": [
+    0,
+    -1,
+    0,
+    40,
+    -1,
+    40
+   ],
+   "block": "minecraft:podzol"
+  },
+  {
+   "box": [
+    14,
+    -1,
+    14,
+    26,
+    -1,
+    26
+   ],
+   "block": "minecraft:coarse_dirt"
+  },
+  {
+   "box": [
+    6,
+    0,
+    6,
+    15,
+    4,
+    13
+   ],
+   "block": "minecraft:spruce_log[axis=y]",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    5,
+    5,
+    5,
+    16,
+    5,
+    14
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    10,
+    0,
+    13,
+    11,
+    2,
+    13
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    28,
+    0,
+    6,
+    32,
+    1,
+    10
+   ],
+   "block": "minecraft:hay_block[axis=y]"
+  },
+  {
+   "box": [
+    29,
+    2,
+    7,
+    31,
+    2,
+    9
+   ],
+   "block": "minecraft:oak_leaves[persistent=true]"
+  },
+  {
+   "box": [
+    31,
+    0,
+    28,
+    35,
+    1,
+    32
+   ],
+   "block": "minecraft:hay_block[axis=y]"
+  },
+  {
+   "box": [
+    32,
+    2,
+    29,
+    34,
+    2,
+    31
+   ],
+   "block": "minecraft:oak_leaves[persistent=true]"
+  },
+  {
+   "box": [
+    6,
+    0,
+    29,
+    10,
+    1,
+    33
+   ],
+   "block": "minecraft:hay_block[axis=y]"
+  },
+  {
+   "box": [
+    7,
+    2,
+    30,
+    9,
+    2,
+    32
+   ],
+   "block": "minecraft:oak_leaves[persistent=true]"
+  },
+  {
+   "box": [
+    28,
+    0,
+    0,
+    36,
+    4,
+    3
+   ],
+   "block": "minecraft:stone",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    30,
+    0,
+    0,
+    34,
+    3,
+    3
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    29,
+    4,
+    0,
+    35,
+    4,
+    3
+   ],
+   "block": "minecraft:mossy_cobblestone"
+  },
+  {
+   "box": [
+    12,
+    0,
+    17,
+    12,
+    5,
+    17
+   ],
+   "block": "minecraft:spruce_log[axis=y]"
+  },
+  {
+   "box": [
+    10,
+    6,
+    15,
+    14,
+    8,
+    19
+   ],
+   "block": "minecraft:spruce_leaves[persistent=true]"
+  },
+  {
+   "box": [
+    28,
+    0,
+    22,
+    28,
+    5,
+    22
+   ],
+   "block": "minecraft:spruce_log[axis=y]"
+  },
+  {
+   "box": [
+    26,
+    6,
+    20,
+    30,
+    8,
+    24
+   ],
+   "block": "minecraft:spruce_leaves[persistent=true]"
+  },
+  {
+   "box": [
+    16,
+    0,
+    30,
+    16,
+    5,
+    30
+   ],
+   "block": "minecraft:spruce_log[axis=y]"
+  },
+  {
+   "box": [
+    14,
+    6,
+    28,
+    18,
+    8,
+    32
+   ],
+   "block": "minecraft:spruce_leaves[persistent=true]"
+  }
+ ],
+ "blocks": [
+  {
+   "pos": [
+    8,
+    0,
+    8
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    8,
+    0,
+    7
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    13,
+    0,
+    8
+   ],
+   "state": "minecraft:crafting_table"
+  },
+  {
+   "pos": [
+    13,
+    0,
+    10
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    20,
+    0,
+    20
+   ],
+   "state": "minecraft:campfire[lit=true]"
+  },
+  {
+   "pos": [
+    18,
+    0,
+    20
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    22,
+    0,
+    20
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    20,
+    0,
+    18
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    20,
+    0,
+    22
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    21,
+    0,
+    24
+   ],
+   "state": "hxh:airship_terminal[facing=north]"
+  }
+ ],
+ "entities": [
+  {
+   "type": "hxh:npc",
+   "pos": [
+    22,
+    0,
+    18
+   ],
+   "yaw": 90,
+   "nbt": "{npc:\"guide_foret_kite\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  }
+ ]
+}
