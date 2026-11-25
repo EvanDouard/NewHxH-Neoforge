@@ -2705,10 +2705,12 @@ cmd tp @s 1560 73 806 0 2
 wait 80
 shot 99z5_kukuroo_sept_portes
 cmd hunter airship yorknew_city
+cmd time set noon
 wait 400
 shot 99za_yorknew_place
 cmd effect give @s minecraft:slow_falling 60 0 true
-cmd tp @s 695 110 3860 0 25
+cmd time set noon
+cmd tp @s 695 100 3846 0 28
 wait 120
 shot 99zb_yorknew_vue_ville
 cmd tp @s 695 78 3925 0 5
