@@ -108,32 +108,58 @@ def run(cid):
 }}
 '''
         open(test, 'w').write(s)
+    print('intégré :', cid)
+
+
+LINEUP_START = '# Série « même style » : alignements de personnages (GeckoLib)'
+LINEUP_END = '# Fin de la série « même style »'
+
+
+def lineups():
+    """Captures CI groupées : les personnages par rangées de 5, de face, de profil et de dos (au lieu de 7
+    captures par personnage, qui faisaient dépasser le délai du client CI). Remplace les anciens blocs."""
+    import re
     sc = os.path.join(ROOT, 'ci/scenario.txt')
     s = open(sc).read()
-    tag = f'# {fr} (modèle GeckoLib)'
-    if tag not in s:
-        d = max(2.8, 1.9 * h)
-        blk = f"{tag} : 6 angles + expression\nhud off\nlook 0 {round(14 - 3 * (h - 1.5) * 2)}\n"
-
-        def sh(c, n, r, dist=d, extra=''):
-            return (f'cmd summon hxh:npc ~ ~ ~{dist:.1f} {{npc:"{cid}",NoAI:1b,Silent:1b,Rotation:[{r}f,0f],'
-                    f'Tags:["geo_ci"]{extra}}}\nwait 25\nclearchat\nshot {c}_{cid}_{n}\ncmd tp @e[tag=geo_ci] ~ ~-40 ~\n')
-        idx = 67 + sorted(CHARACTERS).index(cid)
-        for c, n, r in ((f'{idx}a', 'face', 180), (f'{idx}b', 'trois_quarts', 145), (f'{idx}c', 'profil', 90),
-                        (f'{idx}g', 'trois_quarts_dos', 325), (f'{idx}d', 'dos', 0)):
-            blk += sh(c, n, r)
-        blk += 'look 0 6\n' + sh(f'{idx}h', 'expression', 180, dist=max(1.7, 1.05 * h), extra=',expression:"froid"')
-        up_y = round(1.4 * h, 1)
-        blk += (f'cmd gamemode spectator\ncmd tp @s ~ ~{up_y} ~\nlook 0 68\n'
-                f'cmd summon hxh:npc ~ ~-{up_y} ~1.4 {{npc:"{cid}",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}}\n'
-                f'wait 25\nclearchat\nshot {idx}f_{cid}_dessus\ncmd tp @s ~ ~-{up_y} ~\ncmd gamemode survival\n'
-                'cmd tp @e[tag=geo_ci] ~ ~-40 ~\n')
-        anchor = "# Gon et Killua en mobs (œufs d'apparition)"
-        s = s.replace(anchor, blk + anchor, 1)
-        open(sc, 'w').write(s)
-    print('intégré :', cid)
+    for cid, (fr, *_rest) in CHARACTERS.items():
+        tag = f'# {fr} (modèle GeckoLib) : 6 angles + expression\n'
+        if tag in s:
+            i = s.index(tag)
+            end = 'cmd gamemode survival\ncmd tp @e[tag=geo_ci] ~ ~-40 ~\n'
+            j = s.index(end, i) + len(end)
+            s = s[:i] + s[j:]
+    if LINEUP_START in s:
+        i = s.index(LINEUP_START)
+        j = s.index(LINEUP_END, i) + len(LINEUP_END) + 1
+        s = s[:i] + s[j:]
+    ids = list(CHARACTERS)
+    blk = LINEUP_START + '\nhud off\n'
+    for g in range(0, len(ids), 5):
+        group = ids[g:g + 5]
+        n = g // 5 + 1
+        span = [max(1.9, 2.4 * CHARACTERS[c][2] + 0.6) for c in group]       # largeur selon la carrure
+        xs, x = [], 0.0
+        for k, w in enumerate(span):
+            x += (w if k else 0)
+            xs.append(x)
+        mid = (xs[0] + xs[-1]) / 2
+        tall = max(CHARACTERS[c][3] for c in group)
+        dist = max(4.5, 0.62 * (xs[-1] - xs[0]) + 1.6)
+        for suffix, name, rot in (('a', 'face', 180), ('b', 'profil', 90), ('c', 'dos', 0), ('d', 'expression', 180)):
+            blk += f'look 0 {round(6 + 2 * (tall - 1.6))}\n'
+            for c, x in zip(group, xs):
+                extra = ',expression:"froid"' if name == 'expression' else ''
+                blk += (f'cmd summon hxh:npc ~{mid - x:.1f} ~ ~{dist:.1f} {{npc:"{c}",NoAI:1b,Silent:1b,'
+                        f'Rotation:[{rot}f,0f],Tags:["geo_ci"]{extra}}}\n')
+            blk += f'wait 30\nclearchat\nshot 67{chr(96 + n)}{suffix}_serie_{"_".join(group)}_{name}\n'
+            blk += 'cmd tp @e[tag=geo_ci] ~ ~-40 ~\n'
+    blk += LINEUP_END + '\n'
+    anchor = "# Gon et Killua en mobs (œufs d'apparition)"
+    s = s.replace(anchor, blk + anchor, 1)
+    open(sc, 'w').write(s)
 
 
 if __name__ == '__main__':
     for cid in sys.argv[1:]:
         run(cid)
+    lineups()
