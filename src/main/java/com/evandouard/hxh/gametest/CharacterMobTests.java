@@ -85,4 +85,13 @@ public final class CharacterMobTests {
             helper.assertTrue(!(leorio instanceof Enemy), "Neutre");
         }));
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void hisokaGetsHisKitAndStaysNeutral(GameTestHelper helper) {
+        CharacterEntity hisoka = helper.spawn(ModEntities.HISOKA.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("hisoka".equals(HunterStats.get(hisoka).kit()), "Kit d'Hisoka");
+            helper.assertTrue(!(hisoka instanceof Enemy) && hisoka.getTarget() == null, "Neutre pour l'instant");
+        }));
+    }
 }

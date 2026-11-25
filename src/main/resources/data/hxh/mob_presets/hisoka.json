@@ -1,0 +1,5 @@
+{
+  "entity": "hxh:hisoka",
+  "stats": { "all": 60, "speed": 70, "agility": 70 },
+  "nen": { "level": 75, "kit": "hisoka", "mastery": 65 }
+}

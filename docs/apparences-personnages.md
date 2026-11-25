@@ -29,7 +29,7 @@ Sans fichier d'apparence, un PNJ utilise `textures/entity/npc/<id>.png`, sinon S
 ## Modèles sur mesure (GeckoLib)
 
 Les personnages refaits au niveau décrit dans `docs/Analyse_model.md` ont un vrai modèle GeckoLib, qui remplace le
-rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika** et **Leorio**.
+rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio** et **Hisoka**.
 
 ```
 python3 tools/models/gon.py
@@ -143,3 +143,13 @@ pont, branches) ; costume bleu marine (veste ouverte à revers en relief, épaul
 suivent le bassin, gilet, chemise, cravate, pantalon à pli, chaussures de ville) ; mallette de médecin (os
 `briefcase`, fermoirs dorés). Expression `froid` = colère (il crie). Mob `hxh:leorio` (œuf, kit `leorio`, neutre,
 allié des autres personnages) et PNJ `leorio` avec le même modèle.
+
+### Hisoka
+
+`tools/models/hisoka.py` : grand et mince (≈ 1,95 bloc) ; cheveux magenta plaqués vers le haut et l'arrière en
+grandes mèches pointues (front dégagé) ; yeux dorés étroits, sourcils fins relevés, sourire en coin, étoile
+turquoise et larme rose sur les joues ; haut clair près du corps à col en V bordé de rose, trèfle, carreau et cœur
+sur la poitrine, pique dans le dos, bandes roses aux épaules et aux poignets ; écharpe-ceinture magenta nouée sur le
+côté ; pantalon clair resserré aux chevilles, chaussures violettes à pointe relevée ; trois cartes en éventail dans
+la main droite (os `cards`). Expression `froid` : sourire carnassier. Mob `hxh:hisoka` (œuf, kit `hisoka`, neutre
+pour l'instant) et PNJ `hisoka` avec le même modèle.
