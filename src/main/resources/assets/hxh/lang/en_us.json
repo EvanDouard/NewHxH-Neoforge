@@ -1736,5 +1736,9 @@
   "message.hxh.mike.calmer": "Mike eats the meat and calms down a little (%s/%s).",
   "message.hxh.mike.friend": "Mike recognizes you: you are a friend, he will not attack you anymore.",
   "npc.hxh.passant_yorknew": "Passerby",
-  "dialog.hxh.passant_yorknew.idle": "Yorknew never sleeps. But avoid the warehouse to the south-east: they say strange people gather there at night."
+  "dialog.hxh.passant_yorknew.idle": "Yorknew never sleeps. But avoid the warehouse to the south-east: they say strange people gather there at night.",
+  "npc.hxh.receptionniste_arene": "Tower receptionist",
+  "dialog.hxh.receptionniste_arene.idle": "Welcome to Heavens Arena! Sign up here to climb the floors. Every win brings you closer to the top.",
+  "npc.hxh.marchand_arene": "Merchant",
+  "dialog.hxh.marchand_arene.idle": "Supplies for fighters! Nothing like a good meal before a duel."
 }

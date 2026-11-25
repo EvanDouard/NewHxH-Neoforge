@@ -75,6 +75,25 @@ public final class WorldPlacesTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void heavensArenaTowerAndSquare(GameTestHelper helper) {
+        var place = WorldPlaces.get("hxh:heavens_arena");
+        helper.assertTrue(place != null, "La Tour Céleste est chargée");
+        BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+        var level = helper.getLevel();
+        int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground, origin.getZ() + 45)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable sur la place");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 21, ground + 50, origin.getZ() + 10)).is(Blocks.STONE_BRICKS), "Mur de la tour à 50 blocs");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground + 3, origin.getZ() + 20)).isAir(), "Hall dégagé");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground - 1, origin.getZ() + 20)).is(Blocks.SAND), "Ring de sable");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground + 3, origin.getZ() + 35)).is(Blocks.LECTERN), "Guichet d'inscription");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground + 99, origin.getZ() + 26)).is(Blocks.LIGHTNING_ROD), "Paratonnerre au sommet");
+        var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 95, ground + 20, origin.getZ() + 95);
+        var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+        helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("receptionniste_arene")), "Réceptionniste présente");
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void heavyDoorOpensOnlyWithEnoughStrengthThenCloses(GameTestHelper helper) {
         var level = helper.getLevel();

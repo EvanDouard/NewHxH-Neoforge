@@ -2719,6 +2719,17 @@ shot 99zc_yorknew_maison_ventes
 cmd tp @s 735 76 3950 -135 10
 wait 80
 shot 99zd_yorknew_entrepot_brigade
+cmd hunter airship heavens_arena
+cmd time set noon
+wait 400
+shot 99ze_arene_place
+cmd effect give @s minecraft:slow_falling 60 0 true
+cmd tp @s 2770 75 1500 0 -20
+wait 120
+shot 99zf_arene_tour
+cmd tp @s 2770 72 1438 0 8
+wait 80
+shot 99zg_arene_hall
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative

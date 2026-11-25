@@ -1736,5 +1736,9 @@
   "message.hxh.mike.calmer": "Mike mange la viande et se calme un peu (%s/%s).",
   "message.hxh.mike.friend": "Mike te reconnaît : tu es un ami, il ne t'attaquera plus.",
   "npc.hxh.passant_yorknew": "Passant",
-  "dialog.hxh.passant_yorknew.idle": "Yorknew ne dort jamais. Mais évite l'entrepôt au sud-est : on dit que des gens étranges s'y réunissent le soir."
+  "dialog.hxh.passant_yorknew.idle": "Yorknew ne dort jamais. Mais évite l'entrepôt au sud-est : on dit que des gens étranges s'y réunissent le soir.",
+  "npc.hxh.receptionniste_arene": "Réceptionniste de la Tour",
+  "dialog.hxh.receptionniste_arene.idle": "Bienvenue à la Tour Céleste ! Inscrivez-vous ici pour grimper les étages. Chaque victoire vous rapproche du sommet.",
+  "npc.hxh.marchand_arene": "Marchand",
+  "dialog.hxh.marchand_arene.idle": "Des vivres pour les combattants ! Rien de tel qu'un bon repas avant un duel."
 }

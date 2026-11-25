@@ -3,3 +3,5 @@
 1570 870 125 72
 # Yorknew City (ville côtière)
 694 3924 80 68
+# Tour Céleste (Heavens Arena)
+2775 1445 85 70
