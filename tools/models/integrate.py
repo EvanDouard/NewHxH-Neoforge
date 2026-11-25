@@ -105,7 +105,7 @@ def run(cid):
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {{
             helper.assertTrue("{kit}".equals(HunterStats.get(c).kit()), "Kit de {fr} (" + HunterStats.get(c).kit() + ")");
             helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
-            helper.assertTrue(Math.abs(c.getBbHeight() - {h}f) < 0.01f, "Taille");
+            helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - {h}f) < 0.01f, "Taille");
         }}));
     }}
 }}
@@ -147,9 +147,9 @@ def lineups():
             xs.append(x)
         mid = (xs[0] + xs[-1]) / 2
         tall = max(CHARACTERS[c][3] for c in group)
-        dist = max(4.5, 0.62 * (xs[-1] - xs[0]) + 1.6)
+        dist = max(4.0, 0.45 * (xs[-1] - xs[0]) + 0.8)
         for suffix, name, rot in (('a', 'face', 180), ('b', 'profil', 90), ('c', 'dos', 0), ('d', 'expression', 180)):
-            blk += f'look 0 {round(6 + 2 * (tall - 1.6))}\n'
+            blk += f'look 0 {round(3 + 2 * (tall - 1.6))}\n'
             for c, x in zip(group, xs):
                 extra = ',expression:"froid"' if name == 'expression' else ''
                 blk += (f'cmd summon hxh:npc ~{mid - x:.1f} ~ ~{dist:.1f} {{npc:"{c}",NoAI:1b,Silent:1b,'
