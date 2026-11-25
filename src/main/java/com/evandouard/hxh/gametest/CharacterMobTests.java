@@ -144,4 +144,54 @@ public final class CharacterMobTests {
             helper.assertTrue(Math.abs(c.getBbHeight() - 2.4f) < 0.01f, "Taille");
         }));
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void chrolloIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.CHROLLO.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("chrollo".equals(HunterStats.get(c).kit()), "Kit de Chrollo Lucilfer (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() - 1.9f) < 0.01f, "Taille");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void uvoginIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.UVOGIN.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("uvogin".equals(HunterStats.get(c).kit()), "Kit de Uvogin (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() - 2.3f) < 0.01f, "Taille");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void illumiIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.ILLUMI.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("illumi".equals(HunterStats.get(c).kit()), "Kit de Illumi Zoldyck (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() - 1.95f) < 0.01f, "Taille");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void zenoIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.ZENO.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("zeno".equals(HunterStats.get(c).kit()), "Kit de Zeno Zoldyck (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() - 1.6f) < 0.01f, "Taille");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void biscuitIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.BISCUIT.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("biscuit".equals(HunterStats.get(c).kit()), "Kit de Biscuit Krueger (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() - 1.4f) < 0.01f, "Taille");
+        }));
+    }
 }

@@ -1,0 +1,13 @@
+{
+  "entity": "hxh:uvogin",
+  "stats": {
+    "all": 72,
+    "strength": 95,
+    "endurance": 95
+  },
+  "nen": {
+    "level": 80,
+    "kit": "uvogin",
+    "mastery": 70
+  }
+}

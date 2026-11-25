@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:illumi",
+  "stats": {
+    "all": 78,
+    "speed": 85
+  },
+  "nen": {
+    "level": 88,
+    "kit": "illumi",
+    "mastery": 85
+  }
+}

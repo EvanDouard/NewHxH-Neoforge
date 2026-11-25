@@ -2055,6 +2055,226 @@ shot 75f_youpi_dessus
 cmd tp @s ~ ~-3.4 ~
 cmd gamemode survival
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Chrollo Lucilfer (modèle GeckoLib) : 6 angles + expression
+hud off
+look 0 12
+cmd summon hxh:npc ~ ~ ~3.6 {npc:"chrollo",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 68a_chrollo_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.6 {npc:"chrollo",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 68b_chrollo_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.6 {npc:"chrollo",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 68c_chrollo_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.6 {npc:"chrollo",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 68g_chrollo_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.6 {npc:"chrollo",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 68d_chrollo_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~ ~ ~2.0 {npc:"chrollo",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 68h_chrollo_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~2.7 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.7 ~1.4 {npc:"chrollo",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 68f_chrollo_dessus
+cmd tp @s ~ ~-2.7 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Uvogin (modèle GeckoLib) : 6 angles + expression
+hud off
+look 0 9
+cmd summon hxh:npc ~ ~ ~4.4 {npc:"uvogin",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 74a_uvogin_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~4.4 {npc:"uvogin",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 74b_uvogin_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~4.4 {npc:"uvogin",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 74c_uvogin_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~4.4 {npc:"uvogin",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 74g_uvogin_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~4.4 {npc:"uvogin",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 74d_uvogin_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~ ~ ~2.4 {npc:"uvogin",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 74h_uvogin_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~3.2 ~
+look 0 68
+cmd summon hxh:npc ~ ~-3.2 ~1.4 {npc:"uvogin",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 74f_uvogin_dessus
+cmd tp @s ~ ~-3.2 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Illumi Zoldyck (modèle GeckoLib) : 6 angles + expression
+hud off
+look 0 11
+cmd summon hxh:npc ~ ~ ~3.7 {npc:"illumi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 69a_illumi_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.7 {npc:"illumi",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 69b_illumi_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.7 {npc:"illumi",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 69c_illumi_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.7 {npc:"illumi",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 69g_illumi_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.7 {npc:"illumi",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 69d_illumi_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~ ~ ~2.0 {npc:"illumi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 69h_illumi_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~2.7 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.7 ~1.4 {npc:"illumi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 69f_illumi_dessus
+cmd tp @s ~ ~-2.7 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Zeno Zoldyck (modèle GeckoLib) : 6 angles + expression
+hud off
+look 0 13
+cmd summon hxh:npc ~ ~ ~3.0 {npc:"zeno",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 76a_zeno_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.0 {npc:"zeno",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 76b_zeno_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.0 {npc:"zeno",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 76c_zeno_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.0 {npc:"zeno",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 76g_zeno_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~3.0 {npc:"zeno",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 76d_zeno_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~ ~ ~1.7 {npc:"zeno",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 76h_zeno_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~2.2 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.2 ~1.4 {npc:"zeno",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 76f_zeno_dessus
+cmd tp @s ~ ~-2.2 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Biscuit Krueger (modèle GeckoLib) : 6 angles + expression
+hud off
+look 0 15
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"biscuit",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 67a_biscuit_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"biscuit",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 67b_biscuit_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"biscuit",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 67c_biscuit_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"biscuit",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 67g_biscuit_trois_quarts_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd summon hxh:npc ~ ~ ~2.8 {npc:"biscuit",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 67d_biscuit_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 6
+cmd summon hxh:npc ~ ~ ~1.7 {npc:"biscuit",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 25
+clearchat
+shot 67h_biscuit_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+cmd gamemode spectator
+cmd tp @s ~ ~2.0 ~
+look 0 68
+cmd summon hxh:npc ~ ~-2.0 ~1.4 {npc:"biscuit",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 25
+clearchat
+shot 67f_biscuit_dessus
+cmd tp @s ~ ~-2.0 ~
+cmd gamemode survival
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
 # Gon et Killua en mobs (œufs d'apparition) : même modèle, nom, Hatsu
 hud on
 look 0 8
