@@ -2732,15 +2732,26 @@ wait 80
 shot 99zg_arene_hall
 cmd hunter airship black_whale_port
 cmd time set noon
-wait 400
+wait 600
 shot 99zh_baleine_noire_quai
 cmd effect give @s minecraft:slow_falling 60 0 true
-cmd tp @s 5430 80 2230 0 15
+cmd tp @s 5430 80 2230 180 15
 wait 120
 shot 99zi_baleine_noire_navire
 cmd tp @s 5440 70 2165 -90 5
 wait 80
 shot 99zj_baleine_noire_ponton
+cmd hunter airship hunter_exam_hotel
+cmd time set noon
+wait 600
+shot 99zk_hotel_arrivee
+cmd effect give @s minecraft:slow_falling 60 0 true
+cmd tp @s 905 72 1700 180 5
+wait 120
+shot 99zl_hotel_facade
+cmd tp @s 905 68 1632 0 10
+wait 80
+shot 99zm_hotel_pavillon_president
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative

@@ -7,3 +7,5 @@
 2775 1445 85 70
 # Port du Black Whale (petite île)
 5435 2160 55 65
+# Hôtel de la 5e phase (Kukan'yu)
+905 1658 65 66

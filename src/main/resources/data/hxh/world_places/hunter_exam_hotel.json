@@ -1,0 +1,2404 @@
+{
+ "x": 870,
+ "z": 1636,
+ "clear": [
+  -3,
+  0,
+  -17,
+  73,
+  40,
+  69
+ ],
+ "fills": [
+  {
+   "box": [
+    0,
+    -1,
+    0,
+    70,
+    -1,
+    66
+   ],
+   "block": "minecraft:grass_block"
+  },
+  {
+   "box": [
+    0,
+    -1,
+    38,
+    70,
+    -1,
+    66
+   ],
+   "block": "minecraft:smooth_stone"
+  },
+  {
+   "box": [
+    4,
+    0,
+    6,
+    4,
+    4,
+    6
+   ],
+   "block": "minecraft:oak_log[axis=y]"
+  },
+  {
+   "box": [
+    2,
+    5,
+    4,
+    6,
+    7,
+    8
+   ],
+   "block": "minecraft:oak_leaves[persistent=true]"
+  },
+  {
+   "box": [
+    66,
+    0,
+    6,
+    66,
+    4,
+    6
+   ],
+   "block": "minecraft:oak_log[axis=y]"
+  },
+  {
+   "box": [
+    64,
+    5,
+    4,
+    68,
+    7,
+    8
+   ],
+   "block": "minecraft:oak_leaves[persistent=true]"
+  },
+  {
+   "box": [
+    4,
+    0,
+    30,
+    4,
+    4,
+    30
+   ],
+   "block": "minecraft:oak_log[axis=y]"
+  },
+  {
+   "box": [
+    2,
+    5,
+    28,
+    6,
+    7,
+    32
+   ],
+   "block": "minecraft:oak_leaves[persistent=true]"
+  },
+  {
+   "box": [
+    66,
+    0,
+    30,
+    66,
+    4,
+    30
+   ],
+   "block": "minecraft:oak_log[axis=y]"
+  },
+  {
+   "box": [
+    64,
+    5,
+    28,
+    68,
+    7,
+    32
+   ],
+   "block": "minecraft:oak_leaves[persistent=true]"
+  },
+  {
+   "box": [
+    10,
+    0,
+    34,
+    10,
+    4,
+    34
+   ],
+   "block": "minecraft:oak_log[axis=y]"
+  },
+  {
+   "box": [
+    8,
+    5,
+    32,
+    12,
+    7,
+    36
+   ],
+   "block": "minecraft:oak_leaves[persistent=true]"
+  },
+  {
+   "box": [
+    60,
+    0,
+    34,
+    60,
+    4,
+    34
+   ],
+   "block": "minecraft:oak_log[axis=y]"
+  },
+  {
+   "box": [
+    58,
+    5,
+    32,
+    62,
+    7,
+    36
+   ],
+   "block": "minecraft:oak_leaves[persistent=true]"
+  },
+  {
+   "box": [
+    15,
+    0,
+    8,
+    55,
+    29,
+    36
+   ],
+   "block": "minecraft:white_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    16,
+    5,
+    9,
+    54,
+    5,
+    35
+   ],
+   "block": "minecraft:dark_oak_planks"
+  },
+  {
+   "box": [
+    15,
+    7,
+    8,
+    55,
+    8,
+    8
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    15,
+    7,
+    36,
+    55,
+    8,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    15,
+    7,
+    8,
+    15,
+    8,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    55,
+    7,
+    8,
+    55,
+    8,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    21,
+    6,
+    9,
+    21,
+    9,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    21,
+    6,
+    27,
+    21,
+    9,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    27,
+    6,
+    9,
+    27,
+    9,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    27,
+    6,
+    27,
+    27,
+    9,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    33,
+    6,
+    9,
+    33,
+    9,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    33,
+    6,
+    27,
+    33,
+    9,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    39,
+    6,
+    9,
+    39,
+    9,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    39,
+    6,
+    27,
+    39,
+    9,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    45,
+    6,
+    9,
+    45,
+    9,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    45,
+    6,
+    27,
+    45,
+    9,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    51,
+    6,
+    9,
+    51,
+    9,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    51,
+    6,
+    27,
+    51,
+    9,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    16,
+    10,
+    9,
+    54,
+    10,
+    35
+   ],
+   "block": "minecraft:dark_oak_planks"
+  },
+  {
+   "box": [
+    15,
+    12,
+    8,
+    55,
+    13,
+    8
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    15,
+    12,
+    36,
+    55,
+    13,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    15,
+    12,
+    8,
+    15,
+    13,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    55,
+    12,
+    8,
+    55,
+    13,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    21,
+    11,
+    9,
+    21,
+    14,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    21,
+    11,
+    27,
+    21,
+    14,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    27,
+    11,
+    9,
+    27,
+    14,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    27,
+    11,
+    27,
+    27,
+    14,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    33,
+    11,
+    9,
+    33,
+    14,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    33,
+    11,
+    27,
+    33,
+    14,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    39,
+    11,
+    9,
+    39,
+    14,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    39,
+    11,
+    27,
+    39,
+    14,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    45,
+    11,
+    9,
+    45,
+    14,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    45,
+    11,
+    27,
+    45,
+    14,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    51,
+    11,
+    9,
+    51,
+    14,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    51,
+    11,
+    27,
+    51,
+    14,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    16,
+    15,
+    9,
+    54,
+    15,
+    35
+   ],
+   "block": "minecraft:dark_oak_planks"
+  },
+  {
+   "box": [
+    15,
+    17,
+    8,
+    55,
+    18,
+    8
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    15,
+    17,
+    36,
+    55,
+    18,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    15,
+    17,
+    8,
+    15,
+    18,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    55,
+    17,
+    8,
+    55,
+    18,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    21,
+    16,
+    9,
+    21,
+    19,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    21,
+    16,
+    27,
+    21,
+    19,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    27,
+    16,
+    9,
+    27,
+    19,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    27,
+    16,
+    27,
+    27,
+    19,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    33,
+    16,
+    9,
+    33,
+    19,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    33,
+    16,
+    27,
+    33,
+    19,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    39,
+    16,
+    9,
+    39,
+    19,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    39,
+    16,
+    27,
+    39,
+    19,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    45,
+    16,
+    9,
+    45,
+    19,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    45,
+    16,
+    27,
+    45,
+    19,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    51,
+    16,
+    9,
+    51,
+    19,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    51,
+    16,
+    27,
+    51,
+    19,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    16,
+    20,
+    9,
+    54,
+    20,
+    35
+   ],
+   "block": "minecraft:dark_oak_planks"
+  },
+  {
+   "box": [
+    15,
+    22,
+    8,
+    55,
+    23,
+    8
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    15,
+    22,
+    36,
+    55,
+    23,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    15,
+    22,
+    8,
+    15,
+    23,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    55,
+    22,
+    8,
+    55,
+    23,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    21,
+    21,
+    9,
+    21,
+    24,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    21,
+    21,
+    27,
+    21,
+    24,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    27,
+    21,
+    9,
+    27,
+    24,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    27,
+    21,
+    27,
+    27,
+    24,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    33,
+    21,
+    9,
+    33,
+    24,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    33,
+    21,
+    27,
+    33,
+    24,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    39,
+    21,
+    9,
+    39,
+    24,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    39,
+    21,
+    27,
+    39,
+    24,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    45,
+    21,
+    9,
+    45,
+    24,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    45,
+    21,
+    27,
+    45,
+    24,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    51,
+    21,
+    9,
+    51,
+    24,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    51,
+    21,
+    27,
+    51,
+    24,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    16,
+    25,
+    9,
+    54,
+    25,
+    35
+   ],
+   "block": "minecraft:dark_oak_planks"
+  },
+  {
+   "box": [
+    15,
+    27,
+    8,
+    55,
+    28,
+    8
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    15,
+    27,
+    36,
+    55,
+    28,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    15,
+    27,
+    8,
+    15,
+    28,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    55,
+    27,
+    8,
+    55,
+    28,
+    36
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    21,
+    26,
+    9,
+    21,
+    29,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    21,
+    26,
+    27,
+    21,
+    29,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    27,
+    26,
+    9,
+    27,
+    29,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    27,
+    26,
+    27,
+    27,
+    29,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    33,
+    26,
+    9,
+    33,
+    29,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    33,
+    26,
+    27,
+    33,
+    29,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    39,
+    26,
+    9,
+    39,
+    29,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    39,
+    26,
+    27,
+    39,
+    29,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    45,
+    26,
+    9,
+    45,
+    29,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    45,
+    26,
+    27,
+    45,
+    29,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    51,
+    26,
+    9,
+    51,
+    29,
+    17
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    51,
+    26,
+    27,
+    51,
+    29,
+    35
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    14,
+    30,
+    7,
+    56,
+    30,
+    37
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    15,
+    0,
+    8,
+    15,
+    29,
+    8
+   ],
+   "block": "minecraft:quartz_pillar[axis=y]"
+  },
+  {
+   "box": [
+    55,
+    0,
+    8,
+    55,
+    29,
+    8
+   ],
+   "block": "minecraft:quartz_pillar[axis=y]"
+  },
+  {
+   "box": [
+    15,
+    0,
+    36,
+    15,
+    29,
+    36
+   ],
+   "block": "minecraft:quartz_pillar[axis=y]"
+  },
+  {
+   "box": [
+    55,
+    0,
+    36,
+    55,
+    29,
+    36
+   ],
+   "block": "minecraft:quartz_pillar[axis=y]"
+  },
+  {
+   "box": [
+    16,
+    0,
+    9,
+    54,
+    4,
+    35
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    16,
+    -1,
+    9,
+    54,
+    -1,
+    35
+   ],
+   "block": "minecraft:polished_diorite"
+  },
+  {
+   "box": [
+    32,
+    0,
+    36,
+    38,
+    4,
+    36
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    31,
+    5,
+    36,
+    39,
+    5,
+    38
+   ],
+   "block": "minecraft:smooth_quartz"
+  },
+  {
+   "box": [
+    30,
+    0,
+    38,
+    30,
+    5,
+    38
+   ],
+   "block": "minecraft:quartz_pillar[axis=y]"
+  },
+  {
+   "box": [
+    40,
+    0,
+    38,
+    40,
+    5,
+    38
+   ],
+   "block": "minecraft:quartz_pillar[axis=y]"
+  },
+  {
+   "box": [
+    33,
+    0,
+    37,
+    37,
+    0,
+    50
+   ],
+   "block": "minecraft:red_carpet"
+  },
+  {
+   "box": [
+    28,
+    0,
+    28,
+    42,
+    1,
+    28
+   ],
+   "block": "minecraft:dark_oak_planks"
+  },
+  {
+   "box": [
+    28,
+    2,
+    28,
+    42,
+    2,
+    28
+   ],
+   "block": "minecraft:dark_oak_slab"
+  },
+  {
+   "box": [
+    24,
+    0,
+    -14,
+    46,
+    6,
+    6
+   ],
+   "block": "minecraft:spruce_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    23,
+    7,
+    -15,
+    47,
+    7,
+    7
+   ],
+   "block": "minecraft:dark_oak_slab"
+  },
+  {
+   "box": [
+    25,
+    0,
+    -13,
+    45,
+    6,
+    5
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    25,
+    -1,
+    -13,
+    45,
+    -1,
+    5
+   ],
+   "block": "minecraft:bamboo_planks"
+  },
+  {
+   "box": [
+    25,
+    0,
+    -13,
+    45,
+    0,
+    5
+   ],
+   "block": "minecraft:green_carpet"
+  },
+  {
+   "box": [
+    34,
+    0,
+    6,
+    36,
+    3,
+    8
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    34,
+    0,
+    6,
+    36,
+    0,
+    8
+   ],
+   "block": "minecraft:green_carpet"
+  },
+  {
+   "box": [
+    29,
+    0,
+    -10,
+    41,
+    0,
+    -4
+   ],
+   "block": "minecraft:green_carpet"
+  },
+  {
+   "box": [
+    33,
+    0,
+    -8,
+    37,
+    0,
+    -6
+   ],
+   "block": "minecraft:dark_oak_slab[type=bottom]"
+  },
+  {
+   "box": [
+    27,
+    3,
+    -14,
+    43,
+    4,
+    -14
+   ],
+   "block": "minecraft:glass_pane"
+  },
+  {
+   "box": [
+    8,
+    -1,
+    -10,
+    20,
+    -1,
+    4
+   ],
+   "block": "minecraft:sand"
+  },
+  {
+   "box": [
+    27,
+    -1,
+    42,
+    33,
+    -1,
+    48
+   ],
+   "block": "minecraft:polished_andesite"
+  }
+ ],
+ "blocks": [
+  {
+   "pos": [
+    18,
+    6,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    18,
+    6,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    24,
+    6,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    24,
+    6,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    30,
+    6,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    30,
+    6,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    36,
+    6,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    36,
+    6,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    42,
+    6,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    42,
+    6,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    48,
+    6,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    48,
+    6,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    18,
+    11,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    18,
+    11,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    24,
+    11,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    24,
+    11,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    30,
+    11,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    30,
+    11,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    36,
+    11,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    36,
+    11,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    42,
+    11,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    42,
+    11,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    48,
+    11,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    48,
+    11,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    18,
+    16,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    18,
+    16,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    24,
+    16,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    24,
+    16,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    30,
+    16,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    30,
+    16,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    36,
+    16,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    36,
+    16,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    42,
+    16,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    42,
+    16,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    48,
+    16,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    48,
+    16,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    18,
+    21,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    18,
+    21,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    24,
+    21,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    24,
+    21,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    30,
+    21,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    30,
+    21,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    36,
+    21,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    36,
+    21,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    42,
+    21,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    42,
+    21,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    48,
+    21,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    48,
+    21,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    18,
+    26,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    18,
+    26,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    24,
+    26,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    24,
+    26,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    30,
+    26,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    30,
+    26,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    36,
+    26,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    36,
+    26,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    42,
+    26,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    42,
+    26,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    48,
+    26,
+    10
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    48,
+    26,
+    9
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    35,
+    3,
+    29
+   ],
+   "state": "minecraft:lectern[facing=south]"
+  },
+  {
+   "pos": [
+    18,
+    4,
+    12
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    18,
+    4,
+    30
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    24,
+    4,
+    12
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    24,
+    4,
+    30
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    30,
+    4,
+    12
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    30,
+    4,
+    30
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    36,
+    4,
+    12
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    36,
+    4,
+    30
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    42,
+    4,
+    12
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    42,
+    4,
+    30
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    48,
+    4,
+    12
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    48,
+    4,
+    30
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    19,
+    0,
+    14
+   ],
+   "state": "minecraft:red_wool"
+  },
+  {
+   "pos": [
+    20,
+    0,
+    14
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=east]"
+  },
+  {
+   "pos": [
+    19,
+    0,
+    18
+   ],
+   "state": "minecraft:red_wool"
+  },
+  {
+   "pos": [
+    20,
+    0,
+    18
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=east]"
+  },
+  {
+   "pos": [
+    51,
+    0,
+    14
+   ],
+   "state": "minecraft:red_wool"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    14
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=west]"
+  },
+  {
+   "pos": [
+    51,
+    0,
+    18
+   ],
+   "state": "minecraft:red_wool"
+  },
+  {
+   "pos": [
+    50,
+    0,
+    18
+   ],
+   "state": "minecraft:dark_oak_stairs[facing=west]"
+  },
+  {
+   "pos": [
+    31,
+    0,
+    -7
+   ],
+   "state": "minecraft:white_carpet"
+  },
+  {
+   "pos": [
+    39,
+    0,
+    -7
+   ],
+   "state": "minecraft:white_carpet"
+  },
+  {
+   "pos": [
+    35,
+    0,
+    -9
+   ],
+   "state": "minecraft:white_carpet"
+  },
+  {
+   "pos": [
+    35,
+    0,
+    -5
+   ],
+   "state": "minecraft:white_carpet"
+  },
+  {
+   "pos": [
+    26,
+    5,
+    -12
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    30,
+    5,
+    -12
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    34,
+    5,
+    -12
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    38,
+    5,
+    -12
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    42,
+    5,
+    -12
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    14,
+    0,
+    -3
+   ],
+   "state": "minecraft:potted_azalea_bush"
+  },
+  {
+   "pos": [
+    10,
+    0,
+    -8
+   ],
+   "state": "minecraft:mossy_cobblestone"
+  },
+  {
+   "pos": [
+    18,
+    0,
+    2
+   ],
+   "state": "minecraft:mossy_cobblestone"
+  },
+  {
+   "pos": [
+    12,
+    0,
+    0
+   ],
+   "state": "minecraft:mossy_cobblestone"
+  },
+  {
+   "pos": [
+    30,
+    0,
+    44
+   ],
+   "state": "minecraft:air"
+  },
+  {
+   "pos": [
+    30,
+    0,
+    46
+   ],
+   "state": "minecraft:air"
+  },
+  {
+   "pos": [
+    32,
+    0,
+    46
+   ],
+   "state": "hxh:airship_terminal[facing=north]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    40
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    40
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    40
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    42,
+    0,
+    40
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    1,
+    40
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    2,
+    40
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    46
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    46
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    46
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    42,
+    0,
+    46
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    1,
+    46
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    2,
+    46
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    52
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    52
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    52
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    42,
+    0,
+    52
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    1,
+    52
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    2,
+    52
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    0,
+    58
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    58
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    58
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    42,
+    0,
+    58
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    1,
+    58
+   ],
+   "state": "minecraft:stone_brick_wall"
+  },
+  {
+   "pos": [
+    42,
+    2,
+    58
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  }
+ ],
+ "entities": [
+  {
+   "type": "hxh:npc",
+   "pos": [
+    35,
+    0,
+    -9
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"netero\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    35,
+    0,
+    -5
+   ],
+   "yaw": 180,
+   "nbt": "{npc:\"beans\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    35,
+    0,
+    31
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"receptionniste_hotel\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  }
+ ]
+}

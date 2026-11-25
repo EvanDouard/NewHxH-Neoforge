@@ -1744,5 +1744,7 @@
   "npc.hxh.capitaine_baleine_noire": "Black Whale captain",
   "dialog.hxh.capitaine_baleine_noire.idle": "The Black Whale sails for the Dark Continent. Few return... Are you sure you want to board?",
   "npc.hxh.docker_baleine_noire": "Dockworker",
-  "dialog.hxh.docker_baleine_noire.idle": "These containers are all headed out to sea. Don't touch anything, we're paid by weight."
+  "dialog.hxh.docker_baleine_noire.idle": "These containers are all headed out to sea. Don't touch anything, we're paid by weight.",
+  "npc.hxh.receptionniste_hotel": "Hotel receptionist",
+  "dialog.hxh.receptionniste_hotel.idle": "Welcome to the hotel. Hunter Exam candidates are expected in the pavilion behind the lobby."
 }
