@@ -2752,6 +2752,10 @@ shot 99zl_hotel_facade
 cmd tp @s 905 68 1632 0 10
 wait 80
 shot 99zm_hotel_pavillon_president
+cmd hunter airship greed_island
+cmd time set noon
+wait 600
+shot 99zn_greed_island_place
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative

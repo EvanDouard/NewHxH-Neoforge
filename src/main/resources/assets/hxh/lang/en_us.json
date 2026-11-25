@@ -1746,5 +1746,7 @@
   "npc.hxh.docker_baleine_noire": "Dockworker",
   "dialog.hxh.docker_baleine_noire.idle": "These containers are all headed out to sea. Don't touch anything, we're paid by weight.",
   "npc.hxh.receptionniste_hotel": "Hotel receptionist",
-  "dialog.hxh.receptionniste_hotel.idle": "Welcome to the hotel. Hunter Exam candidates are expected in the pavilion behind the lobby."
+  "dialog.hxh.receptionniste_hotel.idle": "Welcome to the hotel. Hunter Exam candidates are expected in the pavilion behind the lobby.",
+  "npc.hxh.guide_greed_island": "Greed Island guide",
+  "dialog.hxh.guide_greed_island.idle": "Welcome to Greed Island, the game nobody leaves the way they came in."
 }

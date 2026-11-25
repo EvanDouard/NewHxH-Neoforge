@@ -1,0 +1,475 @@
+{
+ "x": 3345,
+ "z": 4075,
+ "clear": [
+  0,
+  0,
+  0,
+  50,
+  25,
+  70
+ ],
+ "fills": [
+  {
+   "box": [
+    0,
+    -1,
+    0,
+    50,
+    -1,
+    70
+   ],
+   "block": "minecraft:grass_block"
+  },
+  {
+   "box": [
+    20,
+    -1,
+    0,
+    30,
+    -1,
+    70
+   ],
+   "block": "minecraft:dirt_path"
+  },
+  {
+   "box": [
+    0,
+    -1,
+    30,
+    50,
+    -1,
+    40
+   ],
+   "block": "minecraft:dirt_path"
+  },
+  {
+   "box": [
+    20,
+    -1,
+    30,
+    30,
+    -1,
+    40
+   ],
+   "block": "minecraft:cobblestone"
+  },
+  {
+   "box": [
+    4,
+    0,
+    6,
+    13,
+    5,
+    14
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    4,
+    6,
+    6,
+    13,
+    6,
+    14
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    8,
+    0,
+    14,
+    9,
+    2,
+    14
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    34,
+    0,
+    6,
+    43,
+    5,
+    14
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    34,
+    6,
+    6,
+    43,
+    6,
+    14
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    38,
+    0,
+    6,
+    39,
+    2,
+    6
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    4,
+    0,
+    46,
+    13,
+    5,
+    54
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    4,
+    6,
+    46,
+    13,
+    6,
+    54
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    8,
+    0,
+    54,
+    9,
+    2,
+    54
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    34,
+    0,
+    46,
+    43,
+    5,
+    54
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    34,
+    6,
+    46,
+    43,
+    6,
+    54
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    38,
+    0,
+    46,
+    39,
+    2,
+    46
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    4,
+    0,
+    20,
+    13,
+    5,
+    28
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    4,
+    6,
+    20,
+    13,
+    6,
+    28
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    8,
+    0,
+    28,
+    9,
+    2,
+    28
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    34,
+    0,
+    22,
+    43,
+    5,
+    30
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    34,
+    6,
+    22,
+    43,
+    6,
+    30
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    38,
+    0,
+    22,
+    39,
+    2,
+    22
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    24,
+    0,
+    34,
+    26,
+    0,
+    36
+   ],
+   "block": "minecraft:stone_bricks"
+  },
+  {
+   "box": [
+    22,
+    0,
+    32,
+    22,
+    3,
+    32
+   ],
+   "block": "minecraft:stone_brick_wall"
+  },
+  {
+   "box": [
+    28,
+    0,
+    32,
+    28,
+    3,
+    32
+   ],
+   "block": "minecraft:stone_brick_wall"
+  },
+  {
+   "box": [
+    22,
+    0,
+    38,
+    22,
+    3,
+    38
+   ],
+   "block": "minecraft:stone_brick_wall"
+  },
+  {
+   "box": [
+    28,
+    0,
+    38,
+    28,
+    3,
+    38
+   ],
+   "block": "minecraft:stone_brick_wall"
+  }
+ ],
+ "blocks": [
+  {
+   "pos": [
+    6,
+    0,
+    8
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    6,
+    0,
+    7
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    8
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    7
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    6,
+    0,
+    48
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    6,
+    0,
+    47
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    48
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    47
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    6,
+    0,
+    22
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    6,
+    0,
+    21
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    24
+   ],
+   "state": "minecraft:red_bed[facing=north,part=foot]"
+  },
+  {
+   "pos": [
+    36,
+    0,
+    23
+   ],
+   "state": "minecraft:red_bed[facing=north,part=head]"
+  },
+  {
+   "pos": [
+    25,
+    1,
+    35
+   ],
+   "state": "minecraft:lectern[facing=south]"
+  },
+  {
+   "pos": [
+    22,
+    4,
+    32
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    4,
+    32
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    22,
+    4,
+    38
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    28,
+    4,
+    38
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    27,
+    0,
+    35
+   ],
+   "state": "hxh:airship_terminal[facing=west]"
+  }
+ ],
+ "entities": [
+  {
+   "type": "hxh:npc",
+   "pos": [
+    25,
+    0,
+    33
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"guide_greed_island\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  }
+ ]
+}

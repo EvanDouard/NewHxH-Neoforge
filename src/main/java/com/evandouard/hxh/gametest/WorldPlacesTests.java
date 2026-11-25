@@ -132,6 +132,21 @@ public final class WorldPlacesTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void greedIslandSketch(GameTestHelper helper) {
+        var place = WorldPlaces.get("hxh:greed_island");
+        helper.assertTrue(place != null, "Greed Island est chargée");
+        BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+        var level = helper.getLevel();
+        int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 27, ground, origin.getZ() + 35)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 25, ground + 1, origin.getZ() + 35)).is(Blocks.LECTERN), "Pupitre du Livre");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 4, ground + 3, origin.getZ() + 6)).is(Blocks.OAK_PLANKS), "Maison");
+        var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 55, ground + 20, origin.getZ() + 75);
+        helper.assertTrue(level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box).stream().anyMatch(n -> n.npcId().equals("guide_greed_island")), "Guide présent");
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void heavyDoorOpensOnlyWithEnoughStrengthThenCloses(GameTestHelper helper) {
         var level = helper.getLevel();
