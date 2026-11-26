@@ -17,6 +17,8 @@ public final class NenSummons {
     public static final String TERPSICHORA = "terpsichora";
     /** Docteur Blythe au-dessus du patient (≈ 3 blocs). */
     public static final String DOCTOR_BLYTHE = "doctor_blythe";
+    /** Dragon d'aura de Zeno (≈ 4,5 blocs de long à l'échelle 1). */
+    public static final String DRAGON = "dragon";
 
     private NenSummons() {}
 
@@ -58,5 +60,13 @@ public final class NenSummons {
     public static void dismissOwned(ServerLevel level, Entity owner) {
         for (NenSummonEntity e : level.getEntitiesOfClass(NenSummonEntity.class, owner.getBoundingBox().inflate(32),
                 s -> s.ownedBy(owner) && !s.model().equals(POT_CLEAN))) e.discard();
+    }
+
+    /** Une invocation qui vole d'un point à un autre puis s'efface (dragon de Zeno). */
+    public static NenSummonEntity fly(ServerLevel level, Entity owner, String model, net.minecraft.world.phys.Vec3 from,
+                                      net.minecraft.world.phys.Vec3 to, int ticks, float arc, float scale, int color, int life) {
+        NenSummonEntity e = spawn(level, owner, model, null, NenSummonEntity.Anchor.FIXED, scale, 0f, color, life);
+        if (e != null) e.travel(from, to, ticks, arc);
+        return e;
     }
 }

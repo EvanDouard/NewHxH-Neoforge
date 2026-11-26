@@ -216,4 +216,4 @@ s'efface en fondu. Elle disparaît avec les effets de son lanceur (`NenFx.clear`
 | Pot-Clean (`pot_clean`) | Hakoware de Knuckle | au-dessus de la cible, dette sur la pancarte | `collect` (à chaque coup) |
 | Terpsichora (`terpsichora`) | Pitou | derrière elle, translucide violet, fils depuis les doigts | `pull` |
 | Docteur Blythe (`doctor_blythe`) | Pitou | au-dessus du patient, coud en boucle | — |
-
+| Dragon (`dragon`) | Tête de dragon et Plongée du dragon de Zeno | vole de Zeno jusqu'à la cible (en arc), ou pique du ciel | `strike` (coup de gueule à l'arrivée) |

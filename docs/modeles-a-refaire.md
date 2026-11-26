@@ -167,7 +167,7 @@ Ils couvrent la plupart des 95 techniques ; les refaire améliore beaucoup de pe
 | Invocation | Technique | À faire | Priorité |
 |---|---|---|---|
 | Statue de Kannon et mains de Kannon | Netero (Bodhisattva, Main zéro) | **Fait (26/11)** : `summon_kannon` (9 à 12 blocs, 22 bras en éventail, gestes `strike` et `zero`) ; reste les mains dorées de la quête de Netero | P1 |
-| Dragons de Zeno (tête de dragon, descente du dragon) | Zeno | Geo-Fx : dragon d'aura serpentin, animé | P1 |
+| Dragons de Zeno (tête de dragon, descente du dragon) | Zeno | **Fait (26/11)** : `summon_dragon`, dragon serpentin qui vole jusqu'à la cible ou pique du ciel | P1 |
 | Poupée Doctor Blythe | Neferpitou | **Fait (26/11)** : `summon_doctor_blythe` au-dessus du patient, quatre bras qui cousent ; l'effet garde le cordon et les fils | P1 |
 | Démons de Razor (14) | Razor | Geo-Fx : démons humanoïdes numérotés | P2 |
 | Soldats de fumée | Morel (Deep Purple) | Geo-Fx : soldats de fumée, texture translucide | P2 |

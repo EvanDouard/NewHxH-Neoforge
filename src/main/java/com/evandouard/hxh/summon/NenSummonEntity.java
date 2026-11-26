@@ -29,8 +29,11 @@ import software.bernie.geckolib.util.GeckoLibUtil;
  * l'entité suivie à chaque image pour qu'elle ne traîne pas).</p>
  */
 public class NenSummonEntity extends Entity implements GeoEntity {
-    /** Placement : derrière l'entité suivie (statue, marionnette), au-dessus d'elle (Pot-Clean, poupée), ou fixe. */
-    public enum Anchor { BEHIND, ABOVE, FIXED }
+    /**
+     * Placement : derrière l'entité suivie (statue, marionnette), au-dessus d'elle (Pot-Clean, poupée), fixe, ou en vol
+     * d'un point à un autre (dragon de Zeno, voir {@link #travel}).
+     */
+    public enum Anchor { BEHIND, ABOVE, FIXED, TRAVEL }
 
     private static final EntityDataAccessor<String> MODEL = SynchedEntityData.defineId(NenSummonEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> FOLLOW = SynchedEntityData.defineId(NenSummonEntity.class, EntityDataSerializers.INT);
@@ -53,6 +56,9 @@ public class NenSummonEntity extends Entity implements GeoEntity {
     /** Geste en attente (serveur) : joué quelques ticks après l'apparition, quand les clients ont reçu l'entité. */
     private String pending;
     private int pendingAt;
+    /** Vol (serveur) : départ, arrivée, durée du trajet en ticks. */
+    private Vec3 from, to;
+    private int travelTicks;
 
     public NenSummonEntity(EntityType<? extends NenSummonEntity> type, Level level) {
         super(type, level);
@@ -101,6 +107,27 @@ public class NenSummonEntity extends Entity implements GeoEntity {
         pendingAt = age + Math.max(1, delay);
     }
 
+    /** Vole de {@code start} à {@code end} en {@code ticks} ticks (arc vers le haut), tête vers l'avant. */
+    public void travel(Vec3 start, Vec3 end, int ticks, float arc) {
+        entityData.set(ANCHOR, Anchor.TRAVEL.ordinal());
+        entityData.set(OFFSET, arc);
+        from = start;
+        to = end;
+        travelTicks = Math.max(1, ticks);
+        setPos(start.x, start.y, start.z);
+        face(end.subtract(start));
+    }
+
+    private void face(Vec3 d) {
+        if (d.lengthSqr() < 1e-6) return;
+        float yaw = (float) (Mth.atan2(d.z, d.x) * Mth.RAD_TO_DEG) - 90f;
+        float pitch = (float) (-Mth.atan2(d.y, Math.sqrt(d.x * d.x + d.z * d.z)) * Mth.RAD_TO_DEG);
+        setYRot(yaw);
+        yRotO = yaw;
+        setXRot(pitch);
+        xRotO = pitch;
+    }
+
     public boolean ownedBy(Entity e) {
         return e != null && owner == e.getId();
     }
@@ -146,6 +173,15 @@ public class NenSummonEntity extends Entity implements GeoEntity {
 
     /** Se recale sur l'entité suivie. */
     public void snap() {
+        if (anchor() == Anchor.TRAVEL) {
+            if (from == null || level().isClientSide) return;
+            float k = Math.min(1f, (float) age / travelTicks);
+            float e = 1f - (1f - k) * (1f - k);
+            Vec3 p = from.lerp(to, e).add(0, Mth.sin(e * Mth.PI) * entityData.get(OFFSET), 0);
+            if (k < 1f) face(p.subtract(position()));
+            setPos(p.x, p.y, p.z);
+            return;
+        }
         Entity f = followed();
         if (f == null) return;
         float yaw = f instanceof LivingEntity l ? l.yBodyRot : f.getYRot();

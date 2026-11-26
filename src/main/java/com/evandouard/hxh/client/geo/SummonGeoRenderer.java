@@ -29,6 +29,16 @@ public class SummonGeoRenderer extends GeoEntityRenderer<NenSummonEntity> {
         if (entity.alpha(partialTick) <= 0.01f) return;
         poseStack.pushPose();
         float s = entity.scale();
+        float pitch = net.minecraft.util.Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
+        if (Math.abs(pitch) > 0.5f) {
+            // inclinaison autour de l'axe gauche-droite du modèle (GeckoLib n'applique que le lacet)
+            float yaw = 180f - net.minecraft.util.Mth.lerp(partialTick, entity.yRotO, entity.getYRot());
+            poseStack.translate(0, 0.4 * s, 0);
+            poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(yaw));
+            poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-pitch));
+            poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-yaw));
+            poseStack.translate(0, -0.4 * s, 0);
+        }
         poseStack.scale(s, s, s);
         int c = entity.color();
         float a = ((c >>> 24) & 0xFF) / 255f * entity.alpha(partialTick);

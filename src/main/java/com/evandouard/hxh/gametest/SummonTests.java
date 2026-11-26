@@ -71,4 +71,18 @@ public final class SummonTests {
                 && NenSummons.find(helper.getLevel(), NenSummons.TERPSICHORA, pitou) == null, "Tout disparaît avec Pitou");
         helper.succeed();
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void zenoDragonFliesToTheTarget(GameTestHelper helper) {
+        Zombie zeno = CharacterKitTests.husk(helper, 0);
+        net.minecraft.world.phys.Vec3 end = zeno.position().add(8, 1, 0);
+        NenFx.sprite(helper.getLevel(), NenFx.Sprite.DRAGON, zeno, end, 2.6f, NenFx.GOLD, 16);
+        NenSummonEntity d = helper.getLevel().getEntitiesOfClass(NenSummonEntity.class, zeno.getBoundingBox().inflate(12),
+                s -> s.model().equals(NenSummons.DRAGON)).stream().findFirst().orElse(null);
+        helper.assertTrue(d != null, "Le dragon apparaît");
+        helper.runAfterDelay(9, () -> {
+            helper.assertTrue(d.position().distanceTo(end) < 1.0, "Il est arrivé sur la cible : " + d.position().distanceTo(end));
+            helper.succeed();
+        });
+    }
 }

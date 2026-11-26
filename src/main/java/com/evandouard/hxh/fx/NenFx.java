@@ -198,6 +198,20 @@ public final class NenFx {
      * Image dessinée {@code sprite}. Accrochée à {@code anchor} (suit l'entité) si non nul, sinon posée en {@code at}.
      */
     public static void sprite(ServerLevel level, Sprite sprite, Entity anchor, Vec3 at, float size, int color, int duration) {
+        // les dragons de Zeno sont des modèles GeckoLib qui volent jusqu'au point (plus des images)
+        if (sprite == Sprite.DRAGON) {
+            Vec3 from = anchor != null ? anchor.getEyePosition() : at.add(0, 3, 0);
+            com.evandouard.hxh.summon.NenSummonEntity d = com.evandouard.hxh.summon.NenSummons.fly(level, anchor,
+                    com.evandouard.hxh.summon.NenSummons.DRAGON, from, at, Math.max(4, duration / 2), 1.6f, size / 3.5f,
+                    0xF0FFFFFF, duration + 6);
+            if (d != null) d.actLater("strike", Math.max(3, duration / 2 - 2));
+            return;
+        }
+        if (sprite == Sprite.DRAGON_DIVE) {
+            com.evandouard.hxh.summon.NenSummons.fly(level, anchor, com.evandouard.hxh.summon.NenSummons.DRAGON,
+                    at.add(0.6, 7, 0.6), at, Math.max(3, duration - 2), 0f, size / 4.5f, 0xE8FFFFFF, duration + 4);
+            return;
+        }
         Payload p = new Payload(Kind.SPRITE.ordinal(), anchor == null ? -1 : anchor.getId(), sprite.ordinal(),
                 at.x, at.y, at.z, size, color, duration);
         for (net.minecraft.server.level.ServerPlayer player : level.players()) {

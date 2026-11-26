@@ -2114,9 +2114,10 @@ shot 68a_invocations_pot_clean_doctor_blythe_terpsichora
 cmd kill @e[type=hxh:nen_summon]
 look 0 -18
 cmd summon hxh:nen_summon ~ ~ ~13 {Model:"kannon",Scale:2.2f,Life:400,Rotation:[180f,0f]}
+cmd summon hxh:nen_summon ~-4 ~4 ~9 {Model:"dragon",Scale:0.9f,Life:400,Rotation:[120f,0f]}
 wait 40
 clearchat
-shot 68b_invocation_kannon_face
+shot 68b_invocations_kannon_dragon
 cmd kill @e[type=hxh:nen_summon]
 # Gon et Killua en mobs (œufs d'apparition) : même modèle, nom, Hatsu
 hud on
