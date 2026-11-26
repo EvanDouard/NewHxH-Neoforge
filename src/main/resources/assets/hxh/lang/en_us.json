@@ -1868,5 +1868,10 @@
   "npc.hxh.ferrailleur_meteor": "Scrap dealer",
   "dialog.hxh.ferrailleur_meteor.idle": "Here nobody asks where you come from. But don't touch what isn't yours.",
   "npc.hxh.habitant_meteor": "Meteor City resident",
-  "dialog.hxh.habitant_meteor.idle": "We don't exist to anyone out here. So we look after our own."
+  "dialog.hxh.habitant_meteor.idle": "We don't exist to anyone out here. So we look after our own.",
+  "airship.hxh.dest.ngl_village": "NGL Republic",
+  "npc.hxh.ancien_ngl": "NGL elder",
+  "dialog.hxh.ancien_ngl.idle": "No machines and no electricity here: the land feeds us, and that is enough.",
+  "npc.hxh.fermier_ngl": "NGL farmer",
+  "dialog.hxh.fermier_ngl.idle": "The wheat is ripe. As for the chimeras, we would rather not think about them."
 }

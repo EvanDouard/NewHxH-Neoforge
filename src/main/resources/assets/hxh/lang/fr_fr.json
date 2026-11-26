@@ -1868,5 +1868,10 @@
   "npc.hxh.ferrailleur_meteor": "Ferrailleur",
   "dialog.hxh.ferrailleur_meteor.idle": "Ici personne ne vous demande d'où vous venez. Mais ne touchez pas à ce qui n'est pas à vous.",
   "npc.hxh.habitant_meteor": "Habitant de Meteor City",
-  "dialog.hxh.habitant_meteor.idle": "On n'existe pour personne, ici. Alors on se débrouille entre nous."
+  "dialog.hxh.habitant_meteor.idle": "On n'existe pour personne, ici. Alors on se débrouille entre nous.",
+  "airship.hxh.dest.ngl_village": "République NGL",
+  "npc.hxh.ancien_ngl": "Ancien de NGL",
+  "dialog.hxh.ancien_ngl.idle": "Ici, pas de machines ni de courant : la terre nous nourrit, et c'est suffisant.",
+  "npc.hxh.fermier_ngl": "Fermier de NGL",
+  "dialog.hxh.fermier_ngl.idle": "Le blé est mûr. Les chimères, on préfère ne pas y penser."
 }

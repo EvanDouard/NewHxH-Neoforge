@@ -231,6 +231,28 @@ public final class WorldPlacesTests {
         });
     }
 
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void nglVillageSketch(GameTestHelper helper) {
+        BlockPos origin0 = helper.absolutePos(new BlockPos(2, 1, 2));
+        withForcedChunks(helper, origin0, 85, () -> {
+            var place = WorldPlaces.get("hxh:ngl_village");
+            helper.assertTrue(place != null, "Le village NGL est chargé");
+            BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+            var level = helper.getLevel();
+            int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 44, ground, origin.getZ() + 66)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 6, ground + 2, origin.getZ() + 6)).is(Blocks.OAK_PLANKS), "Mur d'une cabane");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground + 6, origin.getZ() + 16)).is(Blocks.HAY_BLOCK), "Toit de paille de la halle");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 10, ground, origin.getZ() + 50)).is(Blocks.WHEAT), "Champ de blé");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 71, ground + 8, origin.getZ() + 30)).is(Blocks.OAK_LOG), "Tour de guet");
+            var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 85, ground + 20, origin.getZ() + 85);
+            var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+            helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("ancien_ngl")), "Ancien présent");
+            helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("fermier_ngl")), "Fermier présent");
+            helper.succeed();
+        });
+    }
+
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void heavyDoorOpensOnlyWithEnoughStrengthThenCloses(GameTestHelper helper) {
         var level = helper.getLevel();

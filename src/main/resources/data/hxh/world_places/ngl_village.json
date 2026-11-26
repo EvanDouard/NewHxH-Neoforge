@@ -1,0 +1,660 @@
+{
+ "x": 1310,
+ "z": 4850,
+ "clear": [
+  0,
+  0,
+  0,
+  80,
+  20,
+  80
+ ],
+ "fills": [
+  {
+   "box": [
+    0,
+    -1,
+    0,
+    80,
+    -1,
+    80
+   ],
+   "block": "minecraft:grass_block"
+  },
+  {
+   "box": [
+    38,
+    -1,
+    0,
+    42,
+    -1,
+    80
+   ],
+   "block": "minecraft:dirt_path"
+  },
+  {
+   "box": [
+    0,
+    -1,
+    38,
+    80,
+    -1,
+    42
+   ],
+   "block": "minecraft:dirt_path"
+  },
+  {
+   "box": [
+    39,
+    0,
+    39,
+    41,
+    1,
+    41
+   ],
+   "block": "minecraft:cobblestone",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    40,
+    -1,
+    40,
+    40,
+    -1,
+    40
+   ],
+   "block": "minecraft:water"
+  },
+  {
+   "box": [
+    39,
+    2,
+    39,
+    41,
+    2,
+    41
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    6,
+    0,
+    6,
+    10,
+    3,
+    10
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    5,
+    4,
+    5,
+    11,
+    4,
+    11
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    8,
+    0,
+    10,
+    8,
+    1,
+    10
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    16,
+    0,
+    6,
+    20,
+    3,
+    10
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    15,
+    4,
+    5,
+    21,
+    4,
+    11
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    18,
+    0,
+    10,
+    18,
+    1,
+    10
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    6,
+    0,
+    20,
+    10,
+    3,
+    24
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    5,
+    4,
+    19,
+    11,
+    4,
+    25
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    8,
+    0,
+    24,
+    8,
+    1,
+    24
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    16,
+    0,
+    20,
+    20,
+    3,
+    24
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    15,
+    4,
+    19,
+    21,
+    4,
+    25
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    18,
+    0,
+    24,
+    18,
+    1,
+    24
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    54,
+    0,
+    6,
+    58,
+    3,
+    10
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    53,
+    4,
+    5,
+    59,
+    4,
+    11
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    56,
+    0,
+    10,
+    56,
+    1,
+    10
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    64,
+    0,
+    6,
+    68,
+    3,
+    10
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    63,
+    4,
+    5,
+    69,
+    4,
+    11
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    66,
+    0,
+    10,
+    66,
+    1,
+    10
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    54,
+    0,
+    20,
+    58,
+    3,
+    24
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    53,
+    4,
+    19,
+    59,
+    4,
+    25
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    56,
+    0,
+    24,
+    56,
+    1,
+    24
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    64,
+    0,
+    20,
+    68,
+    3,
+    24
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    63,
+    4,
+    19,
+    69,
+    4,
+    25
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    66,
+    0,
+    24,
+    66,
+    1,
+    24
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    30,
+    0,
+    10,
+    50,
+    5,
+    24
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    29,
+    6,
+    9,
+    51,
+    6,
+    25
+   ],
+   "block": "minecraft:hay_block"
+  },
+  {
+   "box": [
+    31,
+    7,
+    11,
+    49,
+    7,
+    23
+   ],
+   "block": "minecraft:hay_block"
+  },
+  {
+   "box": [
+    34,
+    8,
+    14,
+    46,
+    8,
+    20
+   ],
+   "block": "minecraft:hay_block"
+  },
+  {
+   "box": [
+    38,
+    0,
+    24,
+    42,
+    3,
+    24
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    30,
+    0,
+    10,
+    30,
+    5,
+    10
+   ],
+   "block": "minecraft:oak_log[axis=y]"
+  },
+  {
+   "box": [
+    30,
+    0,
+    24,
+    30,
+    5,
+    24
+   ],
+   "block": "minecraft:oak_log[axis=y]"
+  },
+  {
+   "box": [
+    50,
+    0,
+    10,
+    50,
+    5,
+    10
+   ],
+   "block": "minecraft:oak_log[axis=y]"
+  },
+  {
+   "box": [
+    50,
+    0,
+    24,
+    50,
+    5,
+    24
+   ],
+   "block": "minecraft:oak_log[axis=y]"
+  },
+  {
+   "box": [
+    6,
+    -1,
+    46,
+    30,
+    -1,
+    70
+   ],
+   "block": "minecraft:farmland[moisture=7]"
+  },
+  {
+   "box": [
+    6,
+    -1,
+    58,
+    30,
+    -1,
+    58
+   ],
+   "block": "minecraft:water"
+  },
+  {
+   "box": [
+    6,
+    0,
+    46,
+    30,
+    0,
+    57
+   ],
+   "block": "minecraft:wheat[age=7]"
+  },
+  {
+   "box": [
+    6,
+    0,
+    59,
+    30,
+    0,
+    70
+   ],
+   "block": "minecraft:wheat[age=7]"
+  },
+  {
+   "box": [
+    50,
+    -1,
+    46,
+    74,
+    -1,
+    70
+   ],
+   "block": "minecraft:farmland[moisture=7]"
+  },
+  {
+   "box": [
+    50,
+    -1,
+    58,
+    74,
+    -1,
+    58
+   ],
+   "block": "minecraft:water"
+  },
+  {
+   "box": [
+    50,
+    0,
+    46,
+    74,
+    0,
+    57
+   ],
+   "block": "minecraft:carrots[age=7]"
+  },
+  {
+   "box": [
+    50,
+    0,
+    59,
+    74,
+    0,
+    70
+   ],
+   "block": "minecraft:carrots[age=7]"
+  },
+  {
+   "box": [
+    70,
+    0,
+    30,
+    72,
+    12,
+    32
+   ],
+   "block": "minecraft:oak_log[axis=y]",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    69,
+    12,
+    29,
+    73,
+    12,
+    33
+   ],
+   "block": "minecraft:oak_planks"
+  },
+  {
+   "box": [
+    69,
+    13,
+    29,
+    73,
+    13,
+    33
+   ],
+   "block": "minecraft:oak_fence",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    71,
+    0,
+    30,
+    71,
+    1,
+    30
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    36,
+    0,
+    76,
+    36,
+    6,
+    76
+   ],
+   "block": "minecraft:oak_log[axis=y]"
+  },
+  {
+   "box": [
+    44,
+    0,
+    76,
+    44,
+    6,
+    76
+   ],
+   "block": "minecraft:oak_log[axis=y]"
+  },
+  {
+   "box": [
+    35,
+    7,
+    76,
+    45,
+    7,
+    76
+   ],
+   "block": "minecraft:spruce_planks"
+  }
+ ],
+ "blocks": [
+  {
+   "pos": [
+    40,
+    6,
+    76
+   ],
+   "state": "minecraft:lantern[hanging=true]"
+  },
+  {
+   "pos": [
+    44,
+    0,
+    66
+   ],
+   "state": "hxh:airship_terminal[facing=west]"
+  }
+ ],
+ "entities": [
+  {
+   "type": "hxh:npc",
+   "pos": [
+    44,
+    0,
+    36
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"ancien_ngl\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    33,
+    0,
+    52
+   ],
+   "yaw": 90,
+   "nbt": "{npc:\"fermier_ngl\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  }
+ ]
+}

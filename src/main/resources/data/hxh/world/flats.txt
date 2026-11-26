@@ -19,3 +19,5 @@
 6000 2460 100 70
 # Meteor City (ébauche)
 1700 3855 100 66
+# République NGL (ébauche)
+1350 4890 70 66
