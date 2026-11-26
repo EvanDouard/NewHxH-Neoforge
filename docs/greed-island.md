@@ -1,6 +1,6 @@
 # Greed Island — conception des deux entrées (décision d'Evan, 25 nov)
 
-L'île (3370, 4110) est un lieu du monde réel HxH avec **deux manières d'y entrer**.
+L'île (3366, 4110) est un lieu du monde réel HxH avec **deux manières d'y entrer**.
 
 ## 1) Par la console (entrée « jeu »)
 - Le joueur utilise une **console + la cartouche du jeu**, puis entre dans le jeu avec le **Nen** (comme dans l'anime).
