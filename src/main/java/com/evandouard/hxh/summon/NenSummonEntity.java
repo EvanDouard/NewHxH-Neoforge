@@ -189,7 +189,7 @@ public class NenSummonEntity extends Entity implements GeoEntity {
         Vec3 p = switch (anchor()) {
             case BEHIND -> f.position().subtract(Vec3.directionFromRotation(0, yaw).scale(off));
             case ABOVE -> f.position().add(0, f.getBbHeight() + off, 0);
-            case FIXED -> position();
+            case FIXED, TRAVEL -> position();
         };
         setPos(p.x, p.y, p.z);
         setYRot(yaw);
