@@ -3069,6 +3069,7 @@ wait 400
 shot 99za_yorknew_place
 cmd effect give @s minecraft:slow_falling 60 0 true
 cmd time set noon
+cmd gamemode spectator
 cmd tp @s 695 100 3846 0 28
 wait 120
 shot 99zb_yorknew_vue_ville
@@ -3078,6 +3079,7 @@ shot 99zc_yorknew_maison_ventes
 cmd tp @s 735 76 3950 -135 10
 wait 80
 shot 99zd_yorknew_entrepot_brigade
+cmd gamemode survival
 cmd hunter jenny set 20000
 cmd hunter airship heavens_arena
 cmd time set noon
@@ -3138,6 +3140,7 @@ wait 450
 wait 100
 shot 99zq_kakin_arrivee
 cmd effect give @s minecraft:slow_falling 60 0 true
+cmd gamemode spectator
 cmd tp @s 6000 125 2560 180 28
 wait 200
 shot 99zr_kakin_palais
@@ -3146,12 +3149,14 @@ cmd tp @s 6000 76 2466 180 3
 wait 150
 shot 99zs_kakin_salle_trone
 cmd hunter jenny set 20000
+cmd gamemode creative
 cmd hunter airship meteor_city
 cmd time set noon
 wait 450
 wait 100
 shot 99zt_meteor_arrivee
 cmd effect give @s minecraft:slow_falling 60 0 true
+cmd gamemode spectator
 cmd tp @s 1700 135 3930 180 28
 wait 200
 shot 99zu_meteor_vue
