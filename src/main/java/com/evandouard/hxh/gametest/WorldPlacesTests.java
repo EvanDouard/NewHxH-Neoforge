@@ -269,7 +269,7 @@ public final class WorldPlacesTests {
             var level = helper.getLevel();
             int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
             helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 42, ground, origin.getZ() + 80)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable");
-            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 4, ground + 2, origin.getZ() + 30)).is(Blocks.BLACKSTONE_BRICKS), "Mur d'enceinte");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 4, ground + 2, origin.getZ() + 30)).is(Blocks.POLISHED_BLACKSTONE_BRICKS), "Mur d'enceinte");
             helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 15, ground + 5, origin.getZ() + 20)).is(Blocks.BLACK_CONCRETE), "Bâtiment principal");
             helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 35, ground + 33, origin.getZ() + 28)).is(Blocks.GOLD_BLOCK), "Flèche dorée");
             helper.runAfterDelay(20, () -> {

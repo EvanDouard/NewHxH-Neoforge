@@ -7,7 +7,7 @@ def F(b, s, m=None):
     if m: d["mode"] = m
     fills.append(d)
 def Bk(x, y, z, s): blocks.append({"pos": [x, y, z], "state": s})
-BS, PB, BC, GOLD, AIR = "minecraft:blackstone_bricks", "minecraft:polished_blackstone_bricks", "minecraft:black_concrete", "minecraft:gold_block", "minecraft:air"
+BS, PB, BC, GOLD, AIR = "minecraft:polished_blackstone_bricks", "minecraft:polished_blackstone_bricks", "minecraft:black_concrete", "minecraft:gold_block", "minecraft:air"
 W, D = 70, 85
 F([0, -1, 0, W, -1, D], "minecraft:grass_block")
 F([6, -1, 6, 64, -1, 66], "minecraft:smooth_stone"); F([30, -1, 66, 40, -1, 85], "minecraft:gray_concrete")
