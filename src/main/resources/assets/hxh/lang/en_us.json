@@ -1873,5 +1873,10 @@
   "npc.hxh.ancien_ngl": "NGL elder",
   "dialog.hxh.ancien_ngl.idle": "No machines and no electricity here: the land feeds us, and that is enough.",
   "npc.hxh.fermier_ngl": "NGL farmer",
-  "dialog.hxh.fermier_ngl.idle": "The wheat is ripe. As for the chimeras, we would rather not think about them."
+  "dialog.hxh.fermier_ngl.idle": "The wheat is ripe. As for the chimeras, we would rather not think about them.",
+  "airship.hxh.dest.mafia_hq": "Mafia HQ",
+  "npc.hxh.parrain_mafia": "Community godfather",
+  "dialog.hxh.parrain_mafia.idle": "Every deal in Yorknew goes through this house. Say what you want, and watch your tongue.",
+  "npc.hxh.garde_mafia": "Community guard",
+  "dialog.hxh.garde_mafia.idle": "No invitation, no entry. Move along."
 }

@@ -1873,5 +1873,10 @@
   "npc.hxh.ancien_ngl": "Ancien de NGL",
   "dialog.hxh.ancien_ngl.idle": "Ici, pas de machines ni de courant : la terre nous nourrit, et c'est suffisant.",
   "npc.hxh.fermier_ngl": "Fermier de NGL",
-  "dialog.hxh.fermier_ngl.idle": "Le blé est mûr. Les chimères, on préfère ne pas y penser."
+  "dialog.hxh.fermier_ngl.idle": "Le blé est mûr. Les chimères, on préfère ne pas y penser.",
+  "airship.hxh.dest.mafia_hq": "QG de la Mafia",
+  "npc.hxh.parrain_mafia": "Parrain de la Communauté",
+  "dialog.hxh.parrain_mafia.idle": "Les affaires de Yorknew passent par cette maison. Dis ce que tu veux, et surveille ta langue.",
+  "npc.hxh.garde_mafia": "Garde de la Communauté",
+  "dialog.hxh.garde_mafia.idle": "Pas d'invitation, pas d'entrée. Circule."
 }

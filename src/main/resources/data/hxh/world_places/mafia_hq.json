@@ -1,0 +1,708 @@
+{
+ "x": 680,
+ "z": 3790,
+ "clear": [
+  0,
+  0,
+  0,
+  70,
+  40,
+  85
+ ],
+ "fills": [
+  {
+   "box": [
+    0,
+    -1,
+    0,
+    70,
+    -1,
+    85
+   ],
+   "block": "minecraft:grass_block"
+  },
+  {
+   "box": [
+    6,
+    -1,
+    6,
+    64,
+    -1,
+    66
+   ],
+   "block": "minecraft:smooth_stone"
+  },
+  {
+   "box": [
+    30,
+    -1,
+    66,
+    40,
+    -1,
+    85
+   ],
+   "block": "minecraft:gray_concrete"
+  },
+  {
+   "box": [
+    4,
+    0,
+    4,
+    66,
+    5,
+    70
+   ],
+   "block": "minecraft:blackstone_bricks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    4,
+    6,
+    4,
+    66,
+    6,
+    70
+   ],
+   "block": "minecraft:blackstone_slab",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    31,
+    0,
+    70,
+    39,
+    4,
+    70
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    30,
+    5,
+    70,
+    40,
+    5,
+    70
+   ],
+   "block": "minecraft:gold_block"
+  },
+  {
+   "box": [
+    30,
+    0,
+    69,
+    30,
+    7,
+    71
+   ],
+   "block": "minecraft:polished_blackstone_bricks"
+  },
+  {
+   "box": [
+    40,
+    0,
+    69,
+    40,
+    7,
+    71
+   ],
+   "block": "minecraft:polished_blackstone_bricks"
+  },
+  {
+   "box": [
+    1,
+    0,
+    1,
+    6,
+    9,
+    6
+   ],
+   "block": "minecraft:polished_blackstone_bricks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    0,
+    10,
+    0,
+    7,
+    10,
+    7
+   ],
+   "block": "minecraft:blackstone_slab"
+  },
+  {
+   "box": [
+    63,
+    0,
+    1,
+    68,
+    9,
+    6
+   ],
+   "block": "minecraft:polished_blackstone_bricks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    62,
+    10,
+    0,
+    69,
+    10,
+    7
+   ],
+   "block": "minecraft:blackstone_slab"
+  },
+  {
+   "box": [
+    1,
+    0,
+    67,
+    6,
+    9,
+    72
+   ],
+   "block": "minecraft:polished_blackstone_bricks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    0,
+    10,
+    66,
+    7,
+    10,
+    73
+   ],
+   "block": "minecraft:blackstone_slab"
+  },
+  {
+   "box": [
+    63,
+    0,
+    67,
+    68,
+    9,
+    72
+   ],
+   "block": "minecraft:polished_blackstone_bricks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    62,
+    10,
+    66,
+    69,
+    10,
+    73
+   ],
+   "block": "minecraft:blackstone_slab"
+  },
+  {
+   "box": [
+    15,
+    0,
+    12,
+    55,
+    14,
+    44
+   ],
+   "block": "minecraft:black_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    14,
+    15,
+    11,
+    56,
+    15,
+    45
+   ],
+   "block": "minecraft:polished_blackstone"
+  },
+  {
+   "box": [
+    16,
+    4,
+    13,
+    54,
+    4,
+    43
+   ],
+   "block": "minecraft:polished_blackstone"
+  },
+  {
+   "box": [
+    16,
+    9,
+    13,
+    54,
+    9,
+    43
+   ],
+   "block": "minecraft:polished_blackstone"
+  },
+  {
+   "box": [
+    17,
+    2,
+    44,
+    53,
+    3,
+    44
+   ],
+   "block": "minecraft:tinted_glass"
+  },
+  {
+   "box": [
+    17,
+    6,
+    44,
+    53,
+    7,
+    44
+   ],
+   "block": "minecraft:tinted_glass"
+  },
+  {
+   "box": [
+    17,
+    11,
+    44,
+    53,
+    12,
+    44
+   ],
+   "block": "minecraft:tinted_glass"
+  },
+  {
+   "box": [
+    33,
+    0,
+    44,
+    37,
+    3,
+    44
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    32,
+    4,
+    44,
+    38,
+    4,
+    44
+   ],
+   "block": "minecraft:gold_block"
+  },
+  {
+   "box": [
+    34,
+    0,
+    30,
+    36,
+    0,
+    43
+   ],
+   "block": "minecraft:red_carpet"
+  },
+  {
+   "box": [
+    30,
+    0,
+    16,
+    40,
+    0,
+    16
+   ],
+   "block": "minecraft:polished_blackstone"
+  },
+  {
+   "box": [
+    33,
+    1,
+    16,
+    37,
+    1,
+    16
+   ],
+   "block": "minecraft:dark_oak_planks"
+  },
+  {
+   "box": [
+    26,
+    16,
+    20,
+    44,
+    28,
+    36
+   ],
+   "block": "minecraft:black_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    25,
+    29,
+    19,
+    45,
+    29,
+    37
+   ],
+   "block": "minecraft:polished_blackstone"
+  },
+  {
+   "box": [
+    35,
+    30,
+    28,
+    35,
+    36,
+    28
+   ],
+   "block": "minecraft:gold_block"
+  },
+  {
+   "box": [
+    10,
+    0,
+    52,
+    13,
+    0,
+    53
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    11,
+    1,
+    52,
+    12,
+    1,
+    53
+   ],
+   "block": "minecraft:glass"
+  },
+  {
+   "box": [
+    18,
+    0,
+    52,
+    21,
+    0,
+    53
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    19,
+    1,
+    52,
+    20,
+    1,
+    53
+   ],
+   "block": "minecraft:glass"
+  },
+  {
+   "box": [
+    48,
+    0,
+    52,
+    51,
+    0,
+    53
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    49,
+    1,
+    52,
+    50,
+    1,
+    53
+   ],
+   "block": "minecraft:glass"
+  },
+  {
+   "box": [
+    56,
+    0,
+    52,
+    59,
+    0,
+    53
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    57,
+    1,
+    52,
+    58,
+    1,
+    53
+   ],
+   "block": "minecraft:glass"
+  },
+  {
+   "box": [
+    29,
+    0,
+    72,
+    29,
+    1,
+    72
+   ],
+   "block": "minecraft:stone_brick_wall"
+  },
+  {
+   "box": [
+    41,
+    0,
+    72,
+    41,
+    1,
+    72
+   ],
+   "block": "minecraft:stone_brick_wall"
+  },
+  {
+   "box": [
+    29,
+    0,
+    76,
+    29,
+    1,
+    76
+   ],
+   "block": "minecraft:stone_brick_wall"
+  },
+  {
+   "box": [
+    41,
+    0,
+    76,
+    41,
+    1,
+    76
+   ],
+   "block": "minecraft:stone_brick_wall"
+  },
+  {
+   "box": [
+    29,
+    0,
+    80,
+    29,
+    1,
+    80
+   ],
+   "block": "minecraft:stone_brick_wall"
+  },
+  {
+   "box": [
+    41,
+    0,
+    80,
+    41,
+    1,
+    80
+   ],
+   "block": "minecraft:stone_brick_wall"
+  },
+  {
+   "box": [
+    29,
+    0,
+    84,
+    29,
+    1,
+    84
+   ],
+   "block": "minecraft:stone_brick_wall"
+  },
+  {
+   "box": [
+    41,
+    0,
+    84,
+    41,
+    1,
+    84
+   ],
+   "block": "minecraft:stone_brick_wall"
+  }
+ ],
+ "blocks": [
+  {
+   "pos": [
+    3,
+    10,
+    3
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    65,
+    10,
+    3
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    3,
+    10,
+    69
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    65,
+    10,
+    69
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    29,
+    2,
+    72
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    41,
+    2,
+    72
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    29,
+    2,
+    76
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    41,
+    2,
+    76
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    29,
+    2,
+    80
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    41,
+    2,
+    80
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    29,
+    2,
+    84
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    41,
+    2,
+    84
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    42,
+    0,
+    80
+   ],
+   "state": "hxh:airship_terminal[facing=west]"
+  }
+ ],
+ "entities": [
+  {
+   "type": "hxh:npc",
+   "pos": [
+    35,
+    0,
+    20
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"parrain_mafia\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    32,
+    0,
+    73
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"garde_mafia\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    38,
+    0,
+    73
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"garde_mafia\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    32,
+    0,
+    47
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"garde_mafia\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    38,
+    0,
+    47
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"garde_mafia\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  }
+ ]
+}

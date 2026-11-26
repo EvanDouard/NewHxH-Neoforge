@@ -259,6 +259,29 @@ public final class WorldPlacesTests {
         });
     }
 
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void mafiaHqSketch(GameTestHelper helper) {
+        BlockPos origin0 = helper.absolutePos(new BlockPos(2, 1, 2));
+        withForcedChunks(helper, origin0, 90, () -> {
+            var place = WorldPlaces.get("hxh:mafia_hq");
+            helper.assertTrue(place != null, "Le QG de la Mafia est chargé");
+            BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+            var level = helper.getLevel();
+            int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 42, ground, origin.getZ() + 80)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 4, ground + 2, origin.getZ() + 30)).is(Blocks.BLACKSTONE_BRICKS), "Mur d'enceinte");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 15, ground + 5, origin.getZ() + 20)).is(Blocks.BLACK_CONCRETE), "Bâtiment principal");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 35, ground + 33, origin.getZ() + 28)).is(Blocks.GOLD_BLOCK), "Flèche dorée");
+            helper.runAfterDelay(20, () -> {
+                var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 90, ground + 40, origin.getZ() + 90);
+                var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+                helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("parrain_mafia")), "Parrain présent");
+                helper.assertTrue(npcs.stream().filter(n -> n.npcId().equals("garde_mafia")).count() >= 4, "Gardes présents");
+                helper.succeed();
+            });
+        });
+    }
+
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void heavyDoorOpensOnlyWithEnoughStrengthThenCloses(GameTestHelper helper) {
         var level = helper.getLevel();

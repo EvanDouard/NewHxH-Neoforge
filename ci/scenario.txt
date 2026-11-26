@@ -3196,6 +3196,17 @@ cmd gamemode spectator
 cmd tp @s 1350 118 4985 180 28
 wait 200
 shot 99zw_ngl_vue
+cmd gamemode survival
+cmd hunter jenny set 20000
+cmd hunter airship mafia_hq
+cmd time set noon
+wait 450
+wait 100
+shot 99zx_mafia_arrivee
+cmd gamemode spectator
+cmd tp @s 795 95 3835 90 22
+wait 200
+shot 99zy_mafia_vue
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative
