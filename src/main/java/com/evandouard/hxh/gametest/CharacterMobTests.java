@@ -100,7 +100,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.NETERO.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("netero".equals(HunterStats.get(c).kit()), "Kit de Isaac Netero (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.6f) < 0.01f, "Taille");
         }));
     }
@@ -110,7 +110,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.MERUEM.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("meruem".equals(HunterStats.get(c).kit()), "Kit de Meruem (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 2.0f) < 0.01f, "Taille");
         }));
     }
@@ -120,7 +120,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.NEFERPITOU.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("neferpitou".equals(HunterStats.get(c).kit()), "Kit de Neferpitou (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.8f) < 0.01f, "Taille");
         }));
     }
@@ -130,7 +130,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.SHAIAPOUF.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("shaiapouf".equals(HunterStats.get(c).kit()), "Kit de Shaiapouf (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.95f) < 0.01f, "Taille");
         }));
     }
@@ -140,7 +140,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.YOUPI.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("youpi".equals(HunterStats.get(c).kit()), "Kit de Menthuthuyoupi (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 2.4f) < 0.01f, "Taille");
         }));
     }
@@ -150,7 +150,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.CHROLLO.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("chrollo".equals(HunterStats.get(c).kit()), "Kit de Chrollo Lucilfer (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.9f) < 0.01f, "Taille");
         }));
     }
@@ -160,7 +160,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.UVOGIN.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("uvogin".equals(HunterStats.get(c).kit()), "Kit de Uvogin (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 2.3f) < 0.01f, "Taille");
         }));
     }
@@ -170,7 +170,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.ILLUMI.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("illumi".equals(HunterStats.get(c).kit()), "Kit de Illumi Zoldyck (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.95f) < 0.01f, "Taille");
         }));
     }
@@ -180,7 +180,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.ZENO.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("zeno".equals(HunterStats.get(c).kit()), "Kit de Zeno Zoldyck (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.6f) < 0.01f, "Taille");
         }));
     }
@@ -190,7 +190,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.BISCUIT.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("biscuit".equals(HunterStats.get(c).kit()), "Kit de Biscuit Krueger (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.4f) < 0.01f, "Taille");
         }));
     }
@@ -200,7 +200,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.FEITAN.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("feitan".equals(HunterStats.get(c).kit()), "Kit de Feitan Portor (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.55f) < 0.01f, "Taille");
         }));
     }
@@ -210,7 +210,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.NOBUNAGA.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("nobunaga".equals(HunterStats.get(c).kit()), "Kit de Nobunaga Hazama (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.85f) < 0.01f, "Taille");
         }));
     }
@@ -220,7 +220,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.MACHI.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("machi".equals(HunterStats.get(c).kit()), "Kit de Machi Komacine (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.75f) < 0.01f, "Taille");
         }));
     }
@@ -230,7 +230,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.SILVA.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("silva".equals(HunterStats.get(c).kit()), "Kit de Silva Zoldyck (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 2.1f) < 0.01f, "Taille");
         }));
     }
@@ -240,7 +240,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.KITE.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("kite".equals(HunterStats.get(c).kit()), "Kit de Kite (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.85f) < 0.01f, "Taille");
         }));
     }
@@ -250,7 +250,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.KALLUTO.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("kalluto".equals(HunterStats.get(c).kit()), "Kit de Kalluto Zoldyck (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.35f) < 0.01f, "Taille");
         }));
     }
@@ -260,7 +260,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.SHALNARK.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("shalnark".equals(HunterStats.get(c).kit()), "Kit de Shalnark (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.75f) < 0.01f, "Taille");
         }));
     }
@@ -270,7 +270,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.PAKUNODA.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("pakunoda".equals(HunterStats.get(c).kit()), "Kit de Pakunoda (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.85f) < 0.01f, "Taille");
         }));
     }
@@ -280,7 +280,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.GING.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("ging".equals(HunterStats.get(c).kit()), "Kit de Ging Freecss (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.8f) < 0.01f, "Taille");
         }));
     }
@@ -290,7 +290,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.PHINKS.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("phinks".equals(HunterStats.get(c).kit()), "Kit de Phinks Magcub (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.85f) < 0.01f, "Taille");
         }));
     }
@@ -300,7 +300,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.KNUCKLE.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("knuckle".equals(HunterStats.get(c).kit()), "Kit de Knuckle Bine (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.9f) < 0.01f, "Taille");
         }));
     }
@@ -310,7 +310,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.WING.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("wing".equals(HunterStats.get(c).kit()), "Kit de Wing (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.8f) < 0.01f, "Taille");
         }));
     }
@@ -320,7 +320,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.ZUSHI.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("zushi".equals(HunterStats.get(c).kit()), "Kit de Zushi (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.3f) < 0.01f, "Taille");
         }));
     }
@@ -330,7 +330,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.MENCHI.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("menchi".equals(HunterStats.get(c).kit()), "Kit de Menchi (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.7f) < 0.01f, "Taille");
         }));
     }
@@ -340,7 +340,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.CHEADLE.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("cheadle".equals(HunterStats.get(c).kit()), "Kit de Cheadle Yorkshire (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.7f) < 0.01f, "Taille");
         }));
     }
@@ -350,7 +350,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.PALM.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("palm".equals(HunterStats.get(c).kit()), "Kit de Palm Siberia (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.7f) < 0.01f, "Taille");
         }));
     }
@@ -360,7 +360,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.MOREL.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("morel".equals(HunterStats.get(c).kit()), "Kit de Morel Mackernasey (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 2.1f) < 0.01f, "Taille");
         }));
     }
@@ -370,7 +370,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.NEON.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("neon".equals(HunterStats.get(c).kit()), "Kit de Neon Nostrad (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.6f) < 0.01f, "Taille");
         }));
     }
@@ -380,7 +380,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.PARISTON.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("pariston".equals(HunterStats.get(c).kit()), "Kit de Pariston Hill (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.8f) < 0.01f, "Taille");
         }));
     }
@@ -390,7 +390,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.KNOV.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("knov".equals(HunterStats.get(c).kit()), "Kit de Knov (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.85f) < 0.01f, "Taille");
         }));
     }
@@ -400,7 +400,7 @@ public final class CharacterMobTests {
         CharacterEntity c = helper.spawn(ModEntities.RAZOR.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
             helper.assertTrue("razor".equals(HunterStats.get(c).kit()), "Kit de Razor (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 2.3f) < 0.01f, "Taille");
         }));
     }

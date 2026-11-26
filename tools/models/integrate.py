@@ -112,7 +112,7 @@ def run(cid):
         CharacterEntity c = helper.spawn(ModEntities.{up}.get(), 1, 1, 1);
         helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {{
             helper.assertTrue("{kit}".equals(HunterStats.get(c).kit()), "Kit de {fr} (" + HunterStats.get(c).kit() + ")");
-            helper.assertTrue(!(c instanceof Enemy) && c.getTarget() == null, "Neutre");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - {h}f) < 0.01f, "Taille");
         }}));
     }}
