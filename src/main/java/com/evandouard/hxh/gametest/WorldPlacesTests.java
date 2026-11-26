@@ -196,6 +196,23 @@ public final class WorldPlacesTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void meteorCitySketch(GameTestHelper helper) {
+        var place = WorldPlaces.get("hxh:meteor_city");
+        helper.assertTrue(place != null, "Meteor City est chargée");
+        BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+        var level = helper.getLevel();
+        int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 57, ground, origin.getZ() + 98)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable");
+        helper.assertTrue(!level.getBlockState(new BlockPos(origin.getX() + 55, ground + 30, origin.getZ() + 30)).isAir(), "Tour d'ordures");
+        helper.assertTrue(!level.getBlockState(new BlockPos(origin.getX() + 14, ground + 8, origin.getZ() + 14)).isAir(), "Montagne de déchets");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 38, ground, origin.getZ() + 80)).is(Blocks.BARREL) || level.getBlockState(new BlockPos(origin.getX() + 37, ground, origin.getZ() + 80)).is(Blocks.CAULDRON), "Étal du marché");
+        var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 115, ground + 20, origin.getZ() + 115);
+        var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+        helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("ferrailleur_meteor")), "Ferrailleur présent");
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void heavyDoorOpensOnlyWithEnoughStrengthThenCloses(GameTestHelper helper) {
         var level = helper.getLevel();

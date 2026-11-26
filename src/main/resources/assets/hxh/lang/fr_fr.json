@@ -1832,5 +1832,10 @@
   "npc.hxh.chambellan_kakin": "Chambellan royal",
   "dialog.hxh.chambellan_kakin.idle": "Sa Majesté est occupée. Quatorze princes se disputent le trône : parlez avec prudence.",
   "npc.hxh.garde_royal_kakin": "Garde royal",
-  "dialog.hxh.garde_royal_kakin.idle": "Circulez. Le palais n'est pas un lieu de promenade."
+  "dialog.hxh.garde_royal_kakin.idle": "Circulez. Le palais n'est pas un lieu de promenade.",
+  "airship.hxh.dest.meteor_city": "Meteor City",
+  "npc.hxh.ferrailleur_meteor": "Ferrailleur",
+  "dialog.hxh.ferrailleur_meteor.idle": "Ici personne ne vous demande d'où vous venez. Mais ne touchez pas à ce qui n'est pas à vous.",
+  "npc.hxh.habitant_meteor": "Habitant de Meteor City",
+  "dialog.hxh.habitant_meteor.idle": "On n'existe pour personne, ici. Alors on se débrouille entre nous."
 }

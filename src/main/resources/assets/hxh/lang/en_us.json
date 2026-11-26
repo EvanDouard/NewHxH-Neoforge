@@ -1832,5 +1832,10 @@
   "npc.hxh.chambellan_kakin": "Royal chamberlain",
   "dialog.hxh.chambellan_kakin.idle": "His Majesty is busy. Fourteen princes are vying for the throne: speak with care.",
   "npc.hxh.garde_royal_kakin": "Royal guard",
-  "dialog.hxh.garde_royal_kakin.idle": "Move along. The palace is no place for a stroll."
+  "dialog.hxh.garde_royal_kakin.idle": "Move along. The palace is no place for a stroll.",
+  "airship.hxh.dest.meteor_city": "Meteor City",
+  "npc.hxh.ferrailleur_meteor": "Scrap dealer",
+  "dialog.hxh.ferrailleur_meteor.idle": "Here nobody asks where you come from. But don't touch what isn't yours.",
+  "npc.hxh.habitant_meteor": "Meteor City resident",
+  "dialog.hxh.habitant_meteor.idle": "We don't exist to anyone out here. So we look after our own."
 }

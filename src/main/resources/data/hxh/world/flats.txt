@@ -17,3 +17,5 @@
 800 4585 34 66
 # Palais royal de Kakin (ébauche)
 6000 2460 65 70
+# Meteor City (ébauche)
+1700 3855 70 66
