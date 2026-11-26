@@ -572,6 +572,7 @@
   "message.hxh.strike_failed": "Strike failed!",
   "message.hxh.strike_good": "Charged strike!",
   "message.hxh.strike_perfect": "Perfect strike!",
+  "entity.hxh.nen_summon": "Nen summon",
   "entity.hxh.npc": "NPC",
   "item.hxh.exam_badge": "Applicant badge",
   "npc.hxh.navigator": "Guide",

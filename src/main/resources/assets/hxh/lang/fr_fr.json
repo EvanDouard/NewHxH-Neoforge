@@ -572,6 +572,7 @@
   "message.hxh.strike_failed": "Frappe ratée !",
   "message.hxh.strike_good": "Frappe chargée !",
   "message.hxh.strike_perfect": "Frappe parfaite !",
+  "entity.hxh.nen_summon": "Invocation de Nen",
   "entity.hxh.npc": "PNJ",
   "item.hxh.exam_badge": "Badge de candidat",
   "npc.hxh.navigator": "Guide",

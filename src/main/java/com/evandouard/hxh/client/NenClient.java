@@ -111,6 +111,7 @@ public final class NenClient {
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.KURAPIKA.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.KURAPIKA_SANS_TUNIQUE.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.GON_ULTIME.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NEN_SUMMON.get(), com.evandouard.hxh.client.geo.SummonGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.GREAT_STAMP.get(), GreatStampRenderer::new);
                     e.registerBlockEntityRenderer(com.evandouard.hxh.registry.ModBlockEntities.MARKER.get(),
                             com.evandouard.hxh.marker.MarkerLabelRenderer::new);

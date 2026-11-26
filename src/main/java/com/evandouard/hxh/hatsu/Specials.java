@@ -653,8 +653,7 @@ public final class Specials {
             if (owner.tickCount % 200 == 0 && debt > 0) debt = Math.min(debtLimit(t) * 0.99f, debt * (1 + INTEREST));
             t.getPersistentData().putFloat(HAKO_DEBT, debt);
             data(owner).setKitValue(DEBT, Math.min(100f, debt / debtLimit(t) * 100f));
-            if (owner.level() instanceof ServerLevel level)
-                NenFx.sprite(level, NenFx.Sprite.POT_CLEAN, t, t.position(), 0.9f, 0xFFB0E0FF, 22);
+            if (owner.level() instanceof ServerLevel level) potClean(level, owner, t, debt);
             if (owner instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.hako_status",
                     t.getDisplayName(), Math.round(debt), Math.round(debtLimit(t))), true);
         }
@@ -665,10 +664,26 @@ public final class Specials {
             if (t != target) return amount;
             float debt = target.getPersistentData().getFloat(HAKO_DEBT) + amount * 0.5f;
             target.getPersistentData().putFloat(HAKO_DEBT, debt);
+            if (owner.level() instanceof ServerLevel level) {
+                com.evandouard.hxh.summon.NenSummonEntity pc = potClean(level, owner, target, debt);
+                if (pc != null) pc.act("collect");
+            }
             if (debt >= debtLimit(target)) bankrupt(owner, target);
             return amount;
         }
     };
+
+    /**
+     * Pot-Clean (modèle GeckoLib) flotte au-dessus de la cible de Knuckle et affiche la dette sur sa pancarte ; il reste
+     * tant que le passif le rafraîchit (toutes les secondes).
+     */
+    public static com.evandouard.hxh.summon.NenSummonEntity potClean(ServerLevel level, LivingEntity knuckle, LivingEntity t, float debt) {
+        com.evandouard.hxh.summon.NenSummonEntity pc = com.evandouard.hxh.summon.NenSummons.keep(level, knuckle,
+                com.evandouard.hxh.summon.NenSummons.POT_CLEAN, t, com.evandouard.hxh.summon.NenSummonEntity.Anchor.ABOVE,
+                0.9f, 0.35f, 0xF0FFFFFF, 30);
+        if (pc != null) pc.setLabel(String.valueOf(Math.round(debt)));
+        return pc;
+    }
 
     /** Banqueroute : Zetsu forcé 20 s, plus aucune protection contre le Nen ; Pot-Clean se retire. */
     public static void bankrupt(LivingEntity knuckle, LivingEntity target) {
@@ -685,7 +700,14 @@ public final class Specials {
         }
         if (knuckle.level() instanceof ServerLevel level) {
             NenFx.impactAt(level, target.getBoundingBox().getCenter(), 2f, 0xFFB0E0FF);
-            NenFx.sprite(level, NenFx.Sprite.POT_CLEAN, target, target.position(), 1.4f, 0xFFFFFFFF, 40);
+            com.evandouard.hxh.summon.NenSummons.dismiss(level, com.evandouard.hxh.summon.NenSummons.POT_CLEAN, target);
+            com.evandouard.hxh.summon.NenSummonEntity pc = com.evandouard.hxh.summon.NenSummons.spawn(level, knuckle,
+                    com.evandouard.hxh.summon.NenSummons.POT_CLEAN, target, com.evandouard.hxh.summon.NenSummonEntity.Anchor.ABOVE,
+                    1.4f, 0.4f, 0xFFFFFFFF, 40);
+            if (pc != null) {
+                pc.setLabel("$ $ $");
+                pc.actLater("collect", 4);
+            }
         }
         if (knuckle instanceof Player p) p.displayClientMessage(Component.translatable("message.hxh.hako_bankrupt",
                 target.getDisplayName()).withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD), false);
@@ -719,8 +741,7 @@ public final class Specials {
             caster.getPersistentData().putUUID(HAKO_OWNER, t.getUUID());
             if (!t.getPersistentData().contains(HAKO_DEBT)) t.getPersistentData().putFloat(HAKO_DEBT, 0f);
             NenFx.impactOn(caster, t, 0.8f, 0xFFB0E0FF);
-            if (caster.level() instanceof ServerLevel level)
-                NenFx.sprite(level, NenFx.Sprite.POT_CLEAN, t, t.position(), 1.1f, 0xFFB0E0FF, 30);
+            if (caster.level() instanceof ServerLevel level) potClean(level, caster, t, t.getPersistentData().getFloat(HAKO_DEBT));
             Kinds.sound(t, SoundEvents.CHICKEN_EGG);
             return true;
         }
@@ -737,6 +758,8 @@ public final class Specials {
         public boolean perform(LivingEntity caster, float power) {
             LivingEntity t = hakoTarget(caster);
             if (t != null) t.getPersistentData().remove(HAKO_DEBT);
+            if (t != null && caster.level() instanceof ServerLevel level)
+                com.evandouard.hxh.summon.NenSummons.dismiss(level, com.evandouard.hxh.summon.NenSummons.POT_CLEAN, t);
             caster.getPersistentData().remove(HAKO_OWNER);
             data(caster).setKitValue(DEBT, 0);
             return t != null;

@@ -21,6 +21,12 @@ public final class ModEntities {
                             com.evandouard.hxh.hatsu.NenProjectile::new, net.minecraft.world.entity.MobCategory.MISC)
                     .sized(0.6f, 0.6f).clientTrackingRange(10).updateInterval(1).noSave().build("nen_projectile"));
 
+    /** Invocations des techniques en modèle GeckoLib (Kannon, Pot-Clean, Terpsichora, Docteur Blythe). */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.summon.NenSummonEntity>> NEN_SUMMON =
+            ENTITIES.register("nen_summon", () -> EntityType.Builder.<com.evandouard.hxh.summon.NenSummonEntity>of(
+                            com.evandouard.hxh.summon.NenSummonEntity::new, MobCategory.MISC)
+                    .sized(0.6f, 0.6f).clientTrackingRange(10).updateInterval(1).noSave().build("nen_summon"));
+
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.arena.ArenaFighterEntity>> ARENA_FIGHTER =
             ENTITIES.register("arena_fighter", () -> EntityType.Builder.of(com.evandouard.hxh.arena.ArenaFighterEntity::new,
                     MobCategory.MONSTER).sized(0.6f, 1.8f).clientTrackingRange(10).build("arena_fighter"));

@@ -232,7 +232,10 @@ public final class NenFx {
     }
 
     public static void clear(LivingEntity caster) {
-        if (caster.level() instanceof ServerLevel s) send(s, Kind.CLEAR, caster, null, caster.position(), 1f, 0, 1);
+        if (caster.level() instanceof ServerLevel s) {
+            send(s, Kind.CLEAR, caster, null, caster.position(), 1f, 0, 1);
+            com.evandouard.hxh.summon.NenSummons.dismissOwned(s, caster);
+        }
     }
 
     public static void impact(LivingEntity source, Vec3 at, float size, int color) {
@@ -285,7 +288,14 @@ public final class NenFx {
     }
 
     public static void puppetStrings(LivingEntity entity, int color, int duration) {
-        if (entity.level() instanceof ServerLevel s) send(s, Kind.PUPPET_STRINGS, entity, null, entity.position(), 1f, color, duration);
+        if (entity.level() instanceof ServerLevel s) {
+            send(s, Kind.PUPPET_STRINGS, entity, null, entity.position(), 1f, color, duration);
+            // la marionnette Terpsichora (modèle GeckoLib) se tient derrière et tient les fils
+            com.evandouard.hxh.summon.NenSummonEntity puppet = com.evandouard.hxh.summon.NenSummons.spawn(s, entity,
+                    com.evandouard.hxh.summon.NenSummons.TERPSICHORA, entity, com.evandouard.hxh.summon.NenSummonEntity.Anchor.BEHIND,
+                    entity.getBbHeight() / 1.8f, 0.9f, 0xC0000000 | (color & 0xFFFFFF), duration);
+            if (puppet != null) puppet.actLater("pull", 4);
+        }
     }
 
     public static void gumLink(LivingEntity owner, LivingEntity target, int duration) {
@@ -293,7 +303,13 @@ public final class NenFx {
     }
 
     public static void doll(LivingEntity caster, LivingEntity patient, int duration) {
-        if (caster.level() instanceof ServerLevel s) send(s, Kind.DOLL, caster, patient, patient.position(), 1f, SPECIALIST, duration);
+        if (caster.level() instanceof ServerLevel s) {
+            send(s, Kind.DOLL, caster, patient, patient.position(), 1f, SPECIALIST, duration);
+            // Docteur Blythe elle-même : modèle GeckoLib qui flotte au-dessus du patient
+            com.evandouard.hxh.summon.NenSummons.dismiss(s, com.evandouard.hxh.summon.NenSummons.DOCTOR_BLYTHE, patient);
+            com.evandouard.hxh.summon.NenSummons.spawn(s, caster, com.evandouard.hxh.summon.NenSummons.DOCTOR_BLYTHE, patient,
+                    com.evandouard.hxh.summon.NenSummonEntity.Anchor.ABOVE, 0.7f, 0.2f, 0xF8FFFFFF, duration);
+        }
     }
 
     public static void cardBurst(LivingEntity caster) {

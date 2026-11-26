@@ -83,7 +83,7 @@ public final class Netero {
         @Override
         public boolean perform(LivingEntity caster, float power) {
             if (caster.level() instanceof ServerLevel level)
-                NenFx.sprite(level, NenFx.Sprite.KANNON, caster, caster.position(), 9f, NenFx.GOLD, 34);
+                kannon(level, caster, 9f, 0xF0FFFFFF, 40, "strike");
             KANNON_PALM.perform(caster, power);
             return true;
         }
@@ -104,7 +104,7 @@ public final class Netero {
         @Override
         public boolean perform(LivingEntity caster, float power) {
             if (!(caster.level() instanceof ServerLevel level)) return false;
-            NenFx.sprite(level, NenFx.Sprite.KANNON, caster, caster.position(), 12f, NenFx.WHITE, 50);
+            kannon(level, caster, 12f, 0xE8FFFFFF, 60, "zero");
             Vec3 eye = caster.getEyePosition(), look = caster.getLookAngle();
             // Toute l'aura qui reste part dans le rayon : de 15 dégâts (rien) à 60 (aura pleine)
             HunterData data = HunterStats.get(caster);
@@ -140,5 +140,18 @@ public final class Netero {
             if (along < 0 || along > length) return false;
             return to.subtract(dir.scale(along)).length() <= width + e.getBbWidth() / 2;
         });
+    }
+
+    /**
+     * Le Bodhisattva aux mille mains surgit derrière Netero (modèle GeckoLib, voir tools/models/summon_kannon.py) :
+     * {@code height} blocs de haut, puis il joue le geste ({@code strike} : paume ; {@code zero} : Main zéro).
+     */
+    public static void kannon(net.minecraft.server.level.ServerLevel level, LivingEntity caster, float height, int color,
+                              int life, String action) {
+        com.evandouard.hxh.summon.NenSummons.dismiss(level, com.evandouard.hxh.summon.NenSummons.KANNON, caster);
+        com.evandouard.hxh.summon.NenSummonEntity k = com.evandouard.hxh.summon.NenSummons.spawn(level, caster,
+                com.evandouard.hxh.summon.NenSummons.KANNON, caster, com.evandouard.hxh.summon.NenSummonEntity.Anchor.BEHIND,
+                height / 4f, 1.4f + height * 0.12f, color, life);
+        if (k != null) k.actLater(action, 8);
     }
 }

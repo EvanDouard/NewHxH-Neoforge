@@ -201,3 +201,19 @@ Tous sont des mobs neutres (alliés entre eux) avec leur kit Hatsu.
 
 `tools/models/hairkit.py` regroupe les rideaux de cheveux longs (`curtain` : `inward` > 0 ramène les pointes vers
 le dos, `flip` les fait rebiquer, `flare` les écarte) et les lunettes en relief (`glasses`).
+
+### Invocations en modèle GeckoLib (`hxh:nen_summon`)
+
+Les créatures invoquées par les techniques sont de vrais modèles GeckoLib (`tools/models/summon_*.py`, fichiers
+`summon_<id>` dans les dossiers npc), portés par l'entité `NenSummonEntity` : le serveur la crée
+(`NenSummons.spawn/keep/dismiss`) en lui donnant le modèle, l'entité suivie (derrière elle, au-dessus d'elle ou
+fixe), la taille, la couleur d'aura, la durée et les gestes ; elle ne se sauvegarde pas, ne se touche pas, et
+s'efface en fondu. Elle disparaît avec les effets de son lanceur (`NenFx.clear`).
+
+| Invocation | Technique | Placement | Gestes |
+|---|---|---|---|
+| Kannon (`kannon`) | Bodhisattva et Main zéro de Netero | derrière Netero, 9 à 12 blocs | `strike` (paume géante), `zero` (les bras se referment) |
+| Pot-Clean (`pot_clean`) | Hakoware de Knuckle | au-dessus de la cible, dette sur la pancarte | `collect` (à chaque coup) |
+| Terpsichora (`terpsichora`) | Pitou | derrière elle, translucide violet, fils depuis les doigts | `pull` |
+| Docteur Blythe (`doctor_blythe`) | Pitou | au-dessus du patient, coud en boucle | — |
+

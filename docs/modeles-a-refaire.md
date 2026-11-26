@@ -153,7 +153,7 @@ Ils couvrent la plupart des 95 techniques ; les refaire améliore beaucoup de pe
 | Chaîne (`CHAIN`, `HOLY_CHAIN`) | Kurapika ×2, Machi ×2 (4) | Vraie chaîne en maillons 3D (fil d'aura pour Machi) | P1 |
 | Jajanken (boule chargée, ciseaux, papier) | Gon (4) | Boule qui grossit, lame, cône : déjà en 3D, à affiner avec de vraies textures | P1 |
 | Aiguilles (`NEEDLE`, `NEEDLE_CROWN`) | Illumi ×3 | Aiguilles en 3D (objet) + couronne d'aiguilles | P2 |
-| Marionnette (`PUPPET`), fils | Pitou (Terpsichora), Shalnark | Fils d'aura reliés à une silhouette de marionnettiste | P2 |
+| Marionnette (`PUPPET`), fils | Pitou (Terpsichora), Shalnark | Pitou **fait (26/11)** : `summon_terpsichora` derrière elle, fils depuis ses doigts ; Shalnark à faire | P2 |
 | Embrasement (`FLARE`) | 15 techniques de renforcement sur soi (Nobunaga, Feitan, Youpi, Meruem…) | Explosion d'aura autour du corps, plus marquée que l'aura normale | P2 |
 | Séisme (`QUAKE`), débris | Uvogin, Netero, mobs | Fissures au sol, blocs projetés plus réalistes | P2 |
 | Marque (`MARK`) | Pariston, Neon, Freecss (instinct) | Symbole qui flotte sur la cible | P3 |
@@ -166,16 +166,16 @@ Ils couvrent la plupart des 95 techniques ; les refaire améliore beaucoup de pe
 
 | Invocation | Technique | À faire | Priorité |
 |---|---|---|---|
-| Statue de Kannon et mains de Kannon | Netero (Bodhisattva, Main zéro) | Geo-Fx : grande statue (≈ 8 blocs), mille mains, animation de frappe | P1 |
+| Statue de Kannon et mains de Kannon | Netero (Bodhisattva, Main zéro) | **Fait (26/11)** : `summon_kannon` (9 à 12 blocs, 22 bras en éventail, gestes `strike` et `zero`) ; reste les mains dorées de la quête de Netero | P1 |
 | Dragons de Zeno (tête de dragon, descente du dragon) | Zeno | Geo-Fx : dragon d'aura serpentin, animé | P1 |
-| Poupée Doctor Blythe | Neferpitou | Geo-Fx : poupée-chirurgienne (déjà « poupée 3D » par le code) | P1 |
+| Poupée Doctor Blythe | Neferpitou | **Fait (26/11)** : `summon_doctor_blythe` au-dessus du patient, quatre bras qui cousent ; l'effet garde le cordon et les fils | P1 |
 | Démons de Razor (14) | Razor | Geo-Fx : démons humanoïdes numérotés | P2 |
 | Soldats de fumée | Morel (Deep Purple) | Geo-Fx : soldats de fumée, texture translucide | P2 |
 | Cookie la masseuse | Biscuit | Geo-Fx : petite masseuse | P2 |
 | Blinky | Shizuku | Geo-Fx (ou objet) : aspirateur avec son visage | P2 |
 | Soleil levant | Feitan | Fx : soleil de feu texturé, chaleur | P2 |
 | Clown et armes de la roulette | Kite (Crazy Slots) | Geo-Fx : clown parlant + les armes en objets (2.3) | P2 |
-| Pot Clean (compteur) | Knuckle | Geo-Fx : petite créature compteur avec ses chiffres | P2 |
+| Pot Clean (compteur) | Knuckle | **Fait (26/11)** : `summon_pot_clean` au-dessus de la cible, dette affichée sur sa pancarte, geste `collect` à chaque coup | P2 |
 | Ailes | Shaiapouf, Youpi | Geo : ailes intégrées au modèle du personnage, animées | P2 |
 | Bombe | Genthru | Objet/Fx : petite bombe accrochée à la cible | P3 |
 | Livre | Chrollo | Objet (2.3) | P3 |

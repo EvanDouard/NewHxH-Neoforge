@@ -1324,7 +1324,7 @@ public final class NenFxClient {
         float yaw = (src instanceof LivingEntity l ? Mth.lerp(c.pt, l.yBodyRotO, l.yBodyRot) : src.getYRot()) * Mth.DEG_TO_RAD;
         Vec3 side = new Vec3(Mth.cos(yaw), 0, Mth.sin(yaw));
         Vec3 sway = new Vec3(Mth.sin(age * 0.08f) * 0.25, 0, Mth.cos(age * 0.06f) * 0.25);
-        Vec3 bar = base.add(0, h + 2.4, 0).add(sway);
+        Vec3 bar = base.add(0, h + 1.5, 0).add(sway);
         Vec3[] joints = {
                 base.add(0, h, 0),
                 base.add(side.scale(w * 0.75)).add(0, h * 0.45, 0), base.add(side.scale(-w * 0.75)).add(0, h * 0.45, 0),
@@ -1334,11 +1334,7 @@ public final class NenFxClient {
             ribbon(c, RenderType.eyes(WHITE), anchors[i], joints[i], 0.06f, f.color, fade * 0.8f);
             ribbon(c, RenderType.entityTranslucent(WHITE), anchors[i], joints[i], 0.018f, INK, fade);
         }
-        // croix de manipulation
-        ribbon(c, RenderType.entityTranslucent(WHITE), bar.add(side.scale(-0.8)), bar.add(side.scale(0.8)), 0.09f, INK, fade);
-        Vec3 fwd = new Vec3(-side.z, 0, side.x);
-        ribbon(c, RenderType.entityTranslucent(WHITE), bar.add(fwd.scale(-0.45)), bar.add(fwd.scale(0.45)), 0.09f, INK, fade);
-        billboard(c, RenderType.eyes(GLOW), bar, 0.5f, 0, f.color, fade * 0.7f);
+        // plus de croix : les fils partent des doigts de la marionnette Terpsichora (modèle GeckoLib) au-dessus de Pitou
     }
 
     /**
@@ -1413,51 +1409,13 @@ public final class NenFxClient {
         Vec3 up = new Vec3(0, 1, 0);
         // la poupée se penche sur le patient, un peu en arrière de lui
         Vec3 body = p.add(0, patient.getBbHeight() + 0.55 + bob, 0).subtract(fwd.scale(0.25));
-        int dress = 0xF4F1EA, skin = 0xF6E6DE, red = 0xE0303A, ink = 0x141414;
-        // robe bouffante (cloche) puis buste
-        List<Vec3> trunk = List.of(body.subtract(0, 0.45 * s, 0), body.subtract(0, 0.2 * s, 0), body, body.add(0, 0.28 * s, 0));
-        Mesh3D.tube(m, Mesh3D.solid(m), trunk, t -> s * (t < 0.4f ? Mth.lerp(t / 0.4f, 0.38f, 0.3f) : Mth.lerp((t - 0.4f) / 0.6f, 0.3f, 0.16f)),
-                dress, fade, 12, true);
-        // tablier et ceinture rouges
-        Mesh3D.torus(m, Mesh3D.solid(m), body.add(0, 0.02 * s, 0), up, 0.27f * s, 0.03f * s, red, fade, 20, 6, true);
-        // tête de porcelaine, ronde et un peu trop grosse
-        Vec3 head = body.add(0, 0.55 * s, 0);
-        Mesh3D.sphere(m, Mesh3D.solid(m), head, 0.3f * s, skin, fade, 12, 14, d -> 1f - 0.06f * (float) Math.abs(d.y), true, false);
-        // coiffe d'infirmière et sa croix
-        Vec3 cap = head.add(0, 0.24 * s, 0).subtract(fwd.scale(0.03 * s));
-        Mesh3D.sphere(m, Mesh3D.solid(m), cap, 0.2f * s, 0xFFFFFF, fade, 8, 10,
-                d -> 1f - 0.55f * (float) Math.max(0, -d.y), true, false);
-        Vec3 capFront = cap.add(fwd.scale(0.19 * s)).add(0, 0.02 * s, 0);
-        Mesh3D.tube(m, Mesh3D.solid(m), List.of(capFront.add(side.scale(-0.06 * s)), capFront.add(side.scale(0.06 * s))), 0.022f * s, 0.022f * s, red, fade, 4, false);
-        Mesh3D.tube(m, Mesh3D.solid(m), List.of(capFront.add(0, -0.06 * s, 0), capFront.add(0, 0.06 * s, 0)), 0.022f * s, 0.022f * s, red, fade, 4, false);
-        // yeux-boutons noirs avec reflet, joues roses, bouche cousue
-        for (int k = -1; k <= 1; k += 2) {
-            Vec3 eye = head.add(fwd.scale(0.26 * s)).add(side.scale(k * 0.11 * s)).add(0, 0.03 * s, 0);
-            Mesh3D.sphere(m, Mesh3D.solid(m), eye, 0.065f * s, ink, fade, 6, 8, d -> 1f - 0.5f * (float) Math.abs(d.dot(fwd)), true, false);
-            Mesh3D.sphere(m, Mesh3D.glow(m), eye.add(fwd.scale(0.03 * s)).add(up.scale(0.025 * s)).add(side.scale(-0.02 * s)), 0.015f * s, 0xFFFFFF, fade, 4, 5, null, false, false);
-            Mesh3D.sphere(m, Mesh3D.solid(m), head.add(fwd.scale(0.24 * s)).add(side.scale(k * 0.17 * s)).add(0, -0.07 * s, 0), 0.04f * s,
-                    0xF2A0A8, fade * 0.8f, 5, 6, d -> 1f - 0.6f * (float) Math.abs(d.dot(fwd)), true, false);
-        }
-        Vec3 mouth = head.add(fwd.scale(0.285 * s)).add(0, -0.11 * s, 0);
-        Mesh3D.tube(m, Mesh3D.solid(m), List.of(mouth.add(side.scale(-0.09 * s)), mouth.add(0, -0.015 * s, 0), mouth.add(side.scale(0.09 * s))),
-                0.008f * s, 0.008f * s, ink, fade, 4, false);
-        for (int j = -2; j <= 2; j++) {
-            Vec3 st = mouth.add(side.scale(j * 0.04 * s)).add(0, -0.004 * s * Math.abs(j), 0);
-            Mesh3D.tube(m, Mesh3D.solid(m), List.of(st.add(0, 0.025 * s, 0), st.add(0, -0.025 * s, 0)), 0.006f * s, 0.006f * s, ink, fade, 4, false);
-        }
-        // bras articulés qui descendent vers le patient, terminés par une aiguille qui pique et remonte
+        // la poupée elle-même est un modèle GeckoLib (NenSummonEntity « doctor_blythe ») posé au-dessus du patient ;
+        // l'effet ne dessine plus que les fils d'aura des instruments, les points de suture et le cordon
         Vec3 target = p.add(0, patient.getBbHeight() * 0.6, 0);
         for (int k = -1; k <= 1; k += 2) {
-            Vec3 shoulder = body.add(side.scale(k * 0.2 * s)).add(0, 0.24 * s, 0);
             float stitch = Mth.sin(age * 0.6f + k) * 0.5f + 0.5f;
-            Vec3 tip = target.add(side.scale(k * 0.15)).add(0, 0.05 + 0.25 * stitch, 0);
-            Vec3 elbow = shoulder.add(side.scale(k * 0.3 * s)).add(fwd.scale(0.15 * s)).add(0, -0.1 * s, 0);
-            Vec3 hand = tip.add(0, 0.32, 0);
-            Mesh3D.tube(m, Mesh3D.solid(m), List.of(shoulder, elbow, hand), 0.06f * s, 0.045f * s, dress, fade, 8, true);
-            Mesh3D.sphere(m, Mesh3D.solid(m), hand, 0.06f * s, skin, fade, 5, 6, null, true, false);
-            Mesh3D.cone(m, Mesh3D.solid(m), hand, tip, 0.012f, 0xD8DCE4, fade, 5, true);
-            // fil d'aura de la main au patient
-            Mesh3D.tube(m, Mesh3D.glow(m), List.of(hand, target.add(side.scale(k * 0.1))), 0.01f, 0.01f, f.color & 0xFFFFFF, fade * 0.8f, 4, false);
+            Vec3 hand = body.add(side.scale(k * 0.55)).add(fwd.scale(0.5)).add(0, 0.3 - 0.2 * stitch, 0);
+            Mesh3D.tube(m, Mesh3D.glow(m), List.of(hand, target.add(side.scale(k * 0.1))), 0.012f, 0.012f, f.color & 0xFFFFFF, fade * 0.8f, 4, false);
         }
         // points de suture lumineux sur le patient
         for (int j = 0; j < 4; j++) {
