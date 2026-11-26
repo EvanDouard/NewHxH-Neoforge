@@ -16,6 +16,6 @@
 # Site du Bras de la Reine (ébauche)
 800 4585 34 66
 # Palais royal de Kakin (ébauche)
-6000 2460 65 70
+6000 2460 100 70
 # Meteor City (ébauche)
-1700 3855 70 66
+1700 3855 100 66
