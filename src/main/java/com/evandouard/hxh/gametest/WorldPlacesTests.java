@@ -177,40 +177,58 @@ public final class WorldPlacesTests {
         helper.succeed();
     }
 
+    /** Force (quelques ticks) les tronçons d'un grand lieu pour que ses PNJ soient bien actifs et trouvables. */
+    private static void withForcedChunks(GameTestHelper helper, BlockPos origin, int size, Runnable body) {
+        var level = helper.getLevel();
+        java.util.List<net.minecraft.world.level.ChunkPos> cps = new java.util.ArrayList<>();
+        for (int cx = origin.getX() >> 4; cx <= (origin.getX() + size) >> 4; cx++)
+            for (int cz = origin.getZ() >> 4; cz <= (origin.getZ() + size) >> 4; cz++) cps.add(new net.minecraft.world.level.ChunkPos(cx, cz));
+        for (var c : cps) level.setChunkForced(c.x, c.z, true);
+        helper.runAfterDelay(30, () -> {
+            try { body.run(); } finally { for (var c : cps) level.setChunkForced(c.x, c.z, false); }
+        });
+    }
+
     @GameTest(template = "empty", timeoutTicks = 600)
     public static void kakinPalaceSketch(GameTestHelper helper) {
-        var place = WorldPlaces.get("hxh:kakin_palace");
-        helper.assertTrue(place != null, "Le palais royal de Kakin est chargé");
-        BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
-        var level = helper.getLevel();
-        int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 52, ground, origin.getZ() + 88)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable devant le palais");
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 30, ground + 10, origin.getZ() + 40)).is(Blocks.RED_CONCRETE), "Mur de la salle du trône");
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 50, ground + 5, origin.getZ() + 23)).is(Blocks.GOLD_BLOCK), "Trône doré");
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 50, ground + 27, origin.getZ() + 40)).is(Blocks.GOLD_BLOCK), "Flèche dorée du toit");
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 4, ground + 4, origin.getZ() + 50)).is(Blocks.RED_CONCRETE), "Mur d'enceinte");
-        var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 105, ground + 20, origin.getZ() + 105);
-        var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
-        helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("chambellan_kakin")), "Chambellan présent");
-        helper.assertTrue(npcs.stream().filter(n -> n.npcId().equals("garde_royal_kakin")).count() >= 4, "Gardes royaux présents");
-        helper.succeed();
+        BlockPos origin0 = helper.absolutePos(new BlockPos(2, 1, 2));
+        withForcedChunks(helper, origin0, 105, () -> {
+            var place = WorldPlaces.get("hxh:kakin_palace");
+            helper.assertTrue(place != null, "Le palais royal de Kakin est chargé");
+            BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+            var level = helper.getLevel();
+            int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 52, ground, origin.getZ() + 88)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable devant le palais");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 30, ground + 10, origin.getZ() + 40)).is(Blocks.RED_CONCRETE), "Mur de la salle du trône");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 50, ground + 5, origin.getZ() + 23)).is(Blocks.GOLD_BLOCK), "Trône doré");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 50, ground + 27, origin.getZ() + 40)).is(Blocks.GOLD_BLOCK), "Flèche dorée du toit");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 4, ground + 4, origin.getZ() + 50)).is(Blocks.RED_CONCRETE), "Mur d'enceinte");
+            var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 105, ground + 20, origin.getZ() + 105);
+            var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+            helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("chambellan_kakin")), "Chambellan présent");
+            helper.assertTrue(npcs.stream().filter(n -> n.npcId().equals("garde_royal_kakin")).count() >= 4, "Gardes royaux présents");
+            helper.succeed();
+        });
     }
 
     @GameTest(template = "empty", timeoutTicks = 600)
     public static void meteorCitySketch(GameTestHelper helper) {
-        var place = WorldPlaces.get("hxh:meteor_city");
-        helper.assertTrue(place != null, "Meteor City est chargée");
-        BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
-        var level = helper.getLevel();
-        int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 57, ground, origin.getZ() + 98)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable");
-        helper.assertTrue(!level.getBlockState(new BlockPos(origin.getX() + 55, ground + 30, origin.getZ() + 30)).isAir(), "Tour d'ordures");
-        helper.assertTrue(!level.getBlockState(new BlockPos(origin.getX() + 14, ground + 8, origin.getZ() + 14)).isAir(), "Montagne de déchets");
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 38, ground, origin.getZ() + 80)).is(Blocks.BARREL) || level.getBlockState(new BlockPos(origin.getX() + 37, ground, origin.getZ() + 80)).is(Blocks.CAULDRON), "Étal du marché");
-        var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 115, ground + 20, origin.getZ() + 115);
-        var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
-        helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("ferrailleur_meteor")), "Ferrailleur présent");
-        helper.succeed();
+        BlockPos origin0 = helper.absolutePos(new BlockPos(2, 1, 2));
+        withForcedChunks(helper, origin0, 115, () -> {
+            var place = WorldPlaces.get("hxh:meteor_city");
+            helper.assertTrue(place != null, "Meteor City est chargée");
+            BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+            var level = helper.getLevel();
+            int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 57, ground, origin.getZ() + 98)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable");
+            helper.assertTrue(!level.getBlockState(new BlockPos(origin.getX() + 55, ground + 30, origin.getZ() + 30)).isAir(), "Tour d'ordures");
+            helper.assertTrue(!level.getBlockState(new BlockPos(origin.getX() + 14, ground + 8, origin.getZ() + 14)).isAir(), "Montagne de déchets");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 38, ground, origin.getZ() + 80)).is(Blocks.BARREL) || level.getBlockState(new BlockPos(origin.getX() + 37, ground, origin.getZ() + 80)).is(Blocks.CAULDRON), "Étal du marché");
+            var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 115, ground + 20, origin.getZ() + 115);
+            var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+            helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("ferrailleur_meteor")), "Ferrailleur présent");
+            helper.succeed();
+        });
     }
 
     @GameTest(template = "empty", timeoutTicks = 400)
