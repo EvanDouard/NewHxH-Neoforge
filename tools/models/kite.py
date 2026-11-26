@@ -46,7 +46,7 @@ def build_hair(m):
         r = rr + 0.15
         x, z = c[0] + r * math.sin(a), c[2] + r * math.cos(a)
         side = abs(az) / 76
-        L = 17.5 - 3.0 * side + rnd.uniform(-0.8, 0.8)
+        L = 22.5 - 3.5 * side + rnd.uniform(-0.8, 0.8)
         lock(m, f'k_c{i}', [x, c[1] + 2.0, z], L + 1.6, 3.8, 178, az * 0.05, mk(0.05 + 0.04 * (i % 2)),
              ry=rnd.uniform(-6, 6), flat=0.38, curve=(-16 * math.cos(a), az * 0.04), segs=5, root=1.05, tip=0.12,
              taper_pow=0.45, belly=1.08, skew=rnd.uniform(-0.12, 0.12))

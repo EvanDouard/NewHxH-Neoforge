@@ -141,6 +141,12 @@ public final class ModItems {
     public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> RAZOR_SPAWN_EGG =
             ITEMS.register("razor_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.RAZOR, 0x141418, 0xE8E4DC, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> GENTHRU_SPAWN_EGG =
+            ITEMS.register("genthru_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.GENTHRU, 0x7EC2AE, 0xD8B048, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> SENRITSU_SPAWN_EGG =
+            ITEMS.register("senritsu_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.SENRITSU, 0x1A1A22, 0xE6C2A4, new Item.Properties()));
     public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> KILLUA_SPAWN_EGG =
             ITEMS.register("killua_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.KILLUA, 0xECEAF2, 0x7B5CC2, new Item.Properties()));

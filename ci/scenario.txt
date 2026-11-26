@@ -1835,6 +1835,23 @@ shot 66f_hisoka_dessus
 cmd tp @s ~ ~-2.6 ~
 cmd gamemode survival
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# Invocations en modèle GeckoLib (Pot-Clean, Docteur Blythe, Terpsichora, Kannon)
+hud off
+look 0 8
+cmd summon hxh:nen_summon ~2.6 ~0.6 ~4 {Model:"pot_clean",Scale:1.5f,Life:400,Label:"1250",Rotation:[180f,0f]}
+cmd summon hxh:nen_summon ~0 ~ ~5 {Model:"doctor_blythe",Scale:0.8f,Life:400,Rotation:[180f,0f]}
+cmd summon hxh:nen_summon ~-3 ~ ~5.5 {Model:"terpsichora",Scale:0.9f,Life:400,Color:-1064682241,Rotation:[180f,0f]}
+wait 30
+clearchat
+shot 68a_invocations_pot_clean_doctor_blythe_terpsichora
+cmd kill @e[type=hxh:nen_summon]
+look 0 -18
+cmd summon hxh:nen_summon ~ ~ ~13 {Model:"kannon",Scale:2.2f,Life:400,Rotation:[180f,0f]}
+cmd summon hxh:nen_summon ~-4 ~4 ~9 {Model:"dragon",Scale:0.9f,Life:400,Rotation:[120f,0f]}
+wait 40
+clearchat
+shot 68b_invocations_kannon_dragon
+cmd kill @e[type=hxh:nen_summon]
 # Série « même style » : alignements de personnages (GeckoLib)
 hud off
 look 0 5
@@ -2078,47 +2095,38 @@ clearchat
 shot 67fd_serie_palm_morel_neon_pariston_knov_expression
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 4
-cmd summon hxh:npc ~0.0 ~ ~4.0 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~2.0 ~ ~4.0 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-0.1 ~ ~4.0 {npc:"genthru",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-2.0 ~ ~4.0 {npc:"senritsu",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
 wait 30
 clearchat
-shot 67ga_serie_razor_face
+shot 67ga_serie_razor_genthru_senritsu_face
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 4
-cmd summon hxh:npc ~0.0 ~ ~4.0 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~2.0 ~ ~4.0 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-0.1 ~ ~4.0 {npc:"genthru",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-2.0 ~ ~4.0 {npc:"senritsu",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
 wait 30
 clearchat
-shot 67gb_serie_razor_profil
+shot 67gb_serie_razor_genthru_senritsu_profil
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 4
-cmd summon hxh:npc ~0.0 ~ ~4.0 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~2.0 ~ ~4.0 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-0.1 ~ ~4.0 {npc:"genthru",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-2.0 ~ ~4.0 {npc:"senritsu",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
 wait 30
 clearchat
-shot 67gc_serie_razor_dos
+shot 67gc_serie_razor_genthru_senritsu_dos
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 4
-cmd summon hxh:npc ~0.0 ~ ~4.0 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~2.0 ~ ~4.0 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~-0.1 ~ ~4.0 {npc:"genthru",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~-2.0 ~ ~4.0 {npc:"senritsu",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
 wait 30
 clearchat
-shot 67gd_serie_razor_expression
+shot 67gd_serie_razor_genthru_senritsu_expression
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 # Fin de la série « même style »
-# Invocations en modèle GeckoLib (Pot-Clean, Docteur Blythe, Terpsichora, Kannon)
-hud off
-look 0 8
-cmd summon hxh:nen_summon ~2.6 ~0.6 ~4 {Model:"pot_clean",Scale:1.5f,Life:400,Label:"1250",Rotation:[180f,0f]}
-cmd summon hxh:nen_summon ~0 ~ ~5 {Model:"doctor_blythe",Scale:0.8f,Life:400,Rotation:[180f,0f]}
-cmd summon hxh:nen_summon ~-3 ~ ~5.5 {Model:"terpsichora",Scale:0.9f,Life:400,Color:-1064682241,Rotation:[180f,0f]}
-wait 30
-clearchat
-shot 68a_invocations_pot_clean_doctor_blythe_terpsichora
-cmd kill @e[type=hxh:nen_summon]
-look 0 -18
-cmd summon hxh:nen_summon ~ ~ ~13 {Model:"kannon",Scale:2.2f,Life:400,Rotation:[180f,0f]}
-cmd summon hxh:nen_summon ~-4 ~4 ~9 {Model:"dragon",Scale:0.9f,Life:400,Rotation:[120f,0f]}
-wait 40
-clearchat
-shot 68b_invocations_kannon_dragon
-cmd kill @e[type=hxh:nen_summon]
 # Gon et Killua en mobs (œufs d'apparition) : même modèle, nom, Hatsu
 hud on
 look 0 8

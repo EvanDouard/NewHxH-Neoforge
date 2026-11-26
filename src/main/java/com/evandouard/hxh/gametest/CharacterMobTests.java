@@ -404,4 +404,24 @@ public final class CharacterMobTests {
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 2.3f) < 0.01f, "Taille");
         }));
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void genthruIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.GENTHRU.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("genthru".equals(HunterStats.get(c).kit()), "Kit de Genthru (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.9f) < 0.01f, "Taille");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void senritsuIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.SENRITSU.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("senritsu".equals(HunterStats.get(c).kit()), "Kit de Senritsu (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.4f) < 0.01f, "Taille");
+        }));
+    }
 }

@@ -106,6 +106,8 @@ public final class NenClient {
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.PARISTON.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.KNOV.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.RAZOR.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.GENTHRU.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.SENRITSU.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.HISOKA.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.LEORIO.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.KURAPIKA.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);

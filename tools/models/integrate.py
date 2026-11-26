@@ -50,6 +50,8 @@ add('neon', 'Neon Nostrad', 'Neon Nostrad', 0.5, 1.6, 0xE07A7A, 0xF6F2F0, {"all"
 add('pariston', 'Pariston Hill', 'Pariston Hill', 0.55, 1.8, 0xD8A84A, 0x8EA0B8, {"all": 78}, 88, 86)
 add('knov', 'Knov', 'Knov', 0.55, 1.85, 0x1E2840, 0x141418, {"all": 76}, 86, 88)
 add('razor', 'Razor', 'Razor', 0.85, 2.3, 0x141418, 0xE8E4DC, {"all": 85, "strength": 92}, 88, 84)
+add('genthru', 'Genthru', 'Genthru', 0.6, 1.9, 0x7EC2AE, 0xD8B048, {"all": 82, "strength": 86}, 86, 84)
+add('senritsu', 'Senritsu', 'Senritsu', 0.55, 1.4, 0x1A1A22, 0xE6C2A4, {"all": 60}, 78, 82)
 
 
 def rep(p, a, b, once=True):

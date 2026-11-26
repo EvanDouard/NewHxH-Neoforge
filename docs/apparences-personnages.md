@@ -29,7 +29,7 @@ Sans fichier d'apparence, un PNJ utilise `textures/entity/npc/<id>.png`, sinon S
 ## Modèles sur mesure (GeckoLib)
 
 Les personnages refaits au niveau décrit dans `docs/Analyse_model.md` ont un vrai modèle GeckoLib, qui remplace le
-rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark**, **Pakunoda**, **Ging**, **Phinks**, **Knuckle**, **Wing**, **Zushi**, **Menchi**, **Cheadle**, **Palm**, **Morel**, **Neon**, **Pariston**, **Knov** et **Razor**.
+rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark**, **Pakunoda**, **Ging**, **Phinks**, **Knuckle**, **Wing**, **Zushi**, **Menchi**, **Cheadle**, **Palm**, **Morel**, **Neon**, **Pariston**, **Knov**, **Razor**, **Genthru** et **Senritsu**.
 
 ```
 python3 tools/models/gon.py
@@ -181,7 +181,7 @@ Tous sont des mobs neutres (alliés entre eux) avec leur kit Hatsu.
 | Nobunaga | 1,85 | tirés en chignon au sommet, queue dans le dos | kimono, hakama, katana à la ceinture | regard de duel |
 | Machi | 1,75 | queue de cheval haute rose, mèches qui encadrent le visage | haut de kimono indigo, obi, fils de Nen | regard tranchant |
 | Silva | 2,1 | immense crinière blanche jusqu'au bas du dos | tunique bleu nuit à col montant | regard du chef |
-| Kite | 1,85 | longs cheveux blancs jusqu'à la taille | casquette souple, long manteau | regard de chasseur |
+| Kite | 1,85 | longs cheveux blancs jusqu'aux genoux | casquette souple, long manteau | regard de chasseur |
 | Kalluto | 1,35 | carré noir lisse au menton, frange droite épaisse | kimono violet à fleurs, obi lavande, éventail | regard vide |
 | Shalnark | 1,75 | blond court et léger, frange en pointes | veste kaki ouverte, jean, téléphone à antenne | sourire figé (mode automatique) |
 | Pakunoda | 1,85 | blond platine mi-long, raie sur le côté, pointes qui rebiquent | tailleur noir, chemise claire | regard grave |
@@ -198,6 +198,9 @@ Tous sont des mobs neutres (alliés entre eux) avec leur kit Hatsu.
 | Pariston | 1,8 | blond bouclé et bouffant | grand sourire, costume gris-bleu, cravate rouge | sourire calculateur |
 | Knov | 1,85 | noir gominé plaqué, favoris en pointe | fine moustache, costume bleu nuit | terreur contenue |
 | Razor | 2,3 | longue chevelure noire ondulée jusqu'au milieu du dos | torse nu, gilet noir ouvert, pantalon blanc | sourire sadique |
+
+| Genthru | 1,9 | blond en pointes hérissées vers le haut et l'arrière | lunettes anguleuses, manteau vert d'eau à croix, écharpe bleu clair | rictus du tueur |
+| Senritsu | 1,4 | noir court ondulé en casque arrondi | grands yeux ronds, costume noir à nœud papillon, flûte | écoute attentive |
 
 `tools/models/hairkit.py` regroupe les rideaux de cheveux longs (`curtain` : `inward` > 0 ramène les pointes vers
 le dos, `flip` les fait rebiquer, `flare` les écarte) et les lunettes en relief (`glasses`).
