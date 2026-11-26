@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:razor",
+  "stats": {
+    "all": 85,
+    "strength": 92
+  },
+  "nen": {
+    "level": 88,
+    "kit": "razor",
+    "mastery": 84
+  }
+}

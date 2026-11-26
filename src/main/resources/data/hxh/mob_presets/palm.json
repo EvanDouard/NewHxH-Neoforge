@@ -1,0 +1,11 @@
+{
+  "entity": "hxh:palm",
+  "stats": {
+    "all": 70
+  },
+  "nen": {
+    "level": 80,
+    "kit": "palm",
+    "mastery": 78
+  }
+}

@@ -42,6 +42,14 @@ add('phinks', 'Phinks Magcub', 'Phinks Magcub', 0.6, 1.85, 0x22305A, 0xA8946A, {
 add('knuckle', 'Knuckle Bine', 'Knuckle Bine', 0.65, 1.9, 0x6A6A72, 0x121216, {"all": 74, "strength": 84}, 82, 76)
 add('wing', 'Wing', 'Wing', 0.55, 1.8, 0xF2F0EA, 0x2A1E18, {"all": 74}, 84, 88)
 add('zushi', 'Zushi', 'Zushi', 0.5, 1.3, 0xF2F0EA, 0x16161A, {"all": 50, "willpower": 70}, 55, 50)
+add('menchi', 'Menchi', 'Menchi', 0.55, 1.7, 0x2E7A82, 0x16161A, {"all": 70, "agility": 80}, 75, 72)
+add('cheadle', 'Cheadle Yorkshire', 'Cheadle Yorkshire', 0.55, 1.7, 0x3E7E36, 0xE6DCC4, {"all": 74}, 85, 85)
+add('palm', 'Palm Siberia', 'Palm Siberia', 0.55, 1.7, 0x141418, 0xF2DDD2, {"all": 70}, 80, 78)
+add('morel', 'Morel Mackernasey', 'Morel Mackernasey', 0.75, 2.1, 0x5A4430, 0x18161A, {"all": 82, "strength": 88}, 88, 86)
+add('neon', 'Neon Nostrad', 'Neon Nostrad', 0.5, 1.6, 0xE07A7A, 0xF6F2F0, {"all": 40}, 60, 55)
+add('pariston', 'Pariston Hill', 'Pariston Hill', 0.55, 1.8, 0xD8A84A, 0x8EA0B8, {"all": 78}, 88, 86)
+add('knov', 'Knov', 'Knov', 0.55, 1.85, 0x1E2840, 0x141418, {"all": 76}, 86, 88)
+add('razor', 'Razor', 'Razor', 0.85, 2.3, 0x141418, 0xE8E4DC, {"all": 85, "strength": 92}, 88, 84)
 
 
 def rep(p, a, b, once=True):

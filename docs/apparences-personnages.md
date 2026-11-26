@@ -29,7 +29,7 @@ Sans fichier d'apparence, un PNJ utilise `textures/entity/npc/<id>.png`, sinon S
 ## Modèles sur mesure (GeckoLib)
 
 Les personnages refaits au niveau décrit dans `docs/Analyse_model.md` ont un vrai modèle GeckoLib, qui remplace le
-rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark**, **Pakunoda**, **Ging**, **Phinks**, **Knuckle**, **Wing** et **Zushi**.
+rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark**, **Pakunoda**, **Ging**, **Phinks**, **Knuckle**, **Wing**, **Zushi**, **Menchi**, **Cheadle**, **Palm**, **Morel**, **Neon**, **Pariston**, **Knov** et **Razor**.
 
 ```
 python3 tools/models/gon.py
@@ -190,3 +190,14 @@ Tous sont des mobs neutres (alliés entre eux) avec leur kit Hatsu.
 | Knuckle | 1,9 | noir gominé en grande banane, côtés plaqués, longs favoris | veste grise ouverte, t-shirt blanc | colère |
 | Wing | 1,8 | brun foncé en bataille, grand épi au sommet | lunettes rondes en relief, chemise à moitié rentrée | sévère |
 | Zushi | 1,3 | noir très court en brosse (pointes drues) | dogi blanc, ceinture noire, pieds nus | concentration |
+| Menchi | 1,7 | bleu-vert, cinq petites couettes en pointe à nœuds roses | haut résille, mini-short, couteaux à la ceinture | colère |
+| Cheadle | 1,7 | vert, carré bouffant qui rebique, frange légère | grandes lunettes rondes, tailleur crème, bloc-notes | sévère |
+| Palm | 1,7 | noire sauvage jusqu'aux cuisses, frange irrégulière | énormes yeux ronds, cernes, robe noire | sourire dément |
+| Morel | 2,1 | longs cheveux noirs rejetés en arrière jusqu'aux omoplates | moustache et bouc, pipe, long manteau brun | regard de combat |
+| Neon | 1,6 | rose saumon jusqu'au bas du dos, frange en pointes | robe blanche à gros nœud rose | moue boudeuse |
+| Pariston | 1,8 | blond bouclé et bouffant | grand sourire, costume gris-bleu, cravate rouge | sourire calculateur |
+| Knov | 1,85 | noir gominé plaqué, favoris en pointe | fine moustache, costume bleu nuit | terreur contenue |
+| Razor | 2,3 | longue chevelure noire ondulée jusqu'au milieu du dos | torse nu, gilet noir ouvert, pantalon blanc | sourire sadique |
+
+`tools/models/hairkit.py` regroupe les rideaux de cheveux longs (`curtain` : `inward` > 0 ramène les pointes vers
+le dos, `flip` les fait rebiquer, `flare` les écarte) et les lunettes en relief (`glasses`).

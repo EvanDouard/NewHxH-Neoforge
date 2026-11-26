@@ -1998,36 +1998,108 @@ clearchat
 shot 67dd_serie_kalluto_shalnark_pakunoda_ging_phinks_expression
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 4
-cmd summon hxh:npc ~1.9 ~ ~4.0 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~-0.0 ~ ~4.0 {npc:"wing",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~-1.9 ~ ~4.0 {npc:"zushi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~3.8 ~ ~4.2 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~1.9 ~ ~4.2 {npc:"wing",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~0.0 ~ ~4.2 {npc:"zushi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-1.9 ~ ~4.2 {npc:"menchi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-3.8 ~ ~4.2 {npc:"cheadle",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
 wait 30
 clearchat
-shot 67ea_serie_knuckle_wing_zushi_face
+shot 67ea_serie_knuckle_wing_zushi_menchi_cheadle_face
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 4
-cmd summon hxh:npc ~1.9 ~ ~4.0 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~-0.0 ~ ~4.0 {npc:"wing",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~-1.9 ~ ~4.0 {npc:"zushi",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~3.8 ~ ~4.2 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~1.9 ~ ~4.2 {npc:"wing",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~0.0 ~ ~4.2 {npc:"zushi",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-1.9 ~ ~4.2 {npc:"menchi",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-3.8 ~ ~4.2 {npc:"cheadle",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
 wait 30
 clearchat
-shot 67eb_serie_knuckle_wing_zushi_profil
+shot 67eb_serie_knuckle_wing_zushi_menchi_cheadle_profil
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 4
-cmd summon hxh:npc ~1.9 ~ ~4.0 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~-0.0 ~ ~4.0 {npc:"wing",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~-1.9 ~ ~4.0 {npc:"zushi",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~3.8 ~ ~4.2 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~1.9 ~ ~4.2 {npc:"wing",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~0.0 ~ ~4.2 {npc:"zushi",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-1.9 ~ ~4.2 {npc:"menchi",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-3.8 ~ ~4.2 {npc:"cheadle",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
 wait 30
 clearchat
-shot 67ec_serie_knuckle_wing_zushi_dos
+shot 67ec_serie_knuckle_wing_zushi_menchi_cheadle_dos
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 4
-cmd summon hxh:npc ~1.9 ~ ~4.0 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
-cmd summon hxh:npc ~-0.0 ~ ~4.0 {npc:"wing",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
-cmd summon hxh:npc ~-1.9 ~ ~4.0 {npc:"zushi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~3.8 ~ ~4.2 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~1.9 ~ ~4.2 {npc:"wing",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~0.0 ~ ~4.2 {npc:"zushi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~-1.9 ~ ~4.2 {npc:"menchi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~-3.8 ~ ~4.2 {npc:"cheadle",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
 wait 30
 clearchat
-shot 67ed_serie_knuckle_wing_zushi_expression
+shot 67ed_serie_knuckle_wing_zushi_menchi_cheadle_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 4
+cmd summon hxh:npc ~4.1 ~ ~4.5 {npc:"palm",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~1.7 ~ ~4.5 {npc:"morel",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-0.2 ~ ~4.5 {npc:"neon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-2.1 ~ ~4.5 {npc:"pariston",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-4.1 ~ ~4.5 {npc:"knov",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 30
+clearchat
+shot 67fa_serie_palm_morel_neon_pariston_knov_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 4
+cmd summon hxh:npc ~4.1 ~ ~4.5 {npc:"palm",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~1.7 ~ ~4.5 {npc:"morel",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-0.2 ~ ~4.5 {npc:"neon",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-2.1 ~ ~4.5 {npc:"pariston",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-4.1 ~ ~4.5 {npc:"knov",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 30
+clearchat
+shot 67fb_serie_palm_morel_neon_pariston_knov_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 4
+cmd summon hxh:npc ~4.1 ~ ~4.5 {npc:"palm",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~1.7 ~ ~4.5 {npc:"morel",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-0.2 ~ ~4.5 {npc:"neon",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-2.1 ~ ~4.5 {npc:"pariston",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-4.1 ~ ~4.5 {npc:"knov",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 30
+clearchat
+shot 67fc_serie_palm_morel_neon_pariston_knov_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 4
+cmd summon hxh:npc ~4.1 ~ ~4.5 {npc:"palm",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~1.7 ~ ~4.5 {npc:"morel",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~-0.2 ~ ~4.5 {npc:"neon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~-2.1 ~ ~4.5 {npc:"pariston",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~-4.1 ~ ~4.5 {npc:"knov",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 30
+clearchat
+shot 67fd_serie_palm_morel_neon_pariston_knov_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 4
+cmd summon hxh:npc ~0.0 ~ ~4.0 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 30
+clearchat
+shot 67ga_serie_razor_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 4
+cmd summon hxh:npc ~0.0 ~ ~4.0 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 30
+clearchat
+shot 67gb_serie_razor_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 4
+cmd summon hxh:npc ~0.0 ~ ~4.0 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 30
+clearchat
+shot 67gc_serie_razor_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 4
+cmd summon hxh:npc ~0.0 ~ ~4.0 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 30
+clearchat
+shot 67gd_serie_razor_expression
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 # Fin de la série « même style »
 # Gon et Killua en mobs (œufs d'apparition) : même modèle, nom, Hatsu

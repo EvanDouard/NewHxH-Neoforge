@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:menchi",
+  "stats": {
+    "all": 70,
+    "agility": 80
+  },
+  "nen": {
+    "level": 75,
+    "kit": "menchi",
+    "mastery": 72
+  }
+}

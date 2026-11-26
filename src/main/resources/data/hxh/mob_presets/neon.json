@@ -1,0 +1,11 @@
+{
+  "entity": "hxh:neon",
+  "stats": {
+    "all": 40
+  },
+  "nen": {
+    "level": 60,
+    "kit": "neon",
+    "mastery": 55
+  }
+}
