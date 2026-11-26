@@ -29,16 +29,18 @@ public class SummonGeoRenderer extends GeoEntityRenderer<NenSummonEntity> {
         if (entity.alpha(partialTick) <= 0.01f) return;
         poseStack.pushPose();
         float s = entity.scale();
+        // GeckoLib n'oriente que les LivingEntity : on applique ici le lacet de l'invocation (et l'inclinaison du dragon
+        // qui pique) ; GeckoLib ajoute ensuite son demi-tour fixe
+        float yaw = net.minecraft.util.Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot());
         float pitch = net.minecraft.util.Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
+        poseStack.translate(0, 0.4 * s, 0);
+        poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-yaw));
         if (Math.abs(pitch) > 0.5f) {
-            // inclinaison autour de l'axe gauche-droite du modèle (GeckoLib n'applique que le lacet)
-            float yaw = 180f - net.minecraft.util.Mth.lerp(partialTick, entity.yRotO, entity.getYRot());
-            poseStack.translate(0, 0.4 * s, 0);
-            poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(yaw));
+            poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(180f));
             poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-pitch));
-            poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-yaw));
-            poseStack.translate(0, -0.4 * s, 0);
+            poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-180f));
         }
+        poseStack.translate(0, -0.4 * s, 0);
         poseStack.scale(s, s, s);
         int c = entity.color();
         float a = ((c >>> 24) & 0xFF) / 255f * entity.alpha(partialTick);
