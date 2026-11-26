@@ -185,7 +185,7 @@ public final class WorldPlacesTests {
             for (int cz = origin.getZ() >> 4; cz <= (origin.getZ() + size) >> 4; cz++) cps.add(new net.minecraft.world.level.ChunkPos(cx, cz));
         for (var c : cps) level.setChunkForced(c.x, c.z, true);
         helper.runAfterDelay(30, () -> {
-            try { body.run(); } finally { for (var c : cps) level.setChunkForced(c.x, c.z, false); }
+            try { body.run(); } finally { helper.runAfterDelay(80, () -> { for (var c : cps) level.setChunkForced(c.x, c.z, false); }); }
         });
     }
 
@@ -203,11 +203,13 @@ public final class WorldPlacesTests {
             helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 50, ground + 5, origin.getZ() + 23)).is(Blocks.GOLD_BLOCK), "Trône doré");
             helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 50, ground + 27, origin.getZ() + 40)).is(Blocks.GOLD_BLOCK), "Flèche dorée du toit");
             helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 4, ground + 4, origin.getZ() + 50)).is(Blocks.RED_CONCRETE), "Mur d'enceinte");
-            var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 105, ground + 20, origin.getZ() + 105);
-            var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
-            helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("chambellan_kakin")), "Chambellan présent");
-            helper.assertTrue(npcs.stream().filter(n -> n.npcId().equals("garde_royal_kakin")).count() >= 4, "Gardes royaux présents");
-            helper.succeed();
+            helper.runAfterDelay(20, () -> {
+                var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 105, ground + 20, origin.getZ() + 105);
+                var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+                helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("chambellan_kakin")), "Chambellan présent");
+                helper.assertTrue(npcs.stream().filter(n -> n.npcId().equals("garde_royal_kakin")).count() >= 4, "Gardes royaux présents");
+                helper.succeed();
+            });
         });
     }
 
@@ -224,10 +226,12 @@ public final class WorldPlacesTests {
             helper.assertTrue(!level.getBlockState(new BlockPos(origin.getX() + 55, ground + 30, origin.getZ() + 30)).isAir(), "Tour d'ordures");
             helper.assertTrue(!level.getBlockState(new BlockPos(origin.getX() + 14, ground + 8, origin.getZ() + 14)).isAir(), "Montagne de déchets");
             helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 38, ground, origin.getZ() + 80)).is(Blocks.BARREL) || level.getBlockState(new BlockPos(origin.getX() + 37, ground, origin.getZ() + 80)).is(Blocks.CAULDRON), "Étal du marché");
-            var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 115, ground + 20, origin.getZ() + 115);
-            var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
-            helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("ferrailleur_meteor")), "Ferrailleur présent");
-            helper.succeed();
+            helper.runAfterDelay(20, () -> {
+                var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 115, ground + 20, origin.getZ() + 115);
+                var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+                helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("ferrailleur_meteor")), "Ferrailleur présent");
+                helper.succeed();
+            });
         });
     }
 
@@ -245,11 +249,13 @@ public final class WorldPlacesTests {
             helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground + 6, origin.getZ() + 16)).is(Blocks.HAY_BLOCK), "Toit de paille de la halle");
             helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 10, ground, origin.getZ() + 50)).is(Blocks.WHEAT), "Champ de blé");
             helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 71, ground + 8, origin.getZ() + 30)).is(Blocks.OAK_LOG), "Tour de guet");
-            var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 85, ground + 20, origin.getZ() + 85);
-            var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
-            helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("ancien_ngl")), "Ancien présent");
-            helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("fermier_ngl")), "Fermier présent");
-            helper.succeed();
+            helper.runAfterDelay(20, () -> {
+                var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 85, ground + 20, origin.getZ() + 85);
+                var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+                helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("ancien_ngl")), "Ancien présent");
+                helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("fermier_ngl")), "Fermier présent");
+                helper.succeed();
+            });
         });
     }
 
