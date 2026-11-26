@@ -6,15 +6,15 @@
 # Tour Céleste (Heavens Arena)
 2775 1445 85 70
 # Port du Black Whale (petite île)
-5435 2160 55 65
+5435 2160 68 65
 # Hôtel de la 5e phase (Kukan'yu)
 905 1658 65 66
 # Greed Island (ébauche)
-3370 4110 40 66
+3370 4110 54 66
 # Forêt de Kite, camp (ébauche)
-6420 2260 24 68
+6420 2260 36 68
 # Site du Bras de la Reine (ébauche)
-800 4585 34 66
+800 4585 48 66
 # Palais royal de Kakin (ébauche)
 6000 2460 100 70
 # Meteor City (ébauche)
