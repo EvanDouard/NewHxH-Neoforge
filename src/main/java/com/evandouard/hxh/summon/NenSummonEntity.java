@@ -30,10 +30,11 @@ import software.bernie.geckolib.util.GeckoLibUtil;
  */
 public class NenSummonEntity extends Entity implements GeoEntity {
     /**
-     * Placement : derrière l'entité suivie (statue, marionnette), au-dessus d'elle (Pot-Clean, poupée), fixe, ou en vol
-     * d'un point à un autre (dragon de Zeno, voir {@link #travel}).
+     * Placement : derrière l'entité suivie (statue, marionnette), au-dessus d'elle (Pot-Clean, poupée, clown, bombe),
+     * fixe, en vol d'un point à un autre (dragon de Zeno, voir {@link #travel}), à sa droite (Cookie) ou devant elle à
+     * hauteur de mains (Blinky).
      */
-    public enum Anchor { BEHIND, ABOVE, FIXED, TRAVEL }
+    public enum Anchor { BEHIND, ABOVE, FIXED, TRAVEL, BESIDE, FRONT }
 
     private static final EntityDataAccessor<String> MODEL = SynchedEntityData.defineId(NenSummonEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> FOLLOW = SynchedEntityData.defineId(NenSummonEntity.class, EntityDataSerializers.INT);
@@ -118,7 +119,8 @@ public class NenSummonEntity extends Entity implements GeoEntity {
         face(end.subtract(start));
     }
 
-    private void face(Vec3 d) {
+    /** Tourne l'invocation dans la direction donnée (lacet et inclinaison). */
+    public void face(Vec3 d) {
         if (d.lengthSqr() < 1e-6) return;
         float yaw = (float) (Mth.atan2(d.z, d.x) * Mth.RAD_TO_DEG) - 90f;
         float pitch = (float) (-Mth.atan2(d.y, Math.sqrt(d.x * d.x + d.z * d.z)) * Mth.RAD_TO_DEG);
@@ -163,6 +165,7 @@ public class NenSummonEntity extends Entity implements GeoEntity {
         if (!level().isClientSide) {
             Entity f = followed();
             boolean lost = entityData.get(FOLLOW) >= 0 && (f == null || !f.isAlive());
+            if (model().equals("bomb")) setLabel(String.valueOf(Math.max(0, (life() - age + 19) / 20)));
             if (pending != null && age >= pendingAt) {
                 triggerAnim("action", pending);
                 pending = null;
@@ -189,6 +192,8 @@ public class NenSummonEntity extends Entity implements GeoEntity {
         Vec3 p = switch (anchor()) {
             case BEHIND -> f.position().subtract(Vec3.directionFromRotation(0, yaw).scale(off));
             case ABOVE -> f.position().add(0, f.getBbHeight() + off, 0);
+            case BESIDE -> f.position().add(Vec3.directionFromRotation(0, yaw + 90).scale(off)).add(0, f.getBbHeight() * 0.2, 0);
+            case FRONT -> f.position().add(Vec3.directionFromRotation(0, yaw).scale(off)).add(0, f.getBbHeight() * 0.25, 0);
             case FIXED, TRAVEL -> position();
         };
         setPos(p.x, p.y, p.z);

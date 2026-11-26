@@ -197,6 +197,47 @@ public final class NenFx {
     /**
      * Image dessinée {@code sprite}. Accrochée à {@code anchor} (suit l'entité) si non nul, sinon posée en {@code at}.
      */
+    /**
+     * Les créatures invoquées ont un modèle GeckoLib (voir {@link com.evandouard.hxh.summon.NenSummons}) : au lieu de
+     * l'image, on pose l'invocation au bon endroit (à côté, devant, au-dessus du lanceur ou de la cible, ou au point).
+     */
+    private static boolean summonInstead(ServerLevel level, Sprite sprite, Entity anchor, Vec3 at, float size, int color, int duration) {
+        com.evandouard.hxh.summon.NenSummonEntity.Anchor A;
+        String model;
+        float scale, off;
+        switch (sprite) {
+            case COOKIE -> { model = com.evandouard.hxh.summon.NenSummons.COOKIE; A = com.evandouard.hxh.summon.NenSummonEntity.Anchor.BESIDE; scale = size * 0.9f; off = 1.1f; }
+            case BLINKY -> { model = com.evandouard.hxh.summon.NenSummons.BLINKY; A = com.evandouard.hxh.summon.NenSummonEntity.Anchor.FRONT; scale = size * 0.5f; off = 1.3f; }
+            case CLOWN -> { model = com.evandouard.hxh.summon.NenSummons.CLOWN; A = com.evandouard.hxh.summon.NenSummonEntity.Anchor.ABOVE; scale = size * 0.62f; off = 0.3f; }
+            case BOMB -> { model = com.evandouard.hxh.summon.NenSummons.BOMB; A = com.evandouard.hxh.summon.NenSummonEntity.Anchor.ABOVE; scale = size * 0.55f; off = 0.35f; }
+            case DEMON -> { model = com.evandouard.hxh.summon.NenSummons.DEMON; A = com.evandouard.hxh.summon.NenSummonEntity.Anchor.FIXED; scale = size * 0.45f; off = 1.2f; }
+            case SMOKE_SOLDIER -> { model = com.evandouard.hxh.summon.NenSummons.SMOKE_SOLDIER; A = com.evandouard.hxh.summon.NenSummonEntity.Anchor.FIXED; scale = size * 0.48f; off = 1.0f; }
+            default -> { return false; }
+        }
+        int tint = 0xF0FFFFFF;
+        if (A != com.evandouard.hxh.summon.NenSummonEntity.Anchor.FIXED) {
+            if (anchor == null) return false;
+            if (sprite == Sprite.BOMB || sprite == Sprite.CLOWN)
+                com.evandouard.hxh.summon.NenSummons.dismiss(level, model, anchor);
+            com.evandouard.hxh.summon.NenSummons.keep(level, anchor, model, anchor, A, scale, off, tint, duration);
+            return true;
+        }
+        // posé au point (pieds au sol sous le point de l'image), tourné vers l'entité vivante la plus proche
+        Vec3 base = at.subtract(0, off, 0);
+        com.evandouard.hxh.summon.NenSummonEntity e = com.evandouard.hxh.summon.NenSummons.spawnAt(level, null, model, null,
+                base, A, scale, 0f, sprite == Sprite.SMOKE_SOLDIER ? 0xD0FFFFFF : tint, duration + 10);
+        if (e == null) return true;
+        net.minecraft.world.entity.LivingEntity near = level.getNearestEntity(net.minecraft.world.entity.LivingEntity.class,
+                net.minecraft.world.entity.ai.targeting.TargetingConditions.forNonCombat().ignoreLineOfSight(), null,
+                base.x, base.y, base.z, new net.minecraft.world.phys.AABB(base, base).inflate(12));
+        if (near != null) {
+            Vec3 d = near.position().subtract(base);
+            e.face(new Vec3(d.x, 0, d.z));
+        }
+        e.actLater("strike", 6);
+        return true;
+    }
+
     public static void sprite(ServerLevel level, Sprite sprite, Entity anchor, Vec3 at, float size, int color, int duration) {
         // les dragons de Zeno sont des modèles GeckoLib qui volent jusqu'au point (plus des images)
         if (sprite == Sprite.DRAGON) {
@@ -207,6 +248,7 @@ public final class NenFx {
             if (d != null) d.actLater("strike", Math.max(3, duration / 2 - 2));
             return;
         }
+        if (summonInstead(level, sprite, anchor, at, size, color, duration)) return;
         if (sprite == Sprite.DRAGON_DIVE) {
             com.evandouard.hxh.summon.NenSummons.fly(level, anchor, com.evandouard.hxh.summon.NenSummons.DRAGON,
                     at.add(0.6, 7, 0.6), at, Math.max(3, duration - 2), 0f, size / 4.5f, 0xE8FFFFFF, duration + 4);

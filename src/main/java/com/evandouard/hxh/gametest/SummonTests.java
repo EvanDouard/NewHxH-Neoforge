@@ -85,4 +85,32 @@ public final class SummonTests {
             helper.succeed();
         });
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void creaturesReplaceTheirImages(GameTestHelper helper) {
+        var level = helper.getLevel();
+        Zombie biscuit = CharacterKitTests.husk(helper, 0);
+        biscuit.yBodyRot = -90f;
+        Zombie victim = CharacterKitTests.husk(helper, 3);
+        // Cookie se tient à droite de Biscuit
+        NenFx.sprite(level, NenFx.Sprite.COOKIE, biscuit, biscuit.position(), 1.3f, 0xFFFFB6D9, 80);
+        NenSummonEntity cookie = NenSummons.find(level, NenSummons.COOKIE, biscuit);
+        helper.assertTrue(cookie != null, "Cookie apparaît");
+        double side = Math.hypot(cookie.getX() - biscuit.getX(), cookie.getZ() - biscuit.getZ());
+        helper.assertTrue(side > 0.8 && side < 1.4, "À côté de Biscuit : " + side);
+        // la bombe de Genthru affiche les secondes restantes
+        NenFx.sprite(level, NenFx.Sprite.BOMB, victim, victim.position(), 1.5f, 0xFFFF7A3A, 60);
+        NenSummonEntity bomb = NenSummons.find(level, NenSummons.BOMB, victim);
+        helper.assertTrue(bomb != null && bomb.getY() > victim.getY() + victim.getBbHeight(), "Bombe au-dessus de la cible");
+        // un démon de Razor posé au sol sous le point de l'image
+        net.minecraft.world.phys.Vec3 at = biscuit.position().add(0, 1.2, 4);
+        NenFx.sprite(level, NenFx.Sprite.DEMON, null, at, 2.2f, 0xFFB03A3A, 40);
+        NenSummonEntity demon = level.getEntitiesOfClass(NenSummonEntity.class, new net.minecraft.world.phys.AABB(at, at).inflate(3),
+                s -> s.model().equals(NenSummons.DEMON)).stream().findFirst().orElse(null);
+        helper.assertTrue(demon != null && Math.abs(demon.getY() - (at.y - 1.2)) < 0.1, "Démon posé au sol");
+        helper.runAfterDelay(3, () -> {
+            helper.assertTrue("3".equals(bomb.label()), "Compte à rebours : " + bomb.label());
+            helper.succeed();
+        });
+    }
 }

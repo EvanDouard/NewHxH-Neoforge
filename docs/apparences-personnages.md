@@ -220,3 +220,12 @@ s'efface en fondu. Elle disparaît avec les effets de son lanceur (`NenFx.clear`
 | Terpsichora (`terpsichora`) | Pitou | derrière elle, translucide violet, fils depuis les doigts | `pull` |
 | Docteur Blythe (`doctor_blythe`) | Pitou | au-dessus du patient, coud en boucle | — |
 | Dragon (`dragon`) | Tête de dragon et Plongée du dragon de Zeno | vole de Zeno jusqu'à la cible (en arc), ou pique du ciel | `strike` (coup de gueule à l'arrivée) |
+| Cookie (`cookie`) | Esthéticienne magique de Biscuit | à la droite de Biscuit, flotte | — |
+| Démon (`demon`) | 14 Démons de Razor | posé au sol autour du terrain, tourné vers le plus proche | `strike` (smash) |
+| Soldat de fumée (`smoke_soldier`) | Deep Purple de Morel | posé derrière chaque cible touchée, translucide | `strike` (coup de lance) |
+| Blinky (`blinky`) | Aspirateur de Shizuku | devant elle, à hauteur de mains | `strike` (grande aspiration) |
+| Clown (`clown`) | Crazy Slots de Kite | jaillit au-dessus de Kite (diable à ressort) | `strike` (manette tirée) |
+| Bombe (`bomb`) | Compte à rebours de Genthru | collée au-dessus de la cible, secondes restantes sur le cadran | — |
+
+Ces six-là remplacent les anciennes images : `NenFx.sprite` pose l'invocation à la place (`summonInstead`).
+

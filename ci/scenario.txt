@@ -1852,6 +1852,17 @@ wait 40
 clearchat
 shot 68b_invocations_kannon_dragon
 cmd kill @e[type=hxh:nen_summon]
+look 0 8
+cmd summon hxh:nen_summon ~4.2 ~ ~6 {Model:"cookie",Scale:1.2f,Life:400,Rotation:[180f,0f]}
+cmd summon hxh:nen_summon ~2.2 ~ ~6 {Model:"demon",Scale:1f,Life:400,Rotation:[180f,0f]}
+cmd summon hxh:nen_summon ~0 ~ ~6 {Model:"smoke_soldier",Scale:0.95f,Life:400,Color:-805306369,Rotation:[180f,0f]}
+cmd summon hxh:nen_summon ~-2 ~0.5 ~6 {Model:"blinky",Scale:0.9f,Life:400,Rotation:[160f,0f]}
+cmd summon hxh:nen_summon ~-4.2 ~ ~6 {Model:"clown",Scale:0.8f,Life:400,Rotation:[180f,0f]}
+cmd summon hxh:nen_summon ~-6 ~0.8 ~6 {Model:"bomb",Scale:0.8f,Life:400,Label:"7",Rotation:[180f,0f]}
+wait 30
+clearchat
+shot 68c_invocations_cookie_demon_fumee_blinky_clown_bombe
+cmd kill @e[type=hxh:nen_summon]
 # Série « même style » : alignements de personnages (GeckoLib)
 hud off
 look 0 5

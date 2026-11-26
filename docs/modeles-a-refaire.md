@@ -113,7 +113,7 @@ modèle tenu en main (os `item_main`), utilisable aussi par les mobs-personnages
 | Parapluie-épée | Feitan | P2 |
 | Éventail | Kalluto | P2 |
 | Livre (Skill Hunter) | Chrollo | P2 |
-| Aspirateur Blinky | Shizuku (voir aussi 3.3) | P2 |
+| Aspirateur Blinky | Shizuku (voir aussi 3.3) | P2 — fait (26/11) : `summon_blinky` |
 | Pipe | Morel | P3 |
 | Seringues et mallette de médecin | Leorio, Cheadle | P3 |
 
@@ -169,15 +169,15 @@ Ils couvrent la plupart des 95 techniques ; les refaire améliore beaucoup de pe
 | Statue de Kannon et mains de Kannon | Netero (Bodhisattva, Main zéro) | **Fait (26/11)** : `summon_kannon` (9 à 12 blocs, 22 bras en éventail, gestes `strike` et `zero`) ; reste les mains dorées de la quête de Netero | P1 |
 | Dragons de Zeno (tête de dragon, descente du dragon) | Zeno | **Fait (26/11)** : `summon_dragon`, dragon serpentin qui vole jusqu'à la cible ou pique du ciel | P1 |
 | Poupée Doctor Blythe | Neferpitou | **Fait (26/11)** : `summon_doctor_blythe` au-dessus du patient, quatre bras qui cousent ; l'effet garde le cordon et les fils | P1 |
-| Démons de Razor (14) | Razor | Geo-Fx : démons humanoïdes numérotés | P2 |
-| Soldats de fumée | Morel (Deep Purple) | Geo-Fx : soldats de fumée, texture translucide | P2 |
-| Cookie la masseuse | Biscuit | Geo-Fx : petite masseuse | P2 |
-| Blinky | Shizuku | Geo-Fx (ou objet) : aspirateur avec son visage | P2 |
+| Démons de Razor (14) | Razor | **Fait (26/11) : `summon_demon`** Geo-Fx : démons humanoïdes numérotés | P2 |
+| Soldats de fumée | Morel (Deep Purple) | **Fait (26/11) : `summon_smoke_soldier`** Geo-Fx : soldats de fumée, texture translucide | P2 |
+| Cookie la masseuse | Biscuit | **Fait (26/11) : `summon_cookie`** Geo-Fx : petite masseuse | P2 |
+| Blinky | Shizuku | **Fait (26/11) : `summon_blinky`** Geo-Fx (ou objet) : aspirateur avec son visage | P2 |
 | Soleil levant | Feitan | Fx : soleil de feu texturé, chaleur | P2 |
-| Clown et armes de la roulette | Kite (Crazy Slots) | Geo-Fx : clown parlant + les armes en objets (2.3) | P2 |
+| Clown et armes de la roulette | Kite (Crazy Slots) | **Fait (26/11) : `summon_clown`** Geo-Fx : clown parlant + les armes en objets (2.3) | P2 |
 | Pot Clean (compteur) | Knuckle | **Fait (26/11)** : `summon_pot_clean` au-dessus de la cible, dette affichée sur sa pancarte, geste `collect` à chaque coup | P2 |
 | Ailes | Shaiapouf, Youpi | Geo : ailes intégrées au modèle du personnage, animées | P2 |
-| Bombe | Genthru | Objet/Fx : petite bombe accrochée à la cible | P3 |
+| Bombe | Genthru | **Fait (26/11) : `summon_bomb`**, au-dessus de la cible, secondes restantes sur le cadran (le démon bombardier reste à faire) | P3 |
 | Livre | Chrollo | Objet (2.3) | P3 |
 | Papier, porte marquée | Kalluto, Knov | Fx : papiers qui tourbillonnent, porte d'aura | P3 |
 | Cœur, notes de musique, goutte de peur | Pariston, Senritsu, peur | Fx : sprites redessinés dans le style manga | P3 |
