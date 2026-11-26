@@ -3054,14 +3054,15 @@ shot 99zp_bras_reine
 cmd hunter airship kakin_palace
 cmd time set noon
 wait 450
-wait 100
+wait 300
 shot 99zq_kakin_arrivee
 cmd effect give @s minecraft:slow_falling 60 0 true
-cmd tp @s 6000 90 2535 180 12
-wait 150
+cmd tp @s 6000 125 2560 180 28
+wait 200
 shot 99zr_kakin_palais
+cmd effect give @s minecraft:night_vision 600 0 true
 cmd tp @s 6000 76 2466 180 3
-wait 100
+wait 150
 shot 99zs_kakin_salle_trone
 cmd hunter jenny set 0
 cmd difficulty peaceful
