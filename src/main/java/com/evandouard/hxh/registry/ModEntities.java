@@ -102,6 +102,12 @@ public final class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> RAZOR = character("razor", 0.85f, 2.3f);
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> GENTHRU = character("genthru", 0.6f, 1.9f);
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> SENRITSU = character("senritsu", 0.55f, 1.4f);
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> GOTOH = character("gotoh", 0.55f, 1.85f);
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> SATOTZ = character("satotz", 0.55f, 1.95f);
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> CANARY = character("canary", 0.5f, 1.55f);
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> ALLUKA = character("alluka", 0.5f, 1.45f);
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> HANZO = character("hanzo", 0.55f, 1.7f);
+    public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> TONPA = character("tonpa", 0.6f, 1.5f);
     /** Kurapika sans le tabard (tunique blanche et ceinture) : même personnage, même kit. */
     public static final DeferredHolder<EntityType<?>, EntityType<com.evandouard.hxh.mob.CharacterEntity>> KURAPIKA_SANS_TUNIQUE = character("kurapika_sans_tunique", 0.6f, 1.85f);
 
@@ -195,6 +201,12 @@ public final class ModEntities {
         event.put(RAZOR.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(GENTHRU.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(SENRITSU.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
+        event.put(GOTOH.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
+        event.put(SATOTZ.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
+        event.put(CANARY.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
+        event.put(ALLUKA.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
+        event.put(HANZO.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
+        event.put(TONPA.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(LEORIO.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(KURAPIKA.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());
         event.put(KURAPIKA_SANS_TUNIQUE.get(), com.evandouard.hxh.mob.CharacterEntity.createAttributes().build());

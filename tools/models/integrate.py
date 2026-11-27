@@ -52,6 +52,12 @@ add('knov', 'Knov', 'Knov', 0.55, 1.85, 0x1E2840, 0x141418, {"all": 76}, 86, 88)
 add('razor', 'Razor', 'Razor', 0.85, 2.3, 0x141418, 0xE8E4DC, {"all": 85, "strength": 92}, 88, 84)
 add('genthru', 'Genthru', 'Genthru', 0.6, 1.9, 0x7EC2AE, 0xD8B048, {"all": 82, "strength": 86}, 86, 84)
 add('senritsu', 'Senritsu', 'Senritsu', 0.55, 1.4, 0x1A1A22, 0xE6C2A4, {"all": 60}, 78, 82)
+add('gotoh', 'Gotoh', 'Gotoh', 0.55, 1.85, 0x16161C, 0xF2F0EC, {"all": 72, "agility": 80}, 75, 78, kit='cast_gotoh')
+add('satotz', 'Satotz', 'Satotz', 0.55, 1.95, 0x5A3A7A, 0x9A7AC8, {"all": 74, "speed": 95}, 76, 76, kit='cast_satotz')
+add('canary', 'Canary', 'Canary', 0.5, 1.55, 0x1A1A20, 0xF6F4EE, {"all": 58}, 50, 45, kit='cast_canary')
+add('alluka', 'Alluka Zoldyck', 'Alluka Zoldyck', 0.5, 1.45, 0xF6C6D6, 0x141218, {"all": 50}, 98, 70, kit='cast_alluka')
+add('hanzo', 'Hanzo', 'Hanzo', 0.55, 1.7, 0x4A5A6E, 0xE8C4A2, {"all": 70, "agility": 85}, 60, 55, kit='cast_hanzo')
+add('tonpa', 'Tonpa', 'Tonpa', 0.6, 1.5, 0x4A7AC0, 0x7A5A3A, {"all": 35}, 10, 5, kit='cast_tonpa')
 
 
 def rep(p, a, b, once=True):

@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:gotoh",
+  "stats": {
+    "all": 72,
+    "agility": 80
+  },
+  "nen": {
+    "level": 75,
+    "kit": "cast_gotoh",
+    "mastery": 78
+  }
+}

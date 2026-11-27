@@ -35,6 +35,7 @@ public final class MobKits {
     static {
         MobTechniques.init();
         ArenaChallengers.init();
+        SupportingCast.init();
         kit("mob_skeleton", EMITTER, MobTechniques.NEN_ARROWS, EntityType.SKELETON, EntityType.STRAY, EntityType.BOGGED);
         kit("mob_creeper", EMITTER, MobTechniques.AURA_MINES, EntityType.CREEPER);
         kit("mob_zombie", CONJURER, MobTechniques.NEN_HORDE, EntityType.ZOMBIE, EntityType.HUSK, EntityType.DROWNED, EntityType.ZOMBIE_VILLAGER);

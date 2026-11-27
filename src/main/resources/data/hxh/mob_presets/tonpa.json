@@ -1,0 +1,11 @@
+{
+  "entity": "hxh:tonpa",
+  "stats": {
+    "all": 35
+  },
+  "nen": {
+    "level": 10,
+    "kit": "cast_tonpa",
+    "mastery": 5
+  }
+}

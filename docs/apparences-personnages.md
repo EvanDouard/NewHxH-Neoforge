@@ -29,7 +29,7 @@ Sans fichier d'apparence, un PNJ utilise `textures/entity/npc/<id>.png`, sinon S
 ## Modèles sur mesure (GeckoLib)
 
 Les personnages refaits au niveau décrit dans `docs/Analyse_model.md` ont un vrai modèle GeckoLib, qui remplace le
-rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark**, **Pakunoda**, **Ging**, **Phinks**, **Knuckle**, **Wing**, **Zushi**, **Menchi**, **Cheadle**, **Palm**, **Morel**, **Neon**, **Pariston**, **Knov**, **Razor**, **Genthru** et **Senritsu**.
+rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark**, **Pakunoda**, **Ging**, **Phinks**, **Knuckle**, **Wing**, **Zushi**, **Menchi**, **Cheadle**, **Palm**, **Morel**, **Neon**, **Pariston**, **Knov**, **Razor**, **Genthru**, **Senritsu**, **Gotoh**, **Satotz**, **Canary**, **Alluka**, **Hanzo** et **Tonpa**.
 
 ```
 python3 tools/models/gon.py
@@ -201,6 +201,15 @@ Tous sont des mobs neutres (alliés entre eux) avec leur kit Hatsu.
 
 | Genthru | 1,9 | blond en pointes hérissées vers le haut et l'arrière | lunettes anguleuses, manteau vert d'eau à croix, écharpe bleu clair | rictus du tueur |
 | Senritsu | 1,4 | noir court ondulé en casque arrondi | grands yeux ronds, costume noir à nœud papillon, flûte | écoute attentive |
+
+| Gotoh | 1,85 | noir court peigné en arrière, raie sur le côté | lunettes rondes, queue-de-pie, pièce entre les doigts | regard de tireur |
+| Satotz | 1,95 | lavande, deux grosses boucles enroulées sur les côtés | moustache en guidon, costume violet | sévère |
+| Canary | 1,55 | noir bouclé mi-court | tenue de servante, tablier, long bâton | déterminé |
+| Alluka | 1,45 | noir raide jusqu'au bas du dos, frange droite | kimono rose à fleurs, obi rouge | Nanika (yeux et bouche en trous noirs) |
+| Hanzo | 1,7 | crâne rasé | tenue de ninja, bandages, lame au poignet | sérieux |
+| Tonpa | 1,5 | brun très court en brosse, épi | gros nez, chemise bleue, sac à canettes | sourire fourbe |
+
+Ces six-là n'ont pas de kit jouable : leurs Hatsu sont des kits de mobs (`SupportingCast`, ids `cast_<nom>`).
 
 `tools/models/hairkit.py` regroupe les rideaux de cheveux longs (`curtain` : `inward` > 0 ramène les pointes vers
 le dos, `flip` les fait rebiquer, `flare` les écarte) et les lunettes en relief (`glasses`).

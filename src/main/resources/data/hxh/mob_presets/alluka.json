@@ -1,0 +1,11 @@
+{
+  "entity": "hxh:alluka",
+  "stats": {
+    "all": 50
+  },
+  "nen": {
+    "level": 98,
+    "kit": "cast_alluka",
+    "mastery": 70
+  }
+}

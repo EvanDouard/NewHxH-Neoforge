@@ -1,0 +1,11 @@
+{
+  "entity": "hxh:canary",
+  "stats": {
+    "all": 58
+  },
+  "nen": {
+    "level": 50,
+    "kit": "cast_canary",
+    "mastery": 45
+  }
+}

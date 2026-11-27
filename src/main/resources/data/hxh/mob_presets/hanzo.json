@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:hanzo",
+  "stats": {
+    "all": 70,
+    "agility": 85
+  },
+  "nen": {
+    "level": 60,
+    "kit": "cast_hanzo",
+    "mastery": 55
+  }
+}

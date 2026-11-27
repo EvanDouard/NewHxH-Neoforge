@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:satotz",
+  "stats": {
+    "all": 74,
+    "speed": 95
+  },
+  "nen": {
+    "level": 76,
+    "kit": "cast_satotz",
+    "mastery": 76
+  }
+}

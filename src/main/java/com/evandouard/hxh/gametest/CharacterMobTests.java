@@ -424,4 +424,64 @@ public final class CharacterMobTests {
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.4f) < 0.01f, "Taille");
         }));
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void gotohIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.GOTOH.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("cast_gotoh".equals(HunterStats.get(c).kit()), "Kit de Gotoh (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.85f) < 0.01f, "Taille");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void satotzIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.SATOTZ.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("cast_satotz".equals(HunterStats.get(c).kit()), "Kit de Satotz (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.95f) < 0.01f, "Taille");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void canaryIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.CANARY.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("cast_canary".equals(HunterStats.get(c).kit()), "Kit de Canary (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.55f) < 0.01f, "Taille");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void allukaIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.ALLUKA.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("cast_alluka".equals(HunterStats.get(c).kit()), "Kit de Alluka Zoldyck (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.45f) < 0.01f, "Taille");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void hanzoIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.HANZO.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("cast_hanzo".equals(HunterStats.get(c).kit()), "Kit de Hanzo (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.7f) < 0.01f, "Taille");
+        }));
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void tonpaIsInTheGameWithHisKit(GameTestHelper helper) {
+        CharacterEntity c = helper.spawn(ModEntities.TONPA.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> helper.succeedWhen(() -> {
+            helper.assertTrue("cast_tonpa".equals(HunterStats.get(c).kit()), "Kit de Tonpa (" + HunterStats.get(c).kit() + ")");
+            helper.assertTrue(!(c instanceof Enemy) && (c.getTarget() == null || c.getLastHurtByMob() != null), "Neutre");
+            helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.5f) < 0.01f, "Taille");
+        }));
+    }
 }
