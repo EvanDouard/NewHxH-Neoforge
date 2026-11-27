@@ -154,7 +154,8 @@ public class AirshipMapScreen extends Screen {
         g.fill(mapX - 3, mapY - 3, mapX + mapW + 3, mapY + mapH + 3, INK);
         g.blit(MAP, mapX, mapY, mapW, mapH, 0, 0, TEX_W, TEX_H, TEX_W, TEX_H);
         g.drawCenteredString(font, title, width / 2, 8, 0xFFFFFFFF);
-        g.drawString(font, Component.translatable("airship.hxh.jenny", data.jenny()), mapX, 8, JENNY);
+        Component jenny = Component.translatable("airship.hxh.jenny", data.jenny());
+        g.drawString(font, jenny, mapX + mapW - font.width(jenny), 8, JENNY);
 
         OpenAirshipPayload.Dest hover = pinAt(mouseX, mouseY);
         char region = hover != null ? regionOf(hover) : regionAtScreen(mouseX, mouseY);
