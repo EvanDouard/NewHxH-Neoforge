@@ -3215,7 +3215,7 @@ cmd gamemode survival
 cmd hunter jenny set 20000
 cmd hunter airship black_whale_port
 cmd time set noon
-wait 450
+wait 300
 shot 99zh_baleine_noire_quai
 cmd effect give @s minecraft:slow_falling 60 0 true
 cmd tp @s 5430 80 2230 180 15
@@ -3227,7 +3227,7 @@ shot 99zj_baleine_noire_ponton
 cmd hunter jenny set 20000
 cmd hunter airship hunter_exam_hotel
 cmd time set noon
-wait 450
+wait 300
 shot 99zk_hotel_arrivee
 cmd effect give @s minecraft:slow_falling 60 0 true
 cmd tp @s 905 72 1700 180 5
@@ -3239,25 +3239,25 @@ shot 99zm_hotel_pavillon_president
 cmd hunter jenny set 20000
 cmd hunter airship greed_island
 cmd time set noon
-wait 450
+wait 300
 shot 99zn_greed_island_place
 cmd hunter jenny set 20000
 cmd hunter airship kite_forest
 cmd time set noon
-wait 450
-wait 100
+wait 260
+wait 40
 shot 99zo_kite_camp
 cmd hunter jenny set 20000
 cmd hunter airship chimera_ant_queen_arm
 cmd time set noon
-wait 450
-wait 100
+wait 260
+wait 40
 shot 99zp_bras_reine
 cmd hunter jenny set 20000
 cmd hunter airship kakin_palace
 cmd time set noon
-wait 450
-wait 100
+wait 260
+wait 40
 shot 99zq_kakin_arrivee
 cmd effect give @s minecraft:slow_falling 60 0 true
 cmd gamemode spectator
@@ -3272,8 +3272,8 @@ cmd hunter jenny set 20000
 cmd gamemode creative
 cmd hunter airship meteor_city
 cmd time set noon
-wait 450
-wait 100
+wait 260
+wait 40
 shot 99zt_meteor_arrivee
 cmd effect give @s minecraft:slow_falling 60 0 true
 cmd gamemode spectator
@@ -3284,8 +3284,8 @@ cmd gamemode survival
 cmd hunter jenny set 20000
 cmd hunter airship ngl_village
 cmd time set noon
-wait 450
-wait 100
+wait 260
+wait 40
 shot 99zv_ngl_arrivee
 cmd gamemode spectator
 cmd tp @s 1350 118 4985 180 28
@@ -3295,8 +3295,8 @@ cmd gamemode survival
 cmd hunter jenny set 20000
 cmd hunter airship mafia_hq
 cmd time set noon
-wait 450
-wait 100
+wait 260
+wait 40
 shot 99zx_mafia_arrivee
 cmd gamemode spectator
 cmd tp @s 795 95 3835 90 22
@@ -3306,8 +3306,8 @@ cmd gamemode survival
 cmd hunter jenny set 20000
 cmd hunter airship masadora
 cmd time set noon
-wait 450
-wait 100
+wait 260
+wait 40
 shot 99zz_masadora_arrivee
 cmd gamemode spectator
 cmd tp @s 3475 95 4205 180 25
@@ -3317,8 +3317,8 @@ cmd gamemode survival
 cmd hunter jenny set 20000
 cmd hunter airship padokea_town
 cmd time set noon
-wait 450
-wait 100
+wait 260
+wait 40
 shot 99zzb_padokea_arrivee
 cmd gamemode spectator
 cmd tp @s 2655 100 1585 180 25
