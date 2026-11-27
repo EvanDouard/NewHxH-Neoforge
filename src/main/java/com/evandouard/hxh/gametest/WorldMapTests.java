@@ -30,6 +30,15 @@ public final class WorldMapTests {
     }
 
     @GameTest(template = "empty")
+    public static void hxhWorldHasNoVanillaStructures(GameTestHelper helper) {
+        var level = helper.getLevel().getServer().getLevel(Airship.WORLD);
+        helper.assertTrue(level != null, "Le monde HxH existe");
+        helper.assertTrue(level.getChunkSource().getGenerator() instanceof com.evandouard.hxh.world.HxHChunkGenerator,
+                "Le monde HxH utilise son générateur sans structures vanilla");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void terrainDensityFollowsTheMap(GameTestHelper helper) {
         HxHWorldMap map = HxHWorldMap.get();
         AirshipDestination whale = AirshipRegistry.get("hxh:whale_island");

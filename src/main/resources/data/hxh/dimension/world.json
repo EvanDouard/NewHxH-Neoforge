@@ -1,7 +1,7 @@
 {
   "type": "hxh:world",
   "generator": {
-    "type": "minecraft:noise",
+    "type": "hxh:world",
     "settings": "hxh:world",
     "biome_source": {
       "type": "hxh:world_map",
