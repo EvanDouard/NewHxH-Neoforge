@@ -131,7 +131,7 @@ public final class WorldPlaces extends SimpleJsonResourceReloadListener {
         net.minecraft.world.phys.AABB area = new net.minecraft.world.phys.AABB(ax + Math.min(c[0], c[3]) - 32, gy - 20, az + Math.min(c[2], c[5]) - 32,
                 ax + Math.max(c[0], c[3]) + 32, gy + 120, az + Math.max(c[2], c[5]) + 32);
         for (net.minecraft.world.entity.Mob m : level.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, area, e ->
-                (e instanceof net.minecraft.world.entity.animal.Animal || e instanceof net.minecraft.world.entity.AmbientCreature
+                (e instanceof net.minecraft.world.entity.animal.Animal || e instanceof net.minecraft.world.entity.ambient.AmbientCreature
                         || e instanceof net.minecraft.world.entity.animal.WaterAnimal)
                         && !e.hasCustomName() && !e.isPersistenceRequired()
                         && !(e instanceof net.minecraft.world.entity.TamableAnimal t && t.isTame()))) m.discard();
