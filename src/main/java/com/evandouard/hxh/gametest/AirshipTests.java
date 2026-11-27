@@ -42,6 +42,17 @@ public final class AirshipTests {
     }
 
     @GameTest(template = "empty")
+    public static void switchWorldRefusesWithoutHxhDimension(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        if (helper.getLevel().getServer().getLevel(Airship.WORLD) == null) {
+            helper.assertTrue("message.hxh.world.missing".equals(Airship.switchWorld(player, true)), "Sans dimension HxH : refus");
+        } else {
+            helper.assertTrue("message.hxh.world.already_normal".equals(Airship.switchWorld(player, false)) || player.level().dimension().equals(Airship.WORLD), "Déjà dans le monde normal : refus");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void travelChecksThenCharges(GameTestHelper helper) {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
         QuestData d = QuestManager.data(player);

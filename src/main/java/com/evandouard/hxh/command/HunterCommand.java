@@ -455,6 +455,10 @@ public final class HunterCommand {
                                                                 return 0;
                                                             }
                                                         }))))))
+                // Passage entre le monde normal et le monde HxH
+                .then(Commands.literal("world")
+                        .then(Commands.literal("hxh").executes(ctx -> switchWorld(ctx.getSource(), true)))
+                        .then(Commands.literal("normal").executes(ctx -> switchWorld(ctx.getSource(), false))))
                 .then(Commands.literal("airship").requires(s -> s.hasPermission(2))
                         .executes(ctx -> {
                             com.evandouard.hxh.airship.Airship.open(ctx.getSource().getPlayerOrException());
@@ -1051,5 +1055,11 @@ public final class HunterCommand {
         }
         src.sendSuccess(() -> Component.translatable("message.hxh.en_shape_set"), false);
         return 1;
+    }
+
+    private static int switchWorld(net.minecraft.commands.CommandSourceStack src, boolean toHxh) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        String refusal = com.evandouard.hxh.airship.Airship.switchWorld(src.getPlayerOrException(), toHxh);
+        if (refusal != null) src.sendFailure(Component.translatable(refusal));
+        return refusal == null ? 1 : 0;
     }
 }

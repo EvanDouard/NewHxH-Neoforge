@@ -1943,5 +1943,10 @@
   "npc.hxh.policier_padokea": "Padokea policeman",
   "dialog.hxh.policier_padokea.idle": "Move along. No brawling outside the arena.",
   "npc.hxh.habitant_padokea": "Padokea resident",
-  "dialog.hxh.habitant_padokea.idle": "Ever since the Tower draws crowds, the town never sleeps."
+  "dialog.hxh.habitant_padokea.idle": "Ever since the Tower draws crowds, the town never sleeps.",
+  "message.hxh.world.missing": "The HxH world is not available.",
+  "message.hxh.world.already_hxh": "You are already in the HxH world.",
+  "message.hxh.world.already_normal": "You are already in the normal world.",
+  "message.hxh.world.to_hxh": "Welcome to the world of Hunter x Hunter",
+  "message.hxh.world.to_normal": "Back in the normal world"
 }

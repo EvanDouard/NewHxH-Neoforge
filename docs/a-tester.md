@@ -376,3 +376,4 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [x] CI : GameTest `masadoraSketch` (Masadora : borne, maison, mairie, flèche, fontaine, 2 PNJ) + captures `99zz_masadora_arrivee`, `99zza_masadora_vue`. Île de Greed Island agrandie à l'est.
 - [x] CI : GameTest `padokeaTownSketch` (ville de Padokea : borne, rail, croix rouge, hôtel, centre commercial, 4 PNJ) + captures `99zzb_padokea_arrivee`, `99zzc_padokea_vue`.
 - [ ] En jeu : carte du dirigeable nette (plus de flou) ; arrivée directe dans un lieu sans plateforme qui apparaît puis disparaît ; plus d'animaux sauvages autour des lieux à l'arrivée.
+- [ ] En jeu : `/hunter world normal` puis `/hunter world hxh` — on retrouve l'endroit quitté dans chaque monde (première fois : île de la Baleine / point d'apparition).

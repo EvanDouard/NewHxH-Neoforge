@@ -1943,5 +1943,10 @@
   "npc.hxh.policier_padokea": "Policier de Padokea",
   "dialog.hxh.policier_padokea.idle": "Circulez. Pas de bagarre en dehors de l'arène.",
   "npc.hxh.habitant_padokea": "Habitant de Padokea",
-  "dialog.hxh.habitant_padokea.idle": "Depuis que la Tour attire du monde, la ville ne dort plus."
+  "dialog.hxh.habitant_padokea.idle": "Depuis que la Tour attire du monde, la ville ne dort plus.",
+  "message.hxh.world.missing": "Le monde HxH n'est pas disponible.",
+  "message.hxh.world.already_hxh": "Tu es déjà dans le monde HxH.",
+  "message.hxh.world.already_normal": "Tu es déjà dans le monde normal.",
+  "message.hxh.world.to_hxh": "Bienvenue dans le monde de Hunter x Hunter",
+  "message.hxh.world.to_normal": "Retour dans le monde normal"
 }

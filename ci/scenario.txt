@@ -3324,6 +3324,13 @@ cmd gamemode spectator
 cmd tp @s 2655 100 1585 180 25
 wait 200
 shot 99zzc_padokea_vue
+cmd gamemode survival
+cmd hunter world normal
+wait 200
+shot 99zzd_retour_monde_normal
+cmd hunter world hxh
+wait 200
+shot 99zze_retour_monde_hxh
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative

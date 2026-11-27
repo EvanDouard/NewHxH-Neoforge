@@ -104,6 +104,46 @@ public final class Airship {
         return new BlockPos(x, y, z);
     }
 
+    private static final String LAST_POS = "hxh_last_pos_";
+
+    /**
+     * Passe du monde normal au monde HxH (ou l'inverse). La position quittée est mémorisée : on retrouve l'endroit
+     * exact au retour ; la première fois, on arrive sur l'île de la Baleine (monde HxH) ou au point d'apparition (monde normal).
+     * @return null si le passage a lieu, sinon la clé du message de refus
+     */
+    @Nullable
+    public static String switchWorld(ServerPlayer player, boolean toHxh) {
+        ServerLevel hxh = player.server.getLevel(WORLD);
+        if (hxh == null) return "message.hxh.world.missing";
+        boolean inHxh = player.level().dimension().equals(WORLD);
+        if (inHxh == toHxh) return toHxh ? "message.hxh.world.already_hxh" : "message.hxh.world.already_normal";
+        BlockPos here = player.blockPosition();
+        player.getPersistentData().putIntArray(LAST_POS + (inHxh ? "hxh" : "normal"), new int[]{here.getX(), here.getY(), here.getZ()});
+        int[] saved = player.getPersistentData().getIntArray(LAST_POS + (toHxh ? "hxh" : "normal"));
+        if (toHxh) {
+            if (saved.length == 3) {
+                player.teleportTo(hxh, saved[0] + 0.5, saved[1], saved[2] + 0.5, player.getYRot(), 0f);
+            } else {
+                AirshipDestination home = AirshipRegistry.get("hxh:whale_island");
+                if (home == null) return "message.hxh.world.missing";
+                arrive(player, home);
+            }
+        } else {
+            ServerLevel normal = player.server.overworld();
+            if (saved.length == 3) {
+                player.teleportTo(normal, saved[0] + 0.5, saved[1], saved[2] + 0.5, player.getYRot(), 0f);
+            } else {
+                BlockPos spawn = normal.getSharedSpawnPos();
+                int y = normal.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, spawn.getX(), spawn.getZ());
+                player.teleportTo(normal, spawn.getX() + 0.5, y, spawn.getZ() + 0.5, player.getYRot(), 0f);
+            }
+        }
+        player.resetFallDistance();
+        player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
+                toHxh ? "message.hxh.world.to_hxh" : "message.hxh.world.to_normal"), true);
+        return null;
+    }
+
     /** Étiquette posée sur un joueur déjà accueilli dans le monde HxH (une seule arrivée automatique). */
     public static final String WELCOMED_TAG = "hxh_welcomed";
 
