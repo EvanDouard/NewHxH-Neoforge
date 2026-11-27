@@ -55,10 +55,10 @@ def build_hair(m):
     for g in range(4):                                              # mèches enroulées autour du chignon
         m.cube('knot', [kx - 1.55, ky - 0.4 + 0.25 * g, kz - 0.25], [3.1, 0.3, 0.5], mk(0.3)(0.5),
                pivot=[kx, ky, kz], rotation=[0, 45 * g, 18])
-    m.cube('knot', [kx - 1.0, ky - 1.1, kz - 1.0], [2.0, 0.5, 2.0], flat(OBI, 0.9))                     # lien
+    m.cube('knot', [kx - 1.3, ky - 1.3, kz - 1.3], [2.6, 0.8, 2.6], flat(rgb('#d8d0b0'), 0.9))            # lien clair, bien visible
     for k, (dx, L, W, rz, cz) in enumerate(((0, 12.0, 3.8, 0, 0), (-0.8, 10.0, 3.0, 14, -10), (0.8, 10.5, 3.0, -14, 10))):
-        lock(m, f'n_tail{k}', [kx + dx, ky + 0.2, kz + 1.0], L + 0.5, W, 118, rz, mk(0.22 - 0.06 * k), flat=0.7,
-             curve=(66, cz), segs=5, root=1.1, tip=0.08, taper_pow=0.6, parent='knot', skew=0.06 * (k - 1))
+        lock(m, f'n_tail{k}', [kx + dx, ky - 0.6, kz + 1.0], L + 2.5, W, 150, rz * 0.6, mk(0.22 - 0.06 * k), flat=0.7,
+             curve=(26, cz), segs=5, root=1.1, tip=0.08, taper_pow=0.6, parent='knot', skew=0.06 * (k - 1))
     for sx in (-1, 1):                                            # mèches libres sur les tempes
         lock(m, f'n_t{sx}', [sx * 3.7, b.head_y + 6.2, -hz + 0.4], 4.6, 1.5, 180, -sx * 6, mk(0.18), flat=0.5,
              curve=(-8, sx * 8), segs=3, root=1.1, tip=0.15, taper_pow=0.6, parent='head')
@@ -69,8 +69,8 @@ def face_paint(ctx, mode='calme'):
     material(SKIN, grad=0.05, noise=2, outline=False)(ctx)
     f = FaceGrid(ctx)
     f.rect(0, 0, 66, 6, HAIR)
-    f.poly((10, 21, 28, 19, 28, 22, 10, 24), LINE) if not duel else f.poly((10, 18, 28, 22, 28, 25, 10, 21), LINE)
-    f.poly((56, 21, 38, 19, 38, 22, 56, 24), LINE) if not duel else f.poly((56, 18, 38, 22, 38, 25, 56, 21), LINE)
+    f.poly((10, 19, 28, 21, 28, 24, 10, 22), LINE) if not duel else f.poly((10, 18, 28, 22, 28, 25, 10, 21), LINE)
+    f.poly((56, 19, 38, 21, 38, 24, 56, 22), LINE) if not duel else f.poly((56, 18, 38, 22, 38, 25, 56, 21), LINE)
     for x0 in (12, 40):
         top = 26 if duel else 28
         f.rect(x0, top, x0 + 14, 32, (240, 236, 228))

@@ -34,21 +34,18 @@ def build_hair(m):
     top = b.top
     m.bone('hair', [0, top, 0], 'head')
     rnd = random.Random(401)
-    c, R = (0.0, top - 3.6, 0.3), 4.7
+    c, R = (0.0, top - 3.7, 0.3), 4.4
     scalp(m, c, R, lambda k: mk(k - 0.05)(0.5), skip_front=46, front_phi=36)
     rr = R + 0.25
     for i, az in enumerate(range(0, 360, 20)):
         if 136 < az < 224:
             continue
-        crown_lock(m, f's_m{i}', c, rr, az + rnd.uniform(-4, 4), 94 + rnd.uniform(-5, 5), 8.8 + rnd.uniform(-0.8, 0.6),
+        crown_lock(m, f's_m{i}', c, rr, az + rnd.uniform(-4, 4), 70 + rnd.uniform(-2, 2), 11.6 + rnd.uniform(-0.3, 0.3),
                    3.6 + rnd.uniform(-0.4, 0.8), mk(0.14 + 0.06 * math.cos(math.radians(az - 140))),
-                   flat=0.3, turn=100 + rnd.uniform(-6, 6), tip=0.85, segs=4, taper_pow=0.15,
-                   twist=rnd.uniform(-8, 8), side=rnd.uniform(-10, 10))
-    curtain(m, 's_c', c, rr - 0.5, range(-126, 127, 18), 0.8, 4.2, 3.8, lambda i: mk(0.06 + 0.04 * (i % 2)),
-            inward=4, rnd=rnd, tip=0.9, segs=3, belly=1.02)
-    for j, (az, L, lean) in enumerate(((148, 4.4, -4), (166, 4.8, 2), (184, 4.6, -2), (202, 4.9, 4), (216, 4.0, 8))):
-        crown_lock(m, f's_f{j}', c, rr + 0.05, az, 80, L, 3.8 + 0.3 * (j % 2), mk(0.24), flat=0.3, turn=84, tip=0.7, segs=3, lean=lean,
-                   twist=rnd.uniform(-6, 6))
+                   flat=0.3, turn=78 + rnd.uniform(-3, 3), tip=0.9, segs=5, taper_pow=0.12,
+                   twist=rnd.uniform(-3, 3))
+    for j, (az, L, lean) in enumerate(((146, 4.6, -6), (163, 4.6, -2), (180, 4.6, 0), (197, 4.6, 2), (214, 4.6, 6))):
+        crown_lock(m, f's_f{j}', c, rr + 0.05, az, 74, L + 1.6, 4.0, mk(0.24), flat=0.28, turn=80, tip=0.95, segs=3, lean=lean)
 
 
 def face_paint(ctx, mode='calme'):

@@ -42,14 +42,12 @@ def build_hair(m):
     scalp(m, c, R, lambda k: mk(k - 0.05)(0.5), skip_front=46, front_phi=36)
     rr = R + 0.25
     for i, az in enumerate(range(-150, 151, 22)):
-        crown_lock(m, f'c_m{i}', c, rr, az + rnd.uniform(-5, 5), 88 + rnd.uniform(-8, 6), 7.6 + rnd.uniform(-0.8, 1.2),
+        crown_lock(m, f'c_m{i}', c, rr, az + rnd.uniform(-5, 5), 72 + rnd.uniform(-3, 3), 11.4 + rnd.uniform(-0.6, 0.6),
                    3.8 + rnd.uniform(-0.3, 0.9), mk(0.16 + 0.06 * math.cos(math.radians(az))), flat=0.4,
-                   turn=92 + rnd.uniform(-8, 6), tip=0.3, segs=4, twist=rnd.uniform(-10, 10), side=rnd.uniform(-18, 18))
-    curtain(m, 'c_c', c, rr - 0.9, range(-124, 125, 20), 1.8, 6.0, 4.0, lambda i: mk(0.06 + 0.05 * (i % 2)),
-            inward=5, flip=22, rnd=rnd, tip=0.25, segs=4)
+                   turn=76 + rnd.uniform(-3, 3), tip=0.4, segs=5, twist=rnd.uniform(-5, 5))
     for j, az in enumerate((150, 165, 180, 195, 210)):           # frange droite légère
-        crown_lock(m, f'c_f{j}', c, rr + 0.05, az, 88, 5.4 + 0.5 * (j % 2), 3.4, mk(0.28), flat=0.32, turn=76, tip=0.5, segs=3,
-                   lean=(j - 2) * 4, side=(j - 2) * 6)
+        crown_lock(m, f'c_f{j}', c, rr + 0.05, az, 82, 3.6, 2.8, mk(0.28), flat=0.28, turn=74, tip=0.4, segs=3,
+                   lean=(j - 2) * 6, side=(j - 2) * 8)
 
 
 def face_paint(ctx, mode='calme'):

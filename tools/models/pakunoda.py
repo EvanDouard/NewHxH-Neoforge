@@ -42,20 +42,20 @@ def build_hair(m):
     rr = R + 0.25
     # mèches du sommet qui suivent le crâne
     for i, az in enumerate(range(-150, 151, 22)):
-        crown_lock(m, f'p_m{i}', c, rr, az + rnd.uniform(-4, 4), 90 + rnd.uniform(-4, 4), 8.4 + rnd.uniform(-0.5, 0.5),
-                   4.2, mk(0.16 + 0.06 * math.cos(math.radians(az))), flat=0.42, turn=104, tip=0.3, segs=4,
+        crown_lock(m, f'p_m{i}', c, rr, az + rnd.uniform(-4, 4), 88 + rnd.uniform(-5, 5), 12.0 + rnd.uniform(-1.2, 1.0),
+                   4.2 + rnd.uniform(-0.3, 0.6), mk(0.16 + 0.06 * math.cos(math.radians(az))), flat=0.4, turn=98, tip=0.2, segs=5,
                    twist=rnd.uniform(-6, 6), skew=rnd.uniform(-0.1, 0.1))
     # mi-longs : rideau jusqu'aux épaules, pointes qui rebiquent vers l'extérieur
     for i, az in enumerate(range(-132, 133, 16)):
         a = math.radians(az)
-        r = rr - 0.7 + (0.4 if i % 2 else 0.0)
-        lock(m, f'p_c{i}', [c[0] + r * math.sin(a), c[1] + 1.4, c[2] + r * math.cos(a)], 9.4 + rnd.uniform(-1.4, 0.8),
+        r = rr - 1.1 + (0.35 if i % 2 else 0.0)
+        lock(m, f'p_c{i}', [c[0] + r * math.sin(a), c[1] + 0.6, c[2] + r * math.cos(a)], 9.4 + rnd.uniform(-1.4, 0.8),
              3.6 + (0.0 if i % 2 else 0.5), 180, rnd.uniform(-3, 3),
              mk(0.06 + 0.05 * (i % 2)), flat=0.36, curve=(-30 * math.cos(a) * rnd.uniform(0.7, 1.2), 30 * math.sin(a) * rnd.uniform(0.6, 1.3)), segs=4, root=1.05,
              tip=0.15, taper_pow=0.4, belly=1.05, skew=rnd.uniform(-0.1, 0.1))
     # raie sur le côté : longue mèche balayée sur le front (côté droit du perso), mèches courtes de l'autre côté
-    for j, (az, L, W, lean, k) in enumerate(((150, 9.6, 4.4, -26, 0.34), (166, 8.6, 4.2, -30, 0.3),
-                                             (184, 7.4, 3.8, -34, 0.26), (206, 6.0, 3.4, 10, 0.3))):
+    for j, (az, L, W, lean, k) in enumerate(((148, 9.6, 3.2, -26, 0.34), (164, 8.4, 3.0, -30, 0.3),
+                                             (182, 7.0, 2.8, -34, 0.26), (208, 6.0, 3.0, 10, 0.3))):
         crown_lock(m, f'p_f{j}', c, rr + 0.1, az, 84, L, W, mk(k), flat=0.42, turn=96, tip=0.15, segs=4, lean=lean,
                    skew=0.1)
 

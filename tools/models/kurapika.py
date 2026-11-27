@@ -129,22 +129,25 @@ def build_hair(m, stage=3):
         (25, 11.8, 4.6, 0.42, 84, 0.04, 0.18, 10), (-52, 13.2, 4.2, 0.48, 90, 0.06, 0.26, 6),
         (50, 13.6, 4.0, 0.52, 92, 0.08, 0.2, -6), (-78, 14.0, 4.4, 0.45, 92, 0.12, 0.3, -10),
         (77, 14.4, 4.2, 0.5, 94, 0.1, 0.22, 8), (-104, 14.8, 4.0, 0.48, 94, 0.18, 0.2, 6),
-        (105, 14.2, 4.4, 0.44, 92, 0.16, 0.28, -4), (-130, 15.4, 3.6, 0.5, 96, 0.26, 0.12, -12),
-        (131, 15.8, 3.4, 0.5, 96, 0.24, 0.1, 12),
+        (105, 14.2, 4.4, 0.44, 92, 0.16, 0.28, -4), (-122, 13.6, 3.4, 0.5, 92, 0.26, 0.12, -12),
+        (123, 13.8, 3.2, 0.5, 92, 0.24, 0.1, 12),
     ]
     for i, (az, L, W, fl, turn, k, tip, tw) in enumerate(mains):
-        strand(f'hm_{i}', az + rnd.uniform(-3, 3), 72 + rnd.uniform(-9, 9), L - 2.0, W + 0.1, fl, turn + 14, k, tip, twist=tw,
-               skew=rnd.uniform(-0.1, 0.1))
+        sidek = min(1.0, abs(az) / 90.0)                 # côtés : pointes qui s'incurvent vers la joue
+        strand(f'hm_{i}', az + rnd.uniform(-4, 4), 72 + rnd.uniform(-12, 10), L - 2.0 + rnd.uniform(-1.4, 1.0),
+               W + rnd.uniform(-0.5, 0.6), fl, turn + 12 + 4 * sidek + rnd.uniform(-5, 5), k, tip * 0.6,
+               twist=tw * 1.6, skew=rnd.uniform(-0.16, 0.16))
     # frange : mèches principales du front, qui suivent le crâne puis retombent sur le front ; longueurs
     # différentes, deux plus longues qui descendent entre et à côté des yeux
     bangs = [  # (az, longueur, largeur, virage, éclairage, pointe, inclinaison latérale) : 3 masses larges
-        (154, 6.0, 4.6, 74, 0.3, 0.14, -12), (180, 6.4, 5.0, 74, 0.36, 0.1, 0), (206, 6.0, 4.4, 74, 0.32, 0.14, 12),
+        (152, 4.8, 3.4, 76, 0.3, 0.06, -10), (172, 5.6, 4.4, 74, 0.36, 0.05, -6), (194, 5.0, 4.0, 74, 0.34, 0.06, 6),
+        (210, 4.4, 3.0, 78, 0.3, 0.06, 10),
     ]
     for i, (az, L, W, turn, k, tip, lean) in enumerate(bangs):
-        strand(f'hf_{i}', az, 72 + rnd.uniform(-3, 3), L, W, 0.5, turn, k, tip, segs=4, lean=lean,
+        strand(f'hf_{i}', az, 74 + rnd.uniform(-3, 3), L, W, 0.45, turn, k, tip, segs=4, lean=lean,
                skew=rnd.uniform(-0.1, 0.1))
     # deux mèches fines qui tombent entre et à côté des yeux
-    for i, (az, L, lean) in enumerate(((170, 7.6, -4), (195, 7.0, 6))):
+    for i, (az, L, lean) in enumerate(((168, 6.6, -4), (196, 6.0, 6))):
         strand(f'hft_{i}', az, 70, L, 1.5, 0.6, 78, 0.4, 0.04, segs=4, lean=lean, rr=Rh + 0.12, root=1.0)
     if stage < 3:
         return
@@ -155,7 +158,7 @@ def build_hair(m, stage=3):
         strand(f'hs_{i}', az + rnd.uniform(-4, 4), 70 + rnd.uniform(-6, 6), L - 0.6, 2.4 + rnd.uniform(0, 0.6), 0.55,
                106 + rnd.uniform(-4, 6), -0.08, 0.2, rr=Rh - 0.3, twist=rnd.uniform(-15, 15), root=1.05)
     # 4) finition : quelques petites mèches qui dépassent du contour (côtés, arrière, tempes)
-    wisps = [(-96, 15.0, 1.6, 112), (88, 14.4, 1.5, 114), (-140, 15.8, 1.5, 114), (142, 15.4, 1.4, 112),
+    wisps = [(-96, 15.0, 1.6, 112), (88, 14.4, 1.5, 114), (-128, 13.6, 1.5, 110), (130, 13.4, 1.4, 110),
              (-10, 12.0, 1.6, 104), (40, 12.8, 1.4, 108)]
     for i, (az, L, W, turn) in enumerate(wisps):
         strand(f'hw_{i}', az, 72, L, W, 0.7, turn, 0.12, 0.05, rr=Rh + 0.15, root=1.0, twist=rnd.uniform(-20, 20))
@@ -198,12 +201,12 @@ def face_paint(ctx, mode='calme'):
         f.poly((11, 18, 27, 21, 27, 23, 11, 20), brow)
         f.poly((55, 18, 39, 21, 39, 23, 55, 20), brow)
     else:
-        f.poly((11, 19, 26, 18, 26, 20, 11, 21), brow)
-        f.poly((55, 19, 40, 18, 40, 20, 55, 21), brow)
+        f.poly((10, 20, 18, 17.5, 27, 18.5, 27, 19.5, 18, 18.5, 10, 21), brow)        # sourcils fins, relevés
+        f.poly((56, 20, 48, 17.5, 39, 18.5, 39, 19.5, 48, 18.5, 56, 21), brow)
     iris = SCARLET if red else EYE
     for x0, outer_left in ((11, True), (42, False)):
-        x1 = x0 + 13
-        top = 27 if red else 25
+        x1 = x0 + 14
+        top = 28 if red else 27
         white = (250, 250, 252)
         if outer_left:
             f.poly((x0, top + 1, x1, top, x1, 38, x0 + 2, 37), white)
@@ -354,14 +357,16 @@ def build_plain(m):
     gold = cloth(GOLD, shade(GOLD, 1.12), GOLD_DARK, seed=82)
     # col montant bordé de bleu et ouverture croisée (bande bleue en diagonale sur la poitrine)
     m.cube('torso', [-1.9, TORSO_Y1 - 0.1, -1.7], [3.8, 1.1, 3.4], tunic)
-    m.cube('torso', [-1.95, TORSO_Y1 + 0.8, -1.75], [3.9, 0.3, 3.5], blue)
-    m.cube('torso', [-0.25, TORSO_Y0 + 4.6, -TORSO_D / 2 - 0.22], [0.5, 4.6, 0.14], blue,
-           pivot=[0, TORSO_Y0 + 6.9, -TORSO_D / 2], rotation=[0, 0, -24])
-    for y in (TORSO_Y0 + 5.6, TORSO_Y0 + 7.4):                                           # attaches dorées
-        m.cube('torso', [0.6, y, -TORSO_D / 2 - 0.3], [0.5, 0.4, 0.2], gold)
+    m.cube('torso', [-1.95, TORSO_Y1 + 0.5, -1.75], [3.9, 0.6, 3.5], blue)                  # col montant bleu
+    m.cube('torso', [-0.45, TORSO_Y0 + 4.2, -TORSO_D / 2 - 0.25], [0.9, 6.0, 0.2], blue,
+           pivot=[0, TORSO_Y0 + 7.2, -TORSO_D / 2], rotation=[0, 0, -26])                   # bande croisée, large
+    m.cube('torso', [-0.5, TORSO_Y0 + 4.2, -TORSO_D / 2 - 0.3], [1.0, 6.0, 0.06], cloth(TABARD_DARK, seed=84),
+           pivot=[0, TORSO_Y0 + 7.2, -TORSO_D / 2], rotation=[0, 0, -26])
+    for y in (TORSO_Y0 + 5.2, TORSO_Y0 + 6.8, TORSO_Y0 + 8.4):                           # attaches dorées
+        m.cube('torso', [0.7, y, -TORSO_D / 2 - 0.35], [0.7, 0.5, 0.25], gold)
     # ceinture bleue nouée sur le côté gauche, pans du nœud qui retombent
     m.cube('torso', [-TORSO_W / 2 + 0.15, TORSO_Y0 + 0.2, -TORSO_D / 2 - 0.2], [TORSO_W - 0.3, 1.2, TORSO_D + 0.4], blue)
-    m.cube('torso', [TORSO_W / 2 - 0.9, TORSO_Y0 - 0.1, -TORSO_D / 2 - 0.45], [1.1, 1.6, 0.5], blue)       # nœud
+    m.cube('torso', [TORSO_W / 2 - 1.3, TORSO_Y0 - 0.3, -TORSO_D / 2 - 0.55], [1.6, 2.0, 0.7], blue)       # nœud, plus gros
     for k, (dx, L) in enumerate(((0.0, 3.4), (0.55, 2.6))):
         m.cube('torso', [TORSO_W / 2 - 0.8 + dx, TORSO_Y0 - L, -TORSO_D / 2 - 0.42], [0.45, L, 0.2], blue,
                pivot=[TORSO_W / 2 - 0.6 + dx, TORSO_Y0, -TORSO_D / 2 - 0.3], rotation=[0, 0, 6 + 8 * k])

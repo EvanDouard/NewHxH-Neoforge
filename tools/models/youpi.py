@@ -23,7 +23,7 @@ PANTS = rgb('#141418')
 PANTS_L = rgb('#2c2c36')
 
 BODY = Body(head=(7.2, 7.6, 7.2), head_y=29.4, hip_y=15.4, knee_y=7.6, shoulder_y=27.6, arm_x=8.8, leg_x=2.7,
-            torso_w=13.8, torso_d=8.4)
+            torso_w=13.8, torso_d=10.0)
 FACE_D = 7
 
 
@@ -41,18 +41,27 @@ def build_crest(m):
     top, hx, hz = b.top, b.head[0] / 2, b.head[2] / 2
     m.bone('hair', [0, top, 0], 'head')
     hair = cloth(HAIR, HAIR_L, shade(HAIR, 0.6), seed=190)
-    m.cube('hair', [-hx - 0.2, top - 1.0, -hz + 0.6], [b.head[0] + 0.4, 1.4, b.head[2] - 0.2], hair)   # calotte
+    m.cube('hair', [-hx - 0.1, top - 1.2, -hz + 0.5], [b.head[0] + 0.2, 1.0, b.head[2] - 0.2], hair)   # calotte basse
     m.cube('hair', [-hx - 0.2, top - 3.6, hz - 0.8], [b.head[0] + 0.4, 3.0, 1.0], hair)                 # nuque
     for i, x in enumerate((-2.4, -0.8, 0.8, 2.4)):                 # mèches plaquées vers l'arrière
-        lock(m, f'y_h{i}', [x, top - 0.1, -hz + 0.8], 6.2, 2.2, 96 + 4 * (i % 2), (x / 2.4) * 6, mkh(0.2),
-             flat=0.4, curve=(40, 0), segs=3, root=1.1, tip=0.3, taper_pow=0.5)
-    m.cube('head', [-hx - 0.15, b.head_y + 4.7, -hz - 0.45], [b.head[0] + 0.3, 1.0, 0.6], skin(0.85))  # arcade
+        lock(m, f'y_h{i}', [x, top - 0.3, -hz + 0.3], 7.4, 2.4, 92 + 5 * (i % 2), (x / 2.4) * 8, mkh(0.3 - 0.05 * (i % 2)),
+             flat=0.45, curve=(46, (x / 2.4) * 6), segs=4, root=1.15, tip=0.25, taper_pow=0.5)
+    # os du visage saillants : arcade lourde qui avance, pommettes hautes, mâchoire plus large que le crâne
+    m.cube('head', [-hx - 0.3, b.head_y + 4.6, -hz - 0.9], [b.head[0] + 0.6, 1.2, 1.1], skin(0.82))
+    m.cube('head', [-1.0, b.head_y + 4.3, -hz - 1.1], [2.0, 0.8, 0.5], skin(0.78))                    # creux du nez
+    m.cube('head', [-hx - 0.45, b.head_y - 0.2, -hz + 0.2], [b.head[0] + 0.9, 2.4, b.head[2] - 0.6], skin(0.9))  # mâchoire
     for sx in (-1, 1):
-        m.cube('head', [sx * (hx - 1.6) - 0.9, b.head_y + 2.4, -hz - 0.35], [1.8, 1.0, 0.4], skin(1.08))  # pommettes
-        # oreilles irrégulières : trois lobes déchiquetés de tailles différentes
-        for k, (dy, L, w, rz) in enumerate(((3.4, 2.4, 2.4, 28), (1.6, 2.0, 2.0, -18))):
-            m.cube('head', [sx * (hx + 0.1) - (L if sx < 0 else 0), b.head_y + dy, -0.4], [L, w, 0.7], skin(0.92 - 0.06 * k),
-                   pivot=[sx * hx, b.head_y + dy + w / 2, 0], rotation=[0, 0, sx * rz])
+        m.cube('head', [sx * (hx - 1.3) - 1.1, b.head_y + 2.6, -hz - 0.6], [2.2, 1.3, 0.7], skin(1.1))  # pommettes
+        # oreilles irrégulières plaquées au crâne : une masse aplatie, bord déchiqueté (encoches), lobe pendant
+        ex = sx * (hx + 0.05)
+        bn = f'ear{sx}'
+        m.bone(bn, [ex, b.head_y + 3.0, 0.2], 'head', rotation=[0, -sx * 18, sx * 6])
+        base = [ex - (0.5 if sx < 0 else 0), b.head_y + 1.4, -0.9]
+        m.cube(bn, base, [0.5, 3.6, 2.6], skin(0.9))
+        for k, (dy, dz, w, h, d) in enumerate(((2.6, -0.2, 1.4, 1.4, 1.6), (1.0, 0.6, 1.8, 1.6, 1.6),
+                                                (-0.4, -0.4, 1.0, 1.5, 1.2), (3.4, 0.9, 0.9, 0.9, 1.0))):
+            m.cube(bn, [ex - (w if sx < 0 else 0), b.head_y + 1.4 + dy, -0.9 + dz], [w, h, d],
+                   skin(0.86 + 0.05 * (k % 2)), pivot=[ex, b.head_y + 1.4 + dy, 0], rotation=[18 * (k - 1.5), 0, sx * 10 * k])
 
 
 def face_paint(ctx, mode='calme'):
@@ -73,10 +82,13 @@ def face_paint(ctx, mode='calme'):
         for x in range(18, 48, 5):
             f.poly((x, 45, x + 3, 45, x + 1.5, 49), (240, 236, 220))
             f.poly((x, 56, x + 3, 56, x + 1.5, 52), (240, 236, 220))
-    else:                                                       # bouche fermée, crocs qui dépassent
-        f.rect(14, 49, 52, 50, LINE)
-        for x in (20, 26, 40, 46):
-            f.poly((x, 50, x + 3, 50, x + 1.5, 54), (240, 236, 220))
+    else:                                                       # large bouche serrée : rangée de dents acérées visible
+        f.rect(10, 47, 56, 53, rgb('#3a0a0c'))
+        for x in range(11, 55, 4):
+            f.poly((x, 47, x + 4, 47, x + 2, 51), (240, 236, 220))
+            f.poly((x + 2, 53, x + 6, 53, x + 4, 49.5), (226, 220, 204))
+        f.rect(9, 46, 10, 54, LINE)
+        f.rect(56, 46, 57, 54, LINE)
 
 
 def head_paint(ctx):
@@ -93,35 +105,47 @@ def build_body(m):
     pants = cloth(PANTS, PANTS_L, shade(PANTS, 0.7), ao_top=0.1, folds=1, seed=201)
     y0, y1 = b.hip_y + 0.2, b.shoulder_y + 0.6
     d2 = b.torso_d / 2
-    # torse musclé (taille plus fine), pectoraux, abdominaux en relief
+    # torse énorme en V : dorsaux évasés, pectoraux massifs, abdominaux en blocs, trapèzes qui montent au crâne
     m.cube('torso', [-b.torso_w / 2 + 1.4, y0, -d2 + 0.4], [b.torso_w - 2.8, 5.0, b.torso_d - 0.8], skin(0.96))
     m.cube('torso', [-b.torso_w / 2, y0 + 4.8, -d2], [b.torso_w, y1 - y0 - 4.8, b.torso_d], skin())
     for sx in (-1, 1):
-        m.cube('torso', [sx * 2.6 - 2.4, y1 - 5.2, -d2 - 0.5], [4.8, 3.4, 0.6], skin(1.05))     # pectoraux
+        m.cube('torso', [sx * (b.torso_w / 2) - (1.4 if sx > 0 else 0.2), y0 + 5.2, -d2 + 0.6], [1.6, 5.4, b.torso_d - 1.2],
+               skin(0.9), pivot=[sx * b.torso_w / 2, y0 + 8, 0], rotation=[0, 0, sx * 8])               # dorsaux
+        m.cube('torso', [sx * 3.0 - 2.8, y1 - 5.8, -d2 - 0.9], [5.6, 4.0, 1.0], skin(1.06))           # pectoraux
+        m.cube('torso', [sx * 3.0 - 2.6, y1 - 6.0, -d2 - 0.7], [5.2, 0.4, 0.8], skin(0.78))           # ombre sous le pec
         for k in range(3):
-            m.cube('torso', [sx * 1.2 - 1.0, y0 + 0.8 + k * 1.7, -d2 + 0.1], [2.0, 1.4, 0.4], skin(1.02))
-    m.cube('torso', [-2.0, y1 - 0.2, -2.0], [4.0, 1.0, 4.0], skin(0.9))                           # cou épais
+            m.cube('torso', [sx * 1.3 - 1.1, y0 + 0.6 + k * 1.75, -d2 + 0.0], [2.2, 1.5, 0.5], skin(1.04 - 0.02 * k))
+    m.cube('torso', [-2.4, y1 - 0.2, -2.2], [4.8, 1.6, 4.4], skin(0.88))                           # cou épais
     for sx in (-1, 1):
-        m.cube('torso', [sx * 3.4 - 2.2, y1 - 0.8, -2.4], [4.4, 1.8, 4.8], skin(0.95),
-               pivot=[sx * 3.4, y1, 0], rotation=[0, 0, -sx * 22])                                 # trapèzes
+        m.cube('torso', [sx * 3.6 - 2.6, y1 - 0.6, -2.6], [5.2, 2.6, 5.4], skin(0.94),
+               pivot=[sx * 3.4, y1, 0], rotation=[0, 0, -sx * 26])                                 # trapèzes
     for side, sx in (('right', -1), ('left', 1)):
         cx = sx * b.arm_x
-        m.box(f'{side}_arm', (cx, 0), b.shoulder_y - 3.8, (6.4, 5.0, 6.2), skin(0.98))           # deltoïde
-        m.box(f'{side}_arm', (cx, 0), b.elbow_y, (5.6, b.shoulder_y - b.elbow_y - 3.2, 5.6), skin())
-        m.box(f'{side}_forearm', (cx, 0), b.wrist_y + 0.2, (5.4, b.elbow_y - b.wrist_y - 0.2, 5.4), skin(0.97))
-        m.box(f'{side}_hand', (cx, 0), b.wrist_y - 3.6, (4.4, 3.8, 4.4), skin(0.95))
+        m.box(f'{side}_arm', (cx, 0), b.shoulder_y - 4.2, (7.0, 5.6, 6.8), skin(0.98))           # deltoïde
+        m.box(f'{side}_arm', (cx, 0), b.elbow_y, (5.8, b.shoulder_y - b.elbow_y - 3.2, 5.8), skin())
+        m.box(f'{side}_arm', (cx, -0.6), b.elbow_y + 1.0, (5.0, 3.6, 5.6), skin(1.05))            # biceps
+        m.box(f'{side}_forearm', (cx, 0), b.wrist_y + 0.2, (5.6, b.elbow_y - b.wrist_y - 0.2, 5.6), skin(0.97))
+        m.box(f'{side}_forearm', (cx, 0), b.elbow_y - 3.6, (6.2, 3.0, 6.0), skin(1.02))          # avant-bras gonflé
+        m.box(f'{side}_hand', (cx, 0), b.wrist_y - 3.8, (4.8, 4.0, 4.8), skin(0.95))
+        for k in range(4):
+            m.cube(f'{side}_hand', [cx - 2.0 + k * 1.05, b.wrist_y - 4.8, -2.2], [0.9, 1.2, 1.0], skin(0.88))
     # pantalon noir moulant (seul vêtement) ; jambes animales : cuisses massives, tibias inclinés vers l'arrière,
     # talon haut, pieds à deux gros orteils ronds
     m.cube('body', [-b.torso_w / 2 + 1.0, b.hip_y - 1.8, -2.9], [b.torso_w - 2.0, 2.4, 5.8], pants)
     for side, sx in (('right', -1), ('left', 1)):
         cx = sx * b.leg_x
-        m.box(f'{side}_leg', (cx, -0.4), b.knee_y - 0.4, (5.6, b.hip_y - b.knee_y + 0.4, 6.0), pants)
-        m.box(f'{side}_leg', (cx, -1.6), b.knee_y - 0.6, (4.6, 2.4, 2.4), pants)                  # genou
-        m.cube(f'{side}_shin', [cx - 2.0, 1.8, -0.8], [4.0, b.knee_y - 1.4, 4.0], pants,
-               pivot=[cx, b.knee_y, 0], rotation=[-22, 0, 0])                                      # tibia incliné
-        m.cube(f'{side}_shin', [cx - 1.7, 0.6, 1.0], [3.4, 2.6, 2.6], skin(0.88))                  # talon haut
-        for k, ox in enumerate((-1.1, 1.1)):                                                       # deux orteils ronds
-            m.cube(f'{side}_shin', [cx + ox - 1.2, 0.0, -2.6], [2.4, 1.8, 3.4], skin(0.92 + 0.04 * k))
+        m.cube(f'{side}_leg', [cx - 3.0, b.knee_y - 0.6, -3.6], [6.0, b.hip_y - b.knee_y + 0.8, 7.2], pants,
+               pivot=[cx, b.hip_y, 0], rotation=[16, 0, 0])                                        # cuisse massive, genou en avant
+        m.cube(f'{side}_leg', [cx - 2.4, b.knee_y - 1.2, -4.8], [4.8, 2.6, 2.6], pants,
+               pivot=[cx, b.hip_y, 0], rotation=[16, 0, 0])                                        # genou
+        m.cube(f'{side}_shin', [cx - 2.2, 1.6, -0.6], [4.4, b.knee_y - 0.6, 4.4], pants,
+               pivot=[cx, b.knee_y, -2.0], rotation=[-30, 0, 0])                                      # tibia incliné
+        m.cube(f'{side}_shin', [cx - 1.8, 0.4, 1.4], [3.6, 3.0, 2.8], skin(0.86))                  # talon haut (jarret)
+        m.cube(f'{side}_shin', [cx - 2.4, 0.0, -1.6], [4.8, 1.6, 3.2], skin(0.86))                 # plante lourde
+        for k, ox in enumerate((-1.25, 1.25)):                                                     # deux gros orteils ronds
+            m.cube(f'{side}_shin', [cx + ox - 1.3, 0.0, -3.4], [2.6, 2.2, 2.6], skin(0.94 + 0.04 * k))
+            m.cube(f'{side}_shin', [cx + ox - 1.0, 0.25, -3.9], [2.0, 1.6, 0.6], skin(0.98))       # bout arrondi
+            m.cube(f'{side}_shin', [cx + ox - 0.8, 0.0, -4.0], [1.6, 0.5, 0.5], flat(rgb('#3a1210'), 0.9))  # ongle
 
 
 def build():

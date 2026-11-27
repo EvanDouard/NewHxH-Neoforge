@@ -66,34 +66,37 @@ def build_hair(m):
     # portent la silhouette ; 5 intermédiaires épaisses font les transitions sommet / côtés / arrière ; 4 petites
     # seulement. Directions variées (pas de couronne radiale), côtés moins écartés, plus tournés vers l'arrière.
     dominant = [
-        ('k_top', 0.4, 25.8, -0.6, 11.2, 6.1, -4, -10, 14, 0.68, 16, 0.1, dict(skew=-0.1, tip=0.08, root=1.2)),
-        ('k_top_r', -2.6, 25.6, 0.6, 10.0, 5.7, 20, 26, -22, 0.55, 18, 0.06, dict(skew=0.12, tip=0.12, root=1.2)),
-        ('k_top_l', 2.8, 25.2, 0.0, 9.0, 5.4, 8, -32, 28, 0.78, 14, 0.04, dict(skew=-0.08, tip=0.14, root=1.2)),
-        ('k_back', 0.6, 24.8, 2.6, 10.4, 6.1, 52, -10, 6, 0.55, 18, 0.0, dict(skew=0.08, tip=0.1, root=1.2)),
-        ('k_side_r', -4.1, 24.0, 0.8, 7.8, 5.1, 44, 40, 16, 0.58, 18, 0.04, dict(skew=0.1, tip=0.16, root=1.25)),
+        ('k_top', 0.4, 25.8, -0.6, 7.6, 6.8, 22, -28, 14, 0.41, 24, 0.1, dict(skew=-0.1, tip=0.05, root=1.2)),
+        ('k_top_r', -2.6, 25.6, 0.6, 8.2, 6.4, 20, 38, -22, 0.33, 26, 0.06, dict(skew=0.12, tip=0.07, root=1.2)),
+        ('k_top_l', 2.8, 25.2, 0.0, 7.4, 6.0, 8, -46, 28, 0.47, 22, 0.04, dict(skew=-0.08, tip=0.08, root=1.2)),
+        ('k_back', 0.6, 24.8, 2.6, 7.6, 6.8, 60, -14, 6, 0.33, 26, 0.0, dict(skew=0.08, tip=0.06, root=1.2)),
+        ('k_side_r', -4.1, 24.0, 0.8, 6.4, 5.7, 44, 58, 16, 0.35, 26, 0.04, dict(skew=0.1, tip=0.16, root=1.25)),
     ]
     intermediate = [
-        ('k_i_front', -0.8, 25.6, -2.8, 5.0, 3.9, -22, 18, -12, 0.72, 10, 0.06, dict(tip=0.18, skew=0.06)),
-        ('k_i1', 2.2, 25.4, -1.8, 4.4, 3.7, -6, -30, 6, 0.75, 12, 0.04, dict(tip=0.2)),
-        ('k_i_side_l', 4.1, 23.8, 1.0, 4.8, 3.9, 48, -42, -20, 0.7, 14, 0.0, dict(skew=-0.1, tip=0.18, root=1.25)),
-        ('k_i3', -2.8, 23.6, 3.2, 5.0, 4.0, 70, 26, 24, 0.62, 12, -0.04, dict(skew=0.08, tip=0.16)),
-        ('k_i4', 3.0, 23.4, 3.0, 4.6, 3.9, 64, -30, -24, 0.62, 12, -0.06, dict(skew=-0.08, tip=0.16)),
+        ('k_i_front', -0.8, 25.6, -2.8, 4.8, 4.3, -22, 24, -12, 0.43, 16, 0.06, dict(tip=0.18, skew=0.06)),
+        ('k_i1', 2.2, 25.4, -1.8, 4.2, 4.1, -6, -40, 6, 0.45, 18, 0.04, dict(tip=0.2)),
+        ('k_i_side_l', 4.1, 23.8, 1.0, 4.6, 4.3, 48, -57, -20, 0.42, 20, 0.0, dict(skew=-0.1, tip=0.18, root=1.25)),
+        ('k_i3', -2.8, 23.6, 3.2, 4.8, 4.4, 70, 35, 24, 0.37, 18, -0.04, dict(skew=0.08, tip=0.16)),
+        ('k_i4', 3.0, 23.4, 3.0, 4.4, 4.3, 64, -40, -24, 0.37, 18, -0.06, dict(skew=-0.08, tip=0.16)),
     ]
     small = [
-        ('k_s1', -4.9, 22.4, -3.0, 3.0, 2.5, -6, 150, 0, 0.55, 8, 0.02, dict(tip=0.18)),   # encadrent le visage
-        ('k_s2', 4.9, 22.2, -2.8, 2.6, 2.4, -6, -148, 0, 0.55, 8, -0.02, dict(tip=0.18)),
+        ('k_s1', -4.9, 23.2, -3.0, 4.8, 2.8, -10, 160, 8, 0.55, 14, 0.02, dict(tip=0.1, skew=0.1)),   # encadrent le visage
+        ('k_s2', 4.9, 23.0, -2.8, 4.2, 2.6, -10, -156, -8, 0.55, 14, -0.02, dict(tip=0.1, skew=-0.1)),
         # arrière : deux couches plates qui retombent vers la nuque, continuité avec le sommet
         ('k_bl1', -1.6, 25.4, 4.2, 6.4, 5.1, 158, 10, 0, 0.36, 10, -0.06, dict(tip=0.16)),
         ('k_bl2', 2.0, 24.2, 4.4, 5.4, 4.8, 162, -14, 0, 0.36, 10, -0.1, dict(tip=0.18)),
+        ('k_bl3', -3.4, 24.4, 4.6, 6.8, 4.4, 172, 18, 10, 0.4, 14, -0.08, dict(tip=0.12, skew=0.1)),
+        ('k_bl4', 3.6, 24.2, 4.6, 6.6, 4.2, 172, -18, -10, 0.4, 14, -0.1, dict(tip=0.12, skew=-0.1)),
+        ('k_bl5', 0.2, 24.0, 5.0, 6.4, 5.0, 176, 4, 0, 0.36, 10, -0.12, dict(tip=0.14)),
     ]
-    arched(m, dominant, mk, segs=3)
-    arched(m, intermediate, mk, segs=2)
+    arched(m, dominant, mk, segs=4)
+    arched(m, intermediate, mk, segs=3)
     arched(m, small, mk, segs=2)
     # frange simplifiée : 3 mèches principales bien identifiables, longueurs différentes, qui se chevauchent
     # (profondeurs décalées) et retombent en se courbant ; sourcils dégagés
-    for name, x, z, L, W, rz, arc, skew in (('kb_1', -2.5, -4.92, 3.0, 4.0, -18, 10, 0.12),
-                                             ('kb_2', 0.2, -5.18, 3.9, 4.2, 6, 12, -0.08),
-                                             ('kb_3', 2.9, -5.0, 2.5, 3.6, 24, 10, -0.12)):
+    for name, x, z, L, W, rz, arc, skew in (('kb_1', -2.5, -4.92, 4.2, 4.2, -24, 14, 0.14),
+                                             ('kb_2', 0.2, -5.18, 5.0, 4.4, 8, 16, -0.08),
+                                             ('kb_3', 2.9, -5.0, 3.6, 3.8, 30, 14, -0.14)):
         lock(m, name, [x, 25.8, z], L, W, 168, rz, mk(0.1), flat=0.6, curve=(-arc, arc * (1 if rz > 0 else -1) * 0.5),
              segs=2, root=1.15, tip=0.1, skew=skew)
 
@@ -126,32 +129,32 @@ def face_paint(ctx, mode='malicieux'):
         f.poly((10, 17, 26, 16, 26, 18, 10, 19), brow)
         f.poly((56, 17, 40, 16, 40, 18, 56, 19), brow)
     for x0, outer_left in ((9, True), (42, False)):
-        x1 = x0 + 15
-        top = 27 if cold else 23                                        # paupière baissée en mode froid
-        white = (236, 238, 244) if cold else (252, 252, 255)
+        x1 = x0 + 16
+        top = 28 if cold else 26                                        # paupière baissée en mode froid
+        white = (236, 235, 244) if cold else (252, 252, 255)
         if outer_left:
-            f.poly((x0, top, x1, top + 1, x1, 40, x0 + 2, 38), white)
+            f.poly((x0, top, x1, top + 1, x1, 37, x0 + 2, 35), white)
         else:
-            f.poly((x0, top + 1, x1, top, x1 - 2, 38, x0, 40), white)
+            f.poly((x0, top + 1, x1, top, x1 - 2, 35, x0, 37), white)
         iw = 7 if cold else 9
         ix0 = x0 + (5 if outer_left else 1) + (1 if cold else 0)
         iris = shade(EYE, 0.55) if cold else EYE
-        f.rect(ix0, top + 1, ix0 + iw, 39, iris)
-        f.rect(ix0, 34, ix0 + iw, 39, shade(iris, 1.25) if not cold else shade(iris, 0.9))   # bas de l'iris plus clair
+        f.rect(ix0, top + 1, ix0 + iw, 36, iris)
+        f.rect(ix0, 32, ix0 + iw, 36, shade(iris, 1.25) if not cold else shade(iris, 0.9))   # bas de l'iris plus clair
         f.rect(ix0, top + 1, ix0 + iw, top + 3, shade(iris, 0.6))       # ombre de la paupière
-        f.rect(ix0 - 1, top + 1, ix0 - 1, 39, EYE_DARK)                 # contour de l'iris
-        f.rect(ix0 + iw + 1, top + 1, ix0 + iw + 1, 39, EYE_DARK)
+        f.rect(ix0 - 1, top + 1, ix0 - 1, 36, EYE_DARK)                 # contour de l'iris
+        f.rect(ix0 + iw + 1, top + 1, ix0 + iw + 1, 36, EYE_DARK)
         if cold:
             f.rect(ix0 + 3, 32, ix0 + 4, 33, EYE_DARK)                  # pupille réduite à un point
         else:
-            f.rect(ix0 + 3, 28, ix0 + 6, 36, EYE_DARK)                  # pupille nette
-            f.rect(ix0 + 1, 26, ix0 + 3, 28, (255, 255, 255))           # reflets
-            f.rect(ix0 + 6, 35, ix0 + 7, 36, (215, 236, 255))
+            f.rect(ix0 + 3, 29, ix0 + 6, 35, EYE_DARK)                  # pupille nette
+            f.rect(ix0 + 1, 28, ix0 + 3, 30, (255, 255, 255))           # reflets
+            f.rect(ix0 + 6, 33, ix0 + 7, 34, (215, 236, 255))
         if outer_left:                                                  # paupière supérieure, pointe relevée
             f.poly((x0 - 3, top - 3, x1 + 1, top - 1, x1 + 1, top + 1, x0, top + 1), LINE)
         else:
             f.poly((x0 - 1, top - 1, x1 + 3, top - 3, x1, top + 1, x0 - 1, top + 1), LINE)
-        f.rect(x0 + 3, 40, x1 - 2, 40, shade(SKIN, 0.7))                # cils inférieurs
+        f.rect(x0 + 3, 37, x1 - 2, 37, shade(SKIN, 0.7))                # cils inférieurs
     f.rect(32, 45, 33, 47, shade(SKIN, 0.82))                           # nez
     mouth = rgb('#7a4a40')
     if cold:
@@ -193,7 +196,7 @@ def build_body(m):
     under = cloth(UNDER, UNDER_LIGHT, shade(UNDER, 0.65), ao_bottom=0.1, folds=2, seed=22)
     rib = cloth(UNDER_LIGHT, shade(UNDER_LIGHT, 1.1), shade(UNDER, 0.8), seed=25)
     # t-shirt : ample, s'évase sur les hanches ; plis discrets en relief
-    m.cube('torso', [-4.05, 8.4, -2.45], [8.1, 8.2, 4.9], top)
+    m.cube('torso', [-4.25, 8.4, -2.65], [8.5, 8.2, 5.3], top)
     m.cube('torso', [-4.35, 7.7, -2.7], [8.7, 1.0, 5.4], cloth(shade(TOP, 0.94), TOP, TOP_SHADOW, seed=23))  # ourlet
     for x, y, h in ((-2.2, 8.8, 3.6), (1.4, 8.6, 2.8), (2.8, 9.2, 2.2)):
         m.cube('torso', [x, y, -2.6], [0.45, h, 0.2], fold)
@@ -204,7 +207,7 @@ def build_body(m):
     for side, sx in (('right', -1), ('left', 1)):
         cx = sx * 5.5
         m.box(f'{side}_arm', (cx, 0), 11.8, (3.1, 4.0, 3.1), under)
-        m.box(f'{side}_arm', (cx, 0), 13.3, (3.8, 2.7, 3.8), top)                         # manche courte du t-shirt
+        m.box(f'{side}_arm', (cx, 0), 13.1, (4.1, 3.0, 4.1), top)                         # manche courte du t-shirt
         m.box(f'{side}_arm', (cx, 0), 13.1, (3.9, 0.5, 3.9), fold)                        # ourlet de la manche
         m.box(f'{side}_forearm', (cx, 0), 8.2, (3.0, 3.7, 3.0), under)
         m.box(f'{side}_forearm', (cx, 0), 7.7, (3.25, 0.9, 3.25), rib)                    # poignet côtelé

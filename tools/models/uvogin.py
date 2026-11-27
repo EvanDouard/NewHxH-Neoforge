@@ -47,16 +47,16 @@ def build_hair(m):
     # sur les côtés (silhouette de lion)
     for i, az in enumerate(range(-120, 121, 20)):
         side = abs(az) / 120
-        L = 21.0 - 9.0 * side + rnd.uniform(-1.2, 1.2)
-        crown_lock(m, f'u_m{i}', c, rr, az + rnd.uniform(-5, 5), 62 + rnd.uniform(-5, 5), L,
-                   5.2 + rnd.uniform(-0.4, 0.6), mk(0.06 + 0.06 * (i % 2)), flat=0.5, turn=88 - 6 * side,
-                   tip=0.1, segs=4, lean=(1 if az > 0 else -1) * (3 + 9 * side), twist=rnd.uniform(-10, 10),
-                   skew=rnd.uniform(-0.12, 0.12))
+        L = 28.0 - 13.0 * side + rnd.uniform(-2.4, 1.8)             # jusqu'au milieu du dos
+        crown_lock(m, f'u_m{i}', c, rr + (0.45 if i % 2 else 0.0), az + rnd.uniform(-5, 5), 62 + rnd.uniform(-5, 5), L,
+                   5.6 + rnd.uniform(-0.6, 0.9), mk(0.06 + 0.06 * (i % 2)), flat=0.5, turn=84 - 6 * side + rnd.uniform(-6, 6),
+                   tip=0.08, segs=5, lean=(1 if az > 0 else -1) * (5 + 12 * side) + rnd.uniform(-4, 4),
+                   twist=rnd.uniform(-16, 16), skew=rnd.uniform(-0.18, 0.18), side=rnd.uniform(-18, 18))
     # pointes sauvages qui s'écartent de la masse (mi-hauteur)
     for i, az in enumerate((-110, -78, -46, -14, 18, 50, 82, 112)):
         sgn = 1 if az > 0 else -1
         crown_lock(m, f'u_w{i}', c, rr + 0.2, az + rnd.uniform(-6, 6), 46 + rnd.uniform(-6, 6),
-                   8.5 + rnd.uniform(-1, 1.5), 4.0, mk(-0.04), flat=0.5, turn=42, tip=0.08, segs=3,
+                   11.5 + rnd.uniform(-1.5, 2.0), 4.2, mk(-0.04), flat=0.5, turn=40, tip=0.06, segs=4,
                    lean=sgn * (14 + rnd.uniform(0, 10)), twist=rnd.uniform(-12, 12), skew=rnd.uniform(-0.15, 0.15))
     # couche haute : mèches rejetées depuis le front, qui gonflent le dessus et retombent sur la crinière
     for i, az in enumerate((-44, -26, -9, 9, 26, 44)):
@@ -77,8 +77,8 @@ def face_paint(ctx, mode='calme'):
     material(SKIN, grad=0.06, noise=2, outline=False)(ctx)
     f = FaceGrid(ctx)
     f.rect(0, 0, 66, 5, HAIR)
-    f.poly((8, 19, 28, 16, 29, 21, 9, 23), HAIR)                # gros sourcils
-    f.poly((58, 19, 38, 16, 37, 21, 57, 23), HAIR)
+    f.poly((7, 18, 29, 14, 30, 21, 8, 24), HAIR)                 # sourcils très épais
+    f.poly((59, 18, 37, 14, 36, 21, 58, 24), HAIR)
     for x0 in (12, 40):
         f.rect(x0, 25, x0 + 14, 31, (246, 242, 236))
         f.rect(x0 + 5, 25, x0 + 10, 31, rgb('#3a2414'))
@@ -117,7 +117,8 @@ def build_body(m):
     m.cube('torso', [-b.torso_w / 2 + 1.2, y0, -d2 + 0.4], [b.torso_w - 2.4, 5.0, b.torso_d - 0.8], skin(0.96))
     m.cube('torso', [-b.torso_w / 2, y0 + 4.8, -d2], [b.torso_w, y1 - y0 - 4.8, b.torso_d], skin())
     for sx in (-1, 1):
-        m.cube('torso', [sx * 2.6 - 2.4, y1 - 5.4, -d2 - 0.5], [4.8, 3.6, 0.6], skin(1.05))      # pectoraux
+        m.cube('torso', [sx * 2.8 - 2.7, y1 - 5.8, -d2 - 0.8], [5.4, 4.0, 0.9], skin(1.06))      # pectoraux
+        m.cube('torso', [sx * 2.8 - 2.5, y1 - 6.0, -d2 - 0.6], [5.0, 0.4, 0.7], skin(0.8))
         for k in range(3):
             m.cube('torso', [sx * 1.2 - 1.0, y0 + 0.8 + k * 1.7, -d2 + 0.1], [2.0, 1.4, 0.4], skin(1.02))
         m.cube('torso', [sx * 3.4 - 2.2, y1 - 0.8, -2.4], [4.4, 1.8, 4.8], skin(0.95),
@@ -128,10 +129,18 @@ def build_body(m):
            pivot=[0, (y0 + y1) / 2, 0], rotation=[0, 0, -38])
     m.cube('torso', [2.0, y1 - 2.0, -d2 - 0.6], [5.6, 3.0, b.torso_d + 1.2], fur, pivot=[4.8, y1, 0],
            rotation=[0, 0, -16])
+    # peau organique : pattes qui pendent sur l'épaule et le dos, queue de bête sur la hanche
+    for k, (px, pz, rz) in enumerate(((5.4, -d2 - 0.9, -8), (4.6, d2 + 0.4, 6))):
+        m.cube('torso', [px - 0.9, y1 - 6.2, pz], [1.8, 4.6, 0.8], fur, pivot=[px, y1 - 1.6, pz], rotation=[0, 0, rz])
+        m.cube('torso', [px - 1.1, y1 - 6.8, pz - 0.1], [2.2, 0.9, 1.0], cloth(shade(FUR_D, 0.8) if 'FUR_D' in globals() else LEATHER, seed=230 + k),
+               pivot=[px, y1 - 1.6, pz], rotation=[0, 0, rz])
+    m.cube('torso', [-b.torso_w / 2 + 0.6, y0 - 6.4, d2 + 0.2], [1.6, 5.6, 1.4], fur, pivot=[-b.torso_w / 2 + 1.4, y0 - 1.0, d2],
+           rotation=[10, 0, 12])
     m.cube('torso', [-b.torso_w / 2 - 0.2, y0 - 1.2, -d2 - 0.4], [b.torso_w + 0.4, 2.0, b.torso_d + 0.8], fur)
     for side, sx in (('right', -1), ('left', 1)):
         cx = sx * b.arm_x
-        m.box(f'{side}_arm', (cx, 0), b.shoulder_y - 3.8, (6.0, 5.0, 5.8), skin(0.98))
+        m.box(f'{side}_arm', (cx, 0), b.shoulder_y - 4.0, (6.6, 5.4, 6.2), skin(0.98))
+        m.box(f'{side}_arm', (cx, -0.5), b.elbow_y + 0.8, (4.8, 3.4, 5.2), skin(1.05))                # biceps
         m.box(f'{side}_arm', (cx, 0), b.elbow_y, (5.2, b.shoulder_y - b.elbow_y - 3.2, 5.2), skin())
         m.box(f'{side}_forearm', (cx, 0), b.wrist_y + 0.2, (4.4, b.elbow_y - b.wrist_y - 0.2, 4.4), skin(0.97))
         m.box(f'{side}_forearm', (cx, 0), b.wrist_y, (4.8, 2.0, 4.8), cloth(LEATHER, seed=222))
