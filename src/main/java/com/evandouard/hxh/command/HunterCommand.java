@@ -246,7 +246,10 @@ public final class HunterCommand {
                 // Organisations : quitter (tous), rejoindre directement (admin), liste
                 .then(Commands.literal("org")
                         .then(Commands.literal("leave").executes(ctx ->
-                                com.evandouard.hxh.org.Organizations.leave(ctx.getSource().getPlayerOrException()) ? 1 : 0))
+                                com.evandouard.hxh.org.Organizations.leave(ctx.getSource().getPlayerOrException()) ? 1 : 0)
+                                .then(Commands.argument("id", StringArgumentType.word()).executes(ctx ->
+                                        com.evandouard.hxh.org.Organizations.leave(ctx.getSource().getPlayerOrException(),
+                                                StringArgumentType.getString(ctx, "id")) ? 1 : 0)))
                         .then(Commands.literal("list").executes(ctx -> {
                             ctx.getSource().sendSuccess(() -> Component.translatable("org.hxh.list",
                                     String.join(", ", com.evandouard.hxh.org.Organizations.all().keySet())), false);

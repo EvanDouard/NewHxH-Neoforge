@@ -30,7 +30,7 @@ public final class QuestManager {
      * ({@code org:ryodan}).
      */
     public static boolean requirementMet(QuestData d, String r) {
-        if (r.startsWith("org:")) return d.organization().equals(r.substring(4));
+        if (r.startsWith("org:")) return d.hasOrganization(r.substring(4));
         String id = ResourceLocation.parse(r).toString();
         // La licence de Hunter vaut l'Examen réussi (licence donnée par un admin, monde repris…)
         if (id.equals(QuestRegistry.HUNTER_EXAM.toString()) && d.isHunter()) return true;

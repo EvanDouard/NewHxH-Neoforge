@@ -59,6 +59,7 @@ public class ChimeraAntEntity extends Spider {
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
         targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, true));
+        targetSelector.addGoal(2, new com.evandouard.hxh.org.OrgTargetGoal(this));
     }
 
     /**

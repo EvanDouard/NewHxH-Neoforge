@@ -318,9 +318,14 @@ public final class ProfileText {
             lines.add(Component.translatable("profile.hxh.hunter_rank", com.evandouard.hxh.contract.HunterStars.stars(d.hunterStars()),
                     d.blacklistCaught(), d.contractsDone()).withStyle(ChatFormatting.GOLD));
         }
-        var org = com.evandouard.hxh.org.Organizations.get(d.organization());
-        lines.add(Component.translatable("profile.hxh.organization", org == null ? Component.translatable("org.hxh.none_short")
-                : com.evandouard.hxh.org.Organizations.label(org, player)));
+        net.minecraft.network.chat.MutableComponent orgs = Component.empty();
+        for (String id : com.evandouard.hxh.org.Organizations.memberships(player)) {
+            var org = com.evandouard.hxh.org.Organizations.get(id);
+            if (org == null) continue;
+            if (!orgs.getSiblings().isEmpty()) orgs.append(Component.literal(", "));
+            orgs.append(com.evandouard.hxh.org.Organizations.label(org, player));
+        }
+        lines.add(Component.translatable("profile.hxh.organization", orgs.getSiblings().isEmpty() ? Component.translatable("org.hxh.none_short") : orgs));
         lines.add(Component.empty());
         lines.add(Component.translatable("profile.hxh.arena.title").withStyle(ChatFormatting.GOLD));
         if (!d.arenaRegistered()) {

@@ -10,10 +10,13 @@ import java.util.List;
  * Organisation (fichier {@code data/<mod>/organizations/<id>.json}) : nom, couleur, alliés et ennemis. On la rejoint
  * par une quête (récompense {@code reward_join}). Les membres d'organisations ennemies peuvent se frapper avec
  * leurs techniques ; entre alliés et membres d'une même organisation, jamais. {@code member_kits} : personnages
- * qui en font partie (un mob avec ce kit est un membre, par exemple pour le serment de Kurapika).
+ * qui en font partie (un mob avec ce kit est un membre, par exemple pour le serment de Kurapika) ; {@code member_entities} :
+ * types de créatures membres ({@code hxh:chimera_ant}) ; {@code auto: "nen"} : tout être qui maîtrise le Nen en est membre
+ * sans rien faire ; {@code hostile_on_sight} : ses mobs attaquent à vue les membres des organisations ennemies.
  */
 public record Organization(String id, String nameFr, String nameEn, int color, List<String> allies, List<String> enemies,
-                           String descFr, String descEn, List<String> memberKits) {
+                           String descFr, String descEn, List<String> memberKits, List<String> memberEntities,
+                           String auto, boolean hostileOnSight) {
 
     public static Organization parse(ResourceLocation file, JsonObject o) {
         JsonObject name = o.getAsJsonObject("name");
@@ -23,7 +26,8 @@ public record Organization(String id, String nameFr, String nameEn, int color, L
         int color = o.has("color") ? Integer.parseInt(o.get("color").getAsString().replace("#", ""), 16) : 0xFFFFFF;
         return new Organization(file.getPath(), fr, en, color, strings(o, "allies"), strings(o, "enemies"),
                 desc.has("fr") ? desc.get("fr").getAsString() : "", desc.has("en") ? desc.get("en").getAsString() : "",
-                strings(o, "member_kits"));
+                strings(o, "member_kits"), strings(o, "member_entities"),
+                o.has("auto") ? o.get("auto").getAsString() : "", o.has("hostile_on_sight") && o.get("hostile_on_sight").getAsBoolean());
     }
 
     private static List<String> strings(JsonObject o, String key) {

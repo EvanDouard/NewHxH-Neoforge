@@ -1,0 +1,26 @@
+{
+  "name": {
+    "fr": "Fourmis-Chimères",
+    "en": "Chimera Ants"
+  },
+  "color": "#8BC34A",
+  "allies": [],
+  "enemies": [
+    "nen_user",
+    "association"
+  ],
+  "hostile_on_sight": true,
+  "description": {
+    "fr": "La colonie de la Reine puis du Roi Meruem. Elle voit dans les utilisateurs de Nen une menace et une proie.",
+    "en": "The colony of the Queen and then King Meruem. It sees Nen users as both a threat and prey."
+  },
+  "member_entities": [
+    "hxh:chimera_ant"
+  ],
+  "member_kits": [
+    "meruem",
+    "neferpitou",
+    "shaiapouf",
+    "youpi"
+  ]
+}

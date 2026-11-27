@@ -55,7 +55,8 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     /** Inscrit au 200e étage (il faut le Nen). */
     boolean registered200 = false;
     /** Organisation rejointe (Brigade Fantôme, Association…), vide si aucune. */
-    String organization = "";
+    /** Organisations rejointes (dans l'ordre) : on peut en avoir plusieurs. */
+    final java.util.LinkedHashSet<String> organizations = new java.util.LinkedHashSet<>();
     /** Famille (Zoldyck, Kurta…), vide si aucune ; tirée une seule fois. */
     String family = "";
     boolean familyAssigned = false;
@@ -302,12 +303,31 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         familyAssigned = value;
     }
 
+    /** Première organisation rejointe, ou « » (compatibilité : l'affichage complet utilise {@link #organizations()}). */
     public String organization() {
-        return organization;
+        return organizations.isEmpty() ? "" : organizations.iterator().next();
     }
 
+    public java.util.Set<String> organizations() {
+        return java.util.Collections.unmodifiableSet(organizations);
+    }
+
+    public boolean hasOrganization(String id) {
+        return organizations.contains(id);
+    }
+
+    public void addOrganization(String id) {
+        if (id != null && !id.isEmpty()) organizations.add(id);
+    }
+
+    public boolean removeOrganization(String id) {
+        return organizations.remove(id);
+    }
+
+    /** Remplace toutes les appartenances par une seule (« » = aucune). */
     public void setOrganization(String id) {
-        organization = id == null ? "" : id;
+        organizations.clear();
+        addOrganization(id);
     }
 
     public boolean registered200() {
@@ -384,7 +404,7 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         arenaFloor = 1;
         registeredBracket = -1;
         registered200 = false;
-        organization = "";
+        organizations.clear();
         arenaWins = 0;
         arenaLosses = 0;
         jenny = 0;
@@ -429,7 +449,10 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         examInstances.forEach(inst::putInt);
         tag.put("exam_instances", inst);
         tag.putLong("exam_departure", examDeparture);
-        tag.putString("organization", organization);
+        tag.putString("organization", organization());
+        net.minecraft.nbt.ListTag orgList = new net.minecraft.nbt.ListTag();
+        for (String o : organizations) orgList.add(net.minecraft.nbt.StringTag.valueOf(o));
+        tag.put("organizations", orgList);
         tag.putInt("blacklist_caught", blacklistCaught);
         tag.putInt("contracts_done", contractsDone);
         tag.putInt("hunter_stars", hunterStars);
@@ -494,7 +517,12 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         CompoundTag inst = tag.getCompound("exam_instances");
         for (String k : inst.getAllKeys()) examInstances.put(k, inst.getInt(k));
         examDeparture = tag.contains("exam_departure") ? tag.getLong("exam_departure") : Long.MIN_VALUE;
-        organization = tag.getString("organization");
+        organizations.clear();
+        if (tag.contains("organizations")) {
+            for (net.minecraft.nbt.Tag t : tag.getList("organizations", net.minecraft.nbt.Tag.TAG_STRING)) addOrganization(t.getAsString());
+        } else {
+            addOrganization(tag.getString("organization")); // anciennes sauvegardes : une seule organisation
+        }
         blacklistCaught = tag.getInt("blacklist_caught");
         contractsDone = tag.getInt("contracts_done");
         hunterStars = tag.getInt("hunter_stars");

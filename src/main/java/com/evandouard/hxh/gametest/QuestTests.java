@@ -971,9 +971,44 @@ public final class QuestTests {
         helper.assertTrue(QuestManager.data(a).organization().equals("association"), "A a rejoint l'Association");
         helper.assertTrue(!com.evandouard.hxh.hatsu.Kinds.isAlly(a, b) && !com.evandouard.hxh.hatsu.Kinds.isAlly(b, a), "Ennemis : les techniques touchent");
         com.evandouard.hxh.org.Organizations.join(b, "zodiaques");
+        helper.assertTrue(QuestManager.data(b).organizations().size() == 2, "Plusieurs organisations à la fois");
+        helper.assertTrue(!com.evandouard.hxh.hatsu.Kinds.isAlly(a, b), "Toujours dans la Brigade : toujours ennemis");
+        com.evandouard.hxh.org.Organizations.leave(b, "ryodan");
         helper.assertTrue(com.evandouard.hxh.hatsu.Kinds.isAlly(a, b), "Association et Zodiaques sont alliés");
         com.evandouard.hxh.org.Organizations.leave(b);
         helper.assertTrue(QuestManager.data(b).organization().isEmpty(), "B a quitté son organisation");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 200)
+    public static void nenUsersAreHuntedByChimeraAnts(GameTestHelper helper) {
+        helper.assertTrue(com.evandouard.hxh.org.Organizations.get("nen_user") != null && com.evandouard.hxh.org.Organizations.get("fourmis_chimeres") != null, "Organisations chargées");
+        ServerPlayer p = helper.makeMockServerPlayerInLevel();
+        helper.assertTrue(!com.evandouard.hxh.org.Organizations.memberships(p).contains("nen_user"), "Sans Nen : pas utilisateur de Nen");
+        p.getData(com.evandouard.hxh.data.ModAttachments.HUNTER).setNenUnlocked(true);
+        helper.assertTrue(com.evandouard.hxh.org.Organizations.memberships(p).contains("nen_user"), "Avec le Nen : utilisateur de Nen automatiquement");
+        var ant = helper.spawn(ModEntities.CHIMERA_ANT.get(), new BlockPos(2, 1, 2));
+        helper.assertTrue(com.evandouard.hxh.org.Organizations.memberships(ant).contains("fourmis_chimeres"), "La fourmi est de la colonie");
+        helper.assertTrue(com.evandouard.hxh.org.Organizations.hostile(ant, p) && com.evandouard.hxh.org.Organizations.hostile(p, ant), "Hostilité dans les deux sens");
+        helper.assertTrue(com.evandouard.hxh.org.Organizations.attacksOnSight(ant, p), "La fourmi attaque l'utilisateur de Nen à vue");
+        helper.assertTrue(!com.evandouard.hxh.org.Organizations.attacksOnSight(p, ant), "Le joueur n'est pas forcé d'attaquer");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 200)
+    public static void organizationMembersDefendTheirOwn(GameTestHelper helper) {
+        // Brigade : Chrollo est attaqué, Nobunaga (neutre jusque-là) se retourne contre l'agresseur
+        var chrollo = helper.spawn(ModEntities.CHROLLO.get(), new BlockPos(2, 1, 2));
+        var nobunaga = helper.spawn(ModEntities.NOBUNAGA.get(), new BlockPos(4, 1, 2));
+        var bystander = helper.spawn(ModEntities.GON.get(), new BlockPos(2, 1, 4));
+        chrollo.prepare();
+        nobunaga.prepare();
+        bystander.prepare();
+        ServerPlayer attacker = helper.makeMockServerPlayerInLevel();
+        helper.assertTrue(nobunaga.getTarget() == null, "Nobunaga est neutre au départ");
+        chrollo.hurt(attacker.damageSources().playerAttack(attacker), 1f);
+        helper.assertTrue(nobunaga.getTarget() == attacker, "Nobunaga défend Chrollo");
+        helper.assertTrue(bystander.getTarget() == null, "Un autre personnage, hors de la Brigade, reste neutre");
         helper.succeed();
     }
 

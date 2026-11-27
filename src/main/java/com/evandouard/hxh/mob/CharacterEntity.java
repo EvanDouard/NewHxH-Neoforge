@@ -72,6 +72,8 @@ public class CharacterEntity extends PathfinderMob implements GeoEntity {
         goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         // neutre : riposte seulement, et les autres personnages proches viennent l'aider
         targetSelector.addGoal(1, new HurtByTargetGoal(this, CharacterEntity.class).setAlertOthers());
+        // les membres d'une organisation « hostile à vue » (Fourmis-Chimères) attaquent les ennemis de leur organisation
+        targetSelector.addGoal(2, new com.evandouard.hxh.org.OrgTargetGoal(this));
     }
 
     @Override

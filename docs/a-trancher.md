@@ -34,3 +34,7 @@ Le détail chiffré est dans `equilibrage-final.md`.
 - [ ] Chercher l'emplacement officiel/souhaité de **Meteor City**, **NGL** et **East Gorteau** (propositions provisoires dans `docs/feuille-route-monde.md` : ~(1 700, 3 900), ~(1 350, 4 950), ~(2 000, 5 000)).
 - [ ] Valider ou déplacer le **Palais royal de Kakin** (6 000, 2 500).
 - [ ] Peijin et Glam Gas Land : décrire ce que tu veux y trouver.
+
+## Organisations (ajouté le 27 nov, à corriger)
+- [ ] Nouvelles organisations posées par Claude : **Utilisateurs de Nen** (automatique avec le Nen) et **Fourmis-Chimères** (ennemies des Utilisateurs de Nen et de l'Association, hostiles à vue). Quelles autres organisations/hostilités veux-tu (Zoldyck, mafia, Kakin…) ?
+- [ ] Solidarité : rayon de 24 blocs ; seuls les mobs qui savent se battre (personnages, fourmis) ripostent, les PNJ de décor restent passifs.

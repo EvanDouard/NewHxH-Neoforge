@@ -1,0 +1,16 @@
+{
+  "name": {
+    "fr": "Utilisateurs de Nen",
+    "en": "Nen Users"
+  },
+  "color": "#4FC3F7",
+  "auto": "nen",
+  "allies": [],
+  "enemies": [
+    "fourmis_chimeres"
+  ],
+  "description": {
+    "fr": "Tous ceux qui maîtrisent le Nen en font partie, sans rien faire. Les Fourmis-Chimères les chassent.",
+    "en": "Everyone who has mastered Nen belongs to it automatically. The Chimera Ants hunt them."
+  }
+}
