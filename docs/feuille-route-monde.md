@@ -61,4 +61,4 @@ Propositions « libre/théorie » (non officielles) sur la carte 8 000 × 5 650,
 
 **Fait (6, partie 1)** : monde HxH sans structures vanilla (`world/HxHChunkGenerator`, `createStructures` vide, type `hxh:world` dans `dimension/world.json`) ; les chunks déjà générés gardent leurs structures. **Reste (6, partie 2)** : biomes par lieu (voir la liste proposée dans le chat / `docs/monde-hxh.md`).
 
-**Fait (28 nov, carte)** : Padokea colorée/nommée, archipel de Mitene (NGL déplacé), seconde carte « Continent Noir connu » + variable `darkContinentKnown`. À trancher : l'événement qui rend la variable vraie (quête, PNJ, livre ?).
+**Fait (27 nov, carte)** : Padokea colorée/nommée, archipel de Mitene (NGL déplacé), seconde carte « Continent Noir connu » + variable `darkContinentKnown`. À trancher : l'événement qui rend la variable vraie (quête, PNJ, livre ?).
