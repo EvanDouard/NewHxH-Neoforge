@@ -168,10 +168,10 @@ Tous sont des mobs neutres (alliés entre eux) avec leur kit Hatsu.
 | Personnage | Taille | Cheveux | Tenue / détails | Expression `froid` |
 |---|---|---|---|---|
 | Netero | 1,6 | crâne chauve, couronne blanche, chignon relevé | longue barbe, sourcils tombants, chemise 心 | regard de combat |
-| Meruem | 2,0 | crête de carapace à deux lobes, antennes | cape, queue | regard glacial |
-| Neferpitou | 1,8 | mèches ondulées blanches, frange, oreilles de chat | queue de chat | regard de prédateur |
-| Shaiapouf | 1,95 | mèches blondes, frange balayée | jabot, quatre ailes de papillon | colère |
-| Youpi | 2,4 | crête de cornes recourbées | gilet ouvert, colosse | rage, crocs |
+| Meruem | 2,0 | carapace crânienne à deux lobes, antennes pendantes aux oreilles, peau vert-bleu pâle | torse nu musclé à zones pigmentées, cape royale, queue de scorpion, pieds nus à 4 orteils | regard glacial |
+| Neferpitou | 1,8 | mèches ondulées blanches, grandes oreilles de chat à fourrure jaune | manteau bleu à 6 boutons jaunes, short, chaussettes orange rayées, chaussures bleues, genoux articulés, queue blanche | regard de prédateur |
+| Shaiapouf | 1,95 | cheveux blond foncé courts sur le front et les oreilles, antennes, peau mauve | chemise blanche à jabot, pantalon noir, quatre grandes ailes de papillon multicolores | colère |
+| Youpi | 2,4 | cheveux noirs plaqués, oreilles irrégulières, peau rouge sombre, yeux plissés, crocs | colosse, pantalon noir moulant seul, jambes animales à deux orteils | rage, crocs |
 | Chrollo | 1,9 | noir plaqué vers l'arrière du front à la nuque | croix au front, boucles bleues, manteau à col de fourrure, croix inversée dans le dos | regard de chef |
 | Uvogin | 2,3 | crinière de lion châtain jusqu'au milieu du dos, front dégagé | torse nu, peau de bête en bandoulière | rugissement |
 | Illumi | 1,95 | noir raide jusqu'à la taille, frange droite, mèches devant les épaules | yeux noirs vides, tunique, aiguilles | yeux plus grands |

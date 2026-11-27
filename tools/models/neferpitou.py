@@ -1,8 +1,9 @@
 """
-Neferpitou — même style. Silhouette fine (≈ 1,8 bloc) ; cheveux blancs légèrement lavande, courts, ondulés et
-ébouriffés, frange qui tombe sur le front, mèches qui s'enroulent vers l'intérieur ; oreilles de chat blanches à
-intérieur rose ; grands yeux ronds écarlates aux pupilles de chat, sourire en « ω » ; chemisier blanc ample aux
-manches bouffantes, short sombre à bretelles, ceinture, chaussettes, chaussures ; longue queue de chat blanche.
+Neferpitou (anime 2011) — refonte d'après les références : silhouette fine, taille marquée, hanches larges ;
+cheveux blancs ondulés et ébouriffés, frange irrégulière ; grandes oreilles de chat couvertes de fourrure jaune,
+plantées dans la chevelure ; grands yeux rubis aux pupilles de chat ; manteau bleu à six boutons jaunes et boutons
+de manchette, short, chaussettes orange à fines rayures noires, chaussures bleues ; genoux articulés comme des pattes
+d'insecte ; mains un peu plus grandes que la normale ; longue queue de chat blanche et fournie.
 Expression « froid » : yeux de prédateur (pupilles fendues, sourire carnassier).
 """
 from __future__ import annotations
@@ -18,12 +19,17 @@ HAIR_RIM = rgb('#ffffff')
 EAR_IN = rgb('#f2a9bf')
 EYE = rgb('#d4243a')
 LINE = rgb('#3a2630')
-BLOUSE = rgb('#f2f1f4')
-BLOUSE_SH = rgb('#c6c2d0')
-SHORTS = rgb('#3a3352')
-STRAP = rgb('#2a2440')
-SOCK = rgb('#f0eef2')
-SHOE = rgb('#4a2a3a')
+COAT = rgb('#3d5aa8')
+COAT_L = rgb('#5876c4')
+COAT_D = rgb('#26386e')
+BUTTON = rgb('#f0c840')
+SHORTS = rgb('#2c2f4a')
+SOCK = rgb('#ef8a3a')
+SOCK_LINE = rgb('#2a1a14')
+SHOE = rgb('#3550a0')
+EAR_FUR = rgb('#ecd27a')
+EAR_FUR_D = rgb('#c8a64e')
+JOINT = rgb('#d9c8bc')
 
 BODY = Body(head=(8.4, 8.4, 8.0), head_y=19.8, hip_y=10.6, knee_y=5.6, shoulder_y=18.4, arm_x=4.5, leg_x=1.7,
             torso_w=6.4, torso_d=3.6)
@@ -62,16 +68,21 @@ def build_hair(m):
                                                  (186, 7.0, 3.8, 4, 0.4, -14), (206, 5.8, 3.6, 12, 0.32, 26))):
         crown_lock(m, f'p_f{j}', c, rr, az, 72, L, W, mk(k), flat=0.45, turn=96, tip=0.4, segs=4, lean=lean,
                    skew=rnd.uniform(-0.14, 0.14), side=sd)
-    # oreilles de chat : triangles épais, intérieur rose
+    # grandes oreilles de chat à fourrure jaune, plantées dans la chevelure (base enfoncée dans les mèches),
+    # pointes légèrement tournées vers l'extérieur, intérieur clair
     for sx in (-1, 1):
-        m.bone(f'ear{sx}', [sx * 2.6, top + 0.8, 0.2], 'hair', rotation=[-6, 0, -sx * 18])
-        for i in range(9):
-            w = 3.4 * (1 - i / 9)
-            m.cube(f'ear{sx}', [sx * 2.6 - w / 2, top + 0.8 + i * 0.47, -0.6], [w, 0.55, 1.4],
-                   hair_paint(HAIR_SH, HAIR, HAIR_RIM, lit=0.3, seed=20 + i))
-            if w > 0.9:
-                m.cube(f'ear{sx}', [sx * 2.6 - w / 2 + 0.35, top + 0.8 + i * 0.47, -0.66], [w - 0.7, 0.55, 0.1],
-                       flat(EAR_IN, 0.95))
+        ex, ey = sx * 2.9, top - 0.6
+        m.bone(f'ear{sx}', [ex, ey, 0.4], 'hair', rotation=[-10, -sx * 12, -sx * 22])
+        n = 12
+        for i in range(n):
+            t = i / n
+            w = 4.6 * (1 - t) ** 0.9
+            m.cube(f'ear{sx}', [ex - w / 2, ey + i * 0.52, -0.9], [w, 0.6, 1.8],
+                   material(shade(EAR_FUR, 1.0 + 0.06 * (i % 2)), top=1.1, bottom=0.85, edge=0.8, noise=8, seed=20 + i))
+            if w > 1.2:
+                m.cube(f'ear{sx}', [ex - w / 2 + 0.45, ey + i * 0.52, -0.96], [w - 0.9, 0.6, 0.1],
+                       flat(shade(EAR_FUR, 1.18), 0.95))
+        m.cube(f'ear{sx}', [ex - 0.25, ey + n * 0.52 - 0.2, -0.75], [0.5, 0.9, 1.0], flat(EAR_FUR_D, 0.9))    # touffe
 
 
 def face_paint(ctx, mode='joueur'):
@@ -112,36 +123,57 @@ def head_paint(ctx):
         ctx.draw.rectangle([0, 0, ctx.w, int(ctx.h * 0.7)], fill=HAIR_SH)
 
 
+def sock_paint(ctx):
+    material(SOCK, top=1.08, bottom=0.86, edge=0.85, noise=4)(ctx)
+    for y in range(2, ctx.h, 5):                                   # fines rayures noires
+        ctx.draw.line([(0, y), (ctx.w, y)], fill=SOCK_LINE, width=1)
+
+
 def build_body(m):
     b = BODY
-    blouse = cloth(BLOUSE, shade(BLOUSE, 1.02), BLOUSE_SH, ao_bottom=0.12, folds=3, seed=170)
-    shorts = cloth(SHORTS, shade(SHORTS, 1.2), shade(SHORTS, 0.7), ao_top=0.15, folds=2, seed=171)
-    strap = cloth(STRAP, seed=172)
+    coat = cloth(COAT, COAT_L, COAT_D, ao_bottom=0.12, folds=3, seed=170)
+    shorts = cloth(SHORTS, shade(SHORTS, 1.25), shade(SHORTS, 0.7), ao_top=0.15, folds=2, seed=171)
+    btn = flat(BUTTON, 0.85)
     y0, y1 = b.hip_y + 0.2, b.shoulder_y + 0.6
     d2 = b.torso_d / 2
-    m.cube('torso', [-b.torso_w / 2, y0 + 1.6, -d2], [b.torso_w, y1 - y0 - 1.6, b.torso_d], blouse)
+    # torse fin, taille marquée ; manteau bleu croisé avec deux rangées de trois boutons jaunes
+    m.cube('torso', [-b.torso_w / 2 + 0.5, y0 + 1.4, -d2], [b.torso_w - 1.0, 2.4, b.torso_d], coat)        # taille
+    m.cube('torso', [-b.torso_w / 2, y0 + 3.6, -d2], [b.torso_w, y1 - y0 - 3.6, b.torso_d], coat)
     m.cube('torso', [-1.2, y1 - 0.2, -1.2], [2.4, 0.7, 2.4], skin_mat(shade(SKIN, 0.93)))
-    m.cube('torso', [-1.6, y1 - 1.2, -d2 - 0.25], [3.2, 1.0, 0.3], cloth(BLOUSE_SH, seed=173))      # col
-    m.cube('torso', [-0.5, y1 - 2.6, -d2 - 0.3], [1.0, 1.4, 0.3], flat(rgb('#c23a5a'), 0.9))        # nœud
-    m.cube('torso', [-b.torso_w / 2 + 0.1, y0, -d2 - 0.1], [b.torso_w - 0.2, 2.0, b.torso_d + 0.2], shorts)
-    for sx in (-1, 1):                                                                              # bretelles
-        m.cube('torso', [sx * 1.7 - 0.35, y0 + 1.8, -d2 - 0.12], [0.7, y1 - y0 - 2.2, 0.15], strap)
-        m.cube('torso', [sx * 1.7 - 0.35, y0 + 1.8, d2 - 0.03], [0.7, y1 - y0 - 2.2, 0.15], strap)
+    for sx in (-1, 1):                                                                              # revers
+        m.cube('torso', [sx * 1.0 - 0.7, y1 - 2.6, -d2 - 0.2], [1.4, 2.4, 0.25], cloth(COAT_L, seed=173),
+               pivot=[sx * 1.0, y1 - 1.4, -d2], rotation=[0, 0, sx * 18])
+        for k in range(3):
+            m.cube('torso', [sx * 1.15 - 0.4, y0 + 2.0 + k * 1.9, -d2 - 0.3], [0.8, 0.8, 0.3], btn)
+    m.cube('torso', [-0.25, y0 + 1.4, -d2 - 0.15], [0.5, y1 - y0 - 3.6, 0.15], cloth(COAT_D, seed=174))      # fente
+    # basques du manteau : pans qui s'évasent sur les hanches (hanches larges), derrière et sur les côtés
+    for half, hx in (('r', -1), ('l', 1)):
+        bn = f'coat_tail_{half}'
+        m.bone(bn, [hx * 1.6, y0 + 1.4, 0], 'torso', rotation=[0, 0, hx * 9])
+        m.cube(bn, [hx * 1.6 - (2.4 if hx < 0 else 0.0) - (0.4 if hx < 0 else -0.4), y0 - 3.6, -d2 - 0.15],
+               [2.4, 5.0, b.torso_d + 0.3], coat)
+    m.cube('torso', [-b.torso_w / 2 + 0.2, y0 - 0.4, -d2 + 0.1], [b.torso_w - 0.4, 2.0, b.torso_d - 0.2], shorts)
     for side, sx in (('right', -1), ('left', 1)):
         cx = sx * b.arm_x
-        m.box(f'{side}_arm', (cx, 0), b.elbow_y - 0.4, (3.5, b.shoulder_y - b.elbow_y + 1.0, 3.6), blouse)  # bouffant
-        m.box(f'{side}_forearm', (cx, 0), b.wrist_y + 0.6, (2.7, b.elbow_y - b.wrist_y - 0.8, 2.8), blouse)
-        m.box(f'{side}_forearm', (cx, 0), b.wrist_y + 0.4, (2.9, 0.6, 3.0), cloth(BLOUSE_SH, seed=174))
-        m.box(f'{side}_hand', (cx, 0), b.wrist_y - 2.0, (2.4, 2.4, 2.4), skin_mat(SKIN))
+        m.box(f'{side}_arm', (cx, 0), b.elbow_y - 0.2, (2.9, b.shoulder_y - b.elbow_y + 0.8, 3.0), coat)
+        m.box(f'{side}_forearm', (cx, 0), b.wrist_y + 0.5, (2.8, b.elbow_y - b.wrist_y - 0.7, 2.9), coat)
+        m.box(f'{side}_forearm', (cx, 0), b.wrist_y + 0.3, (3.1, 0.9, 3.2), cloth(COAT_L, seed=175))        # poignet
+        m.box(f'{side}_forearm', (cx + sx * 1.6, 0), b.wrist_y + 0.5, (0.3, 0.5, 0.5), btn)                  # bouton de manchette
+        m.box(f'{side}_hand', (cx, 0), b.wrist_y - 2.4, (2.9, 2.8, 2.9), skin_mat(SKIN))                     # mains un peu grandes
+        for k in range(4):
+            m.cube(f'{side}_hand', [cx - 1.2 + k * 0.7, b.wrist_y - 3.1, -1.25], [0.5, 0.8, 0.6], skin_mat(shade(SKIN, 0.95)))
     for side, sx in (('right', -1), ('left', 1)):
         cx = sx * b.leg_x
-        m.box(f'{side}_leg', (cx, 0), b.hip_y - 3.0, (3.1, 3.2, 3.2), shorts)
-        m.box(f'{side}_leg', (cx, 0), b.knee_y, (2.5, b.hip_y - 3.0 - b.knee_y, 2.6), skin_mat(SKIN))
-        m.box(f'{side}_shin', (cx, 0), 1.0, (2.6, b.knee_y - 1.4, 2.7), cloth(SOCK, seed=175))
+        m.box(f'{side}_leg', (cx, 0), b.hip_y - 2.2, (3.0, 2.4, 3.1), shorts)
+        m.box(f'{side}_leg', (cx, 0), b.knee_y + 0.4, (2.4, b.hip_y - 2.2 - b.knee_y - 0.4, 2.5), skin_mat(SKIN))
+        # genou articulé comme une patte d'insecte : rotule saillante et anneau
+        m.box(f'{side}_leg', (cx, -0.5), b.knee_y - 0.4, (2.7, 1.2, 2.6), material(JOINT, top=1.1, bottom=0.8, edge=0.7))
+        m.box(f'{side}_leg', (cx, -1.3), b.knee_y - 0.2, (1.4, 0.9, 0.6), flat(shade(JOINT, 0.8), 0.9))
+        m.box(f'{side}_shin', (cx, 0), 1.0, (2.5, b.knee_y - 1.4, 2.6), sock_paint)
         m.box(f'{side}_shin', (cx, -0.4), 0.0, (2.8, 1.2, 3.8), cloth(SHOE, shade(SHOE, 1.3), shade(SHOE, 0.7), seed=176))
-    # queue de chat : longue, souple, en S
-    lock(m, 'tail', [0, b.hip_y + 0.4, 1.9], 14.0, 1.8, 150, 0, mk(0.1), flat=1.0, curve=(-50, 0), segs=5,
-         root=1.0, tip=0.45, taper_pow=0.3, parent='body')
+    # longue queue de chat blanche et fournie : épaisse à la base, en S, bout plus touffu
+    lock(m, 'tail', [0, b.hip_y + 0.4, 1.9], 15.0, 2.4, 150, 0, mk(0.12), flat=1.0, curve=(-60, 14), segs=5,
+         root=1.1, tip=0.8, taper_pow=0.2, belly=1.15, parent='body')
 
 
 def build():
