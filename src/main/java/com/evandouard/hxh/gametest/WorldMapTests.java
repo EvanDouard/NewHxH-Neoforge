@@ -73,4 +73,19 @@ public final class WorldMapTests {
         helper.assertTrue(sea < HxHWorldMap.SEA_LEVEL - 5, "Fond marin profond au large : " + sea);
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void placesOverrideRegionBiome(GameTestHelper helper) {
+        var biomes = helper.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME);
+        var plains = biomes.getOrThrow(net.minecraft.world.level.biome.Biomes.PLAINS);
+        var desert = biomes.getOrThrow(net.minecraft.world.level.biome.Biomes.DESERT);
+        var place = new com.evandouard.hxh.world.HxHBiomeSource.Place(1560, 810, 100, desert);
+        var source = new com.evandouard.hxh.world.HxHBiomeSource(plains, plains, plains, plains, plains, plains, plains, plains, plains, plains,
+                java.util.List.of(place));
+        helper.assertTrue(source.placeBiome(1560, 810) == desert, "Biome du lieu en son centre");
+        helper.assertTrue(source.placeBiome(1650, 810) == desert, "Biome du lieu dans le rayon");
+        helper.assertTrue(source.placeBiome(1700, 810) == null, "Pas de biome de lieu hors du rayon");
+        helper.assertTrue(source.possibleBiomes().contains(desert), "Le biome du lieu est déclaré au générateur");
+        helper.succeed();
+    }
 }

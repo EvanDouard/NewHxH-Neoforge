@@ -147,7 +147,7 @@ Le Navigateur (guide qui lance l'Examen Hunter) attend dans le village de l'île
 ## Billets de dirigeable et minimap
 Le prix d'un billet = 50 + 1 Jenny pour 4 blocs entre le point de départ (position du joueur dans le monde HxH, île de la Baleine sinon) et la destination + 1/10 du « prix » du fichier de la destination (prestige du lieu), arrondi à 10. La minimap (client uniquement, fichier `config/hxh-client.toml`) montre la carte du monde centrée sur le joueur dans le monde HxH.
 
-## Biomes par lieu (proposition, à valider)
+## Biomes par lieu (fait le 27 nov : liste dans `data/hxh/dimension/world.json`, champ `places`)
 Vanilla seulement (pas de biome sur mesure pour l'instant) ; un biome par lieu connu, posé en disque autour du lieu par `HxHBiomeSource` (rayon à régler), le reste de la région gardant son biome d'ambiance.
 | Lieu | Biome proposé | Pourquoi |
 |---|---|---|
@@ -164,7 +164,7 @@ Vanilla seulement (pas de biome sur mesure pour l'instant) ; un biome par lieu c
 | Glam Gas Land | `minecraft:desert` | terre désolée |
 | Palais de Kakin | `minecraft:dark_forest` | région Kakin |
 | Port de la Baleine Noire | `minecraft:stony_shore` | côte rocheuse |
-Techniquement : `HxHBiomeSource.getNoiseBiome` regarde déjà la case ; on ajoute une liste « lieu → rayon, biome » (données JSON) testée avant la région. Les structures vanilla sont déjà coupées (`HxHChunkGenerator`).
+Techniquement : `HxHBiomeSource` lit la liste `places` (x, z, rayon en blocs, biome) avant la région ; la mer et les plages gardent leur biome. Rayons et biomes se règlent dans `world.json`. Les structures vanilla sont déjà coupées (`HxHChunkGenerator`).
 
 ## Carte (27 nov) : régions ajoutées
 - `p` = République de Padokea (teal, tout le continent nord autour de Minbo) ; archipel de Mitene en cinq îles : `n` NGL (vert), `r` Rokario (rose), `h` Hass (vert-jaune), `w` Gorteau-Ouest (violet), `e` Gorteau-Est (orange), d'ouest en est. Peijin est à la jonction Gorteau-Ouest / Gorteau-Est.

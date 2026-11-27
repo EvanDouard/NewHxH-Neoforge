@@ -391,3 +391,7 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu : dans le monde HxH, plus aucun village de villageois, forteresse, épave ni portail en ruine (nouveau monde, ou chunks pas encore générés).
 - [ ] En jeu : carte du dirigeable : République de Padokea colorée et nommée (survol), archipel de Mitene (NGL, Rokario, Hass, Gorteau-Ouest/Est) ; NGL est maintenant sur l'île la plus à l'ouest.
 - [ ] En jeu : `/hunter darkcontinent known` puis ouvrir la carte du dirigeable : carte « Continent Noir connu » (Nouveau Monde, noms des régions, Lac Mobius, Continent Noir) ; `unknown` : carte classique. Les repères, le survol et le clic marchent comme sur la classique.
+
+## Biomes par lieu (27 nov)
+- **CI** `placesOverrideRegionBiome` (disque de lieu, rayon, déclaration au générateur).
+- [ ] En jeu : les 12 lieux ont leur biome (herbe/feuillage, ciel), sans coupure trop brutale au bord du disque ; ajuster les rayons dans `data/hxh/dimension/world.json`. Les chunks déjà générés gardent leurs anciens biomes (nouveau monde ou zone neuve).

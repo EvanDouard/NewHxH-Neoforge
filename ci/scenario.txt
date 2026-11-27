@@ -3402,6 +3402,13 @@ pick region:n
 wait 5
 shot 99zzo_carte_ngl
 closescreen
+cmd gamemode spectator
+cmd tp @s 1685 110 3840 0 25
+wait 240
+shot 99zzq_biome_cite_meteore
+cmd tp @s 4390 110 4174 0 25
+wait 240
+shot 99zzr_biome_ile_baleine
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative
