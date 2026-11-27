@@ -17,75 +17,75 @@
       "begerosse": "minecraft:savanna",
       "places": [
         {
-          "x": 4390,
-          "z": 4174,
-          "radius": 260,
+          "x": 87800,
+          "z": 83480,
+          "radius": 2080,
           "biome": "minecraft:forest"
         },
         {
-          "x": 1600,
-          "z": 850,
-          "radius": 320,
+          "x": 32000,
+          "z": 17000,
+          "radius": 2560,
           "biome": "minecraft:windswept_forest"
         },
         {
-          "x": 1685,
-          "z": 3840,
-          "radius": 220,
+          "x": 33700,
+          "z": 76800,
+          "radius": 1760,
           "biome": "minecraft:badlands"
         },
         {
-          "x": 690,
-          "z": 3924,
-          "radius": 200,
+          "x": 13800,
+          "z": 78480,
+          "radius": 1600,
           "biome": "minecraft:plains"
         },
         {
-          "x": 2650,
-          "z": 1440,
-          "radius": 260,
+          "x": 53000,
+          "z": 28800,
+          "radius": 2080,
           "biome": "minecraft:plains"
         },
         {
-          "x": 6440,
-          "z": 2280,
-          "radius": 300,
+          "x": 128800,
+          "z": 45600,
+          "radius": 2400,
           "biome": "minecraft:old_growth_spruce_taiga"
         },
         {
-          "x": 2030,
-          "z": 5272,
-          "radius": 200,
+          "x": 40600,
+          "z": 105440,
+          "radius": 1600,
           "biome": "minecraft:bamboo_jungle"
         },
         {
-          "x": 3480,
-          "z": 4115,
-          "radius": 200,
+          "x": 69600,
+          "z": 82300,
+          "radius": 1600,
           "biome": "minecraft:savanna"
         },
         {
-          "x": 3385,
-          "z": 4115,
-          "radius": 260,
+          "x": 67700,
+          "z": 82300,
+          "radius": 2080,
           "biome": "minecraft:cherry_grove"
         },
         {
-          "x": 812,
-          "z": 4597,
-          "radius": 260,
+          "x": 16240,
+          "z": 91940,
+          "radius": 2080,
           "biome": "minecraft:mangrove_swamp"
         },
         {
-          "x": 5990,
-          "z": 2450,
-          "radius": 260,
+          "x": 119800,
+          "z": 49000,
+          "radius": 2080,
           "biome": "minecraft:dark_forest"
         },
         {
-          "x": 5425,
-          "z": 2170,
-          "radius": 160,
+          "x": 108500,
+          "z": 43400,
+          "radius": 1280,
           "biome": "minecraft:stony_shore"
         }
       ]

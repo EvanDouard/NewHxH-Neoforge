@@ -21,7 +21,7 @@ public final class WorldMapTests {
     @GameTest(template = "empty")
     public static void mapHasExpectedSizeAndLandAtDestinations(GameTestHelper helper) {
         HxHWorldMap map = HxHWorldMap.get();
-        helper.assertTrue(map.widthBlocks() == 7968 && map.heightBlocks() == 5632, "Taille de la carte : " + map.widthBlocks() + "×" + map.heightBlocks());
+        helper.assertTrue(map.widthBlocks() == 7968 * HxHWorldMap.SCALE && map.heightBlocks() == 5632 * HxHWorldMap.SCALE, "Taille de la carte : " + map.widthBlocks() + "×" + map.heightBlocks());
         helper.assertTrue(!HxHWorldMap.isLand(map.cellAt(0, 0)), "Le coin de la carte est de la mer");
         helper.assertTrue(!HxHWorldMap.isLand(map.cellAt(-500, 100)), "Hors de la carte : mer");
         for (AirshipDestination d : AirshipRegistry.all())

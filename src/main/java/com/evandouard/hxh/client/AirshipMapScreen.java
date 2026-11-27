@@ -3,6 +3,7 @@ package com.evandouard.hxh.client;
 import com.evandouard.hxh.HxHMod;
 import com.evandouard.hxh.network.AirshipTravelPayload;
 import com.evandouard.hxh.network.OpenAirshipPayload;
+import com.evandouard.hxh.world.HxHWorldMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ConfirmScreen;
@@ -25,7 +26,7 @@ public class AirshipMapScreen extends Screen {
     /** Échelle du monde connu sur la grande toile (1076 / 1494). */
     private static final double DARK_WS = 0.72;
     /** Étendue du monde représentée par la carte (blocs) : 249 × 176 cases de 32 blocs. */
-    private static final int WORLD_W = 7968, WORLD_H = 5632;
+    private static final int WORLD_W = 7968 * HxHWorldMap.SCALE, WORLD_H = 5632 * HxHWorldMap.SCALE, CELL = HxHWorldMap.CELL;
     private static final int INK = 0xFF0E1420, PIN_OK = 0xFFFFE9A8, PIN_POOR = 0xFF7C8594, JENNY = 0xFFFFC23A;
     /** Couleurs des régions (identiques à celles de la texture) pour l'en-tête de l'infobulle. */
     private static final String REGIONS = "mksKobprhwen";
@@ -83,16 +84,16 @@ public class AirshipMapScreen extends Screen {
     /** Lettre de la région sous un point de l'écran, ou '~' / '.' hors région. */
     private char regionAtScreen(double mx, double my) {
         if (mx < mapX || my < mapY || mx >= mapX + mapW || my >= mapY + mapH) return '~';
-        return cell((int) ((mx - mapX) * WORLD_W / mapW / 32), (int) ((my - mapY) * WORLD_H / mapH / 32));
+        return cell((int) ((mx - mapX) * WORLD_W / mapW / CELL), (int) ((my - mapY) * WORLD_H / mapH / CELL));
     }
 
     private char regionOf(OpenAirshipPayload.Dest d) {
-        return cell(d.x() / 32, d.z() / 32);
+        return cell(d.x() / CELL, d.z() / CELL);
     }
 
     /** Nom de la région à une position du monde (blocs), ou null hors région. Sert à la minimap. */
     public static Component regionNameAt(double bx, double bz) {
-        char c = cell((int) Math.floor(bx / 32), (int) Math.floor(bz / 32));
+        char c = cell((int) Math.floor(bx / CELL), (int) Math.floor(bz / CELL));
         return REGIONS.indexOf(c) >= 0 ? regionName(c) : null;
     }
 
@@ -145,8 +146,8 @@ public class AirshipMapScreen extends Screen {
             long sx = 0, sz = 0, n = 0;
             for (int z = 0; z < g.length; z++) for (int x = 0; x < g[z].length; x++) if (g[z][x] == c) { sx += x; sz += z; n++; }
             if (n == 0) return false;
-            fakeX = mapX + (int) (sx / n * 32 * mapW / WORLD_W);
-            fakeY = mapY + (int) (sz / n * 32 * mapH / WORLD_H);
+            fakeX = mapX + (int) (sx / n * CELL * mapW / WORLD_W);
+            fakeY = mapY + (int) (sz / n * CELL * mapH / WORLD_H);
             return true;
         }
         for (OpenAirshipPayload.Dest d : data.destinations()) {
@@ -170,8 +171,8 @@ public class AirshipMapScreen extends Screen {
         for (int z = 0; z < grid.length; z++) {
             for (int x = 0; x < grid[z].length; x++) {
                 if (grid[z][x] != region) continue;
-                int x0 = mapX + x * 32 * mapW / WORLD_W, x1 = mapX + (x + 1) * 32 * mapW / WORLD_W;
-                int y0 = mapY + z * 32 * mapH / WORLD_H, y1 = mapY + (z + 1) * 32 * mapH / WORLD_H;
+                int x0 = mapX + x * CELL * mapW / WORLD_W, x1 = mapX + (x + 1) * CELL * mapW / WORLD_W;
+                int y0 = mapY + z * CELL * mapH / WORLD_H, y1 = mapY + (z + 1) * CELL * mapH / WORLD_H;
                 g.fill(x0, y0, x1, y1, 0x30FFFFFF);
                 if (cell(x - 1, z) != region) g.fill(x0 - 1, y0, x0 + 1, y1, 0xFFFFFFFF);
                 if (cell(x + 1, z) != region) g.fill(x1 - 1, y0, x1 + 1, y1, 0xFFFFFFFF);

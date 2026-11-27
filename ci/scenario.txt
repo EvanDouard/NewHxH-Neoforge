@@ -3172,7 +3172,7 @@ cmd hunter jenny set 6000
 cmd hunter airship whale_island
 wait 400
 shot 99w_monde_hxh_ile_de_la_baleine
-cmd tp @s 4338 80 4122 -45 25
+cmd tp @s 86760 80 82440 -45 25
 cmd effect give @s minecraft:slow_falling 10 0 true
 wait 60
 shot 99y_monde_hxh_village_baleine
@@ -3181,19 +3181,19 @@ cmd hunter airship kukuroo_mountain
 wait 400
 shot 99x_monde_hxh_montagne_kukuroo
 cmd effect give @s minecraft:slow_falling 60 0 true
-cmd tp @s 1560 88 782 0 18
+cmd tp @s 31200 88 15640 0 18
 wait 200
 shot 99z1_kukuroo_grande_porte
-cmd tp @s 1556 80 836 118 12
+cmd tp @s 31120 80 16720 118 12
 wait 60
 shot 99z2_kukuroo_mike
-cmd tp @s 1560 88 850 0 8
+cmd tp @s 31200 88 17000 0 8
 wait 80
 shot 99z3_kukuroo_manoir
-cmd tp @s 1588 80 782 -40 15
+cmd tp @s 31760 80 15640 -40 15
 wait 60
 shot 99z4_kukuroo_maison_zebro
-cmd tp @s 1560 73 806 0 2
+cmd tp @s 31200 73 16120 0 2
 wait 80
 shot 99z5_kukuroo_sept_portes
 cmd hunter jenny set 20000
@@ -3204,13 +3204,13 @@ shot 99za_yorknew_place
 cmd effect give @s minecraft:slow_falling 60 0 true
 cmd time set noon
 cmd gamemode spectator
-cmd tp @s 695 100 3846 0 28
+cmd tp @s 13900 100 76920 0 28
 wait 120
 shot 99zb_yorknew_vue_ville
-cmd tp @s 695 78 3925 0 5
+cmd tp @s 13900 78 78500 0 5
 wait 80
 shot 99zc_yorknew_maison_ventes
-cmd tp @s 735 76 3950 -135 10
+cmd tp @s 14700 76 79000 -135 10
 wait 80
 shot 99zd_yorknew_entrepot_brigade
 cmd gamemode survival
@@ -3220,7 +3220,7 @@ cmd time set noon
 wait 400
 shot 99ze_arene_place
 cmd gamemode spectator
-cmd tp @s 2775 120 1540 180 -15
+cmd tp @s 55500 120 30800 180 -15
 wait 200
 shot 99zf_arene_tour
 cmd gamemode survival
@@ -3230,10 +3230,10 @@ cmd time set noon
 wait 300
 shot 99zh_baleine_noire_quai
 cmd effect give @s minecraft:slow_falling 60 0 true
-cmd tp @s 5430 80 2230 180 15
+cmd tp @s 108600 80 44600 180 15
 wait 120
 shot 99zi_baleine_noire_navire
-cmd tp @s 5440 70 2165 -90 5
+cmd tp @s 108800 70 43300 -90 5
 wait 80
 shot 99zj_baleine_noire_ponton
 cmd hunter jenny set 20000
@@ -3242,10 +3242,10 @@ cmd time set noon
 wait 300
 shot 99zk_hotel_arrivee
 cmd effect give @s minecraft:slow_falling 60 0 true
-cmd tp @s 905 72 1700 180 5
+cmd tp @s 18100 72 34000 180 5
 wait 120
 shot 99zl_hotel_facade
-cmd tp @s 905 68 1632 0 10
+cmd tp @s 18100 68 32640 0 10
 wait 80
 shot 99zm_hotel_pavillon_president
 cmd hunter jenny set 20000
@@ -3273,11 +3273,11 @@ wait 40
 shot 99zq_kakin_arrivee
 cmd effect give @s minecraft:slow_falling 60 0 true
 cmd gamemode spectator
-cmd tp @s 6000 125 2560 180 28
+cmd tp @s 120000 125 51200 180 28
 wait 200
 shot 99zr_kakin_palais
 cmd effect give @s minecraft:night_vision 600 0 true
-cmd tp @s 6000 76 2466 180 3
+cmd tp @s 120000 76 49320 180 3
 wait 150
 shot 99zs_kakin_salle_trone
 cmd hunter jenny set 20000
@@ -3289,7 +3289,7 @@ wait 40
 shot 99zt_meteor_arrivee
 cmd effect give @s minecraft:slow_falling 60 0 true
 cmd gamemode spectator
-cmd tp @s 1700 135 3930 180 28
+cmd tp @s 34000 135 78600 180 28
 wait 200
 shot 99zu_meteor_vue
 cmd gamemode creative
@@ -3321,7 +3321,7 @@ wait 260
 wait 40
 shot 99zv_ngl_arrivee
 cmd gamemode spectator
-cmd tp @s 1350 118 4985 180 28
+cmd tp @s 27000 118 99700 180 28
 wait 200
 shot 99zw_ngl_vue
 cmd gamemode survival
@@ -3332,7 +3332,7 @@ wait 260
 wait 40
 shot 99zx_mafia_arrivee
 cmd gamemode spectator
-cmd tp @s 795 95 3835 90 22
+cmd tp @s 15900 95 76700 90 22
 wait 200
 shot 99zy_mafia_vue
 cmd gamemode survival
@@ -3343,7 +3343,7 @@ wait 260
 wait 40
 shot 99zz_masadora_arrivee
 cmd gamemode spectator
-cmd tp @s 3475 95 4205 180 25
+cmd tp @s 69500 95 84100 180 25
 wait 200
 shot 99zza_masadora_vue
 cmd gamemode survival
@@ -3354,7 +3354,7 @@ wait 260
 wait 40
 shot 99zzb_padokea_arrivee
 cmd gamemode spectator
-cmd tp @s 2655 100 1585 180 25
+cmd tp @s 53100 100 31700 180 25
 wait 200
 shot 99zzc_padokea_vue
 cmd gamemode creative
@@ -3403,10 +3403,10 @@ wait 5
 shot 99zzo_carte_ngl
 closescreen
 cmd gamemode spectator
-cmd tp @s 1685 110 3840 0 25
+cmd tp @s 33700 110 76800 0 25
 wait 240
 shot 99zzq_biome_cite_meteore
-cmd tp @s 4390 110 4174 0 25
+cmd tp @s 87800 110 83480 0 25
 wait 240
 shot 99zzr_biome_ile_baleine
 cmd hunter jenny set 0

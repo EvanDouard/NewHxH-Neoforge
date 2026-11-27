@@ -54,10 +54,10 @@ public final class AirshipTests {
 
     @GameTest(template = "empty")
     public static void ticketPriceGrowsWithDistance(GameTestHelper helper) {
-        int near = Airship.farePrice(100, 1000), mid = Airship.farePrice(2000, 1000), far = Airship.farePrice(8000, 1000);
+        int near = Airship.farePrice(100 * 20, 1000), mid = Airship.farePrice(2000 * 20, 1000), far = Airship.farePrice(8000 * 20, 1000);
         helper.assertTrue(near < mid && mid < far, "Plus c'est loin, plus c'est cher : " + near + " < " + mid + " < " + far);
-        helper.assertTrue(Airship.farePrice(0, 0) >= 10 && Airship.farePrice(500, 0) % 10 == 0, "Prix minimal et arrondi à 10");
-        helper.assertTrue(Airship.farePrice(2000, 3000) > Airship.farePrice(2000, 0), "Le prestige du lieu s'ajoute");
+        helper.assertTrue(Airship.farePrice(0, 0) >= 10 && Airship.farePrice(500 * 20, 0) % 10 == 0, "Prix minimal et arrondi à 10");
+        helper.assertTrue(Airship.farePrice(2000 * 20, 3000) > Airship.farePrice(2000 * 20, 0), "Le prestige du lieu s'ajoute");
         helper.succeed();
     }
 

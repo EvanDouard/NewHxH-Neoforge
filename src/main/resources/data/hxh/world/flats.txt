@@ -1,29 +1,29 @@
 # x z rayon y : sol aplani (pour poser de grands lieux)
 # Domaine Zoldyck, pied de la montagne Kukuroo
-1570 870 125 72
+31400 17400 125 72
 # Yorknew City (ville côtière)
-694 3924 80 68
+13880 78480 80 68
 # Tour Céleste (Heavens Arena)
-2775 1445 85 70
+55500 28900 85 70
 # Port du Black Whale (petite île)
-5435 2160 68 65
+108700 43200 68 65
 # Hôtel de la 5e phase (Kukan'yu)
-905 1658 65 66
+18100 33160 65 66
 # Greed Island (ébauche)
-3370 4110 54 66
+67400 82200 54 66
 # Forêt de Kite, camp (ébauche)
-6420 2260 36 68
+128400 45200 36 68
 # Site du Bras de la Reine (ébauche)
-800 4585 48 66
+16000 91700 48 66
 # Palais royal de Kakin (ébauche)
-6000 2460 100 70
+120000 49200 100 70
 # Meteor City (ébauche)
-1700 3855 100 66
+34000 77100 100 66
 # République NGL, île la plus à l ouest de l Union de Mitene (ébauche)
-2030 5272 62 66
+40600 105440 62 66
 # QG de la Mafia, nord de Yorknew (ébauche)
-715 3832 62 68
+14300 76640 62 68
 # Masadora, Greed Island (ébauche)
-3475 4115 56 66
+69500 82300 56 66
 # Ville de Padokea, à l ouest de la Tour Céleste (ébauche)
-2655 1447 68 70
+53100 28940 68 70

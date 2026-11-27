@@ -52,7 +52,7 @@ public final class Airship {
 
     /** Formule du tarif, à part pour être testée. */
     public static int farePrice(double distance, int prestige) {
-        int raw = 50 + (int) (distance / 4) + prestige / 10;
+        int raw = 50 + (int) (distance / (4.0 * com.evandouard.hxh.world.HxHWorldMap.SCALE)) + prestige / 10;
         return Math.max(10, Math.round(raw / 10f) * 10);
     }
 

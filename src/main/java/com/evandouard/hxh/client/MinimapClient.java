@@ -32,7 +32,7 @@ public final class MinimapClient {
     private static final ResourceLocation MAP = HxHMod.id("textures/gui/world_map.png");
     private static final int TEX_W = 1494, TEX_H = 1056;
     /** Pixels de texture par bloc : 6 px pour une case de 32 blocs. */
-    private static final double TEX_PER_BLOCK = 6.0 / 32.0;
+    private static final double TEX_PER_BLOCK = 6.0 / com.evandouard.hxh.world.HxHWorldMap.CELL;
     /** Pixels d'écran par pixel de texture, par niveau de zoom. */
     private static final double[] ZOOMS = {0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0};
     private static final int MARGIN = 6;

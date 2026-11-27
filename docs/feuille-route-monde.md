@@ -71,3 +71,5 @@ Propositions « libre/théorie » (non officielles) sur la carte 8 000 × 5 650,
 - [ ] **Continent Noir et Nouveau Continent = biomes spéciaux** : mobs qui n'y apparaissent qu'ici, arbres/plantes spéciaux, ambiance propre.
 - [ ] **Créatures dans le lac Mobius** (serpents de mer, méduses, baleine, tortue géante, pieuvre, tourbillons…).
 - Pour l'instant : points de la carte en petits carrés grisés, non téléportables ; événement qui rend `darkContinentKnown` vrai à décider.
+
+**Fait (9, 27 nov)** : échelle du monde ×20 (`HxHWorldMap.SCALE`), voir `docs/monde-hxh.md`. **Reste** : moyens de transport rapides (dirigeable existant ; véhicules terrestres/maritimes à imaginer), Yorknew 2000×2000, relief/côtes à valider en jeu, grille plus fine si besoin.

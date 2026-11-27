@@ -395,3 +395,7 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 ## Biomes par lieu (27 nov)
 - **CI** `placesOverrideRegionBiome` (disque de lieu, rayon, déclaration au générateur).
 - [ ] En jeu : les 12 lieux ont leur biome (herbe/feuillage, ciel), sans coupure trop brutale au bord du disque ; ajuster les rayons dans `data/hxh/dimension/world.json`. Les chunks déjà générés gardent leurs anciens biomes (nouveau monde ou zone neuve).
+
+## Échelle ×20 (27 nov)
+- **CI** : taille de la carte, destinations sur la terre, prix du billet (distances ×20), captures des lieux aux nouvelles coordonnées.
+- [ ] En jeu : relief et côtes lisibles à cette échelle, lieux bien posés sur la terre (pas dans l'eau), prix des billets cohérents, carte et minimap justes, temps de chargement de chunks loin de l'origine. Anciens mondes : les lieux déjà posés restent à leurs anciennes coordonnées (nouveau monde conseillé).
