@@ -165,6 +165,21 @@ public final class ModItems {
     public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> TONPA_SPAWN_EGG =
             ITEMS.register("tonpa_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.TONPA, 0x4A7AC0, 0x7A5A3A, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> SHIZUKU_SPAWN_EGG =
+            ITEMS.register("shizuku_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.SHIZUKU, 0x18181C, 0xF4E0D2, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> FRANKLIN_SPAWN_EGG =
+            ITEMS.register("franklin_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.FRANKLIN, 0x22283C, 0xD8B496, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> TSEZGUERRA_SPAWN_EGG =
+            ITEMS.register("tsezguerra_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.TSEZGUERRA, 0x2A2A32, 0xF4F2EC, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> BOTOBAI_SPAWN_EGG =
+            ITEMS.register("botobai_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.BOTOBAI, 0x2E4434, 0xC8A888, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> BUSHIDORA_SPAWN_EGG =
+            ITEMS.register("bushidora_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.BUSHIDORA, 0x1A1A20, 0x7A7A82, new Item.Properties()));
     public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> KILLUA_SPAWN_EGG =
             ITEMS.register("killua_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.KILLUA, 0xECEAF2, 0x7B5CC2, new Item.Properties()));

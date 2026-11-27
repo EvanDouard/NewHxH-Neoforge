@@ -1,0 +1,12 @@
+{
+  "entity": "hxh:franklin",
+  "stats": {
+    "all": 82,
+    "endurance": 92
+  },
+  "nen": {
+    "level": 84,
+    "kit": "franklin",
+    "mastery": 80
+  }
+}

@@ -2148,40 +2148,80 @@ clearchat
 shot 67gd_serie_razor_genthru_senritsu_gotoh_satotz_expression
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 3
-cmd summon hxh:npc ~2.9 ~ ~4.0 {npc:"canary",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~1.0 ~ ~4.0 {npc:"alluka",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~-0.9 ~ ~4.0 {npc:"hanzo",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~-2.9 ~ ~4.0 {npc:"tonpa",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~3.9 ~ ~4.3 {npc:"canary",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~2.0 ~ ~4.3 {npc:"alluka",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~0.1 ~ ~4.3 {npc:"hanzo",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-2.0 ~ ~4.3 {npc:"tonpa",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-3.9 ~ ~4.3 {npc:"shizuku",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
 wait 30
 clearchat
-shot 67ha_serie_canary_alluka_hanzo_tonpa_face
+shot 67ha_serie_canary_alluka_hanzo_tonpa_shizuku_face
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 3
-cmd summon hxh:npc ~2.9 ~ ~4.0 {npc:"canary",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~1.0 ~ ~4.0 {npc:"alluka",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~-0.9 ~ ~4.0 {npc:"hanzo",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~-2.9 ~ ~4.0 {npc:"tonpa",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~3.9 ~ ~4.3 {npc:"canary",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~2.0 ~ ~4.3 {npc:"alluka",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~0.1 ~ ~4.3 {npc:"hanzo",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-2.0 ~ ~4.3 {npc:"tonpa",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-3.9 ~ ~4.3 {npc:"shizuku",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
 wait 30
 clearchat
-shot 67hb_serie_canary_alluka_hanzo_tonpa_profil
+shot 67hb_serie_canary_alluka_hanzo_tonpa_shizuku_profil
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 3
-cmd summon hxh:npc ~2.9 ~ ~4.0 {npc:"canary",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~1.0 ~ ~4.0 {npc:"alluka",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~-0.9 ~ ~4.0 {npc:"hanzo",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
-cmd summon hxh:npc ~-2.9 ~ ~4.0 {npc:"tonpa",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~3.9 ~ ~4.3 {npc:"canary",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~2.0 ~ ~4.3 {npc:"alluka",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~0.1 ~ ~4.3 {npc:"hanzo",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-2.0 ~ ~4.3 {npc:"tonpa",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-3.9 ~ ~4.3 {npc:"shizuku",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
 wait 30
 clearchat
-shot 67hc_serie_canary_alluka_hanzo_tonpa_dos
+shot 67hc_serie_canary_alluka_hanzo_tonpa_shizuku_dos
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 3
-cmd summon hxh:npc ~2.9 ~ ~4.0 {npc:"canary",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
-cmd summon hxh:npc ~1.0 ~ ~4.0 {npc:"alluka",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
-cmd summon hxh:npc ~-0.9 ~ ~4.0 {npc:"hanzo",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
-cmd summon hxh:npc ~-2.9 ~ ~4.0 {npc:"tonpa",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~3.9 ~ ~4.3 {npc:"canary",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~2.0 ~ ~4.3 {npc:"alluka",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~0.1 ~ ~4.3 {npc:"hanzo",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~-2.0 ~ ~4.3 {npc:"tonpa",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~-3.9 ~ ~4.3 {npc:"shizuku",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
 wait 30
 clearchat
-shot 67hd_serie_canary_alluka_hanzo_tonpa_expression
+shot 67hd_serie_canary_alluka_hanzo_tonpa_shizuku_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 5
+cmd summon hxh:npc ~3.2 ~ ~4.0 {npc:"franklin",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~1.2 ~ ~4.0 {npc:"tsezguerra",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-1.2 ~ ~4.0 {npc:"botobai",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-3.2 ~ ~4.0 {npc:"bushidora",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+wait 30
+clearchat
+shot 67ia_serie_franklin_tsezguerra_botobai_bushidora_face
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 5
+cmd summon hxh:npc ~3.2 ~ ~4.0 {npc:"franklin",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~1.2 ~ ~4.0 {npc:"tsezguerra",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-1.2 ~ ~4.0 {npc:"botobai",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-3.2 ~ ~4.0 {npc:"bushidora",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+wait 30
+clearchat
+shot 67ib_serie_franklin_tsezguerra_botobai_bushidora_profil
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 5
+cmd summon hxh:npc ~3.2 ~ ~4.0 {npc:"franklin",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~1.2 ~ ~4.0 {npc:"tsezguerra",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-1.2 ~ ~4.0 {npc:"botobai",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd summon hxh:npc ~-3.2 ~ ~4.0 {npc:"bushidora",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+wait 30
+clearchat
+shot 67ic_serie_franklin_tsezguerra_botobai_bushidora_dos
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+look 0 5
+cmd summon hxh:npc ~3.2 ~ ~4.0 {npc:"franklin",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~1.2 ~ ~4.0 {npc:"tsezguerra",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~-1.2 ~ ~4.0 {npc:"botobai",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd summon hxh:npc ~-3.2 ~ ~4.0 {npc:"bushidora",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+wait 30
+clearchat
+shot 67id_serie_franklin_tsezguerra_botobai_bushidora_expression
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 # Fin de la série « même style »
 # Gon et Killua en mobs (œufs d'apparition) : même modèle, nom, Hatsu

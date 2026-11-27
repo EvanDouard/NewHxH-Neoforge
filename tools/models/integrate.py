@@ -58,6 +58,11 @@ add('canary', 'Canary', 'Canary', 0.5, 1.55, 0x1A1A20, 0xF6F4EE, {"all": 58}, 50
 add('alluka', 'Alluka Zoldyck', 'Alluka Zoldyck', 0.5, 1.45, 0xF6C6D6, 0x141218, {"all": 50}, 98, 70, kit='cast_alluka')
 add('hanzo', 'Hanzo', 'Hanzo', 0.55, 1.7, 0x4A5A6E, 0xE8C4A2, {"all": 70, "agility": 85}, 60, 55, kit='cast_hanzo')
 add('tonpa', 'Tonpa', 'Tonpa', 0.6, 1.5, 0x4A7AC0, 0x7A5A3A, {"all": 35}, 10, 5, kit='cast_tonpa')
+add('shizuku', 'Shizuku Murasaki', 'Shizuku Murasaki', 0.55, 1.65, 0x18181C, 0xF4E0D2, {"all": 74}, 80, 78)
+add('franklin', 'Franklin Bordeau', 'Franklin Bordeau', 0.85, 2.4, 0x22283C, 0xD8B496, {"all": 82, "endurance": 92}, 84, 80)
+add('tsezguerra', 'Tsezguerra', 'Tsezguerra', 0.6, 1.85, 0x2A2A32, 0xF4F2EC, {"all": 76}, 80, 80)
+add('botobai', 'Botobai Gigante', 'Botobai Gigante', 0.75, 2.1, 0x2E4434, 0xC8A888, {"all": 86}, 90, 88)
+add('bushidora', 'Bushidora Ambitious', 'Bushidora Ambitious', 0.6, 1.85, 0x1A1A20, 0x7A7A82, {"all": 74}, 78, 76)
 
 
 def rep(p, a, b, once=True):

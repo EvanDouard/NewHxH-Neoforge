@@ -29,7 +29,7 @@ Sans fichier d'apparence, un PNJ utilise `textures/entity/npc/<id>.png`, sinon S
 ## Modèles sur mesure (GeckoLib)
 
 Les personnages refaits au niveau décrit dans `docs/Analyse_model.md` ont un vrai modèle GeckoLib, qui remplace le
-rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark**, **Pakunoda**, **Ging**, **Phinks**, **Knuckle**, **Wing**, **Zushi**, **Menchi**, **Cheadle**, **Palm**, **Morel**, **Neon**, **Pariston**, **Knov**, **Razor**, **Genthru**, **Senritsu**, **Gotoh**, **Satotz**, **Canary**, **Alluka**, **Hanzo** et **Tonpa**.
+rendu ci-dessus dès qu'il existe (`NpcRenderer` délègue à `NpcGeoRenderer`). Personnages faits : **Gon** (pilote), **Killua**, **Kurapika**, **Leorio**, **Hisoka**, puis **Netero**, **Meruem**, **Neferpitou**, **Shaiapouf**, **Youpi**, **Chrollo**, **Uvogin**, **Illumi**, **Zeno**, **Biscuit**, **Feitan**, **Nobunaga**, **Machi**, **Silva**, **Kite**, **Kalluto**, **Shalnark**, **Pakunoda**, **Ging**, **Phinks**, **Knuckle**, **Wing**, **Zushi**, **Menchi**, **Cheadle**, **Palm**, **Morel**, **Neon**, **Pariston**, **Knov**, **Razor**, **Genthru**, **Senritsu**, **Gotoh**, **Satotz**, **Canary**, **Alluka**, **Hanzo**, **Tonpa**, **Shizuku**, **Franklin**, **Tsezguerra**, **Botobai** et **Bushidora** (tous les kits jouables ont maintenant un modèle).
 
 ```
 python3 tools/models/gon.py
@@ -208,6 +208,12 @@ Tous sont des mobs neutres (alliés entre eux) avec leur kit Hatsu.
 | Alluka | 1,45 | noir raide jusqu'au bas du dos, frange droite | kimono rose à fleurs, obi rouge | Nanika (yeux et bouche en trous noirs) |
 | Hanzo | 1,7 | crâne rasé | tenue de ninja, bandages, lame au poignet | sérieux |
 | Tonpa | 1,5 | brun très court en brosse, épi | gros nez, chemise bleue, sac à canettes | sourire fourbe |
+
+| Shizuku | 1,65 | carré noir lisse au menton | grandes lunettes, pull noir à col roulé | regard vide |
+| Franklin | 2,4 | noir très court plaqué, front haut | visage couturé, lobes étirés, long manteau boutonné, doigts-canons | prêt à tirer |
+| Tsezguerra | 1,85 | noir plaqué en arrière | sourcils blancs, bouc, costume sombre | regard de chasseur |
+| Botobai | 2,1 | chauve, deux cornes de dragon | peau écailleuse, longue barbe blanche, manteau d'officier | procureur |
+| Bushidora | 1,85 | noir en queue haute de samouraï | bouc, haori noir, hakama, sabre (apparence reconstituée, à vérifier) | regard de juge |
 
 Ces six-là n'ont pas de kit jouable : leurs Hatsu sont des kits de mobs (`SupportingCast`, ids `cast_<nom>`).
 
