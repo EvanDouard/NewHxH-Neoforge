@@ -15,7 +15,7 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class WorldPlacesTests {
 
-    @GameTest(template = "empty", timeoutTicks = 300)
+    @GameTest(template = "empty", timeoutTicks = 400)
     public static void whaleIslandVillageIsBuilt(GameTestHelper helper) {
         var place = WorldPlaces.get("hxh:whale_island_village");
         helper.assertTrue(place != null, "Le village de l'île de la Baleine est chargé");
@@ -27,7 +27,13 @@ public final class WorldPlacesTests {
         helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 1, ground, origin.getZ() + 1)).is(Blocks.RED_BED), "Un lit dans la maison de Mito");
         helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 4, ground + 1, origin.getZ() + 3)).isAir(), "L'intérieur est dégagé");
         helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 11, ground, origin.getZ() + 11)).is(Blocks.WATER), "Le puits contient de l'eau");
-        helper.succeed();
+        // Le guide de l'Examen (Navigateur) vit ici, dans le monde HxH
+        helper.runAfterDelay(20, () -> {
+            var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 3, origin.getZ(), origin.getX() + 12, ground + 6, origin.getZ() + 14);
+            helper.assertTrue(level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box).stream().anyMatch(n -> n.npcId().equals("navigator")),
+                    "Le Navigateur attend dans le village");
+            helper.succeed();
+        });
     }
 
     @GameTest(template = "empty", timeoutTicks = 600)

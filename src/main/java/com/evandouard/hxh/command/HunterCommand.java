@@ -330,7 +330,8 @@ public final class HunterCommand {
                                 return 0;
                             }
                             net.minecraft.core.BlockPos p = net.minecraft.core.BlockPos.of(nav);
-                            ctx.getSource().sendSuccess(() -> Component.translatable("command.hxh.exam_where", p.getX(), p.getY(), p.getZ()), false);
+                            boolean inHxh = com.evandouard.hxh.exam.ExamSavedData.get(ctx.getSource().getLevel()).navigatorHxh();
+                            ctx.getSource().sendSuccess(() -> Component.translatable(inHxh ? "command.hxh.exam_where_hxh" : "command.hxh.exam_where", p.getX(), p.getY(), p.getZ()), false);
                             return 1;
                         }))
                         .then(Commands.literal("rebuild").requires(src -> src.hasPermission(2)).executes(ctx -> {

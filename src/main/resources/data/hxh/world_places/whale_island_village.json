@@ -817,5 +817,17 @@
    ],
    "state": "minecraft:lantern"
   }
+ ],
+ "entities": [
+  {
+   "type": "hxh:npc",
+   "pos": [
+    4,
+    0,
+    9
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"navigator\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  }
  ]
 }

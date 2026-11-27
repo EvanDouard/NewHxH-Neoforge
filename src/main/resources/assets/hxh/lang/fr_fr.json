@@ -1954,5 +1954,7 @@
   "airship.hxh.region.s": "Saherta",
   "airship.hxh.region.K": "Kakin",
   "airship.hxh.region.o": "Ochima",
-  "airship.hxh.region.b": "Begerosse"
+  "airship.hxh.region.b": "Begerosse",
+  "exam.hxh.guide_other_world": "Trouve le guide dans le monde HxH, au village de l'île de la Baleine (/hunter world hxh)",
+  "command.hxh.exam_where_hxh": "Le Navigateur attend les candidats dans le monde HxH, en %s %s %s (/hunter world hxh pour y aller)."
 }

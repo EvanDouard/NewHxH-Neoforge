@@ -1954,5 +1954,7 @@
   "airship.hxh.region.s": "Saherta",
   "airship.hxh.region.K": "Kakin",
   "airship.hxh.region.o": "Ochima",
-  "airship.hxh.region.b": "Begerosse"
+  "airship.hxh.region.b": "Begerosse",
+  "exam.hxh.guide_other_world": "Find the guide in the HxH world, in the Whale Island village (/hunter world hxh)",
+  "command.hxh.exam_where_hxh": "The Navigator waits for candidates in the HxH world, at %s %s %s (/hunter world hxh to go there)."
 }

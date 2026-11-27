@@ -1062,7 +1062,14 @@ public final class QuestManager {
         };
         // Examen : trouver un guide (on dit où il attend)
         if (q.id().equals(QuestRegistry.HUNTER_EXAM) && step.npc().equals("navigator") && step.type().equals("talk")) {
-            long nav = com.evandouard.hxh.exam.ExamSavedData.get(player.server.overworld()).navigator();
+            var examData = com.evandouard.hxh.exam.ExamSavedData.get(player.server.overworld());
+            long nav = examData.navigator();
+            if (nav != Long.MIN_VALUE && examData.navigatorHxh() && !player.level().dimension().equals(com.evandouard.hxh.airship.Airship.WORLD)) {
+                // Le guide est dans le monde HxH : des coordonnées d'un autre monde ne mèneraient nulle part
+                com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.title(player),
+                        Component.translatable("exam.hxh.guide_other_world"), 0, 0, QuestStatusPayload.NO_TARGET));
+                return;
+            }
             if (nav != Long.MIN_VALUE) {
                 BlockPos g = BlockPos.of(nav);
                 com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.title(player),

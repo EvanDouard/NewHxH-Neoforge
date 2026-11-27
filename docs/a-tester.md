@@ -378,3 +378,4 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu : carte du dirigeable nette (plus de flou) ; arrivée directe dans un lieu sans plateforme qui apparaît puis disparaît ; plus d'animaux sauvages autour des lieux à l'arrivée.
 - [ ] En jeu : `/hunter world normal` puis `/hunter world hxh` — on retrouve l'endroit quitté dans chaque monde (première fois : île de la Baleine / point d'apparition).
 - [ ] En jeu : carte du dirigeable — un seul voile léger, repères discrets ; survol d'une région = nom + bordure blanche ; survol d'un lieu = région, nom, prix.
+- [ ] En jeu : le guide de l'Examen est au village de l'île de la Baleine (monde HxH) ; depuis le monde normal, la quête dit d'aller dans le monde HxH (`/hunter world hxh`) au lieu de donner des coordonnées. L'ancien guide du monde normal est retiré au démarrage.

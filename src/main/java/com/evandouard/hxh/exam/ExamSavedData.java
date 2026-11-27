@@ -17,6 +17,8 @@ public final class ExamSavedData extends SavedData {
 
     final Set<String> built = new HashSet<>();
     long navigator = Long.MIN_VALUE;
+    /** Le Navigateur est dans le monde HxH (village de l'île de la Baleine) et non dans le monde normal. */
+    boolean navigatorHxh;
 
     public static ExamSavedData get(ServerLevel level) {
         return level.getServer().overworld().getDataStorage().computeIfAbsent(
@@ -27,6 +29,7 @@ public final class ExamSavedData extends SavedData {
         ExamSavedData d = new ExamSavedData();
         for (Tag t : tag.getList("built", Tag.TAG_STRING)) d.built.add(t.getAsString());
         if (tag.contains("navigator")) d.navigator = tag.getLong("navigator");
+        d.navigatorHxh = tag.getBoolean("navigator_hxh");
         return d;
     }
 
@@ -36,7 +39,12 @@ public final class ExamSavedData extends SavedData {
         for (String s : built) list.add(StringTag.valueOf(s));
         tag.put("built", list);
         if (navigator != Long.MIN_VALUE) tag.putLong("navigator", navigator);
+        tag.putBoolean("navigator_hxh", navigatorHxh);
         return tag;
+    }
+
+    public boolean navigatorHxh() {
+        return navigatorHxh;
     }
 
     public long navigator() {
