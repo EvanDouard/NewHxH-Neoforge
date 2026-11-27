@@ -34,14 +34,14 @@ def build_hair(m):
     b = BODY
     top = b.top
     m.bone('hair', [0, top, 0], 'head')
-    c, R = (0.0, top - 3.8, 0.5), 5.6
+    c, R = (0.0, top - 4.4, 0.5), 5.1
     scalp(m, c, R, lambda k: mk(k - 0.05)(0.5), skip_front=56, front_phi=50,
-          rings=((8, 14, -0.12), (30, 12, -0.08), (52, 9, -0.04), (72, 5, 0.0)))
-    rr = R + 0.15
+          rings=((36, 12, -0.08), (56, 9, -0.04), (74, 5, 0.0)))
+    rr = R + 0.08
     for i, x_az in enumerate((-30, -10, 10, 30)):
-        crown_lock(m, f'f_t{i}', c, rr, x_az, 124, 7.0, 3.6, mk(0.2), flat=0.25, turn=96, tip=0.4, segs=4)
+        crown_lock(m, f'f_t{i}', c, rr, x_az, 130, 7.4, 3.6, mk(0.2), flat=0.18, turn=104, tip=0.5, segs=4)
     for sx in (-1, 1):
-        crown_lock(m, f'f_s{sx}', c, rr, sx * 80, 100, 5.2, 3.6, mk(0.1), flat=0.25, turn=80, tip=0.4, segs=3)
+        crown_lock(m, f'f_s{sx}', c, rr, sx * 70, 118, 4.4, 3.4, mk(0.1), flat=0.18, turn=90, tip=0.5, segs=3)
 
 
 def face_paint(ctx, mode='calme'):
@@ -58,9 +58,10 @@ def face_paint(ctx, mode='calme'):
     f.rect(31, 31, 35, 42, shade(SKIN, 0.84))
     f.rect(25, 49, 41, 50, rgb('#6a3e34'))
     for (x0, y0, x1) in ((10, 10, 56), (6, 36, 24), (42, 36, 60), (22, 55, 44)):   # cicatrices cousues
-        f.rect(x0, y0, x1, y0 + 1, SCAR)
-        for x in range(x0 + 1, x1, 3):
-            f.rect(x, y0 - 2, x + 1, y0 + 3, SCAR)
+        f.rect(x0, y0, x1, y0 + 1, SCAR)                                        # trait plus épais
+        f.rect(x0, y0 + 2, x1, y0 + 2, shade(SKIN, 0.82))
+        for x in range(x0 + 1, x1, 3):                                          # points de suture nets
+            f.rect(x, y0 - 2, x + 1, y0 + 3, rgb("#2a1a18"))
 
 
 def head_paint(ctx):
@@ -115,8 +116,9 @@ def build():
     skeleton(m, b, arm_out=6, leg_out=3)
     head_box(m, b, head_paint, FACE_D, skin=SKIN, ears=False)
     for sx in (-1, 1):                                                         # lobes étirés et percés
-        m.cube('head', [sx * (b.head[0] / 2 + 0.4) - 0.5, b.head_y + 1.0, -0.8], [1.0, 4.4, 1.8], skin_mat(SKIN))
-        m.cube('head', [sx * (b.head[0] / 2 + 0.4) - 0.55, b.head_y + 1.6, -0.3], [1.1, 1.0, 0.8], flat(rgb('#3a2a24'), 0.9))
+        m.cube('head', [sx * (b.head[0] / 2 + 0.4) - 0.5, b.head_y + 2.6, -0.8], [1.0, 2.6, 1.8], skin_mat(SKIN))   # oreille
+        m.cube('head', [sx * (b.head[0] / 2 + 0.45) - 0.45, b.head_y - 2.6, -0.6], [0.9, 5.4, 1.4], skin_mat(shade(SKIN, 0.97)))  # lobe très étiré
+        m.cube('head', [sx * (b.head[0] / 2 + 0.45) - 0.55, b.head_y - 1.8, -0.3], [1.1, 1.8, 0.8], flat(rgb('#3a2a24'), 0.9))  # trou
     build_hair(m)
     build_body(m)
     m.animations = humanoid_animations(arm_swing=12, leg_swing=18, breath=1.6)

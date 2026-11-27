@@ -46,10 +46,15 @@ def build_hair(m):
                 continue
             crown_lock(m, f'p_l{layer}{i}', c, rr + 0.25 * layer, az + rnd.uniform(-5, 5), phi + rnd.uniform(-5, 5),
                        L + rnd.uniform(-0.4, 0.5), W, mk(0.14 + 0.08 * layer + 0.04 * (i % 2)), flat=0.6, turn=turn,
-                       tip=0.3, segs=5, twist=rnd.uniform(-12, 12), skew=rnd.uniform(-0.1, 0.1))
+                       tip=0.3, segs=5, twist=rnd.uniform(-12, 12), skew=rnd.uniform(-0.1, 0.1),
+                       side=rnd.choice((-1, 1)) * rnd.uniform(25, 55))                    # boucles distinctes
+    for i, az in enumerate(range(6, 360, 30)):                    # petites boucles serrées sur le dessus et les tempes
+        crown_lock(m, f'p_c{i}', c, rr + 0.5, az + rnd.uniform(-6, 6), 108 + rnd.uniform(-10, 10), 3.4, 2.8,
+                   mk(0.3), flat=0.65, turn=200, tip=0.4, segs=5, twist=rnd.uniform(-30, 30),
+                   side=rnd.choice((-1, 1)) * rnd.uniform(30, 60))
     for j, (az, lean) in enumerate(((150, -10), (170, -2), (192, 6), (212, 12))):     # boucles sur le front
-        crown_lock(m, f'p_f{j}', c, rr + 0.2, az, 76, 5.0, 4.4, mk(0.32), flat=0.6, turn=170, tip=0.3, segs=5,
-                   lean=lean, twist=rnd.uniform(-10, 10))
+        crown_lock(m, f'p_f{j}', c, rr + 0.2, az, 76, 5.0, 4.0, mk(0.32), flat=0.6, turn=180, tip=0.3, segs=5,
+                   lean=lean, twist=rnd.uniform(-10, 10), side=(1 if j % 2 else -1) * 35)
 
 
 def face_paint(ctx, mode='calme'):

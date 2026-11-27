@@ -207,8 +207,9 @@ def build_hair(m):
         rz, rx = -lean * ux, lean * uz
         curve = (-bend * uz, -bend * ux)
         layer = 'hair_front' if z < -1.5 else 'hair_back' if z > 1.5 else 'hair_core'
-        lock(m, name, [x, y0, z], L, W, rx + rnd.uniform(-1.5, 1.5), rz + rnd.uniform(-1.5, 1.5), mk(lit),
-             ry=twist, flat=flat, curve=curve, segs=segs, root=1.35, tip=tip, taper_pow=0.55,
+        # faisceaux plus épais (pas des aiguilles), légèrement ondulés (torsion), pointe effilée
+        lock(m, name, [x, y0, z], L, W * 1.55, rx + rnd.uniform(-1.5, 1.5), rz + rnd.uniform(-1.5, 1.5), mk(lit),
+             ry=twist + rnd.uniform(-14, 14), flat=flat * 0.85, curve=(curve[0] + rnd.uniform(-6, 6), curve[1] + rnd.uniform(-6, 6)), segs=segs, root=1.3, tip=tip, taper_pow=0.42,
              skew=rnd.uniform(-0.05, 0.05), belly=1.08, parent=layer)
         STRANDS.append((name, segs, L))
 
@@ -270,11 +271,14 @@ def build_body(m):
     m.box('torso', (0, 0), WAIST_Y + 4.4, (tw, th - 4.4, td), torso_paint)              # cage thoracique / épaules
     m.box('torso', (0, -0.15), WAIST_Y + 6.4, (tw - 3.0, 3.2, td + 0.5), torso_paint)     # pectoraux en relief
     for sx in (-1, 1):                                                                 # trapèzes
-        m.cube('torso', [sx * 3.2 - 1.6, WAIST_Y + th - 0.6, -1.8], [3.2, 1.6, 3.6], skin(0.96),
-               pivot=[sx * 3.2, WAIST_Y + th, 0], rotation=[0, 0, -sx * 18])
+        m.cube('torso', [sx * 3.4 - 2.2, WAIST_Y + th - 0.8, -2.2], [4.4, 2.4, 4.4], skin(0.96),
+               pivot=[sx * 3.4, WAIST_Y + th, 0], rotation=[0, 0, -sx * 22])                  # trapèzes larges
+        m.cube('torso', [sx * (tw / 2) - (1.2 if sx > 0 else 0.4), WAIST_Y + 3.0, -td / 2 + 0.6], [1.6, th - 5.0, td - 1.2],
+               skin(0.9), pivot=[sx * tw / 2, WAIST_Y + 6, 0], rotation=[0, 0, sx * 10])         # dorsaux évasés
+        m.cube('torso', [sx * 2.2 - 2.0, WAIST_Y + 6.2, -td / 2 - 0.45], [4.0, 0.4, 0.4], skin(0.72))   # ombre sous les pecs
     for side, sx in (('right', -1), ('left', 1)):
         cx = sx * 8.5
-        m.box(f'{side}_arm', (cx, 0), 25.4, (4.8, 4.8, 4.8), skin(0.98))                 # deltoïde
+        m.box(f'{side}_arm', (cx, 0), 25.2, (5.4, 5.2, 5.4), skin(0.98))                 # deltoïde
         m.box(f'{side}_arm', (cx, 0), 21.4, (4.3, 4.6, 4.3), skin())                     # biceps
         m.box(f'{side}_arm', (cx, -0.4), 22.4, (3.4, 2.8, 0.6), skin(1.03))              # relief du biceps
         m.box(f'{side}_forearm', (cx, 0), 15.0, (4.0, 6.6, 4.0), skin(0.97))

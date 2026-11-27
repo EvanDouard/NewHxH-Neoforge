@@ -18,8 +18,8 @@ from geolib import Model, humanoid_animations, material, rgb, shade
 
 SKIN = rgb('#b9ccc2')
 SKIN_D = rgb('#93ab9f')
-PIG = rgb('#3a5448')          # zones pigmentées
-PIG_D = rgb('#26392f')
+PIG = rgb('#2c4238')          # zones pigmentées, bien contrastées
+PIG_D = rgb('#1a2a22')
 SHELL = rgb('#4f6e60')        # carapace de la tête
 SHELL_L = rgb('#729383')
 SHELL_D = rgb('#2c4238')
@@ -92,14 +92,14 @@ def build_head(m):
         bn = f'm_lobe{sx}'
         x0, y0, z0 = sx * 1.75, top - 0.6, -1.0
         m.bone(bn, [x0, y0, z0], 'hair', rotation=[6, sx * 10, sx * 3])
-        n = 8
+        n = 14
         for i in range(n):
             t = i / (n - 1)
             w = 3.3 * (1.0 - 0.55 * t ** 1.3)
             h = 3.4 * (1.0 - 0.5 * t ** 1.2)
-            L = 1.9
-            z = z0 + i * (L - 0.2)
-            y = y0 - h / 2 + 0.28 * i * t
+            L = 1.15
+            z = z0 + i * (L - 0.1)
+            y = y0 - h / 2 + 0.16 * i * t
             k = 1.06 - 0.12 * t
             m.cube(bn, [x0 - w / 2, y, z], [w, h, L], cloth(shade(SHELL, k), SHELL_L, SHELL_D, seed=140 + i))
             s2 = min(w, h) * 0.45                                 # arêtes adoucies
@@ -107,7 +107,7 @@ def build_head(m):
                 m.cube(bn, [x0 + ex * w / 2 - s2 / 2, y + h - s2 / 2, z], [s2, s2, L],
                        cloth(shade(SHELL_L, k), seed=150 + i), pivot=[x0 + ex * w / 2, y + h, z + L / 2],
                        rotation=[0, 0, 45])
-        m.cube(bn, [x0 - 0.45, y0 + 0.28 * (n - 1) - 0.4, z0 + n * 1.7], [0.9, 0.9, 1.0], cloth(SHELL_D, seed=160))
+        m.cube(bn, [x0 - 0.45, y0 + 0.16 * (n - 1) - 0.4, z0 + n * 1.05], [0.9, 0.9, 1.0], cloth(SHELL_D, seed=160))
     # antennes : longues, fines, elles pendent des oreilles le long des joues jusqu'aux épaules
     for sx in (-1, 1):
         lock(m, f'm_ant{sx}', [sx * (hx + 0.35), b.head_y + 3.6, 0.2], 7.4, 1.3, 176, -sx * 6, mk(0.25), flat=0.9,
@@ -133,14 +133,14 @@ def face_paint(ctx, mode='calme'):
     for x0, left in ((12, True), (40, False)):
         x1 = x0 + 14
         if left:                                                   # yeux étroits en amande
-            f.poly((x0, 28, x1, 27, x1, 31, x0 + 3, 31), (236, 232, 222))
+            f.poly((x0, 29, x1, 27, x1, 30, x0 + 3, 30.5), (236, 232, 222))
         else:
-            f.poly((x0, 27, x1, 28, x1 - 3, 31, x0, 31), (236, 232, 222))
+            f.poly((x0, 27, x1, 29, x1 - 3, 30.5, x0, 30), (236, 232, 222))
         ix = x0 + (6 if left else 3)
-        f.rect(ix, 27, ix + 5, 31, EYE)
-        f.rect(ix + 2, 27, ix + 3 if cold else ix + 4, 31, rgb('#1a0a1a'))
+        f.rect(ix, 27, ix + 5, 30, EYE)
+        f.rect(ix + 2, 27, ix + 3 if cold else ix + 4, 30, rgb('#1a0a1a'))
         f.rect(x0 - 1, 26, x1 + 1, 26, PIG_D)
-        f.poly((x0 + 4, 33, x0 + 7, 33, x0 + 5, 45, x0 + 3, 45), PIG)  # marques sous les yeux
+        f.poly((x0 + 4, 32, x0 + 6, 32, x0 + 5.5, 47, x0 + 4.5, 47), PIG_D)  # marques verticales sous les yeux
     f.rect(32, 36, 33, 42, shade(SKIN, 0.82))
     f.rect(28, 50, 38, 50, PIG_D)
 

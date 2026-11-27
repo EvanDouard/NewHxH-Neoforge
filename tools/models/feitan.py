@@ -47,12 +47,13 @@ def build_hair(m):
         side = 1 - abs(((az + 180) % 360) - 180) / 180          # 1 devant, 0 derrière
         crown_lock(m, f'f_m{i}', c, rr, az + rnd.uniform(-6, 6), 78 + rnd.uniform(-8, 8),
                    7.0 + 1.6 * side + rnd.uniform(-0.8, 0.8), 4.0 + rnd.uniform(-0.3, 0.5),
-                   mk(0.1 + 0.08 * side + 0.04 * (i % 2)), flat=0.5, turn=96 + rnd.uniform(-14, 14), tip=0.08,
-                   segs=4, lean=rnd.uniform(-14, 14), twist=rnd.uniform(-16, 16), skew=rnd.uniform(-0.16, 0.16))
+                   mk(0.1 + 0.08 * side + 0.04 * (i % 2)), flat=0.45, turn=84 + rnd.uniform(-18, 14), tip=0.04,
+                   segs=4, lean=rnd.uniform(-22, 22), twist=rnd.uniform(-16, 16), skew=rnd.uniform(-0.16, 0.16))
     # pointes du sommet qui rebiquent
-    for i, az in enumerate((-60, 20, 100, 200, 280)):
-        crown_lock(m, f'f_k{i}', c, rr + 0.3, az, 104, 4.6 + rnd.uniform(-0.4, 0.8), 3.4, mk(0.24), flat=0.5,
-                   turn=20, tip=0.06, segs=3, twist=rnd.uniform(-20, 20))
+    for i, az in enumerate((-70, -20, 30, 80, 125, 235, 290, 330)):     # pointes en bataille qui se dressent
+        crown_lock(m, f'f_k{i}', c, rr + 0.3, az + rnd.uniform(-8, 8), 96 + rnd.uniform(-10, 10), 5.4 + rnd.uniform(-0.6, 1.2),
+                   3.2, mk(0.24), flat=0.45, turn=rnd.uniform(-10, 30), tip=0.04, segs=3, twist=rnd.uniform(-25, 25),
+                   lean=rnd.uniform(-25, 25))
     # longue frange effilée : une mèche centrale qui tombe entre les yeux, d'autres plus courtes
     for j, (az, L, W, lean, k) in enumerate(((146, 5.4, 3.2, -14, 0.24), (162, 6.4, 3.4, -6, 0.3),
                                              (178, 8.8, 2.8, 2, 0.36), (194, 6.2, 3.4, 8, 0.3),

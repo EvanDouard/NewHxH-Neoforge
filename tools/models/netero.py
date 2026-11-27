@@ -68,10 +68,10 @@ def build_beard(m):
              curve=(0, -sx * 30), segs=2, root=1.1, tip=0.15, taper_pow=0.6, parent='beard')
     # longue barbe en mèches groupées : une pointe centrale longue, des mèches latérales plus courtes qui
     # convergent vers elle, une couche arrière plus sombre qui donne l'épaisseur
-    for j, (x, L, W, rz, k) in enumerate(((-2.3, 5.6, 2.4, 16, 0.2), (-1.2, 7.6, 2.6, 8, 0.26), (0.0, 9.6, 2.8, 0, 0.32),
-                                          (1.2, 7.8, 2.6, -8, 0.24), (2.3, 5.4, 2.4, -16, 0.18))):
-        lock(m, f'n_beard{j}', [x, yf(50), -hz - 0.3 - 0.08 * (2 - abs(j - 2))], L, W, 184, rz, mk(k), flat=0.5,
-             curve=(-14, -rz * 0.8), segs=4, root=1.05, tip=0.06, taper_pow=0.65, parent='beard',
+    for j, (x, L, W, rz, k) in enumerate(((-2.5, 6.4, 3.0, 18, 0.2), (-1.3, 8.8, 3.2, 8, 0.26), (0.0, 11.4, 3.4, 0, 0.32),
+                                          (1.3, 9.0, 3.2, -8, 0.24), (2.5, 6.2, 3.0, -18, 0.18))):
+        lock(m, f'n_beard{j}', [x, yf(50), -hz - 0.3 - 0.08 * (2 - abs(j - 2))], L, W, 184, rz, mk(k), flat=0.55,
+             curve=(-22, -rz * 0.8), segs=4, root=1.05, tip=0.06, taper_pow=0.65, parent='beard',
              skew=0.08 * (j - 2) / 2)
     lock(m, 'n_beard_b', [0, yf(52), -hz - 0.02], 7.0, 6.2, 182, 0, mk(0.06), flat=0.4, curve=(-10, 0), segs=3,
          root=1.0, tip=0.12, taper_pow=0.7, parent='beard')

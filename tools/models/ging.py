@@ -62,9 +62,9 @@ def build_hair(m):
     m.cube('hair', [-hx - 0.35, y + 1.2, -hz - 0.35], [b.head[0] + 0.7, 1.1, b.head[2] + 0.7], wrap,
            pivot=[0, y + 1.6, 0], rotation=[0, 0, -4])
     m.cube('hair', [-1.2, y + 0.2, hz + 0.3], [2.4, 1.8, 1.0], wrap)                           # nœud
-    for k, (dx, L, rz) in enumerate(((-0.6, 6.0, 8), (0.6, 5.0, -10))):
-        lock(m, f'g_w{k}', [dx, y + 0.8, hz + 0.9], L, 1.6, 168, rz,
-             lambda t: strand_paint(WRAP_SH, WRAP, t, lit=0.2), flat=0.3, curve=(-10, rz), segs=3, root=1.0,
+    for k, (dx, L, rz) in enumerate(((-0.7, 7.8, 14), (0.7, 6.6, -16))):                     # pans qui flottent
+        lock(m, f'g_w{k}', [dx, y + 0.8, hz + 0.9], L, 2.2, 140, rz,
+             lambda t: strand_paint(WRAP_SH, WRAP, t, lit=0.2), flat=0.25, curve=(-36, rz * 1.6), segs=3, root=1.0,
              tip=0.6, taper_pow=0.4)
 
 
@@ -86,8 +86,13 @@ def face_paint(ctx, mode='calme'):
         f.rect(x0 + 5, 27, x0 + 6, 28, (255, 255, 255))
         f.rect(x0 - 1, 24, x0 + 15, 26, LINE)
     f.rect(32, 35, 33, 41, shade(SKIN, 0.82))
-    stub = shade(SKIN, 0.82)
+    stub = shade(SKIN, 0.74)
     f.rect(10, 44, 56, 58, stub)
+    import random as _r
+    rr_ = _r.Random(91)
+    for _ in range(160):                                          # barbe de quelques jours : poils piquetés
+        x, y = rr_.randint(10, 55), rr_.randint(42, 59)
+        f.rect(x, y, x, y, shade(SKIN, 0.55))
     if serious:
         f.rect(27, 49, 39, 49, rgb('#6a3e34'))
     else:

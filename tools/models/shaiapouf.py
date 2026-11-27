@@ -159,7 +159,7 @@ def build_wings(m):
         m.cube('torso', [sx * 0.6 - 0.35, y - 4.0, b.torso_d / 2 - 0.1], [0.7, 4.6, 1.2], flat(shade(WING, 0.6), 0.9))
         for k, (w, h, rz, dy, up) in enumerate(((13.5, 12.0, -24, 0.6, 0.66), (9.0, 8.0, 26, -4.8, 0.32))):
             name = f'wing{sx}{k}'
-            m.bone(name, [sx * 0.8, y + dy, z0], 'torso', rotation=[6, -sx * 20, -sx * rz])
+            m.bone(name, [sx * 0.8, y + dy, z0], 'torso', rotation=[4, -sx * 14, -sx * rz])
             n = 9
             for i in range(n):                      # bandes du bas (attache) vers le haut de l'aile
                 t = (i + 0.5) / n

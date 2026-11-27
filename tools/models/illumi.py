@@ -48,9 +48,9 @@ def build_hair(m):
         x, z = c[0] + r * math.sin(a), c[2] + r * math.cos(a)
         side = abs(az) / 72
         L = 16.5 - 3.0 * side + rnd.uniform(-1.2, 1.0) + (0.8 if i % 2 == 0 else 0.0)
-        lock(m, f'i_c{i}', [x, c[1] + 0.4, z], L, 3.6 + (0.8 if i % 2 == 0 else 0.0), 180 + 4 * math.cos(a), rnd.uniform(-2.5, 2.5),
-             mk(0.04 + 0.03 * (i % 2)), ry=-az * 0.0, flat=0.32, curve=(-12 * math.cos(a), 0), segs=4, root=1.05,
-             tip=0.55 + 0.3 * (i % 2), taper_pow=0.25, belly=1.02, skew=rnd.uniform(-0.08, 0.08))
+        lock(m, f'i_c{i}', [x, c[1] + 0.4, z], L, 3.6 + (0.8 if i % 2 == 0 else 0.0), 180 + 4 * math.cos(a), rnd.uniform(-1.0, 1.0),
+             mk(0.04 + 0.03 * (i % 2)), ry=-az * 0.0, flat=0.26, curve=(-10 * math.cos(a), 0), segs=4, root=1.05,
+             tip=0.75 + 0.15 * (i % 2), taper_pow=0.15, belly=1.0, skew=rnd.uniform(-0.03, 0.03))
     # dessus lisse : mèches qui partent du sommet et suivent le crâne jusqu'au rideau
     for i, az in enumerate(range(0, 360, 24)):
         if 140 < az < 220:
@@ -117,8 +117,8 @@ def build_body(m):
     m.cube('torso', [-b.torso_w / 2 - 0.15, y0 + 0.6, -d2 - 0.15], [b.torso_w + 0.3, 1.6, b.torso_d + 0.3], sash)
     m.cube('torso', [1.2, y0 - 3.4, -d2 - 0.3], [1.4, 4.4, 0.4], sash)                         # pan de l'écharpe
     for k, (x, y) in enumerate(((-2.2, y1 - 2.4), (-1.2, y1 - 3.6), (1.6, y1 - 2.8), (2.4, y1 - 4.2))):
-        m.cube('torso', [x - 0.1, y - 0.8, -d2 - 1.2], [0.2, 0.2, 1.4], flat(NEEDLE, 1.0))     # aiguilles
-        m.cube('torso', [x - 0.3, y - 1.0, -d2 - 1.5], [0.6, 0.6, 0.4], flat(PIN, 0.9))
+        m.cube('torso', [x - 0.15, y - 0.85, -d2 - 2.2], [0.3, 0.3, 2.4], flat(NEEDLE, 1.0))   # aiguilles, plus longues
+        m.cube('torso', [x - 0.45, y - 1.15, -d2 - 2.6], [0.9, 0.9, 0.5], flat(PIN, 0.9))
     # pans de la tunique (mi-cuisse)
     for name, sz in (('tunic_f', -1), ('tunic_b', 1)):
         m.bone(name, [0, y0, sz * d2], 'body', rotation=[-sz * 4, 0, 0])

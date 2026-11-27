@@ -113,13 +113,20 @@ def build_body(m):
     for sx in (-1, 1):                                                       # pans avant ouverts
         x0 = sx * b.torso_w / 2 - (2.4 if sx > 0 else 0)
         m.cube('torso', [x0, y0 - 0.2, -d2 - 0.3], [2.4, y1 - y0 - 1.0, 0.9], coat)
-    # grand col de fourrure blanche
-    m.cube('torso', [-b.torso_w / 2 - 0.4, y1 - 1.6, -d2 - 0.6], [b.torso_w + 0.8, 2.2, b.torso_d + 1.2], fur)
-    m.cube('torso', [-b.torso_w / 2 + 0.2, y1 + 0.4, -d2 - 0.2], [b.torso_w - 0.4, 1.4, b.torso_d + 0.6], fur)
-    for k in range(6):                                                       # touffes
-        x = -b.torso_w / 2 + 0.4 + k * 1.25
-        m.cube('torso', [x, y1 - 2.2, -d2 - 0.75], [1.0, 1.0, 0.5], fur, pivot=[x + 0.5, y1 - 1.6, -d2 - 0.5],
-               rotation=[0, 0, 45])
+    # grand col de fourrure blanche, volumineux et irrégulier : bourrelet, mèches de fourrure qui dépassent
+    import random as _r
+    rr_ = _r.Random(215)
+    m.cube('torso', [-b.torso_w / 2 - 0.7, y1 - 1.8, -d2 - 0.9], [b.torso_w + 1.4, 2.6, b.torso_d + 1.8], fur)
+    m.cube('torso', [-b.torso_w / 2 - 0.1, y1 + 0.6, -d2 - 0.5], [b.torso_w + 0.2, 1.8, b.torso_d + 1.0], fur)
+    for k in range(18):                                            # touffes : tout le tour du col
+        ang = k / 18 * 6.283
+        import math as _m
+        px = _m.sin(ang) * (b.torso_w / 2 + 0.7)
+        pz = _m.cos(ang) * (b.torso_d / 2 + 0.9)
+        w = rr_.uniform(1.4, 2.2)
+        m.cube('torso', [px - w / 2, y1 - 2.4 + rr_.uniform(-0.3, 0.6), pz - w / 2], [w, rr_.uniform(1.6, 2.6), w],
+               cloth(shade(FUR, rr_.uniform(0.92, 1.03)), FUR, FUR_SH, folds=2, seed=230 + k),
+               pivot=[px, y1 - 1.6, pz], rotation=[rr_.uniform(-20, 20), 0, rr_.uniform(-25, 25)])
     # pans du manteau (genoux), qui suivent le bassin
     for name, sz in (('coat_f', -1), ('coat_b', 1)):
         m.bone(name, [0, y0, sz * d2], 'body', rotation=[-sz * 5, 0, 0])

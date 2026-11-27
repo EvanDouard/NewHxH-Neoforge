@@ -57,12 +57,14 @@ def build_hair(m):
     m.bone('braid', [0, b.head_y + 1.4, hz - 0.4], 'head', rotation=[7, 0, 0])
     y = b.head_y + 1.4
     m.cube('braid', [-1.4, y - 0.4, hz - 0.75], [2.8, 0.7, 1.9], flat(rgb('#5a4a3a'), 0.9))       # attache
-    for k in range(10):
-        w = 2.3 - 0.07 * k
-        off = 0.3 if k % 2 else -0.3
-        m.cube('braid', [-w / 2 + off, y - 1.3, hz - 0.6], [w, 1.6, 1.6], mk(0.16 if k % 2 else 0.04)(0.5),
-               pivot=[off, y - 0.5, hz + 0.2], rotation=[0, 0, 16 if k % 2 else -16])
-        y -= 1.0
+    for k in range(14):                                     # tresse : maillons plus petits et serrés, croisés
+        w = 2.3 - 0.06 * k
+        off = 0.28 if k % 2 else -0.28
+        zk = hz - 0.6 + 0.05 * k
+        m.cube('braid', [-w / 2 + off, y - 1.1, zk], [w, 1.3, 1.5], mk(0.18 if k % 2 else 0.06)(0.5),
+               pivot=[off, y - 0.45, zk + 0.75], rotation=[0, 0, 22 if k % 2 else -22])
+        m.cube('braid', [-w / 2 + 0.25, y - 1.05, zk + 0.05], [w - 0.5, 1.2, 1.4], mk(0.0)(0.5))   # cœur sombre
+        y -= 0.72
     m.cube('braid', [-0.7, y - 0.6, hz - 0.4], [1.4, 0.7, 1.2], flat(rgb('#5a6a8a'), 0.9))       # attache
     lock(m, 'z_bt', [0, y - 0.6, hz + 0.2], 2.2, 1.6, 180, 0, mk(0.1), flat=0.6, segs=2, root=1.0, tip=0.1,
          parent='braid')
@@ -85,8 +87,13 @@ def face_paint(ctx, mode='calme'):
     cold = mode == 'froid'
     material(SKIN, grad=0.06, noise=2, outline=False)(ctx)
     f = FaceGrid(ctx)
-    for y in (8, 12):
-        f.rect(18, y, 48, y, shade(SKIN, 0.82))
+    for y in (7, 11, 15):                                       # rides du front
+        f.rect(16, y, 50, y, shade(SKIN, 0.8))
+    for x0, d in ((8, -1), (58, 1)):                            # pattes d'oie
+        for k in range(3):
+            f.rect(min(x0, x0 + d * 3), 26 + 3 * k, max(x0, x0 + d * 3), 26 + 3 * k, shade(SKIN, 0.78))
+    f.poly((20, 40, 24, 46, 23, 46, 19, 41), shade(SKIN, 0.82))   # sillons nasogéniens
+    f.poly((46, 40, 42, 46, 43, 46, 47, 41), shade(SKIN, 0.82))
     for x0 in (13, 40):
         f.rect(x0, 25, x0 + 13, 30, (246, 246, 250))
         f.rect(x0 + 4, 25, x0 + 9, 30, EYE)
