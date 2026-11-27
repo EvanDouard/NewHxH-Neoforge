@@ -3403,10 +3403,10 @@ wait 5
 shot 99zzo_carte_ngl
 closescreen
 cmd gamemode spectator
-cmd tp @s 33700 110 76800 0 25
+cmd tp @s 33700 170 76800 0 35
 wait 240
 shot 99zzq_biome_cite_meteore
-cmd tp @s 87800 110 83480 0 25
+cmd tp @s 87800 150 83480 0 35
 wait 240
 shot 99zzr_biome_ile_baleine
 cmd hunter jenny set 0
