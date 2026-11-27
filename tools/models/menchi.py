@@ -54,12 +54,12 @@ def build_hair(m):
     # cinq petites couettes en pointe : nœud rose + mèche courte qui pointe vers l'extérieur
     for k, (az, phi, out) in enumerate(((66, 58, 74), (118, 40, 82), (-66, 58, 74), (-118, 40, 82), (0, 70, 60))):
         a, p = math.radians(az), math.radians(phi)
-        base = [c[0] + (rr + 0.3) * math.cos(p) * math.sin(a), c[1] + (rr + 0.3) * math.sin(p),
-                c[2] + (rr + 0.3) * math.cos(p) * math.cos(a)]
-        m.cube('hair', [base[0] - 0.8, base[1] - 0.8, base[2] - 0.8], [1.6, 1.6, 1.6], flat(TIE, 0.95))
+        base = [c[0] + (rr + 0.7) * math.cos(p) * math.sin(a), c[1] + (rr + 0.7) * math.sin(p),
+                c[2] + (rr + 0.7) * math.cos(p) * math.cos(a)]
+        m.cube('hair', [base[0] - 1.05, base[1] - 1.05, base[2] - 1.05], [2.1, 2.1, 2.1], flat(TIE, 0.95))       # nœud
         rx = out * math.cos(a)
         rz = -out * math.sin(a)
-        lock(m, f'm_t{k}', base, 4.0 + rnd.uniform(-0.3, 0.4), 3.4, rx, rz, mk(0.2), flat=0.6,
+        lock(m, f'm_t{k}', base, 5.8 + rnd.uniform(-0.4, 0.6), 2.8, rx, rz, mk(0.24), flat=0.7,
              curve=(14 * math.cos(a), -14 * math.sin(a)), segs=3, root=1.1, tip=0.06, taper_pow=0.55, belly=1.2)
 
 
