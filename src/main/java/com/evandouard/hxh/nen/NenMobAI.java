@@ -1,6 +1,7 @@
 package com.evandouard.hxh.nen;
 
 import com.evandouard.hxh.HxHConfig;
+import com.evandouard.hxh.combat.Combat;
 import com.evandouard.hxh.data.HunterData;
 import com.evandouard.hxh.data.ModAttachments;
 import com.evandouard.hxh.data.NenMode;
@@ -233,13 +234,48 @@ public final class NenMobAI {
                 }
             }
 
+            if (windup > 0) {
+                // frappe chargée en cours : il s'arrête, fait face, puis relâche quand la barre est (à peu près) au sommet
+                mob.getNavigation().stop();
+                face(mob, target);
+                if (--windup == 0) Combat.releaseChargedTechnique(mob);
+                return;
+            }
             if (--castDelay <= 0) {
                 castDelay = tryCast(mob, target) ? 30 : 10;
             }
+            martial(target);
             tactics(target);
         }
 
         private int dashCooldown = 40;
+        private int windup, kickDelay = 30, strikeDelay = 60, strafeTicks;
+        private float strafeSide = 1f;
+
+        /** Coups de pied, frappes chargées et pas de côté : le répertoire de corps à corps d'un mob qui maîtrise le Nen. */
+        private void martial(LivingEntity target) {
+            kickDelay--;
+            strikeDelay--;
+            double dist = mob.distanceTo(target);
+            Move move = chooseMove(dist, kickDelay <= 0, strikeDelay <= 0, mob.getRandom().nextFloat());
+            if (move == Move.KICK) {
+                face(mob, target);
+                Combat.kick(mob);
+                kickDelay = 40 + mob.getRandom().nextInt(40);
+            } else if (move == Move.STRIKE) {
+                face(mob, target);
+                Combat.startStrike(mob);
+                windup = windupTicks(mob.getRandom().nextFloat());
+                strikeDelay = 100 + mob.getRandom().nextInt(80);
+            } else if (dist < 4.0 && mob.onGround()) {
+                // à portée mais rien de prêt : il tourne autour de la cible au lieu de rester planté
+                if (--strafeTicks <= 0) {
+                    strafeTicks = 15 + mob.getRandom().nextInt(25);
+                    strafeSide = mob.getRandom().nextBoolean() ? 1f : -1f;
+                }
+                mob.getMoveControl().strafe(0f, 0.6f * strafeSide);
+            }
+        }
 
         /**
          * Déplacements de combat au Nen : esquive des projectiles et des coups, recul pour se replacer (tireurs),
@@ -284,6 +320,28 @@ public final class NenMobAI {
             }
             return false;
         }
+    }
+
+    /** Coups de corps à corps qu'un mob sait enchaîner. */
+    public enum Move { NONE, KICK, STRIKE }
+
+    /**
+     * Choix du coup selon la distance, ce qui est prêt et un tirage {@code roll} (0 ≤ roll < 1) : au pied (≤ 2,8 blocs)
+     * le coup de pied part une fois sur trois ; sinon (≤ 3,2 blocs) une frappe chargée est lancée une fois sur quatre.
+     */
+    public static Move chooseMove(double distance, boolean kickReady, boolean strikeReady, float roll) {
+        if (kickReady && distance <= 2.8 && roll < 0.35f) return Move.KICK;
+        if (strikeReady && distance <= 3.2 && roll < 0.25f) return Move.STRIKE;
+        return Move.NONE;
+    }
+
+    /**
+     * Durée (ticks) de maintien d'une frappe chargée : le plus souvent au sommet de la barre (« parfaite »,
+     * entre 14 et 16 ticks), une fois sur cinq trop tôt (frappe ratée, comme un joueur qui s'impatiente).
+     */
+    public static int windupTicks(float roll) {
+        if (roll < 0.2f) return 5 + (int) (roll * 20); // 5 à 8 ticks : barre trop basse
+        return 14 + (int) ((roll - 0.2f) / 0.8f * 3f);   // 14 à 16 ticks
     }
 
     /** Aura dépensée par un dash de mob. */

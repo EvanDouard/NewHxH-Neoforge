@@ -411,4 +411,28 @@ public final class CombatTests {
             });
         });
     }
+
+    @GameTest(template = "empty", timeoutTicks = 200)
+    public static void mobsChooseKicksAndChargedStrikes(GameTestHelper helper) {
+        helper.assertTrue(com.evandouard.hxh.nen.NenMobAI.chooseMove(2.0, true, true, 0.1f) == com.evandouard.hxh.nen.NenMobAI.Move.KICK, "Au pied : coup de pied");
+        helper.assertTrue(com.evandouard.hxh.nen.NenMobAI.chooseMove(3.0, true, true, 0.1f) == com.evandouard.hxh.nen.NenMobAI.Move.STRIKE, "Un peu plus loin : frappe chargée");
+        helper.assertTrue(com.evandouard.hxh.nen.NenMobAI.chooseMove(2.0, false, true, 0.1f) == com.evandouard.hxh.nen.NenMobAI.Move.STRIKE, "Pied en recharge : frappe chargée");
+        helper.assertTrue(com.evandouard.hxh.nen.NenMobAI.chooseMove(6.0, true, true, 0.0f) == com.evandouard.hxh.nen.NenMobAI.Move.NONE, "Trop loin : rien");
+        helper.assertTrue(com.evandouard.hxh.nen.NenMobAI.chooseMove(2.0, true, true, 0.9f) == com.evandouard.hxh.nen.NenMobAI.Move.NONE, "Il ne frappe pas à chaque tick");
+        int perfectLo = com.evandouard.hxh.nen.NenMobAI.windupTicks(0.2f), perfectHi = com.evandouard.hxh.nen.NenMobAI.windupTicks(0.99f);
+        helper.assertTrue(Combat.chargeValue(perfectLo) >= Combat.CHARGE_PERFECT_FROM && Combat.chargeValue(perfectHi) >= Combat.CHARGE_PERFECT_FROM,
+                "Le maintien normal d'un mob tombe sur une frappe parfaite : " + perfectLo + "-" + perfectHi);
+        helper.assertTrue(Combat.chargeValue(com.evandouard.hxh.nen.NenMobAI.windupTicks(0.05f)) < Combat.CHARGE_FAIL_BELOW, "Parfois il s'impatiente : frappe ratée");
+        // Bout en bout : un personnage au Nen frappe une cible collée à lui
+        var gon = helper.spawn(com.evandouard.hxh.registry.ModEntities.GON.get(), new BlockPos(2, 1, 2));
+        gon.prepare();
+        var dummy = helper.spawn(net.minecraft.world.entity.EntityType.ZOMBIE, new BlockPos(3, 1, 2));
+        dummy.setNoAi(true);
+        float before = dummy.getHealth();
+        gon.setTarget(dummy);
+        helper.runAfterDelay(120, () -> {
+            helper.assertTrue(dummy.getHealth() < before, "Le personnage a frappé sa cible (vie " + dummy.getHealth() + "/" + before + ")");
+            helper.succeed();
+        });
+    }
 }
