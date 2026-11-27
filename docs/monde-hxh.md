@@ -146,3 +146,22 @@ Le Navigateur (guide qui lance l'Examen Hunter) attend dans le village de l'île
 
 ## Billets de dirigeable et minimap
 Le prix d'un billet = 50 + 1 Jenny pour 4 blocs entre le point de départ (position du joueur dans le monde HxH, île de la Baleine sinon) et la destination + 1/10 du « prix » du fichier de la destination (prestige du lieu), arrondi à 10. La minimap (client uniquement, fichier `config/hxh-client.toml`) montre la carte du monde centrée sur le joueur dans le monde HxH.
+
+## Biomes par lieu (proposition, à valider)
+Vanilla seulement (pas de biome sur mesure pour l'instant) ; un biome par lieu connu, posé en disque autour du lieu par `HxHBiomeSource` (rayon à régler), le reste de la région gardant son biome d'ambiance.
+| Lieu | Biome proposé | Pourquoi |
+|---|---|---|
+| Île de la Baleine | `minecraft:forest` + plage | île verdoyante |
+| Montagne Kukuroo / domaine Zoldyck | `minecraft:windswept_forest` ou `snowy_taiga` | forêt froide, relief |
+| Cité Météore | `minecraft:badlands` (ou `desert`) | décharge aride, terre brûlée |
+| Yorknew | `minecraft:plains` | ville sur terrain plat |
+| Padokea / Tour Céleste | `minecraft:plains` | grande ville ouverte |
+| Forêt de Kite | `minecraft:dark_forest` / `old_growth_spruce_taiga` | forêt dense |
+| Village NGL | `minecraft:jungle` ou `bamboo_jungle` | forêt reculée |
+| Masadora | `minecraft:savanna` | plaine sèche |
+| Greed Island (côtes) | `minecraft:cherry_grove` / `meadow` | île de jeu colorée |
+| Bras de la Reine (Fourmis-Chimères) | `minecraft:mangrove_swamp` / `swamp` | zone étouffante |
+| Glam Gas Land | `minecraft:desert` | terre désolée |
+| Palais de Kakin | `minecraft:dark_forest` | région Kakin |
+| Port de la Baleine Noire | `minecraft:stony_shore` | côte rocheuse |
+Techniquement : `HxHBiomeSource.getNoiseBiome` regarde déjà la case ; on ajoute une liste « lieu → rayon, biome » (données JSON) testée avant la région. Les structures vanilla sont déjà coupées (`HxHChunkGenerator`).
