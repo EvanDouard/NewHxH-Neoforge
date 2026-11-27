@@ -246,6 +246,11 @@ public final class CiAutopilot {
                         log("fiche du carnet '" + arg + "'");
                         return true;
                     }
+                    // Carte du dirigeable : place le curseur sur un lieu ou une région (region:K)
+                    if (mc.screen instanceof com.evandouard.hxh.client.AirshipMapScreen map && map.hover(arg)) {
+                        log("survol de la carte '" + arg + "'");
+                        return true;
+                    }
                     log("ECHEC : pas de fiche '" + arg + "' à l'écran");
                     return false;
                 }

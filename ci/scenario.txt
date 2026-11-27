@@ -3155,6 +3155,18 @@ cmd hunter jenny set 1500
 cmd hunter airship
 wait 10
 shot 99v_dirigeable_carte
+pick region:K
+wait 5
+shot 99v1_carte_region_kakin
+pick region:m
+wait 5
+shot 99v2_carte_region_minbo
+pick whale_island
+wait 5
+shot 99v3_carte_lieu_ile_baleine
+pick yorknew_city
+wait 5
+shot 99v4_carte_lieu_yorknew
 closescreen
 cmd hunter jenny set 6000
 cmd hunter airship whale_island

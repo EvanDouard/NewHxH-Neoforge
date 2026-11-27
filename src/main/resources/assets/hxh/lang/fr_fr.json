@@ -1948,5 +1948,11 @@
   "message.hxh.world.already_hxh": "Tu es déjà dans le monde HxH.",
   "message.hxh.world.already_normal": "Tu es déjà dans le monde normal.",
   "message.hxh.world.to_hxh": "Bienvenue dans le monde de Hunter x Hunter",
-  "message.hxh.world.to_normal": "Retour dans le monde normal"
+  "message.hxh.world.to_normal": "Retour dans le monde normal",
+  "airship.hxh.region.m": "Minbo",
+  "airship.hxh.region.k": "Kukan'yu",
+  "airship.hxh.region.s": "Saherta",
+  "airship.hxh.region.K": "Kakin",
+  "airship.hxh.region.o": "Ochima",
+  "airship.hxh.region.b": "Begerosse"
 }
