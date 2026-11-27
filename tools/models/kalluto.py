@@ -54,9 +54,9 @@ def build_hair(m):
              mk(0.08 + 0.04 * (i % 2)), flat=0.3, curve=(-8 * math.cos(a), 0), segs=3, root=1.05, tip=0.92,
              taper_pow=0.15, belly=1.02)
     # frange droite épaisse
-    for j, az in enumerate((144, 158, 172, 188, 202, 216)):
-        crown_lock(m, f'k_f{j}', c, rr + 0.05, az, 92, 7.0, 3.4, mk(0.24), flat=0.28, turn=74, tip=0.95, segs=3,
-                   taper_pow=0.1)
+    for j, az in enumerate((142, 152, 162, 172, 182, 192, 202, 212, 220)):     # frange : mèches fines, bord net
+        crown_lock(m, f'k_f{j}', c, rr + 0.05 + 0.04 * (j % 2), az, 90, 8.6 - 0.3 * (j % 2), 2.3, mk(0.24 - 0.04 * (j % 2)),
+                   flat=0.22, turn=74, tip=0.7, segs=3, taper_pow=0.1)
 
 
 def face_paint(ctx, mode='calme'):

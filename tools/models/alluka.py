@@ -49,9 +49,9 @@ def build_hair(m):
     for sx in (-1, 1):
         curtain(m, f'a_s{sx}', c, rr - 0.2, [sx * 100, sx * 114, sx * 128], 1.0, 8.6, 3.4, lambda i: mk(0.12),
                 inward=0, rnd=rnd, tip=0.75, segs=4)
-    for j, az in enumerate((144, 158, 172, 188, 202, 216)):
-        crown_lock(m, f'a_f{j}', c, rr + 0.05, az, 92, 6.8, 3.4, mk(0.24), flat=0.28, turn=74, tip=0.95, segs=3,
-                   taper_pow=0.1)
+    for j, az in enumerate((142, 152, 162, 172, 182, 192, 202, 212, 220)):     # frange : mèches fines, bord net
+        crown_lock(m, f'a_f{j}', c, rr + 0.05 + 0.04 * (j % 2), az, 90, 8.4 - 0.3 * (j % 2), 2.3, mk(0.24 - 0.04 * (j % 2)),
+                   flat=0.22, turn=74, tip=0.7, segs=3, taper_pow=0.1)
 
 
 def face_paint(ctx, mode='calme'):

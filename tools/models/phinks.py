@@ -35,17 +35,17 @@ def build_hair(m):
     top = b.top
     m.bone('hair', [0, top, 0], 'head')
     rnd = random.Random(151)
-    c, R = (0.0, top - 3.3, 0.35), 4.75
+    c, R = (0.0, top - 3.6, 0.35), 4.3
     scalp(m, c, R, lambda k: mk(k - 0.05)(0.5), skip_front=52, front_phi=46,
-          rings=((8, 14, -0.12), (30, 12, -0.08), (52, 9, -0.04), (72, 5, 0.0)))
-    rr = R + 0.2
+          rings=((40, 12, -0.08), (58, 9, -0.04), (74, 5, 0.0)))
+    rr = R + 0.12
     for i, x_az in enumerate((-30, -18, -6, 6, 18, 30)):           # plaqué vers l'arrière depuis un front haut
-        crown_lock(m, f'p_t{i}', c, rr, x_az + rnd.uniform(-2, 2), 128 + rnd.uniform(-3, 3), 8.4, 3.6,
-                   mk(0.2 + 0.03 * (2.5 - abs(i - 2.5))), flat=0.3, turn=90, tip=0.3, segs=4,
+        crown_lock(m, f'p_t{i}', c, rr, x_az + rnd.uniform(-2, 2), 132 + rnd.uniform(-3, 3), 9.4, 3.6,
+                   mk(0.2 + 0.03 * (2.5 - abs(i - 2.5))), flat=0.22, turn=104, tip=0.4, segs=5,
                    twist=rnd.uniform(-4, 4))
     for sx in (-1, 1):
-        for j, (az, phi, L) in enumerate(((sx * 60, 118, 7.2), (sx * 84, 100, 6.0))):
-            crown_lock(m, f'p_s{sx}{j}', c, rr, az, phi, L, 3.4, mk(0.1), flat=0.32, turn=80, tip=0.3, segs=3)
+        for j, (az, phi, L) in enumerate(((sx * 48, 128, 6.0),)):
+            crown_lock(m, f'p_s{sx}{j}', c, rr, az, phi, L, 3.4, mk(0.1), flat=0.22, turn=96, tip=0.4, segs=3)
 
 
 def face_paint(ctx, mode='calme'):
@@ -53,6 +53,8 @@ def face_paint(ctx, mode='calme'):
     material(SKIN, grad=0.05, noise=2, outline=False)(ctx)
     f = FaceGrid(ctx)
     f.rect(0, 0, 66, 4, HAIR)
+    f.poly((10, 21, 30, 24, 30, 26, 10, 23), shade(SKIN, 0.78))      # arcades froncées, sans sourcils
+    f.poly((56, 21, 36, 24, 36, 26, 56, 23), shade(SKIN, 0.78))
     for x0 in (12, 40):
         f.rect(x0, 27, x0 + 14, 31, (242, 238, 228))
         f.rect(x0 + 5, 27, x0 + 10, 31, rgb('#8a6a2a'))
@@ -74,7 +76,16 @@ def head_paint(ctx):
         return
     material(SKIN, grad=0.08, noise=2, edge=0.9)(ctx)
     if ctx.face in ('east', 'west', 'south', 'up'):
-        ctx.draw.rectangle([0, 0, ctx.w, int(ctx.h * (0.7 if ctx.face == 'south' else 1 if ctx.face == 'up' else 0.45))], fill=shade(HAIR, 0.8))
+        h = int(ctx.h * (0.85 if ctx.face == 'south' else 1 if ctx.face == 'up' else 0.62))
+        ctx.draw.rectangle([0, 0, ctx.w, int(h * 0.55)], fill=shade(HAIR, 0.8))
+        # nuque et côtés rasés : fondu progressif (duvet blond qui s'éclaircit vers la peau)
+        import random
+        rnd = random.Random(ctx.w * 7 + ctx.h)
+        stub = tuple(int(0.55 * a + 0.45 * b) for a, b in zip(HAIR[:3], SKIN[:3]))
+        for y in range(int(h * 0.55), h):
+            for x in range(ctx.w):
+                if rnd.random() < 1.0 - (y - h * 0.55) / (h * 0.45 + 1) * 0.8:
+                    ctx.img.putpixel((x, y), stub + (255,))
 
 
 def track_paint(ctx):
