@@ -1016,6 +1016,7 @@ public final class QuestTests {
     public static void nenUsersAreHuntedByChimeraAnts(GameTestHelper helper) {
         helper.assertTrue(com.evandouard.hxh.org.Organizations.get("nen_user") != null && com.evandouard.hxh.org.Organizations.get("fourmis_chimeres") != null, "Organisations chargées");
         ServerPlayer p = helper.makeMockServerPlayerInLevel();
+        p.setGameMode(net.minecraft.world.level.GameType.SURVIVAL); // les joueurs créatifs ne sont jamais attaqués à vue
         helper.assertTrue(!com.evandouard.hxh.org.Organizations.memberships(p).contains("nen_user"), "Sans Nen : pas utilisateur de Nen");
         p.getData(com.evandouard.hxh.data.ModAttachments.HUNTER).setNenUnlocked(true);
         helper.assertTrue(com.evandouard.hxh.org.Organizations.memberships(p).contains("nen_user"), "Avec le Nen : utilisateur de Nen automatiquement");
@@ -1037,6 +1038,7 @@ public final class QuestTests {
         nobunaga.prepare();
         bystander.prepare();
         ServerPlayer attacker = helper.makeMockServerPlayerInLevel();
+        attacker.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
         helper.assertTrue(nobunaga.getTarget() == null, "Nobunaga est neutre au départ");
         chrollo.hurt(attacker.damageSources().playerAttack(attacker), 1f);
         helper.assertTrue(nobunaga.getTarget() == attacker, "Nobunaga défend Chrollo");

@@ -23,7 +23,9 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 public final class Achievements {
     private Achievements() {}
 
-    public static final String REGIONS = "mksKobp";
+    /** Lettre de la grille → identifiant de succès (les identifiants sont en minuscules, or K et k sont deux régions). */
+    public static final java.util.Map<Character, String> REGION_IDS = java.util.Map.of(
+            'm', "minbo", 'k', "kukanyu", 's', "saherta", 'K', "kakin", 'o', "ochima", 'b', "begerosse", 'p', "padokea");
     private static final int PERIOD = 40;
 
     public static void register(IEventBus bus) {
@@ -71,10 +73,11 @@ public final class Achievements {
 
         if (p.level().dimension().equals(Airship.WORLD)) {
             char c = HxHWorldMap.get().cellAt(p.getBlockX(), p.getBlockZ());
-            if (REGIONS.indexOf(c) >= 0) grant(p, "region_" + c);
+            String id = REGION_IDS.get(c);
+            if (id != null) grant(p, "region_" + id);
         }
         boolean all = true;
-        for (char c : REGIONS.toCharArray()) all &= has(p, "region_" + c);
+        for (String id : REGION_IDS.values()) all &= has(p, "region_" + id);
         if (all) grant(p, "explorer");
     }
 }

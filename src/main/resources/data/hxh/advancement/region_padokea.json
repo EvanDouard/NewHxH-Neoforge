@@ -4,10 +4,10 @@
       "id": "minecraft:map"
     },
     "title": {
-      "translate": "advancement.hxh.region_b.title"
+      "translate": "advancement.hxh.region_padokea.title"
     },
     "description": {
-      "translate": "advancement.hxh.region_b.desc"
+      "translate": "advancement.hxh.region_padokea.desc"
     },
     "frame": "task",
     "show_toast": true,

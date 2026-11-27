@@ -340,7 +340,7 @@ public final class NenMobAI {
      * entre 14 et 16 ticks), une fois sur cinq trop tôt (frappe ratée, comme un joueur qui s'impatiente).
      */
     public static int windupTicks(float roll) {
-        if (roll < 0.2f) return 5 + (int) (roll * 20); // 5 à 8 ticks : barre trop basse
+        if (roll < 0.2f) return 2 + (int) (roll * 10); // 2 à 3 ticks : barre trop basse (ratée)
         return 14 + (int) ((roll - 0.2f) / 0.8f * 3f);   // 14 à 16 ticks
     }
 

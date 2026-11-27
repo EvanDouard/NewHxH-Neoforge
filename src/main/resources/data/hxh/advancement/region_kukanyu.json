@@ -4,10 +4,10 @@
       "id": "minecraft:map"
     },
     "title": {
-      "translate": "advancement.hxh.region_m.title"
+      "translate": "advancement.hxh.region_kukanyu.title"
     },
     "description": {
-      "translate": "advancement.hxh.region_m.desc"
+      "translate": "advancement.hxh.region_kukanyu.desc"
     },
     "frame": "task",
     "show_toast": true,
