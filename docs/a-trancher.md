@@ -38,3 +38,7 @@ Le détail chiffré est dans `equilibrage-final.md`.
 ## Organisations (ajouté le 27 nov, à corriger)
 - [ ] Nouvelles organisations posées par Claude : **Utilisateurs de Nen** (automatique avec le Nen) et **Fourmis-Chimères** (ennemies des Utilisateurs de Nen et de l'Association, hostiles à vue). Quelles autres organisations/hostilités veux-tu (Zoldyck, mafia, Kakin…) ?
 - [ ] Solidarité : rayon de 24 blocs ; seuls les mobs qui savent se battre (personnages, fourmis) ripostent, les PNJ de décor restent passifs.
+
+## Continent caché (27 nov)
+- [ ] Lire `docs/continent-cache.md` (idées tirées des images, du manga et de théories) et choisir ce qu'on garde ou non : accès (bateau/Black Whale), cinq fléaux, biomes, créatures du lac.
+- [ ] Nom : « Mimbo » (carte d'Evan) ou « Minbo » ?

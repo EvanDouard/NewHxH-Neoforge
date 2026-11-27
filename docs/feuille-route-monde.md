@@ -62,3 +62,10 @@ Propositions « libre/théorie » (non officielles) sur la carte 8 000 × 5 650,
 **Fait (6, partie 1)** : monde HxH sans structures vanilla (`world/HxHChunkGenerator`, `createStructures` vide, type `hxh:world` dans `dimension/world.json`) ; les chunks déjà générés gardent leurs structures. **Reste (6, partie 2)** : biomes par lieu (voir la liste proposée dans le chat / `docs/monde-hxh.md`).
 
 **Fait (27 nov, carte)** : Padokea colorée/nommée, archipel de Mitene (NGL déplacé), seconde carte « Continent Noir connu » + variable `darkContinentKnown`. À trancher : l'événement qui rend la variable vraie (quête, PNJ, livre ?).
+
+## Continent caché (demandes d'Evan, 27 nov — détail dans `docs/continent-cache.md`)
+- [ ] **Étendre l'océan** du monde HxH jusqu'à atteindre la terre qui sera le Continent Noir (lac Mobius autour du monde connu), avec les îles comme sur la carte.
+- [ ] **Ajouter réellement le Nouveau Continent** (complexe d'îles du lobe est).
+- [ ] **Continent Noir et Nouveau Continent = biomes spéciaux** : mobs qui n'y apparaissent qu'ici, arbres/plantes spéciaux, ambiance propre.
+- [ ] **Créatures dans le lac Mobius** (serpents de mer, méduses, baleine, tortue géante, pieuvre, tourbillons…).
+- Pour l'instant : points de la carte en petits carrés grisés, non téléportables ; événement qui rend `darkContinentKnown` vrai à décider.
