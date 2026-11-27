@@ -56,3 +56,5 @@ Propositions « libre/théorie » (non officielles) sur la carte 8 000 × 5 650,
 **Fait (8)** : les objectifs de quête à coordonnées ajoutent la région (`QuestManager.regionTail`, clés `airship.hxh.region.*`) ; GameTest `coordinatesComeWithRegionName`.
 
 **Fait (7, 11)** : éclats de zone plafonnés à 12 victimes (`AreaScaling.MAX_SPLASH_TARGETS`, optimisation ; sommes de niveaux jusqu'à 300 inchangées) ; personnages à vitesse réduite de 60 % hors combat (`CharacterEntity.calmWhenIdle`), GameTest `charactersAreFastOnlyInCombat`.
+
+**Fait (5)** : succès = advancements `data/hxh/advancement/*.json` (générés par `tools/gen_achievements.py`, critère « impossible ») accordés par `achievement/Achievements` (contrôle toutes les 2 s + achat/fabrication immédiats) ; GameTest `achievementsAreGrantedFromPlayerState`, captures 99zzi/99zzj. Pistes à valider avec Evan : liste des succès, ajout de succès par boss/personnage.

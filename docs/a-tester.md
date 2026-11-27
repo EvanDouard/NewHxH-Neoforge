@@ -387,3 +387,4 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu : les objectifs de quête avec coordonnées (guide, dirigeable de départ) affichent aussi la région (« x 4354, z 4143, Kakin »).
 - [ ] En jeu : les personnages (Gon, Killua…) se promènent calmement hors combat et ne sont rapides qu'en combat.
 - [ ] En jeu : les attaques de zone liées à la Volonté touchent au plus 12 cibles par éclat (plus de rafales coûteuses en foule).
+- [ ] En jeu : succès (touche L) : onglet « Hunter x Hunter » avec licence, monstres vaincus (1/50/500), éveil et niveaux de Nen (10/25/50), étages de la Tour (50/100/200/sommet), régions découvertes (6 + Explorateur), premier objet fabriqué/acheté.

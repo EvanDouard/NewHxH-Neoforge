@@ -107,6 +107,7 @@ public final class HxHMod {
         HxHGameRules.init();
 
         HunterEvents.register(NeoForge.EVENT_BUS);
+        com.evandouard.hxh.achievement.Achievements.register(NeoForge.EVENT_BUS);
 
         NeoForge.EVENT_BUS.addListener(HunterCommand::register);
         LOGGER.info("[HxH] Mod chargé");

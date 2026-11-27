@@ -3373,6 +3373,13 @@ shot 99zzd_retour_monde_normal
 cmd hunter world hxh
 wait 200
 shot 99zze_retour_monde_hxh
+cmd advancement grant @s only hxh:kills_500
+wait 40
+shot 99zzi_succes_toast
+key key.advancements
+wait 30
+shot 99zzj_succes_ecran
+closescreen
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative

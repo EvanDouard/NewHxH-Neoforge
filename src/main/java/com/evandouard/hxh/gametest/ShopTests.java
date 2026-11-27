@@ -26,6 +26,23 @@ public final class ShopTests {
     }
 
     @GameTest(template = "empty")
+    public static void achievementsAreGrantedFromPlayerState(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        helper.assertTrue(player.server.getAdvancements().get(com.evandouard.hxh.HxHMod.id("root")) != null, "Les succès sont chargés depuis le datapack");
+        helper.assertFalse(com.evandouard.hxh.achievement.Achievements.has(player, "hunter_license"), "Pas de licence au départ");
+        QuestManager.data(player).setHunter(true);
+        com.evandouard.hxh.stats.HunterStats.get(player).setNenUnlocked(true);
+        QuestManager.data(player).setArenaFloor(120);
+        com.evandouard.hxh.achievement.Achievements.check(player);
+        for (String id : new String[]{"hunter_license", "nen_awakened", "tower_floor_50", "tower_floor_100"})
+            helper.assertTrue(com.evandouard.hxh.achievement.Achievements.has(player, id), "Succès accordé : " + id);
+        helper.assertFalse(com.evandouard.hxh.achievement.Achievements.has(player, "tower_floor_200"), "Étage 200 pas encore atteint");
+        Shops.buy(player, towerShop(helper), 0);
+        helper.assertFalse(com.evandouard.hxh.achievement.Achievements.has(player, "first_purchase"), "Achat refusé : pas de succès");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void buyingCostsJennyAndGivesItem(GameTestHelper helper) {
         Shop shop = towerShop(helper);
         ServerPlayer player = helper.makeMockServerPlayerInLevel();

@@ -55,6 +55,7 @@ public final class Shops {
         d.addJenny(-o.price());
         ItemStack stack = o.stack().copy();
         if (!player.getInventory().add(stack)) player.drop(stack, false);
+        com.evandouard.hxh.achievement.Achievements.grant(player, "first_purchase");
         player.level().playSound(null, player.blockPosition(), SoundEvents.VILLAGER_YES, SoundSource.NEUTRAL, 0.8f, 1.1f);
         return Result.OK;
     }
