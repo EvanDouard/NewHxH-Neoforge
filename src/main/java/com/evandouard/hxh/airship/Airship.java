@@ -73,7 +73,7 @@ public final class Airship {
         BlockPos landing;
         if (com.evandouard.hxh.world.WorldPlaces.ensureBuilt(level, dest.x(), dest.z())) {
             // Le lieu a sa propre zone d'arrivée (et sa borne) : on n'ajoute aucune plateforme
-            landing = new BlockPos(dest.x(), Math.max(level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, dest.x(), dest.z()), level.getSeaLevel() + 1), dest.z());
+            landing = safeLanding(level, dest.x(), dest.z());
         } else {
             landing = buildPad(level, dest.x(), dest.z());
         }
@@ -82,6 +82,26 @@ public final class Airship {
         level.playSound(null, landing, SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.8f, 1.2f);
         player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.hxh.airship.arrived",
                 net.minecraft.network.chat.Component.translatable(dest.nameKey())), true);
+    }
+
+    private static boolean free(ServerLevel level, BlockPos p) {
+        var st = level.getBlockState(p);
+        return st.getCollisionShape(level, p).isEmpty() && st.getFluidState().isEmpty();
+    }
+
+    /** Point d'arrivée dans un lieu déjà bâti : on lit la vraie colonne (deux blocs libres au-dessus d'un sol plein) plutôt que de se fier à la carte des hauteurs. */
+    static BlockPos safeLanding(ServerLevel level, int x, int z) {
+        int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+        int y = Math.max(top, level.getSeaLevel() + 1);
+        int start = y;
+        BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
+        int guard = 0;
+        while (guard++ < 40 && !(free(level, m.set(x, y, z)) && free(level, m.set(x, y + 1, z)))) y++;
+        guard = 0;
+        while (guard++ < 40 && y > level.getMinBuildHeight() + 1 && free(level, m.set(x, y - 1, z))) y--;
+        com.evandouard.hxh.HxHMod.LOGGER.info("[HxH] Arrivée dans un lieu : carte des hauteurs {}, départ {}, point retenu {} ({} au pied, {} au sol)",
+                top, start, y, level.getBlockState(new BlockPos(x, y, z)).getBlock(), level.getBlockState(new BlockPos(x, y - 1, z)).getBlock());
+        return new BlockPos(x, y, z);
     }
 
     /** Étiquette posée sur un joueur déjà accueilli dans le monde HxH (une seule arrivée automatique). */
