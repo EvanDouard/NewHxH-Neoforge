@@ -385,3 +385,5 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu : organisations — on peut en avoir plusieurs (`/hunter org leave [id]`, le carnet les liste toutes) ; dès qu'on a le Nen on est « Utilisateurs de Nen » ; les Fourmis-Chimères (mobs et personnages Meruem, Neferpitou, Shaiapouf, Youpi) attaquent à vue les utilisateurs de Nen et l'Association ; si on attaque un membre d'une organisation, ceux qui sont autour (24 blocs) se retournent contre nous.
 - [ ] En jeu : les mobs qui maîtrisent le Nen (personnages, mobs éveillés) se battent plus intelligemment : coup de pied à bout portant, frappe chargée (parfois ratée), pas de côté autour de la cible. Réglage dans `NenMobAI.chooseMove` / `windupTicks`.
 - [ ] En jeu : les objectifs de quête avec coordonnées (guide, dirigeable de départ) affichent aussi la région (« x 4354, z 4143, Kakin »).
+- [ ] En jeu : les personnages (Gon, Killua…) se promènent calmement hors combat et ne sont rapides qu'en combat.
+- [ ] En jeu : les attaques de zone liées à la Volonté touchent au plus 12 cibles par éclat (plus de rafales coûteuses en foule).

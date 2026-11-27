@@ -19,6 +19,24 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 public final class CharacterMobTests {
     private CharacterMobTests() {}
 
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void charactersAreFastOnlyInCombat(GameTestHelper helper) {
+        CharacterEntity gon = helper.spawn(ModEntities.GON.get(), 1, 1, 1);
+        helper.runAfterDelay(5, () -> {
+            gon.calmWhenIdle();
+            double idle = gon.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
+            Zombie z = helper.spawn(net.minecraft.world.entity.EntityType.ZOMBIE, 3, 1, 3);
+            gon.setTarget(z);
+            gon.calmWhenIdle();
+            double fight = gon.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
+            helper.assertTrue(fight > idle * 2, "Rapide seulement en combat : repos " + idle + ", combat " + fight);
+            gon.setTarget(null);
+            gon.calmWhenIdle();
+            helper.assertTrue(Math.abs(gon.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED) - idle) < 1e-9, "Retour au calme");
+            helper.succeed();
+        });
+    }
+
     @GameTest(template = "empty", timeoutTicks = 100)
     public static void gonAndKilluaGetTheirHatsuAndStayNeutral(GameTestHelper helper) {
         CharacterEntity gon = helper.spawn(ModEntities.GON.get(), 1, 1, 1);

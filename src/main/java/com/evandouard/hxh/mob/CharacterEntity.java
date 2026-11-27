@@ -80,6 +80,22 @@ public class CharacterEntity extends PathfinderMob implements GeoEntity {
     public void tick() {
         if (!level().isClientSide() && !prepared) prepare();
         super.tick();
+        if (!level().isClientSide() && tickCount % 10 == 0) calmWhenIdle();
+    }
+
+    private static final ResourceLocation IDLE_CALM = com.evandouard.hxh.HxHMod.id("idle_calm");
+    /** Part de vitesse retirée hors combat : les personnages ne sont rapides que quand ils se battent. */
+    public static final double IDLE_SLOWDOWN = -0.6;
+
+    /** Hors combat (pas de cible), la vitesse de marche est réduite ; en combat, elle revient en entier. */
+    public void calmWhenIdle() {
+        var speed = getAttribute(Attributes.MOVEMENT_SPEED);
+        if (speed == null) return;
+        boolean idle = getTarget() == null;
+        boolean has = speed.getModifier(IDLE_CALM) != null;
+        if (idle && !has) speed.addTransientModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(IDLE_CALM, IDLE_SLOWDOWN,
+                net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        else if (!idle && has) speed.removeModifier(IDLE_CALM);
     }
 
     /** Applique le mob d'exemple du personnage (une seule fois : c'est sauvegardé ensuite). */

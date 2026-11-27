@@ -37,6 +37,8 @@ public final class AreaScaling {
     /** Part des dégâts reçue par les voisins, rayon au seuil et rayon maximal. */
     public static final float SPLASH = 0.5f;
     public static final double MIN_RADIUS = 1.5, MAX_RADIUS = 4.0;
+    /** Plafond de victimes par éclat (évite les rafales de dégâts coûteuses quand beaucoup de monde est autour). */
+    public static final int MAX_SPLASH_TARGETS = 12;
 
     /** Techniques à cible unique, jamais en zone (liens, aiguilles, contrats de Nen…). */
     public static final Set<String> SINGLE_TARGET = Set.of(
@@ -111,6 +113,7 @@ public final class AreaScaling {
                             && o.distanceTo(target) <= radius && !isAlly(attacker, o))) {
                 Long last = SPLASHED.get(other);
                 if (last != null && last == now) continue;
+                if (hit >= MAX_SPLASH_TARGETS) break;
                 SPLASHED.put(other, now);
                 other.invulnerableTime = 0;
                 if (other.hurt(source, damage * SPLASH)) hit++;
