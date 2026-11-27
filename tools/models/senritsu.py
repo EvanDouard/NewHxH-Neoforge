@@ -36,16 +36,17 @@ def build_hair(m):
     top = b.top
     m.bone('hair', [0, top, 0], 'head')
     rnd = random.Random(227)
-    c, R = (0.0, top - 3.3, 0.35), 5.25
+    c, R = (0.0, top - 3.4, 0.35), 4.7
     scalp(m, c, R, lambda k: mk(k - 0.05)(0.5), skip_front=46, front_phi=36)
     rr = R + 0.25
     for i, az in enumerate(range(-150, 151, 20)):                # casque ondulé : mèches qui se recourbent en dedans
-        crown_lock(m, f's_m{i}', c, rr, az + rnd.uniform(-3, 3), 88, 8.4 + rnd.uniform(-0.4, 0.5), 4.2,
-                   mk(0.14 + 0.06 * math.cos(math.radians(az))), flat=0.45, turn=140, tip=0.35, segs=5,
-                   twist=rnd.uniform(-8, 8))
+        crown_lock(m, f's_m{i}', c, rr, az + rnd.uniform(-6, 6), 86 + rnd.uniform(-6, 6), 7.4 + rnd.uniform(-0.8, 1.0),
+                   3.8 + rnd.uniform(-0.3, 0.8), mk(0.14 + 0.06 * math.cos(math.radians(az))), flat=0.45,
+                   turn=124 + rnd.uniform(-14, 12), tip=0.4, segs=5, twist=rnd.uniform(-14, 14),
+                   side=rnd.choice((-1, 1)) * rnd.uniform(10, 30))               # ondulations
     # bas du casque : mèches qui couvrent les côtés et la nuque jusqu'à la mâchoire et se recourbent en dedans
-    curtain(m, 's_c', c, rr - 0.45, range(-118, 119, 14), 1.0, 5.4, 3.8, lambda i: mk(0.06 + 0.05 * (i % 2)),
-            inward=0, flip=-16, rnd=rnd, tip=0.3, segs=4, belly=1.1)
+    curtain(m, 's_c', c, rr - 0.45, range(-118, 119, 16), 1.0, 5.2, 3.8, lambda i: mk(0.06 + 0.05 * (i % 2)),
+            inward=8, flip=0, rnd=rnd, tip=0.35, segs=4, belly=1.1)
     for j, az in enumerate((150, 168, 192, 210)):
         crown_lock(m, f's_f{j}', c, rr, az, 76, 4.6, 3.6, mk(0.28), flat=0.45, turn=110, tip=0.3, segs=3)
 

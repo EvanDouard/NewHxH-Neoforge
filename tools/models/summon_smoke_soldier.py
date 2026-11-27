@@ -17,7 +17,38 @@ INK = rgb('#2a2236')
 
 
 def puff(k=1.0):
-    return material(shade(SMOKE, k), top=1.12, bottom=0.8, edge=0.72, noise=10, grad=0.22)
+    """Fumée : fond doux, volutes en spirale plus claires et plus sombres, bords effilochés (pixels transparents
+    au hasard sur le pourtour) pour casser l'effet de pierre."""
+    base = material(shade(SMOKE, k), top=1.1, bottom=0.85, edge=0.9, noise=6, grad=0.18)
+
+    def paint(ctx):
+        import math
+        import random
+        base(ctx)
+        w, h = ctx.w, ctx.h
+        rnd = random.Random(int(k * 1000) + w * 31 + h * 17 + hash(ctx.face) % 97)
+        px = ctx.img.load()
+        for _ in range(max(1, (w * h) // 160)):              # volutes
+            cx, cy = rnd.uniform(0, w), rnd.uniform(0, h)
+            r0 = rnd.uniform(2, max(3, min(w, h) * 0.45))
+            col = shade(SMOKE, k * rnd.choice((1.22, 1.15, 0.82)))
+            turns = rnd.uniform(1.2, 2.2)
+            for i in range(90):
+                t = i / 90
+                a = t * turns * 2 * math.pi + rnd.random() * 0.05
+                r = r0 * (1 - t)
+                x, y = int(cx + r * math.cos(a)), int(cy + r * math.sin(a))
+                if 0 <= x < w and 0 <= y < h:
+                    px[x, y] = tuple(int(v) for v in col[:3]) + (235,)
+        for x in range(w):                                    # bords effilochés
+            for y in range(h):
+                d = min(x, y, w - 1 - x, h - 1 - y) / max(1, min(w, h))
+                if d < 0.14 and rnd.random() < (0.14 - d) * 5.5:
+                    px[x, y] = (0, 0, 0, 0)
+                elif d < 0.2:
+                    p = px[x, y]
+                    px[x, y] = (p[0], p[1], p[2], int(p[3] * 0.75))
+    return paint
 
 
 def face_paint(ctx):
