@@ -152,7 +152,7 @@ def lineups():
         j = s.index(LINEUP_END, i) + len(LINEUP_END) + 1
         s = s[:i] + s[j:]
     ids = list(CHARACTERS)
-    blk = LINEUP_START + '\nhud off\n'
+    blk = LINEUP_START + '\nhud off\ncmd weather clear\ncmd time set noon\n'
     for g in range(0, len(ids), 5):
         group = ids[g:g + 5]
         n = g // 5 + 1
