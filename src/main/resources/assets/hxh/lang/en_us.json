@@ -2019,5 +2019,10 @@
   "advancement.hxh.region_b.title": "Region: Begerosse",
   "advancement.hxh.region_b.desc": "Discover the Begerosse region.",
   "advancement.hxh.region_p.title": "Region: Padokea",
-  "advancement.hxh.region_p.desc": "Discover the Padokea region."
+  "advancement.hxh.region_p.desc": "Discover the Padokea region.",
+  "command.hxh.dark_continent_known": "You now know the Dark Continent exists: the airship map changes.",
+  "command.hxh.dark_continent_unknown": "The Dark Continent is unknown to you again: classic map.",
+  "airship.hxh.new_world": "New World",
+  "airship.hxh.lake_mobius": "Lake Mobius",
+  "airship.hxh.dark_continent": "Dark Continent"
 }

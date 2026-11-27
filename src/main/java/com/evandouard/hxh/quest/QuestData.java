@@ -46,6 +46,8 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
     final java.util.Map<String, Integer> examInstances = new java.util.HashMap<>();
     /** Point de départ de l'Examen donné par le guide (place du passeur dans le monde), ou Long.MIN_VALUE. */
     long examDeparture = Long.MIN_VALUE;
+    /** Sait que le Continent Noir existe (carte du dirigeable alternative). */
+    boolean darkContinentKnown = false;
 
     // ---------- Tour Céleste ----------
     boolean arenaRegistered = false;
@@ -255,6 +257,15 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         return registered200 || arenaFloor >= 200;
     }
 
+    /** Le joueur sait que le Continent Noir existe : il voit la carte du monde avec le Nouveau Monde, le lac Mobius et le Continent Noir. */
+    public boolean darkContinentKnown() {
+        return darkContinentKnown;
+    }
+
+    public void setDarkContinentKnown(boolean value) {
+        darkContinentKnown = value;
+    }
+
     public boolean isHunter() {
         return hunter;
     }
@@ -400,6 +411,7 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         planTrials.clear();
         examInstances.clear();
         examDeparture = Long.MIN_VALUE;
+        darkContinentKnown = false;
         arenaRegistered = false;
         arenaFloor = 1;
         registeredBracket = -1;
@@ -449,6 +461,7 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         examInstances.forEach(inst::putInt);
         tag.put("exam_instances", inst);
         tag.putLong("exam_departure", examDeparture);
+        tag.putBoolean("dark_continent_known", darkContinentKnown);
         tag.putString("organization", organization());
         net.minecraft.nbt.ListTag orgList = new net.minecraft.nbt.ListTag();
         for (String o : organizations) orgList.add(net.minecraft.nbt.StringTag.valueOf(o));
@@ -517,6 +530,7 @@ public final class QuestData implements INBTSerializable<CompoundTag> {
         CompoundTag inst = tag.getCompound("exam_instances");
         for (String k : inst.getAllKeys()) examInstances.put(k, inst.getInt(k));
         examDeparture = tag.contains("exam_departure") ? tag.getLong("exam_departure") : Long.MIN_VALUE;
+        darkContinentKnown = tag.getBoolean("dark_continent_known");
         organizations.clear();
         if (tag.contains("organizations")) {
             for (net.minecraft.nbt.Tag t : tag.getList("organizations", net.minecraft.nbt.Tag.TAG_STRING)) addOrganization(t.getAsString());

@@ -17,7 +17,11 @@ import net.neoforged.neoforge.network.PacketDistributor;
  */
 public class AirshipMapScreen extends Screen {
     private static final ResourceLocation MAP = HxHMod.id("textures/gui/world_map.png");
-    private static final int TEX_W = 1494, TEX_H = 1056;
+    /** Carte pour qui sait que le Continent Noir existe : même style, sur une toile plus grande (Nouveau Monde, lac Mobius, Continent Noir). */
+    private static final ResourceLocation MAP_DARK = HxHMod.id("textures/gui/world_map_dark.png");
+    /** Taille de la zone du monde connu dans les deux textures ; la grande toile la pose en (DARK_DX, DARK_DY). */
+    private static final int WORLD_TEX_W = 1494, WORLD_TEX_H = 1056;
+    private static final int DARK_TEX_W = 1944, DARK_TEX_H = 1446, DARK_DX = 90, DARK_DY = 60;
     /** Étendue du monde représentée par la carte (blocs) : 249 × 176 cases de 32 blocs. */
     private static final int WORLD_W = 7968, WORLD_H = 5632;
     private static final int INK = 0xFF0E1420, PIN_OK = 0xFFFFE9A8, PIN_POOR = 0xFF7C8594, JENNY = 0xFFFFC23A;
@@ -28,13 +32,25 @@ public class AirshipMapScreen extends Screen {
     private static char[][] grid;
 
     private final OpenAirshipPayload data;
-    private int mapX, mapY, mapW, mapH;
+    private final boolean dark;
+    private final int texW, texH, offX, offY;
+    /** Toile entière à l'écran, puis zone du monde connu (blocs ↔ pixels) : {@code mapW/mapH} = monde. */
+    private int mapX, mapY, mapW, mapH, canvasX, canvasY, canvasW, canvasH;
     /** Position simulée du curseur (scénario de CI), sinon -1. */
     private int fakeX = -1, fakeY = -1;
 
     public AirshipMapScreen(OpenAirshipPayload data) {
         super(Component.translatable("airship.hxh.title"));
         this.data = data;
+        this.dark = data.darkContinentKnown();
+        this.texW = dark ? DARK_TEX_W : WORLD_TEX_W;
+        this.texH = dark ? DARK_TEX_H : WORLD_TEX_H;
+        this.offX = dark ? DARK_DX : 0;
+        this.offY = dark ? DARK_DY : 0;
+    }
+
+    public boolean isDarkMap() {
+        return dark;
     }
 
     /** Grille des régions (assets/hxh/world/regions.txt), lue une fois. */
@@ -88,10 +104,14 @@ public class AirshipMapScreen extends Screen {
     @Override
     protected void init() {
         int maxW = width - 40, maxH = height - 50;
-        mapW = Math.min(maxW, maxH * TEX_W / TEX_H);
-        mapH = mapW * TEX_H / TEX_W;
-        mapX = (width - mapW) / 2;
-        mapY = 28 + (maxH - mapH) / 2;
+        canvasW = Math.min(maxW, maxH * texW / texH);
+        canvasH = canvasW * texH / texW;
+        canvasX = (width - canvasW) / 2;
+        canvasY = 28 + (maxH - canvasH) / 2;
+        mapW = canvasW * WORLD_TEX_W / texW;
+        mapH = canvasH * WORLD_TEX_H / texH;
+        mapX = canvasX + canvasW * offX / texW;
+        mapY = canvasY + canvasH * offY / texH;
     }
 
     private int px(OpenAirshipPayload.Dest d) {
@@ -153,15 +173,41 @@ public class AirshipMapScreen extends Screen {
         }
     }
 
+    /** Texte centré, agrandi, avec ombre : {@code cx/cy} en pixels de la toile. */
+    private void label(GuiGraphics g, Component text, double cx, double cy, float scale, int color) {
+        g.pose().pushPose();
+        g.pose().translate(canvasX + cx * canvasW / texW, canvasY + cy * canvasH / texH, 0);
+        g.pose().scale(scale, scale, 1);
+        g.drawString(font, text, -font.width(text) / 2, -font.lineHeight / 2, color, true);
+        g.pose().popPose();
+    }
+
+    /** Carte du Continent Noir : noms permanents des régions (centre de chaque région), Nouveau Monde, lac Mobius, Continent Noir. */
+    private void drawDarkLabels(GuiGraphics g) {
+        float s = Math.max(0.6f, canvasW / 1100f);
+        char[][] grid = grid();
+        for (int i = 0; i < REGIONS.length() && i < 7; i++) {
+            char c = REGIONS.charAt(i);
+            long sx = 0, sz = 0, n = 0;
+            for (int z = 0; z < grid.length; z++) for (int x = 0; x < grid[z].length; x++) if (grid[z][x] == c) { sx += x; sz += z; n++; }
+            if (n == 0) continue;
+            label(g, regionName(c), offX + (sx / (double) n + 0.5) * 6, offY + (sz / (double) n + 0.5) * 6, s, 0xFFFFFFFF);
+        }
+        label(g, Component.translatable("airship.hxh.new_world"), offX + 747, offY + 520, s * 1.9f, 0xFFFFE9A8);
+        label(g, Component.translatable("airship.hxh.lake_mobius"), 560, 1215, s * 1.5f, 0xFF9CC8FF);
+        label(g, Component.translatable("airship.hxh.dark_continent"), 1780, 1255, s * 1.5f, 0xFFE070A8);
+    }
+
     @Override
     public void render(GuiGraphics g, int mouseX, int mouseY, float partial) {
         if (fakeX >= 0) { mouseX = fakeX; mouseY = fakeY; }
         g.fill(0, 0, width, height, 0x80000000);
-        g.fill(mapX - 3, mapY - 3, mapX + mapW + 3, mapY + mapH + 3, INK);
-        g.blit(MAP, mapX, mapY, mapW, mapH, 0, 0, TEX_W, TEX_H, TEX_W, TEX_H);
+        g.fill(canvasX - 3, canvasY - 3, canvasX + canvasW + 3, canvasY + canvasH + 3, INK);
+        g.blit(dark ? MAP_DARK : MAP, canvasX, canvasY, canvasW, canvasH, 0, 0, texW, texH, texW, texH);
+        if (dark) drawDarkLabels(g);
         g.drawCenteredString(font, title, width / 2, 8, 0xFFFFFFFF);
         Component jenny = Component.translatable("airship.hxh.jenny", data.jenny());
-        g.drawString(font, jenny, mapX + mapW - font.width(jenny), 8, JENNY);
+        g.drawString(font, jenny, canvasX + canvasW - font.width(jenny), 8, JENNY);
 
         OpenAirshipPayload.Dest hover = pinAt(mouseX, mouseY);
         char region = hover != null ? regionOf(hover) : regionAtScreen(mouseX, mouseY);

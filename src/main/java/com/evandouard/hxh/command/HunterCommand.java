@@ -463,6 +463,10 @@ public final class HunterCommand {
                 .then(Commands.literal("world")
                         .then(Commands.literal("hxh").executes(ctx -> switchWorld(ctx.getSource(), true)))
                         .then(Commands.literal("normal").executes(ctx -> switchWorld(ctx.getSource(), false))))
+                // Le joueur sait (ou non) que le Continent Noir existe : change la carte du dirigeable
+                .then(Commands.literal("darkcontinent").requires(s -> s.hasPermission(2))
+                        .then(Commands.literal("known").executes(ctx -> setDarkContinent(ctx.getSource(), true)))
+                        .then(Commands.literal("unknown").executes(ctx -> setDarkContinent(ctx.getSource(), false))))
                 .then(Commands.literal("airship").requires(s -> s.hasPermission(2))
                         .executes(ctx -> {
                             com.evandouard.hxh.airship.Airship.open(ctx.getSource().getPlayerOrException());
@@ -1058,6 +1062,14 @@ public final class HunterCommand {
             return 0;
         }
         src.sendSuccess(() -> Component.translatable("message.hxh.en_shape_set"), false);
+        return 1;
+    }
+
+    private static int setDarkContinent(net.minecraft.commands.CommandSourceStack src, boolean known) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        var p = src.getPlayerOrException();
+        com.evandouard.hxh.quest.QuestManager.data(p).setDarkContinentKnown(known);
+        com.evandouard.hxh.quest.QuestManager.sync(p);
+        src.sendSuccess(() -> Component.translatable(known ? "command.hxh.dark_continent_known" : "command.hxh.dark_continent_unknown"), false);
         return 1;
     }
 

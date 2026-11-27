@@ -42,6 +42,21 @@ public final class QuestTests {
     }
 
     @GameTest(template = "empty")
+    public static void darkContinentKnowledgeIsSaved(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(player);
+        helper.assertFalse(d.darkContinentKnown(), "Inconnu par défaut : carte classique");
+        d.setDarkContinentKnown(true);
+        var tag = d.serializeNBT(player.registryAccess());
+        QuestData copy = new QuestData();
+        copy.deserializeNBT(player.registryAccess(), tag);
+        helper.assertTrue(copy.darkContinentKnown(), "Le savoir sur le Continent Noir est sauvegardé");
+        d.reset();
+        helper.assertFalse(d.darkContinentKnown(), "Remis à zéro avec la quête");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void coordinatesComeWithRegionName(GameTestHelper helper) {
         var m = com.evandouard.hxh.world.HxHWorldMap.get();
         helper.assertTrue(com.evandouard.hxh.quest.QuestManager.regionTail(-100000, -100000).getString().isEmpty(), "Hors carte : pas de région");

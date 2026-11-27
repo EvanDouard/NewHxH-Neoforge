@@ -61,7 +61,7 @@ public final class Airship {
         int jenny = QuestManager.data(player).jenny();
         List<OpenAirshipPayload.Dest> dests = new ArrayList<>();
         for (AirshipDestination d : AirshipRegistry.all()) dests.add(new OpenAirshipPayload.Dest(d.id().toString(), d.x(), d.z(), ticketPrice(player, d)));
-        HxHNetwork.sendTo(player, new OpenAirshipPayload(jenny, dests));
+        HxHNetwork.sendTo(player, new OpenAirshipPayload(jenny, dests, QuestManager.data(player).darkContinentKnown()));
     }
 
     /** Une borne de dirigeable est-elle à portée ? */

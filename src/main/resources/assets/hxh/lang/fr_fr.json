@@ -2019,5 +2019,10 @@
   "advancement.hxh.region_b.title": "Région : Begerosse",
   "advancement.hxh.region_b.desc": "Découvrir la région de Begerosse.",
   "advancement.hxh.region_p.title": "Région : Padokea",
-  "advancement.hxh.region_p.desc": "Découvrir la région de Padokea."
+  "advancement.hxh.region_p.desc": "Découvrir la région de Padokea.",
+  "command.hxh.dark_continent_known": "Tu sais maintenant que le Continent Noir existe : la carte du dirigeable change.",
+  "command.hxh.dark_continent_unknown": "Le Continent Noir t'est de nouveau inconnu : carte classique.",
+  "airship.hxh.new_world": "Nouveau Monde",
+  "airship.hxh.lake_mobius": "Lac Mobius",
+  "airship.hxh.dark_continent": "Continent Noir"
 }

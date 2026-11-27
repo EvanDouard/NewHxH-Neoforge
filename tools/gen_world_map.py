@@ -120,3 +120,47 @@ big[edge] = (120, 108, 78)
 img = Image.fromarray(big).resize((W * PX, H * PX), Image.LANCZOS)
 img.save(OUT_PNG, optimize=True)
 print('ok', img.size)
+
+# 6. Seconde carte (« Continent Noir connu ») : le monde connu au centre d'un lac (Mobius), le Continent Noir au sud et à l'est.
+#    Purement visuel : les limites du Continent Noir ne sont pas connues. Même style, sur une toile plus grande ; le monde y est
+#    posé en (DX, DY). Les mêmes constantes sont dans AirshipMapScreen.
+OUT_DARK = 'src/main/resources/assets/hxh/textures/gui/world_map_dark.png'
+CW, CH, DX, DY = 1944, 1446, 90, 60
+rng = np.random.default_rng(27)
+def fractal(w, h):
+    acc = np.zeros((h, w)); amp = 1.0; tot = 0
+    for cells_ in (6, 12, 24, 48, 96):
+        n = rng.random((cells_ * h // w + 2, cells_ + 2))
+        acc += amp * np.array(Image.fromarray((n * 255).astype(np.uint8)).resize((w, h), Image.BICUBIC)).astype(float) / 255
+        tot += amp; amp *= 0.5
+    return acc / tot
+yy, xx = np.mgrid[0:CH, 0:CW].astype(float)
+def ell(cx, cy, rx, ry): return 1 - (((xx - cx) / rx) ** 2 + ((yy - cy) / ry) ** 2)
+shape = np.maximum.reduce([ell(1900, 880, 280, 700), ell(1050, 1440, 760, 190), ell(1720, 1330, 330, 260)])
+dark_land = (shape + (fractal(CW, CH) - 0.5) * 0.9) > 0.18
+# garde une mer entre le monde connu et le Continent Noir
+dark_land[max(0, DY - 40):DY + H * PX + 70, max(0, DX - 40):DX + W * PX + 60] &= False
+dl = Image.fromarray((dark_land * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(5))
+dark_land = np.array(dl) > 127
+halo = np.array(Image.fromarray((dark_land * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(70))).astype(float) / 255
+canvas = np.zeros((CH, CW, 3), float)
+for i in range(3): canvas[..., i] = SEA_DEEP[i] * (1 - 0.45 * np.clip(halo * 2.2, 0, 1))
+inland = np.array(Image.fromarray((dark_land * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(60))).astype(float) / 255
+for i, (a, b) in enumerate(zip((78, 58, 88), (34, 24, 46))):
+    canvas[..., i][dark_land] = (a + (b - a) * np.clip(inland * 1.6, 0, 1))[dark_land]
+stripes = ((xx + yy) % 22 < 3) & dark_land            # hachures de brume : « terre inconnue »
+canvas[stripes] = canvas[stripes] * 0.82
+edge2 = dark_land & ~(np.array(Image.fromarray((dark_land * 255).astype(np.uint8)).filter(ImageFilter.MinFilter(5))) > 127)
+canvas[edge2] = (150, 70, 110)
+canvas = canvas.astype(np.uint8)
+# on pose le monde connu avec un bord fondu
+world = Image.fromarray(canvas).convert('RGB')
+fade = Image.new('L', img.size, 255)
+fp = fade.load()
+for yv in range(img.size[1]):
+    for xv in range(img.size[0]):
+        d = min(xv, yv, img.size[0] - 1 - xv, img.size[1] - 1 - yv)
+        fp[xv, yv] = min(255, int(255 * d / 40))
+world.paste(img, (DX, DY), fade)
+world.save(OUT_DARK, optimize=True)
+print('ok dark', world.size)

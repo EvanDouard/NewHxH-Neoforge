@@ -10,7 +10,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import java.util.List;
 
 /** Serveur → client : ouvre la carte du dirigeable (Jenny du joueur et destinations avec leur prix). */
-public record OpenAirshipPayload(int jenny, List<Dest> destinations) implements CustomPacketPayload {
+public record OpenAirshipPayload(int jenny, List<Dest> destinations, boolean darkContinentKnown) implements CustomPacketPayload {
     public record Dest(String id, int x, int z, int price) {
         public static final StreamCodec<ByteBuf, Dest> STREAM_CODEC = StreamCodec.composite(
                 ByteBufCodecs.STRING_UTF8, Dest::id,
@@ -24,6 +24,7 @@ public record OpenAirshipPayload(int jenny, List<Dest> destinations) implements 
     public static final StreamCodec<ByteBuf, OpenAirshipPayload> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.VAR_INT, OpenAirshipPayload::jenny,
             Dest.STREAM_CODEC.apply(ByteBufCodecs.list()), OpenAirshipPayload::destinations,
+            ByteBufCodecs.BOOL, OpenAirshipPayload::darkContinentKnown,
             OpenAirshipPayload::new);
 
     @Override

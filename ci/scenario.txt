@@ -3380,6 +3380,25 @@ key key.advancements
 wait 30
 shot 99zzj_succes_ecran
 closescreen
+cmd hunter darkcontinent known
+cmd hunter airship
+wait 10
+shot 99zzk_carte_continent_noir
+pick region:K
+wait 5
+shot 99zzl_carte_continent_noir_kakin
+closescreen
+cmd hunter darkcontinent unknown
+cmd hunter airship
+wait 10
+shot 99zzm_carte_classique_padokea_mitene
+pick region:p
+wait 5
+shot 99zzn_carte_padokea
+pick region:n
+wait 5
+shot 99zzo_carte_ngl
+closescreen
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative

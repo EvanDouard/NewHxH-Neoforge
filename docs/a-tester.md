@@ -390,3 +390,4 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu : succès (touche L) : onglet « Hunter x Hunter » avec licence, monstres vaincus (1/50/500), éveil et niveaux de Nen (10/25/50), étages de la Tour (50/100/200/sommet), régions découvertes (6 + Explorateur), premier objet fabriqué/acheté.
 - [ ] En jeu : dans le monde HxH, plus aucun village de villageois, forteresse, épave ni portail en ruine (nouveau monde, ou chunks pas encore générés).
 - [ ] En jeu : carte du dirigeable : République de Padokea colorée et nommée (survol), archipel de Mitene (NGL, Rokario, Hass, Gorteau-Ouest/Est) ; NGL est maintenant sur l'île la plus à l'ouest.
+- [ ] En jeu : `/hunter darkcontinent known` puis ouvrir la carte du dirigeable : carte « Continent Noir connu » (Nouveau Monde, noms des régions, Lac Mobius, Continent Noir) ; `unknown` : carte classique. Les repères, le survol et le clic marchent comme sur la classique.
