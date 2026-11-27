@@ -3358,6 +3358,14 @@ cmd tp @s 2655 100 1585 180 25
 wait 200
 shot 99zzc_padokea_vue
 cmd gamemode creative
+cmd effect give @s hxh:fear 25 2 true
+wait 50
+shot 99zzf_peur_tunnel_a
+wait 45
+shot 99zzg_peur_tunnel_b
+wait 45
+shot 99zzh_peur_tunnel_c
+cmd effect clear @s hxh:fear
 cmd effect give @s minecraft:slow_falling 60 0 true
 cmd hunter world normal
 wait 200

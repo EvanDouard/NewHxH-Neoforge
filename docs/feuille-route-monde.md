@@ -49,3 +49,6 @@ Propositions « libre/théorie » (non officielles) sur la carte 8 000 × 5 650,
 | Meteor City | ~ (1 700, 3 900) | terres sauvages du continent Yorbian, entre Yorknew et Greed Island |
 | NGL | ~ (1 350, 4 950) | pointe sud (Union de Mitene), forêt/ferme isolée |
 | East Gorteau | ~ (2 000, 5 000) | côte sud de Mitene, vers Peijin (2 445, 5 085) |
+
+## Demandes d'Evan du 27 nov (ordre de traitement ; détail dans la feuille de route Docs)
+1. Peur : effet « crise de panique » (vue qui se rétrécit, bords durs, zoom par à-coups). 2. Organisations en listes + nouvelles (Fourmis-Chimères) + hostilités (Utilisateur de Nen ↔ Fourmis-Chimères). 3. Neutres solidaires si l'un des leurs est attaqué. 4. Mobs plus autonomes (coups de pied, frappes chargées). 5. Succès. 6. Monde HxH sans structures classiques + biomes par lieu (lister d'abord). 7. Techniques qui grossissent avec la volonté : optimiser, niveau max 300. 8. Quêtes : ville/région à côté des coordonnées. 9. Échelle du monde (discussion : carte pré-générée ?). 10. Modèles validés par Evan. 11. Vitesse des personnages seulement en combat.

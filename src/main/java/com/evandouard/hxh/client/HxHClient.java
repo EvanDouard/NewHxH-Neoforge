@@ -20,6 +20,7 @@ public final class HxHClient {
         DamageNumberRenderer.register();
         CombatAnimClient.register();
         FearClient.register();
+        FearClient.registerLayers(modEventBus);
         AirJumpClient.register();
         NenFxClient.register();
         CiAutopilot.initIfRequested();
