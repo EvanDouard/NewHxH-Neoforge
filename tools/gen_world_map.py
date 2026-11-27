@@ -121,46 +121,90 @@ img = Image.fromarray(big).resize((W * PX, H * PX), Image.LANCZOS)
 img.save(OUT_PNG, optimize=True)
 print('ok', img.size)
 
-# 6. Seconde carte (« Continent Noir connu ») : le monde connu au centre d'un lac (Mobius), le Continent Noir au sud et à l'est.
-#    Purement visuel : les limites du Continent Noir ne sont pas connues. Même style, sur une toile plus grande ; le monde y est
-#    posé en (DX, DY). Les mêmes constantes sont dans AirshipMapScreen.
+# 6. Seconde carte (« Continent Noir connu »), d'après la carte du lac Mobius : le Continent Noir (parchemin) entoure tout le lac ;
+#    le lac a deux lobes ; le monde connu est au centre dans un cadre en pointillés ; le Nouveau Continent est dans le lobe est ;
+#    cinq croix sur les côtes du Continent Noir (Saherta, Begerossé, Kukan'yu, Mimbo, Ochima). Purement visuel : les limites du
+#    Continent Noir ne sont pas connues. Mêmes constantes dans AirshipMapScreen (toile, position et taille du monde).
+from PIL import ImageDraw
 OUT_DARK = 'src/main/resources/assets/hxh/textures/gui/world_map_dark.png'
-CW, CH, DX, DY = 1944, 1446, 90, 60
+CW, CH = 2400, 1424
+WS = 0.72                                   # échelle du monde connu sur la toile
+WW, WH = round(W * PX * WS), round(H * PX * WS)
+DX, DY = (CW - WW) // 2, (CH - WH) // 2
 rng = np.random.default_rng(27)
-def fractal(w, h):
+def fractal(w, h, octaves=(4, 8, 16, 32, 64)):
     acc = np.zeros((h, w)); amp = 1.0; tot = 0
-    for cells_ in (6, 12, 24, 48, 96):
-        n = rng.random((cells_ * h // w + 2, cells_ + 2))
+    for cells_ in octaves:
+        n = rng.random((max(2, cells_ * h // w) + 2, cells_ + 2))
         acc += amp * np.array(Image.fromarray((n * 255).astype(np.uint8)).resize((w, h), Image.BICUBIC)).astype(float) / 255
-        tot += amp; amp *= 0.5
+        tot += amp; amp *= 0.55
     return acc / tot
 yy, xx = np.mgrid[0:CH, 0:CW].astype(float)
-def ell(cx, cy, rx, ry): return 1 - (((xx - cx) / rx) ** 2 + ((yy - cy) / ry) ** 2)
-shape = np.maximum.reduce([ell(1900, 880, 280, 700), ell(1050, 1440, 760, 190), ell(1720, 1330, 330, 260)])
-dark_land = (shape + (fractal(CW, CH) - 0.5) * 0.9) > 0.18
-# garde une mer entre le monde connu et le Continent Noir
-dark_land[max(0, DY - 40):DY + H * PX + 70, max(0, DX - 40):DX + W * PX + 60] &= False
-dl = Image.fromarray((dark_land * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(5))
-dark_land = np.array(dl) > 127
-halo = np.array(Image.fromarray((dark_land * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(70))).astype(float) / 255
+u, v = xx / CW, yy / CH
+def ell(cx, cy, rx, ry): return 1 - (((u - cx) / rx) ** 2 + ((v - cy) / ry) ** 2)
+band = 1 - np.maximum(np.abs((u - 0.5) / 0.2) ** 4, np.abs((v - 0.495) / 0.32) ** 4)
+shape = np.maximum.reduce([ell(0.222, 0.495, 0.205, 0.43), ell(0.778, 0.495, 0.205, 0.43), band])
+lake = (shape + (fractal(CW, CH, (3, 6, 12, 24, 48)) - 0.5) * 0.18) > 0.0
+lake = np.array(Image.fromarray((lake * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(3))) > 127
+# parchemin du Continent Noir
+tex = fractal(CW, CH, (3, 6, 12, 24))
+vign = np.clip(1 - np.maximum(np.abs(u - 0.5) * 2, np.abs(v - 0.5) * 2) ** 3, 0, 1)
 canvas = np.zeros((CH, CW, 3), float)
-for i in range(3): canvas[..., i] = SEA_DEEP[i] * (1 - 0.45 * np.clip(halo * 2.2, 0, 1))
-inland = np.array(Image.fromarray((dark_land * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(60))).astype(float) / 255
-for i, (a, b) in enumerate(zip((78, 58, 88), (34, 24, 46))):
-    canvas[..., i][dark_land] = (a + (b - a) * np.clip(inland * 1.6, 0, 1))[dark_land]
-stripes = ((xx + yy) % 22 < 3) & dark_land            # hachures de brume : « terre inconnue »
-canvas[stripes] = canvas[stripes] * 0.82
-edge2 = dark_land & ~(np.array(Image.fromarray((dark_land * 255).astype(np.uint8)).filter(ImageFilter.MinFilter(5))) > 127)
-canvas[edge2] = (150, 70, 110)
-canvas = canvas.astype(np.uint8)
-# on pose le monde connu avec un bord fondu
+for i, (a, b) in enumerate(zip((214, 176, 112), (150, 112, 62))):
+    canvas[..., i] = b + (a - b) * (0.55 + 0.45 * vign) + (tex - 0.5) * 22
+# lac Mobius
+lake_f = np.array(Image.fromarray((lake * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(40))).astype(float) / 255
+for i, c in enumerate((92, 130, 150)):
+    lake_col = c + (tex - 0.5) * 18 - 16 * (1 - np.clip(lake_f * 1.6, 0, 1))
+    canvas[..., i][lake] = lake_col[lake]
+# rivage : double trait clair + ombre
+inner = np.array(Image.fromarray((lake * 255).astype(np.uint8)).filter(ImageFilter.MinFilter(7))) > 127
+inner2 = np.array(Image.fromarray((lake * 255).astype(np.uint8)).filter(ImageFilter.MinFilter(15))) > 127
+shore1 = lake & ~inner; shore2 = inner & ~inner2
+canvas[shore1] = (205, 220, 214); canvas[shore2] = (150, 188, 196)
+outside = np.array(Image.fromarray((lake * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(9))) > 127
+canvas[outside & ~lake] = canvas[outside & ~lake] * 0.78 + np.array((120, 96, 52)) * 0.22
+# Nouveau Continent (lobe est)
+nc_u, nc_v = 0.789, 0.375
+nc = (1 - (((u - nc_u) / 0.034) ** 2 + ((v - nc_v) / (0.105 + 0.03 * (v - nc_v) / 0.1)) ** 2) + (fractal(CW, CH) - 0.5) * 0.35) > 0
+nc = np.array(Image.fromarray((nc * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(2))) > 127
+nc_edge = nc & ~(np.array(Image.fromarray((nc * 255).astype(np.uint8)).filter(ImageFilter.MinFilter(7))) > 127)
+canvas[nc] = (206, 152, 96) + (tex[nc, None] - 0.5) * 16
+canvas[nc_edge] = (232, 214, 170)
+canvas = np.clip(canvas, 0, 255).astype(np.uint8)
 world = Image.fromarray(canvas).convert('RGB')
-fade = Image.new('L', img.size, 255)
-fp = fade.load()
-for yv in range(img.size[1]):
-    for xv in range(img.size[0]):
-        d = min(xv, yv, img.size[0] - 1 - xv, img.size[1] - 1 - yv)
-        fp[xv, yv] = min(255, int(255 * d / 40))
-world.paste(img, (DX, DY), fade)
+# monde connu : seules la terre et son liséré sont posés (la mer est celle du lac)
+wimg = img.resize((WW, WH), Image.LANCZOS)
+wmask = m.resize((WW, WH), Image.LANCZOS).filter(ImageFilter.MaxFilter(3))
+wmask = wmask.point(lambda a: 255 if a > 150 else (0 if a < 70 else int((a - 70) * 255 / 80)))
+world.paste(wimg, (DX, DY), wmask)
+# cadre en pointillés autour du monde connu
+d = ImageDraw.Draw(world, 'RGBA')
+x0, y0, x1, y1, r = DX - 45, DY - 45, DX + WW + 45, DY + WH + 45, 70
+def dashed(pts, dash=22, gap=14, color=(225, 235, 240, 190), wd=3):
+    step = dash + gap; carry = 0
+    for (ax, ay), (bx, by) in zip(pts, pts[1:]):
+        L = max(1, ((bx - ax) ** 2 + (by - ay) ** 2) ** 0.5)
+        t = -carry
+        while t < L:
+            a_, b_ = max(t, 0), min(t + dash, L)
+            if b_ > a_: d.line([(ax + (bx - ax) * a_ / L, ay + (by - ay) * a_ / L), (ax + (bx - ax) * b_ / L, ay + (by - ay) * b_ / L)], fill=color, width=wd)
+            t += step
+        carry = (t - L)
+import math
+pts = []
+for cx_, cy_, a0 in ((x1 - r, y0 + r, -90), (x1 - r, y1 - r, 0), (x0 + r, y1 - r, 90), (x0 + r, y0 + r, 180)):
+    for k in range(0, 91, 6):
+        pts.append((cx_ + r * math.cos(math.radians(a0 + k)), cy_ + r * math.sin(math.radians(a0 + k))))
+pts.append(pts[0])
+dashed(pts)
 world.save(OUT_DARK, optimize=True)
-print('ok dark', world.size)
+# repères des croix : sur la côte du Continent Noir, juste hors du lac
+def shore_y(col, top):
+    ys = np.where(lake[:, col])[0]
+    return (ys.min() if top else ys.max())
+marks = {}
+for name, uu, top in (('saherta', 0.554, True), ('begerosse', 0.672, True), ('kukanyu', 0.547, False), ('mimbo', 0.751, False), ('ochima', 0.882, False)):
+    col = int(uu * CW); y = shore_y(col, top)
+    marks[name] = (col, int(y - 0.045 * CH if top else y + 0.045 * CH))
+print('ok dark', world.size, 'monde', (DX, DY, WW, WH), 'croix', marks)

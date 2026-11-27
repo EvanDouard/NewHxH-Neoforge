@@ -21,7 +21,9 @@ public class AirshipMapScreen extends Screen {
     private static final ResourceLocation MAP_DARK = HxHMod.id("textures/gui/world_map_dark.png");
     /** Taille de la zone du monde connu dans les deux textures ; la grande toile la pose en (DARK_DX, DARK_DY). */
     private static final int WORLD_TEX_W = 1494, WORLD_TEX_H = 1056;
-    private static final int DARK_TEX_W = 1944, DARK_TEX_H = 1446, DARK_DX = 90, DARK_DY = 60;
+    private static final int DARK_TEX_W = 2400, DARK_TEX_H = 1424, DARK_DX = 662, DARK_DY = 332, DARK_WORLD_W = 1076, DARK_WORLD_H = 760;
+    /** Échelle du monde connu sur la grande toile (1076 / 1494). */
+    private static final double DARK_WS = 0.72;
     /** Étendue du monde représentée par la carte (blocs) : 249 × 176 cases de 32 blocs. */
     private static final int WORLD_W = 7968, WORLD_H = 5632;
     private static final int INK = 0xFF0E1420, PIN_OK = 0xFFFFE9A8, PIN_POOR = 0xFF7C8594, JENNY = 0xFFFFC23A;
@@ -33,7 +35,7 @@ public class AirshipMapScreen extends Screen {
 
     private final OpenAirshipPayload data;
     private final boolean dark;
-    private final int texW, texH, offX, offY;
+    private final int texW, texH, offX, offY, worldTexW, worldTexH;
     /** Toile entière à l'écran, puis zone du monde connu (blocs ↔ pixels) : {@code mapW/mapH} = monde. */
     private int mapX, mapY, mapW, mapH, canvasX, canvasY, canvasW, canvasH;
     /** Position simulée du curseur (scénario de CI), sinon -1. */
@@ -47,6 +49,8 @@ public class AirshipMapScreen extends Screen {
         this.texH = dark ? DARK_TEX_H : WORLD_TEX_H;
         this.offX = dark ? DARK_DX : 0;
         this.offY = dark ? DARK_DY : 0;
+        this.worldTexW = dark ? DARK_WORLD_W : WORLD_TEX_W;
+        this.worldTexH = dark ? DARK_WORLD_H : WORLD_TEX_H;
     }
 
     public boolean isDarkMap() {
@@ -108,8 +112,8 @@ public class AirshipMapScreen extends Screen {
         canvasH = canvasW * texH / texW;
         canvasX = (width - canvasW) / 2;
         canvasY = 28 + (maxH - canvasH) / 2;
-        mapW = canvasW * WORLD_TEX_W / texW;
-        mapH = canvasH * WORLD_TEX_H / texH;
+        mapW = canvasW * worldTexW / texW;
+        mapH = canvasH * worldTexH / texH;
         mapX = canvasX + canvasW * offX / texW;
         mapY = canvasY + canvasH * offY / texH;
     }
@@ -173,29 +177,48 @@ public class AirshipMapScreen extends Screen {
         }
     }
 
-    /** Texte centré, agrandi, avec ombre : {@code cx/cy} en pixels de la toile. */
-    private void label(GuiGraphics g, Component text, double cx, double cy, float scale, int color) {
+    /** Texte centré (sur plusieurs lignes si {@code split}), agrandi, avec ombre : {@code cx/cy} en pixels de la toile. */
+    private void label(GuiGraphics g, Component text, double cx, double cy, float scale, int color, boolean split) {
+        String[] lines = split ? text.getString().split(" ") : new String[]{text.getString()};
         g.pose().pushPose();
         g.pose().translate(canvasX + cx * canvasW / texW, canvasY + cy * canvasH / texH, 0);
         g.pose().scale(scale, scale, 1);
-        g.drawString(font, text, -font.width(text) / 2, -font.lineHeight / 2, color, true);
+        int top = -lines.length * font.lineHeight / 2;
+        for (int i = 0; i < lines.length; i++)
+            g.drawString(font, lines[i], -font.width(lines[i]) / 2, top + i * font.lineHeight, color, true);
         g.pose().popPose();
     }
 
-    /** Carte du Continent Noir : noms permanents des régions (centre de chaque région), Nouveau Monde, lac Mobius, Continent Noir. */
+    /** Une croix rouge sur la côte du Continent Noir, avec le nom du pays (point d'accès : lieu connu, mais pas la région). */
+    private void cross(GuiGraphics g, char region, double cx, double cy, float s) {
+        label(g, Component.literal("X"), cx, cy - 14, s * 1.6f, 0xFFB02020, false);
+        label(g, regionName(region), cx, cy + 14, s * 0.9f, 0xFF3A2410, false);
+    }
+
+    /**
+     * Carte du Continent Noir : noms des régions du monde connu, « Monde connu », lac Mobius (deux lobes), Nouveau Continent,
+     * « Continent Noir » en haut et cinq croix (Saherta, Begerossé, Kukan'yu, Mimbo, Ochima) sur ses côtes.
+     */
     private void drawDarkLabels(GuiGraphics g) {
-        float s = Math.max(0.6f, canvasW / 1100f);
+        float s = Math.max(0.55f, canvasW / 1100f);
         char[][] grid = grid();
-        for (int i = 0; i < REGIONS.length() && i < 7; i++) {
+        for (int i = 0; i < 7; i++) {
             char c = REGIONS.charAt(i);
             long sx = 0, sz = 0, n = 0;
             for (int z = 0; z < grid.length; z++) for (int x = 0; x < grid[z].length; x++) if (grid[z][x] == c) { sx += x; sz += z; n++; }
             if (n == 0) continue;
-            label(g, regionName(c), offX + (sx / (double) n + 0.5) * 6, offY + (sz / (double) n + 0.5) * 6, s, 0xFFFFFFFF);
+            label(g, regionName(c), offX + (sx / (double) n + 0.5) * 6 * DARK_WS, offY + (sz / (double) n + 0.5) * 6 * DARK_WS, s * 0.55f, 0xFFFFFFFF, true);
         }
-        label(g, Component.translatable("airship.hxh.new_world"), offX + 747, offY + 520, s * 1.9f, 0xFFFFE9A8);
-        label(g, Component.translatable("airship.hxh.lake_mobius"), 560, 1215, s * 1.5f, 0xFF9CC8FF);
-        label(g, Component.translatable("airship.hxh.dark_continent"), 1780, 1255, s * 1.5f, 0xFFE070A8);
+        label(g, Component.translatable("airship.hxh.dark_continent"), 1200, 78, s * 2.0f, 0xFFFFF4D8, false);
+        label(g, Component.translatable("airship.hxh.known_world"), 1200, 700, s * 1.7f, 0xFFFFF4D8, false);
+        label(g, Component.translatable("airship.hxh.lake_mobius"), 370, 730, s * 1.7f, 0xFFE8F4FF, false);
+        label(g, Component.translatable("airship.hxh.lake_mobius"), 2030, 760, s * 1.7f, 0xFFE8F4FF, false);
+        label(g, Component.translatable("airship.hxh.new_continent"), 1894, 534, s * 0.9f, 0xFFFFF4D8, true);
+        cross(g, 's', 1329, 188, s);
+        cross(g, 'b', 1612, 122, s);
+        cross(g, 'k', 1312, 1225, s);
+        cross(g, 'm', 1802, 1375, s);
+        cross(g, 'o', 2116, 1293, s);
     }
 
     @Override

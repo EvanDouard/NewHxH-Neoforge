@@ -22,7 +22,7 @@ A = [
  ('first_purchase', 'root', 'minecraft:emerald', 'task', ('Premier achat', 'Acheter un objet chez un marchand.'), ('First Purchase', 'Buy an item from a merchant.')),
  ('explorer', 'root', 'minecraft:compass', 'goal', ('Explorateur', 'Découvrir les sept régions du monde.'), ('Explorer', 'Discover all seven regions of the world.')),
 ]
-REG = [('minbo', 'Minbo', 'Minbo'), ('kukanyu', "Kukan'yu", "Kukan'yu"), ('saherta', 'Saherta', 'Saherta'), ('kakin', 'Kakin', 'Kakin'), ('ochima', 'Ochima', 'Ochima'), ('begerosse', 'Begerosse', 'Begerosse'), ('padokea', 'Padokea', 'Padokea')]
+REG = [('minbo', 'Mimbo', 'Mimbo'), ('kukanyu', "Kukan'yu", "Kukan'yu"), ('saherta', 'Saherta', 'Saherta'), ('kakin', 'Kakin', 'Kakin'), ('ochima', 'Ochima', 'Ochima'), ('begerosse', 'Begerossé', 'Begerossé'), ('padokea', 'Padokea', 'Padokea')]
 for c, fr, en in REG:
     A.append(('region_' + c, 'explorer', 'minecraft:map', 'task', ('Région : ' + fr, 'Découvrir la région de %s.' % fr), ('Region: ' + en, 'Discover the %s region.' % en)))
 
