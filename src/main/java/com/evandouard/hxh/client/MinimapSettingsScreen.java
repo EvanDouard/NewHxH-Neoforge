@@ -51,9 +51,14 @@ public class MinimapSettingsScreen extends Screen {
         return Component.translatable(MinimapClient.enabled() ? "screen.hxh.minimap.hide" : "screen.hxh.minimap.show");
     }
 
+    /** Pas de flou : on voit le jeu derrière, pour placer la minimap à l'œil. */
+    @Override
+    public void renderBackground(GuiGraphics g, int mouseX, int mouseY, float partial) {
+    }
+
     @Override
     public void render(GuiGraphics g, int mouseX, int mouseY, float partial) {
-        g.fill(0, 0, width, height, 0x90000000);
+        g.fill(0, 0, width, height, 0x50000000);
         g.drawCenteredString(font, title, width / 2, 10, 0xFFFFFFFF);
         g.drawCenteredString(font, Component.translatable("screen.hxh.minimap.hint"), width / 2, 24, 0xFFC8C8C8);
         Minecraft mc = Minecraft.getInstance();
