@@ -41,29 +41,27 @@ def build_hair(m):
     import random
     from chibi import crown_lock, scalp
     rnd = random.Random(7)
-    c, R = (0.0, top - 3.3, 0.4), 4.95
+    c, R = (0.0, top - 3.4, 0.4), 4.6
     scalp(m, c, R, lambda k: mk(k - 0.1)(0.5))
     rr = R + 0.3
-    # mèches courtes et ondulées qui partent du sommet et retombent en s'écartant un peu (volume ébouriffé),
-    # pointes arrondies qui rebiquent
-    for i, az in enumerate(range(0, 360, 30)):
-        if 130 < az < 230:
-            continue
-        L = 9.0 + rnd.uniform(-1.0, 1.4)
-        crown_lock(m, f'p_m{i}', c, rr, az + rnd.uniform(-6, 6), 74 + rnd.uniform(-6, 6), L, 4.4 + rnd.uniform(-0.4, 0.6),
-                   mk(0.16 if 60 < az < 300 else 0.04), flat=0.5, turn=118 + rnd.uniform(-8, 8), tip=0.32,
-                   segs=4, lean=rnd.uniform(-10, 10), twist=rnd.uniform(-14, 14), skew=rnd.uniform(-0.12, 0.12))
-    for i, az in enumerate(range(15, 360, 30)):          # couche secondaire plus courte (épaisseur, boucles)
-        if 130 < az < 230:
-            continue
-        crown_lock(m, f'p_s{i}', c, rr - 0.3, az, 68, 6.6 + rnd.uniform(-0.6, 1.0), 3.4, mk(0.0), flat=0.55,
-                   turn=130, tip=0.4, segs=3, lean=rnd.uniform(-12, 12), twist=rnd.uniform(-20, 20))
+    # mèches souples et ondulées : longueurs, largeurs et directions toutes différentes ; chacune s'enroule un peu
+    # sur le côté (side) et rebique en pointe arrondie : volume ébouriffé, pas de coque
+    azs = [0, 34, 62, 92, 118, 242, 268, 296, 326]
+    for i, az in enumerate(azs):
+        L = 9.6 + rnd.uniform(-1.4, 2.0)
+        crown_lock(m, f'p_m{i}', c, rr, az + rnd.uniform(-8, 8), 70 + rnd.uniform(-10, 8), L, 4.0 + rnd.uniform(-0.6, 1.0),
+                   mk(0.16 if 60 < az < 300 else 0.04), flat=0.42, turn=104 + rnd.uniform(-12, 14), tip=0.45,
+                   segs=5, lean=rnd.uniform(-14, 14), twist=rnd.uniform(-22, 22), skew=rnd.uniform(-0.18, 0.18),
+                   side=rnd.choice((-1, 1)) * rnd.uniform(14, 30))
+    for i, az in enumerate((16, 48, 78, 105, 255, 282, 312, 342)):   # couche secondaire plus courte (boucles)
+        crown_lock(m, f'p_s{i}', c, rr - 0.3, az + rnd.uniform(-6, 6), 64 + rnd.uniform(-6, 6), 7.2 + rnd.uniform(-0.8, 1.4),
+                   2.8 + rnd.uniform(0, 0.8), mk(0.0), flat=0.5, turn=128 + rnd.uniform(-10, 14), tip=0.5, segs=4,
+                   lean=rnd.uniform(-16, 16), twist=rnd.uniform(-26, 26), side=rnd.uniform(-45, 45))
     # frange : mèches ondulées qui tombent sur le front, la plus longue au centre
-    for j, (az, L, W, lean, k) in enumerate(((146, 6.0, 3.8, -10, 0.3), (164, 6.6, 4.0, -4, 0.36),
-                                             (182, 7.2, 4.0, 3, 0.4), (200, 6.4, 3.8, 9, 0.34),
-                                             (216, 5.6, 3.4, 14, 0.28))):
-        crown_lock(m, f'p_f{j}', c, rr, az, 72, L, W, mk(k), flat=0.5, turn=92, tip=0.3, segs=4, lean=lean,
-                   skew=rnd.uniform(-0.1, 0.1))
+    for j, (az, L, W, lean, k, sd) in enumerate(((146, 5.6, 3.6, -12, 0.3, -24), (166, 6.4, 4.2, -4, 0.36, 18),
+                                                 (186, 7.0, 3.8, 4, 0.4, -14), (206, 5.8, 3.6, 12, 0.32, 26))):
+        crown_lock(m, f'p_f{j}', c, rr, az, 72, L, W, mk(k), flat=0.45, turn=96, tip=0.4, segs=4, lean=lean,
+                   skew=rnd.uniform(-0.14, 0.14), side=sd)
     # oreilles de chat : triangles épais, intérieur rose
     for sx in (-1, 1):
         m.bone(f'ear{sx}', [sx * 2.6, top + 0.8, 0.2], 'hair', rotation=[-6, 0, -sx * 18])

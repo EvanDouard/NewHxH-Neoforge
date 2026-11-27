@@ -42,9 +42,9 @@ def build_hair(m):
     scalp(m, c, R, lambda k: mk(k - 0.05)(0.5), skip_front=40, front_phi=20)
     rr = R + 0.22
     # couche arrière (posée d'abord) : tombe de l'arrière du crâne jusqu'à la nuque, pointes légèrement écartées
-    for i, az in enumerate(range(-75, 76, 25)):
+    for i, az in enumerate(range(-60, 61, 20)):
         crown_lock(m, f'c_k{i}', c, rr - 0.1, az + rnd.uniform(-4, 4), 72 + rnd.uniform(-4, 4), 9.0 + rnd.uniform(-0.6, 0.8),
-                   3.8 + rnd.uniform(0, 0.4), mk(0.04 + 0.02 * (i % 2)), flat=0.4, turn=66, tip=0.28, segs=4,
+                   3.8 + rnd.uniform(0, 0.4), mk(0.04 + 0.02 * (i % 2)), flat=0.4, turn=84, tip=0.28, segs=4,
                    twist=rnd.uniform(-6, 6), skew=rnd.uniform(-0.06, 0.06))
     # dessus : plaqué depuis la naissance des cheveux jusqu'à l'arrière du crâne
     for i, x_az in enumerate((-30, -18, -6, 6, 18, 30)):
@@ -53,9 +53,9 @@ def build_hair(m):
                    segs=5, twist=rnd.uniform(-4, 4), skew=rnd.uniform(-0.05, 0.05))
     # côtés : peignés vers l'arrière au-dessus des oreilles
     for sx in (-1, 1):
-        for j, (az, phi, L) in enumerate(((sx * 56, 130, 8.6), (sx * 78, 116, 7.4), (sx * 100, 102, 6.2))):
+        for j, (az, phi, L) in enumerate(((sx * 56, 130, 8.6), (sx * 78, 116, 7.4), (sx * 96, 108, 4.6))):
             crown_lock(m, f'c_s{sx}{j}', c, rr - 0.05 * j, az, phi, L, 3.4, mk(0.08 if sx > 0 else 0.0), flat=0.36,
-                       turn=104, tip=0.3, segs=4, twist=rnd.uniform(-6, 6), lean=sx * 4)
+                       turn=118, tip=0.3, segs=4, twist=rnd.uniform(-6, 6), lean=sx * 4)
 
 
 def face_paint(ctx, mode='calme'):

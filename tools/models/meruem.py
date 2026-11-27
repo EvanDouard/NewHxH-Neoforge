@@ -35,28 +35,28 @@ def build_crest(m):
     top, hx, hz = b.top, b.head[0] / 2, b.head[2] / 2
     m.bone('hair', [0, top, 0], 'head')
     cara = cloth(CARA, CARA_LIGHT, CARA_DARK, seed=130)
-    m.cube('hair', [-hx - 0.3, top - 2.2, -hz + 0.2], [b.head[0] + 0.6, 2.8, b.head[2] + 0.2], cara)     # casque
+    m.cube('hair', [-hx - 0.25, top - 1.6, -hz + 0.9], [b.head[0] + 0.5, 2.0, b.head[2] - 0.5], cara)     # casque, front dégagé
     m.cube('hair', [-hx + 0.6, top + 0.4, -hz + 1.0], [b.head[0] - 1.2, 0.8, b.head[2] - 1.4], cara)
     for sx in (-1, 1):                                                      # joues de carapace
         m.cube('hair', [sx * (hx + 0.25) - 0.35, b.head_y + 2.4, -hz + 0.6], [0.7, 4.4, b.head[2] - 0.6], cara)
     # deux grands lobes lisses qui s'étirent vers l'arrière et un peu vers le haut : tronçons arrondis qui
     # s'affinent (arêtes adoucies par des pans), séparés par un sillon
     for sx in (-1, 1):
-        m.bone(f'm_lobe{sx}', [sx * 1.9, top - 1.4, 0.6], 'hair', rotation=[-14, sx * 8, 0])
+        m.bone(f'm_lobe{sx}', [sx * 1.9, top - 1.4, 0.6], 'hair', rotation=[-8, sx * 11, sx * 4])
         x0, y0, z0 = sx * 1.9, top - 1.4, 0.6
         for i in range(6):
-            w = 3.6 * (1 - 0.1 * i)
-            h = 3.6 * (1 - 0.13 * i)
+            w = 3.4 * (1 - 0.12 * i)
+            h = 3.8 * (1 - 0.14 * i)
             L = 2.3
             z = z0 + i * (L - 0.3)
-            y = y0 - h / 2 + 0.15 * i
+            y = y0 - h / 2 + 0.22 * i + 0.03 * i * i      # le lobe se relève en s'effilant
             paint = cloth(shade(CARA, 1.08 - 0.04 * i), CARA_LIGHT, CARA_DARK, seed=140 + i)
             m.cube(f'm_lobe{sx}', [x0 - w / 2, y, z], [w, h, L], paint)
             s2 = min(w, h) * 0.42
             for ex in (-1, 1):                                    # pans supérieurs : arrondi
                 m.cube(f'm_lobe{sx}', [x0 + ex * w / 2 - s2 / 2, y + h - s2 / 2, z], [s2, s2, L],
                        cloth(CARA_LIGHT, seed=150 + i), pivot=[x0 + ex * w / 2, y + h, z + L / 2], rotation=[0, 0, 45])
-        m.cube(f'm_lobe{sx}', [x0 - 0.7, y0 - 0.6, z0 + 6 * 2.0 - 0.6], [1.4, 1.2, 1.4], cloth(CARA_DARK, seed=160))
+        m.cube(f'm_lobe{sx}', [x0 - 0.5, y0 + 0.6, z0 + 6 * 2.0 - 0.6], [1.0, 1.0, 1.4], cloth(CARA_DARK, seed=160))
         # deux antennes courtes au-dessus du front
         lock(m, f'm_ant{sx}', [sx * 1.3, top + 0.2, -2.6], 3.6, 0.6, -12, -sx * 18, mk(0.2), flat=1.0,
              curve=(-20, -sx * 8), segs=2, root=1.0, tip=0.4, taper_pow=0.4)
@@ -130,8 +130,17 @@ def build_body(m):
         m.box(f'{side}_shin', (cx, 0), 1.0, (3.0, b.knee_y - 1.0, 3.1), cara)
         m.box(f'{side}_shin', (cx, -0.6), 0.0, (3.1, 1.2, 4.4), cloth(CARA_DARK, seed=136))
     # queue segmentée : part du bas du dos, descend puis remonte, dard au bout
-    lock(m, 'tail', [0, b.hip_y + 0.4, 1.8], 14.0, 2.6, 150, 0, mk(0.06), flat=1.0, curve=(-30, 0), segs=4,
-         root=1.1, tip=0.25, taper_pow=0.6, parent='body')
+    # queue segmentée : anneaux de carapace qui s'affinent, chacun légèrement plus incliné, dard au bout
+    parent, py, pz = 'body', b.hip_y + 0.6, 1.9
+    for i in range(7):
+        bn = f'tail_{i}'
+        m.bone(bn, [0, py, pz], parent, rotation=[24 if i == 0 else 9, 0, 0])
+        w = 2.4 * (1 - 0.1 * i)
+        L = 2.1
+        m.cube(bn, [-w / 2, py - w / 2, pz], [w, w, L], cloth(CARA if i % 2 == 0 else CARA_LIGHT, seed=170 + i))
+        m.cube(bn, [-w / 2 - 0.12, py - w / 2 - 0.12, pz + L - 0.45], [w + 0.24, w + 0.24, 0.45], flat(CARA_DARK, 0.85))
+        parent, pz = bn, pz + L - 0.1
+    m.cube(parent, [-0.4, py - 0.4, pz], [0.8, 0.8, 1.6], flat(PLATE, 0.9))
 
 
 

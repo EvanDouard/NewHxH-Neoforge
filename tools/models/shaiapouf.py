@@ -50,7 +50,7 @@ def build_hair(m):
         crown_lock(m, f'f_m{i}', c, rr, az + rnd.uniform(-4, 4), 76 + rnd.uniform(-4, 4), 12.0 + rnd.uniform(-1, 1.5) + 3.0 * max(0.0, 1 - min(az, 360 - az) / 90),
                    3.8 + rnd.uniform(-0.3, 0.5), mk(0.14 if 50 < az < 310 else 0.02), flat=0.42,
                    turn=122 + rnd.uniform(-6, 6), tip=0.18, segs=5, lean=rnd.uniform(-6, 6),
-                   twist=rnd.uniform(-10, 10), skew=0.14 * side * (1 if i % 2 else -1))
+                   twist=rnd.uniform(-10, 10), skew=0.14 * side * (1 if i % 2 else -1), side=rnd.uniform(-24, 24))
     for i, az in enumerate(range(13, 360, 26)):
         if 140 < az < 220:
             continue
@@ -137,15 +137,34 @@ def wing_paint(seed):
 
 
 def build_wings(m):
-    """Quatre ailes de papillon (deux grandes en haut, deux plus petites en bas), fines, bord clair."""
+    """Quatre ailes de papillon distinctes (deux grandes en haut, deux plus petites en bas) : contour arrondi fait de
+    bandes de largeur variable (pas un panneau rectangulaire), bord clair, nervures sombres en relief qui partent de
+    l'attache ; elles sortent du dos sur une petite tige et s'écartent du costume."""
+    import math
     b = BODY
     y = b.shoulder_y - 1.0
+    z0 = b.torso_d / 2 + 0.9
+    vein = flat(shade(WING, 0.45), 0.9)
     for sx in (-1, 1):
-        for k, (w, h, rz, dy) in enumerate(((10.0, 9.0, -28, 0.0), (7.0, 6.0, 18, -5.0))):
+        m.cube('torso', [sx * 0.6 - 0.35, y - 4.0, b.torso_d / 2 - 0.1], [0.7, 4.6, 1.2], flat(shade(WING, 0.6), 0.9))
+        for k, (w, h, rz, dy, up) in enumerate(((10.5, 9.5, -30, 0.4, 0.62), (7.0, 6.4, 22, -4.6, 0.35))):
             name = f'wing{sx}{k}'
-            m.bone(name, [sx * 0.8, y + dy, b.torso_d / 2 + 0.3], 'torso', rotation=[0, -sx * 24, -sx * rz])
-            x0 = sx * 0.8 + (0 if sx > 0 else -w)
-            m.cube(name, [x0, y + dy - h * 0.4, b.torso_d / 2 + 0.3], [w, h, 0.25], wing_paint(190 + k))
+            m.bone(name, [sx * 0.8, y + dy, z0], 'torso', rotation=[6, -sx * 34, -sx * rz])
+            n = 9
+            for i in range(n):                      # bandes du bas (attache) vers le haut de l'aile
+                t = (i + 0.5) / n
+                prof = math.sin(math.pi * (0.12 + 0.82 * t)) ** 0.7       # aile arrondie, plus large au milieu
+                ww = w * (0.35 + 0.65 * prof)
+                hy = y + dy - h * (1 - up) + i * h / n
+                x0 = sx * 0.8 + (0 if sx > 0 else -ww)
+                col = tuple(int(WING[c] + (WING_L[c] - WING[c]) * (0.25 + 0.6 * t)) for c in range(3))
+                m.cube(name, [x0, hy, z0], [ww, h / n + 0.05, 0.22], cloth(col, shade(col, 1.15), shade(col, 0.8), folds=0, seed=190 + k * 10 + i))
+                m.cube(name, [x0 + (ww - 0.35 if sx > 0 else 0), hy, z0 - 0.04], [0.35, h / n + 0.05, 0.3],
+                       flat(WING_EDGE, 0.95))                                      # bord clair
+            for j, ang in enumerate((-35, 0, 30)):                                 # nervures
+                L = w * (0.85 if j == 1 else 0.7)
+                m.cube(name, [sx * 0.8 + (0 if sx > 0 else -L), y + dy - 0.1, z0 - 0.08], [L, 0.2, 0.36], vein,
+                       pivot=[sx * 0.8, y + dy, z0], rotation=[0, 0, sx * ang])
 
 
 def build():

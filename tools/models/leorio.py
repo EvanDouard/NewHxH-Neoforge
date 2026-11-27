@@ -36,7 +36,7 @@ LEATHER_DARK = rgb('#4f2e16')
 BRASS = rgb('#d6b04a')
 
 # Proportions (pieds à 0) : grand et élancé
-HEAD = (8.2, 8.6, 8.0)
+HEAD = (7.8, 9.2, 7.8)
 HEAD_Y = 22.6
 HIP_Y = 12.2
 KNEE_Y = 6.2

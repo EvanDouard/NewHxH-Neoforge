@@ -376,13 +376,14 @@ def scalp(m, c, R, paint_for, skip_front=62, front_phi=40, rings=None, prefix='h
 
 
 def crown_lock(m, name, c, rr, az, phi0, L, W, paint_for, flat=0.5, turn=90, tip=0.2, segs=4, lean=0.0,
-               twist=0.0, skew=0.0, root=1.15, taper_pow=0.45, parent='hair'):
+               twist=0.0, skew=0.0, root=1.15, taper_pow=0.45, parent='hair', side=0.0):
     """Mèche qui part du point (az, phi0) de la sphère (centre c, rayon rr), tangente à sa surface vers le bas,
     et tourne de `turn` degrés répartis sur ses tronçons : elle suit l'arrondi du crâne puis retombe.
-    az : 0 = arrière, 90 = gauche du perso (+X), 180 = devant. lean : inclinaison latérale (degrés)."""
+    az : 0 = arrière, 90 = gauche du perso (+X), 180 = devant. lean : inclinaison latérale (degrés).
+    side : virage latéral réparti le long de la mèche (degrés) : la mèche s'enroule sur le côté au lieu de tomber droit."""
     import math
     m.bone(f'{name}_az', list(c), parent, rotation=[0, az, lean])
     y = c[1] + rr * math.sin(math.radians(phi0))
     z = c[2] + rr * math.cos(math.radians(phi0))
-    lock(m, name, [c[0], y, z], L, W, 180 - phi0, 0, paint_for, ry=twist, flat=flat, curve=(turn, 0), segs=segs,
+    lock(m, name, [c[0], y, z], L, W, 180 - phi0, 0, paint_for, ry=twist, flat=flat, curve=(turn, side), segs=segs,
          root=root, tip=tip, taper_pow=taper_pow, skew=skew, belly=1.08, parent=f'{name}_az')

@@ -298,65 +298,94 @@ def _face_quad(c, f):
     }[f]
 
 
+def _affine(rot, pivot):
+    """Matrice 4x4 : rotation (degrés, ordre Z·Y·X) autour d'un pivot."""
+    import numpy as np
+    R = np.array(_rot(*[math.radians(a) for a in rot]))
+    M = np.eye(4)
+    M[:3, :3] = R
+    pv = np.array(pivot, dtype=float)
+    M[:3, 3] = pv - R @ pv
+    return M
+
+
 def render(model, yaw=0, pitch=0, px=11, canvas=(300, 520), pose=None):
+    """Rendu orthographique : chaque face est une parallélogramme à l'écran, sa texture y est plaquée par une
+    transformation affine (peintre : faces triées de la plus lointaine à la plus proche)."""
+    import numpy as np
     pose = pose or {}
-    tex = model.texture
-    quads = []
-    view = _rot(math.radians(pitch), math.radians(yaw), 0)
+    tex = model.texture.convert('RGBA')
+    view = np.eye(4)
+    view[:3, :3] = np.array(_rot(math.radians(pitch), math.radians(yaw), 0))
+    W, H = canvas
+    light = np.array((-0.45, 0.7, -0.55))
+    light /= np.linalg.norm(light)
+    world = {}
 
-    def chain(bn):
-        out = []
-        while bn:
-            out.append(model.bones[bn])
-            bn = model.bones[bn].parent
-        return out
+    def bone_m(bn):
+        if bn in world:
+            return world[bn]
+        b = model.bones[bn]
+        rot = list(b.rotation or [0, 0, 0])
+        if b.name in pose:
+            rot = [rot[i] + pose[b.name][i] for i in range(3)]
+        M = _affine(rot, b.pivot) if any(rot) else np.eye(4)
+        if b.parent:
+            M = bone_m(b.parent) @ M
+        world[bn] = M
+        return M
 
+    faces = []
     for bn in model.order:
-        bones = chain(bn)
+        BM = view @ bone_m(bn)
         for c in model.bones[bn].cubes:
+            CM = BM
+            if c.rotation and any(c.rotation):
+                CM = BM @ _affine(c.rotation, c.pivot or [c.origin[i] + c.size[i] / 2 for i in range(3)])
             for f in FACES:
                 u, v, w, h = c.uv[f]
-                corners = _face_quad(c, f)
-                def tf(p):
-                    if c.rotation:
-                        p = _rotate_about(p, c.pivot or [c.origin[i] + c.size[i] / 2 for i in range(3)], c.rotation)
-                    for b in bones:
-                        rot = list(b.rotation or [0, 0, 0])
-                        if b.name in pose:
-                            rot = [rot[i] + pose[b.name][i] for i in range(3)]
-                        p = _rotate_about(p, b.pivot, rot)
-                    return _apply(view, p)
-                P = [tf(p) for p in corners]
-                # normale (vers le spectateur si z < 0)
-                ax = [P[1][i] - P[0][i] for i in range(3)]
-                ay = [P[3][i] - P[0][i] for i in range(3)]
-                n = (ax[1] * ay[2] - ax[2] * ay[1], ax[2] * ay[0] - ax[0] * ay[2], ax[0] * ay[1] - ax[1] * ay[0])
-                ln = math.sqrt(sum(a * a for a in n)) or 1
-                n = tuple(a / ln for a in n)
-                for ty in range(h):
-                    for tx in range(w):
-                        col = tex.getpixel((u + tx, v + ty))
-                        if col[3] < 20:
-                            continue
-                        a0, a1, b0, b1 = tx / w, (tx + 1) / w, ty / h, (ty + 1) / h
-                        def at(a, b):
-                            return tuple(P[0][i] + (P[1][i] - P[0][i]) * a + (P[3][i] - P[0][i]) * b for i in range(3))
-                        quads.append(([at(a0, b0), at(a1, b0), at(a1, b1), at(a0, b1)], col, n))
-    W, H = canvas
+                if w <= 0 or h <= 0:
+                    continue
+                pts = np.array([list(p) + [1.0] for p in _face_quad(c, f)]) @ CM.T
+                P = pts[:, :3]
+                ax, ay = P[1] - P[0], P[3] - P[0]
+                n = np.cross(ax, ay)
+                ln = np.linalg.norm(n)
+                if ln < 1e-9:
+                    continue
+                n /= ln
+                if n[2] > 0.05:
+                    continue
+                k = 0.55 + 0.45 * max(0.0, float(n @ light))
+                faces.append((-P[:, 2].sum(), P, (u, v, w, h), k))
+    faces.sort(key=lambda t: t[0])
     img = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-    dr = ImageDraw.Draw(img)
-    light = (-0.45, 0.7, -0.55)
-    ll = math.sqrt(sum(a * a for a in light))
-    light = tuple(a / ll for a in light)
-    quads.sort(key=lambda q: -sum(p[2] for p in q[0]))
-    for pts, col, n in quads:
-        if n[2] > 0.05:
-            continue  # face tournée vers l'arrière
-        k = 0.55 + 0.45 * max(0.0, n[0] * light[0] + n[1] * light[1] + n[2] * light[2])
-        c = (int(col[0] * k), int(col[1] * k), int(col[2] * k), 255)
-        # X de l'écran : +X du modèle (côté gauche du personnage) à droite de l'image, vu de face
-        poly = [(W / 2 + p[0] * px, H - 18 - p[1] * px) for p in pts]
-        dr.polygon(poly, fill=c, outline=c)
+    for _, P, (u, v, w, h), k in faces:
+        S = np.stack([W / 2 + P[:, 0] * px, H - 18 - P[:, 1] * px], axis=1)
+        e1, e2 = S[1] - S[0], S[3] - S[0]
+        det = e1[0] * e2[1] - e1[1] * e2[0]
+        if abs(det) < 0.05:
+            continue
+        x0, y0 = np.floor(S.min(axis=0)).astype(int)
+        x1, y1 = np.ceil(S.max(axis=0)).astype(int)
+        bw, bh = x1 - x0 + 1, y1 - y0 + 1
+        if bw <= 0 or bh <= 0 or bw > 4 * W or bh > 4 * H:
+            continue
+        patch = tex.crop((u, v, u + w, v + h))
+        r, g, b, a = patch.split()
+        lut = [int(i * k) for i in range(256)]
+        a = a.point(lambda q: 255 if q >= 20 else 0)
+        patch = Image.merge('RGBA', (r.point(lut), g.point(lut), b.point(lut), a))
+        # écran (X, Y) -> texture (tx, ty) : [X - S0] = e1 * tx/w + e2 * ty/h
+        inv = np.array([[e2[1], -e2[0]], [-e1[1], e1[0]]]) / det
+        A = np.diag([w, h]) @ inv
+        o = np.array([x0, y0]) - S[0]
+        # échantillonnage au centre des pixels
+        o = o + 0.5
+        coeffs = (A[0, 0], A[0, 1], A[0, 0] * o[0] + A[0, 1] * o[1],
+                  A[1, 0], A[1, 1], A[1, 0] * o[0] + A[1, 1] * o[1])
+        out = patch.transform((int(bw), int(bh)), Image.AFFINE, coeffs, resample=Image.NEAREST)
+        img.alpha_composite(out, (int(x0), int(y0)))
     return img
 
 

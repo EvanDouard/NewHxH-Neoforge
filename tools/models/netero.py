@@ -40,7 +40,7 @@ def build_hair(m):
     # remontent toutes vers le chignon à l'arrière du crâne
     m.cube('hair', [-hx - 0.2, b.head_y + 2.6, -1.2], [0.5, 3.4, 5.2], base)
     m.cube('hair', [hx - 0.3, b.head_y + 2.6, -1.2], [0.5, 3.4, 5.2], base)
-    m.cube('hair', [-hx - 0.2, b.head_y + 2.4, hz - 0.3], [b.head[0] + 0.4, 5.0, 0.5], base)
+    m.cube('hair', [-hx + 0.3, b.head_y + 2.4, hz - 0.3], [b.head[0] - 0.6, 3.4, 0.5], base)
     for sx in (-1, 1):                     # côtés : rubans plaqués peignés vers l'arrière (épaisseur faible)
         for j, (y, z, L, k) in enumerate(((b.head_y + 5.0, -1.8, 5.8, 0.3), (b.head_y + 3.2, -1.4, 5.4, 0.18))):
             lock(m, f'n_s{sx}{j}', [sx * (hx + 0.2), y, z], L, 0.7, 92, 0, mk(k if sx < 0 else k - 0.1), flat=3.0,
@@ -50,6 +50,7 @@ def build_hair(m):
              segs=2, root=1.05, tip=0.3, taper_pow=0.5)
     # queue relevée : part de l'arrière du crâne, remonte et retombe en chignon en pointe
     m.bone('topknot', [0, top - 1.2, hz + 0.2], 'hair', rotation=[-28, 0, 0])
+    m.cube('topknot', [-0.9, top - 1.1, hz - 0.1], [1.8, 0.7, 1.4], flat(rgb('#4a3a2a'), 0.9))   # lien du chignon
     lock(m, 'n_knot', [0, top - 0.6, hz + 0.6], 4.6, 3.0, 10, 0, mk(0.3), flat=0.8, curve=(60, 0), segs=4,
          root=1.1, tip=0.08, taper_pow=0.6, parent='topknot')
     lock(m, 'n_knot2', [0.5, top - 0.6, hz + 0.4], 3.8, 2.2, 4, -14, mk(0.18), flat=0.8, curve=(50, 8), segs=3,
@@ -65,10 +66,15 @@ def build_beard(m):
     for sx in (-1, 1):                                           # moustache
         lock(m, f'n_mu{sx}', [sx * 0.8, yf(43), -hz - 0.25], 3.6, 1.6, 180, sx * 40, mk(0.3), flat=0.7,
              curve=(0, -sx * 30), segs=2, root=1.1, tip=0.15, taper_pow=0.6, parent='beard')
-    lock(m, 'n_beard', [0, yf(50), -hz - 0.3], 9.0, 5.4, 186, 0, mk(0.28), flat=0.42, curve=(-16, 0), segs=4,
-         root=1.0, tip=0.04, taper_pow=0.7, parent='beard', skew=0.04)
-    lock(m, 'n_beard2', [0, yf(52), -hz - 0.05], 7.0, 6.4, 182, 0, mk(0.12), flat=0.4, curve=(-10, 0), segs=3,
-         root=1.0, tip=0.1, taper_pow=0.7, parent='beard')
+    # longue barbe en mèches groupées : une pointe centrale longue, des mèches latérales plus courtes qui
+    # convergent vers elle, une couche arrière plus sombre qui donne l'épaisseur
+    for j, (x, L, W, rz, k) in enumerate(((-2.3, 5.6, 2.4, 16, 0.2), (-1.2, 7.6, 2.6, 8, 0.26), (0.0, 9.6, 2.8, 0, 0.32),
+                                          (1.2, 7.8, 2.6, -8, 0.24), (2.3, 5.4, 2.4, -16, 0.18))):
+        lock(m, f'n_beard{j}', [x, yf(50), -hz - 0.3 - 0.08 * (2 - abs(j - 2))], L, W, 184, rz, mk(k), flat=0.5,
+             curve=(-14, -rz * 0.8), segs=4, root=1.05, tip=0.06, taper_pow=0.65, parent='beard',
+             skew=0.08 * (j - 2) / 2)
+    lock(m, 'n_beard_b', [0, yf(52), -hz - 0.02], 7.0, 6.2, 182, 0, mk(0.06), flat=0.4, curve=(-10, 0), segs=3,
+         root=1.0, tip=0.12, taper_pow=0.7, parent='beard')
     for sx in (-1, 1):                                           # favoris qui rejoignent la barbe
         lock(m, f'n_fav{sx}', [sx * 3.4, yf(36), -hz - 0.1], 5.2, 2.4, 182, sx * 12, mk(0.16), flat=0.5,
              curve=(-8, -sx * 18), segs=2, root=1.0, tip=0.2, taper_pow=0.6, parent='beard')

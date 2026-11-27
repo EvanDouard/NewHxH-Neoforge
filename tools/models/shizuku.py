@@ -40,12 +40,15 @@ def build_hair(m):
     for i, az in enumerate(range(0, 360, 20)):
         if 136 < az < 224:
             continue
-        crown_lock(m, f's_m{i}', c, rr, az, 96, 9.6, 3.8, mk(0.14 + 0.06 * math.cos(math.radians(az - 140))),
-                   flat=0.3, turn=96, tip=0.9, segs=4, taper_pow=0.15)
-    curtain(m, 's_c', c, rr - 0.5, range(-126, 127, 14), 0.8, 5.6, 3.4, lambda i: mk(0.06 + 0.04 * (i % 2)),
+        crown_lock(m, f's_m{i}', c, rr, az + rnd.uniform(-4, 4), 94 + rnd.uniform(-5, 5), 8.8 + rnd.uniform(-0.8, 0.6),
+                   3.6 + rnd.uniform(-0.4, 0.8), mk(0.14 + 0.06 * math.cos(math.radians(az - 140))),
+                   flat=0.3, turn=100 + rnd.uniform(-6, 6), tip=0.85, segs=4, taper_pow=0.15,
+                   twist=rnd.uniform(-8, 8), side=rnd.uniform(-10, 10))
+    curtain(m, 's_c', c, rr - 0.5, range(-126, 127, 18), 0.8, 4.2, 3.8, lambda i: mk(0.06 + 0.04 * (i % 2)),
             inward=4, rnd=rnd, tip=0.9, segs=3, belly=1.02)
-    for j, (az, L, lean) in enumerate(((146, 5.0, 16), (162, 5.4, 18), (178, 5.6, 20), (196, 5.2, 22), (214, 4.2, 8))):
-        crown_lock(m, f's_f{j}', c, rr + 0.05, az, 80, L, 3.6, mk(0.24), flat=0.3, turn=82, tip=0.7, segs=3, lean=lean)
+    for j, (az, L, lean) in enumerate(((148, 4.4, -4), (166, 4.8, 2), (184, 4.6, -2), (202, 4.9, 4), (216, 4.0, 8))):
+        crown_lock(m, f's_f{j}', c, rr + 0.05, az, 80, L, 3.8 + 0.3 * (j % 2), mk(0.24), flat=0.3, turn=84, tip=0.7, segs=3, lean=lean,
+                   twist=rnd.uniform(-6, 6))
 
 
 def face_paint(ctx, mode='calme'):

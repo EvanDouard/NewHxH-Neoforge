@@ -92,7 +92,7 @@ def build():
     yf = lambda gy: b.head_y + b.head[1] * (1 - gy / 60)
     for sx in (-1, 1):
         # crêtes en cornes de dragon rejetées en arrière
-        lock(m, f'b_horn{sx}', [sx * 2.6, top - 0.6, -1.0], 11.0, 3.4, 20, -sx * 12, lambda t: material(SCALE, grad=0.2, edge=0.8),
+        lock(m, f'b_horn{sx}', [sx * 2.6, top - 0.6, -1.0], 6.6, 2.6, 20, -sx * 12, lambda t: material(SCALE, grad=0.2, edge=0.8),
              flat=0.7, curve=(-70, 0), segs=4, root=1.1, tip=0.15, parent='head')
         # moustache tombante
         lock(m, f'b_mu{sx}', [sx * 1.2, yf(43), -hz - 0.2], 7.0, 1.2, 180, sx * 16, mk(0.3), flat=0.7,

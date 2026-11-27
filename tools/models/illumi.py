@@ -44,13 +44,13 @@ def build_hair(m):
     # rideau : longues mèches droites qui pendent de la ligne équatoriale du crâne jusqu'à la taille
     for i, az in enumerate(range(-72, 73, 12)):
         a = math.radians(az)
-        r = rr + 0.15
+        r = rr + 0.15 + (0.4 if i % 2 else 0.0)          # deux plans : nappes intérieures et extérieures
         x, z = c[0] + r * math.sin(a), c[2] + r * math.cos(a)
         side = abs(az) / 72
-        L = 16.5 - 3.0 * side + rnd.uniform(-0.3, 0.3)
-        lock(m, f'i_c{i}', [x, c[1] + 0.4, z], L, 3.6, 180 + 4 * math.cos(a), 4 * math.sin(a) * 0,
+        L = 16.5 - 3.0 * side + rnd.uniform(-1.2, 1.0) + (0.8 if i % 2 == 0 else 0.0)
+        lock(m, f'i_c{i}', [x, c[1] + 0.4, z], L, 3.6 + (0.8 if i % 2 == 0 else 0.0), 180 + 4 * math.cos(a), rnd.uniform(-2.5, 2.5),
              mk(0.04 + 0.03 * (i % 2)), ry=-az * 0.0, flat=0.32, curve=(-12 * math.cos(a), 0), segs=4, root=1.05,
-             tip=0.8, taper_pow=0.25, belly=1.02)
+             tip=0.55 + 0.3 * (i % 2), taper_pow=0.25, belly=1.02, skew=rnd.uniform(-0.08, 0.08))
     # dessus lisse : mèches qui partent du sommet et suivent le crâne jusqu'au rideau
     for i, az in enumerate(range(0, 360, 24)):
         if 140 < az < 220:

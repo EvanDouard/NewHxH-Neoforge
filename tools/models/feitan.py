@@ -55,7 +55,7 @@ def build_hair(m):
                    turn=20, tip=0.06, segs=3, twist=rnd.uniform(-20, 20))
     # longue frange effilée : une mèche centrale qui tombe entre les yeux, d'autres plus courtes
     for j, (az, L, W, lean, k) in enumerate(((146, 5.4, 3.2, -14, 0.24), (162, 6.4, 3.4, -6, 0.3),
-                                             (178, 7.6, 3.0, 2, 0.36), (194, 6.2, 3.4, 8, 0.3),
+                                             (178, 8.8, 2.8, 2, 0.36), (194, 6.2, 3.4, 8, 0.3),
                                              (212, 5.2, 3.2, 14, 0.24))):
         crown_lock(m, f'f_f{j}', c, rr, az, 64, L, W, mk(k), flat=0.45, turn=70, tip=0.06, segs=3, lean=lean,
                    skew=rnd.uniform(-0.14, 0.14))

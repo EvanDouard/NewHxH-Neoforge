@@ -40,7 +40,7 @@ RUBY = rgb('#d0182a')
 
 # Proportions propres (plus élancé que Gon et Killua) : tête un peu plus petite, jambes plus longues, épaules plus
 # étroites. Pieds à y = 0 ; hanches à 10 ; torse 10 → 18,6 ; tête 19,2 → 27,2.
-HEAD = (8.6, 8.0, 8.0)
+HEAD = (8.0, 7.6, 7.6)
 HEAD_Y = 19.2
 HIP_Y = 10.0
 KNEE_Y = 5.2
@@ -97,7 +97,7 @@ def build_hair(m, stage=3):
     m.cube('hair', [-hx - 0.1, top - 6.4, -0.6], [HEAD[0] + 0.2, 5.6, hz + 0.9], inner)
 
     # 1) sous-couche arrondie (sombre)
-    c, R = (0.0, top - 3.2, 0.45), 4.85
+    c, R = (0.0, top - 3.3, 0.35), 4.25
     rings = ((-34, 14, -0.2), (-14, 14, -0.16), (8, 14, -0.12), (30, 12, -0.08), (52, 9, -0.04), (72, 5, 0.0))
     for ri, (phi, n, k) in enumerate(rings):
         for j in range(n):
@@ -133,17 +133,19 @@ def build_hair(m, stage=3):
         (131, 15.8, 3.4, 0.5, 96, 0.24, 0.1, 12),
     ]
     for i, (az, L, W, fl, turn, k, tip, tw) in enumerate(mains):
-        strand(f'hm_{i}', az + rnd.uniform(-3, 3), 76 + rnd.uniform(-6, 6), L - 0.6, W, fl, turn + 18, k, tip, twist=tw,
+        strand(f'hm_{i}', az + rnd.uniform(-3, 3), 72 + rnd.uniform(-9, 9), L - 2.0, W + 0.1, fl, turn + 14, k, tip, twist=tw,
                skew=rnd.uniform(-0.1, 0.1))
     # frange : mèches principales du front, qui suivent le crâne puis retombent sur le front ; longueurs
     # différentes, deux plus longues qui descendent entre et à côté des yeux
-    bangs = [  # (az, longueur, largeur, virage, éclairage, pointe, inclinaison latérale)
-        (152, 6.8, 3.6, 72, 0.3, 0.16, -10), (168, 7.4, 3.8, 76, 0.36, 0.1, -4), (184, 8.6, 3.4, 74, 0.34, 0.06, 4),
-        (200, 7.0, 3.4, 74, 0.32, 0.12, 12), (214, 6.4, 3.2, 70, 0.28, 0.2, 16),
+    bangs = [  # (az, longueur, largeur, virage, éclairage, pointe, inclinaison latérale) : 3 masses larges
+        (154, 6.0, 4.6, 74, 0.3, 0.14, -12), (180, 6.4, 5.0, 74, 0.36, 0.1, 0), (206, 6.0, 4.4, 74, 0.32, 0.14, 12),
     ]
     for i, (az, L, W, turn, k, tip, lean) in enumerate(bangs):
-        strand(f'hf_{i}', az, 74 + rnd.uniform(-4, 4), L, W, 0.5, turn, k, tip, segs=4, lean=lean,
-               skew=rnd.uniform(-0.12, 0.12))
+        strand(f'hf_{i}', az, 72 + rnd.uniform(-3, 3), L, W, 0.5, turn, k, tip, segs=4, lean=lean,
+               skew=rnd.uniform(-0.1, 0.1))
+    # deux mèches fines qui tombent entre et à côté des yeux
+    for i, (az, L, lean) in enumerate(((170, 7.6, -4), (195, 7.0, 6))):
+        strand(f'hft_{i}', az, 70, L, 1.5, 0.6, 78, 0.4, 0.04, segs=4, lean=lean, rr=Rh + 0.12, root=1.0)
     if stage < 3:
         return
 
@@ -152,9 +154,6 @@ def build_hair(m, stage=3):
         L = 10.0 + rnd.uniform(-1.0, 2.2) + (abs(az) / 60.0)
         strand(f'hs_{i}', az + rnd.uniform(-4, 4), 70 + rnd.uniform(-6, 6), L - 0.6, 2.4 + rnd.uniform(0, 0.6), 0.55,
                106 + rnd.uniform(-4, 6), -0.08, 0.2, rr=Rh - 0.3, twist=rnd.uniform(-15, 15), root=1.05)
-    for i, az in enumerate((160, 176, 192, 207)):
-        strand(f'hsf_{i}', az + rnd.uniform(-3, 3), 70, 5.8 + rnd.uniform(-0.6, 1.2), 2.0, 0.55, 72, 0.18, 0.12,
-               segs=4, rr=Rh - 0.25, root=1.0)
     # 4) finition : quelques petites mèches qui dépassent du contour (côtés, arrière, tempes)
     wisps = [(-96, 15.0, 1.6, 112), (88, 14.4, 1.5, 114), (-140, 15.8, 1.5, 114), (142, 15.4, 1.4, 112),
              (-10, 12.0, 1.6, 104), (40, 12.8, 1.4, 108)]
@@ -303,7 +302,7 @@ def build_base(m, long_tunic=False):
 def build_tabard(m):
     gold = cloth(GOLD, shade(GOLD, 1.12), GOLD_DARK, seed=62)
     blue_in = cloth(TABARD_DARK, seed=70)
-    T = 0.7
+    T = 0.95
     for sz in (-1, 1):                                   # sz = -1 devant, +1 derrière
         zf = sz * (TORSO_D / 2 + 0.1 + T / 2)
         # partie haute (torse), légèrement plus large en bas
@@ -313,20 +312,20 @@ def build_tabard(m):
                    [0.26, 8.0, 0.12], gold)
         for ex in (-1, 1):                                                               # bordures latérales
             m.cube('torso', [ex * 2.9 - 0.25, TORSO_Y0 + 0.4, zf - T / 2 - 0.08], [0.5, 8.0, T + 0.16], gold)
-        # pan (bassin → genou) : s'écarte du corps en descendant
-        bone = f'tabard_{"front" if sz < 0 else "back"}'
-        m.bone(bone, [0, TORSO_Y0 + 0.6, zf], 'body', rotation=[-sz * 7, 0, 0])
-        m.cube(bone, [-3.0, 4.2, zf - T / 2], [6.0, TORSO_Y0 + 0.8 - 4.2, T], tabard_paint)
-        for ex in (-1, 1):
-            m.cube(bone, [ex * 1.05 - 0.13, 4.2, zf + sz * T / 2 - (0.12 if sz > 0 else 0.0)],
-                   [0.26, TORSO_Y0 + 0.8 - 4.2, 0.12], gold)
-        for ex in (-1, 1):
-            m.cube(bone, [ex * 3.0 - 0.25, 4.2, zf - T / 2 - 0.08], [0.5, TORSO_Y0 + 0.8 - 4.2, T + 0.16], gold)
-        m.cube(bone, [-3.25, 3.75, zf - T / 2 - 0.08], [6.5, 0.5, T + 0.16], gold)          # ourlet doré
-        m.cube(bone, [-2.9, 4.25, zf - sz * (T / 2 + 0.02)], [5.8, TORSO_Y0 + 0.5 - 4.25, 0.04], blue_in)  # doublure
-        for x in (-1.9, 1.6):                                                              # plis en relief
-            m.cube(bone, [x, 4.3, zf + sz * (T / 2) - (0.1 if sz > 0 else 0)], [0.25, 4.0, 0.1],
-                   cloth(TABARD_DARK, seed=71))
+        # pan (bassin → genou) : deux demi-pans qui s'écartent du corps en descendant et s'ouvrent un peu, avec une
+        # vraie épaisseur, un ourlet doré et une doublure sombre visible sur la tranche
+        L = TORSO_Y0 + 0.8 - 4.2
+        for half, hx in (('r', -1), ('l', 1)):
+            bone = f'tabard_{"front" if sz < 0 else "back"}_{half}'
+            m.bone(bone, [hx * 0.05, TORSO_Y0 + 0.6, zf], 'body', rotation=[-sz * 10, hx * sz * 3, hx * 2.5])
+            x0 = -3.1 if hx < 0 else 0.0
+            m.cube(bone, [x0, 4.2, zf - T / 2], [3.1, L, T], tabard_paint)
+            m.cube(bone, [hx * 1.05 - 0.13, 4.2, zf + sz * T / 2 - (0.12 if sz > 0 else 0.0)], [0.26, L, 0.12], gold)
+            m.cube(bone, [hx * 3.1 - 0.25, 4.2, zf - T / 2 - 0.08], [0.5, L, T + 0.16], gold)
+            m.cube(bone, [x0 - 0.15, 3.75, zf - T / 2 - 0.08], [3.4, 0.5, T + 0.16], gold)            # ourlet doré
+            m.cube(bone, [x0 + 0.1, 4.25, zf - sz * (T / 2 + 0.02)], [2.9, L - 0.3, 0.04], blue_in)   # doublure
+            m.cube(bone, [hx * 1.9 - 0.12, 4.3, zf + sz * (T / 2) - (0.1 if sz > 0 else 0)], [0.25, 4.0, 0.1],
+                   cloth(TABARD_DARK, seed=71))                                            # pli
     # épaules : le tabard passe par-dessus et enveloppe l'épaule (devant ↔ dos)
     for sx in (-1, 1):
         m.cube('torso', [sx * 2.2 - 1.0, TORSO_Y1 - 0.4, -TORSO_D / 2 - 0.8], [2.0, 0.75, TORSO_D + 1.6],
