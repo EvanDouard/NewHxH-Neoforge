@@ -1878,5 +1878,10 @@
   "npc.hxh.parrain_mafia": "Community godfather",
   "dialog.hxh.parrain_mafia.idle": "Every deal in Yorknew goes through this house. Say what you want, and watch your tongue.",
   "npc.hxh.garde_mafia": "Community guard",
-  "dialog.hxh.garde_mafia.idle": "No invitation, no entry. Move along."
+  "dialog.hxh.garde_mafia.idle": "No invitation, no entry. Move along.",
+  "airship.hxh.dest.masadora": "Masadora (Greed Island)",
+  "npc.hxh.marchand_cartes_masadora": "Card merchant",
+  "dialog.hxh.marchand_cartes_masadora.idle": "Spell cards, item cards: everything sells in Masadora. Mind the prices, though.",
+  "npc.hxh.habitant_masadora": "Masadora resident",
+  "dialog.hxh.habitant_masadora.idle": "The biggest town on the island. You can find anything here, even players in a hurry."
 }

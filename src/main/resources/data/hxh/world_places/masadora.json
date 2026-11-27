@@ -1,0 +1,917 @@
+{
+ "x": 3440,
+ "z": 4075,
+ "clear": [
+  0,
+  0,
+  0,
+  70,
+  34,
+  80
+ ],
+ "fills": [
+  {
+   "box": [
+    0,
+    -1,
+    0,
+    70,
+    -1,
+    80
+   ],
+   "block": "minecraft:grass_block"
+  },
+  {
+   "box": [
+    32,
+    -1,
+    0,
+    38,
+    -1,
+    80
+   ],
+   "block": "minecraft:dirt_path"
+  },
+  {
+   "box": [
+    0,
+    -1,
+    36,
+    70,
+    -1,
+    40
+   ],
+   "block": "minecraft:dirt_path"
+  },
+  {
+   "box": [
+    24,
+    -1,
+    28,
+    46,
+    -1,
+    48
+   ],
+   "block": "minecraft:stone_bricks"
+  },
+  {
+   "box": [
+    32,
+    0,
+    34,
+    38,
+    0,
+    40
+   ],
+   "block": "minecraft:stone_brick_slab",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    33,
+    -1,
+    35,
+    37,
+    -1,
+    39
+   ],
+   "block": "minecraft:water"
+  },
+  {
+   "box": [
+    35,
+    0,
+    37,
+    35,
+    2,
+    37
+   ],
+   "block": "minecraft:stone_brick_wall"
+  },
+  {
+   "box": [
+    22,
+    0,
+    4,
+    48,
+    12,
+    18
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    21,
+    13,
+    3,
+    49,
+    13,
+    19
+   ],
+   "block": "minecraft:red_terracotta"
+  },
+  {
+   "box": [
+    30,
+    14,
+    8,
+    40,
+    24,
+    14
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    29,
+    25,
+    7,
+    41,
+    25,
+    15
+   ],
+   "block": "minecraft:red_terracotta"
+  },
+  {
+   "box": [
+    35,
+    26,
+    11,
+    35,
+    31,
+    11
+   ],
+   "block": "minecraft:gold_block"
+  },
+  {
+   "box": [
+    34,
+    0,
+    18,
+    36,
+    3,
+    18
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    4,
+    0,
+    22,
+    9,
+    3,
+    27
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    3,
+    4,
+    21,
+    10,
+    4,
+    28
+   ],
+   "block": "minecraft:brick_slab"
+  },
+  {
+   "box": [
+    9,
+    0,
+    24,
+    9,
+    1,
+    24
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    13,
+    0,
+    22,
+    18,
+    3,
+    27
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    12,
+    4,
+    21,
+    19,
+    4,
+    28
+   ],
+   "block": "minecraft:brick_slab"
+  },
+  {
+   "box": [
+    18,
+    0,
+    24,
+    18,
+    1,
+    24
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    52,
+    0,
+    22,
+    57,
+    3,
+    27
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    51,
+    4,
+    21,
+    58,
+    4,
+    28
+   ],
+   "block": "minecraft:brick_slab"
+  },
+  {
+   "box": [
+    52,
+    0,
+    24,
+    52,
+    1,
+    24
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    61,
+    0,
+    22,
+    66,
+    3,
+    27
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    60,
+    4,
+    21,
+    67,
+    4,
+    28
+   ],
+   "block": "minecraft:brick_slab"
+  },
+  {
+   "box": [
+    61,
+    0,
+    24,
+    61,
+    1,
+    24
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    4,
+    0,
+    44,
+    9,
+    3,
+    49
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    3,
+    4,
+    43,
+    10,
+    4,
+    50
+   ],
+   "block": "minecraft:brick_slab"
+  },
+  {
+   "box": [
+    9,
+    0,
+    46,
+    9,
+    1,
+    46
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    13,
+    0,
+    44,
+    18,
+    3,
+    49
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    12,
+    4,
+    43,
+    19,
+    4,
+    50
+   ],
+   "block": "minecraft:brick_slab"
+  },
+  {
+   "box": [
+    18,
+    0,
+    46,
+    18,
+    1,
+    46
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    52,
+    0,
+    44,
+    57,
+    3,
+    49
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    51,
+    4,
+    43,
+    58,
+    4,
+    50
+   ],
+   "block": "minecraft:brick_slab"
+  },
+  {
+   "box": [
+    52,
+    0,
+    46,
+    52,
+    1,
+    46
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    61,
+    0,
+    44,
+    66,
+    3,
+    49
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    60,
+    4,
+    43,
+    67,
+    4,
+    50
+   ],
+   "block": "minecraft:brick_slab"
+  },
+  {
+   "box": [
+    61,
+    0,
+    46,
+    61,
+    1,
+    46
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    4,
+    0,
+    56,
+    9,
+    3,
+    61
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    3,
+    4,
+    55,
+    10,
+    4,
+    62
+   ],
+   "block": "minecraft:brick_slab"
+  },
+  {
+   "box": [
+    9,
+    0,
+    58,
+    9,
+    1,
+    58
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    13,
+    0,
+    56,
+    18,
+    3,
+    61
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    12,
+    4,
+    55,
+    19,
+    4,
+    62
+   ],
+   "block": "minecraft:brick_slab"
+  },
+  {
+   "box": [
+    18,
+    0,
+    58,
+    18,
+    1,
+    58
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    52,
+    0,
+    56,
+    57,
+    3,
+    61
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    51,
+    4,
+    55,
+    58,
+    4,
+    62
+   ],
+   "block": "minecraft:brick_slab"
+  },
+  {
+   "box": [
+    52,
+    0,
+    58,
+    52,
+    1,
+    58
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    61,
+    0,
+    56,
+    66,
+    3,
+    61
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    60,
+    4,
+    55,
+    67,
+    4,
+    62
+   ],
+   "block": "minecraft:brick_slab"
+  },
+  {
+   "box": [
+    61,
+    0,
+    58,
+    61,
+    1,
+    58
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    25,
+    0,
+    29,
+    25,
+    1,
+    29
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    28,
+    0,
+    29,
+    28,
+    1,
+    29
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    25,
+    0,
+    31,
+    25,
+    1,
+    31
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    28,
+    0,
+    31,
+    28,
+    1,
+    31
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    25,
+    2,
+    29,
+    28,
+    2,
+    31
+   ],
+   "block": "minecraft:red_wool"
+  },
+  {
+   "box": [
+    41,
+    0,
+    29,
+    41,
+    1,
+    29
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    44,
+    0,
+    29,
+    44,
+    1,
+    29
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    41,
+    0,
+    31,
+    41,
+    1,
+    31
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    44,
+    0,
+    31,
+    44,
+    1,
+    31
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    41,
+    2,
+    29,
+    44,
+    2,
+    31
+   ],
+   "block": "minecraft:yellow_wool"
+  },
+  {
+   "box": [
+    25,
+    0,
+    43,
+    25,
+    1,
+    43
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    28,
+    0,
+    43,
+    28,
+    1,
+    43
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    25,
+    0,
+    45,
+    25,
+    1,
+    45
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    28,
+    0,
+    45,
+    28,
+    1,
+    45
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    25,
+    2,
+    43,
+    28,
+    2,
+    45
+   ],
+   "block": "minecraft:blue_wool"
+  },
+  {
+   "box": [
+    41,
+    0,
+    43,
+    41,
+    1,
+    43
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    44,
+    0,
+    43,
+    44,
+    1,
+    43
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    41,
+    0,
+    45,
+    41,
+    1,
+    45
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    44,
+    0,
+    45,
+    44,
+    1,
+    45
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    41,
+    2,
+    43,
+    44,
+    2,
+    45
+   ],
+   "block": "minecraft:green_wool"
+  },
+  {
+   "box": [
+    30,
+    0,
+    78,
+    30,
+    5,
+    78
+   ],
+   "block": "minecraft:stone_bricks"
+  },
+  {
+   "box": [
+    40,
+    0,
+    78,
+    40,
+    5,
+    78
+   ],
+   "block": "minecraft:stone_bricks"
+  },
+  {
+   "box": [
+    30,
+    6,
+    78,
+    40,
+    6,
+    78
+   ],
+   "block": "minecraft:stone_bricks"
+  }
+ ],
+ "blocks": [
+  {
+   "pos": [
+    26,
+    0,
+    30
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    27,
+    0,
+    30
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    42,
+    0,
+    30
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    43,
+    0,
+    30
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    26,
+    0,
+    44
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    27,
+    0,
+    44
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    42,
+    0,
+    44
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    43,
+    0,
+    44
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    41,
+    0,
+    72
+   ],
+   "state": "hxh:airship_terminal[facing=west]"
+  }
+ ],
+ "entities": [
+  {
+   "type": "hxh:npc",
+   "pos": [
+    27,
+    0,
+    32
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"marchand_cartes_masadora\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    35,
+    0,
+    62
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"habitant_masadora\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  }
+ ]
+}

@@ -373,3 +373,4 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - Meteor City (ébauche) : `/hunter airship meteor_city` (1 000 J, en (1700, 3900)). 8 montagnes de déchets, tour d'ordures centrale avec entrée de cachette, bidonville de 12 cabanes, marché de récupération, cimetière de véhicules, feux de camp, ferrailleur et habitants. Générateur : `tools/gen_meteor.py`.
 - [x] CI : GameTest `nglVillageSketch` (village NGL : borne, cabane, halle, blé, tour de guet, 2 PNJ) + captures `99zv_ngl_arrivee`, `99zw_ngl_vue`.
 - [x] CI : GameTest `mafiaHqSketch` (QG de la Mafia : borne, mur, bâtiment, flèche, parrain + gardes) + captures `99zx_mafia_arrivee`, `99zy_mafia_vue`.
+- [x] CI : GameTest `masadoraSketch` (Masadora : borne, maison, mairie, flèche, fontaine, 2 PNJ) + captures `99zz_masadora_arrivee`, `99zza_masadora_vue`. Île de Greed Island agrandie à l'est.

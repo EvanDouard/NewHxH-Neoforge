@@ -23,3 +23,5 @@
 1350 4890 70 66
 # QG de la Mafia, nord de Yorknew (ébauche)
 715 3832 62 68
+# Masadora, Greed Island (ébauche)
+3475 4115 56 66

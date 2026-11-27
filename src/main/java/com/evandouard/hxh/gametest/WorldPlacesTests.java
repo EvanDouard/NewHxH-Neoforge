@@ -282,6 +282,30 @@ public final class WorldPlacesTests {
         });
     }
 
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void masadoraSketch(GameTestHelper helper) {
+        BlockPos origin0 = helper.absolutePos(new BlockPos(2, 1, 2));
+        withForcedChunks(helper, origin0, 85, () -> {
+            var place = WorldPlaces.get("hxh:masadora");
+            helper.assertTrue(place != null, "Masadora est chargée");
+            BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+            var level = helper.getLevel();
+            int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 41, ground, origin.getZ() + 72)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 4, ground + 2, origin.getZ() + 22)).is(Blocks.WHITE_TERRACOTTA), "Mur d'une maison");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 35, ground + 13, origin.getZ() + 10)).is(Blocks.RED_TERRACOTTA), "Toit de la mairie");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 35, ground + 28, origin.getZ() + 11)).is(Blocks.GOLD_BLOCK), "Flèche dorée");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 35, ground - 1, origin.getZ() + 37)).is(Blocks.WATER), "Fontaine");
+            helper.runAfterDelay(20, () -> {
+                var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 75, ground + 35, origin.getZ() + 85);
+                var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+                helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("marchand_cartes_masadora")), "Marchand présent");
+                helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("habitant_masadora")), "Habitant présent");
+                helper.succeed();
+            });
+        });
+    }
+
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void heavyDoorOpensOnlyWithEnoughStrengthThenCloses(GameTestHelper helper) {
         var level = helper.getLevel();
