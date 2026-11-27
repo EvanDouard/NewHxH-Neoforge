@@ -259,6 +259,13 @@ public final class CiAutopilot {
                     mc.options.hideGui = arg.equals("off");
                     return true;
                 }
+                case "minimap" -> {
+                    // « minimap on|off » ou « minimap zoom N » : active la minimap pour les captures
+                    if (arg.equals("settings")) mc.setScreen(new com.evandouard.hxh.client.MinimapSettingsScreen(null));
+                    else if (arg.startsWith("zoom ")) com.evandouard.hxh.client.MinimapClient.setZoom(Integer.parseInt(arg.substring(5).trim()));
+                    else com.evandouard.hxh.client.MinimapClient.setEnabled(arg.equals("on"));
+                    return true;
+                }
                 case "camera" -> {
                     mc.options.setCameraType(switch (arg) {
                         case "back" -> CameraType.THIRD_PERSON_BACK;

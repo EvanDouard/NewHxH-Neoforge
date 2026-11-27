@@ -379,3 +379,5 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu : `/hunter world normal` puis `/hunter world hxh` — on retrouve l'endroit quitté dans chaque monde (première fois : île de la Baleine / point d'apparition).
 - [ ] En jeu : carte du dirigeable — un seul voile léger, repères discrets ; survol d'une région = nom + bordure blanche ; survol d'un lieu = région, nom, prix.
 - [ ] En jeu : le guide de l'Examen est au village de l'île de la Baleine (monde HxH) ; depuis le monde normal, la quête dit d'aller dans le monde HxH (`/hunter world hxh`) au lieu de donner des coordonnées. L'ancien guide du monde normal est retiré au démarrage.
+- [ ] En jeu : le prix du billet de dirigeable dépend de la distance depuis l'endroit où on est (hors monde HxH : depuis l'île de la Baleine).
+- [ ] En jeu : minimap (touche M, uniquement dans le monde HxH) ; touches « = » / « − » (ou pavé numérique + / −) pour zoomer / dézoomer ; carnet (O) → bouton « Minimap » : glisser pour la déplacer, taille, zoom, remise par défaut. Les touches se changent dans les contrôles (catégorie HxH).

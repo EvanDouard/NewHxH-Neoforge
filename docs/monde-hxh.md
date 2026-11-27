@@ -143,3 +143,6 @@ Lieux faits : village de l'île de la Baleine, domaine Zoldyck de la montagne Ku
 
 ## Le guide de l'Examen et les deux mondes
 Le Navigateur (guide qui lance l'Examen Hunter) attend dans le village de l'île de la Baleine, dans le monde HxH (là où le joueur apparaît par défaut). Un ancien Navigateur resté dans le monde normal est retiré au démarrage. Depuis le monde normal, la quête indique « va dans le monde HxH » (sans coordonnées) ; la commande `/hunter world hxh|normal` fait le passage et mémorise la position quittée.
+
+## Billets de dirigeable et minimap
+Le prix d'un billet = 50 + 1 Jenny pour 4 blocs entre le point de départ (position du joueur dans le monde HxH, île de la Baleine sinon) et la destination + 1/10 du « prix » du fichier de la destination (prestige du lieu), arrondi à 10. La minimap (client uniquement, fichier `config/hxh-client.toml`) montre la carte du monde centrée sur le joueur dans le monde HxH.

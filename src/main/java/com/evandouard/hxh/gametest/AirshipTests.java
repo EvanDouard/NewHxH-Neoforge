@@ -53,6 +53,15 @@ public final class AirshipTests {
     }
 
     @GameTest(template = "empty")
+    public static void ticketPriceGrowsWithDistance(GameTestHelper helper) {
+        int near = Airship.farePrice(100, 1000), mid = Airship.farePrice(2000, 1000), far = Airship.farePrice(8000, 1000);
+        helper.assertTrue(near < mid && mid < far, "Plus c'est loin, plus c'est cher : " + near + " < " + mid + " < " + far);
+        helper.assertTrue(Airship.farePrice(0, 0) >= 10 && Airship.farePrice(500, 0) % 10 == 0, "Prix minimal et arrondi à 10");
+        helper.assertTrue(Airship.farePrice(2000, 3000) > Airship.farePrice(2000, 0), "Le prestige du lieu s'ajoute");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void travelChecksThenCharges(GameTestHelper helper) {
         ServerPlayer player = helper.makeMockServerPlayerInLevel();
         QuestData d = QuestManager.data(player);
@@ -62,7 +71,8 @@ public final class AirshipTests {
         helper.assertTrue("message.hxh.airship.no_terminal".equals(Airship.travel(player, dest.id().toString(), true)), "Sans borne à portée : refus");
         helper.assertTrue("message.hxh.airship.not_enough".equals(Airship.travel(player, dest.id().toString(), false)), "Sans Jenny : refus");
         helper.assertTrue(d.jenny() == 0, "Rien n'est prélevé en cas de refus");
-        d.addJenny(dest.price() + 7);
+        int fare = Airship.ticketPrice(player, dest);
+        d.addJenny(fare + 7);
         helper.assertTrue(Airship.travel(player, dest.id().toString(), false) == null, "Voyage accepté avec assez de Jenny");
         helper.assertTrue(d.jenny() == 7, "Le billet est prélevé, reste " + d.jenny());
         helper.assertTrue(Math.abs(player.getX() - (dest.x() + 0.5)) < 1 && Math.abs(player.getZ() - (dest.z() + 0.5)) < 1,

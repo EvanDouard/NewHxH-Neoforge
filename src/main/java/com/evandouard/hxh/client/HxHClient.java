@@ -13,7 +13,9 @@ import net.neoforged.fml.common.Mod;
 @Mod(value = HxHMod.MODID, dist = Dist.CLIENT)
 public final class HxHClient {
     public HxHClient(IEventBus modEventBus, ModContainer container) {
+        container.registerConfig(net.neoforged.fml.config.ModConfig.Type.CLIENT, HxHClientConfig.SPEC);
         NenClient.register(modEventBus);
+        MinimapClient.register(modEventBus);
         LevelTagRenderer.register();
         DamageNumberRenderer.register();
         CombatAnimClient.register();

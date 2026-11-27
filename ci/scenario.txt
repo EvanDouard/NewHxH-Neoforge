@@ -3292,6 +3292,27 @@ cmd gamemode spectator
 cmd tp @s 1700 135 3930 180 28
 wait 200
 shot 99zu_meteor_vue
+cmd gamemode creative
+key key.hxh.minimap
+wait 10
+shot 99zu1_minimap_activee
+key key.hxh.minimap_zoom_in
+key key.hxh.minimap_zoom_in
+wait 10
+shot 99zu2_minimap_zoom_proche
+key key.hxh.minimap_zoom_out
+key key.hxh.minimap_zoom_out
+key key.hxh.minimap_zoom_out
+key key.hxh.minimap_zoom_out
+wait 10
+shot 99zu3_minimap_zoom_loin
+minimap settings
+wait 10
+shot 99zu4_minimap_reglages
+closescreen
+key key.hxh.minimap
+wait 10
+shot 99zu5_minimap_cachee
 cmd gamemode survival
 cmd hunter jenny set 20000
 cmd hunter airship ngl_village

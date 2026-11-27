@@ -1956,5 +1956,16 @@
   "airship.hxh.region.o": "Ochima",
   "airship.hxh.region.b": "Begerosse",
   "exam.hxh.guide_other_world": "Find the guide in the HxH world, in the Whale Island village (/hunter world hxh)",
-  "command.hxh.exam_where_hxh": "The Navigator waits for candidates in the HxH world, at %s %s %s (/hunter world hxh to go there)."
+  "command.hxh.exam_where_hxh": "The Navigator waits for candidates in the HxH world, at %s %s %s (/hunter world hxh to go there).",
+  "key.hxh.minimap": "Minimap (HxH world)",
+  "key.hxh.minimap_zoom_in": "Minimap: zoom in",
+  "key.hxh.minimap_zoom_out": "Minimap: zoom out",
+  "screen.hxh.minimap.title": "Minimap",
+  "screen.hxh.minimap.hint": "Drag the minimap to move it",
+  "screen.hxh.minimap.button": "Minimap",
+  "screen.hxh.minimap.show": "Show minimap",
+  "screen.hxh.minimap.hide": "Hide minimap",
+  "screen.hxh.minimap.reset": "Reset to default",
+  "screen.hxh.minimap.size": "Size",
+  "screen.hxh.minimap.zoom": "Zoom"
 }

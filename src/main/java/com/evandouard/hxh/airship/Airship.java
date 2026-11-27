@@ -33,11 +33,34 @@ public final class Airship {
 
     private Airship() {}
 
+    /**
+     * Prix du billet : un tarif de base, plus 1 Jenny pour 4 blocs entre le point de départ et la destination (arrondi à 10),
+     * plus un dixième du « prix » du fichier de la destination (prestige du lieu). Hors du monde HxH, le départ est l'île de la Baleine.
+     */
+    public static int ticketPrice(ServerPlayer player, AirshipDestination dest) {
+        double fromX, fromZ;
+        if (player.level().dimension().equals(WORLD)) {
+            fromX = player.getX();
+            fromZ = player.getZ();
+        } else {
+            AirshipDestination home = AirshipRegistry.get("hxh:whale_island");
+            fromX = home != null ? home.x() : 0;
+            fromZ = home != null ? home.z() : 0;
+        }
+        return farePrice(Math.hypot(dest.x() - fromX, dest.z() - fromZ), dest.price());
+    }
+
+    /** Formule du tarif, à part pour être testée. */
+    public static int farePrice(double distance, int prestige) {
+        int raw = 50 + (int) (distance / 4) + prestige / 10;
+        return Math.max(10, Math.round(raw / 10f) * 10);
+    }
+
     /** Ouvre la carte chez le joueur (destinations, prix, Jenny). */
     public static void open(ServerPlayer player) {
         int jenny = QuestManager.data(player).jenny();
         List<OpenAirshipPayload.Dest> dests = new ArrayList<>();
-        for (AirshipDestination d : AirshipRegistry.all()) dests.add(new OpenAirshipPayload.Dest(d.id().toString(), d.x(), d.z(), d.price()));
+        for (AirshipDestination d : AirshipRegistry.all()) dests.add(new OpenAirshipPayload.Dest(d.id().toString(), d.x(), d.z(), ticketPrice(player, d)));
         HxHNetwork.sendTo(player, new OpenAirshipPayload(jenny, dests));
     }
 
@@ -60,8 +83,9 @@ public final class Airship {
         if (dest == null) return "message.hxh.airship.unknown";
         if (needTerminal && !nearTerminal(player)) return "message.hxh.airship.no_terminal";
         var data = QuestManager.data(player);
-        if (data.jenny() < dest.price()) return "message.hxh.airship.not_enough";
-        data.addJenny(-dest.price());
+        int fare = ticketPrice(player, dest);
+        if (data.jenny() < fare) return "message.hxh.airship.not_enough";
+        data.addJenny(-fare);
         arrive(player, dest);
         return null;
     }

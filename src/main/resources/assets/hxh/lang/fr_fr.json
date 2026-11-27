@@ -1956,5 +1956,16 @@
   "airship.hxh.region.o": "Ochima",
   "airship.hxh.region.b": "Begerosse",
   "exam.hxh.guide_other_world": "Trouve le guide dans le monde HxH, au village de l'île de la Baleine (/hunter world hxh)",
-  "command.hxh.exam_where_hxh": "Le Navigateur attend les candidats dans le monde HxH, en %s %s %s (/hunter world hxh pour y aller)."
+  "command.hxh.exam_where_hxh": "Le Navigateur attend les candidats dans le monde HxH, en %s %s %s (/hunter world hxh pour y aller).",
+  "key.hxh.minimap": "Minimap (monde HxH)",
+  "key.hxh.minimap_zoom_in": "Minimap : zoomer",
+  "key.hxh.minimap_zoom_out": "Minimap : dézoomer",
+  "screen.hxh.minimap.title": "Minimap",
+  "screen.hxh.minimap.hint": "Fais glisser la minimap pour la déplacer",
+  "screen.hxh.minimap.button": "Minimap",
+  "screen.hxh.minimap.show": "Afficher la minimap",
+  "screen.hxh.minimap.hide": "Cacher la minimap",
+  "screen.hxh.minimap.reset": "Remettre par défaut",
+  "screen.hxh.minimap.size": "Taille",
+  "screen.hxh.minimap.zoom": "Zoom"
 }

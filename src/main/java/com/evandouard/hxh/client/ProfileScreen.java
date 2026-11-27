@@ -108,6 +108,9 @@ public class ProfileScreen extends Screen {
         }
         addRenderableWidget(Button.builder(Component.translatable("gui.done"), b -> onClose())
                 .bounds(width / 2 - 50, height - 28, 100, 20).build());
+        addRenderableWidget(Button.builder(Component.translatable("screen.hxh.minimap.button"),
+                b -> net.minecraft.client.Minecraft.getInstance().setScreen(new MinimapSettingsScreen(this)))
+                .bounds(width / 2 + 54, height - 28, 100, 20).build());
         select(tab);
     }
 

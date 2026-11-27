@@ -70,6 +70,12 @@ public class AirshipMapScreen extends Screen {
         return cell(d.x() / 32, d.z() / 32);
     }
 
+    /** Nom de la région à une position du monde (blocs), ou null hors région. Sert à la minimap. */
+    public static Component regionNameAt(double bx, double bz) {
+        char c = cell((int) Math.floor(bx / 32), (int) Math.floor(bz / 32));
+        return REGIONS.indexOf(c) >= 0 ? regionName(c) : null;
+    }
+
     private static Component regionName(char c) {
         return Component.translatable("airship.hxh.region." + c);
     }
