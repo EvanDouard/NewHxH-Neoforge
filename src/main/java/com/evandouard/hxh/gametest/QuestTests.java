@@ -48,7 +48,7 @@ public final class QuestTests {
         int found = 0;
         for (int x = 0; x < m.widthBlocks() && found < 1; x += 256)
             for (int z = 0; z < m.heightBlocks(); z += 256)
-                if ("mksKob".indexOf(m.cellAt(x, z)) >= 0) {
+                if ("mksKobprhwen".indexOf(m.cellAt(x, z)) >= 0) {
                     String tail = com.evandouard.hxh.quest.QuestManager.regionTail(x, z).toString();
                     helper.assertTrue(tail.contains("airship.hxh.region." + m.cellAt(x, z)), "Région attendue pour " + x + "," + z);
                     found++;

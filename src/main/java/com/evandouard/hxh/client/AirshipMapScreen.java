@@ -22,8 +22,8 @@ public class AirshipMapScreen extends Screen {
     private static final int WORLD_W = 7968, WORLD_H = 5632;
     private static final int INK = 0xFF0E1420, PIN_OK = 0xFFFFE9A8, PIN_POOR = 0xFF7C8594, JENNY = 0xFFFFC23A;
     /** Couleurs des régions (identiques à celles de la texture) pour l'en-tête de l'infobulle. */
-    private static final String REGIONS = "mksKob";
-    private static final int[] REGION_RGB = {0x84B2CE, 0xA082B8, 0xC4685C, 0xDEBE60, 0x6EAA6C, 0xDE9454};
+    private static final String REGIONS = "mksKobprhwen";
+    private static final int[] REGION_RGB = {0x84B2CE, 0xA082B8, 0xC4685C, 0xDEBE60, 0x6EAA6C, 0xDE9454, 0x58B0A8, 0x7CC47A, 0xE08AC8, 0xC8D860, 0x9A6AD0, 0xE89A50};
 
     private static char[][] grid;
 

@@ -389,3 +389,4 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [ ] En jeu : les attaques de zone liées à la Volonté touchent au plus 12 cibles par éclat (plus de rafales coûteuses en foule).
 - [ ] En jeu : succès (touche L) : onglet « Hunter x Hunter » avec licence, monstres vaincus (1/50/500), éveil et niveaux de Nen (10/25/50), étages de la Tour (50/100/200/sommet), régions découvertes (6 + Explorateur), premier objet fabriqué/acheté.
 - [ ] En jeu : dans le monde HxH, plus aucun village de villageois, forteresse, épave ni portail en ruine (nouveau monde, ou chunks pas encore générés).
+- [ ] En jeu : carte du dirigeable : République de Padokea colorée et nommée (survol), archipel de Mitene (NGL, Rokario, Hass, Gorteau-Ouest/Est) ; NGL est maintenant sur l'île la plus à l'ouest.

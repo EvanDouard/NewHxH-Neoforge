@@ -1099,7 +1099,7 @@ public final class QuestManager {
     /** « , Région » à coller derrière des coordonnées (vide si le point est en mer ou hors carte). */
     public static Component regionTail(int x, int z) {
         char c = com.evandouard.hxh.world.HxHWorldMap.get().cellAt(x, z);
-        if ("mksKob".indexOf(c) < 0) return Component.empty();
+        if ("mksKobprhwen".indexOf(c) < 0) return Component.empty();
         return Component.literal(", ").append(Component.translatable("airship.hxh.region." + c));
     }
 

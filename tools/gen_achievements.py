@@ -20,9 +20,9 @@ A = [
  ('tower_top', 'tower_floor_200', 'minecraft:dragon_head', 'challenge', ('Sommet de la Tour', "Atteindre le dernier étage de la Tour Céleste."), ('Top of the Tower', 'Reach the top floor of Heavens Arena.')),
  ('first_craft', 'root', 'minecraft:crafting_table', 'task', ('Artisan', 'Fabriquer un objet du mod.'), ('Craftsman', 'Craft an item from the mod.')),
  ('first_purchase', 'root', 'minecraft:emerald', 'task', ('Premier achat', 'Acheter un objet chez un marchand.'), ('First Purchase', 'Buy an item from a merchant.')),
- ('explorer', 'root', 'minecraft:compass', 'goal', ('Explorateur', 'Découvrir les six régions du monde.'), ('Explorer', 'Discover all six regions of the world.')),
+ ('explorer', 'root', 'minecraft:compass', 'goal', ('Explorateur', 'Découvrir les sept régions du monde.'), ('Explorer', 'Discover all seven regions of the world.')),
 ]
-REG = [('m', 'Minbo', 'Minbo'), ('k', "Kukan'yu", "Kukan'yu"), ('s', 'Saherta', 'Saherta'), ('K', 'Kakin', 'Kakin'), ('o', 'Ochima', 'Ochima'), ('b', 'Begerosse', 'Begerosse')]
+REG = [('m', 'Minbo', 'Minbo'), ('k', "Kukan'yu", "Kukan'yu"), ('s', 'Saherta', 'Saherta'), ('K', 'Kakin', 'Kakin'), ('o', 'Ochima', 'Ochima'), ('b', 'Begerosse', 'Begerosse'), ('p', 'Padokea', 'Padokea')]
 for c, fr, en in REG:
     A.append(('region_' + c, 'explorer', 'minecraft:map', 'task', ('Région : ' + fr, 'Découvrir la région de %s.' % fr), ('Region: ' + en, 'Discover the %s region.' % en)))
 

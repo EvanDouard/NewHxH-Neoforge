@@ -23,7 +23,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 public final class Achievements {
     private Achievements() {}
 
-    public static final String REGIONS = "mksKob";
+    public static final String REGIONS = "mksKobp";
     private static final int PERIOD = 40;
 
     public static void register(IEventBus bus) {

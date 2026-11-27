@@ -1968,6 +1968,12 @@
   "screen.hxh.minimap.reset": "Remettre par défaut",
   "screen.hxh.minimap.size": "Taille",
   "screen.hxh.minimap.zoom": "Zoom",
+  "airship.hxh.region.p": "République de Padokea",
+  "airship.hxh.region.n": "NGL",
+  "airship.hxh.region.r": "Rokario",
+  "airship.hxh.region.h": "Hass",
+  "airship.hxh.region.w": "Gorteau-Ouest",
+  "airship.hxh.region.e": "Gorteau-Est",
   "advancement.hxh.root.title": "Hunter x Hunter",
   "advancement.hxh.root.desc": "Ton aventure de Hunter commence ici.",
   "advancement.hxh.hunter_license.title": "Licence de Hunter",
@@ -1999,7 +2005,7 @@
   "advancement.hxh.first_purchase.title": "Premier achat",
   "advancement.hxh.first_purchase.desc": "Acheter un objet chez un marchand.",
   "advancement.hxh.explorer.title": "Explorateur",
-  "advancement.hxh.explorer.desc": "Découvrir les six régions du monde.",
+  "advancement.hxh.explorer.desc": "Découvrir les sept régions du monde.",
   "advancement.hxh.region_m.title": "Région : Minbo",
   "advancement.hxh.region_m.desc": "Découvrir la région de Minbo.",
   "advancement.hxh.region_k.title": "Région : Kukan'yu",
@@ -2011,5 +2017,7 @@
   "advancement.hxh.region_o.title": "Région : Ochima",
   "advancement.hxh.region_o.desc": "Découvrir la région de Ochima.",
   "advancement.hxh.region_b.title": "Région : Begerosse",
-  "advancement.hxh.region_b.desc": "Découvrir la région de Begerosse."
+  "advancement.hxh.region_b.desc": "Découvrir la région de Begerosse.",
+  "advancement.hxh.region_p.title": "Région : Padokea",
+  "advancement.hxh.region_p.desc": "Découvrir la région de Padokea."
 }
