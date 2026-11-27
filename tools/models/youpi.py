@@ -23,8 +23,8 @@ VEST_L = rgb('#b03a3e')
 PANTS = rgb('#2c2a34')
 SASH = rgb('#c9a24a')
 
-BODY = Body(head=(8.6, 8.6, 8.4), head_y=29.4, hip_y=15.4, knee_y=7.6, shoulder_y=27.6, arm_x=7.6, leg_x=2.7,
-            torso_w=12.0, torso_d=6.4)
+BODY = Body(head=(7.8, 8.0, 7.8), head_y=29.4, hip_y=15.4, knee_y=7.6, shoulder_y=27.6, arm_x=8.8, leg_x=2.7,
+            torso_w=13.8, torso_d=7.0)
 FACE_D = 7
 
 
@@ -42,12 +42,12 @@ def build_crest(m):
     m.bone('hair', [0, top, 0], 'head')
     # crête centrale de cornes courtes, de plus en plus grandes vers l'arrière, recourbées
     for i, (z, L, W) in enumerate(((-2.4, 2.6, 2.0), (-0.6, 3.4, 2.4), (1.2, 4.2, 2.6), (3.0, 4.6, 2.8))):
-        lock(m, f'y_h{i}', [0, top - 0.2, z], L + 1.0, W, 10 + 8 * i, 0, mkh(0.2 - 0.04 * i), flat=0.9, curve=(34, 0),
+        lock(m, f'y_h{i}', [0, top - 0.2, z], L + 1.4, W, 6 + 10 * i, (i - 1.5) * 4, mkh(0.2 - 0.04 * i), flat=0.8, curve=(62, (i - 1.5) * 6),
              segs=3, root=1.15, tip=0.12, taper_pow=0.6)
     for sx in (-1, 1):                                          # cornes latérales
         for i, (z, L) in enumerate(((-1.0, 2.8), (1.6, 3.4))):
-            lock(m, f'y_s{sx}{i}', [sx * 3.0, top - 0.6, z], L, 1.8, 20, -sx * 30, mkh(0.1), flat=0.9,
-                 curve=(26, -sx * 6), segs=2, root=1.1, tip=0.12, taper_pow=0.6)
+            lock(m, f'y_s{sx}{i}', [sx * 3.0, top - 0.6, z], L + 0.8, 2.0, 20, -sx * 34, mkh(0.1), flat=0.8,
+                 curve=(58, -sx * 10), segs=2, root=1.1, tip=0.12, taper_pow=0.6)
         # grandes oreilles pointues
         lock(m, f'y_ear{sx}', [sx * (b.head[0] / 2 + 0.2), b.head_y + 4.0, 0.2], 4.6, 2.4, 20, -sx * 70,
              lambda t: strand_paint(SKIN_D, SKIN_L, t, lit=0.1), flat=0.35, curve=(10, -sx * 16), segs=2, root=1.1,
@@ -110,9 +110,9 @@ def build_body(m):
            cloth(SASH, seed=202))
     for side, sx in (('right', -1), ('left', 1)):
         cx = sx * b.arm_x
-        m.box(f'{side}_arm', (cx, 0), b.shoulder_y - 3.6, (5.4, 4.6, 5.4), skin(0.98))           # deltoïde
-        m.box(f'{side}_arm', (cx, 0), b.elbow_y, (4.8, b.shoulder_y - b.elbow_y - 3.2, 4.8), skin())
-        m.box(f'{side}_forearm', (cx, 0), b.wrist_y + 0.2, (4.6, b.elbow_y - b.wrist_y - 0.2, 4.6), skin(0.97))
+        m.box(f'{side}_arm', (cx, 0), b.shoulder_y - 3.8, (6.4, 5.0, 6.2), skin(0.98))           # deltoïde
+        m.box(f'{side}_arm', (cx, 0), b.elbow_y, (5.6, b.shoulder_y - b.elbow_y - 3.2, 5.6), skin())
+        m.box(f'{side}_forearm', (cx, 0), b.wrist_y + 0.2, (5.4, b.elbow_y - b.wrist_y - 0.2, 5.4), skin(0.97))
         m.box(f'{side}_hand', (cx, 0), b.wrist_y - 3.6, (4.4, 3.8, 4.4), skin(0.95))
     m.cube('body', [-b.torso_w / 2 + 1.2, b.hip_y - 1.6, -2.8], [b.torso_w - 2.4, 1.8, 5.6], pants)
     for side, sx in (('right', -1), ('left', 1)):

@@ -22,8 +22,8 @@ COAT = rgb('#5a4430')
 COAT_L = rgb('#78603e')
 PIPE = rgb('#6a3e22')
 
-BODY = Body(head=(8.4, 8.6, 8.0), head_y=25.2, hip_y=13.6, knee_y=6.8, shoulder_y=23.6, arm_x=6.4, leg_x=2.4,
-            torso_w=10.0, torso_d=5.2)
+BODY = Body(head=(8.4, 8.6, 8.0), head_y=25.2, hip_y=13.6, knee_y=6.8, shoulder_y=23.6, arm_x=6.9, leg_x=2.5,
+            torso_w=10.8, torso_d=5.5)
 FACE_D = 7
 
 

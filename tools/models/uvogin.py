@@ -22,8 +22,8 @@ FUR_D = rgb('#5a3e22')
 PANTS = rgb('#6a4a2e')
 LEATHER = rgb('#3e2a1c')
 
-BODY = Body(head=(8.6, 8.6, 8.2), head_y=27.8, hip_y=14.6, knee_y=7.2, shoulder_y=26.2, arm_x=7.3, leg_x=2.6,
-            torso_w=11.6, torso_d=6.2)
+BODY = Body(head=(8.2, 8.4, 8.0), head_y=27.8, hip_y=14.6, knee_y=7.2, shoulder_y=26.2, arm_x=8.0, leg_x=2.6,
+            torso_w=12.8, torso_d=6.6)
 FACE_D = 7
 
 
@@ -131,8 +131,8 @@ def build_body(m):
     m.cube('torso', [-b.torso_w / 2 - 0.2, y0 - 1.2, -d2 - 0.4], [b.torso_w + 0.4, 2.0, b.torso_d + 0.8], fur)
     for side, sx in (('right', -1), ('left', 1)):
         cx = sx * b.arm_x
-        m.box(f'{side}_arm', (cx, 0), b.shoulder_y - 3.6, (5.2, 4.6, 5.2), skin(0.98))
-        m.box(f'{side}_arm', (cx, 0), b.elbow_y, (4.6, b.shoulder_y - b.elbow_y - 3.2, 4.6), skin())
+        m.box(f'{side}_arm', (cx, 0), b.shoulder_y - 3.8, (6.0, 5.0, 5.8), skin(0.98))
+        m.box(f'{side}_arm', (cx, 0), b.elbow_y, (5.2, b.shoulder_y - b.elbow_y - 3.2, 5.2), skin())
         m.box(f'{side}_forearm', (cx, 0), b.wrist_y + 0.2, (4.4, b.elbow_y - b.wrist_y - 0.2, 4.4), skin(0.97))
         m.box(f'{side}_forearm', (cx, 0), b.wrist_y, (4.8, 2.0, 4.8), cloth(LEATHER, seed=222))
         m.box(f'{side}_hand', (cx, 0), b.wrist_y - 3.6, (4.2, 3.8, 4.2), skin(0.95))

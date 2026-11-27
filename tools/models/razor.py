@@ -21,8 +21,8 @@ LINE = rgb('#1e181a')
 VEST = rgb('#16161a')
 PANTS = rgb('#e8e4dc')
 
-BODY = Body(head=(8.6, 8.8, 8.2), head_y=27.6, hip_y=14.6, knee_y=7.2, shoulder_y=26.0, arm_x=7.0, leg_x=2.6,
-            torso_w=11.0, torso_d=6.0)
+BODY = Body(head=(8.6, 8.8, 8.2), head_y=27.6, hip_y=14.6, knee_y=7.2, shoulder_y=26.0, arm_x=7.6, leg_x=2.7,
+            torso_w=12.0, torso_d=6.2)
 FACE_D = 7
 
 
@@ -39,13 +39,13 @@ def build_hair(m):
     top = b.top
     m.bone('hair', [0, top, 0], 'head')
     rnd = random.Random(211)
-    c, R = (0.0, top - 3.7, 0.4), 5.0
+    c, R = (0.0, top - 3.7, 0.4), 4.6
     scalp(m, c, R, lambda k: mk(k - 0.05)(0.5), skip_front=48, front_phi=42)
     rr = R + 0.25
     for i, x_az in enumerate((-36, -22, -8, 8, 22, 36)):
         crown_lock(m, f'r_t{i}', c, rr + 0.1, x_az + rnd.uniform(-3, 3), 132, 11.5 + rnd.uniform(-0.5, 0.8), 4.8,
                    mk(0.18 + 0.03 * (2.5 - abs(i - 2.5))), flat=0.42, turn=94, tip=0.15, segs=5,
-                   twist=rnd.uniform(-8, 8), skew=rnd.uniform(-0.12, 0.12))
+                   twist=rnd.uniform(-8, 8), skew=rnd.uniform(-0.12, 0.12), side=rnd.uniform(-16, 16))
     for sx in (-1, 1):
         for j, (az, phi, L) in enumerate(((sx * 62, 120, 10.0), (sx * 86, 104, 8.8), (sx * 110, 90, 7.6))):
             crown_lock(m, f'r_s{sx}{j}', c, rr, az, phi, L, 4.2, mk(0.1), flat=0.42, turn=90, tip=0.15, segs=4,
@@ -105,7 +105,7 @@ def build_body(m):
            cloth(rgb('#b02a30'), seed=462))
     for side, sx in (('right', -1), ('left', 1)):
         cx = sx * b.arm_x
-        m.box(f'{side}_arm', (cx, 0), b.shoulder_y - 3.6, (5.0, 4.6, 5.0), skin(0.98))
+        m.box(f'{side}_arm', (cx, 0), b.shoulder_y - 3.8, (5.6, 5.0, 5.4), skin(0.98))
         m.box(f'{side}_arm', (cx, 0), b.elbow_y, (4.4, b.shoulder_y - b.elbow_y - 3.2, 4.4), skin())
         m.box(f'{side}_forearm', (cx, 0), b.wrist_y, (4.2, b.elbow_y - b.wrist_y, 4.2), skin(0.97))
         m.box(f'{side}_hand', (cx, 0), b.wrist_y - 3.6, (4.0, 3.8, 4.0), skin(0.95))

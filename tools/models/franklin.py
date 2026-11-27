@@ -21,8 +21,8 @@ SCAR = rgb('#8a5a50')
 COAT = rgb('#22283c')
 COAT_L = rgb('#343c58')
 
-BODY = Body(head=(8.4, 10.0, 8.0), head_y=28.6, hip_y=15.0, knee_y=7.4, shoulder_y=27.0, arm_x=7.2, leg_x=2.6,
-            torso_w=11.4, torso_d=6.0)
+BODY = Body(head=(8.4, 10.0, 8.0), head_y=28.6, hip_y=15.0, knee_y=7.4, shoulder_y=27.0, arm_x=7.9, leg_x=2.8,
+            torso_w=12.6, torso_d=6.4)
 FACE_D = 7
 
 
@@ -94,8 +94,8 @@ def build_body(m):
                coat_paint if sz < 0 else coat)
     for side, sx in (('right', -1), ('left', 1)):
         cx = sx * b.arm_x
-        m.box(f'{side}_arm', (cx, 0), b.elbow_y, (4.6, b.shoulder_y - b.elbow_y + 0.6, 4.7), coat)
-        m.box(f'{side}_forearm', (cx, 0), b.wrist_y + 0.2, (4.4, b.elbow_y - b.wrist_y - 0.2, 4.5), coat)
+        m.box(f'{side}_arm', (cx, 0), b.elbow_y, (5.2, b.shoulder_y - b.elbow_y + 0.6, 5.3), coat)
+        m.box(f'{side}_forearm', (cx, 0), b.wrist_y + 0.2, (5.0, b.elbow_y - b.wrist_y - 0.2, 5.1), coat)
         m.box(f'{side}_hand', (cx, 0), b.wrist_y - 2.8, (3.8, 3.0, 3.8), skin_mat(SKIN))
         for k in range(4):                                                                  # doigts-canons
             m.cube(f'{side}_hand', [cx - 1.7 + k * 0.95, b.wrist_y - 4.2, -1.2], [0.7, 1.6, 0.7], skin_mat(shade(SKIN, 0.95)))

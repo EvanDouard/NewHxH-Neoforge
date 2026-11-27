@@ -23,8 +23,8 @@ TUNIC = rgb('#1e2a44')
 TUNIC_L = rgb('#30406a')
 BELT = rgb('#7a7a86')
 
-BODY = Body(head=(8.2, 8.6, 8.0), head_y=25.2, hip_y=13.6, knee_y=6.8, shoulder_y=23.6, arm_x=6.2, leg_x=2.3,
-            torso_w=9.6, torso_d=5.0)
+BODY = Body(head=(8.2, 8.6, 8.0), head_y=25.2, hip_y=13.6, knee_y=6.8, shoulder_y=23.6, arm_x=6.7, leg_x=2.4,
+            torso_w=10.4, torso_d=5.3)
 FACE_D = 7
 
 
@@ -43,10 +43,10 @@ def build_hair(m):
     # longue masse ondulée : mèches épaisses qui pendent de l'arrière du crâne jusqu'au bas du dos, en s'évasant
     for i, az in enumerate(range(-80, 81, 13)):
         a = math.radians(az)
-        r = rr + 0.2
+        r = rr + 0.2 + (0.45 if i % 2 else 0.0)
         x, z = c[0] + r * math.sin(a), c[2] + r * math.cos(a)
         side = abs(az) / 80
-        L = 19.0 - 4.0 * side + rnd.uniform(-1.0, 1.0)
+        L = 19.0 - 4.0 * side + rnd.uniform(-2.0, 1.6)
         lock(m, f's_c{i}', [x, c[1] + 0.6, z], L, 4.4, 178, az * 0.1, mk(0.04 + 0.05 * (i % 2)),
              ry=rnd.uniform(-8, 8), flat=0.45, curve=(-20 * math.cos(a), az * 0.08), segs=5, root=1.1, tip=0.1,
              taper_pow=0.5, belly=1.18, skew=rnd.uniform(-0.15, 0.15))
@@ -54,7 +54,8 @@ def build_hair(m):
     for i, az in enumerate(range(-150, 151, 25)):
         crown_lock(m, f's_t{i}', c, rr + 0.25, az + rnd.uniform(-4, 4), 96 + rnd.uniform(-4, 4),
                    10.5 + rnd.uniform(-0.8, 0.8), 4.8, mk(0.2 + 0.05 * math.cos(math.radians(az))), flat=0.42,
-                   turn=88, tip=0.12, segs=4, twist=rnd.uniform(-8, 8), skew=rnd.uniform(-0.12, 0.12))
+                   turn=88, tip=0.12, segs=4, twist=rnd.uniform(-8, 8), skew=rnd.uniform(-0.12, 0.12),
+                   side=rnd.uniform(-20, 20))
     for i, az in enumerate((-24, -8, 8, 24)):                     # front : rejeté vers l'arrière
         crown_lock(m, f's_fr{i}', c, rr + 0.3, az, 138, 9.0, 4.2, mk(0.28), flat=0.4, turn=96, tip=0.15, segs=4,
                    twist=rnd.uniform(-6, 6))
