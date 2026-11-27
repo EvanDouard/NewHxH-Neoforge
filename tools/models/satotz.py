@@ -49,6 +49,10 @@ def build_hair(m):
             y, z = cy + 2.0 * math.cos(r), cz + 2.0 * math.sin(r)
             m.cube('head', [cx - 1.5, y - 0.7, z - 1.0], [3.0, 1.4, 2.0], mk(0.1 + 0.18 * (0.5 + 0.5 * math.cos(r)))(0.5),
                    pivot=[cx, y, z], rotation=[-a, 0, 0])
+            # bord extérieur arrondi : anneau plus petit qui dépasse, vu de face la boucle n'est plus un rectangle
+            y2, z2 = cy + 1.3 * math.cos(r), cz + 1.3 * math.sin(r)
+            m.cube('head', [cx + sx * 1.3 - 0.6, y2 - 0.5, z2 - 0.7], [1.2, 1.0, 1.4], mk(0.16 + 0.14 * (0.5 + 0.5 * math.cos(r)))(0.5),
+                   pivot=[cx + sx * 1.3, y2, z2], rotation=[-a, 0, 0])
 
 
 def face_paint(ctx, mode='calme'):

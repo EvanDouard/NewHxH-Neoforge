@@ -44,8 +44,8 @@ def face_paint(ctx, mode='calme'):
     material(SKIN, grad=0.06, noise=2, outline=False)(ctx)
     f = FaceGrid(ctx)
     f.rect(0, 0, 66, 4, HAIR)
-    f.poly((8, 18 if cold else 20, 28, 22, 28, 26, 8, 24), BROW)              # sourcils blancs
-    f.poly((58, 18 if cold else 20, 38, 22, 38, 26, 58, 24), BROW)
+    f.poly((7, 17 if cold else 19, 29, 21, 29, 27, 7, 25), BROW)              # sourcils blancs, épais et très lisibles
+    f.poly((59, 17 if cold else 19, 37, 21, 37, 27, 59, 25), BROW)
     for x0 in (12, 40):
         f.rect(x0, 28, x0 + 14, 32, (244, 242, 238))
         f.rect(x0 + 5, 28, x0 + 10, 32, rgb('#2a2228'))
