@@ -42,6 +42,23 @@ public final class QuestTests {
     }
 
     @GameTest(template = "empty")
+    public static void coordinatesComeWithRegionName(GameTestHelper helper) {
+        var m = com.evandouard.hxh.world.HxHWorldMap.get();
+        helper.assertTrue(com.evandouard.hxh.quest.QuestManager.regionTail(-100000, -100000).getString().isEmpty(), "Hors carte : pas de région");
+        int found = 0;
+        for (int x = 0; x < m.widthBlocks() && found < 1; x += 256)
+            for (int z = 0; z < m.heightBlocks(); z += 256)
+                if ("mksKob".indexOf(m.cellAt(x, z)) >= 0) {
+                    String tail = com.evandouard.hxh.quest.QuestManager.regionTail(x, z).toString();
+                    helper.assertTrue(tail.contains("airship.hxh.region." + m.cellAt(x, z)), "Région attendue pour " + x + "," + z);
+                    found++;
+                    break;
+                }
+        helper.assertTrue(found == 1, "Au moins une case de région trouvée");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void examQuestIsLoaded(GameTestHelper helper) {
         Quest exam = QuestRegistry.get(QuestRegistry.HUNTER_EXAM);
         helper.assertTrue(exam != null, "La quête hxh:hunter_exam doit être chargée depuis le datapack");

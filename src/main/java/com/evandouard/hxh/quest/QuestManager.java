@@ -1073,7 +1073,7 @@ public final class QuestManager {
             if (nav != Long.MIN_VALUE) {
                 BlockPos g = BlockPos.of(nav);
                 com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.title(player),
-                        Component.translatable("exam.hxh.guide_objective", g.getX(), g.getZ()), 0, 0, g.asLong()));
+                        Component.translatable("exam.hxh.guide_objective", g.getX(), g.getZ(), regionTail(g.getX(), g.getZ())), 0, 0, g.asLong()));
                 return;
             }
         }
@@ -1082,7 +1082,7 @@ public final class QuestManager {
                 && !com.evandouard.hxh.exam.ExamWorld.isExamLevel(player.level())) {
             BlockPos dep = BlockPos.of(d.examDeparture());
             com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.title(player),
-                    Component.translatable("exam.hxh.departure_objective", dep.getX(), dep.getZ()), 0, 0, dep.asLong()));
+                    Component.translatable("exam.hxh.departure_objective", dep.getX(), dep.getZ(), regionTail(dep.getX(), dep.getZ())), 0, 0, dep.asLong()));
             return;
         }
         // Inscription en attente : même objectif que le refus de l'arbitre
@@ -1094,6 +1094,13 @@ public final class QuestManager {
         }
         com.evandouard.hxh.network.HxHNetwork.sendTo(player, new QuestStatusPayload(q.title(player), q.objective(step, player), progress, step.goal(),
                 compassTarget(player, step)));
+    }
+
+    /** « , Région » à coller derrière des coordonnées (vide si le point est en mer ou hors carte). */
+    public static Component regionTail(int x, int z) {
+        char c = com.evandouard.hxh.world.HxHWorldMap.get().cellAt(x, z);
+        if ("mksKob".indexOf(c) < 0) return Component.empty();
+        return Component.literal(", ").append(Component.translatable("airship.hxh.region." + c));
     }
 
     /** Position que la boussole de quête doit pointer pour cette étape, ou {@link QuestStatusPayload#NO_TARGET}. */
