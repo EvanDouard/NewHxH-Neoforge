@@ -81,16 +81,12 @@ public final class WorldPlacesTests {
         helper.assertTrue(place != null, "La Tour Céleste est chargée");
         BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
         var level = helper.getLevel();
-        int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground, origin.getZ() + 45)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable sur la place");
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 26, ground + 48, origin.getZ() + 20)).is(Blocks.STONE_BRICKS), "Mur du 2e étage de la tour");
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground + 3, origin.getZ() + 20)).isAir(), "Hall dégagé");
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground - 1, origin.getZ() + 20)).is(Blocks.SAND), "Ring de sable");
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground + 3, origin.getZ() + 35)).is(Blocks.LECTERN), "Guichet d'inscription");
-        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 40, ground + 99, origin.getZ() + 26)).is(Blocks.LIGHTNING_ROD), "Paratonnerre au sommet");
-        var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 95, ground + 20, origin.getZ() + 95);
-        var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
-        helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals("receptionniste_arene")), "Réceptionniste présente");
+        int ground = WorldPlaces.build(level, place, origin.getX() + 30, origin.getZ() + 5);
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 35, ground, origin.getZ() + 41)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable devant la Tour");
+        int solid = 0;
+        for (int dx = -26; dx <= 26; dx += 2) for (int dz = -24; dz <= 24; dz += 2)
+            if (!level.getBlockState(new BlockPos(origin.getX() + 30 + dx, ground + 20, origin.getZ() + 5 + dz)).isAir()) solid++;
+        helper.assertTrue(solid > 20, "Le modèle de la Tour (hxh:heavens_arena/tour) est posé (blocs trouvés à 20 de haut : " + solid + ")");
         helper.succeed();
     }
 

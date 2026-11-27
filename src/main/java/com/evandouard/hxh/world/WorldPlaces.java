@@ -125,6 +125,38 @@ public final class WorldPlaces extends SimpleJsonResourceReloadListener {
         }
     }
 
+    /** Supprime les animaux sauvages déjà apparus à la génération du terrain autour du lieu (immersion) ; jamais les PNJ, bêtes nommées ou apprivoisées. */
+    private static void removeWildlife(ServerLevel level, Place p, int ax, int gy, int az) {
+        int[] c = p.json().has("clear") ? ints(p.json().getAsJsonArray("clear")) : new int[]{-16, 0, -16, 16, 0, 16};
+        net.minecraft.world.phys.AABB area = new net.minecraft.world.phys.AABB(ax + Math.min(c[0], c[3]) - 32, gy - 20, az + Math.min(c[2], c[5]) - 32,
+                ax + Math.max(c[0], c[3]) + 32, gy + 120, az + Math.max(c[2], c[5]) + 32);
+        for (net.minecraft.world.entity.Mob m : level.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, area, e ->
+                (e instanceof net.minecraft.world.entity.animal.Animal || e instanceof net.minecraft.world.entity.AmbientCreature
+                        || e instanceof net.minecraft.world.entity.animal.WaterAnimal)
+                        && !e.hasCustomName() && !e.isPersistenceRequired()
+                        && !(e instanceof net.minecraft.world.entity.TamableAnimal t && t.isTame()))) m.discard();
+    }
+
+    /**
+     * Si un lieu couvre (x, z) dans le monde HxH, le bâtit tout de suite (avant que le joueur n'y arrive, donc sans plateforme
+     * provisoire qui apparaît puis disparaît) et renvoie vrai ; sinon faux.
+     */
+    public static boolean ensureBuilt(ServerLevel level, int x, int z) {
+        if (!level.dimension().equals(Airship.WORLD)) return false;
+        for (Place p : PLACES.values()) {
+            int[] c = p.json().has("clear") ? ints(p.json().getAsJsonArray("clear")) : new int[]{-16, 0, -16, 16, 0, 16};
+            if (x < p.x() + Math.min(c[0], c[3]) || x > p.x() + Math.max(c[0], c[3]) || z < p.z() + Math.min(c[2], c[5]) || z > p.z() + Math.max(c[2], c[5])) continue;
+            boolean fresh = Placed.get(level).add(p.id().toString());
+            boolean pending = PENDING.removeIf(pe -> pe.place == p && pe.level == level);
+            if (fresh || pending) {
+                build(level, p, p.x(), p.z());
+                for (var ch : new Pending(level, p).chunks) level.setChunkForced(ch.x, ch.z, false);
+            }
+            return true;
+        }
+        return false;
+    }
+
     /** Bâtit le lieu avec son ancre en (ax, az). @return la hauteur du sol (y = 0 relatif) */
     public static int build(ServerLevel level, Place p, int ax, int az) {
         level.getChunk(ax >> 4, az >> 4);
@@ -133,6 +165,9 @@ public final class WorldPlaces extends SimpleJsonResourceReloadListener {
         JsonObject j = p.json();
         HolderLookup<Block> blocks = level.holderLookup(Registries.BLOCK);
         if (j.has("clear")) box(level, ax, gy, az, ints(j.getAsJsonArray("clear")), Blocks.AIR.defaultBlockState(), false);
+        removeWildlife(level, p, ax, gy, az);
+        // "tower": true -> pose la Tour Céleste (modèle d'Evan, centré sur l'ancre) au lieu d'une version dessinée en données
+        if (j.has("tower") && j.get("tower").getAsBoolean()) com.evandouard.hxh.arena.TowerPlacer.place(level, new BlockPos(ax, gy, az));
         if (j.has("foundation")) {
             JsonArray f = j.getAsJsonArray("foundation");
             BlockState state = parse(blocks, f.get(4).getAsString());

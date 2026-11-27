@@ -70,7 +70,13 @@ public final class Airship {
     public static void arrive(ServerPlayer player, AirshipDestination dest) {
         ServerLevel level = player.server.getLevel(WORLD);
         if (level == null) level = player.serverLevel();
-        BlockPos landing = buildPad(level, dest.x(), dest.z());
+        BlockPos landing;
+        if (com.evandouard.hxh.world.WorldPlaces.ensureBuilt(level, dest.x(), dest.z())) {
+            // Le lieu a sa propre zone d'arrivée (et sa borne) : on n'ajoute aucune plateforme
+            landing = new BlockPos(dest.x(), Math.max(level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, dest.x(), dest.z()), level.getSeaLevel() + 1), dest.z());
+        } else {
+            landing = buildPad(level, dest.x(), dest.z());
+        }
         player.teleportTo(level, landing.getX() + 0.5, landing.getY(), landing.getZ() + 0.5, player.getYRot(), 0f);
         player.resetFallDistance();
         level.playSound(null, landing, SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.8f, 1.2f);

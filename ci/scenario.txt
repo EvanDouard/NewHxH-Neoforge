@@ -3207,13 +3207,11 @@ cmd hunter airship heavens_arena
 cmd time set noon
 wait 400
 shot 99ze_arene_place
-cmd effect give @s minecraft:slow_falling 60 0 true
-cmd tp @s 2770 75 1500 180 -20
-wait 120
+cmd gamemode spectator
+cmd tp @s 2775 120 1540 180 -15
+wait 200
 shot 99zf_arene_tour
-cmd tp @s 2770 72 1438 0 8
-wait 80
-shot 99zg_arene_hall
+cmd gamemode survival
 cmd hunter jenny set 20000
 cmd hunter airship black_whale_port
 cmd time set noon

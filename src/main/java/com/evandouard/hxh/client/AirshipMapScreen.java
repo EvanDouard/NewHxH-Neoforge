@@ -54,6 +54,12 @@ public class AirshipMapScreen extends Screen {
         return best;
     }
 
+    /** Pas de flou de fond (le flou de Minecraft rendait la carte floue) : un simple voile sombre. */
+    @Override
+    public void renderBackground(GuiGraphics g, int mouseX, int mouseY, float partial) {
+        renderTransparentBackground(g);
+    }
+
     @Override
     public void render(GuiGraphics g, int mouseX, int mouseY, float partial) {
         renderTransparentBackground(g);
