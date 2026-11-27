@@ -374,3 +374,4 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 - [x] CI : GameTest `nglVillageSketch` (village NGL : borne, cabane, halle, blé, tour de guet, 2 PNJ) + captures `99zv_ngl_arrivee`, `99zw_ngl_vue`.
 - [x] CI : GameTest `mafiaHqSketch` (QG de la Mafia : borne, mur, bâtiment, flèche, parrain + gardes) + captures `99zx_mafia_arrivee`, `99zy_mafia_vue`.
 - [x] CI : GameTest `masadoraSketch` (Masadora : borne, maison, mairie, flèche, fontaine, 2 PNJ) + captures `99zz_masadora_arrivee`, `99zza_masadora_vue`. Île de Greed Island agrandie à l'est.
+- [x] CI : GameTest `padokeaTownSketch` (ville de Padokea : borne, rail, croix rouge, hôtel, centre commercial, 4 PNJ) + captures `99zzb_padokea_arrivee`, `99zzc_padokea_vue`.

@@ -25,3 +25,5 @@
 715 3832 62 68
 # Masadora, Greed Island (ébauche)
 3475 4115 56 66
+# Ville de Padokea, à l ouest de la Tour Céleste (ébauche)
+2655 1447 68 70

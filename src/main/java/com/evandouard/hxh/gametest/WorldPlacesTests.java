@@ -306,6 +306,30 @@ public final class WorldPlacesTests {
         });
     }
 
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void padokeaTownSketch(GameTestHelper helper) {
+        BlockPos origin0 = helper.absolutePos(new BlockPos(2, 1, 2));
+        withForcedChunks(helper, origin0, 95, () -> {
+            var place = WorldPlaces.get("hxh:padokea_town");
+            helper.assertTrue(place != null, "La ville de Padokea est chargée");
+            BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+            var level = helper.getLevel();
+            int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 48, ground, origin.getZ() + 86)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 10, ground, origin.getZ() + 20)).is(Blocks.RAIL), "Voie ferrée de la gare");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 59, ground + 5, origin.getZ() + 67)).is(Blocks.RED_CONCRETE), "Croix rouge de l'hôpital");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 52, ground + 10, origin.getZ() + 75)).is(Blocks.QUARTZ_BLOCK), "Hôtel");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 52, ground + 3, origin.getZ() + 10)).is(Blocks.WHITE_CONCRETE), "Centre commercial");
+            helper.runAfterDelay(20, () -> {
+                var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 5, origin.getZ(), origin.getX() + 95, ground + 30, origin.getZ() + 100);
+                var npcs = level.getEntitiesOfClass(com.evandouard.hxh.npc.NpcEntity.class, box);
+                for (String id : new String[]{"chef_de_gare_padokea", "infirmiere_padokea", "policier_padokea", "habitant_padokea"})
+                    helper.assertTrue(npcs.stream().anyMatch(n -> n.npcId().equals(id)), "PNJ présent : " + id);
+                helper.succeed();
+            });
+        });
+    }
+
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void heavyDoorOpensOnlyWithEnoughStrengthThenCloses(GameTestHelper helper) {
         var level = helper.getLevel();

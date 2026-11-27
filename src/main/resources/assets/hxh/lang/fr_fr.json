@@ -1919,5 +1919,14 @@
   "npc.hxh.marchand_cartes_masadora": "Marchand de cartes",
   "dialog.hxh.marchand_cartes_masadora.idle": "Cartes de sort, cartes d'objet : tout se vend à Masadora. Mais attention aux prix.",
   "npc.hxh.habitant_masadora": "Habitant de Masadora",
-  "dialog.hxh.habitant_masadora.idle": "La plus grande ville de l'île. On y trouve de tout, même des joueurs pressés."
+  "dialog.hxh.habitant_masadora.idle": "La plus grande ville de l'île. On y trouve de tout, même des joueurs pressés.",
+  "airship.hxh.dest.padokea_town": "Padokea (ville de la Tour)",
+  "npc.hxh.chef_de_gare_padokea": "Chef de gare",
+  "dialog.hxh.chef_de_gare_padokea.idle": "Le prochain train part bientôt. Les voyageurs pour la Tour Céleste, c'est de l'autre côté de la ville.",
+  "npc.hxh.infirmiere_padokea": "Infirmière",
+  "dialog.hxh.infirmiere_padokea.idle": "Après un combat à la Tour, tout le monde passe par chez nous.",
+  "npc.hxh.policier_padokea": "Policier de Padokea",
+  "dialog.hxh.policier_padokea.idle": "Circulez. Pas de bagarre en dehors de l'arène.",
+  "npc.hxh.habitant_padokea": "Habitant de Padokea",
+  "dialog.hxh.habitant_padokea.idle": "Depuis que la Tour attire du monde, la ville ne dort plus."
 }

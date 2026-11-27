@@ -1,0 +1,716 @@
+{
+ "x": 2610,
+ "z": 1400,
+ "clear": [
+  0,
+  0,
+  0,
+  90,
+  25,
+  95
+ ],
+ "fills": [
+  {
+   "box": [
+    0,
+    -1,
+    0,
+    90,
+    -1,
+    95
+   ],
+   "block": "minecraft:grass_block"
+  },
+  {
+   "box": [
+    40,
+    -1,
+    0,
+    46,
+    -1,
+    95
+   ],
+   "block": "minecraft:gray_concrete"
+  },
+  {
+   "box": [
+    0,
+    -1,
+    46,
+    90,
+    -1,
+    50
+   ],
+   "block": "minecraft:gray_concrete"
+  },
+  {
+   "box": [
+    43,
+    -1,
+    0,
+    43,
+    -1,
+    95
+   ],
+   "block": "minecraft:white_concrete"
+  },
+  {
+   "box": [
+    4,
+    0,
+    6,
+    31,
+    5,
+    15
+   ],
+   "block": "minecraft:stone_bricks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    3,
+    6,
+    5,
+    32,
+    6,
+    16
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    14,
+    0,
+    15,
+    20,
+    3,
+    15
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    4,
+    0,
+    16,
+    31,
+    0,
+    19
+   ],
+   "block": "minecraft:smooth_stone"
+  },
+  {
+   "box": [
+    4,
+    0,
+    20,
+    31,
+    0,
+    20
+   ],
+   "block": "minecraft:rail[shape=east_west]"
+  },
+  {
+   "box": [
+    4,
+    0,
+    23,
+    31,
+    0,
+    23
+   ],
+   "block": "minecraft:rail[shape=east_west]"
+  },
+  {
+   "box": [
+    6,
+    1,
+    16,
+    6,
+    4,
+    16
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    4,
+    5,
+    16,
+    8,
+    5,
+    19
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    17,
+    1,
+    16,
+    17,
+    4,
+    16
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    15,
+    5,
+    16,
+    19,
+    5,
+    19
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    28,
+    1,
+    16,
+    28,
+    4,
+    16
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    26,
+    5,
+    16,
+    30,
+    5,
+    19
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    52,
+    0,
+    6,
+    81,
+    6,
+    23
+   ],
+   "block": "minecraft:white_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    51,
+    7,
+    5,
+    82,
+    7,
+    24
+   ],
+   "block": "minecraft:light_gray_concrete"
+  },
+  {
+   "box": [
+    54,
+    1,
+    23,
+    62,
+    3,
+    23
+   ],
+   "block": "minecraft:glass"
+  },
+  {
+   "box": [
+    70,
+    1,
+    23,
+    79,
+    3,
+    23
+   ],
+   "block": "minecraft:glass"
+  },
+  {
+   "box": [
+    64,
+    0,
+    23,
+    68,
+    3,
+    23
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    55,
+    5,
+    23,
+    78,
+    5,
+    23
+   ],
+   "block": "minecraft:gold_block"
+  },
+  {
+   "box": [
+    54,
+    0,
+    30,
+    63,
+    3,
+    37
+   ],
+   "block": "minecraft:orange_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    53,
+    4,
+    29,
+    64,
+    4,
+    38
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    58,
+    0,
+    37,
+    59,
+    1,
+    37
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    54,
+    3,
+    38,
+    63,
+    3,
+    40
+   ],
+   "block": "minecraft:red_wool"
+  },
+  {
+   "box": [
+    4,
+    0,
+    54,
+    9,
+    3,
+    59
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    3,
+    4,
+    53,
+    10,
+    4,
+    60
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    6,
+    0,
+    54,
+    7,
+    1,
+    54
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    14,
+    0,
+    54,
+    19,
+    3,
+    59
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    13,
+    4,
+    53,
+    20,
+    4,
+    60
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    16,
+    0,
+    54,
+    17,
+    1,
+    54
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    24,
+    0,
+    54,
+    29,
+    3,
+    59
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    23,
+    4,
+    53,
+    30,
+    4,
+    60
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    26,
+    0,
+    54,
+    27,
+    1,
+    54
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    4,
+    0,
+    68,
+    9,
+    3,
+    73
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    3,
+    4,
+    67,
+    10,
+    4,
+    74
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    6,
+    0,
+    68,
+    7,
+    1,
+    68
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    14,
+    0,
+    68,
+    19,
+    3,
+    73
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    13,
+    4,
+    67,
+    20,
+    4,
+    74
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    16,
+    0,
+    68,
+    17,
+    1,
+    68
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    24,
+    0,
+    68,
+    29,
+    3,
+    73
+   ],
+   "block": "minecraft:oak_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    23,
+    4,
+    67,
+    30,
+    4,
+    74
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    26,
+    0,
+    68,
+    27,
+    1,
+    68
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    50,
+    0,
+    54,
+    69,
+    7,
+    67
+   ],
+   "block": "minecraft:white_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    49,
+    8,
+    53,
+    70,
+    8,
+    68
+   ],
+   "block": "minecraft:light_gray_concrete"
+  },
+  {
+   "box": [
+    57,
+    5,
+    67,
+    61,
+    5,
+    67
+   ],
+   "block": "minecraft:red_concrete"
+  },
+  {
+   "box": [
+    59,
+    3,
+    67,
+    59,
+    7,
+    67
+   ],
+   "block": "minecraft:red_concrete"
+  },
+  {
+   "box": [
+    63,
+    0,
+    67,
+    65,
+    2,
+    67
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    74,
+    0,
+    54,
+    87,
+    5,
+    65
+   ],
+   "block": "minecraft:blue_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    73,
+    6,
+    53,
+    88,
+    6,
+    66
+   ],
+   "block": "minecraft:blue_concrete"
+  },
+  {
+   "box": [
+    79,
+    0,
+    65,
+    81,
+    2,
+    65
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    52,
+    0,
+    70,
+    65,
+    16,
+    83
+   ],
+   "block": "minecraft:quartz_block",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    51,
+    17,
+    69,
+    66,
+    17,
+    84
+   ],
+   "block": "minecraft:smooth_quartz"
+  },
+  {
+   "box": [
+    53,
+    4,
+    70,
+    64,
+    4,
+    70
+   ],
+   "block": "minecraft:gold_block"
+  },
+  {
+   "box": [
+    53,
+    8,
+    70,
+    64,
+    8,
+    70
+   ],
+   "block": "minecraft:gold_block"
+  },
+  {
+   "box": [
+    53,
+    12,
+    70,
+    64,
+    12,
+    70
+   ],
+   "block": "minecraft:gold_block"
+  },
+  {
+   "box": [
+    57,
+    0,
+    70,
+    60,
+    3,
+    70
+   ],
+   "block": "minecraft:air"
+  }
+ ],
+ "blocks": [
+  {
+   "pos": [
+    48,
+    0,
+    86
+   ],
+   "state": "hxh:airship_terminal[facing=west]"
+  }
+ ],
+ "entities": [
+  {
+   "type": "hxh:npc",
+   "pos": [
+    18,
+    0,
+    17
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"chef_de_gare_padokea\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    64,
+    0,
+    70
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"infirmiere_padokea\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    80,
+    0,
+    68
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"policier_padokea\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  },
+  {
+   "type": "hxh:npc",
+   "pos": [
+    43,
+    0,
+    60
+   ],
+   "yaw": 0,
+   "nbt": "{npc:\"habitant_padokea\",NoAI:1b,PersistenceRequired:1b,Invulnerable:1b}"
+  }
+ ]
+}

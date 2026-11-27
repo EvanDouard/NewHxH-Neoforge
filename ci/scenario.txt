@@ -3273,6 +3273,17 @@ cmd gamemode spectator
 cmd tp @s 3475 95 4205 180 25
 wait 200
 shot 99zza_masadora_vue
+cmd gamemode survival
+cmd hunter jenny set 20000
+cmd hunter airship padokea_town
+cmd time set noon
+wait 450
+wait 100
+shot 99zzb_padokea_arrivee
+cmd gamemode spectator
+cmd tp @s 2655 100 1585 180 25
+wait 200
+shot 99zzc_padokea_vue
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative

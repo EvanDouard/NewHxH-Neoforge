@@ -1919,5 +1919,14 @@
   "npc.hxh.marchand_cartes_masadora": "Card merchant",
   "dialog.hxh.marchand_cartes_masadora.idle": "Spell cards, item cards: everything sells in Masadora. Mind the prices, though.",
   "npc.hxh.habitant_masadora": "Masadora resident",
-  "dialog.hxh.habitant_masadora.idle": "The biggest town on the island. You can find anything here, even players in a hurry."
+  "dialog.hxh.habitant_masadora.idle": "The biggest town on the island. You can find anything here, even players in a hurry.",
+  "airship.hxh.dest.padokea_town": "Padokea (Tower town)",
+  "npc.hxh.chef_de_gare_padokea": "Station master",
+  "dialog.hxh.chef_de_gare_padokea.idle": "The next train leaves soon. Travelers for Heavens Arena, it is across town.",
+  "npc.hxh.infirmiere_padokea": "Nurse",
+  "dialog.hxh.infirmiere_padokea.idle": "After a fight at the Tower, everyone ends up with us.",
+  "npc.hxh.policier_padokea": "Padokea policeman",
+  "dialog.hxh.policier_padokea.idle": "Move along. No brawling outside the arena.",
+  "npc.hxh.habitant_padokea": "Padokea resident",
+  "dialog.hxh.habitant_padokea.idle": "Ever since the Tower draws crowds, the town never sleeps."
 }
