@@ -50,12 +50,13 @@ def build_hair(m):
     for i, az in enumerate(range(-140, 141, 28)):
         if abs(az) < 20:
             continue
-        crown_lock(m, f'z_b{i}', c, rr, az + rnd.uniform(-5, 5), 66 + rnd.uniform(-5, 5), 5.6 + rnd.uniform(-0.6, 0.8),
-                   3.6, mk(0.08), flat=0.55, turn=30, tip=0.08, segs=3, lean=(1 if az > 0 else -1) * 10,
+        crown_lock(m, f'z_b{i}', c, rr, az + rnd.uniform(-5, 5), 66 + rnd.uniform(-5, 5), 4.4 + rnd.uniform(-0.6, 0.8),
+                   3.6, mk(0.08), flat=0.55, turn=62, tip=0.1, segs=3, lean=(1 if az > 0 else -1) * 6,
                    twist=rnd.uniform(-12, 12))
     # longue tresse : part de la nuque et descend dans le dos (maillons alternés)
     m.bone('braid', [0, b.head_y + 1.4, hz - 0.4], 'head', rotation=[7, 0, 0])
     y = b.head_y + 1.4
+    m.cube('braid', [-1.4, y - 0.4, hz - 0.75], [2.8, 0.7, 1.9], flat(rgb('#5a4a3a'), 0.9))       # attache
     for k in range(10):
         w = 2.3 - 0.07 * k
         off = 0.3 if k % 2 else -0.3

@@ -50,7 +50,11 @@ def build_hair(m):
     # chignon au sommet arrière et queue épaisse qui retombe dans le dos
     kx, ky, kz = 0.0, top + 1.0, 1.4
     m.bone('knot', [kx, ky, kz], 'hair')
-    m.cube('knot', [kx - 1.4, ky - 1.4, kz - 1.4], [2.8, 3.0, 2.8], mk(0.22)(0.5))
+    for g, (dy, w, h) in enumerate(((-1.4, 2.2, 0.8), (-0.7, 2.9, 1.6), (0.8, 2.3, 0.8))):        # chignon arrondi
+        m.cube('knot', [kx - w / 2, ky + dy, kz - w / 2], [w, h, w], mk(0.22 + 0.04 * g)(0.5))
+    for g in range(4):                                              # mèches enroulées autour du chignon
+        m.cube('knot', [kx - 1.55, ky - 0.4 + 0.25 * g, kz - 0.25], [3.1, 0.3, 0.5], mk(0.3)(0.5),
+               pivot=[kx, ky, kz], rotation=[0, 45 * g, 18])
     m.cube('knot', [kx - 1.0, ky - 1.1, kz - 1.0], [2.0, 0.5, 2.0], flat(OBI, 0.9))                     # lien
     for k, (dx, L, W, rz, cz) in enumerate(((0, 12.0, 3.8, 0, 0), (-0.8, 10.0, 3.0, 14, -10), (0.8, 10.5, 3.0, -14, 10))):
         lock(m, f'n_tail{k}', [kx + dx, ky + 0.2, kz + 1.0], L + 0.5, W, 118, rz, mk(0.22 - 0.06 * k), flat=0.7,

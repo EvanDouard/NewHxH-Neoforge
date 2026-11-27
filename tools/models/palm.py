@@ -47,7 +47,7 @@ def build_hair(m):
                    lean=rnd.uniform(-12, 12), twist=rnd.uniform(-14, 14), skew=rnd.uniform(-0.15, 0.15))
     # masse jusqu'aux cuisses, mèches qui s'écartent du corps
     curtain(m, 'p_c', c, rr - 0.1, range(-90, 91, 12), 1.2, lambda az: 20.0 - 4.0 * abs(az) / 90, 4.4,
-            lambda i: mk(0.04 + 0.05 * (i % 2)), inward=8, flare=0.5, wave=18, rnd=rnd, tip=0.08, belly=1.2)
+            lambda i: mk(0.04 + 0.05 * (i % 2)), inward=8, flare=0.5, wave=18, rnd=rnd, vary=0.22, layer=0.55, tip=0.08, belly=1.2)
     for sx in (-1, 1):                                            # mèches devant les épaules
         curtain(m, f'p_s{sx}', c, rr, [sx * 108, sx * 120], 1.0, 14.0, 3.4, lambda i: mk(0.1),
                 inward=-6, flare=0.3, wave=14, rnd=rnd, tip=0.08, belly=1.15)

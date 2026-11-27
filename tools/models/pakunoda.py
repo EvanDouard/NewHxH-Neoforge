@@ -48,9 +48,10 @@ def build_hair(m):
     # mi-longs : rideau jusqu'aux épaules, pointes qui rebiquent vers l'extérieur
     for i, az in enumerate(range(-132, 133, 16)):
         a = math.radians(az)
-        r = rr - 0.7
-        lock(m, f'p_c{i}', [c[0] + r * math.sin(a), c[1] + 1.4, c[2] + r * math.cos(a)], 9.4, 3.6, 180, 0,
-             mk(0.06 + 0.05 * (i % 2)), flat=0.36, curve=(-30 * math.cos(a), 30 * math.sin(a)), segs=4, root=1.05,
+        r = rr - 0.7 + (0.4 if i % 2 else 0.0)
+        lock(m, f'p_c{i}', [c[0] + r * math.sin(a), c[1] + 1.4, c[2] + r * math.cos(a)], 9.4 + rnd.uniform(-1.4, 0.8),
+             3.6 + (0.0 if i % 2 else 0.5), 180, rnd.uniform(-3, 3),
+             mk(0.06 + 0.05 * (i % 2)), flat=0.36, curve=(-30 * math.cos(a) * rnd.uniform(0.7, 1.2), 30 * math.sin(a) * rnd.uniform(0.6, 1.3)), segs=4, root=1.05,
              tip=0.15, taper_pow=0.4, belly=1.05, skew=rnd.uniform(-0.1, 0.1))
     # raie sur le côté : longue mèche balayée sur le front (côté droit du perso), mèches courtes de l'autre côté
     for j, (az, L, W, lean, k) in enumerate(((150, 9.6, 4.4, -26, 0.34), (166, 8.6, 4.2, -30, 0.3),

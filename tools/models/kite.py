@@ -43,11 +43,11 @@ def build_hair(m):
     rr = R + 0.25
     for i, az in enumerate(range(-76, 77, 12)):                   # rideau jusqu'à la taille
         a = math.radians(az)
-        r = rr + 0.15
+        r = rr + 0.15 + (0.45 if i % 2 else 0.0)                  # deux plans de mèches
         x, z = c[0] + r * math.sin(a), c[2] + r * math.cos(a)
         side = abs(az) / 76
-        L = 22.5 - 3.5 * side + rnd.uniform(-0.8, 0.8)
-        lock(m, f'k_c{i}', [x, c[1] + 2.0, z], L + 1.6, 3.8, 178, az * 0.05, mk(0.05 + 0.04 * (i % 2)),
+        L = 22.5 - 3.5 * side + rnd.uniform(-2.6, 1.6)
+        lock(m, f'k_c{i}', [x, c[1] + 2.0, z], L + 1.6, 3.8 + (0.0 if i % 2 else 0.6), 178, az * 0.05, mk(0.05 + 0.04 * (i % 2)),
              ry=rnd.uniform(-6, 6), flat=0.38, curve=(-16 * math.cos(a), az * 0.04), segs=5, root=1.05, tip=0.12,
              taper_pow=0.45, belly=1.08, skew=rnd.uniform(-0.12, 0.12))
     for sx in (-1, 1):                                            # côtés courts (cachent la tête) + devant épaules
@@ -66,9 +66,9 @@ def build_hair(m):
     # casquette souple : calotte bouffante, bandeau, visière
     hx, hz = b.head[0] / 2, b.head[2] / 2
     hat = cloth(HAT, HAT_L, shade(HAT, 0.7), folds=3, seed=300)
-    m.bone('hat', [0, top, 0], 'head', rotation=[-4, 0, 0])
-    m.cube('hat', [-hx - 0.5, top - 1.5, -hz - 0.5], [b.head[0] + 1.0, 1.6, b.head[2] + 1.0], cloth(shade(HAT, 0.85), seed=301))
-    for k, (dy, g, h) in enumerate(((0.0, 1.0, 1.9), (1.9, 0.3, 0.7))):     # calotte bouffante
+    m.bone('hat', [0, top, 0], 'head', rotation=[-6, 0, 4])
+    m.cube('hat', [-hx - 0.35, top - 1.5, -hz - 0.35], [b.head[0] + 0.7, 1.6, b.head[2] + 0.7], cloth(shade(HAT, 0.85), seed=301))
+    for k, (dy, g, h) in enumerate(((0.0, 0.7, 1.5), (1.5, 0.15, 0.6))):    # calotte souple
         m.cube('hat', [-hx - g, top + dy, -hz - g + 0.5], [b.head[0] + 2 * g, h, b.head[2] + 2 * g], hat)
     m.cube('hat', [-hx + 0.2, top - 1.3, -hz - 3.2], [b.head[0] - 0.4, 0.45, 2.9], cloth(shade(HAT, 0.8), seed=302),
            pivot=[0, top - 1.3, -hz - 0.3], rotation=[-6, 0, 0])

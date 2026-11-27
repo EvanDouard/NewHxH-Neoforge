@@ -45,7 +45,7 @@ def build_hair(m):
         crown_lock(m, f'a_m{i}', c, rr, az, 96, 9.8, 3.8, mk(0.14 + 0.06 * math.cos(math.radians(az - 140))),
                    flat=0.3, turn=96, tip=0.85, segs=4, taper_pow=0.15)
     curtain(m, 'a_c', c, rr - 0.4, range(-84, 85, 12), 1.6, lambda az: 13.5 - 2.5 * abs(az) / 84, 3.8,
-            lambda i: mk(0.06 + 0.04 * (i % 2)), inward=10, rnd=rnd, tip=0.7, segs=4, belly=1.02)
+            lambda i: mk(0.06 + 0.04 * (i % 2)), inward=10, rnd=rnd, vary=0.18, layer=0.5, tip=0.7, segs=4, belly=1.02)
     for sx in (-1, 1):
         curtain(m, f'a_s{sx}', c, rr - 0.2, [sx * 100, sx * 114, sx * 128], 1.0, 8.6, 3.4, lambda i: mk(0.12),
                 inward=0, rnd=rnd, tip=0.75, segs=4)

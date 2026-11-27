@@ -46,7 +46,7 @@ def build_hair(m):
                    mk(0.16 + 0.06 * math.cos(math.radians(az - 150))), flat=0.4, turn=98, tip=0.3, segs=4,
                    twist=rnd.uniform(-5, 5))
     curtain(m, 'n_c', c, rr - 0.5, range(-96, 97, 12), 1.6, lambda az: 15.5 - 3.0 * abs(az) / 96, 4.0,
-            lambda i: mk(0.08 + 0.05 * (i % 2)), inward=14, flare=0.15, wave=8, rnd=rnd, tip=0.15, belly=1.12)
+            lambda i: mk(0.08 + 0.05 * (i % 2)), inward=14, flare=0.15, wave=8, rnd=rnd, vary=0.2, layer=0.55, tip=0.15, belly=1.12)
     for sx in (-1, 1):
         curtain(m, f'n_s{sx}', c, rr - 0.1, [sx * 112, sx * 124], 1.2, 10.5, 3.4, lambda i: mk(0.14), inward=0,
                 rnd=rnd, tip=0.12, belly=1.1)

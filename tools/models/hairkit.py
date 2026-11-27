@@ -11,10 +11,11 @@ from chibi import flat, lock
 
 
 def curtain(m, name, c, r, azs, y_off, length, width, paint, *, inward=12.0, flare=0.0, rnd=None, tip=0.12,
-            flat_=0.38, belly=1.08, wave=0.0, segs=5, flip=0.0):
+            flat_=0.38, belly=1.08, wave=0.0, segs=5, flip=0.0, vary=0.1, layer=0.3):
     """Mèches qui pendent d'un anneau autour du crâne (rayon r, hauteur c_y + y_off).
     length / width : float ou fonction de az ; inward : courbure vers le corps (dos) ; flare : écartement des pointes ;
-    flip : pointes qui rebiquent vers l'extérieur ; wave : torsion aléatoire."""
+    flip : pointes qui rebiquent vers l'extérieur ; wave : torsion aléatoire ; vary : écart aléatoire de longueur
+    (fraction) ; layer : décalage d'une mèche sur deux vers l'extérieur (deux plans, pas un rideau régulier)."""
     rnd = rnd or random.Random(len(name))
     for i, az in enumerate(azs):
         a = math.radians(az)
@@ -22,8 +23,10 @@ def curtain(m, name, c, r, azs, y_off, length, width, paint, *, inward=12.0, fla
         W = width(az) if callable(width) else width
         bend = inward * math.cos(a) - flip * math.cos(a)
         side = flip * math.sin(a) + flare * az / 90
-        lock(m, f'{name}{i}', [c[0] + r * math.sin(a), c[1] + y_off, c[2] + r * math.cos(a)], L + rnd.uniform(-0.5, 0.5),
-             W, 178, flare * az * 0.05, paint(i), ry=rnd.uniform(-wave, wave), flat=flat_, curve=(bend, side),
+        rr = r + (layer if i % 2 else 0.0)
+        L = L * (1 + rnd.uniform(-vary, vary * 0.6)) + (0.0 if i % 2 else 0.4)
+        lock(m, f'{name}{i}', [c[0] + rr * math.sin(a), c[1] + y_off, c[2] + rr * math.cos(a)], L + rnd.uniform(-0.5, 0.5),
+             W * (1.0 if i % 2 else 1.12), 178, flare * az * 0.05, paint(i), ry=rnd.uniform(-wave, wave), flat=flat_, curve=(bend, side),
              segs=segs, root=1.05, tip=tip, taper_pow=0.45, belly=belly, skew=rnd.uniform(-0.12, 0.12))
 
 
