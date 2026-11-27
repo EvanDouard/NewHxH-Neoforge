@@ -3387,6 +3387,9 @@ shot 99zzk_carte_continent_noir
 pick region:K
 wait 5
 shot 99zzl_carte_continent_noir_kakin
+pick dark:s
+wait 5
+shot 99zzp_carte_continent_noir_point_saherta
 closescreen
 cmd hunter darkcontinent unknown
 cmd hunter airship

@@ -123,7 +123,7 @@ print('ok', img.size)
 
 # 6. Seconde carte (« Continent Noir connu »), d'après la carte du lac Mobius : le Continent Noir (parchemin) entoure tout le lac ;
 #    le lac a deux lobes ; le monde connu est au centre dans un cadre en pointillés ; le Nouveau Continent est dans le lobe est ;
-#    cinq croix sur les côtes du Continent Noir (Saherta, Begerossé, Kukan'yu, Mimbo, Ochima). Purement visuel : les limites du
+#    cinq repères sur les côtes du Continent Noir (Saherta, Begerossé, Kukan'yu, Mimbo, Ochima). Purement visuel : les limites du
 #    Continent Noir ne sont pas connues. Mêmes constantes dans AirshipMapScreen (toile, position et taille du monde).
 from PIL import ImageDraw
 OUT_DARK = 'src/main/resources/assets/hxh/textures/gui/world_map_dark.png'
@@ -142,10 +142,9 @@ def fractal(w, h, octaves=(4, 8, 16, 32, 64)):
 yy, xx = np.mgrid[0:CH, 0:CW].astype(float)
 u, v = xx / CW, yy / CH
 def ell(cx, cy, rx, ry): return 1 - (((u - cx) / rx) ** 2 + ((v - cy) / ry) ** 2)
-band = 1 - np.maximum(np.abs((u - 0.5) / 0.2) ** 4, np.abs((v - 0.495) / 0.32) ** 4)
-shape = np.maximum.reduce([ell(0.222, 0.495, 0.205, 0.43), ell(0.778, 0.495, 0.205, 0.43), band])
-lake = (shape + (fractal(CW, CH, (3, 6, 12, 24, 48)) - 0.5) * 0.18) > 0.0
-lake = np.array(Image.fromarray((lake * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(3))) > 127
+# contours tracés sur la carte du lac Mobius (tools/extract_lake_masks.py) : lac à deux lobes et Nouveau Continent
+lake = np.array(Image.open('tools/ref/lake_mask.png').convert('L').resize((CW, CH), Image.LANCZOS)) > 127
+lake = np.array(Image.fromarray((lake * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(2))) > 127
 # parchemin du Continent Noir
 tex = fractal(CW, CH, (3, 6, 12, 24))
 vign = np.clip(1 - np.maximum(np.abs(u - 0.5) * 2, np.abs(v - 0.5) * 2) ** 3, 0, 1)
@@ -164,12 +163,13 @@ shore1 = lake & ~inner; shore2 = inner & ~inner2
 canvas[shore1] = (205, 220, 214); canvas[shore2] = (150, 188, 196)
 outside = np.array(Image.fromarray((lake * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(9))) > 127
 canvas[outside & ~lake] = canvas[outside & ~lake] * 0.78 + np.array((120, 96, 52)) * 0.22
-# Nouveau Continent (lobe est)
-nc_u, nc_v = 0.789, 0.375
-nc = (1 - (((u - nc_u) / 0.034) ** 2 + ((v - nc_v) / (0.105 + 0.03 * (v - nc_v) / 0.1)) ** 2) + (fractal(CW, CH) - 0.5) * 0.35) > 0
+# Nouveau Continent (lobe est) : contour tracé
+nc = np.array(Image.open('tools/ref/new_continent_mask.png').convert('L').resize((CW, CH), Image.LANCZOS)) > 127
 nc = np.array(Image.fromarray((nc * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(2))) > 127
 nc_edge = nc & ~(np.array(Image.fromarray((nc * 255).astype(np.uint8)).filter(ImageFilter.MinFilter(7))) > 127)
-canvas[nc] = (206, 152, 96) + (tex[nc, None] - 0.5) * 16
+nc_shade = np.array(Image.fromarray((nc * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(25))).astype(float) / 255
+for i, (a_, b_) in enumerate(zip((214, 166, 104), (186, 134, 80))):
+    canvas[..., i][nc] = (a_ + (b_ - a_) * (1 - np.clip(nc_shade * 1.5, 0, 1)) + (tex - 0.5) * 16)[nc]
 canvas[nc_edge] = (232, 214, 170)
 canvas = np.clip(canvas, 0, 255).astype(np.uint8)
 world = Image.fromarray(canvas).convert('RGB')
@@ -199,12 +199,7 @@ for cx_, cy_, a0 in ((x1 - r, y0 + r, -90), (x1 - r, y1 - r, 0), (x0 + r, y1 - r
 pts.append(pts[0])
 dashed(pts)
 world.save(OUT_DARK, optimize=True)
-# repères des croix : sur la côte du Continent Noir, juste hors du lac
-def shore_y(col, top):
-    ys = np.where(lake[:, col])[0]
-    return (ys.min() if top else ys.max())
-marks = {}
-for name, uu, top in (('saherta', 0.554, True), ('begerosse', 0.672, True), ('kukanyu', 0.547, False), ('mimbo', 0.751, False), ('ochima', 0.882, False)):
-    col = int(uu * CW); y = shore_y(col, top)
-    marks[name] = (col, int(y - 0.045 * CH if top else y + 0.045 * CH))
-print('ok dark', world.size, 'monde', (DX, DY, WW, WH), 'croix', marks)
+# repères (petits carrés dans le client) : positions relevées sur la carte du lac Mobius, en pixels de la toile
+marks = {'saherta': (0.554, 0.168), 'begerosse': (0.672, 0.104), 'kukanyu': (0.547, 0.857), 'mimbo': (0.751, 0.951), 'ochima': (0.882, 0.876)}
+marks = {k: (round(a_ * CW), round(b_ * CH)) for k, (a_, b_) in marks.items()}
+print('ok dark', world.size, 'monde', (DX, DY, WW, WH), 'repères', marks)

@@ -2025,5 +2025,6 @@
   "advancement.hxh.region_begerosse.title": "Region: Begerossé",
   "advancement.hxh.region_begerosse.desc": "Discover the Begerossé region.",
   "advancement.hxh.region_padokea.title": "Region: Padokea",
-  "advancement.hxh.region_padokea.desc": "Discover the Padokea region."
+  "advancement.hxh.region_padokea.desc": "Discover the Padokea region.",
+  "airship.hxh.dark_point": "Dark Continent coast: not accessible yet"
 }

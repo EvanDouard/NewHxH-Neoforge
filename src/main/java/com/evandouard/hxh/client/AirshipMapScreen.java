@@ -135,6 +135,10 @@ public class AirshipMapScreen extends Screen {
 
     /** Scénario de CI : place le curseur sur un lieu (identifiant ou nom court) ou sur une région (« region:K »). */
     public boolean hover(String what) {
+        if (dark && what.startsWith("dark:") && what.length() == 6) {
+            for (int[] p : DARK_POINTS) if (p[0] == what.charAt(5)) { fakeX = dpx(p); fakeY = dpy(p); return true; }
+            return false;
+        }
         if (what.startsWith("region:") && what.length() == 8) {
             char c = what.charAt(7);
             char[][] g = grid();
@@ -189,10 +193,21 @@ public class AirshipMapScreen extends Screen {
         g.pose().popPose();
     }
 
-    /** Une croix rouge sur la côte du Continent Noir, avec le nom du pays (point d'accès : lieu connu, mais pas la région). */
-    private void cross(GuiGraphics g, char region, double cx, double cy, float s) {
-        label(g, Component.literal("X"), cx, cy - 14, s * 1.6f, 0xFFB02020, false);
-        label(g, regionName(region), cx, cy + 14, s * 0.9f, 0xFF3A2410, false);
+    /** Points sur les côtes du Continent Noir : région (pour le nom) et position sur la toile. Pas encore accessibles. */
+    private static final int[][] DARK_POINTS = {{'s', 1330, 239}, {'b', 1613, 148}, {'k', 1313, 1220}, {'m', 1802, 1354}, {'o', 2117, 1247}};
+
+    private int dpx(int[] p) {
+        return canvasX + p[1] * canvasW / texW;
+    }
+
+    private int dpy(int[] p) {
+        return canvasY + p[2] * canvasH / texH;
+    }
+
+    private int[] darkPointAt(double mx, double my) {
+        if (!dark) return null;
+        for (int[] p : DARK_POINTS) if (Math.abs(mx - dpx(p)) <= 4 && Math.abs(my - dpy(p)) <= 4) return p;
+        return null;
     }
 
     /**
@@ -214,11 +229,13 @@ public class AirshipMapScreen extends Screen {
         label(g, Component.translatable("airship.hxh.lake_mobius"), 370, 730, s * 1.7f, 0xFFE8F4FF, false);
         label(g, Component.translatable("airship.hxh.lake_mobius"), 2030, 760, s * 1.7f, 0xFFE8F4FF, false);
         label(g, Component.translatable("airship.hxh.new_continent"), 1894, 534, s * 0.9f, 0xFFFFF4D8, true);
-        cross(g, 's', 1329, 188, s);
-        cross(g, 'b', 1612, 122, s);
-        cross(g, 'k', 1312, 1225, s);
-        cross(g, 'm', 1802, 1375, s);
-        cross(g, 'o', 2116, 1293, s);
+        // petits carrés comme les autres repères, grisés : pas encore accessibles en dirigeable
+        for (int[] p : DARK_POINTS) {
+            int x = dpx(p), y = dpy(p);
+            g.fill(x - 3, y - 3, x + 3, y + 3, 0xE0000000);
+            g.fill(x - 2, y - 2, x + 2, y + 2, PIN_POOR);
+            label(g, regionName((char) p[0]), p[1], p[2] + (p[2] < texH / 2 ? -26 : 26), s * 0.9f, 0xFF3A2410, false);
+        }
     }
 
     @Override
@@ -243,7 +260,12 @@ public class AirshipMapScreen extends Screen {
             g.fill(x - r, y - r, x + r, y + r, data.jenny() >= d.price() ? PIN_OK : PIN_POOR);
         }
 
-        if (hover != null) {
+        int[] darkPoint = hover == null ? darkPointAt(mouseX, mouseY) : null;
+        if (darkPoint != null) {
+            g.renderTooltip(font, java.util.List.of(regionName((char) darkPoint[0]).copy().withStyle(net.minecraft.ChatFormatting.BOLD),
+                    Component.translatable("airship.hxh.dark_point").withStyle(net.minecraft.ChatFormatting.GRAY)),
+                    java.util.Optional.empty(), mouseX, mouseY);
+        } else if (hover != null) {
             Component name = Component.translatable("airship.hxh.dest." + hover.id().substring(hover.id().indexOf(':') + 1));
             boolean poor = data.jenny() < hover.price();
             java.util.List<Component> lines = new java.util.ArrayList<>();
