@@ -59,8 +59,8 @@ def build_hair(m):
     m.cube('knot', [kx - 1.3, ky - 1.2, kz - 1.3], [2.6, 2.6, 2.6], mk(0.22)(0.5))
     m.cube('knot', [kx - 1.0, ky - 1.4, kz - 1.0], [2.0, 0.5, 2.0], flat(rgb('#2a2a3a'), 0.9))
     for k, (dx, L, W, rz, cz) in enumerate(((0, 15.0, 4.2, 0, 0), (-0.8, 12.5, 3.2, 12, -8), (0.8, 13.0, 3.2, -12, 8))):
-        lock(m, f'm_tail{k}', [kx + dx, ky + 0.4, kz + 0.8], L, W, 122, rz, mk(0.24 - 0.06 * k), flat=0.7,
-             curve=(58, cz), segs=5, root=1.2, tip=0.08, taper_pow=0.6, parent='knot', skew=0.06 * (k - 1))
+        lock(m, f'm_tail{k}', [kx + dx, ky - 0.2, kz + 0.8], L + 1.0, W, 150, rz * 0.7, mk(0.24 - 0.06 * k), flat=0.7,
+             curve=(30, cz), segs=5, root=1.2, tip=0.08, taper_pow=0.6, parent='knot', skew=0.06 * (k - 1))
 
 
 def face_paint(ctx, mode='calme'):

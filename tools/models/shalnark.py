@@ -14,8 +14,8 @@ from chibi import FaceGrid, cloth, crown_lock, flat, scalp, skin_mat, strand_pai
 from geolib import Model, humanoid_animations, material, rgb, shade
 
 SKIN = rgb('#f4dcc8')
-HAIR = rgb('#c99a3a')
-HAIR_L = rgb('#f2d27a')
+HAIR = rgb('#d6b25a')
+HAIR_L = rgb('#f6e2a0')
 LINE = rgb('#3a2a1a')
 EYE = rgb('#3a9a5a')
 JACKET = rgb('#7a7448')
@@ -37,7 +37,7 @@ def build_hair(m):
     top = b.top
     m.bone('hair', [0, top, 0], 'head')
     rnd = random.Random(137)
-    c, R = (0.0, top - 3.4, 0.3), 4.6
+    c, R = (0.0, top - 3.5, 0.3), 4.35
     scalp(m, c, R, lambda k: mk(k)(0.5), skip_front=46, front_phi=32)
     rr = R + 0.25
     for i, az in enumerate(range(0, 360, 24)):

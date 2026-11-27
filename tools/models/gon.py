@@ -130,14 +130,14 @@ def build_hair(m):
     # Itération 7 — hiérarchie : grandes mèches élargies (aucune lame fine), intermédiaires qui font la
     # transition sommet / côtés, peu de petites mèches ; arrière en mèches séparées aux reflets différents.
     dominant = [
-        ('g_top', 0.8, 26.2, -0.2, 13.0, 8.0, 8, -8, 8, 0.68, 14, 0.22, dict(skew=-0.08, tip=0.1, root=1.4)),
-        ('g_top_r', -2.6, 25.8, 0.9, 10.8, 7.4, 26, 26, -14, 0.55, 18, 0.1, dict(skew=0.12, tip=0.12, root=1.4)),
-        ('g_top_l', 3.2, 25.3, 0.4, 9.2, 7.0, 16, -36, 20, 0.74, 16, 0.06, dict(skew=-0.1, tip=0.14, root=1.4)),
-        ('g_front', -1.0, 25.6, -2.7, 7.8, 6.8, -22, 12, -6, 0.58, 14, 0.26, dict(skew=0.08, tip=0.12, root=1.35)),
-        ('g_back', 0.2, 25.0, 2.8, 11.2, 7.8, 50, -6, 4, 0.55, 18, 0.04, dict(skew=0.06, tip=0.1, root=1.4)),
-        ('g_back_r', -3.3, 23.8, 3.4, 8.8, 6.6, 66, 38, 18, 0.48, 16, 0.2, dict(skew=0.1, tip=0.12)),
-        ('g_back_l', 3.5, 24.4, 2.6, 7.6, 6.4, 60, -46, -16, 0.58, 14, -0.12, dict(skew=-0.1, tip=0.12)),
-        ('g_side_r', -4.4, 23.8, 0.4, 6.6, 6.2, 34, 46, 10, 0.52, 18, 0.06, dict(skew=0.1, tip=0.14, root=1.45)),
+        ('g_top', 0.8, 26.2, -0.2, 10.9, 8.0, 20, -8, 8, 0.68, 14, 0.22, dict(skew=-0.08, tip=0.1, root=1.4)),
+        ('g_top_r', -2.6, 25.8, 0.9, 9.1, 7.4, 38, 26, -14, 0.55, 18, 0.1, dict(skew=0.12, tip=0.12, root=1.4)),
+        ('g_top_l', 3.2, 25.3, 0.4, 7.7, 7.0, 28, -36, 20, 0.74, 16, 0.06, dict(skew=-0.1, tip=0.14, root=1.4)),
+        ('g_front', -1.0, 25.6, -2.7, 6.6, 6.8, -10, 12, -6, 0.58, 14, 0.26, dict(skew=0.08, tip=0.12, root=1.35)),
+        ('g_back', 0.2, 25.0, 2.8, 9.4, 7.8, 50, -6, 4, 0.55, 18, 0.04, dict(skew=0.06, tip=0.1, root=1.4)),
+        ('g_back_r', -3.3, 23.8, 3.4, 7.4, 6.6, 66, 38, 18, 0.48, 16, 0.2, dict(skew=0.1, tip=0.12)),
+        ('g_back_l', 3.5, 24.4, 2.6, 6.4, 6.4, 60, -46, -16, 0.58, 14, -0.12, dict(skew=-0.1, tip=0.12)),
+        ('g_side_r', -4.4, 23.8, 0.4, 5.5, 6.2, 34, 46, 10, 0.52, 18, 0.06, dict(skew=0.1, tip=0.14, root=1.45)),
     ]
     intermediate = [                                    # transitions sommet → côtés, plus épaisses
         ('g_i1', 1.9, 25.6, -2.1, 5.6, 5.2, -10, -24, 12, 0.62, 12, 0.18, dict(tip=0.16)),
@@ -158,9 +158,9 @@ def build_hair(m):
     # frange : 4 mèches individuelles qui retombent en se courbant, longueurs variées, profondeurs décalées
     # (elles se chevauchent) ; le front et les sourcils restent visibles
     # frange individualisée : longueurs, largeurs, inclinaisons (rx) et profondeurs toutes différentes
-    for name, x, z, L, W, rz, arc, sk, rxb, lt in (('b_1', -3.3, -4.75, 2.6, 3.4, -24, 10, 0.12, 164, 0.14),
+    for name, x, z, L, W, rz, arc, sk, rxb, lt in (('b_1', -3.3, -4.75, 3.2, 2.6, -24, 12, 0.12, 164, 0.14),
                                                     ('b_2', -0.9, -5.1, 4.0, 3.8, -6, 12, -0.06, 170, 0.24),
-                                                    ('b_3', 1.5, -4.85, 2.1, 3.0, 14, 8, 0.1, 176, 0.1),
+                                                    ('b_3', 1.5, -4.85, 3.0, 2.2, 14, 10, 0.1, 176, 0.1),
                                                     ('b_4', 3.5, -5.0, 3.2, 3.0, 30, 10, -0.12, 166, 0.18)):
         lock(m, name, [x, 25.7, z], L, W, rxb, rz, mk(lt), flat=0.5, curve=(-arc, arc * (1 if rz > 0 else -1) * 0.5),
              segs=2, root=1.15, tip=0.1, skew=sk)
@@ -191,18 +191,18 @@ def face_paint(ctx):
     d.polygon(P(0, 9, 7, 9, 0, 26), fill=HAIR)
     d.polygon(P(66, 9, 59, 9, 66, 26), fill=HAIR)
     # sourcils (sous les sourcils en relief) : épais, relevés à l'extérieur, abaissés vers le centre : déterminé
-    d.polygon(P(9, 16, 27, 20, 27, 23, 9, 19), fill=LINE)
-    d.polygon(P(57, 16, 39, 20, 39, 23, 57, 19), fill=LINE)
+    d.polygon(P(9, 17, 16, 14, 27, 19, 27, 22, 16, 17, 9, 20), fill=LINE)          # sourcils arqués, énergiques
+    d.polygon(P(57, 17, 50, 14, 39, 19, 39, 22, 50, 17, 57, 20), fill=LINE)
     # yeux : grands, plus hauts, iris brun chaud, pupille nette et contourée, deux reflets (regard ouvert)
     for x0, inner_right in ((11, True), (42, False)):
         x1 = x0 + 13
         d.rectangle(P(x0, 25, x1, 42), fill=(252, 252, 252, 255))
-        ix0 = x0 + (4 if inner_right else 0)
-        d.rectangle(P(ix0, 27, ix0 + 9, 42), fill=EYE_IRIS)
+        ix0 = x0 + (3 if inner_right else 0)
+        d.rectangle(P(ix0, 27, ix0 + 10, 42), fill=EYE_IRIS)                # iris agrandi
         d.rectangle(P(ix0, 36, ix0 + 9, 42), fill=EYE_IRIS_LIGHT)          # bas de l'iris plus clair
         d.rectangle(P(ix0, 27, ix0 + 9, 29), fill=shade(EYE_IRIS, 0.6))    # ombre de la paupière
         d.rectangle(P(ix0 + 2, 30, ix0 + 7, 39), fill=rgb('#1a0c05'))      # pupille
-        d.rectangle(P(ix0 + 1, 28, ix0 + 4, 31), fill=(255, 255, 255, 255))
+        d.rectangle(P(ix0 + 1, 28, ix0 + 5, 32), fill=(255, 255, 255, 255))     # reflet net
         d.rectangle(P(ix0 + 6, 37, ix0 + 8, 39), fill=(255, 236, 214, 255))
         d.rectangle(P(x0 - 1, 23, x1 + 1, 26), fill=LINE)                  # paupière supérieure épaisse
         if inner_right:
@@ -286,7 +286,7 @@ def build_jacket(m):
     # col sombre et petite zone rouge à l'ouverture
     m.cube('torso', [-2.4, 16.2, -1.8], [4.8, 0.9, 3.6], flat(COLLAR, 0.8))
     for sx, rz in ((-1, -20), (1, 20)):
-        m.cube('torso', [sx * 1.3 - 0.8, 15.0, -2.45], [1.6, 1.5, 0.4], flat(COLLAR, 0.8),
+        m.cube('torso', [sx * 1.3 - 0.9, 14.9, -2.65], [1.8, 1.7, 0.6], flat(COLLAR, 0.8),
                pivot=[sx * 0.6, 16.4, -2.3], rotation=[0, 0, rz])
     m.cube('torso', [-0.55, 15.1, -2.42], [1.1, 1.2, 0.3], flat(RED, 0.85))
     # fermeture centrale rouge/orange, en relief
@@ -359,7 +359,7 @@ def build_waist_and_legs(m):
             m.cube(f'{side}_shin', [cx - 0.7, 1.12 + k * 0.42, -2.78], [1.4, 0.17, 0.12], flat(LACE, 0.95))
             m.cube(f'{side}_shin', [cx - 0.7, 2.05 + k * 0.42, -1.72], [1.4, 0.17, 0.12], flat(LACE, 0.95))
     # ceinture noire et boucle métallique au centre
-    m.cube('body', [-3.9, 8.9, -2.3], [7.8, 1.1, 4.6], cloth(BELT, shade(BELT, 1.8), seed=12))
+    m.cube('body', [-4.0, 8.85, -2.45], [8.0, 1.25, 4.9], cloth(BELT, shade(BELT, 1.8), seed=12))
     m.cube('body', [-0.9, 8.95, -2.55], [1.8, 1.0, 0.3], flat(BUCKLE, 0.75))
     m.cube('body', [-0.45, 9.2, -2.62], [0.9, 0.5, 0.12], flat(BUCKLE_LIGHT, 0.95))
 

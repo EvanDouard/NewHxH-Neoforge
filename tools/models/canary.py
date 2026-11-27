@@ -35,16 +35,22 @@ def build_hair(m):
     top = b.top
     m.bone('hair', [0, top, 0], 'head')
     rnd = random.Random(311)
-    c, R = (0.0, top - 3.4, 0.3), 5.0
+    c, R = (0.0, top - 3.5, 0.3), 4.6
     scalp(m, c, R, lambda k: mk(k - 0.05)(0.5), skip_front=46, front_phi=34)
     rr = R + 0.3
     for i, az in enumerate(range(0, 360, 20)):                      # boucles : mèches courtes très enroulées
         if 140 < az < 220:
             continue
         crown_lock(m, f'c_m{i}', c, rr, az + rnd.uniform(-5, 5), 80 + rnd.uniform(-8, 8), 5.6 + rnd.uniform(-0.6, 0.6),
-                   4.0, mk(0.1 + 0.06 * (i % 2)), flat=0.6, turn=170, tip=0.4, segs=5, twist=rnd.uniform(-14, 14))
-    curtain(m, 'c_c', c, rr - 1.0, range(-116, 117, 18), 0.8, 5.6, 4.0, lambda i: mk(0.05 + 0.05 * (i % 2)),
-            inward=0, flip=-14, rnd=rnd, tip=0.4, segs=4, belly=1.15, wave=10)
+                   4.0, mk(0.1 + 0.06 * (i % 2)), flat=0.6, turn=170, tip=0.4, segs=5, twist=rnd.uniform(-14, 14),
+                   side=rnd.choice((-1, 1)) * rnd.uniform(20, 45))
+    # deuxième couche de boucles plus basses (autour des oreilles et de la nuque) au lieu d'un rideau
+    for i, az in enumerate(range(10, 360, 22)):
+        if 130 < az < 230:
+            continue
+        crown_lock(m, f'c_l{i}', c, rr - 0.2, az + rnd.uniform(-6, 6), 50 + rnd.uniform(-8, 6), 5.0 + rnd.uniform(-0.6, 0.8),
+                   3.6, mk(0.04 + 0.06 * (i % 2)), flat=0.65, turn=180 + rnd.uniform(-20, 20), tip=0.45, segs=5,
+                   twist=rnd.uniform(-20, 20), side=rnd.choice((-1, 1)) * rnd.uniform(20, 50))
     for j, az in enumerate((152, 170, 190, 208)):
         crown_lock(m, f'c_f{j}', c, rr, az, 72, 4.0, 3.6, mk(0.22), flat=0.6, turn=160, tip=0.4, segs=4)
 

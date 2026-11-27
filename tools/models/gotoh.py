@@ -33,16 +33,17 @@ def build_hair(m):
     top = b.top
     m.bone('hair', [0, top, 0], 'head')
     rnd = random.Random(301)
-    c, R = (0.0, top - 3.4, 0.35), 4.8
+    c, R = (0.0, top - 3.7, 0.35), 4.3
     scalp(m, c, R, lambda k: mk(k - 0.05)(0.5), skip_front=48, front_phi=40)
-    rr = R + 0.18
-    for i, x_az in enumerate((-30, -16, -2, 12, 26)):              # peigné en arrière, raie à gauche du perso
-        crown_lock(m, f'g_t{i}', c, rr, x_az + 6, 136, 9.0, 3.6, mk(0.22 + 0.02 * (2 - abs(i - 2))), flat=0.3,
-                   turn=104, tip=0.35, segs=5, lean=-6)
+    rr = R + 0.12
+    for i, x_az in enumerate((-34, -20, -6, 8, 22, 36)):          # peigné en arrière, raie à gauche du perso
+        crown_lock(m, f'g_t{i}', c, rr, x_az + 6, 140, 11.0, 3.4, mk(0.22 + 0.02 * (2.5 - abs(i - 2.5))), flat=0.22,
+                   turn=118, tip=0.5, segs=5, lean=-4)
     for sx in (-1, 1):
-        for j, (az, phi, L) in enumerate(((sx * 60, 120, 7.6), (sx * 84, 104, 6.4), (sx * 106, 90, 5.2))):
-            crown_lock(m, f'g_s{sx}{j}', c, rr - 0.04 * j, az, phi, L, 3.4, mk(0.12), flat=0.3, turn=96, tip=0.35, segs=4)
-    crown_lock(m, 'g_part', c, rr + 0.2, 156, 120, 5.0, 3.0, mk(0.3), flat=0.35, turn=60, tip=0.3, segs=3, lean=-16)
+        for j, (az, phi, L) in enumerate(((sx * 60, 124, 7.0), (sx * 84, 112, 4.2), (sx * 100, 104, 3.0))):
+            crown_lock(m, f'g_s{sx}{j}', c, rr - 0.04 * j, az, phi, L, 3.4, mk(0.12), flat=0.22, turn=100, tip=0.5, segs=4)
+    crown_lock(m, 'g_part', c, rr + 0.1, 150, 138, 9.0, 3.2, mk(0.3), flat=0.22, turn=116, tip=0.5, segs=4, lean=-10)
+    m.cube('hair', [-2.0, top - 0.25, -3.8], [0.25, 0.3, 4.4], flat(shade(HAIR, 1.6), 0.9))          # ligne de la raie
 
 
 def face_paint(ctx, mode='calme'):

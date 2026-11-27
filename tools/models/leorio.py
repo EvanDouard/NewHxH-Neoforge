@@ -80,11 +80,11 @@ def build_hair(m):
         m.cube('hair', [sx * (hx + 0.1) - 0.3, top - 3.6, -1.6], [0.6, 2.4, 4.2], base)
     # (nom, x, y, z, longueur, largeur, rx, rz, ry, aplatissement, courbure, éclairage, options)
     spikes = [   # courtes, épaisses, couchées vers l'arrière ; la houppe avant est la plus haute
-        ('l_f1', -1.8, top + 0.2, -3.2, 3.0, 3.6, 4, 10, 8, 0.6, 22, 0.24, dict(tip=0.18, skew=0.08)),
-        ('l_f2', 0.5, top + 0.4, -3.4, 3.6, 3.8, 2, -4, -6, 0.62, 24, 0.3, dict(tip=0.14, skew=-0.06)),
-        ('l_f3', 2.7, top + 0.1, -3.0, 2.8, 3.4, 6, -16, 10, 0.6, 20, 0.2, dict(tip=0.2)),
+        ('l_f1', -1.8, top + 0.2, -3.2, 3.8, 3.4, 10, 18, 8, 0.6, 22, 0.24, dict(tip=0.18, skew=0.08)),
+        ('l_f2', 0.5, top + 0.4, -3.4, 4.6, 3.6, 6, -6, -6, 0.62, 24, 0.3, dict(tip=0.14, skew=-0.06)),
+        ('l_f3', 2.7, top + 0.1, -3.0, 3.4, 3.2, 14, -24, 10, 0.6, 20, 0.2, dict(tip=0.2)),
         ('l_f4', -3.4, top - 0.3, -2.6, 2.4, 3.2, 10, 26, 0, 0.6, 16, 0.18, dict(tip=0.22)),
-        ('l_t1', -0.6, top + 0.5, -0.8, 3.2, 4.2, 48, 6, 12, 0.6, 18, 0.12, dict(tip=0.16)),
+        ('l_t1', -0.6, top + 0.5, -0.8, 4.2, 4.0, 40, 10, 12, 0.6, 18, 0.12, dict(tip=0.16)),
         ('l_t2', 2.0, top + 0.4, 0.2, 2.8, 4.0, 56, -14, -10, 0.6, 16, 0.08, dict(tip=0.18)),
         ('l_t3', -2.6, top + 0.3, 0.6, 2.8, 3.8, 58, 18, 6, 0.6, 16, 0.06, dict(tip=0.18)),
         ('l_b1', 0.2, top - 0.5, 2.6, 2.8, 4.4, 84, 2, 0, 0.55, 12, -0.02, dict(tip=0.2)),
@@ -92,6 +92,8 @@ def build_hair(m):
         ('l_b3', 2.8, top - 1.1, 2.6, 2.4, 3.8, 90, -24, 0, 0.55, 10, -0.06, dict(tip=0.22)),
         ('l_s1', -hx, top - 1.4, -0.4, 2.0, 3.0, 50, 80, 0, 0.55, 8, 0.06, dict(tip=0.25)),
         ('l_s2', hx, top - 1.4, 0.0, 1.9, 3.0, 54, -82, 0, 0.55, 8, 0.0, dict(tip=0.25)),
+        ('l_x1', 1.2, top + 0.4, -1.8, 3.8, 3.2, 24, -30, 14, 0.6, 22, 0.16, dict(tip=0.12, skew=-0.1)),
+        ('l_x2', -2.0, top + 0.2, 1.8, 3.4, 3.4, 70, 30, -8, 0.6, 18, 0.04, dict(tip=0.14, skew=0.1)),
     ]
     arched(m, spikes, mk, segs=2)
 
@@ -157,6 +159,9 @@ def build_face(m):
     for sx in (-1, 1):                                                                   # oreilles
         m.box('head', (sx * (hx + 0.3), 0.3), HEAD_Y + 2.8, (0.6, 2.0, 1.3), skin_mat(shade(SKIN, 0.95)),
               density=FACE_D)
+    # arcade sourcilière marquée et mâchoire carrée plus large en bas
+    m.cube('head', [-hx + 0.4, HEAD_Y + HEAD[1] * (1 - 21 / 60) - 0.3, -hz - 0.3], [HEAD[0] - 0.8, 0.6, 0.35], skin_mat(shade(SKIN, 0.9)))
+    m.cube('head', [-hx - 0.15, HEAD_Y, -hz + 0.4], [HEAD[0] + 0.3, 1.8, HEAD[2] - 0.8], skin_mat(shade(SKIN, 0.93)))
     # nez en relief
     m.cube('head', [-0.45, HEAD_Y + 2.4, -hz - 0.35], [0.9, 1.6, 0.4], skin_mat(shade(SKIN, 0.97)))
     # lunettes rondes : verres teintés, monture fine, pont, branches jusqu'aux oreilles
@@ -190,8 +195,8 @@ def build_suit(m):
     for sx in (-1, 1):
         m.cube('torso', [sx * 0.9 - 0.7, y1 - 0.9, -d2 - 0.12], [1.4, 1.0, 0.3], shirt,
                pivot=[sx * 0.9, y1 - 0.4, -d2], rotation=[0, 0, -sx * 28])
-    # cravate : nœud, pan qui s'élargit
-    m.cube('torso', [-0.5, y1 - 1.5, -d2 - 0.3], [1.0, 0.9, 0.3], tie)
+    # cravate : nœud en relief, pan qui s'élargit
+    m.cube('torso', [-0.65, y1 - 1.6, -d2 - 0.45], [1.3, 1.1, 0.5], tie)
     m.cube('torso', [-0.55, y1 - 6.0, -d2 - 0.22], [1.1, 4.6, 0.22], tie)
     m.cube('torso', [-0.35, y1 - 6.5, -d2 - 0.22], [0.7, 0.6, 0.22], tie, pivot=[0, y1 - 6.0, -d2], rotation=[0, 0, 45])
     # gilet sombre, boutonné

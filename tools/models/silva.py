@@ -47,14 +47,14 @@ def build_hair(m):
         x, z = c[0] + r * math.sin(a), c[2] + r * math.cos(a)
         side = abs(az) / 80
         L = 19.0 - 4.0 * side + rnd.uniform(-2.0, 1.6)
-        lock(m, f's_c{i}', [x, c[1] + 0.6, z], L, 4.4, 178, az * 0.1, mk(0.04 + 0.05 * (i % 2)),
+        lock(m, f's_c{i}', [x, c[1] + 1.6, z], L + 1.0, 4.8, 178, az * 0.1, mk(0.04 + 0.05 * (i % 2)),
              ry=rnd.uniform(-8, 8), flat=0.45, curve=(-20 * math.cos(a), az * 0.08), segs=5, root=1.1, tip=0.1,
              taper_pow=0.5, belly=1.18, skew=rnd.uniform(-0.15, 0.15))
     # dessus : mèches épaisses rejetées depuis le front, qui gonflent et retombent sur la masse
-    for i, az in enumerate(range(-150, 151, 25)):
-        crown_lock(m, f's_t{i}', c, rr + 0.25, az + rnd.uniform(-4, 4), 96 + rnd.uniform(-4, 4),
-                   10.5 + rnd.uniform(-0.8, 0.8), 4.8, mk(0.2 + 0.05 * math.cos(math.radians(az))), flat=0.42,
-                   turn=88, tip=0.12, segs=4, twist=rnd.uniform(-8, 8), skew=rnd.uniform(-0.12, 0.12),
+    for i, az in enumerate(range(-125, 126, 25)):
+        crown_lock(m, f's_t{i}', c, rr + 0.25, az + rnd.uniform(-4, 4), 76 + rnd.uniform(-4, 4),
+                   14.0 + rnd.uniform(-1.2, 1.2), 5.0, mk(0.2 + 0.05 * math.cos(math.radians(az))), flat=0.42,
+                   turn=74, tip=0.12, segs=5, twist=rnd.uniform(-8, 8), skew=rnd.uniform(-0.12, 0.12),
                    side=rnd.uniform(-20, 20))
     for i, az in enumerate((-24, -8, 8, 24)):                     # front : rejeté vers l'arrière
         crown_lock(m, f's_fr{i}', c, rr + 0.3, az, 138, 9.0, 4.2, mk(0.28), flat=0.4, turn=96, tip=0.15, segs=4,
