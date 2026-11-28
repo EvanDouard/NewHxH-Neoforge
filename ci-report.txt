@@ -1,0 +1,2055 @@
+Scénario chargé : 3539 lignes
+Création du monde plat
+Monde chargé, joueur Dev
+cmd /gamerule doDaylightCycle false
+cmd /gamerule hxhNenLearning false
+cmd /gamerule doMobSpawning false
+cmd /hunter family set none
+cmd /give @s hxh:hunter_card
+capture 01_carte_hunter_en_main : Capture d'écran enregistrée sous le nom de 01_carte_hunter_en_main.png
+cmd /gamemode survival
+cmd /hunter
+OK : message trouvé 'niveau 0'
+OK : message trouvé 'Force : 0'
+OK : message trouvé 'Nen : non débloqué'
+OK : message bien absent 'type de Nen : aucun'
+capture 02_hunter_depart : Capture d'écran enregistrée sous le nom de 02_hunter_depart.png
+cmd /hunter stat vitality set 100
+cmd /hunter stat strength set 30
+cmd /effect give @s minecraft:instant_health 1 5
+cmd /hunter
+cmd /attribute @s minecraft:generic.max_health get
+cmd /attribute @s minecraft:generic.attack_damage get
+OK : message trouvé 'Vitalité : 100'
+OK : message trouvé 'Force : 30'
+OK : message trouvé '60'
+capture 03_vitalite_100_force_30 : Capture d'écran enregistrée sous le nom de 03_vitalite_100_force_30.png
+cmd /hunter nen type manipulator
+cmd /hunter nen unlock
+cmd /hunter
+OK : message trouvé 'Nen : ???'
+touche key.hxh.ten
+cmd /hunter
+OK : message trouvé '(Ten)'
+capture 04_ten_aura_et_jauge : Capture d'écran enregistrée sous le nom de 04_ten_aura_et_jauge.png
+touche key.hxh.ren
+cmd /hunter
+OK : message trouvé '(Ren)'
+capture 05_ren_aura_rouge : Capture d'écran enregistrée sous le nom de 05_ren_aura_rouge.png
+touche key.hxh.ren
+cmd /setblock ~2 ~ ~ hxh:water_divination
+capture 06_verre_de_divination : Capture d'écran enregistrée sous le nom de 06_verre_de_divination.png
+clic droit sur -3, -60, 5 (Verre de divination)
+OK : message trouvé 'La feuille se met à tourner'
+OK : message trouvé 'Ton type de Nen : Manipulation'
+capture 07_divination_manipulation : Capture d'écran enregistrée sous le nom de 07_divination_manipulation.png
+cmd /hunter nen type enhancer
+clic droit sur -3, -60, 5 (Verre de divination)
+capture 07b_divination_renforcement_deborde : Capture d'écran enregistrée sous le nom de 07b_divination_renforcement_deborde.png
+cmd /hunter nen type specialist
+clic droit sur -3, -60, 5 (Verre de divination)
+capture 07c_divination_specialisation_fane : Capture d'écran enregistrée sous le nom de 07c_divination_specialisation_fane.png
+cmd /hunter nen type manipulator
+cmd /hunter
+OK : message bien absent 'Nen : ???'
+capture 08_aura_neutre : Capture d'écran enregistrée sous le nom de 08_aura_neutre.png
+touche key.hxh.ten
+capture 09_aura_ten : Capture d'écran enregistrée sous le nom de 09_aura_ten.png
+touche key.hxh.ren
+capture 10_aura_ren : Capture d'écran enregistrée sous le nom de 10_aura_ren.png
+touche key.hxh.zetsu
+capture 11_zetsu_sans_aura : Capture d'écran enregistrée sous le nom de 11_zetsu_sans_aura.png
+touche key.hxh.zetsu
+cmd /hunter nen color FF8A3D
+capture 12_aura_orange : Capture d'écran enregistrée sous le nom de 12_aura_orange.png
+touche key.hxh.ten
+touche key.hxh.ten
+capture 12b_ken_flammes : Capture d'écran enregistrée sous le nom de 12b_ken_flammes.png
+touche key.hxh.ten
+cmd /hunter aura wild
+touche key.hxh.ten
+capture 12c_aura_sauvage_au_ten : Capture d'écran enregistrée sous le nom de 12c_aura_sauvage_au_ten.png
+touche key.hxh.ten
+cmd /hunter aura calm
+cmd /hunter nen ryu 100
+touche key.hxh.ren
+capture 12d_ryu_poings : Capture d'écran enregistrée sous le nom de 12d_ryu_poings.png
+touche key.hxh.ren
+cmd /hunter nen ryu 50
+cmd /hunter nen heal unlock
+cmd /damage @s 20
+hold key.hxh.heal
+capture 13_soin_aura_verte : Capture d'écran enregistrée sous le nom de 13_soin_aura_verte.png
+release key.hxh.heal
+cmd /hunter
+OK : message trouvé 'Soin par le Nen : niveau'
+cmd /item replace entity @s weapon.mainhand with air
+cmd /summon hxh:npc ~5 ~ ~ {npc:"cook",NoAI:1b,Rotation:[0f,0f],Tags:["anim_ci"]}
+cmd /hunter anim @e[tag=anim_ci] punch_main
+capture 13a_anim_poing_droit_pnj : Capture d'écran enregistrée sous le nom de 13a_anim_poing_droit_pnj.png
+cmd /hunter anim @e[tag=anim_ci] punch_off
+capture 13b_anim_poing_gauche_pnj : Capture d'écran enregistrée sous le nom de 13b_anim_poing_gauche_pnj.png
+cmd /hunter anim @e[tag=anim_ci] charge
+capture 13c_anim_frappe_armee_pnj : Capture d'écran enregistrée sous le nom de 13c_anim_frappe_armee_pnj.png
+cmd /hunter anim @e[tag=anim_ci] charged_punch
+capture 13d_anim_frappe_chargee_pnj : Capture d'écran enregistrée sous le nom de 13d_anim_frappe_chargee_pnj.png
+cmd /hunter anim @e[tag=anim_ci] kick
+capture 13e0_anim_coup_de_pied_arme_pnj : Capture d'écran enregistrée sous le nom de 13e0_anim_coup_de_pied_arme_pnj.png
+capture 13e1_anim_coup_de_pied_pnj : Capture d'écran enregistrée sous le nom de 13e1_anim_coup_de_pied_pnj.png
+cmd /execute as @e[tag=anim_ci] at @s run tp @s ~ ~ ~ 110 0
+cmd /hunter anim @e[tag=anim_ci] punch_main
+capture 13f_anim_poing_droit_pnj_face : Capture d'écran enregistrée sous le nom de 13f_anim_poing_droit_pnj_face.png
+cmd /hunter anim @e[tag=anim_ci] charge
+capture 13g_anim_frappe_armee_pnj_face : Capture d'écran enregistrée sous le nom de 13g_anim_frappe_armee_pnj_face.png
+cmd /hunter anim @e[tag=anim_ci] charged_punch
+capture 13h_anim_frappe_chargee_pnj_face : Capture d'écran enregistrée sous le nom de 13h_anim_frappe_chargee_pnj_face.png
+cmd /hunter anim @e[tag=anim_ci] kick
+capture 13i_anim_coup_de_pied_pnj_face : Capture d'écran enregistrée sous le nom de 13i_anim_coup_de_pied_pnj_face.png
+cmd /kill @e[tag=anim_ci]
+cmd /summon hxh:gon ~4.5 ~ ~ {NoAI:1b,Rotation:[0f,0f],Tags:["anim_ci"]}
+cmd /hunter anim @e[tag=anim_ci] punch_main
+capture 13j_anim_poing_gon_profil : Capture d'écran enregistrée sous le nom de 13j_anim_poing_gon_profil.png
+cmd /hunter anim @e[tag=anim_ci] charge
+capture 13k_anim_frappe_armee_gon_profil : Capture d'écran enregistrée sous le nom de 13k_anim_frappe_armee_gon_profil.png
+cmd /hunter anim @e[tag=anim_ci] charged_punch
+capture 13l_anim_frappe_chargee_gon_profil : Capture d'écran enregistrée sous le nom de 13l_anim_frappe_chargee_gon_profil.png
+cmd /hunter anim @e[tag=anim_ci] kick
+capture 13m_anim_coup_de_pied_arme_gon_profil : Capture d'écran enregistrée sous le nom de 13m_anim_coup_de_pied_arme_gon_profil.png
+capture 13n_anim_coup_de_pied_gon_profil : Capture d'écran enregistrée sous le nom de 13n_anim_coup_de_pied_gon_profil.png
+cmd /execute as @e[tag=anim_ci] at @s run tp @s ~ ~ ~ 110 0
+cmd /hunter anim @e[tag=anim_ci] punch_main
+capture 13o_anim_poing_gon_face : Capture d'écran enregistrée sous le nom de 13o_anim_poing_gon_face.png
+cmd /hunter anim @e[tag=anim_ci] charged_punch
+capture 13p_anim_frappe_chargee_gon_face : Capture d'écran enregistrée sous le nom de 13p_anim_frappe_chargee_gon_face.png
+cmd /kill @e[tag=anim_ci]
+cmd /hunter hatsu select basic_attack
+touche key.hxh.cast
+capture 13e_poing_vue_subjective : Capture d'écran enregistrée sous le nom de 13e_poing_vue_subjective.png
+cmd /hunter hatsu select basic_charged
+hold key.hxh.cast
+capture 13f_frappe_armee_vue_subjective : Capture d'écran enregistrée sous le nom de 13f_frappe_armee_vue_subjective.png
+release key.hxh.cast
+capture 13g_frappe_chargee_vue_subjective : Capture d'écran enregistrée sous le nom de 13g_frappe_chargee_vue_subjective.png
+OK : message trouvé '[hud]'
+cmd /hunter stat strength addxp 3000
+cmd /hunter stat speed addxp 3000
+OK : message trouvé '[hud] Force'
+capture 13i_hud_notifications : Capture d'écran enregistrée sous le nom de 13i_hud_notifications.png
+cmd /tp @s ~-200 ~ ~
+cmd /difficulty easy
+cmd /hunter spawn mannequin ~-3 ~ ~
+cmd /hunter stat strength set 60
+cmd /hunter strike 1
+OK : message trouvé 'lourd'
+capture 13j_impact_lourd_blocs_qui_sautent : Capture d'écran enregistrée sous le nom de 13j_impact_lourd_blocs_qui_sautent.png
+cmd /tp @e[type=minecraft:husk,distance=..12] ~-3 ~ ~
+cmd /hunter stat strength set 100
+cmd /hunter strike 1
+OK : message trouvé '[hud] Image d'impact'
+capture 13k_image_impact : Capture d'écran enregistrée sous le nom de 13k_image_impact.png
+capture 13l_image_impact_negatif : Capture d'écran enregistrée sous le nom de 13l_image_impact_negatif.png
+capture 13m_cratere_apres_impact : Capture d'écran enregistrée sous le nom de 13m_cratere_apres_impact.png
+cmd /kill @e[type=minecraft:husk,distance=..30]
+capture 13n_mort_etoile_d_encre : Capture d'écran enregistrée sous le nom de 13n_mort_etoile_d_encre.png
+cmd /tp @s ~200 -60 ~
+cmd /hunter stat strength set 30
+cmd /difficulty peaceful
+cmd /difficulty easy
+cmd /hunter spawn mannequin ~3 ~ ~5
+cmd /hunter spawn elite_manipulateur ~ ~ ~6
+cmd /hunter spawn squelette_archer ~-3 ~ ~5
+OK : message trouvé 'apparu'
+cmd /execute if entity @e[type=minecraft:husk,distance=..10]
+OK : message trouvé 'Test réussi'
+cmd /effect give @s minecraft:resistance 40 4 true
+cmd /effect give @s minecraft:regeneration 40 4 true
+OK : message trouvé 'Terreur'
+cmd /effect clear @s
+capture 13h_mobs_exemple_peur : Capture d'écran enregistrée sous le nom de 13h_mobs_exemple_peur.png
+cmd /kill @e[type=minecraft:husk,distance=..12]
+cmd /kill @e[type=minecraft:husk,distance=..12]
+cmd /kill @e[type=minecraft:skeleton,distance=..12]
+cmd /difficulty peaceful
+cmd /summon minecraft:villager ~ ~ ~3 {NoAI:1b}
+touche key.hxh.profile
+clic sur 'Ouvrir les pores (cible)'
+cmd /hunter show @e[type=minecraft:villager,limit=1,sort=nearest]
+OK : message trouvé 'Aura :'
+capture 14_maitre_ouvre_les_pores : Capture d'écran enregistrée sous le nom de 14_maitre_ouvre_les_pores.png
+cmd /hunter nen lock
+cmd /hunter nen meditation 1195
+touche key.hxh.profile
+capture 15a_carnet_boutons : Capture d'écran enregistrée sous le nom de 15a_carnet_boutons.png
+clic sur 'Méditer'
+OK : message trouvé 'Après une longue méditation'
+capture 15_eveil_par_meditation : Capture d'écran enregistrée sous le nom de 15_eveil_par_meditation.png
+cmd /hunter nen reveal
+touche key.hxh.profile
+fiche du carnet 'hatsu'
+clic sur 'Hatsu'
+clic sur 'Voir'
+capture 16_choix_du_hatsu : Capture d'écran enregistrée sous le nom de 16_choix_du_hatsu.png
+capture 16b_fiche_gon : Capture d'écran enregistrée sous le nom de 16b_fiche_gon.png
+clic sur 'Retour'
+clic sur '>'
+capture 16c_page_2_idees : Capture d'écran enregistrée sous le nom de 16c_page_2_idees.png
+clic sur 'Voir'
+clic sur 'Retour'
+capture 16d_fiche_idee : Capture d'écran enregistrée sous le nom de 16d_fiche_idee.png
+clic sur '<'
+clic sur 'Transformation'
+clic sur 'Transformation'
+capture 16f_filtre_par_type_transformation : Capture d'écran enregistrée sous le nom de 16f_filtre_par_type_transformation.png
+clic sur 'Filtre : tous'
+clic sur 'Choisir'
+capture 16e_filtre_mon_type : Capture d'écran enregistrée sous le nom de 16e_filtre_mon_type.png
+clic sur 'Oui'
+capture 17_confirmation_definitive : Capture d'écran enregistrée sous le nom de 17_confirmation_definitive.png
+OK : message trouvé 'Tu as choisi le Hatsu de Illumi'
+cmd /hunter
+OK : message trouvé 'Hatsu : Illumi Zoldyck'
+cmd /kill @e[type=minecraft:villager]
+cmd /difficulty easy
+cmd /hunter nen level 20
+cmd /summon minecraft:husk ~ ~ ~4 {NoAI:1b,PersistenceRequired:1b}
+capture 18_encart_technique_prete : Capture d'écran enregistrée sous le nom de 18_encart_technique_prete.png
+touche key.hxh.cast
+capture 19_aiguille_en_recharge : Capture d'écran enregistrée sous le nom de 19_aiguille_en_recharge.png
+cmd /execute as @e[type=minecraft:husk] if data entity @s active_effects run say touche
+OK : message trouvé 'touche'
+touche key.hxh.next_technique
+capture 20_technique_suivante : Capture d'écran enregistrée sous le nom de 20_technique_suivante.png
+touche key.hxh.profile
+fiche du carnet 'hatsu'
+clic sur 'Hatsu'
+capture 21_ma_fiche_illumi : Capture d'écran enregistrée sous le nom de 21_ma_fiche_illumi.png
+touche key.hxh.next_technique
+touche key.hxh.cast
+capture 22_aiguille_ratee_dans_le_vide : Capture d'écran enregistrée sous le nom de 22_aiguille_ratee_dans_le_vide.png
+OK : message bien absent 'Raté'
+cmd /gamerule sendCommandFeedback false
+cmd /kill @e[type=minecraft:husk]
+cmd /tp @s ~300 ~ ~
+cmd /hunter nen level 40
+cmd /summon minecraft:husk ~ ~ ~3.2 {NoAI:1b,PersistenceRequired:1b,Silent:1b}
+cmd /hunter hatsu set kurapika
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22b_chaine_kurapika_lancee : Capture d'écran enregistrée sous le nom de 22b_chaine_kurapika_lancee.png
+capture 22c_chaine_enroulee : Capture d'écran enregistrée sous le nom de 22c_chaine_enroulee.png
+cmd /hunter hatsu next
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22d_holy_chain : Capture d'écran enregistrée sous le nom de 22d_holy_chain.png
+cmd /fill ~-3 ~ ~5 ~3 ~3 ~5 minecraft:stone_bricks
+cmd /summon minecraft:zombie ~ ~ ~7 {NoAI:1b,PersistenceRequired:1b,Silent:1b}
+capture 22d2_reperage_a_travers_le_mur : Capture d'écran enregistrée sous le nom de 22d2_reperage_a_travers_le_mur.png
+cmd /kill @e[type=minecraft:zombie]
+cmd /fill ~-3 ~ ~5 ~3 ~3 ~5 minecraft:air
+cmd /hunter hatsu set killua
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22e_eclair_killua : Capture d'écran enregistrée sous le nom de 22e_eclair_killua.png
+cmd /hunter hatsu release
+cmd /hunter hatsu next
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22e2_godspeed : Capture d'écran enregistrée sous le nom de 22e2_godspeed.png
+cmd /hunter hatsu set gon
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22f_pierre_charge_debut : Capture d'écran enregistrée sous le nom de 22f_pierre_charge_debut.png
+capture 22f2b_pierre_boule_3d : Capture d'écran enregistrée sous le nom de 22f2b_pierre_boule_3d.png
+cmd /hunter nen refill
+capture 22f2_pierre_charge_palier : Capture d'écran enregistrée sous le nom de 22f2_pierre_charge_palier.png
+cmd /hunter hatsu release
+capture 22f3_pierre_lancee : Capture d'écran enregistrée sous le nom de 22f3_pierre_lancee.png
+capture 22f4_pierre_explosion : Capture d'écran enregistrée sous le nom de 22f4_pierre_explosion.png
+cmd /hunter hatsu next
+cmd /hunter nen refill
+cmd /summon minecraft:husk ~ ~ ~6 {NoAI:1b,PersistenceRequired:1b,Silent:1b}
+cmd /hunter hatsu cast
+capture 22f5_ciseaux_lame : Capture d'écran enregistrée sous le nom de 22f5_ciseaux_lame.png
+cmd /hunter nen level 40
+cmd /hunter hatsu select gon_paper
+cmd /hunter nen refill
+cmd /summon minecraft:husk ~-1 ~ ~5 {NoAI:1b,PersistenceRequired:1b,Silent:1b}
+cmd /summon minecraft:husk ~1.5 ~ ~4 {NoAI:1b,PersistenceRequired:1b,Silent:1b}
+cmd /hunter hatsu cast
+capture 22f5b_papier_vague : Capture d'écran enregistrée sous le nom de 22f5b_papier_vague.png
+capture 22f5c_papier_cibles_projetees : Capture d'écran enregistrée sous le nom de 22f5c_papier_cibles_projetees.png
+cmd /hunter nen level 60
+cmd /hunter hatsu select gon_rock_epic
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22f6_pierre_sans_retenue_enfle : Capture d'écran enregistrée sous le nom de 22f6_pierre_sans_retenue_enfle.png
+capture 22f7_pierre_sans_retenue_aveuglante : Capture d'écran enregistrée sous le nom de 22f7_pierre_sans_retenue_aveuglante.png
+cmd /hunter hatsu release
+capture 22f8_pierre_sans_retenue_explosion : Capture d'écran enregistrée sous le nom de 22f8_pierre_sans_retenue_explosion.png
+cmd /hunter hatsu set leorio
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22g_poing_a_distance : Capture d'écran enregistrée sous le nom de 22g_poing_a_distance.png
+cmd /hunter hatsu next
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22h_onde_de_choc : Capture d'écran enregistrée sous le nom de 22h_onde_de_choc.png
+cmd /hunter hatsu set illumi
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22i_aiguille_illumi : Capture d'écran enregistrée sous le nom de 22i_aiguille_illumi.png
+cmd /hunter hatsu next
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22j_illumi_transformation_aiguilles : Capture d'écran enregistrée sous le nom de 22j_illumi_transformation_aiguilles.png
+cmd /hunter hatsu set netero
+touche key.hxh.profile
+clic sur 'Prière'
+capture 22m_netero_priere_jauge : Capture d'écran enregistrée sous le nom de 22m_netero_priere_jauge.png
+capture 22m2_netero_priere_pose_dos : Capture d'écran enregistrée sous le nom de 22m2_netero_priere_pose_dos.png
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22m2_netero_poings_de_kannon : Capture d'écran enregistrée sous le nom de 22m2_netero_poings_de_kannon.png
+cmd /hunter hatsu next
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22m3_netero_kannon_statue : Capture d'écran enregistrée sous le nom de 22m3_netero_kannon_statue.png
+cmd /hunter hatsu next
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22m4_netero_main_zero : Capture d'écran enregistrée sous le nom de 22m4_netero_main_zero.png
+cmd /hunter hatsu set biscuit
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22n_biscuit_grande_forme : Capture d'écran enregistrée sous le nom de 22n_biscuit_grande_forme.png
+cmd /hunter hatsu cast
+cmd /hunter hatsu set feitan
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22n2_feitan_soleil_levant : Capture d'écran enregistrée sous le nom de 22n2_feitan_soleil_levant.png
+cmd /hunter hatsu set meruem
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+cmd /hunter hatsu set zeno
+capture 22n3_meruem_rafale_de_rage : Capture d'écran enregistrée sous le nom de 22n3_meruem_rafale_de_rage.png
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22n4a_zeno_tete_de_dragon : Capture d'écran enregistrée sous le nom de 22n4a_zeno_tete_de_dragon.png
+cmd /hunter hatsu next
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22n4_zeno_plongee_du_dragon : Capture d'écran enregistrée sous le nom de 22n4_zeno_plongee_du_dragon.png
+cmd /hunter hatsu set biscuit
+cmd /hunter nen refill
+cmd /hunter hatsu next
+cmd /hunter hatsu cast
+capture 22n5_biscuit_cookie : Capture d'écran enregistrée sous le nom de 22n5_biscuit_cookie.png
+cmd /hunter hatsu set razor
+cmd /hunter nen refill
+cmd /hunter hatsu next
+cmd /hunter hatsu cast
+cmd /hunter hatsu set kite
+capture 22n6_razor_quatorze_demons : Capture d'écran enregistrée sous le nom de 22n6_razor_quatorze_demons.png
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22n7_kite_roulette : Capture d'écran enregistrée sous le nom de 22n7_kite_roulette.png
+cmd /hunter hatsu set killua
+cmd /hunter nen refill
+touche key.hxh.gyo
+capture 22n7b_gyo_aura_aux_yeux : Capture d'écran enregistrée sous le nom de 22n7b_gyo_aura_aux_yeux.png
+capture 22n7c_gyo_liseret_couleur_aura_bord_ecran : Capture d'écran enregistrée sous le nom de 22n7c_gyo_liseret_couleur_aura_bord_ecran.png
+touche key.hxh.gyo
+cmd /hunter hatsu set kalluto
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22n8_kalluto_danse_des_papiers : Capture d'écran enregistrée sous le nom de 22n8_kalluto_danse_des_papiers.png
+cmd /hunter hatsu set genthru
+cmd /hunter nen refill
+cmd /hunter hatsu next
+cmd /summon minecraft:villager ~-1 ~ ~5 {NoAI:1b,PersistenceRequired:1b,Silent:1b,Invulnerable:1b,Tags:["hxh_dummy"]}
+cmd /hunter hatsu cast
+capture 22n9_genthru_compte_a_rebours : Capture d'écran enregistrée sous le nom de 22n9_genthru_compte_a_rebours.png
+cmd /kill @e[tag=hxh_dummy]
+cmd /tp @s ~60 ~ ~
+cmd /hunter hatsu set uvogin
+cmd /hunter nen refill
+hold key.hxh.cast
+capture 22o1_uvogin_charge : Capture d'écran enregistrée sous le nom de 22o1_uvogin_charge.png
+release key.hxh.cast
+capture 22o2_uvogin_big_bang : Capture d'écran enregistrée sous le nom de 22o2_uvogin_big_bang.png
+cmd /hunter hatsu set silva
+cmd /hunter nen refill
+hold key.hxh.cast
+capture 22o3_silva_grande_boule_charge : Capture d'écran enregistrée sous le nom de 22o3_silva_grande_boule_charge.png
+release key.hxh.cast
+capture 22o4_silva_grande_boule : Capture d'écran enregistrée sous le nom de 22o4_silva_grande_boule.png
+cmd /difficulty easy
+cmd /summon minecraft:zombie ~ ~ ~8 {PersistenceRequired:1b,Tags:["hxh_mobnen"]}
+cmd /hunter nen unlock @e[tag=hxh_mobnen]
+cmd /hunter nen level 50 @e[tag=hxh_mobnen]
+cmd /effect give @s minecraft:resistance 30 4 true
+capture 22o5_zombie_horde_de_nen : Capture d'écran enregistrée sous le nom de 22o5_zombie_horde_de_nen.png
+cmd /kill @e[type=minecraft:zombie]
+cmd /tp @s ~-60 ~ ~
+cmd /fill ~-5 ~ ~-3 ~5 ~6 ~9 minecraft:air
+cmd /fill ~-5 ~-1 ~-3 ~5 ~-1 ~9 minecraft:grass_block
+cmd /effect clear @s
+cmd /hunter hatsu set neferpitou
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22k_pitou_terpsichora_fils : Capture d'écran enregistrée sous le nom de 22k_pitou_terpsichora_fils.png
+cmd /hunter hatsu next
+cmd /hunter nen refill
+cmd /summon minecraft:villager ~ ~ ~4.5 {NoAI:1b,PersistenceRequired:1b,Silent:1b,Tags:["hxh_patient"]}
+cmd /hunter hatsu cast
+capture 22l_docteur_blythe_poupee : Capture d'écran enregistrée sous le nom de 22l_docteur_blythe_poupee.png
+cmd /kill @e[tag=hxh_patient]
+cmd /effect clear @s
+cmd /hunter hatsu set hisoka
+cmd /summon minecraft:villager ~1.5 ~ ~4 {PersistenceRequired:1b,Silent:1b,Tags:["hxh_gum"]}
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22m_bungee_gum_colle : Capture d'écran enregistrée sous le nom de 22m_bungee_gum_colle.png
+cmd /tp @e[tag=hxh_gum] ~4 ~ ~9
+capture 22n_bungee_gum_tendu : Capture d'écran enregistrée sous le nom de 22n_bungee_gum_tendu.png
+cmd /hunter hatsu cast
+capture 22o_bungee_gum_contraction : Capture d'écran enregistrée sous le nom de 22o_bungee_gum_contraction.png
+cmd /kill @e[tag=hxh_gum]
+cmd /hunter hatsu next
+cmd /hunter nen refill
+cmd /hunter hatsu cast
+capture 22p_carte_hisoka : Capture d'écran enregistrée sous le nom de 22p_carte_hisoka.png
+cmd /hunter hatsu next
+cmd /hunter hatsu cast
+capture 22q_texture_surprise_cartes : Capture d'écran enregistrée sous le nom de 22q_texture_surprise_cartes.png
+cmd /effect clear @s
+cmd /kill @e[type=minecraft:husk]
+cmd /tp @s ~-300 -60 ~
+cmd /gamerule sendCommandFeedback true
+cmd /kill @e[type=minecraft:husk]
+cmd /gamemode creative
+cmd /summon minecraft:husk ~ ~ ~6 {PersistenceRequired:0b}
+cmd /summon minecraft:villager ~ ~ ~9 {NoAI:1b}
+cmd /hunter hatsu set gon @e[type=minecraft:husk,limit=1]
+cmd /hunter show @e[type=minecraft:husk,limit=1]
+OK : message trouvé 'Hatsu : Gon Freecss'
+capture 23_husk_gon : Capture d'écran enregistrée sous le nom de 23_husk_gon.png
+cmd /kill @e[type=!minecraft:player]
+cmd /summon minecraft:husk ~-2 ~ ~5 {NoAI:1b}
+cmd /summon minecraft:husk ~2 ~ ~5 {NoAI:1b}
+cmd /hunter nen unlock @e[type=minecraft:husk,limit=1,sort=nearest]
+cmd /hunter stat strength set 60 @e[type=minecraft:husk,limit=1,sort=furthest]
+cmd /hunter stat vitality set 60 @e[type=minecraft:husk,limit=1,sort=furthest]
+cmd /hunter stat endurance set 60 @e[type=minecraft:husk,limit=1,sort=furthest]
+cmd /hunter nen unlock @e[type=minecraft:husk,limit=1,sort=furthest]
+touche key.hxh.gyo
+capture 24_niveau_au_dessus_des_mobs_avec_gyo : Capture d'écran enregistrée sous le nom de 24_niveau_au_dessus_des_mobs_avec_gyo.png
+cmd /hunter nen level 60
+cmd /hunter nen mastery gyo 50
+cmd /effect give @e[type=minecraft:husk,limit=1,sort=nearest] minecraft:invisibility 30 0 true
+cmd /summon minecraft:arrow ~1 ~4 ~16 {Motion:[0.0,0.25,-1.6d],NoGravity:0b}
+capture 24b_gyo_50_type_invisible_et_trajectoire : Capture d'écran enregistrée sous le nom de 24b_gyo_50_type_invisible_et_trajectoire.png
+cmd /effect clear @e[type=minecraft:husk]
+cmd /hunter nen mastery gyo 0
+touche key.hxh.gyo
+cmd /gamemode survival
+cmd /hunter nen mode none
+touche key.hxh.ten
+touche key.hxh.ten
+cmd /hunter
+OK : message trouvé '(Ken)'
+OK : message trouvé 'Niveau de Nen'
+OK : message trouvé 'Résistance actuelle'
+touche key.hxh.ko
+capture 25_ken_et_ko : Capture d'écran enregistrée sous le nom de 25_ken_et_ko.png
+touche key.hxh.ten
+touche key.hxh.zetsu
+cmd /hunter
+OK : message trouvé '(In)'
+touche key.hxh.zetsu
+cmd /hunter nen mastery in 10
+touche key.hxh.zetsu
+cmd /hunter
+OK : message trouvé '(Zetsu)'
+touche key.hxh.zetsu
+cmd /hunter nen mastery en 40
+cmd /summon minecraft:zombie ~2 ~ ~4 {NoAI:1b,PersistenceRequired:1b,Tags:["hxh_en_probe"]}
+touche key.hxh.en
+capture 26a_en_qui_se_deploie : Capture d'écran enregistrée sous le nom de 26a_en_qui_se_deploie.png
+capture 26_sphere_d_en : Capture d'écran enregistrée sous le nom de 26_sphere_d_en.png
+capture 26b_en_nom_et_niveau : Capture d'écran enregistrée sous le nom de 26b_en_nom_et_niveau.png
+cmd /kill @e[tag=hxh_en_probe]
+touche key.hxh.en
+touche key.hxh.profile
+fiche du carnet 'ryu'
+clic sur 'Ryu (répartition)'
+capture 27_ecran_ryu : Capture d'écran enregistrée sous le nom de 27_ecran_ryu.png
+cmd /kill @e[type=!minecraft:player]
+cmd /summon minecraft:husk ~ ~ ~2 {NoAI:1b}
+cmd /hunter hatsu select basic_charged
+hold key.hxh.cast
+capture 28_barre_de_frappe : Capture d'écran enregistrée sous le nom de 28_barre_de_frappe.png
+release key.hxh.cast
+capture 29_frappe_chargee_et_chiffre_rouge : Capture d'écran enregistrée sous le nom de 29_frappe_chargee_et_chiffre_rouge.png
+cmd /hunter hatsu select basic_kick
+touche key.hxh.cast
+capture 30_coup_de_pied : Capture d'écran enregistrée sous le nom de 30_coup_de_pied.png
+cmd /hunter hatsu select 0
+cmd /kill @e[type=!minecraft:player]
+cmd /summon minecraft:husk ~ ~ ~5 {NoAI:1b}
+cmd /hunter nen unlock @e[type=minecraft:husk]
+cmd /hunter nen level 80 @e[type=minecraft:husk]
+cmd /hunter stat strength set 80 @e[type=minecraft:husk]
+cmd /hunter stat endurance set 80 @e[type=minecraft:husk]
+cmd /hunter stat vitality set 80 @e[type=minecraft:husk]
+cmd /hunter nen mode ren @e[type=minecraft:husk]
+capture 31_peur_face_a_une_aura_ecrasante : Capture d'écran enregistrée sous le nom de 31_peur_face_a_une_aura_ecrasante.png
+cmd /kill @e[type=!minecraft:player]
+cmd /effect clear @s
+cmd /hunter nen level 90
+cmd /hunter nen mode ren
+cmd /summon minecraft:zombie ~ ~ ~4 {NoAI:1b,PersistenceRequired:1b}
+capture 31b_peur_visible_sur_un_mob : Capture d'écran enregistrée sous le nom de 31b_peur_visible_sur_un_mob.png
+cmd /hunter nen mode none
+cmd /hunter nen level 40
+cmd /kill @e[type=!minecraft:player]
+capture 31c_mort_giclee_d_encre : Capture d'écran enregistrée sous le nom de 31c_mort_giclee_d_encre.png
+cmd /effect clear @s
+cmd /damage @s 8
+cmd /effect give @s minecraft:regeneration 3 3
+capture 32_chiffres_de_soin_verts : Capture d'écran enregistrée sous le nom de 32_chiffres_de_soin_verts.png
+cmd /effect clear @s
+cmd /hunter quest reset
+cmd /hunter exam setup
+capture 33_navigateur_qui_attend : Capture d'écran enregistrée sous le nom de 33_navigateur_qui_attend.png
+cmd /hunter exam plan dolle kiriko zaban numele ko288 biska menchi balle tour ile zevil tournoi
+OK : message trouvé 'Nouvelle quête : Examen Hunter'
+cmd /hunter exam plan
+OK : message trouvé 'dolle → kiriko → zaban → numele → ko288 → biska → menchi → balle → tour → ile → zevil → tournoi'
+parle à navigator
+OK : message trouvé 'Ton dirigeable t'attend'
+capture 34_guide_donne_le_dirigeable : Capture d'écran enregistrée sous le nom de 34_guide_donne_le_dirigeable.png
+cmd /hunter exam go
+capture 34_dirigeable_et_hotesse : Capture d'écran enregistrée sous le nom de 34_dirigeable_et_hotesse.png
+parle à passeur
+OK : message trouvé 'bienvenue à bord'
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+OK : message trouvé 'Décollage'
+OK : message trouvé 'Épreuve 1/11 : Le voyage vers l'île de Dolle'
+capture 34_bateau_pour_dolle : Capture d'écran enregistrée sous le nom de 34_bateau_pour_dolle.png
+parle à captain
+OK : message trouvé 'pourquoi veux-tu devenir Hunter'
+cmd /hunter exam answer 1
+capture 34_quiz_du_capitaine : Capture d'écran enregistrée sous le nom de 34_quiz_du_capitaine.png
+OK : message trouvé 'Tu as du cran'
+OK : message trouvé 'La tempête éclate'
+capture 34_tempete_sur_le_pont : Capture d'écran enregistrée sous le nom de 34_tempete_sur_le_pont.png
+cmd /effect give @s minecraft:resistance 60 4 true
+OK : message trouvé 'énorme vague'
+capture 34_grosse_vague_abri : Capture d'écran enregistrée sous le nom de 34_grosse_vague_abri.png
+cmd /hunter quest skip
+capture 34_dolle_maison_mamie : Capture d'écran enregistrée sous le nom de 34_dolle_maison_mamie.png
+parle à quiz_granny
+OK : message trouvé 'Réfléchis bien'
+capture 34_quiz_de_la_mamie : Capture d'écran enregistrée sous le nom de 34_quiz_de_la_mamie.png
+OK : message trouvé 'se taire était la seule'
+OK : message trouvé 'Départ dans'
+capture 34_mamie_attente_avant_depart : Capture d'écran enregistrée sous le nom de 34_mamie_attente_avant_depart.png
+OK : message trouvé 'Ton dirigeable t'attend'
+capture 34_retour_au_dirigeable_apres_dolle : Capture d'écran enregistrée sous le nom de 34_retour_au_dirigeable_apres_dolle.png
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+OK : message trouvé 'Épreuve 2/11 : La forêt des Kiriko'
+OK : message trouvé '[hud] Brume de la forêt des Kiriko'
+capture 34k_foret_des_kiriko : Capture d'écran enregistrée sous le nom de 34k_foret_des_kiriko.png
+parle à kiriko_wife
+parle à husband_1
+OK : message trouvé 'Mari ?'
+capture 34k2_examiner_un_mari : Capture d'écran enregistrée sous le nom de 34k2_examiner_un_mari.png
+cmd /hunter quest skip
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+OK : message trouvé 'Épreuve 3/11 : Zaban'
+capture 34_zaban_gargote : Capture d'écran enregistrée sous le nom de 34_zaban_gargote.png
+parle à cook
+cmd /execute at @e[type=hxh:npc,limit=1,sort=nearest] run tp @s ~ ~ ~5
+capture 34a0_zaban_salle_qui_descend : Capture d'écran enregistrée sous le nom de 34a0_zaban_salle_qui_descend.png
+capture 34a_hall_souterrain : Capture d'écran enregistrée sous le nom de 34a_hall_souterrain.png
+parle à beans
+parle à satotz
+OK : message trouvé 'Satotz'
+capture 34b_tunnel_du_marathon : Capture d'écran enregistrée sous le nom de 34b_tunnel_du_marathon.png
+OK : message trouvé 'Retentez l'année prochaine'
+OK : message trouvé 'Retrouve un guide'
+capture 34c_examen_rate_retour_au_dirigeable : Capture d'écran enregistrée sous le nom de 34c_examen_rate_retour_au_dirigeable.png
+cmd /hunter exam plan dolle kiriko zaban numele ko288 biska menchi balle tour ile zevil tournoi
+cmd /hunter exam plan
+OK : message trouvé 'boat#1'
+rapprochement de navigator par le serveur
+parle à navigator
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+capture 34c2_un_autre_bateau_pour_dolle : Capture d'écran enregistrée sous le nom de 34c2_un_autre_bateau_pour_dolle.png
+cmd /hunter quest skip
+cmd /hunter quest skip
+cmd /hunter quest skip
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+cmd /hunter quest skip
+cmd /hunter quest skip
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+parle à cook
+cmd /execute at @e[type=hxh:npc,limit=1,sort=nearest] run tp @s ~ ~ ~5
+parle à beans
+parle à satotz
+cmd /hunter quest skip
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+OK : message trouvé '[hud] Brouillard de Numele'
+cmd /hunter quest skip
+capture 34d_marais_de_numele_brouillard : Capture d'écran enregistrée sous le nom de 34d_marais_de_numele_brouillard.png
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+parle à beans
+OK : message trouvé 'candidats se ruent sur toi'
+capture 34j_288e_examen_la_meute : Capture d'écran enregistrée sous le nom de 34j_288e_examen_la_meute.png
+cmd /hunter quest skip
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+capture 34d_reserve_de_biska : Capture d'écran enregistrée sous le nom de 34d_reserve_de_biska.png
+parle à buhara
+cmd /hunter quest skip
+parle à buhara
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+cmd /give @s minecraft:salmon
+parle à menchi
+OK : message trouvé 'Raté pour tout le monde'
+parle à netero
+capture 34e_mont_split_faille_aux_oeufs : Capture d'écran enregistrée sous le nom de 34e_mont_split_faille_aux_oeufs.png
+cmd /give @s hxh:spider_eagle_egg
+parle à menchi
+OK : message trouvé 'Tu passes'
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+capture 34e2_salle_du_dirigeable : Capture d'écran enregistrée sous le nom de 34e2_salle_du_dirigeable.png
+parle à netero
+OK : message trouvé 'Un petit jeu'
+cmd /execute as @s at @s run tp @s ^ ^ ^-3
+capture 34e3_jeu_de_la_balle_de_netero : Capture d'écran enregistrée sous le nom de 34e3_jeu_de_la_balle_de_netero.png
+cmd /hunter quest skip
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+capture 34h_tour_de_trick_toit_trappes : Capture d'écran enregistrée sous le nom de 34h_tour_de_trick_toit_trappes.png
+parle à lippo
+cmd /hunter quest skip
+parle à tonpa
+OK : message trouvé 'Porte O ou porte X'
+cmd /hunter exam answer 1
+OK : message trouvé 'Vote :'
+capture 34h1_tour_de_trick_apres_le_vote : Capture d'écran enregistrée sous le nom de 34h1_tour_de_trick_apres_le_vote.png
+cmd /execute in hxh:hunter_exam run tp @s 4009.5 92 -4.5 180 10
+capture 34h1b_tour_de_trick_long_chemin : Capture d'écran enregistrée sous le nom de 34h1b_tour_de_trick_long_chemin.png
+cmd /execute in hxh:hunter_exam run tp @s 4000.5 76 2.5 180 5
+OK : message trouvé 'Majitani entre en lice'
+cmd /hunter quest skip
+capture 34h2_tour_de_trick_prisonnier : Capture d'écran enregistrée sous le nom de 34h2_tour_de_trick_prisonnier.png
+cmd /execute in hxh:hunter_exam run tp @s 4006.5 76 -3.5 90 45
+capture 34h3_tour_de_trick_escalier_pieges : Capture d'écran enregistrée sous le nom de 34h3_tour_de_trick_escalier_pieges.png
+cmd /hunter quest skip
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+capture 34i_ile_hotel : Capture d'écran enregistrée sous le nom de 34i_ile_hotel.png
+parle à hotel_manager
+cmd /execute in hxh:hunter_exam run tp @s 4800.5 57 21.5 0 30
+capture 34i2_epave_au_fond_de_la_baie : Capture d'écran enregistrée sous le nom de 34i2_epave_au_fond_de_la_baie.png
+cmd /give @s hxh:sunken_coin 3
+parle à hotel_manager
+OK : message trouvé 'Une vague'
+OK : message trouvé 'Une lame géante déferle'
+capture 34i3_vague_et_boulets : Capture d'écran enregistrée sous le nom de 34i3_vague_et_boulets.png
+cmd /hunter quest skip
+parle à hotel_manager
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+cmd /effect give @s minecraft:resistance 60 4 true
+capture 34f_ile_de_zevil : Capture d'écran enregistrée sous le nom de 34f_ile_de_zevil.png
+cmd /effect give @s minecraft:invisibility 30 0 true
+capture 34f2_zevil_candidats_qui_se_battent : Capture d'écran enregistrée sous le nom de 34f2_zevil_candidats_qui_se_battent.png
+cmd /effect clear @s minecraft:invisibility
+cmd /give @s hxh:target_plate
+OK : message trouvé 'Ton dirigeable t'attend'
+cmd /hunter exam go
+parle à passeur
+OK : message trouvé '[Embarquer]'
+cmd /hunter exam board
+capture 34e_hotel_de_l_association : Capture d'écran enregistrée sous le nom de 34e_hotel_de_l_association.png
+parle à netero
+OK : message trouvé 'entre en lice'
+capture 34g_tournoi_final_adversaire : Capture d'écran enregistrée sous le nom de 34g_tournoi_final_adversaire.png
+cmd /hunter quest skip
+parle à netero
+OK : message trouvé 'Tu es maintenant un Hunter'
+capture 35_licence_de_hunter : Capture d'écran enregistrée sous le nom de 35_licence_de_hunter.png
+cmd /effect clear @s
+cmd /hunter quest reset
+cmd /hunter nen lock
+cmd /difficulty easy
+cmd /tp @e[type=hxh:npc,distance=..8] ~12 ~ ~12
+cmd /setblock ~2 ~ ~ hxh:heavens_arena_gate
+capture 36_portail_de_la_tour : Capture d'écran enregistrée sous le nom de 36_portail_de_la_tour.png
+clic droit sur 229, -54, -113 (Portail de la Tour Céleste)
+OK : message trouvé 'Bienvenue à la Tour Céleste'
+cmd /tp @s 0.5 64 -4.5 180 10
+capture 37_hall_de_la_tour_celeste : Capture d'écran enregistrée sous le nom de 37_hall_de_la_tour_celeste.png
+parle à receptionist
+OK : message trouvé 'Inscription validée'
+OK : message trouvé 'Nouvelle quête : La Tour Céleste'
+capture 38_guichet_et_quete : Capture d'écran enregistrée sous le nom de 38_guichet_et_quete.png
+cmd /gamerule hxhNenLearning true
+cmd /hunter nen unlock
+cmd /hunter nen mode none
+touche key.hxh.ten
+OK : message trouvé 'pas encore appris le Ten'
+parle à wing
+OK : message trouvé 'Leçon de Nen : le Ten'
+parle à wing
+OK : message trouvé '[hud] Capacité apprise'
+capture 38b_wing_lecon_ten : Capture d'écran enregistrée sous le nom de 38b_wing_lecon_ten.png
+cmd /hunter nen mastery ten 0
+cmd /hunter refill
+touche key.hxh.ten
+parle à wing
+OK : message trouvé 'Entraîne-toi encore'
+capture 38c_wing_entraine_toi_encore_niveau : Capture d'écran enregistrée sous le nom de 38c_wing_entraine_toi_encore_niveau.png
+cmd /hunter refill
+cmd /hunter refill
+cmd /hunter refill
+cmd /hunter show @s
+cmd /hunter nen mastery ten 1
+parle à wing
+OK : message trouvé 'Le Ten est la base'
+cmd /hunter nen mode none
+cmd /hunter nen lock
+cmd /gamerule hxhNenLearning false
+cmd /tp @s 8.5 64 0.5 -90 0
+clic droit sur 10, 64, 0 (Ascenseur de la Tour Céleste)
+clic sur '101–150'
+capture 39_ecran_ascenseur : Capture d'écran enregistrée sous le nom de 39_ecran_ascenseur.png
+parle à referee
+OK : message trouvé 'Ton étage est le 1e'
+cmd /hunter arena goto 1
+capture 39b_arbitre_autre_etage_refuse : Capture d'écran enregistrée sous le nom de 39b_arbitre_autre_etage_refuse.png
+capture 40_hall_etages_1_50 : Capture d'écran enregistrée sous le nom de 40_hall_etages_1_50.png
+parle à referee
+OK : message trouvé 'Étage 1 : ton adversaire'
+hold key.forward
+release key.forward
+cmd /execute positioned 5000.5 71 327.5 if entity @s[distance=..0.8]
+OK : message trouvé 'Test réussi'
+capture 41_compte_a_rebours_immobile : Capture d'écran enregistrée sous le nom de 41_compte_a_rebours_immobile.png
+capture 42_combat_sur_le_ring_central : Capture d'écran enregistrée sous le nom de 42_combat_sur_le_ring_central.png
+cmd /kill @e[type=hxh:arena_fighter]
+OK : message trouvé 'Victoire par K.-O.'
+OK : message trouvé 'Tu montes au 9e'
+cmd /hunter arena goto 0
+cmd /tp @s 0.5 64 -4.5 180 10
+parle à receptionist
+OK : message trouvé '+500 Jenny'
+cmd /hunter arena floor 120
+cmd /hunter arena goto 120
+parle à referee
+OK : message trouvé 'Tu dois d'abord t'inscrire'
+cmd /hunter arena floor 200
+capture 43_hall_101_150_inscription_requise : Capture d'écran enregistrée sous le nom de 43_hall_101_150_inscription_requise.png
+cmd /hunter arena goto 200
+parle à receptionist
+OK : message trouvé 'Une aura glaciale'
+capture 44_hall_151_200_refus_sans_nen_aura_d_hisoka : Capture d'écran enregistrée sous le nom de 44_hall_151_200_refus_sans_nen_aura_d_hisoka.png
+cmd /hunter nen unlock
+touche key.hxh.ten
+parle à receptionist
+OK : message trouvé 'Inscription au 200e étage validée'
+cmd /give @s diamond_sword
+cmd /item replace entity @s armor.chest with diamond_chestplate
+parle à referee
+OK : message trouvé 'ton adversaire maîtrise le Nen'
+OK : message trouvé 'Dans ce coin, Gido'
+OK : message trouvé 'Guichet des paris'
+cmd /hunter jenny add 0
+cmd /hunter bet Dev player 100
+OK : message trouvé 'Mise de 100 Jenny'
+OK : message bien absent 'éfaite'
+capture 45_combat_maitre_du_nen_sans_objets : Capture d'écran enregistrée sous le nom de 45_combat_maitre_du_nen_sans_objets.png
+cmd /tp @s ~25 ~ ~
+OK : message bien absent 'éfaite'
+cmd /kill @e[type=hxh:arena_fighter]
+capture 45b_sortie_de_ring_ignoree : Capture d'écran enregistrée sous le nom de 45b_sortie_de_ring_ignoree.png
+OK : message trouvé 'Victoire'
+OK : message trouvé 'Pari gagné'
+capture 45c_objets_rendus : Capture d'écran enregistrée sous le nom de 45c_objets_rendus.png
+cmd /hunter arena floor 250
+cmd /hunter arena register
+cmd /hunter arena goto 250
+parle à referee
+cmd /kill @e[type=hxh:arena_fighter]
+OK : message trouvé 'Maître d'étage'
+capture 46_maitre_d_etage : Capture d'écran enregistrée sous le nom de 46_maitre_d_etage.png
+parle à referee
+OK : message trouvé 'plus personne dans cette Tour'
+cmd /hunter arena room
+capture 47_chambre_privee : Capture d'écran enregistrée sous le nom de 47_chambre_privee.png
+cmd /hunter arena enter
+cmd /hunter arena leave
+cmd /hunter arena enter
+cmd /hunter arena enter
+cmd /hunter jenny set 1000
+cmd /clear @s minecraft:bone
+cmd /give @s minecraft:bone 12
+parle à merchant
+capture 47b_boutique_marchand : Capture d'écran enregistrée sous le nom de 47b_boutique_marchand.png
+clic sur 'Acheter'
+cmd /hunter jenny add 0
+OK : message trouvé 'Jenny : 200'
+cmd /clear @s minecraft:rotten_flesh
+parle à merchant
+clic sur 'Tout'
+cmd /hunter jenny add 0
+OK : message trouvé 'Jenny : 224'
+capture 47c_boutique_apres_achat : Capture d'écran enregistrée sous le nom de 47c_boutique_apres_achat.png
+cmd /setblock ~1 ~ ~ hxh:hunter_computer[facing=west]
+clic droit sur -3, 64, -8 (Ordinateur Hunter)
+capture 47d_ordinateur_hunter : Capture d'écran enregistrée sous le nom de 47d_ordinateur_hunter.png
+cmd /execute if entity @e[type=hxh:npc,distance=..30,nbt={npc:"receptionist"}]
+OK : message trouvé ': 1'
+cmd /hunter arena leave
+OK : message trouvé 'Tu quittes la Tour Céleste'
+capture 48_retour_dans_le_monde : Capture d'écran enregistrée sous le nom de 48_retour_dans_le_monde.png
+cmd /hunter tower
+OK : message trouvé 'se dresse en'
+cmd /hunter tower tp
+capture 48b_tour_celeste_posee_dans_une_plaine : Capture d'écran enregistrée sous le nom de 48b_tour_celeste_posee_dans_une_plaine.png
+cmd /tp @s 0 -60 58 0 0
+cmd /setblock 0 -60 62 hxh:treadmill_1[facing=north]
+cmd /setblock 2 -60 62 hxh:treadmill_2[facing=north,mode=endurance]
+cmd /setblock 4 -60 62 hxh:treadmill_3[facing=north]
+cmd /setblock 6 -60 62 hxh:treadmill_4[facing=north,mode=endurance]
+cmd /setblock 8 -60 62 hxh:striking_dummy[facing=south]
+cmd /setblock -2 -60 62 hxh:ice_bath
+cmd /clear @s
+cmd /give @s hxh:dumbbell_1
+cmd /give @s hxh:dumbbell_2
+cmd /give @s hxh:dumbbell_3
+cmd /give @s hxh:dumbbell_4
+cmd /tp @s 3.5 -60 59.5 0 35
+capture 48c_objets_entrainement : Capture d'écran enregistrée sous le nom de 48c_objets_entrainement.png
+cmd /tp @s -1.5 -60 62.5 0 20
+capture 48c2_bain_glace_givre : Capture d'écran enregistrée sous le nom de 48c2_bain_glace_givre.png
+cmd /tp @s 8.5 -60 63.5 180 10
+cmd /tp @s 8.5 -60 65.8 180 20
+capture 48c3_mannequin_cogneur : Capture d'écran enregistrée sous le nom de 48c3_mannequin_cogneur.png
+cmd /tp @s 3.5 -60 59.5 0 35
+cmd /setblock 1 -60 64 hxh:marker_npc
+cmd /setblock 3 -60 64 hxh:marker_waypoint
+cmd /setblock 5 -60 64 hxh:marker_prey
+capture 48d_reperes_examen : Capture d'écran enregistrée sous le nom de 48d_reperes_examen.png
+cmd /hunter quest reset
+cmd /hunter quest start hxh:hunter_exam
+cmd /hunter quest start hxh:heavens_arena
+touche key.hxh.profile
+capture 49_carnet_personnage : Capture d'écran enregistrée sous le nom de 49_carnet_personnage.png
+clic sur 'Quêtes'
+capture 50_carnet_quetes : Capture d'écran enregistrée sous le nom de 50_carnet_quetes.png
+clic sur 'Suivre : Examen Hunter'
+capture 50b_carnet_autre_quete_suivie : Capture d'écran enregistrée sous le nom de 50b_carnet_autre_quete_suivie.png
+clic sur 'Tour Céleste'
+capture 51_carnet_tour_celeste : Capture d'écran enregistrée sous le nom de 51_carnet_tour_celeste.png
+cmd /difficulty easy
+cmd /hunter event manieur_errant
+OK : message trouvé '[Association Hunter]'
+OK : message trouvé 'manieur de Nen errant'
+capture 52_evenement_prime_association : Capture d'écran enregistrée sous le nom de 52_evenement_prime_association.png
+cmd /difficulty peaceful
+cmd /kill @e[tag=geo_ci]
+cmd /gamerule sendCommandFeedback false
+cmd /fill ~-6 ~30 ~-3 ~6 ~30 ~9 minecraft:smooth_stone
+cmd /tp @s ~ ~31 ~ 0 0
+cmd /summon hxh:npc ~ ~ ~2.8 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 60a_gon_face : Capture d'écran enregistrée sous le nom de 60a_gon_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~2.8 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+capture 60b_gon_trois_quarts : Capture d'écran enregistrée sous le nom de 60b_gon_trois_quarts.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~2.8 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 60c_gon_profil : Capture d'écran enregistrée sous le nom de 60c_gon_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~2.8 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 60d_gon_dos : Capture d'écran enregistrée sous le nom de 60d_gon_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~2.8 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+capture 60g_gon_trois_quarts_dos : Capture d'écran enregistrée sous le nom de 60g_gon_trois_quarts_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /gamemode spectator
+cmd /tp @s ~ ~2.2 ~
+cmd /summon hxh:npc ~ ~-2.2 ~1.3 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 60e_gon_dessus : Capture d'écran enregistrée sous le nom de 60e_gon_dessus.png
+cmd /tp @s ~ ~-2.2 ~
+cmd /gamemode survival
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~-1.0 ~ ~4 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[160f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.2 ~ ~4 {npc:"cook",NoAI:1b,Silent:1b,Rotation:[200f,0f],Tags:["geo_ci"]}
+capture 60f_gon_echelle : Capture d'écran enregistrée sous le nom de 60f_gon_echelle.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~2.8 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 61a_killua_face : Capture d'écran enregistrée sous le nom de 61a_killua_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~2.8 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+capture 61b_killua_trois_quarts : Capture d'écran enregistrée sous le nom de 61b_killua_trois_quarts.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~2.8 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 61c_killua_profil : Capture d'écran enregistrée sous le nom de 61c_killua_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~2.8 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+capture 61g_killua_trois_quarts_dos : Capture d'écran enregistrée sous le nom de 61g_killua_trois_quarts_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~2.8 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 61d_killua_dos : Capture d'écran enregistrée sous le nom de 61d_killua_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /gamemode spectator
+cmd /tp @s ~ ~2.2 ~
+cmd /summon hxh:npc ~ ~-2.2 ~1.3 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 61f_killua_dessus : Capture d'écran enregistrée sous le nom de 61f_killua_dessus.png
+cmd /tp @s ~ ~-2.2 ~
+cmd /gamemode survival
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~1.7 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+capture 61h_killua_expression_froide : Capture d'écran enregistrée sous le nom de 61h_killua_expression_froide.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~-1.0 ~ ~4 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[160f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.0 ~ ~4 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[200f,0f],Tags:["geo_ci"]}
+capture 61e_gon_killua : Capture d'écran enregistrée sous le nom de 61e_gon_killua.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.2 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 64a_kurapika_face : Capture d'écran enregistrée sous le nom de 64a_kurapika_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.2 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+capture 64b_kurapika_trois_quarts : Capture d'écran enregistrée sous le nom de 64b_kurapika_trois_quarts.png
+cmd /summon hxh:npc ~ ~ ~3.2 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 64c_kurapika_profil : Capture d'écran enregistrée sous le nom de 64c_kurapika_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.2 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+capture 64g_kurapika_trois_quarts_dos : Capture d'écran enregistrée sous le nom de 64g_kurapika_trois_quarts_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.2 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 64d_kurapika_dos : Capture d'écran enregistrée sous le nom de 64d_kurapika_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~1.7 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+capture 64h_kurapika_yeux_ecarlates : Capture d'écran enregistrée sous le nom de 64h_kurapika_yeux_ecarlates.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /gamemode spectator
+cmd /tp @s ~ ~2.2 ~
+cmd /summon hxh:npc ~ ~-2.2 ~1.3 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /tp @s ~ ~-2.2 ~
+capture 64f_kurapika_dessus : Capture d'écran enregistrée sous le nom de 64f_kurapika_dessus.png
+cmd /gamemode survival
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.2 {npc:"kurapika_sans_tunique",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 64i_kurapika_sans_tunique_face : Capture d'écran enregistrée sous le nom de 64i_kurapika_sans_tunique_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.2 {npc:"kurapika_sans_tunique",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+capture 64j_kurapika_sans_tunique_trois_quarts : Capture d'écran enregistrée sous le nom de 64j_kurapika_sans_tunique_trois_quarts.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.2 {npc:"kurapika_sans_tunique",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 64k_kurapika_sans_tunique_profil : Capture d'écran enregistrée sous le nom de 64k_kurapika_sans_tunique_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.2 {npc:"kurapika_sans_tunique",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 64l_kurapika_sans_tunique_dos : Capture d'écran enregistrée sous le nom de 64l_kurapika_sans_tunique_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.6 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 65a_leorio_face : Capture d'écran enregistrée sous le nom de 65a_leorio_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.6 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+capture 65b_leorio_trois_quarts : Capture d'écran enregistrée sous le nom de 65b_leorio_trois_quarts.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.6 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 65c_leorio_profil : Capture d'écran enregistrée sous le nom de 65c_leorio_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.6 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+capture 65g_leorio_trois_quarts_dos : Capture d'écran enregistrée sous le nom de 65g_leorio_trois_quarts_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.6 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 65d_leorio_dos : Capture d'écran enregistrée sous le nom de 65d_leorio_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~2.0 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+capture 65h_leorio_colere : Capture d'écran enregistrée sous le nom de 65h_leorio_colere.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /gamemode spectator
+cmd /tp @s ~ ~2.6 ~
+cmd /summon hxh:npc ~ ~-2.6 ~1.4 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /tp @s ~ ~-2.6 ~
+cmd /gamemode survival
+capture 65f_leorio_dessus : Capture d'écran enregistrée sous le nom de 65f_leorio_dessus.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.6 {npc:"hisoka",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 66a_hisoka_face : Capture d'écran enregistrée sous le nom de 66a_hisoka_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.6 {npc:"hisoka",NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+capture 66b_hisoka_trois_quarts : Capture d'écran enregistrée sous le nom de 66b_hisoka_trois_quarts.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.6 {npc:"hisoka",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 66c_hisoka_profil : Capture d'écran enregistrée sous le nom de 66c_hisoka_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.6 {npc:"hisoka",NoAI:1b,Silent:1b,Rotation:[325f,0f],Tags:["geo_ci"]}
+capture 66g_hisoka_trois_quarts_dos : Capture d'écran enregistrée sous le nom de 66g_hisoka_trois_quarts_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~3.6 {npc:"hisoka",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 66d_hisoka_dos : Capture d'écran enregistrée sous le nom de 66d_hisoka_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~ ~ ~2.0 {npc:"hisoka",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+capture 66h_hisoka_sourire_carnassier : Capture d'écran enregistrée sous le nom de 66h_hisoka_sourire_carnassier.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /gamemode spectator
+cmd /tp @s ~ ~2.6 ~
+cmd /summon hxh:npc ~ ~-2.6 ~1.4 {npc:"hisoka",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /tp @s ~ ~-2.6 ~
+cmd /gamemode survival
+capture 66f_hisoka_dessus : Capture d'écran enregistrée sous le nom de 66f_hisoka_dessus.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:nen_summon ~2.6 ~0.6 ~4 {Model:"pot_clean",Scale:1.5f,Life:400,Label:"1250",Rotation:[180f,0f]}
+cmd /summon hxh:nen_summon ~0 ~ ~5 {Model:"doctor_blythe",Scale:0.8f,Life:400,Rotation:[180f,0f]}
+cmd /summon hxh:nen_summon ~-3 ~ ~5.5 {Model:"terpsichora",Scale:0.9f,Life:400,Color:-1064682241,Rotation:[180f,0f]}
+capture 68a_invocations_pot_clean_doctor_blythe_terpsichora : Capture d'écran enregistrée sous le nom de 68a_invocations_pot_clean_doctor_blythe_terpsichora.png
+cmd /kill @e[type=hxh:nen_summon]
+cmd /summon hxh:nen_summon ~ ~ ~13 {Model:"kannon",Scale:2.2f,Life:400,Rotation:[180f,0f]}
+cmd /summon hxh:nen_summon ~-4 ~4 ~9 {Model:"dragon",Scale:0.9f,Life:400,Rotation:[120f,0f]}
+capture 68b_invocations_kannon_dragon : Capture d'écran enregistrée sous le nom de 68b_invocations_kannon_dragon.png
+cmd /kill @e[type=hxh:nen_summon]
+cmd /summon hxh:nen_summon ~4.2 ~ ~6 {Model:"cookie",Scale:1.2f,Life:400,Rotation:[180f,0f]}
+cmd /summon hxh:nen_summon ~2.2 ~ ~6 {Model:"demon",Scale:1f,Life:400,Rotation:[180f,0f]}
+cmd /summon hxh:nen_summon ~0 ~ ~6 {Model:"smoke_soldier",Scale:0.95f,Life:400,Color:-805306369,Rotation:[180f,0f]}
+cmd /summon hxh:nen_summon ~-2 ~0.5 ~6 {Model:"blinky",Scale:0.9f,Life:400,Rotation:[160f,0f]}
+cmd /summon hxh:nen_summon ~-4.2 ~ ~6 {Model:"clown",Scale:0.8f,Life:400,Rotation:[180f,0f]}
+cmd /summon hxh:nen_summon ~-6 ~0.8 ~6 {Model:"bomb",Scale:0.8f,Life:400,Label:"7",Rotation:[180f,0f]}
+capture 68c_invocations_cookie_demon_fumee_blinky_clown_bombe : Capture d'écran enregistrée sous le nom de 68c_invocations_cookie_demon_fumee_blinky_clown_bombe.png
+cmd /kill @e[type=hxh:nen_summon]
+cmd /weather clear
+cmd /time set noon
+cmd /summon hxh:npc ~4.5 ~ ~4.8 {npc:"netero",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~2.3 ~ ~4.8 {npc:"meruem",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.3 ~ ~4.8 {npc:"neferpitou",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-1.7 ~ ~4.8 {npc:"shaiapouf",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.5 ~ ~4.8 {npc:"youpi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 67aa_serie_netero_meruem_neferpitou_shaiapouf_youpi_face : Capture d'écran enregistrée sous le nom de 67aa_serie_netero_meruem_neferpitou_shaiapouf_youpi_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.5 ~ ~4.8 {npc:"netero",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~2.3 ~ ~4.8 {npc:"meruem",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.3 ~ ~4.8 {npc:"neferpitou",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-1.7 ~ ~4.8 {npc:"shaiapouf",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.5 ~ ~4.8 {npc:"youpi",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 67ab_serie_netero_meruem_neferpitou_shaiapouf_youpi_profil : Capture d'écran enregistrée sous le nom de 67ab_serie_netero_meruem_neferpitou_shaiapouf_youpi_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.5 ~ ~4.8 {npc:"netero",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~2.3 ~ ~4.8 {npc:"meruem",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.3 ~ ~4.8 {npc:"neferpitou",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-1.7 ~ ~4.8 {npc:"shaiapouf",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.5 ~ ~4.8 {npc:"youpi",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 67ac_serie_netero_meruem_neferpitou_shaiapouf_youpi_dos : Capture d'écran enregistrée sous le nom de 67ac_serie_netero_meruem_neferpitou_shaiapouf_youpi_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.5 ~ ~4.8 {npc:"netero",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~2.3 ~ ~4.8 {npc:"meruem",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~0.3 ~ ~4.8 {npc:"neferpitou",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-1.7 ~ ~4.8 {npc:"shaiapouf",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-4.5 ~ ~4.8 {npc:"youpi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+capture 67ad_serie_netero_meruem_neferpitou_shaiapouf_youpi_expression : Capture d'écran enregistrée sous le nom de 67ad_serie_netero_meruem_neferpitou_shaiapouf_youpi_expression.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.0 ~ ~4.6 {npc:"netero",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci","geo_med"]}
+cmd /summon hxh:npc ~1.4 ~ ~4.6 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci","geo_med"]}
+cmd /summon hxh:npc ~-1.2 ~ ~4.6 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci","geo_med"]}
+cmd /summon hxh:npc ~-3.8 ~ ~4.6 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci","geo_med"]}
+cmd /hunter hatsu set netero @e[tag=geo_med,nbt={npc:"netero"}]
+cmd /hunter nen meditate @e[tag=geo_med]
+capture 67ae_poses_priere_meditation_face : Capture d'écran enregistrée sous le nom de 67ae_poses_priere_meditation_face.png
+cmd /execute as @e[tag=geo_med] at @s run tp @s ~ ~ ~ 90 0
+capture 67af_poses_priere_meditation_profil : Capture d'écran enregistrée sous le nom de 67af_poses_priere_meditation_profil.png
+cmd /execute as @e[tag=geo_med] at @s run tp @s ~ ~ ~ 140 0
+capture 67ag_poses_priere_inclinaison_trois_quarts : Capture d'écran enregistrée sous le nom de 67ag_poses_priere_inclinaison_trois_quarts.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /hunter nen meditate
+capture 15m_meditation_pose_face : Capture d'écran enregistrée sous le nom de 15m_meditation_pose_face.png
+capture 15n_meditation_pose_dos : Capture d'écran enregistrée sous le nom de 15n_meditation_pose_dos.png
+cmd /hunter nen meditate
+capture 15o_meditation_relevee_en_douceur : Capture d'écran enregistrée sous le nom de 15o_meditation_relevee_en_douceur.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.3 ~ ~4.7 {npc:"chrollo",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.7 ~ ~4.7 {npc:"uvogin",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-0.4 ~ ~4.7 {npc:"illumi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.4 ~ ~4.7 {npc:"zeno",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.3 ~ ~4.7 {npc:"biscuit",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 67ba_serie_chrollo_uvogin_illumi_zeno_biscuit_face : Capture d'écran enregistrée sous le nom de 67ba_serie_chrollo_uvogin_illumi_zeno_biscuit_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.3 ~ ~4.7 {npc:"chrollo",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.7 ~ ~4.7 {npc:"uvogin",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-0.4 ~ ~4.7 {npc:"illumi",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.4 ~ ~4.7 {npc:"zeno",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.3 ~ ~4.7 {npc:"biscuit",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 67bb_serie_chrollo_uvogin_illumi_zeno_biscuit_profil : Capture d'écran enregistrée sous le nom de 67bb_serie_chrollo_uvogin_illumi_zeno_biscuit_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.3 ~ ~4.7 {npc:"chrollo",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.7 ~ ~4.7 {npc:"uvogin",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-0.4 ~ ~4.7 {npc:"illumi",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.4 ~ ~4.7 {npc:"zeno",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.3 ~ ~4.7 {npc:"biscuit",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 67bc_serie_chrollo_uvogin_illumi_zeno_biscuit_dos : Capture d'écran enregistrée sous le nom de 67bc_serie_chrollo_uvogin_illumi_zeno_biscuit_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.3 ~ ~4.7 {npc:"chrollo",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~1.7 ~ ~4.7 {npc:"uvogin",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-0.4 ~ ~4.7 {npc:"illumi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-2.4 ~ ~4.7 {npc:"zeno",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-4.3 ~ ~4.7 {npc:"biscuit",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+capture 67bd_serie_chrollo_uvogin_illumi_zeno_biscuit_expression : Capture d'écran enregistrée sous le nom de 67bd_serie_chrollo_uvogin_illumi_zeno_biscuit_expression.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.2 ~ ~4.6 {npc:"feitan",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~2.2 ~ ~4.6 {npc:"nobunaga",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.2 ~ ~4.6 {npc:"machi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.2 ~ ~4.6 {npc:"silva",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.2 ~ ~4.6 {npc:"kite",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 67ca_serie_feitan_nobunaga_machi_silva_kite_face : Capture d'écran enregistrée sous le nom de 67ca_serie_feitan_nobunaga_machi_silva_kite_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.2 ~ ~4.6 {npc:"feitan",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~2.2 ~ ~4.6 {npc:"nobunaga",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.2 ~ ~4.6 {npc:"machi",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.2 ~ ~4.6 {npc:"silva",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.2 ~ ~4.6 {npc:"kite",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 67cb_serie_feitan_nobunaga_machi_silva_kite_profil : Capture d'écran enregistrée sous le nom de 67cb_serie_feitan_nobunaga_machi_silva_kite_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.2 ~ ~4.6 {npc:"feitan",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~2.2 ~ ~4.6 {npc:"nobunaga",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.2 ~ ~4.6 {npc:"machi",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.2 ~ ~4.6 {npc:"silva",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.2 ~ ~4.6 {npc:"kite",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 67cc_serie_feitan_nobunaga_machi_silva_kite_dos : Capture d'écran enregistrée sous le nom de 67cc_serie_feitan_nobunaga_machi_silva_kite_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.2 ~ ~4.6 {npc:"feitan",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~2.2 ~ ~4.6 {npc:"nobunaga",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~0.2 ~ ~4.6 {npc:"machi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-2.2 ~ ~4.6 {npc:"silva",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-4.2 ~ ~4.6 {npc:"kite",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+capture 67cd_serie_feitan_nobunaga_machi_silva_kite_expression : Capture d'écran enregistrée sous le nom de 67cd_serie_feitan_nobunaga_machi_silva_kite_expression.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.0 ~ ~4.4 {npc:"kalluto",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~2.0 ~ ~4.4 {npc:"shalnark",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.1 ~ ~4.4 {npc:"pakunoda",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-1.9 ~ ~4.4 {npc:"ging",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.0 ~ ~4.4 {npc:"phinks",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 67da_serie_kalluto_shalnark_pakunoda_ging_phinks_face : Capture d'écran enregistrée sous le nom de 67da_serie_kalluto_shalnark_pakunoda_ging_phinks_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.0 ~ ~4.4 {npc:"kalluto",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~2.0 ~ ~4.4 {npc:"shalnark",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.1 ~ ~4.4 {npc:"pakunoda",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-1.9 ~ ~4.4 {npc:"ging",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.0 ~ ~4.4 {npc:"phinks",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 67db_serie_kalluto_shalnark_pakunoda_ging_phinks_profil : Capture d'écran enregistrée sous le nom de 67db_serie_kalluto_shalnark_pakunoda_ging_phinks_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.0 ~ ~4.4 {npc:"kalluto",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~2.0 ~ ~4.4 {npc:"shalnark",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.1 ~ ~4.4 {npc:"pakunoda",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-1.9 ~ ~4.4 {npc:"ging",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.0 ~ ~4.4 {npc:"phinks",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 67dc_serie_kalluto_shalnark_pakunoda_ging_phinks_dos : Capture d'écran enregistrée sous le nom de 67dc_serie_kalluto_shalnark_pakunoda_ging_phinks_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.0 ~ ~4.4 {npc:"kalluto",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~2.0 ~ ~4.4 {npc:"shalnark",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~0.1 ~ ~4.4 {npc:"pakunoda",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-1.9 ~ ~4.4 {npc:"ging",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-4.0 ~ ~4.4 {npc:"phinks",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+capture 67dd_serie_kalluto_shalnark_pakunoda_ging_phinks_expression : Capture d'écran enregistrée sous le nom de 67dd_serie_kalluto_shalnark_pakunoda_ging_phinks_expression.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.8 ~ ~4.2 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.9 ~ ~4.2 {npc:"wing",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.0 ~ ~4.2 {npc:"zushi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-1.9 ~ ~4.2 {npc:"menchi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-3.8 ~ ~4.2 {npc:"cheadle",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 67ea_serie_knuckle_wing_zushi_menchi_cheadle_face : Capture d'écran enregistrée sous le nom de 67ea_serie_knuckle_wing_zushi_menchi_cheadle_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.8 ~ ~4.2 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.9 ~ ~4.2 {npc:"wing",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.0 ~ ~4.2 {npc:"zushi",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-1.9 ~ ~4.2 {npc:"menchi",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-3.8 ~ ~4.2 {npc:"cheadle",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 67eb_serie_knuckle_wing_zushi_menchi_cheadle_profil : Capture d'écran enregistrée sous le nom de 67eb_serie_knuckle_wing_zushi_menchi_cheadle_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.8 ~ ~4.2 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.9 ~ ~4.2 {npc:"wing",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.0 ~ ~4.2 {npc:"zushi",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-1.9 ~ ~4.2 {npc:"menchi",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-3.8 ~ ~4.2 {npc:"cheadle",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 67ec_serie_knuckle_wing_zushi_menchi_cheadle_dos : Capture d'écran enregistrée sous le nom de 67ec_serie_knuckle_wing_zushi_menchi_cheadle_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.8 ~ ~4.2 {npc:"knuckle",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~1.9 ~ ~4.2 {npc:"wing",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~0.0 ~ ~4.2 {npc:"zushi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-1.9 ~ ~4.2 {npc:"menchi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-3.8 ~ ~4.2 {npc:"cheadle",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+capture 67ed_serie_knuckle_wing_zushi_menchi_cheadle_expression : Capture d'écran enregistrée sous le nom de 67ed_serie_knuckle_wing_zushi_menchi_cheadle_expression.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.1 ~ ~4.5 {npc:"palm",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.7 ~ ~4.5 {npc:"morel",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-0.2 ~ ~4.5 {npc:"neon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.1 ~ ~4.5 {npc:"pariston",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.1 ~ ~4.5 {npc:"knov",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 67fa_serie_palm_morel_neon_pariston_knov_face : Capture d'écran enregistrée sous le nom de 67fa_serie_palm_morel_neon_pariston_knov_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.1 ~ ~4.5 {npc:"palm",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.7 ~ ~4.5 {npc:"morel",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-0.2 ~ ~4.5 {npc:"neon",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.1 ~ ~4.5 {npc:"pariston",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.1 ~ ~4.5 {npc:"knov",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 67fb_serie_palm_morel_neon_pariston_knov_profil : Capture d'écran enregistrée sous le nom de 67fb_serie_palm_morel_neon_pariston_knov_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.1 ~ ~4.5 {npc:"palm",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.7 ~ ~4.5 {npc:"morel",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-0.2 ~ ~4.5 {npc:"neon",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.1 ~ ~4.5 {npc:"pariston",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-4.1 ~ ~4.5 {npc:"knov",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 67fc_serie_palm_morel_neon_pariston_knov_dos : Capture d'écran enregistrée sous le nom de 67fc_serie_palm_morel_neon_pariston_knov_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~4.1 ~ ~4.5 {npc:"palm",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~1.7 ~ ~4.5 {npc:"morel",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-0.2 ~ ~4.5 {npc:"neon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-2.1 ~ ~4.5 {npc:"pariston",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-4.1 ~ ~4.5 {npc:"knov",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+capture 67fd_serie_palm_morel_neon_pariston_knov_expression : Capture d'écran enregistrée sous le nom de 67fd_serie_palm_morel_neon_pariston_knov_expression.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.9 ~ ~4.3 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.9 ~ ~4.3 {npc:"genthru",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-0.1 ~ ~4.3 {npc:"senritsu",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.0 ~ ~4.3 {npc:"gotoh",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-3.9 ~ ~4.3 {npc:"satotz",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 67ga_serie_razor_genthru_senritsu_gotoh_satotz_face : Capture d'écran enregistrée sous le nom de 67ga_serie_razor_genthru_senritsu_gotoh_satotz_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.9 ~ ~4.3 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.9 ~ ~4.3 {npc:"genthru",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-0.1 ~ ~4.3 {npc:"senritsu",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.0 ~ ~4.3 {npc:"gotoh",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-3.9 ~ ~4.3 {npc:"satotz",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 67gb_serie_razor_genthru_senritsu_gotoh_satotz_profil : Capture d'écran enregistrée sous le nom de 67gb_serie_razor_genthru_senritsu_gotoh_satotz_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.9 ~ ~4.3 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.9 ~ ~4.3 {npc:"genthru",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-0.1 ~ ~4.3 {npc:"senritsu",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.0 ~ ~4.3 {npc:"gotoh",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-3.9 ~ ~4.3 {npc:"satotz",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 67gc_serie_razor_genthru_senritsu_gotoh_satotz_dos : Capture d'écran enregistrée sous le nom de 67gc_serie_razor_genthru_senritsu_gotoh_satotz_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.9 ~ ~4.3 {npc:"razor",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~1.9 ~ ~4.3 {npc:"genthru",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-0.1 ~ ~4.3 {npc:"senritsu",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-2.0 ~ ~4.3 {npc:"gotoh",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-3.9 ~ ~4.3 {npc:"satotz",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+capture 67gd_serie_razor_genthru_senritsu_gotoh_satotz_expression : Capture d'écran enregistrée sous le nom de 67gd_serie_razor_genthru_senritsu_gotoh_satotz_expression.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.9 ~ ~4.3 {npc:"canary",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~2.0 ~ ~4.3 {npc:"alluka",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.1 ~ ~4.3 {npc:"hanzo",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.0 ~ ~4.3 {npc:"tonpa",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-3.9 ~ ~4.3 {npc:"shizuku",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 67ha_serie_canary_alluka_hanzo_tonpa_shizuku_face : Capture d'écran enregistrée sous le nom de 67ha_serie_canary_alluka_hanzo_tonpa_shizuku_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.9 ~ ~4.3 {npc:"canary",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~2.0 ~ ~4.3 {npc:"alluka",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.1 ~ ~4.3 {npc:"hanzo",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.0 ~ ~4.3 {npc:"tonpa",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-3.9 ~ ~4.3 {npc:"shizuku",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 67hb_serie_canary_alluka_hanzo_tonpa_shizuku_profil : Capture d'écran enregistrée sous le nom de 67hb_serie_canary_alluka_hanzo_tonpa_shizuku_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.9 ~ ~4.3 {npc:"canary",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~2.0 ~ ~4.3 {npc:"alluka",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~0.1 ~ ~4.3 {npc:"hanzo",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-2.0 ~ ~4.3 {npc:"tonpa",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-3.9 ~ ~4.3 {npc:"shizuku",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 67hc_serie_canary_alluka_hanzo_tonpa_shizuku_dos : Capture d'écran enregistrée sous le nom de 67hc_serie_canary_alluka_hanzo_tonpa_shizuku_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.9 ~ ~4.3 {npc:"canary",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~2.0 ~ ~4.3 {npc:"alluka",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~0.1 ~ ~4.3 {npc:"hanzo",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-2.0 ~ ~4.3 {npc:"tonpa",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-3.9 ~ ~4.3 {npc:"shizuku",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+capture 67hd_serie_canary_alluka_hanzo_tonpa_shizuku_expression : Capture d'écran enregistrée sous le nom de 67hd_serie_canary_alluka_hanzo_tonpa_shizuku_expression.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.2 ~ ~4.0 {npc:"franklin",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.2 ~ ~4.0 {npc:"tsezguerra",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-1.2 ~ ~4.0 {npc:"botobai",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-3.2 ~ ~4.0 {npc:"bushidora",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 67ia_serie_franklin_tsezguerra_botobai_bushidora_face : Capture d'écran enregistrée sous le nom de 67ia_serie_franklin_tsezguerra_botobai_bushidora_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.2 ~ ~4.0 {npc:"franklin",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.2 ~ ~4.0 {npc:"tsezguerra",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-1.2 ~ ~4.0 {npc:"botobai",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-3.2 ~ ~4.0 {npc:"bushidora",NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 67ib_serie_franklin_tsezguerra_botobai_bushidora_profil : Capture d'écran enregistrée sous le nom de 67ib_serie_franklin_tsezguerra_botobai_bushidora_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.2 ~ ~4.0 {npc:"franklin",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~1.2 ~ ~4.0 {npc:"tsezguerra",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-1.2 ~ ~4.0 {npc:"botobai",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:npc ~-3.2 ~ ~4.0 {npc:"bushidora",NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 67ic_serie_franklin_tsezguerra_botobai_bushidora_dos : Capture d'écran enregistrée sous le nom de 67ic_serie_franklin_tsezguerra_botobai_bushidora_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:npc ~3.2 ~ ~4.0 {npc:"franklin",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~1.2 ~ ~4.0 {npc:"tsezguerra",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-1.2 ~ ~4.0 {npc:"botobai",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+cmd /summon hxh:npc ~-3.2 ~ ~4.0 {npc:"bushidora",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"],expression:"froid"}
+capture 67id_serie_franklin_tsezguerra_botobai_bushidora_expression : Capture d'écran enregistrée sous le nom de 67id_serie_franklin_tsezguerra_botobai_bushidora_expression.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:gon ~-1.0 ~ ~3.6 {NoAI:1b,Rotation:[165f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:killua ~1.0 ~ ~3.6 {NoAI:1b,Rotation:[195f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:kurapika ~0 ~ ~4.6 {NoAI:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:leorio ~2.2 ~ ~5.2 {NoAI:1b,Rotation:[200f,0f],Tags:["geo_ci"]}
+cmd /summon hxh:hisoka ~-2.4 ~ ~5.4 {NoAI:1b,Rotation:[160f,0f],Tags:["geo_ci"]}
+capture 62a_mobs_gon_killua : Capture d'écran enregistrée sous le nom de 62a_mobs_gon_killua.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:gon_ultime ~ ~ ~8.5 {HxhAdult:1b,NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
+capture 63a_gon_adulte_face : Capture d'écran enregistrée sous le nom de 63a_gon_adulte_face.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:gon_ultime ~ ~ ~8.5 {HxhAdult:1b,NoAI:1b,Silent:1b,Rotation:[145f,0f],Tags:["geo_ci"]}
+capture 63b_gon_adulte_trois_quarts : Capture d'écran enregistrée sous le nom de 63b_gon_adulte_trois_quarts.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:gon_ultime ~ ~ ~8.5 {HxhAdult:1b,NoAI:1b,Silent:1b,Rotation:[90f,0f],Tags:["geo_ci"]}
+capture 63c_gon_adulte_profil : Capture d'écran enregistrée sous le nom de 63c_gon_adulte_profil.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:gon_ultime ~ ~ ~8.5 {HxhAdult:1b,NoAI:1b,Silent:1b,Rotation:[0f,0f],Tags:["geo_ci"]}
+capture 63d_gon_adulte_dos : Capture d'écran enregistrée sous le nom de 63d_gon_adulte_dos.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /summon hxh:gon_ultime ~ ~ ~9 {NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci","gon_ult"]}
+cmd /data merge entity @e[tag=gon_ult,limit=1] {Health:4f}
+capture 63e_gon_ultime_transformation : Capture d'écran enregistrée sous le nom de 63e_gon_ultime_transformation.png
+capture 63f_gon_ultime_adulte : Capture d'écran enregistrée sous le nom de 63f_gon_ultime_adulte.png
+capture 63g_gon_adulte_cheveux_1s5 : Capture d'écran enregistrée sous le nom de 63g_gon_adulte_cheveux_1s5.png
+cmd /tp @e[tag=geo_ci] ~ ~-40 ~
+cmd /kill @e[tag=geo_ci]
+cmd /gamerule sendCommandFeedback true
+cmd /kill @e[type=hxh:npc]
+cmd /tp @s ~ ~ ~ 0 0
+cmd /summon hxh:npc ~-4.2 ~ ~6 {npc:"netero",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd /summon hxh:npc ~-2.1 ~ ~6 {npc:"satotz",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd /summon hxh:npc ~0 ~ ~6 {npc:"menchi",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd /summon hxh:npc ~2.1 ~ ~6 {npc:"buhara",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd /summon hxh:npc ~4.2 ~ ~6 {npc:"beans",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+capture 53a_apparences_examinateurs : Capture d'écran enregistrée sous le nom de 53a_apparences_examinateurs.png
+capture 53b_apparences_examinateurs_profil : Capture d'écran enregistrée sous le nom de 53b_apparences_examinateurs_profil.png
+cmd /kill @e[tag=look_ci]
+cmd /summon hxh:npc ~-4.2 ~ ~6 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd /summon hxh:npc ~-2.1 ~ ~6 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd /summon hxh:npc ~0 ~ ~6 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd /summon hxh:npc ~2.1 ~ ~6 {npc:"leorio",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+cmd /summon hxh:npc ~4.2 ~ ~6 {npc:"hisoka",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["look_ci"]}
+capture 53c_apparences_heros : Capture d'écran enregistrée sous le nom de 53c_apparences_heros.png
+capture 53d_apparences_heros_profil : Capture d'écran enregistrée sous le nom de 53d_apparences_heros_profil.png
+cmd /kill @e[tag=look_ci]
+cmd /kill @e[type=!minecraft:player]
+cmd /hunter quest reset
+cmd /gamemode survival
+cmd /effect give @s minecraft:instant_health 1 5 true
+cmd /hunter quest start hxh:netero_soin
+cmd /hunter quest skip
+cmd /hunter quest skip
+cmd /hunter quest skip
+capture 54a_netero_cercle_et_paume_de_kannon : Capture d'écran enregistrée sous le nom de 54a_netero_cercle_et_paume_de_kannon.png
+capture 54b_netero_la_paume_s_abat : Capture d'écran enregistrée sous le nom de 54b_netero_la_paume_s_abat.png
+cmd /hunter quest reset
+cmd /gamemode creative
+cmd /kill @e[type=!minecraft:player]
+cmd /gamemode survival
+cmd /hunter family set zoldyck
+cmd /tp @s ~ ~ ~ 0 0
+cmd /hunter spawn mannequin ~ ~ ~6
+cmd /hunter hatsu select family_zoldyck_claw
+touche key.hxh.cast
+capture 55a_famille_zoldyck_main_griffe : Capture d'écran enregistrée sous le nom de 55a_famille_zoldyck_main_griffe.png
+cmd /kill @e[type=!minecraft:player]
+cmd /hunter family set freecss
+cmd /summon minecraft:pig ~8 ~ ~3 {NoAI:1b}
+cmd /summon minecraft:cow ~-7 ~ ~5 {NoAI:1b}
+cmd /summon minecraft:sheep ~2 ~ ~-9 {NoAI:1b}
+cmd /hunter hatsu select family_freecss_instinct
+touche key.hxh.cast
+capture 55b_famille_freecss_instinct_du_chasseur : Capture d'écran enregistrée sous le nom de 55b_famille_freecss_instinct_du_chasseur.png
+cmd /kill @e[type=!minecraft:player]
+cmd /hunter family set none
+cmd /gamemode creative
+cmd /hunter hatsu set gon
+cmd /hunter vow clear
+touche key.hxh.profile
+fiche du carnet 'hatsu'
+clic sur 'Hatsu'
+clic sur 'Serments'
+capture 56a_serments_liste : Capture d'écran enregistrée sous le nom de 56a_serments_liste.png
+cmd /hunter vow take ultimate
+OK : message trouvé 'Serment prêté'
+capture 56b_serment_ultime_prete : Capture d'écran enregistrée sous le nom de 56b_serment_ultime_prete.png
+cmd /hunter vow clear
+cmd /hunter hatsu set none
+cmd /kill @e[type=!minecraft:player]
+cmd /tp @s ~ ~ ~ 0 0
+cmd /summon hxh:npc ~ ~ ~3 {npc:"commissaire_priseur",NoAI:1b,Silent:1b,Rotation:[180f,0f]}
+cmd /hunter jenny set 20000
+parle à commissaire_priseur
+capture 57a_encheres_lots_du_jour : Capture d'écran enregistrée sous le nom de 57a_encheres_lots_du_jour.png
+clic sur 'Enchérir 1200 J'
+capture 57b_encheres_apres_une_mise : Capture d'écran enregistrée sous le nom de 57b_encheres_apres_une_mise.png
+cmd /kill @e[type=hxh:npc]
+cmd /hunter jenny set 0
+cmd /kill @e[type=!minecraft:player]
+cmd /gamemode survival
+cmd /tp @s ~ ~ ~ 0 0
+cmd /summon hxh:npc ~ ~ ~3 {npc:"exorciste",NoAI:1b,Silent:1b,Rotation:[180f,0f]}
+cmd /effect give @s hxh:nen_curse 600 0
+cmd /hunter jenny set 1000
+capture 58a_malediction_de_nen : Capture d'écran enregistrée sous le nom de 58a_malediction_de_nen.png
+parle à exorciste
+OK : message trouvé 'Mon Nen avale'
+capture 58b_exorcisme : Capture d'écran enregistrée sous le nom de 58b_exorcisme.png
+cmd /kill @e[type=hxh:npc]
+cmd /hunter jenny set 0
+cmd /gamemode creative
+cmd /difficulty easy
+cmd /kill @e[type=!minecraft:player]
+cmd /tp @s ~ ~ ~ 0 0
+cmd /summon hxh:npc ~ ~ ~3 {npc:"majordome_zoldyck",NoAI:1b,Silent:1b,Rotation:[180f,0f]}
+parle à majordome_zoldyck
+OK : message trouvé 'Contrat :'
+capture 59_contrat_zoldyck : Capture d'écran enregistrée sous le nom de 59_contrat_zoldyck.png
+cmd /kill @e[type=!minecraft:player]
+cmd /difficulty peaceful
+cmd /hunter license give
+cmd /hunter blacklist
+OK : message trouvé 'Blacklist de l'Association'
+OK : message trouvé '[Traquer]'
+capture 60_blacklist_et_rang : Capture d'écran enregistrée sous le nom de 60_blacklist_et_rang.png
+cmd /kill @e[type=!minecraft:player]
+cmd /tp @s ~ ~ ~ 0 0
+cmd /summon hxh:npc ~ ~ ~3 {npc:"hunter_gourmet",NoAI:1b,Silent:1b,Rotation:[180f,0f]}
+cmd /hunter jenny set 1500
+parle à hunter_gourmet
+capture 61_boutique_hunter_gourmet : Capture d'écran enregistrée sous le nom de 61_boutique_hunter_gourmet.png
+cmd /kill @e[type=hxh:npc]
+cmd /hunter jenny set 0
+cmd /kill @e[type=!minecraft:player]
+cmd /tp @s ~30 ~ ~ 0 0
+cmd /summon hxh:foxbear ~ ~ ~7 {NoAI:1b,Rotation:[180f,0f]}
+cmd /summon hxh:foxbear ~2.5 ~ ~6 {NoAI:1b,Age:-24000,Rotation:[200f,0f]}
+capture 62_renard_ours : Capture d'écran enregistrée sous le nom de 62_renard_ours.png
+cmd /kill @e[type=hxh:foxbear]
+cmd /kill @e[type=!minecraft:player]
+cmd /summon hxh:great_stamp ~-3 ~ ~7 {NoAI:1b,Rotation:[180f,0f]}
+cmd /summon hxh:great_stamp ~3 ~ ~8 {NoAI:1b,Rotation:[150f,0f]}
+capture 63_great_stamp : Capture d'écran enregistrée sous le nom de 63_great_stamp.png
+cmd /kill @e[type=hxh:great_stamp]
+cmd /kill @e[type=!minecraft:player]
+cmd /gamemode survival
+cmd /tp @s ~10 ~ ~ 0 0
+cmd /gamerule hxhNenDestruction true
+cmd /fill ~-3 ~ ~8 ~3 ~4 ~8 minecraft:stone_bricks
+cmd /summon minecraft:pig ~ ~ ~2
+cmd /hunter stat strength set 60
+cmd /hunter hatsu select basic_kick
+touche key.hxh.cast
+capture 64_coup_de_pied_fort_mur_creuse : Capture d'écran enregistrée sous le nom de 64_coup_de_pied_fort_mur_creuse.png
+cmd /kill @e[type=minecraft:pig]
+cmd /tp @s ~10 ~ ~ 0 0
+cmd /fill ~-4 ~ ~6 ~4 ~5 ~34 minecraft:stone
+cmd /summon minecraft:pig ~ ~ ~2
+cmd /hunter stat strength set 100
+touche key.hxh.cast
+capture 64b_coup_de_pied_niveau_100_tunnel : Capture d'écran enregistrée sous le nom de 64b_coup_de_pied_niveau_100_tunnel.png
+cmd /tp @s ~ ~ ~ 0 0
+cmd /kill @e[type=minecraft:pig]
+cmd /gamemode creative
+cmd /hunter stat strength set 40
+cmd /hunter armwrestle 40
+capture 65_bras_de_fer : Capture d'écran enregistrée sous le nom de 65_bras_de_fer.png
+cmd /kill @e[type=!minecraft:player]
+cmd /gamemode survival
+cmd /tp @s ~40 ~ ~ 0 0
+cmd /hunter shrine build 4
+cmd /tp @s ~ ~ ~4 0 20
+touche key.hxh.profile
+clic sur 'Méditer'
+capture 66_meditation_sanctuaire_niveau_4 : Capture d'écran enregistrée sous le nom de 66_meditation_sanctuaire_niveau_4.png
+touche key.hxh.profile
+clic sur 'Méditer'
+cmd /kill @e[type=!minecraft:player]
+cmd /tp @s ~30 ~ ~ 0 0
+cmd /summon minecraft:pig ~ ~ ~2
+cmd /summon minecraft:pig ~ ~ ~6
+cmd /hunter stat strength set 60
+cmd /hunter hatsu select basic_kick
+touche key.hxh.cast
+capture 67_coup_de_pied_cible_percute_un_mob : Capture d'écran enregistrée sous le nom de 67_coup_de_pied_cible_percute_un_mob.png
+cmd /kill @e[type=minecraft:pig]
+cmd /kill @e[type=!minecraft:player]
+cmd /hunter nen mastery en 50
+cmd /hunter en shape cube 12
+cmd /tp @s ~120 -60 ~ 0 10
+cmd /summon minecraft:zombie ~3 ~ ~5 {NoAI:1b,PersistenceRequired:1b,Tags:["hxh_en_probe"]}
+touche key.hxh.en
+capture 70_en_en_cube : Capture d'écran enregistrée sous le nom de 70_en_en_cube.png
+cmd /hunter en shape cylinder 12 4
+capture 71_en_en_cylindre : Capture d'écran enregistrée sous le nom de 71_en_en_cylindre.png
+touche key.hxh.en
+cmd /kill @e[tag=hxh_en_probe]
+touche key.hxh.profile
+clic sur 'Quêtes'
+clic sur 'Personnage'
+clic sur 'Forme de l'En'
+capture 72_ecran_forme_de_l_en : Capture d'écran enregistrée sous le nom de 72_ecran_forme_de_l_en.png
+cmd /hunter en shape sphere
+cmd /hunter nen mastery en 60
+cmd /fill ~-1 ~19 ~-1 ~1 ~19 ~1 minecraft:glass
+cmd /tp @s ~ ~20 ~ 0 35
+cmd /summon minecraft:pig ~4 ~-6 ~4 {NoAI:1b,NoGravity:1b,PersistenceRequired:1b,Tags:["hxh_en_probe"]}
+touche key.hxh.en
+capture 74_en_sphere_complete_dessous_visible : Capture d'écran enregistrée sous le nom de 74_en_sphere_complete_dessous_visible.png
+touche key.hxh.profile
+clic sur 'Quêtes'
+clic sur 'Personnage'
+clic sur 'Forme de l'En'
+clic sur '▶'
+capture 75a_ecran_demi_sphere : Capture d'écran enregistrée sous le nom de 75a_ecran_demi_sphere.png
+clic sur '▶'
+capture 75b_ecran_cube_reglage_par_defaut : Capture d'écran enregistrée sous le nom de 75b_ecran_cube_reglage_par_defaut.png
+clic sur '»'
+capture 75c_ecran_cube_plus_5 : Capture d'écran enregistrée sous le nom de 75c_ecran_cube_plus_5.png
+clic sur 'Appliquer'
+capture 76_en_cube_depuis_l_ecran : Capture d'écran enregistrée sous le nom de 76_en_cube_depuis_l_ecran.png
+touche key.hxh.profile
+clic sur 'Quêtes'
+clic sur 'Personnage'
+clic sur 'Forme de l'En'
+clic sur '▶'
+capture 77a_ecran_cylindre_reglage_par_defaut : Capture d'écran enregistrée sous le nom de 77a_ecran_cylindre_reglage_par_defaut.png
+clic sur 'Appliquer'
+capture 77_en_cylindre_depuis_l_ecran : Capture d'écran enregistrée sous le nom de 77_en_cylindre_depuis_l_ecran.png
+touche key.hxh.profile
+clic sur 'Quêtes'
+clic sur 'Personnage'
+clic sur 'Forme de l'En'
+clic sur '▶'
+clic sur '▶'
+clic sur 'Appliquer'
+capture 78_en_demi_sphere_depuis_l_ecran : Capture d'écran enregistrée sous le nom de 78_en_demi_sphere_depuis_l_ecran.png
+touche key.hxh.en
+cmd /kill @e[tag=hxh_en_probe]
+cmd /tp @s ~ ~-20 ~
+cmd /hunter en shape sphere
+cmd /hunter nen mastery en 0
+cmd /kill @e[type=!minecraft:player]
+cmd /tp @s ~ ~ ~ 0 15
+cmd /summon minecraft:pig ~ ~ ~2 {NoAI:1b,PersistenceRequired:1b,Tags:["hxh_en_probe"]}
+touche key.hxh.en
+touche key.hxh.en
+capture 73_en_niveau_0_cible_en_surbrillance : Capture d'écran enregistrée sous le nom de 73_en_niveau_0_cible_en_surbrillance.png
+cmd /kill @e[tag=hxh_en_probe]
+cmd /hunter quest reset
+cmd /hunter quest start hxh:exemple_pecheur
+cmd /hunter quest skip
+cmd /tp @s 40 ~ 30 135 0
+capture 68_boussole_de_quete : Capture d'écran enregistrée sous le nom de 68_boussole_de_quete.png
+cmd /tp @s 40 ~ 30 -45 0
+capture 69_boussole_de_quete_dos_tourne : Capture d'écran enregistrée sous le nom de 69_boussole_de_quete_dos_tourne.png
+cmd /hunter quest reset
+cmd /difficulty easy
+cmd /kill @e[type=!minecraft:player]
+cmd /gamemode survival
+cmd /tp @s ~200 -60 ~ 0 10
+cmd /hunter quest reset
+cmd /hunter contract cancel
+cmd /hunter jenny set 20000
+cmd /hunter license give
+cmd /summon hxh:npc ~2 ~ ~ {npc:"majordome_zoldyck",NoAI:1b}
+parle à majordome_zoldyck
+OK : message trouvé 'Contrat :'
+capture 73_contrat_zoldyck_bulle_et_boussole : Capture d'écran enregistrée sous le nom de 73_contrat_zoldyck_bulle_et_boussole.png
+cmd /kill @e[type=hxh:npc]
+cmd /hunter contract goto
+capture 74_contrat_zoldyck_cible_proche : Capture d'écran enregistrée sous le nom de 74_contrat_zoldyck_cible_proche.png
+cmd /damage @e[tag=hxh_contract,limit=1,sort=nearest] 1000 minecraft:player_attack by @s
+OK : message trouvé 'Contrat rempli'
+cmd /kill @e[type=!minecraft:player]
+cmd /tp @s ~30 -60 ~ 0 10
+cmd /hunter stat strength set 100
+cmd /hunter stat speed set 100
+cmd /hunter stat endurance set 100
+cmd /summon minecraft:pig ~ ~ ~2 {NoAI:1b}
+cmd /summon minecraft:pig ~1.2 ~ ~3 {NoAI:1b}
+cmd /summon minecraft:pig ~-1.2 ~ ~3 {NoAI:1b}
+cmd /hunter hatsu select basic_attack
+touche key.hxh.cast
+capture 75_attaque_de_zone_poing : Capture d'écran enregistrée sous le nom de 75_attaque_de_zone_poing.png
+cmd /kill @e[type=minecraft:pig]
+cmd /hunter stat speed set 30
+cmd /hunter stat endurance set 30
+cmd /hunter nen mastery gyo 40
+cmd /tp @s ~ ~ ~ 0 0
+cmd /summon minecraft:husk ~ ~ ~3 {NoAI:1b,PersistenceRequired:1b}
+cmd /item replace entity @e[type=minecraft:husk,limit=1,sort=nearest] armor.chest with minecraft:iron_chestplate
+touche key.hxh.gyo
+capture 76_gyo_40_pv_et_armure : Capture d'écran enregistrée sous le nom de 76_gyo_40_pv_et_armure.png
+touche key.hxh.gyo
+cmd /hunter nen mastery gyo 0
+cmd /kill @e[type=minecraft:husk]
+cmd /hunter hatsu set neferpitou
+cmd /hunter hatsu select pitou_doctor_blythe
+cmd /damage @s 8
+hold key.hxh.cast
+capture 77_docteur_blythe_maintenu : Capture d'écran enregistrée sous le nom de 77_docteur_blythe_maintenu.png
+release key.hxh.cast
+cmd /hunter vow take fair_fight
+OK : message trouvé 'Serment prêté'
+cmd /hunter vow toggle
+OK : message trouvé 'Serment en pause'
+touche key.hxh.profile
+clic sur 'Quêtes'
+clic sur 'Personnage'
+fiche du carnet 'hatsu'
+clic sur 'Hatsu'
+clic sur 'Serments'
+capture 78_ecran_serments_en_pause : Capture d'écran enregistrée sous le nom de 78_ecran_serments_en_pause.png
+cmd /hunter vow clear
+cmd /tp @s ~40 -60 ~ 0 0
+cmd /hunter shrine build 5
+cmd /tp @s ~ ~ ~4 0 20
+touche key.hxh.profile
+clic sur 'Quêtes'
+clic sur 'Personnage'
+clic sur 'Méditer'
+capture 79_meditation_sanctuaire_niveau_5 : Capture d'écran enregistrée sous le nom de 79_meditation_sanctuaire_niveau_5.png
+touche key.hxh.profile
+clic sur 'Méditer'
+cmd /tp @s ~30 -60 ~ -90 10
+cmd /effect clear @s hxh:nen_curse
+cmd /summon hxh:npc ~2 ~ ~ {npc:"exorciste",NoAI:1b}
+parle à exorciste
+OK : message trouvé 'Aucune aura'
+cmd /kill @e[type=hxh:npc]
+cmd /summon hxh:npc ~2 ~ ~ {npc:"archeologue",NoAI:1b}
+parle à archeologue
+OK : message trouvé 'sanctuaires'
+capture 80_archeologue : Capture d'écran enregistrée sous le nom de 80_archeologue.png
+cmd /kill @e[type=hxh:npc]
+cmd /summon hxh:npc ~2 ~ ~ {npc:"hunter_gourmet",NoAI:1b}
+parle à hunter_gourmet
+capture 81_boutique_hunter_gourmet : Capture d'écran enregistrée sous le nom de 81_boutique_hunter_gourmet.png
+cmd /kill @e[type=hxh:npc]
+cmd /summon hxh:npc ~2 ~ ~ {npc:"commissaire_priseur",NoAI:1b}
+parle à commissaire_priseur
+capture 82_encheres_york_shin : Capture d'écran enregistrée sous le nom de 82_encheres_york_shin.png
+cmd /kill @e[type=hxh:npc]
+cmd /hunter hatsu set none
+cmd /tp @s ~30 -60 ~ 0 -10
+cmd /summon hxh:spider_eagle ~ ~1 ~5 {NoAI:1b,PersistenceRequired:1b}
+capture 83_aigle_araignee : Capture d'écran enregistrée sous le nom de 83_aigle_araignee.png
+cmd /kill @e[type=hxh:spider_eagle]
+cmd /gamemode survival
+cmd /hunter arena enter
+cmd /hunter arena floor 235
+cmd /hunter arena register
+cmd /hunter arena goto 235
+parle à referee
+OK : message trouvé 'Hisoka'
+cmd /kill @e[type=hxh:arena_fighter]
+capture 84_hisoka_235e : Capture d'écran enregistrée sous le nom de 84_hisoka_235e.png
+cmd /hunter arena leave
+cmd /tp @s ~50 -60 ~ 0 10
+cmd /summon hxh:great_stamp ~-3 ~ ~7 {NoAI:1b,PersistenceRequired:1b}
+cmd /summon hxh:foxbear ~3 ~ ~7 {NoAI:1b,PersistenceRequired:1b}
+cmd /summon hxh:foxbear ~5 ~ ~6 {NoAI:1b,PersistenceRequired:1b,Age:-24000}
+capture 85_great_stamp_et_renard_ours : Capture d'écran enregistrée sous le nom de 85_great_stamp_et_renard_ours.png
+cmd /kill @e[type=!minecraft:player]
+cmd /hunter family set zoldyck
+touche key.hxh.profile
+clic sur 'Quêtes'
+clic sur 'Personnage'
+capture 86_carnet_famille_zoldyck : Capture d'écran enregistrée sous le nom de 86_carnet_famille_zoldyck.png
+cmd /summon minecraft:pig ~ ~ ~6 {NoAI:1b}
+cmd /hunter hatsu select family_zoldyck_claw
+touche key.hxh.cast
+capture 87_main_griffe : Capture d'écran enregistrée sous le nom de 87_main_griffe.png
+cmd /kill @e[type=minecraft:pig]
+cmd /hunter family set none
+cmd /hunter hatsu set kurapika
+touche key.hxh.profile
+clic sur 'Quêtes'
+clic sur 'Personnage'
+fiche du carnet 'hatsu'
+clic sur 'Hatsu'
+clic sur 'Serments'
+capture 88_serment_de_kurapika : Capture d'écran enregistrée sous le nom de 88_serment_de_kurapika.png
+cmd /hunter hatsu set none
+cmd /hunter org join ryodan
+touche key.hxh.profile
+clic sur 'Quêtes'
+clic sur 'Personnage'
+capture 89_carnet_organisation_brigade : Capture d'écran enregistrée sous le nom de 89_carnet_organisation_brigade.png
+cmd /hunter org leave
+cmd /hunter license remove
+cmd /hunter jenny set 1000
+cmd /tp @s ~60 -60 ~ -90 10
+cmd /summon hxh:npc ~2 ~ ~ {npc:"guichetier",NoAI:1b}
+parle à guichetier
+cmd /hunter airport name Alpha
+cmd /tp @s ~600 -60 ~ -90 10
+cmd /summon hxh:npc ~2 ~ ~ {npc:"guichetier",NoAI:1b}
+parle à guichetier
+OK : message trouvé 'Alpha'
+capture 90_guichet_destinations : Capture d'écran enregistrée sous le nom de 90_guichet_destinations.png
+cmd /hunter airport name Beta
+cmd /hunter fly name Alpha
+capture 91_en_vol : Capture d'écran enregistrée sous le nom de 91_en_vol.png
+OK : message trouvé 'Billet payé'
+capture 92_arrivee_a_alpha : Capture d'écran enregistrée sous le nom de 92_arrivee_a_alpha.png
+cmd /kill @e[type=hxh:npc]
+cmd /hunter license give
+cmd /difficulty easy
+cmd /hunter contract cancel
+cmd /tp @s ~80 -60 ~ 0 10
+cmd /hunter blacklist take bl_trafiquant
+OK : message trouvé 'Traque ouverte'
+cmd /hunter contract goto
+capture 93_traque_blacklist : Capture d'écran enregistrée sous le nom de 93_traque_blacklist.png
+cmd /damage @e[tag=hxh_contract,limit=1,sort=nearest] 1000 minecraft:player_attack by @s
+OK : message trouvé 'Contrat rempli'
+cmd /kill @e[type=!minecraft:player]
+cmd /tp @s ~40 -60 ~ -90 10
+cmd /summon hxh:npc ~2 ~ ~ {npc:"hunter_gourmet",NoAI:1b}
+hold key.sneak
+parle à hunter_gourmet
+release key.sneak
+cmd /give @s minecraft:golden_carrot 16
+cmd /give @s minecraft:cooked_salmon 16
+cmd /give @s minecraft:enchanted_golden_apple 1
+hold key.sneak
+parle à hunter_gourmet
+parle à hunter_gourmet
+parle à hunter_gourmet
+parle à hunter_gourmet
+release key.sneak
+OK : message trouvé 'Quête terminée'
+capture 94_quete_du_gourmet_terminee : Capture d'écran enregistrée sous le nom de 94_quete_du_gourmet_terminee.png
+parle à hunter_gourmet
+capture 95_boutique_gourmet_debloquee : Capture d'écran enregistrée sous le nom de 95_boutique_gourmet_debloquee.png
+cmd /kill @e[type=hxh:npc]
+cmd /difficulty easy
+cmd /tp @s ~30 -60 ~ 0 10
+cmd /summon hxh:man_faced_ape ~-2 ~ ~5 {NoAI:1b,PersistenceRequired:1b}
+cmd /summon hxh:chimera_ant ~2 ~ ~6 {NoAI:1b,PersistenceRequired:1b}
+cmd /summon hxh:kiriko ~5 ~ ~8 {NoAI:1b,PersistenceRequired:1b}
+capture 96_singe_fourmi_chimere_et_kiriko : Capture d'écran enregistrée sous le nom de 96_singe_fourmi_chimere_et_kiriko.png
+cmd /kill @e[type=hxh:man_faced_ape]
+cmd /kill @e[type=hxh:chimera_ant]
+cmd /kill @e[type=hxh:kiriko]
+cmd /summon hxh:mike ~ ~ ~14 {NoAI:1b,PersistenceRequired:1b,Rotation:[180f,0f],Tags:["ci_mike"]}
+capture 96m_mike_face : Capture d'écran enregistrée sous le nom de 96m_mike_face.png
+cmd /tp @e[tag=ci_mike] ~ ~ ~14 90 0
+capture 96n_mike_profil : Capture d'écran enregistrée sous le nom de 96n_mike_profil.png
+cmd /kill @e[tag=ci_mike]
+cmd /setblock ~-1 ~ ~ hxh:hunter_computer[facing=east]
+clic droit sur 534, -60, -15 (Ordinateur Hunter)
+fiche 'bestiary_chimera_ant'
+capture 97_ordinateur_bestiaire_fourmi_chimere : Capture d'écran enregistrée sous le nom de 97_ordinateur_bestiaire_fourmi_chimere.png
+fiche 'recipe_hunter_computer'
+capture 97b_ordinateur_recette_icones_ordinateur : Capture d'écran enregistrée sous le nom de 97b_ordinateur_recette_icones_ordinateur.png
+fiche 'recipe_nutritious_dish_1'
+capture 97c_ordinateur_recette_icones_sans_forme : Capture d'écran enregistrée sous le nom de 97c_ordinateur_recette_icones_sans_forme.png
+fiche 'recipe_cooked_foxbear_meat_from_smelting'
+capture 97d_ordinateur_recette_icones_four : Capture d'écran enregistrée sous le nom de 97d_ordinateur_recette_icones_four.png
+cmd /kill @e[type=!minecraft:player]
+cmd /time set midnight
+cmd /hunter nen refill
+touche key.hxh.gyo
+capture 98a_gyo_yeux_de_face : Capture d'écran enregistrée sous le nom de 98a_gyo_yeux_de_face.png
+capture 98b_gyo_yeux_tete_tournee_45 : Capture d'écran enregistrée sous le nom de 98b_gyo_yeux_tete_tournee_45.png
+capture 98c_gyo_yeux_tete_tournee_90 : Capture d'écran enregistrée sous le nom de 98c_gyo_yeux_tete_tournee_90.png
+capture 98d_gyo_yeux_tete_baissee : Capture d'écran enregistrée sous le nom de 98d_gyo_yeux_tete_baissee.png
+touche key.hxh.gyo
+cmd /hunter family set kurta
+cmd /hunter clan level 100
+cmd /effect give @s hxh:scarlet_eyes 60
+capture 99a_yeux_ecarlates_de_face : Capture d'écran enregistrée sous le nom de 99a_yeux_ecarlates_de_face.png
+capture 99b_yeux_ecarlates_tete_tournee : Capture d'écran enregistrée sous le nom de 99b_yeux_ecarlates_tete_tournee.png
+touche key.hxh.profile
+clic sur 'Quêtes'
+clic sur 'Personnage'
+capture 99c_carnet_personnage_famille_et_clan : Capture d'écran enregistrée sous le nom de 99c_carnet_personnage_famille_et_clan.png
+cmd /effect clear @s hxh:scarlet_eyes
+cmd /hunter clan level 0
+cmd /hunter hatsu give @s Jajanken: Rock
+OK : message trouvé 'Jajanken'
+cmd /hunter hatsu give @s Doctor Blythe
+capture 99e_technique_donnee_dans_l_encart : Capture d'écran enregistrée sous le nom de 99e_technique_donnee_dans_l_encart.png
+cmd /hunter hatsu take @s gon_rock
+cmd /hunter hatsu take @s pitou_doctor_blythe
+cmd /hunter nen mastery ten 7
+cmd /hunter nen mastery in 5
+cmd /hunter nen mastery ren 4
+cmd /hunter nen mastery gyo 0
+touche key.hxh.profile
+clic sur 'Nen'
+capture 99f_graphe_du_nen : Capture d'écran enregistrée sous le nom de 99f_graphe_du_nen.png
+fiche du carnet 'ten'
+capture 99g_fiche_ten_paliers : Capture d'écran enregistrée sous le nom de 99g_fiche_ten_paliers.png
+fiche du carnet 'gyo'
+capture 99h_fiche_gyo_deblocages : Capture d'écran enregistrée sous le nom de 99h_fiche_gyo_deblocages.png
+fiche du carnet 'hatsu'
+capture 99i_fiche_hatsu_cout : Capture d'écran enregistrée sous le nom de 99i_fiche_hatsu_cout.png
+fiche du carnet 'nen'
+capture 99j_fiche_niveau_de_nen : Capture d'écran enregistrée sous le nom de 99j_fiche_niveau_de_nen.png
+clic sur 'Personnage'
+capture 99k_personnage_cartes_stats : Capture d'écran enregistrée sous le nom de 99k_personnage_cartes_stats.png
+fiche du carnet 'strength'
+capture 99l_fiche_force_coup_de_pied : Capture d'écran enregistrée sous le nom de 99l_fiche_force_coup_de_pied.png
+fiche du carnet 'willpower'
+capture 99m_fiche_volonte : Capture d'écran enregistrée sous le nom de 99m_fiche_volonte.png
+fiche du carnet 'txt:identity'
+capture 99n_fiche_type_de_nen : Capture d'écran enregistrée sous le nom de 99n_fiche_type_de_nen.png
+clic sur 'Aura'
+capture 99o_onglet_aura : Capture d'écran enregistrée sous le nom de 99o_onglet_aura.png
+fiche du carnet 'heal'
+capture 99p_fiche_soin_par_le_nen : Capture d'écran enregistrée sous le nom de 99p_fiche_soin_par_le_nen.png
+fiche du carnet 'regen'
+capture 99q_fiche_regeneration_aura : Capture d'écran enregistrée sous le nom de 99q_fiche_regeneration_aura.png
+fiche du carnet 'txt:family'
+capture 99r_famille_coup_secret_explique : Capture d'écran enregistrée sous le nom de 99r_famille_coup_secret_explique.png
+fiche du carnet 'hatsu'
+capture 99s_fiche_hatsu_avec_bouton : Capture d'écran enregistrée sous le nom de 99s_fiche_hatsu_avec_bouton.png
+fiche du carnet 'ryu'
+capture 99t_fiche_ryu_avec_bouton : Capture d'écran enregistrée sous le nom de 99t_fiche_ryu_avec_bouton.png
+clic sur 'Quêtes'
+capture 99u_quetes_decouvrir_heaven_arena : Capture d'écran enregistrée sous le nom de 99u_quetes_decouvrir_heaven_arena.png
+cmd /hunter jenny set 1500
+cmd /hunter airship
+capture 99v_dirigeable_carte : Capture d'écran enregistrée sous le nom de 99v_dirigeable_carte.png
+survol de la carte 'region:K'
+capture 99v1_carte_region_kakin : Capture d'écran enregistrée sous le nom de 99v1_carte_region_kakin.png
+survol de la carte 'region:m'
+capture 99v2_carte_region_minbo : Capture d'écran enregistrée sous le nom de 99v2_carte_region_minbo.png
+survol de la carte 'whale_island'
+capture 99v3_carte_lieu_ile_baleine : Capture d'écran enregistrée sous le nom de 99v3_carte_lieu_ile_baleine.png
+survol de la carte 'yorknew_city'
+capture 99v4_carte_lieu_yorknew : Capture d'écran enregistrée sous le nom de 99v4_carte_lieu_yorknew.png
+cmd /hunter jenny set 6000
+cmd /hunter airship whale_island
+capture 99w_monde_hxh_ile_de_la_baleine : Capture d'écran enregistrée sous le nom de 99w_monde_hxh_ile_de_la_baleine.png
+cmd /tp @s 86760 80 82440 -45 25
+cmd /effect give @s minecraft:slow_falling 10 0 true
+capture 99y_monde_hxh_village_baleine : Capture d'écran enregistrée sous le nom de 99y_monde_hxh_village_baleine.png
+cmd /tp @s 87011 88 82650 0 22
+cmd /effect give @s minecraft:slow_falling 10 0 true
+cmd /tp @s 87045 88 82700 90 20
+capture 99zzs_baleine_phare_et_maisons : Capture d'écran enregistrée sous le nom de 99zzs_baleine_phare_et_maisons.png
+cmd /effect give @s minecraft:slow_falling 10 0 true
+cmd /hunter jenny set 20000
+capture 99zzt_baleine_ecole_et_cabane : Capture d'écran enregistrée sous le nom de 99zzt_baleine_ecole_et_cabane.png
+cmd /hunter airship kukuroo_mountain
+cmd /effect give @s minecraft:slow_falling 60 0 true
+capture 99x_monde_hxh_montagne_kukuroo : Capture d'écran enregistrée sous le nom de 99x_monde_hxh_montagne_kukuroo.png
+cmd /tp @s 31200 88 15640 0 18
+cmd /tp @s 31120 80 16720 118 12
+capture 99z1_kukuroo_grande_porte : Capture d'écran enregistrée sous le nom de 99z1_kukuroo_grande_porte.png
+cmd /tp @s 31200 88 17000 0 8
+capture 99z2_kukuroo_mike : Capture d'écran enregistrée sous le nom de 99z2_kukuroo_mike.png
+capture 99z3_kukuroo_manoir : Capture d'écran enregistrée sous le nom de 99z3_kukuroo_manoir.png
+cmd /tp @s 31760 80 15640 -40 15
+cmd /tp @s 31200 73 16120 0 2
+capture 99z4_kukuroo_maison_zebro : Capture d'écran enregistrée sous le nom de 99z4_kukuroo_maison_zebro.png
+cmd /hunter jenny set 20000
+capture 99z5_kukuroo_sept_portes : Capture d'écran enregistrée sous le nom de 99z5_kukuroo_sept_portes.png
+cmd /hunter airship yorknew_city
+cmd /time set noon
+capture 99za_yorknew_place : Capture d'écran enregistrée sous le nom de 99za_yorknew_place.png
+cmd /effect give @s minecraft:slow_falling 60 0 true
+cmd /time set noon
+cmd /gamemode spectator
+cmd /tp @s 13900 100 76920 0 28
+cmd /tp @s 13900 78 78500 0 5
+capture 99zb_yorknew_vue_ville : Capture d'écran enregistrée sous le nom de 99zb_yorknew_vue_ville.png
+cmd /tp @s 14700 76 79000 -135 10
+capture 99zc_yorknew_maison_ventes : Capture d'écran enregistrée sous le nom de 99zc_yorknew_maison_ventes.png
+capture 99zd_yorknew_entrepot_brigade : Capture d'écran enregistrée sous le nom de 99zd_yorknew_entrepot_brigade.png
+cmd /gamemode survival
+cmd /hunter jenny set 20000
+cmd /hunter airship heavens_arena
+cmd /time set noon
+cmd /gamemode spectator
+cmd /tp @s 55500 120 30800 180 -15
+capture 99ze_arene_place : Capture d'écran enregistrée sous le nom de 99ze_arene_place.png
+cmd /gamemode survival
+capture 99zf_arene_tour : Capture d'écran enregistrée sous le nom de 99zf_arene_tour.png
+cmd /hunter jenny set 20000
+cmd /hunter airship black_whale_port
+cmd /time set noon
+cmd /effect give @s minecraft:slow_falling 60 0 true
+capture 99zh_baleine_noire_quai : Capture d'écran enregistrée sous le nom de 99zh_baleine_noire_quai.png
+cmd /tp @s 108600 80 44600 180 15
+cmd /tp @s 108800 70 43300 -90 5
+capture 99zi_baleine_noire_navire : Capture d'écran enregistrée sous le nom de 99zi_baleine_noire_navire.png
+cmd /hunter jenny set 20000
+capture 99zj_baleine_noire_ponton : Capture d'écran enregistrée sous le nom de 99zj_baleine_noire_ponton.png
+cmd /hunter airship hunter_exam_hotel
+cmd /time set noon
+capture 99zk_hotel_arrivee : Capture d'écran enregistrée sous le nom de 99zk_hotel_arrivee.png
+cmd /effect give @s minecraft:slow_falling 60 0 true
+cmd /tp @s 18100 72 34000 180 5
+capture 99zl_hotel_facade : Capture d'écran enregistrée sous le nom de 99zl_hotel_facade.png
+cmd /tp @s 18100 68 32640 0 10
+capture 99zm_hotel_pavillon_president : Capture d'écran enregistrée sous le nom de 99zm_hotel_pavillon_president.png
+cmd /hunter jenny set 20000
+cmd /hunter airship greed_island
+cmd /time set noon
+capture 99zn_greed_island_place : Capture d'écran enregistrée sous le nom de 99zn_greed_island_place.png
+cmd /hunter jenny set 20000
+cmd /hunter airship kite_forest
+cmd /time set noon
+capture 99zo_kite_camp : Capture d'écran enregistrée sous le nom de 99zo_kite_camp.png
+cmd /hunter jenny set 20000
+cmd /hunter airship chimera_ant_queen_arm
+cmd /time set noon
+capture 99zp_bras_reine : Capture d'écran enregistrée sous le nom de 99zp_bras_reine.png
+cmd /hunter jenny set 20000
+cmd /hunter airship kakin_palace
+cmd /time set noon
+capture 99zq_kakin_arrivee : Capture d'écran enregistrée sous le nom de 99zq_kakin_arrivee.png
+cmd /effect give @s minecraft:slow_falling 60 0 true
+cmd /gamemode spectator
+cmd /tp @s 120000 125 51200 180 28
+capture 99zr_kakin_palais : Capture d'écran enregistrée sous le nom de 99zr_kakin_palais.png
+cmd /effect give @s minecraft:night_vision 600 0 true
+cmd /tp @s 120000 76 49320 180 3
+capture 99zs_kakin_salle_trone : Capture d'écran enregistrée sous le nom de 99zs_kakin_salle_trone.png
+cmd /hunter jenny set 20000
+cmd /gamemode creative
+cmd /hunter airship meteor_city
+cmd /time set noon
+capture 99zt_meteor_arrivee : Capture d'écran enregistrée sous le nom de 99zt_meteor_arrivee.png
+cmd /effect give @s minecraft:slow_falling 60 0 true
+cmd /gamemode spectator
+cmd /tp @s 34000 135 78600 180 28
+capture 99zu_meteor_vue : Capture d'écran enregistrée sous le nom de 99zu_meteor_vue.png
+cmd /gamemode creative
+touche key.hxh.minimap
+capture 99zu1_minimap_activee : Capture d'écran enregistrée sous le nom de 99zu1_minimap_activee.png
+touche key.hxh.minimap_zoom_in
+touche key.hxh.minimap_zoom_in
+capture 99zu2_minimap_zoom_proche : Capture d'écran enregistrée sous le nom de 99zu2_minimap_zoom_proche.png
+touche key.hxh.minimap_zoom_out
+touche key.hxh.minimap_zoom_out
+touche key.hxh.minimap_zoom_out
+touche key.hxh.minimap_zoom_out
+capture 99zu3_minimap_zoom_loin : Capture d'écran enregistrée sous le nom de 99zu3_minimap_zoom_loin.png
+capture 99zu4_minimap_reglages : Capture d'écran enregistrée sous le nom de 99zu4_minimap_reglages.png
+touche key.hxh.minimap
+capture 99zu5_minimap_cachee : Capture d'écran enregistrée sous le nom de 99zu5_minimap_cachee.png
+cmd /gamemode survival
+cmd /hunter jenny set 20000
+cmd /hunter airship ngl_village
+cmd /time set noon
+capture 99zv_ngl_arrivee : Capture d'écran enregistrée sous le nom de 99zv_ngl_arrivee.png
+cmd /gamemode spectator
+cmd /tp @s 27000 118 99700 180 28
+capture 99zw_ngl_vue : Capture d'écran enregistrée sous le nom de 99zw_ngl_vue.png
+cmd /gamemode survival
+cmd /hunter jenny set 20000
+cmd /hunter airship mafia_hq
+cmd /time set noon
+capture 99zx_mafia_arrivee : Capture d'écran enregistrée sous le nom de 99zx_mafia_arrivee.png
+cmd /gamemode spectator
+cmd /tp @s 15900 95 76700 90 22
+capture 99zy_mafia_vue : Capture d'écran enregistrée sous le nom de 99zy_mafia_vue.png
+cmd /gamemode survival
+cmd /hunter jenny set 20000
+cmd /hunter airship masadora
+cmd /time set noon
+capture 99zz_masadora_arrivee : Capture d'écran enregistrée sous le nom de 99zz_masadora_arrivee.png
+cmd /gamemode spectator
+cmd /tp @s 69500 95 84100 180 25
+capture 99zza_masadora_vue : Capture d'écran enregistrée sous le nom de 99zza_masadora_vue.png
+cmd /gamemode survival
+cmd /hunter jenny set 20000
+cmd /hunter airship padokea_town
+cmd /time set noon
+capture 99zzb_padokea_arrivee : Capture d'écran enregistrée sous le nom de 99zzb_padokea_arrivee.png
+cmd /gamemode spectator
+cmd /tp @s 53100 100 31700 180 25
+capture 99zzc_padokea_vue : Capture d'écran enregistrée sous le nom de 99zzc_padokea_vue.png
+cmd /gamemode creative
+cmd /effect give @s hxh:fear 25 2 true
+capture 99zzf_peur_tunnel_a : Capture d'écran enregistrée sous le nom de 99zzf_peur_tunnel_a.png
+capture 99zzg_peur_tunnel_b : Capture d'écran enregistrée sous le nom de 99zzg_peur_tunnel_b.png
+capture 99zzh_peur_tunnel_c : Capture d'écran enregistrée sous le nom de 99zzh_peur_tunnel_c.png
+cmd /effect clear @s hxh:fear
+cmd /effect give @s minecraft:slow_falling 60 0 true
+cmd /hunter world normal
+capture 99zzd_retour_monde_normal : Capture d'écran enregistrée sous le nom de 99zzd_retour_monde_normal.png
+cmd /hunter world hxh
+capture 99zze_retour_monde_hxh : Capture d'écran enregistrée sous le nom de 99zze_retour_monde_hxh.png
+cmd /advancement grant @s only hxh:kills_500
+capture 99zzi_succes_toast : Capture d'écran enregistrée sous le nom de 99zzi_succes_toast.png
+touche key.advancements
+capture 99zzj_succes_ecran : Capture d'écran enregistrée sous le nom de 99zzj_succes_ecran.png
+cmd /hunter darkcontinent known
+cmd /hunter airship
+capture 99zzk_carte_continent_noir : Capture d'écran enregistrée sous le nom de 99zzk_carte_continent_noir.png
+survol de la carte 'region:K'
+capture 99zzl_carte_continent_noir_kakin : Capture d'écran enregistrée sous le nom de 99zzl_carte_continent_noir_kakin.png
+survol de la carte 'dark:s'
+capture 99zzp_carte_continent_noir_point_saherta : Capture d'écran enregistrée sous le nom de 99zzp_carte_continent_noir_point_saherta.png
+cmd /hunter darkcontinent unknown
+cmd /hunter airship
+capture 99zzm_carte_classique_padokea_mitene : Capture d'écran enregistrée sous le nom de 99zzm_carte_classique_padokea_mitene.png
+survol de la carte 'region:p'
+capture 99zzn_carte_padokea : Capture d'écran enregistrée sous le nom de 99zzn_carte_padokea.png
+survol de la carte 'region:n'
+capture 99zzo_carte_ngl : Capture d'écran enregistrée sous le nom de 99zzo_carte_ngl.png
+cmd /gamemode spectator
+cmd /tp @s 33700 170 76800 0 35
+capture 99zzq_biome_cite_meteore : Capture d'écran enregistrée sous le nom de 99zzq_biome_cite_meteore.png
+cmd /tp @s 87800 150 83480 0 35
+capture 99zzr_biome_ile_baleine : Capture d'écran enregistrée sous le nom de 99zzr_biome_ile_baleine.png
+cmd /tp @s 37700 150 76800 0 35
+capture 99zzr2_biome_desert_meteore : Capture d'écran enregistrée sous le nom de 99zzr2_biome_desert_meteore.png
+cmd /tp @s 36500 150 17000 0 35
+capture 99zzr3_biome_jungle_kukuroo : Capture d'écran enregistrée sous le nom de 99zzr3_biome_jungle_kukuroo.png
+cmd /tp @s 68000 260 81000 0 50
+capture 99zzr4_ile_greed_forme : Capture d'écran enregistrée sous le nom de 99zzr4_ile_greed_forme.png
+cmd /hunter jenny set 0
+cmd /difficulty peaceful
+cmd /gamemode creative
+Fin du scénario (quit)

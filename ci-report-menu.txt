@@ -1,0 +1,14 @@
+Scénario chargé : 8 lignes
+menu : écran TitleScreen
+menu : clic sur 'Solo'
+menu : écran CreateWorldScreen
+menu : clic sur 'Créer un nouveau monde'
+menu : avertissement (ConfirmScreen) affiché après la création, on répond Oui
+menu : clic sur 'Oui'
+chargement du monde depuis 36 s, écran : LevelLoadingScreen
+capture chargement : Capture d'écran enregistrée sous le nom de menu_chargement_36s.png
+Monde chargé, joueur Dev
+monde créé par le menu et chargé
+capture menu_01_monde_charge : Capture d'écran enregistrée sous le nom de menu_01_monde_charge.png
+capture menu_02_apres_attente : Capture d'écran enregistrée sous le nom de menu_02_apres_attente.png
+Fin du scénario (quit)

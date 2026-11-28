@@ -1,0 +1,419 @@
+[28Nov2026 20:22:22.198] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeserverdev, --gameDir, ., --fml.fmlVersion, 4.0.45, --fml.mcVersion, 1.21.1, --fml.neoForgeVersion, 21.1.265, --fml.neoFormVersion, 20240808.144430]
+[28Nov2026 20:22:22.200] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: JVM identified as Eclipse Adoptium OpenJDK 64-Bit Server VM 21.0.13.1+2-LTS
+[28Nov2026 20:22:22.203] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 11.0.5+main.901c6ea8 starting: java version 21.0.13.1 by Eclipse Adoptium; OS Linux arch amd64 version 7.0.0-1020-azure
+[28Nov2026 20:22:22.335] [main/INFO] [net.neoforged.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgeserverdev
+[28Nov2026 20:22:22.393] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=union:/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.16.4+mixin.0.8.7/26d01f0567ab46e9ca0d2ed89d0ecc11aadbd433/sponge-mixin-0.16.4+mixin.0.8.7.jar%2394!/ Service=ModLauncher Env=SERVER
+[28Nov2026 20:22:22.692] [main/INFO] [net.neoforged.fml.loading.moddiscovery.locators.JarInJarDependencyLocator/]: Found 2 dependencies adding them to mods collection
+[28Nov2026 20:22:22.694] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/]: 
+     Mod List:
+		Name Version (Mod Id)
+
+		GeckoLib 4 4.6.6 (geckolib)
+		Minecraft 1.21.1 (minecraft)
+		NeoForge 21.1.265 (neoforge)
+		NewHxH 0.0.1 (hxh)
+[28Nov2026 20:22:23.302] [main/INFO] [mixin/]: Compatibility level set to JAVA_21
+[28Nov2026 20:22:23.322] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeserverdev' with arguments [--gameDir, .]
+[28Nov2026 20:22:23.402] [main/WARN] [mixin/]: Reference map 'geckolib.refmap.json' for geckolib.mixins.json could not be read. If this is a development environment you can ignore this message
+[28Nov2026 20:22:24.614] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+[28Nov2026 20:22:30.004] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[28Nov2026 20:22:30.007] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[28Nov2026 20:22:30.009] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[28Nov2026 20:22:30.010] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[28Nov2026 20:22:30.011] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[28Nov2026 20:22:30.080] [modloading-worker-0/INFO] [net.neoforged.neoforge.common.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 21.1.265, for MC 1.21.1
+[28Nov2026 20:22:30.151] [modloading-worker-0/INFO] [com.evandouard.hxh.HxHMod/]: [HxH] Mod chargé
+[28Nov2026 20:22:30.462] [main/ERROR] [net.minecraft.server.dedicated.Settings/]: Failed to load properties from file: server.properties
+java.nio.file.NoSuchFileException: server.properties
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92) ~[?:?]
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106) ~[?:?]
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111) ~[?:?]
+	at java.base/sun.nio.fs.UnixFileSystemProvider.newByteChannel(UnixFileSystemProvider.java:261) ~[?:?]
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:380) ~[?:?]
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:432) ~[?:?]
+	at java.base/java.nio.file.spi.FileSystemProvider.newInputStream(FileSystemProvider.java:420) ~[?:?]
+	at java.base/java.nio.file.Files.newInputStream(Files.java:160) ~[?:?]
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.dedicated.Settings.loadFromFile(Settings.java:38) ~[neoforge-21.1.265.jar%23125!/:?]
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.dedicated.DedicatedServerProperties.fromFile(DedicatedServerProperties.java:132) ~[neoforge-21.1.265.jar%23125!/:?]
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.dedicated.DedicatedServerSettings.<init>(DedicatedServerSettings.java:12) ~[neoforge-21.1.265.jar%23125!/:?]
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.Main.main(Main.java:125) ~[neoforge-21.1.265.jar%23125!/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at MC-BOOTSTRAP/fml_loader@4.0.45/net.neoforged.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:136) ~[loader-4.0.45.jar%23102!/:4.0]
+	at MC-BOOTSTRAP/fml_loader@4.0.45/net.neoforged.fml.loading.targets.CommonLaunchHandler.serverService(CommonLaunchHandler.java:128) ~[loader-4.0.45.jar%23102!/:4.0]
+	at MC-BOOTSTRAP/fml_loader@4.0.45/net.neoforged.fml.loading.targets.NeoForgeServerDevLaunchHandler.runService(NeoForgeServerDevLaunchHandler.java:23) ~[loader-4.0.45.jar%23102!/:4.0]
+	at MC-BOOTSTRAP/fml_loader@4.0.45/net.neoforged.fml.loading.targets.CommonLaunchHandler.lambda$launchService$4(CommonLaunchHandler.java:118) ~[loader-4.0.45.jar%23102!/:4.0]
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) [modlauncher-11.0.5.jar%2382!/:?]
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) [modlauncher-11.0.5.jar%2382!/:?]
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) [modlauncher-11.0.5.jar%2382!/:?]
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.Launcher.run(Launcher.java:103) [modlauncher-11.0.5.jar%2382!/:?]
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.Launcher.main(Launcher.java:74) [modlauncher-11.0.5.jar%2382!/:?]
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) [modlauncher-11.0.5.jar%2382!/:?]
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) [modlauncher-11.0.5.jar%2382!/:?]
+	at cpw.mods.bootstraplauncher@2.0.2/cpw.mods.bootstraplauncher.BootstrapLauncher.run(BootstrapLauncher.java:210) [bootstraplauncher-2.0.2.jar:?]
+	at cpw.mods.bootstraplauncher@2.0.2/cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:69) [bootstraplauncher-2.0.2.jar:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?]
+[28Nov2026 20:22:30.484] [main/INFO] [com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService/]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[28Nov2026 20:22:30.561] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/build/moddev/artifacts/neoforge-21.1.265.jar%23125!/assets/.mcassetsroot' uses unexpected schema
+[28Nov2026 20:22:30.561] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/home/runner/work/NewHxH-Neoforge/NewHxH-Neoforge/build/moddev/artifacts/neoforge-21.1.265.jar%23125!/data/.mcassetsroot' uses unexpected schema
+[28Nov2026 20:22:30.567] [main/INFO] [net.neoforged.neoforge.gametest.GameTestHooks/]: Enabled Gametest Namespaces: [hxh]
+[28Nov2026 20:22:31.972] [main/INFO] [net.minecraft.world.item.crafting.RecipeManager/]: Loaded 1306 recipes
+[28Nov2026 20:22:32.213] [main/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 1423 advancements
+[28Nov2026 20:22:32.221] [main/INFO] [com.evandouard.hxh.HxHMod/]: [HxH] 29 quête(s) chargée(s), 0 problème(s)
+[28Nov2026 20:22:32.223] [main/INFO] [com.evandouard.hxh.HxHMod/]: [HxH] 15 tranche(s) d'étages chargée(s)
+[28Nov2026 20:22:32.270] [main/INFO] [com.evandouard.hxh.HxHMod/]: [HxH] 61 mob(s) d'exemple chargé(s)
+[28Nov2026 20:22:32.272] [main/INFO] [com.evandouard.hxh.HxHMod/]: 2 boutique(s) chargée(s)
+[28Nov2026 20:22:32.273] [main/INFO] [com.evandouard.hxh.HxHMod/]: 18 destination(s) de dirigeable chargée(s)
+[28Nov2026 20:22:32.274] [main/INFO] [com.evandouard.hxh.HxHMod/]: 30 lieu(x) du monde HxH chargé(s)
+[28Nov2026 20:22:32.275] [main/INFO] [com.evandouard.hxh.HxHMod/]: 1 salle(s) des ventes chargée(s)
+[28Nov2026 20:22:32.275] [main/INFO] [com.evandouard.hxh.HxHMod/]: 6 organisation(s) chargée(s)
+[28Nov2026 20:22:32.277] [main/INFO] [com.evandouard.hxh.HxHMod/]: 5 famille(s) chargée(s)
+[28Nov2026 20:22:32.278] [main/INFO] [com.evandouard.hxh.HxHMod/]: [HxH] 8 contrat(s) Zoldyck chargé(s)
+[28Nov2026 20:22:32.279] [main/INFO] [com.evandouard.hxh.HxHMod/]: 14 fiche(s) d'ordinateur Hunter chargée(s)
+[28Nov2026 20:22:32.280] [main/INFO] [com.evandouard.hxh.HxHMod/]: [HxH] 4 événement(s) aléatoire(s) chargé(s)
+[28Nov2026 20:22:33.287] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Preparing start region for dimension minecraft:overworld
+[28Nov2026 20:22:33.318] [worldgen/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 2%
+[28Nov2026 20:22:33.580] [Server thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Time elapsed: 291 ms
+[28Nov2026 20:22:33.589] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: Started game test server
+[28Nov2026 20:22:33.610] [Server thread/INFO] [net.neoforged.neoforge.server.permission.PermissionAPI/]: Successfully initialized permission handler neoforge:default_handler
+[28Nov2026 20:22:33.717] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: 307 tests are now running at position -13809573, -59, 11409301!
+[28Nov2026 20:22:34.107] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestRunner/]: Running test batch 'defaultBatch:0' (50 tests)...
+[28Nov2026 20:22:34.266] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [                                                                                                                                                                                                                                                                                                                   ]
+[28Nov2026 20:22:34.484] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 12 at (2.5, -60.0, -1.5)
+[28Nov2026 20:22:34.588] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:34.618] [Server thread/INFO] [net.minecraft.world.entity.LivingEntity/]: Named entity Husk['Training dummy'/14, l='ServerLevel[Test Level]', x=-13809523.50, y=-59.00, z=11409302.50] died: Training dummy was killed
+[28Nov2026 20:22:34.647] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 20 at (2.5, -60.0, 8.5)
+[28Nov2026 20:22:34.650] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:34.710] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 37 at (5.5, -60.0, 0.5)
+[28Nov2026 20:22:34.713] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:35.203] [Server thread/INFO] [net.minecraft.world.entity.LivingEntity/]: Named entity ExamCandidate['Applicant #16'/50, l='ServerLevel[Test Level]', x=-13809521.50, y=-59.00, z=11409320.50] died: Applicant #16 was slain by Applicant #16
+[28Nov2026 20:22:35.211] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 51 at (-3.5, -60.0, -0.5)
+[28Nov2026 20:22:35.214] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:35.226] [Server thread/INFO] [net.minecraft.world.entity.LivingEntity/]: Named entity ExamCandidate['Applicant #16'/49, l='ServerLevel[Test Level]', x=-13809523.50, y=-59.00, z=11409320.50] died: Applicant #16 was slain by test-mock-player
+[28Nov2026 20:22:36.106] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 94 at (8.5, -60.0, -3.5)
+[28Nov2026 20:22:36.109] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:36.443] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 98 at (-0.5, -60.0, -6.5)
+[28Nov2026 20:22:36.446] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:36.501] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 99 at (-6.5, -60.0, -2.5)
+[28Nov2026 20:22:36.503] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:36.520] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 100 at (2.5, -60.0, 5.5)
+[28Nov2026 20:22:36.522] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:36.534] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 102 at (3.5, -60.0, 1.5)
+[28Nov2026 20:22:36.537] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:36.597] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 103 at (8.5, -60.0, 2.5)
+[28Nov2026 20:22:36.600] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:36.736] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 109 at (-9.5, -60.0, -1.5)
+[28Nov2026 20:22:36.740] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:36.787] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 112 at (-7.5, -60.0, 10.5)
+[28Nov2026 20:22:36.789] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:36.870] [Server thread/INFO] [com.evandouard.hxh.HxHMod/]: [HxH] Arrivée dans un lieu : carte des hauteurs -60, départ 64, point retenu 24 (Block{minecraft:air} au pied, Block{minecraft:air} au sol)
+[28Nov2026 20:22:36.879] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 113 at (-7.5, -60.0, 9.5)
+[28Nov2026 20:22:36.880] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:36.918] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 117 at (1.5, -60.0, -3.5)
+[28Nov2026 20:22:36.920] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:36.931] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 119 at (-3.5, -60.0, 7.5)
+[28Nov2026 20:22:36.933] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:36.960] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++_+_+++++++++++++++++_++++_+++++++++_++__++_+_+_                                                                                                                                                                                                                                                                 ]
+[28Nov2026 20:22:37.160] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++_+++++++++++++++++++_++++_+++++++++_+++++++++++                                                                                                                                                                                                                                                                 ]
+[28Nov2026 20:22:37.648] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++_+++++++++++++++++++_++++++++++++++_+++++++++++                                                                                                                                                                                                                                                                 ]
+[28Nov2026 20:22:38.118] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++_+++++++++++++++++++_++++++++++++++_+++++++++++                                                                                                                                                                                                                                                                 ]
+[28Nov2026 20:22:38.199] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++_++++++++++++++++++++++++++++++++++++++++++++++                                                                                                                                                                                                                                                                 ]
+[28Nov2026 20:22:38.262] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++_++++++++++++++++++++++++++++++++++++++++++++++                                                                                                                                                                                                                                                                 ]
+[28Nov2026 20:22:38.297] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++_++++++++++++++++++++++++++++++++++++++++++++++                                                                                                                                                                                                                                                                 ]
+[28Nov2026 20:22:38.334] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++_++++++++++++++++++++++++++++++++++++++++++++++                                                                                                                                                                                                                                                                 ]
+[28Nov2026 20:22:38.364] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++_++++++++++++++++++++++++++++++++++++++++++++++                                                                                                                                                                                                                                                                 ]
+[28Nov2026 20:22:38.395] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++_++++++++++++++++++++++++++++++++++++++++++++++                                                                                                                                                                                                                                                                 ]
+[28Nov2026 20:22:38.416] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++_++++++++++++++++++++++++++++++++++++++++++++++                                                                                                                                                                                                                                                                 ]
+[28Nov2026 20:22:38.519] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestRunner/]: Running test batch 'defaultBatch:1' (50 tests)...
+[28Nov2026 20:22:38.626] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++                                                                                                                                                                                                                                                                 ]
+[28Nov2026 20:22:38.649] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 134 at (7.5, -60.0, 6.5)
+[28Nov2026 20:22:38.651] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:38.662] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 136 at (4.5, -60.0, 7.5)
+[28Nov2026 20:22:38.663] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:38.676] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 140 at (3.5, -60.0, 5.5)
+[28Nov2026 20:22:38.678] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:38.687] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 142 at (-1.5, -60.0, 7.5)
+[28Nov2026 20:22:38.688] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:38.760] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 152 at (-4.5, -60.0, -3.5)
+[28Nov2026 20:22:38.764] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:38.786] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 153 at (-6.5, -60.0, 3.5)
+[28Nov2026 20:22:38.791] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:38.804] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 158 at (10.5, -60.0, 1.5)
+[28Nov2026 20:22:38.806] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:38.816] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 160 at (-3.5, -60.0, -0.5)
+[28Nov2026 20:22:38.817] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:38.845] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 162 at (-9.5, -60.0, 6.5)
+[28Nov2026 20:22:38.847] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:38.851] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player has made the advancement [First Purchase]
+[28Nov2026 20:22:38.875] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 170 at (7.5, -60.0, -9.5)
+[28Nov2026 20:22:38.876] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:38.927] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 172 at (-4.5, -60.0, -6.5)
+[28Nov2026 20:22:38.928] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.120] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 178 at (-9.5, -60.0, 10.5)
+[28Nov2026 20:22:39.122] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.128] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player has made the advancement [Monster Hunter]
+[28Nov2026 20:22:39.129] [Server thread/INFO] [net.minecraft.world.entity.LivingEntity/]: Named entity Husk['Elite manipulator (Nen)'/179, l='ServerLevel[Test Level]', x=32.50, y=-60.00, z=1.50] died: Elite manipulator (Nen) was slain by test-mock-player
+[28Nov2026 20:22:39.140] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 185 at (4.5, -60.0, 0.5)
+[28Nov2026 20:22:39.142] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.189] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 193 at (0.5, -60.0, -5.5)
+[28Nov2026 20:22:39.190] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.212] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 194 at (-6.5, -60.0, -4.5)
+[28Nov2026 20:22:39.215] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.232] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 195 at (-0.5, -60.0, -5.5)
+[28Nov2026 20:22:39.233] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.241] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 196 at (-4.5, -60.0, -4.5)
+[28Nov2026 20:22:39.243] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.251] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 197 at (-6.5, -60.0, 2.5)
+[28Nov2026 20:22:39.253] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.259] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++++++++++++++++++++++++++++++++++++++++++++++++++_++++__+++_+_+++__+__+++++++++++++++_++++++++ ++_                                                                                                                                                                                                               ]
+[28Nov2026 20:22:39.331] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++++++++++++++++++++++++++++++++++++++++++++++++++_+++++_+++++++++__+__++++++++++++++++++++++++_++_                                                                                                                                                                                                               ]
+[28Nov2026 20:22:39.429] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++++++++++++++++++++++++++++++++++++++++++++++++++_+++++++++++++++__++_++++++++++++++++++++++++_+++                                                                                                                                                                                                               ]
+[28Nov2026 20:22:39.555] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestRunner/]: Running test batch 'defaultBatch:2' (50 tests)...
+[28Nov2026 20:22:39.661] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++                                                                                                                                                                                                               ]
+[28Nov2026 20:22:39.728] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 228 at (-8.5, -60.0, 7.5)
+[28Nov2026 20:22:39.729] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.741] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 239 at (10.5, -60.0, -6.5)
+[28Nov2026 20:22:39.742] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.749] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 242 at (-5.5, -60.0, -9.5)
+[28Nov2026 20:22:39.751] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.780] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 316 at (-5.5, -60.0, -1.5)
+[28Nov2026 20:22:39.782] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.873] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 328 at (-8.5, -60.0, 2.5)
+[28Nov2026 20:22:39.875] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.883] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player has made the advancement [Monster Hunter]
+[28Nov2026 20:22:39.883] [Server thread/INFO] [net.minecraft.world.entity.LivingEntity/]: Named entity Zombie['A grave robber'/329, l='ServerLevel[Test Level]', x=-13809561.50, y=-59.00, z=11409439.50] died: A grave robber was slain by test-mock-player
+[28Nov2026 20:22:39.977] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 339 at (8.5, -60.0, -7.5)
+[28Nov2026 20:22:39.979] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.990] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 341 at (-8.5, -60.0, 8.5)
+[28Nov2026 20:22:39.992] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:39.997] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player has reached the goal [Hunter License]
+[28Nov2026 20:22:39.997] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player has reached the goal [Nen Awakening]
+[28Nov2026 20:22:39.997] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player has made the advancement [Heavens Arena: Floor 50]
+[28Nov2026 20:22:39.997] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player has made the advancement [Heavens Arena: Floor 100]
+[28Nov2026 20:22:40.016] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 345 at (-5.5, -60.0, 4.5)
+[28Nov2026 20:22:40.019] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:40.161] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 364 at (-9.5, -60.0, -5.5)
+[28Nov2026 20:22:40.169] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:40.235] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++__++++++++++++++++++_+__+++                                                                                                                                                             ]
+[28Nov2026 20:22:40.301] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++__++++++++++++++++++_++++++                                                                                                                                                             ]
+[28Nov2026 20:22:40.821] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestRunner/]: Running test batch 'defaultBatch:3' (50 tests)...
+[28Nov2026 20:22:40.914] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player has made the advancement [Bring Home the Beacon]
+[28Nov2026 20:22:40.915] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++                                                                                                                                                             ]
+[28Nov2026 20:22:41.007] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 375 at (7.5, -60.0, 1.5)
+[28Nov2026 20:22:41.011] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:41.020] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 376 at (-6.5, -60.0, -0.5)
+[28Nov2026 20:22:41.022] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:41.185] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 378 at (-9.5, -60.0, 1.5)
+[28Nov2026 20:22:41.187] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:41.195] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 380 at (4.5, -60.0, 10.5)
+[28Nov2026 20:22:41.197] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:41.205] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 381 at (-1.5, -60.0, -0.5)
+[28Nov2026 20:22:41.206] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:41.256] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 383 at (9.5, -60.0, -3.5)
+[28Nov2026 20:22:41.258] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:41.264] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 384 at (3.5, -60.0, 10.5)
+[28Nov2026 20:22:41.265] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:41.273] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 385 at (-4.5, -60.0, 0.5)
+[28Nov2026 20:22:41.274] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:41.287] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 404 at (-5.5, -60.0, 7.5)
+[28Nov2026 20:22:41.288] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:41.815] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 419 at (8.5, -60.0, -1.5)
+[28Nov2026 20:22:41.817] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:41.826] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 423 at (2.5, -60.0, -6.5)
+[28Nov2026 20:22:41.917] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:41.972] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 434 at (-2.5, -60.0, 6.5)
+[28Nov2026 20:22:41.973] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:42.013] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++_+++++_+_++++_++++++++                                                                                                                           ]
+[28Nov2026 20:22:42.042] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 442 at (6.5, -60.0, -9.5)
+[28Nov2026 20:22:42.043] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:42.053] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 444 at (5.5, -60.0, 7.5)
+[28Nov2026 20:22:42.055] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:42.088] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 454 at (7.5, -60.0, 3.5)
+[28Nov2026 20:22:42.089] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:42.095] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player has made the advancement [Suit Up]
+[28Nov2026 20:22:42.101] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 456 at (-3.5, -60.0, -8.5)
+[28Nov2026 20:22:42.102] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:42.129] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 459 at (-6.5, -60.0, 5.5)
+[28Nov2026 20:22:42.130] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:42.163] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++_+++++++_++++++++++++++__++++++++++_++                                                                                                           ]
+[28Nov2026 20:22:42.286] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++_+++++++++++++++++++++++_+++++++++++++                                                                                                           ]
+[28Nov2026 20:22:42.319] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player has made the advancement [Bring Home the Beacon]
+[28Nov2026 20:22:42.319] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++++++++++++++++++++_+++++++++++++                                                                                                           ]
+[28Nov2026 20:22:42.349] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++++++++++++++++++++_+++++++++++++                                                                                                           ]
+[28Nov2026 20:22:42.380] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++++++++++++++++++++_+++++++++++++                                                                                                           ]
+[28Nov2026 20:22:42.411] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++++++++++++++++++++_+++++++++++++                                                                                                           ]
+[28Nov2026 20:22:42.441] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++++++++++++++++++++++++++++++++++                                                                                                           ]
+[28Nov2026 20:22:42.583] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestRunner/]: Running test batch 'defaultBatch:4' (50 tests)...
+[28Nov2026 20:22:42.665] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++                                                                                                           ]
+[28Nov2026 20:22:42.809] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 500 at (1.5, 72.0, -7.5)
+[28Nov2026 20:22:42.811] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:42.815] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player has made the advancement [Monster Hunter]
+[28Nov2026 20:22:42.816] [Server thread/INFO] [net.minecraft.world.entity.LivingEntity/]: Named entity Zombie['A mafia boss's bodyguard'/501, l='ServerLevel[Test Level]', x=-13809545.50, y=-59.00, z=11409538.50] died: A mafia boss's bodyguard was slain by test-mock-player
+[28Nov2026 20:22:42.828] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 505 at (-9.5, 72.0, -5.5)
+[28Nov2026 20:22:42.829] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:42.845] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 511 at (10.5, 72.0, 5.5)
+[28Nov2026 20:22:42.846] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:42.855] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 512 at (-4.5, 72.0, -6.5)
+[28Nov2026 20:22:42.857] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:42.864] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 514 at (-7.5, 72.0, -7.5)
+[28Nov2026 20:22:42.865] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:43.558] [Server thread/ERROR] [net.minecraft.world.level.chunk.ChunkAccess/]: Unprimed heightmap: WORLD_SURFACE_WG 0 15
+[28Nov2026 20:22:43.559] [Server thread/ERROR] [net.minecraft.world.level.chunk.ChunkAccess/]: Unprimed heightmap: WORLD_SURFACE_WG 6 15
+[28Nov2026 20:22:43.560] [Server thread/ERROR] [net.minecraft.world.level.chunk.ChunkAccess/]: Unprimed heightmap: WORLD_SURFACE_WG 0 1
+[28Nov2026 20:22:43.561] [Server thread/ERROR] [net.minecraft.world.level.chunk.ChunkAccess/]: Unprimed heightmap: WORLD_SURFACE_WG 6 1
+[28Nov2026 20:22:43.561] [Server thread/ERROR] [net.minecraft.world.level.chunk.ChunkAccess/]: Unprimed heightmap: WORLD_SURFACE_WG 11 8
+[28Nov2026 20:22:44.414] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 539 at (5.5, 72.0, 8.5)
+[28Nov2026 20:22:44.416] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:44.443] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 548 at (-6.5, 72.0, -6.5)
+[28Nov2026 20:22:44.444] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:44.461] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+__++_+++_+_+++++_+++_++_+_++_+++++_++++   _+                                                         ]
+[28Nov2026 20:22:44.513] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_++_++++++++++++++++++_+++++++_+++++++++++++++                                                         ]
+[28Nov2026 20:22:45.114] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_++_++++++++++++++++++_+++++++_+++++++++++++++                                                         ]
+[28Nov2026 20:22:45.219] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++++++++++++                                                         ]
+[28Nov2026 20:22:45.331] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++++++++++++                                                         ]
+[28Nov2026 20:22:45.506] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestRunner/]: Running test batch 'defaultBatch:5' (50 tests)...
+[28Nov2026 20:22:45.649] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++                                                         ]
+[28Nov2026 20:22:45.661] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 891 at (9.5, 72.0, 7.5)
+[28Nov2026 20:22:45.662] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:45.670] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 892 at (-9.5, 72.0, -3.5)
+[28Nov2026 20:22:45.671] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:45.674] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player has made the advancement [First Purchase]
+[28Nov2026 20:22:45.682] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 897 at (3.5, 72.0, 7.5)
+[28Nov2026 20:22:45.683] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:45.694] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 902 at (1.5, 72.0, 0.5)
+[28Nov2026 20:22:45.695] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:51.961] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 992 at (2.5, 72.0, -6.5)
+[28Nov2026 20:22:51.963] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:51.972] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 999 at (2.5, 72.0, -3.5)
+[28Nov2026 20:22:51.974] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:52.177] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 1003 at (0.5, 72.0, -6.5)
+[28Nov2026 20:22:52.179] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:52.189] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 1005 at (3.5, 72.0, -7.5)
+[28Nov2026 20:22:52.190] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:52.197] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 1007 at (7.5, 72.0, 0.5)
+[28Nov2026 20:22:52.199] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:52.209] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 1009 at (-3.5, 72.0, -5.5)
+[28Nov2026 20:22:52.214] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:52.222] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 1011 at (3.5, 72.0, 0.5)
+[28Nov2026 20:22:52.223] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:52.232] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 1013 at (-3.5, 72.0, -9.5)
+[28Nov2026 20:22:52.233] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:52.906] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 1073 at (2.5, 72.0, 9.5)
+[28Nov2026 20:22:52.908] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:55.195] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++   +++++   +++++   +++++   +++++   ++++_   +       ]
+[28Nov2026 20:22:55.253] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 1414 at (9.5, 72.0, -8.5)
+[28Nov2026 20:22:55.255] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:55.316] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++++++++++++_+++++++++++++++++++++++++++       ]
+[28Nov2026 20:22:55.387] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++++++++++++_+++++++++++++++++++++++++++       ]
+[28Nov2026 20:22:55.459] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++++++++++++_+++++++++++++++++++++++++++       ]
+[28Nov2026 20:22:55.526] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++++++++++++++++++++++++++++++++++++++++       ]
+[28Nov2026 20:22:55.584] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_+++++++++++++++++++++++++++++++++++++++++++       ]
+[28Nov2026 20:22:55.625] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestRunner/]: Running test batch 'defaultBatch:6' (6 tests)...
+[28Nov2026 20:22:55.681] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++       ]
+[28Nov2026 20:22:58.156] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: test-mock-player[embedded] logged in with entity id 1432 at (-3.5, 72.0, -0.5)
+[28Nov2026 20:22:58.158] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player joined the game
+[28Nov2026 20:22:58.346] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_++++ ]
+[28Nov2026 20:22:58.715] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestRunner/]: Running test batch 'tunnel:0' (1 tests)...
+[28Nov2026 20:22:58.763] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ]
+[28Nov2026 20:22:58.840] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_]
+[28Nov2026 20:22:58.850] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_]
+[28Nov2026 20:22:58.860] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_]
+[28Nov2026 20:22:58.863] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++]
+[28Nov2026 20:22:58.863] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: ========= 307 GAME TESTS COMPLETE IN 25.14 s ======================
+[28Nov2026 20:22:58.863] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: All 307 required tests passed :)
+[28Nov2026 20:22:58.864] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: ====================================================
+[28Nov2026 20:22:58.866] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Stopping server
+[28Nov2026 20:22:58.866] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving players
+[28Nov2026 20:22:59.187] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.187] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.191] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.191] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.193] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.193] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.195] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.196] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.199] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.199] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.201] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.201] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.203] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.203] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.205] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.205] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.229] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.229] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.249] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.250] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.252] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.252] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.253] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.253] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.255] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.255] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.257] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.257] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.259] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.259] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.261] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.261] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.263] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.263] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.268] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.268] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.271] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.271] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.274] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.274] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.276] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.276] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.278] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.278] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.280] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.280] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.282] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.282] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.284] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.284] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.285] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.285] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.287] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.287] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.289] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.289] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.291] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.291] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.292] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.292] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.294] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.294] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.296] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.296] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.298] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.298] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.300] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.300] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.301] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.301] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.303] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.303] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.325] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.325] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.326] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.327] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.328] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.328] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.330] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.330] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.331] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: test-mock-player lost connection: Server closed
+[28Nov2026 20:22:59.331] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: test-mock-player left the game
+[28Nov2026 20:22:59.333] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving worlds
+[28Nov2026 20:22:59.694] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:overworld
+[28Nov2026 20:23:10.125] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_end
+[28Nov2026 20:23:10.126] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[28Nov2026 20:23:10.135] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[28Nov2026 20:23:10.135] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[28Nov2026 20:23:10.135] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[28Nov2026 20:23:10.136] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage: All dimensions are saved
+[28Nov2026 20:23:10.348] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: Game test server shutting down
