@@ -295,7 +295,6 @@ click Méditer
 closescreen
 camera front
 wait 40
-clearchat
 shot 15m_meditation_pose_face
 camera back
 wait 6
@@ -1920,6 +1919,25 @@ cmd summon hxh:npc ~-4.5 ~ ~4.8 {npc:"youpi",NoAI:1b,Silent:1b,Rotation:[180f,0f
 wait 30
 clearchat
 shot 67ad_serie_netero_meruem_neferpitou_shaiapouf_youpi_expression
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# --- Poses tenues des personnages GeckoLib : Netero prie (seiza), les autres méditent (tailleur) ---
+look 0 5
+cmd summon hxh:npc ~4.0 ~ ~4.6 {npc:"netero",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci","geo_med"]}
+cmd summon hxh:npc ~1.4 ~ ~4.6 {npc:"gon",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci","geo_med"]}
+cmd summon hxh:npc ~-1.2 ~ ~4.6 {npc:"killua",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci","geo_med"]}
+cmd summon hxh:npc ~-3.8 ~ ~4.6 {npc:"kurapika",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci","geo_med"]}
+wait 5
+cmd hunter hatsu set netero @e[tag=geo_med,nbt={npc:"netero"}]
+cmd hunter nen meditate @e[tag=geo_med]
+wait 40
+clearchat
+shot 67ae_poses_priere_meditation_face
+cmd execute as @e[tag=geo_med] at @s run tp @s ~ ~ ~ 90 0
+wait 20
+shot 67af_poses_priere_meditation_profil
+cmd execute as @e[tag=geo_med] at @s run tp @s ~ ~ ~ 140 0
+wait 32
+shot 67ag_poses_priere_inclinaison_trois_quarts
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 4
 cmd summon hxh:npc ~4.3 ~ ~4.7 {npc:"chrollo",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}

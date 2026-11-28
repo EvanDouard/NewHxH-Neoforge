@@ -151,8 +151,11 @@ public class CharacterEntity extends PathfinderMob implements GeoEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "base", 5,
-                state -> state.setAndContinue(state.isMoving() ? WALK : IDLE)));
+        controllers.add(new AnimationController<>(this, "base", HeldPoses.TRANSITION, state -> {
+            RawAnimation held = HeldPoses.of(this);
+            if (held != null) return state.setAndContinue(held);
+            return state.setAndContinue(state.isMoving() ? WALK : IDLE);
+        }));
         controllers.add(new AnimationController<>(this, "attack", 0, state -> software.bernie.geckolib.animation.PlayState.STOP)
                 .triggerableAnim("punch", ATTACK));
     }

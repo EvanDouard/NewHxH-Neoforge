@@ -244,6 +244,10 @@ class Model:
             os.makedirs(os.path.dirname(p), exist_ok=True)
         with open(geo, 'w') as f:
             json.dump(self.geo_json(), f, separators=(',', ':'))
+        if 'idle' in self.animations:      # personnages humanoïdes : poses tenues communes (méditation, prière)
+            from poses import pose_animations
+            for k, v in pose_animations(self).items():
+                self.animations.setdefault(k, v)
         anims = json.loads(json.dumps(self.animations))
         for a in anims.values():
             for bone in a.get('bones', {}).values():
@@ -327,9 +331,18 @@ def render(model, yaw=0, pitch=0, px=11, canvas=(300, 520), pose=None):
             return world[bn]
         b = model.bones[bn]
         rot = list(b.rotation or [0, 0, 0])
+        pos = None
         if b.name in pose:
-            rot = [rot[i] + pose[b.name][i] for i in range(3)]
+            pr = pose[b.name]
+            if isinstance(pr, dict):          # {'rot': [...], 'pos': [...]} comme une image d'animation
+                pos = pr.get('pos')
+                pr = pr.get('rot', [0, 0, 0])
+            rot = [rot[i] + pr[i] for i in range(3)]
         M = _affine(rot, b.pivot) if any(rot) else np.eye(4)
+        if pos and any(pos):
+            T = np.eye(4)
+            T[:3, 3] = pos
+            M = T @ M
         if b.parent:
             M = bone_m(b.parent) @ M
         world[bn] = M

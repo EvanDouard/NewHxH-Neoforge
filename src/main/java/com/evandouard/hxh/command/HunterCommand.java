@@ -673,6 +673,7 @@ public final class HunterCommand {
                                             return apply(ctx, List.of(ctx.getSource().getEntityOrException()),
                                                     e -> HunterStats.get(e).setMasteryLevel(m, IntegerArgumentType.getInteger(ctx, "level")));
                                         }))))
+                .then(targeted("meditate", com.evandouard.hxh.nen.NenAwakening::toggleMeditation))
                 .then(Commands.literal("meditation")
                         .then(Commands.argument("seconds", IntegerArgumentType.integer(0))
                                 .executes(ctx -> apply(ctx, List.of(ctx.getSource().getEntityOrException()),

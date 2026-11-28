@@ -224,8 +224,12 @@ public class NpcEntity extends PathfinderMob implements software.bernie.geckolib
 
     @Override
     public void registerControllers(software.bernie.geckolib.animation.AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new software.bernie.geckolib.animation.AnimationController<>(this, "base", 5,
-                state -> state.setAndContinue(state.isMoving() ? WALK : IDLE)));
+        controllers.add(new software.bernie.geckolib.animation.AnimationController<>(this, "base",
+                com.evandouard.hxh.mob.HeldPoses.TRANSITION, state -> {
+                    software.bernie.geckolib.animation.RawAnimation held = com.evandouard.hxh.mob.HeldPoses.of(this);
+                    if (held != null) return state.setAndContinue(held);
+                    return state.setAndContinue(state.isMoving() ? WALK : IDLE);
+                }));
     }
 
     @Override
