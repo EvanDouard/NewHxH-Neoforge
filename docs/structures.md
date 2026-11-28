@@ -37,6 +37,10 @@ x, z = ancre en blocs du monde HxH (monde ×20). Taille = zone dégagée (largeu
 | 14 | `ngl_village` — Village NGL | 39 800, 104 640 | NGL | 81 × 21 × 81 | Premier jet | cabanes, halle, champ de blé, tour de guet, Ancien et fermier | [ ] |
 | 15 | `chimera_ant_queen_arm` — Palais souterrain de la Reine | 15 440, 91 140 | terre libre | 57 × 31 × 57 | Complet (export) | 1 849 blocs, survivant de l'atterrissage | [ ] |
 | 16 | `east_gorteau_palace` — Palais de Gorteau Est | 52 140, 100 140 | East Gorteau | 41 × 25 × 41 | **Minimal (28 nov)** | plateforme, bloc de pierre 25×25×11 avec porte, 4 tours, chemin, borne du dirigeable ; destination « Palais de Gorteau Est » | [ ] |
+| 17 | `greed_antokiba`, `greed_soufrabi`, `greed_aiai`, `greed_limeiro`, `greed_jispa`, `greed_pukku` — villes de Greed Island | 67 500–69 100, 80 800 / 82 200 | Greed Island | 15 × 8 × 15 chacune | **Minimal (28 nov)** | bâtiment creux + porte | [ ] |
+| 18 | `yorknew_residential` — Quartier résidentiel de Yorknew | 13 120, 77 690 | Yorknew | 31 × 20 × 21 | **Minimal** | bâtiment creux + porte | [ ] |
+| 19 | `padokea_gare`, `padokea_hopital`, `padokea_commissariat`, `padokea_ecole_assassins`, `padokea_prison` | 52 320, 28 000 → 28 125 | Padokea | 17–25 × 8–12 × 13–17 | **Minimal** | bâtiments creux alignés à l'est de la ville | [ ] |
+| 20 | `gorteau_caserne`, `gorteau_centre_selection` | 52 200, 100 140 / 100 175 | East Gorteau | 21–25 × 8–10 × 15 | **Minimal** | bâtiments creux + porte | [ ] |
 
 ## 2. Tour Céleste (structures NBT, `data/hxh/structure/heavens_arena/`)
 | Fichier | Rôle | État | Validation |
@@ -74,12 +78,12 @@ repères : `examen-constructions.md`.
 ## 4. Structures absentes (à construire quand tu veux ; stub = contour minimal)
 | Lieu | Prévu dans | Ancre proposée | État |
 |---|---|---|---|
-| Greed Island : Antokiba, Soufrabi, Aiai, Limeiro, Jispa, Pukku, château, ruines, donjon, arène, bibliothèque magique… | `feuille-route-monde.md`, `greed-island.md` | sur l'île (15 cases) | Absent |
+| Greed Island : château, ruines, donjon, arène, bibliothèque magique, tour de sorcier, sanctuaire, grotte aux trésors (les 6 villes sont en stub, §1 n°17) | `feuille-route-monde.md`, `greed-island.md` | sur l'île (15 cases) | Absent |
 | Port de l'île de la Baleine (quai, bateaux), sanctuaire du lac | idem | côte de l'île, à fixer avec la carte | Absent |
-| Quartier résidentiel de Yorknew, hôtel de luxe, banque, musée… | idem | autour de Yorknew (2000 × 2000 à venir) | Absent |
-| East Gorteau : quartiers, caserne, centre de sélection, souterrains | idem | autour du palais (§1 n°16) | Absent (palais minimal fait) |
+| Yorknew : hôtel de luxe, banque, musée, gare centrale… (le quartier résidentiel est en stub, §1 n°18) | idem | autour de Yorknew (2000 × 2000 à venir) | Absent |
+| East Gorteau : quartiers, hôpital, école, souterrains (palais, caserne et centre de sélection sont en stub) | idem | autour du palais (§1 n°16) | Absent |
 | Intérieurs de la Baleine Noire (cabines, cuisines, prison…) | idem | dans le navire | Absent |
-| Padokea : gare, hôpital, commissariat, école d'assassins, prison… | idem | autour de la Tour | Absent |
+| Padokea : quartier résidentiel, centre commercial, hôtel, restaurant, terrain d'entraînement (gare, hôpital, commissariat, école d'assassins, prison en stub, §1 n°19) | idem | autour de la Tour | Absent |
 | Continent Noir / Nouveau Continent : rives, ruines, villes | `continent-cache.md` | à définir | Absent |
 
-*Dis-moi lesquels tu veux en stub (volume + porte + borne, remplaçable en copiant un fichier) : je les ajoute avec leur destination.*
+*Stubs générés par `tools/gen_stub_places.py` (un bâtiment creux avec porte, sans destination de dirigeable). Pour en ajouter : une ligne dans le script, ou un fichier à la main.*

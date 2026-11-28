@@ -395,4 +395,24 @@ public final class WorldPlacesTests {
             helper.succeed();
         });
     }
+
+    /** Lieux « stub » (strict minimum, à remplacer par un fichier exporté) : tous chargés, bâtiment creux avec porte ouverte. */
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void stubPlacesAreLoadedAndBuilt(GameTestHelper helper) {
+        for (String id : new String[]{"greed_antokiba", "greed_soufrabi", "greed_aiai", "greed_limeiro", "greed_jispa", "greed_pukku",
+                "yorknew_residential", "padokea_gare", "padokea_hopital", "padokea_commissariat", "padokea_ecole_assassins",
+                "padokea_prison", "gorteau_caserne", "gorteau_centre_selection"})
+            helper.assertTrue(WorldPlaces.get("hxh:" + id) != null, "Lieu stub chargé : " + id);
+        BlockPos origin0 = helper.absolutePos(new BlockPos(2, 1, 2));
+        withForcedChunks(helper, origin0, 30, () -> {
+            var place = WorldPlaces.get("hxh:padokea_gare");
+            BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+            var level = helper.getLevel();
+            int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX(), ground + 3, origin.getZ() + 5)).is(Blocks.STONE_BRICKS), "Mur de la gare");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 10, ground + 1, origin.getZ())).isAir(), "Porte de la gare ouverte");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 5, ground + 8, origin.getZ() + 5)).is(Blocks.STONE_BRICK_SLAB), "Toit de la gare");
+            helper.succeed();
+        });
+    }
 }

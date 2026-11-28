@@ -1,0 +1,79 @@
+{
+ "x": 52200,
+ "z": 100140,
+ "clear": [
+  -1,
+  0,
+  -3,
+  25,
+  10,
+  15
+ ],
+ "foundation": [
+  -1,
+  -3,
+  25,
+  15,
+  "minecraft:stone_bricks"
+ ],
+ "fills": [
+  {
+   "box": [
+    0,
+    -1,
+    0,
+    24,
+    -1,
+    14
+   ],
+   "block": "minecraft:stone_bricks"
+  },
+  {
+   "box": [
+    0,
+    0,
+    0,
+    24,
+    7,
+    14
+   ],
+   "block": "minecraft:stone_bricks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    0,
+    8,
+    0,
+    24,
+    8,
+    14
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    11,
+    0,
+    0,
+    13,
+    2,
+    0
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    11,
+    -1,
+    -3,
+    13,
+    -1,
+    -1
+   ],
+   "block": "minecraft:dirt_path"
+  }
+ ],
+ "blocks": [],
+ "entities": []
+}
