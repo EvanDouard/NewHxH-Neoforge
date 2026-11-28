@@ -88,4 +88,27 @@ public final class WorldMapTests {
         helper.assertTrue(source.possibleBiomes().contains(desert), "Le biome du lieu est déclaré au générateur");
         helper.succeed();
     }
+
+    /** Cité Météore : cœur badlands, désert tout autour ; Kukuroo : sommet venteux, jungle au pied (même ordre que world.json : le plus petit d'abord). */
+    @GameTest(template = "empty")
+    public static void meteorDesertAndKukurooJungleRings(GameTestHelper helper) {
+        var biomes = helper.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME);
+        var plains = biomes.getOrThrow(net.minecraft.world.level.biome.Biomes.PLAINS);
+        var badlands = biomes.getOrThrow(net.minecraft.world.level.biome.Biomes.BADLANDS);
+        var desert = biomes.getOrThrow(net.minecraft.world.level.biome.Biomes.DESERT);
+        var windswept = biomes.getOrThrow(net.minecraft.world.level.biome.Biomes.WINDSWEPT_FOREST);
+        var jungle = biomes.getOrThrow(net.minecraft.world.level.biome.Biomes.JUNGLE);
+        var src = new com.evandouard.hxh.world.HxHBiomeSource(plains, plains, plains, plains, plains, plains, plains, plains, plains, plains,
+                java.util.List.of(
+                        new com.evandouard.hxh.world.HxHBiomeSource.Place(32000, 17000, 2560, windswept),
+                        new com.evandouard.hxh.world.HxHBiomeSource.Place(32000, 17000, 6400, jungle),
+                        new com.evandouard.hxh.world.HxHBiomeSource.Place(33700, 76800, 1760, badlands),
+                        new com.evandouard.hxh.world.HxHBiomeSource.Place(33700, 76800, 6400, desert)));
+        helper.assertTrue(src.placeBiome(33700, 76800) == badlands, "Cœur de la Cité Météore en badlands");
+        helper.assertTrue(src.placeBiome(33700 + 4000, 76800) == desert, "Désert autour de la Cité Météore");
+        helper.assertTrue(src.placeBiome(33700 + 7000, 76800) == null, "Au-delà : biome de région");
+        helper.assertTrue(src.placeBiome(32000, 17000) == windswept, "Sommet Kukuroo venteux");
+        helper.assertTrue(src.placeBiome(32000 + 4500, 17000) == jungle, "Pied de Kukuroo en jungle");
+        helper.succeed();
+    }
 }

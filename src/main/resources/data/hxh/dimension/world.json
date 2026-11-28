@@ -29,10 +29,22 @@
           "biome": "minecraft:windswept_forest"
         },
         {
+          "x": 32000,
+          "z": 17000,
+          "radius": 6400,
+          "biome": "minecraft:jungle"
+        },
+        {
           "x": 33700,
           "z": 76800,
           "radius": 1760,
           "biome": "minecraft:badlands"
+        },
+        {
+          "x": 33700,
+          "z": 76800,
+          "radius": 6400,
+          "biome": "minecraft:desert"
         },
         {
           "x": 13800,

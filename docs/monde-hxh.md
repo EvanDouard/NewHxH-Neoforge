@@ -187,3 +187,16 @@ Ajoutés autour des trois maisons d'origine (`world_places/whale_island_village.
 - `cells.txt` (utilisé par le jeu) divergeait de `regions.txt` (carte dessinée validée) : 331 cases de terre dessinée étaient de la mer en jeu (toute la rangée 124 formait un détroit, ligne verticale vers la colonne 155…), 165 cases de terre n'existaient qu'en jeu, 121 lettres différaient. `cells.txt` est maintenant identique à `regions.txt` ; aucun lieu ni destination de dirigeable ne se retrouve sur la mer.
 - `tools/export_world_view.py <dossier>` recrée le relief/biomes du jeu (bruits refaits hors du jeu, approximation non exacte au bit près) et exporte relief.jpg, biomes.png, drawn.png, ecarts.png, hauteurs/biomes et data.json pour le comparateur (rideau carte dessinée / relief / biomes, lieux, grille, tooltip).
 - Garder `cells.txt` et `regions.txt` synchronisés : toute modification de l'un se copie dans l'autre ; `ecarts.png` doit rester vide.
+
+## Biomes d'après les descriptions de régions (28 nov)
+Sources : fiches du wiki HxH (hunterxhunter.fandom.com : Kukuroo Mountain, Whale Island, Padokea, Saherta, Meteor City) et indications d'Evan. Le canon est pauvre : la plupart des fiches ne décrivent pas le terrain, donc ce qui n'est pas indiqué reste une proposition *(à valider)*.
+| Région | Ce que dit la description | Biome en jeu |
+|---|---|---|
+| Cité Météore | décharge du monde, terre aride ; « tout autour c'est un désert » (Evan) ; zone de la taille de la République de Lapet | cœur `badlands` (rayon 1 760), **désert** `minecraft:desert` jusqu'à 6 400 blocs (~10 cases) autour |
+| Montagne Kukuroo | volcan dormant de 3 722 m, pied couvert de jungle dense, base souvent dans les nuages | sommet/domaine `windswept_forest` (rayon 2 560), **jungle** `minecraft:jungle` jusqu'à 6 400 blocs autour |
+| Île de la Baleine | montagneuse, très boisée, une zone marécageuse, forêt de hêtres des neiges (renards-ours, écureuils) | `forest` (inchangé) ; marais à ajouter plus tard *(où ?)* |
+| Padokea | « en grande partie l'actuelle Algérie » (fiche wiki) ; Kukuroo dans la région de Dentora | inchangé (plaines) ; piste : plus aride vers l'intérieur *(à valider)* |
+| Saherta | désert de Gordeau et Glam Gas Land dans ses terres ; centre du continent Yorbian | forêt de région ; **désert de Gordeau et Glam Gas Land : emplacements à donner** (pas encore de lieu) |
+| Kakin | Europe tournée de 90° (fan) ; aucun détail de terrain officiel | inchangé |
+| NGL / Mitene / Greed Island | rien d'officiel sur le terrain | inchangé |
+Technique : un lieu peut avoir plusieurs disques de même centre, le plus petit doit être écrit avant le plus grand dans `world.json` (à égalité de distance, le premier gagne). Test : `WorldMapTests.meteorDesertAndKukurooJungleRings` ; captures `99zzr2` (désert) et `99zzr3` (jungle).
