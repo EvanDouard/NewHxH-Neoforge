@@ -181,3 +181,11 @@ def biped_animations(flap=70, walk_len=0.7, step=24, attack='peck', arms=False, 
     if fly:
         out['fly'] = {'loop': True, 'animation_length': 0.5, 'bones': fly_bones}
     return out
+
+
+def seg(m, bone, x, p0, p1, w, d, paint, over=0.6):
+    """Pavé tendu entre deux points (y, z) du plan de profil, centré en x (cou, membres articulés sans jour)."""
+    (y0, z0), (y1, z1) = p0, p1
+    L = math.hypot(y1 - y0, z1 - z0) + over
+    th = math.degrees(math.atan2(-(z1 - z0), (y0 - y1)))
+    m.cube(bone, [x - w / 2, y0 - L + over / 2, z0 - d / 2], [w, L, d], paint, pivot=[x, y0, z0], rotation=[th, 0, 0])
