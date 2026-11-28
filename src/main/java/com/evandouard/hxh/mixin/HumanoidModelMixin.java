@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Applique les animations de combat après l'animation normale du modèle humanoïde (joueurs, PNJ, adversaires).
+ * Applique les animations de combat, puis les poses tenues (méditation, prière), après l'animation normale du modèle humanoïde (joueurs, PNJ, adversaires).
  * Le modèle du joueur recopie ensuite les bras sur les manches, qui suivent donc le mouvement.
  */
 @Mixin(HumanoidModel.class)
@@ -18,5 +18,6 @@ public abstract class HumanoidModelMixin {
     private void hxh$combatAnim(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
                                 float netHeadYaw, float headPitch, CallbackInfo ci) {
         CombatAnimClient.applyToModel((HumanoidModel<?>) (Object) this, entity, ageInTicks, headPitch);
+        com.evandouard.hxh.client.PoseAnimClient.applyToModel((HumanoidModel<?>) (Object) this, entity, ageInTicks);
     }
 }

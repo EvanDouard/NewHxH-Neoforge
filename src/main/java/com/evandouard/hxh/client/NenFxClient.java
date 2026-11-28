@@ -84,6 +84,7 @@ public final class NenFxClient {
         EnDomeClient.register();
         ExamFogClient.register();
         AuraClient.register();
+        PoseAnimClient.register();
     }
 
     private static void add(NenFx.Payload p) {

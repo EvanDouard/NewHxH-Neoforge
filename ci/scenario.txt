@@ -292,7 +292,16 @@ key key.hxh.profile
 wait 15
 shot 15a_carnet_boutons
 click Méditer
-wait 160
+closescreen
+camera front
+wait 40
+clearchat
+shot 15m_meditation_pose_face
+camera back
+wait 6
+shot 15n_meditation_pose_dos
+camera first
+wait 108
 expect Après une longue méditation
 shot 15_eveil_par_meditation
 
@@ -494,8 +503,13 @@ camera front
 key key.hxh.profile
 wait 20
 click Prière
+closescreen
 wait 120
 shot 22m_netero_priere_jauge
+camera back
+wait 4
+shot 22m2_netero_priere_pose_dos
+camera front
 camera back
 cmd hunter nen refill
 cmd hunter hatsu cast
