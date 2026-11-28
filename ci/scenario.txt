@@ -154,8 +154,9 @@ expect Soin par le Nen : niveau
 
 # --- Animations de combat (mains nues) ---
 cmd item replace entity @s weapon.mainhand with air
-cmd summon hxh:npc ~3 ~ ~ {npc:"cook",NoAI:1b,Rotation:[0f,0f],Tags:["anim_ci"]}
-look -90 0
+cmd summon hxh:npc ~5 ~ ~ {npc:"cook",NoAI:1b,Rotation:[0f,0f],Tags:["anim_ci"]}
+look -90 12
+hud off
 wait 20
 clearchat
 cmd hunter anim @e[tag=anim_ci] punch_main
@@ -180,8 +181,9 @@ wait 2
 shot 13e1_anim_coup_de_pied_pnj
 wait 15
 # même série, de trois quarts face (le PNJ regarde vers la caméra)
-cmd execute as @e[tag=anim_ci] at @s run tp @s ~ ~ ~ 130 0
+cmd execute as @e[tag=anim_ci] at @s run tp @s ~ ~ ~ 110 0
 wait 5
+clearchat
 cmd hunter anim @e[tag=anim_ci] punch_main
 wait 3
 shot 13f_anim_poing_droit_pnj_face
@@ -199,8 +201,10 @@ shot 13i_anim_coup_de_pied_pnj_face
 wait 15
 cmd kill @e[tag=anim_ci]
 # personnage GeckoLib (coudes et genoux) : Gon
-cmd summon hxh:gon ~3 ~ ~ {NoAI:1b,Rotation:[0f,0f],Tags:["anim_ci"]}
+cmd summon hxh:gon ~4.5 ~ ~ {NoAI:1b,Rotation:[0f,0f],Tags:["anim_ci"]}
+look -90 18
 wait 10
+clearchat
 cmd hunter anim @e[tag=anim_ci] punch_main
 wait 3
 shot 13j_anim_poing_gon_profil
@@ -218,8 +222,9 @@ shot 13m_anim_coup_de_pied_arme_gon_profil
 wait 2
 shot 13n_anim_coup_de_pied_gon_profil
 wait 15
-cmd execute as @e[tag=anim_ci] at @s run tp @s ~ ~ ~ 130 0
+cmd execute as @e[tag=anim_ci] at @s run tp @s ~ ~ ~ 110 0
 wait 5
+clearchat
 cmd hunter anim @e[tag=anim_ci] punch_main
 wait 3
 shot 13o_anim_poing_gon_face
@@ -228,6 +233,7 @@ cmd hunter anim @e[tag=anim_ci] charged_punch
 wait 3
 shot 13p_anim_frappe_chargee_gon_face
 wait 20
+hud on
 cmd kill @e[tag=anim_ci]
 camera first
 look 0 -35
