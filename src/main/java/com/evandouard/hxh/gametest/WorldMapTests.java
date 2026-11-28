@@ -111,4 +111,20 @@ public final class WorldMapTests {
         helper.assertTrue(src.placeBiome(32000 + 4500, 17000) == jungle, "Pied de Kukuroo en jungle");
         helper.succeed();
     }
+
+    /** Plus de lacs de lave en surface (ils apparaissaient sur les plages) : la fonctionnalité est retirée des biomes par un biome modifier. */
+    @GameTest(template = "empty")
+    public static void noSurfaceLavaLakes(GameTestHelper helper) {
+        var biomes = helper.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME);
+        var lava = net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.PLACED_FEATURE,
+                net.minecraft.resources.ResourceLocation.withDefaultNamespace("lake_lava_surface"));
+        for (var key : java.util.List.of(net.minecraft.world.level.biome.Biomes.BEACH, net.minecraft.world.level.biome.Biomes.PLAINS,
+                net.minecraft.world.level.biome.Biomes.DESERT, net.minecraft.world.level.biome.Biomes.FOREST)) {
+            var biome = biomes.getOrThrow(key).value();
+            for (var set : biome.getGenerationSettings().features())
+                for (var f : set)
+                    helper.assertTrue(!f.is(lava), "Lac de lave de surface encore présent dans " + key.location());
+        }
+        helper.succeed();
+    }
 }

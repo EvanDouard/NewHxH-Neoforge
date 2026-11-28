@@ -200,3 +200,9 @@ Sources : fiches du wiki HxH (hunterxhunter.fandom.com : Kukuroo Mountain, Whale
 | Kakin | Europe tournée de 90° (fan) ; aucun détail de terrain officiel | inchangé |
 | NGL / Mitene / Greed Island | rien d'officiel sur le terrain | inchangé |
 Technique : un lieu peut avoir plusieurs disques de même centre, le plus petit doit être écrit avant le plus grand dans `world.json` (à égalité de distance, le premier gagne). Test : `WorldMapTests.meteorDesertAndKukurooJungleRings` ; captures `99zzr2` (désert) et `99zzr3` (jungle).
+
+## Lacs de lave sur les plages et îles trop rectangulaires (28 nov)
+- Les lacs de lave de surface de Minecraft (`lake_lava_surface`) apparaissaient sur les plages. Un biome modifier (`data/hxh/neoforge/biome_modifier/no_surface_lava_lakes.json`) les retire de tous les biomes de l'Overworld ; les lacs de lave souterrains restent. Test : `WorldMapTests.noSurfaceLavaLakes`.
+- Îles trop carrées (une île de 5×3 cases donnait un rectangle aux bords droits) remodelées à la main dans `cells.txt` : Greed Island (contour irrégulier de 16 cases, tous les lieux restent sur la terre), île de la Baleine (7 cases), port de la Baleine Noire (6 cases), îlot 2×2 près de la case (140, 96).
+- `tools/gen_world_map.py` : variable `HXH_NO_CLEAN=1` pour ne pas relancer le nettoyage automatique quand `cells.txt` est déjà la grille finale (le nettoyage comble les petites baies et supprime de petits îlots, il modifie donc la carte validée). Commande : `HXH_NO_CLEAN=1 python3 tools/gen_world_map.py` ; `cells.txt` et `regions.txt` restent identiques.
+- Encore visible : les côtes suivent la grille de 640 blocs, donc les petites îles gardent des bords en escalier ; une piste est d'augmenter le bruit de côte dans `HxHWorldMap` *(à décider après votre test en jeu)*.

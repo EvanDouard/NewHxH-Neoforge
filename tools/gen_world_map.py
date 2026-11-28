@@ -32,60 +32,63 @@ def comps(pred):
             out.append(cs)
     return out
 
-# 0. Un trou de 1 à 2 cases de terre libre ou de mer entre deux cases de la même région est comblé
-for _ in range(2):
-    for z in range(H):
-        for x in range(W):
-            if g[z][x] in LETTERS: continue
-            for gap in (1, 2):
-                for dx, dz in ((1, 0), (0, 1)):
-                    ax, az, bx, bz = x - dx, z - dz, x + dx * gap, z + dz * gap
-                    if 0 <= ax < W and 0 <= bx < W and 0 <= az < H and 0 <= bz < H:
-                        a, b = g[az][ax], g[bz][bx]
-                        if a == b and a in LETTERS and all(g[z + dz * i][x + dx * i] in '.~' for i in range(gap)):
-                            for i in range(gap): g[z + dz * i][x + dx * i] = a
-# 1. Les petits morceaux isolés d'une lettre redeviennent de la terre libre
-for letter in 'mksKobp':
-    for small in comps(lambda c, L=letter: c == L):
-        if len(small) < (25 if letter == 'o' else 100):  # Ochima est un archipel : ses îles restent
-            for x, z in small: g[z][x] = '.'
+# HXH_NO_CLEAN=1 : cells.txt est déjà la grille finale (retouchée à la main), on saute le nettoyage automatique (étapes 0 à 4)
+import os
+if not os.environ.get('HXH_NO_CLEAN'):
+    # 0. Un trou de 1 à 2 cases de terre libre ou de mer entre deux cases de la même région est comblé
+    for _ in range(2):
+        for z in range(H):
+            for x in range(W):
+                if g[z][x] in LETTERS: continue
+                for gap in (1, 2):
+                    for dx, dz in ((1, 0), (0, 1)):
+                        ax, az, bx, bz = x - dx, z - dz, x + dx * gap, z + dz * gap
+                        if 0 <= ax < W and 0 <= bx < W and 0 <= az < H and 0 <= bz < H:
+                            a, b = g[az][ax], g[bz][bx]
+                            if a == b and a in LETTERS and all(g[z + dz * i][x + dx * i] in '.~' for i in range(gap)):
+                                for i in range(gap): g[z + dz * i][x + dx * i] = a
+    # 1. Les petits morceaux isolés d'une lettre redeviennent de la terre libre
+    for letter in 'mksKobp':
+        for small in comps(lambda c, L=letter: c == L):
+            if len(small) < (25 if letter == 'o' else 100):  # Ochima est un archipel : ses îles restent
+                for x, z in small: g[z][x] = '.'
 
-# 2. Les poches de terre libre enclavées dans une région (ou petites) sont absorbées par la région voisine majoritaire
-for cs in comps(lambda c: c == '.'):
-    border = {}
-    sea = False
-    for x, z in cs:
-        for dx in (-1, 0, 1):
-            for dz in (-1, 0, 1):
-                nx, nz = x + dx, z + dz
-                if 0 <= nx < W and 0 <= nz < H:
-                    c = g[nz][nx]
-                    if c == '~': sea = True
-                    elif c != '.': border[c] = border.get(c, 0) + 1
-    if border and (len(cs) <= 60 or not sea):
-        best = max(border, key=border.get)
-        for x, z in cs: g[z][x] = best
-
-# 3. Les îlots de moins de 3 cases disparaissent
-for cs in comps(lambda c: c != '~'):
-    if len(cs) < 3:
-        for x, z in cs: g[z][x] = '~'
-
-# 4. Lissage : une case prend la lettre majoritaire de ses 8 voisins si elle est en minorité écrasante
-for _ in range(2):
-    new = [r[:] for r in g]
-    for z in range(H):
-        for x in range(W):
-            cnt = {}
+    # 2. Les poches de terre libre enclavées dans une région (ou petites) sont absorbées par la région voisine majoritaire
+    for cs in comps(lambda c: c == '.'):
+        border = {}
+        sea = False
+        for x, z in cs:
             for dx in (-1, 0, 1):
                 for dz in (-1, 0, 1):
-                    if dx == 0 and dz == 0: continue
                     nx, nz = x + dx, z + dz
-                    c = g[nz][nx] if 0 <= nx < W and 0 <= nz < H else '~'
-                    cnt[c] = cnt.get(c, 0) + 1
-            best = max(cnt, key=cnt.get)
-            if cnt[best] >= 6 and best != g[z][x]: new[z][x] = best
-    g = new
+                    if 0 <= nx < W and 0 <= nz < H:
+                        c = g[nz][nx]
+                        if c == '~': sea = True
+                        elif c != '.': border[c] = border.get(c, 0) + 1
+        if border and (len(cs) <= 60 or not sea):
+            best = max(border, key=border.get)
+            for x, z in cs: g[z][x] = best
+
+    # 3. Les îlots de moins de 3 cases disparaissent
+    for cs in comps(lambda c: c != '~'):
+        if len(cs) < 3:
+            for x, z in cs: g[z][x] = '~'
+
+    # 4. Lissage : une case prend la lettre majoritaire de ses 8 voisins si elle est en minorité écrasante
+    for _ in range(2):
+        new = [r[:] for r in g]
+        for z in range(H):
+            for x in range(W):
+                cnt = {}
+                for dx in (-1, 0, 1):
+                    for dz in (-1, 0, 1):
+                        if dx == 0 and dz == 0: continue
+                        nx, nz = x + dx, z + dz
+                        c = g[nz][nx] if 0 <= nx < W and 0 <= nz < H else '~'
+                        cnt[c] = cnt.get(c, 0) + 1
+                best = max(cnt, key=cnt.get)
+                if cnt[best] >= 6 and best != g[z][x]: new[z][x] = best
+        g = new
 
 open(OUT_TXT, 'w').write('\n'.join(''.join(r) for r in g) + '\n')
 
