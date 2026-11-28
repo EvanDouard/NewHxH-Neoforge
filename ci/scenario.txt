@@ -3423,6 +3423,9 @@ shot 99zzr2_biome_desert_meteore
 cmd tp @s 36500 150 17000 0 35
 wait 240
 shot 99zzr3_biome_jungle_kukuroo
+cmd tp @s 68000 260 81000 0 50
+wait 240
+shot 99zzr4_ile_greed_forme
 cmd hunter jenny set 0
 cmd difficulty peaceful
 cmd gamemode creative
