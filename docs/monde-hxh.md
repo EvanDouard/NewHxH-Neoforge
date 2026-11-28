@@ -182,3 +182,8 @@ Décision d'Evan : les distances doivent imposer un moyen de transport (dirigeab
 
 ## Village de l'île de la Baleine — extensions (28 nov)
 Ajoutés autour des trois maisons d'origine (`world_places/whale_island_village.json`, zone dégagée 70 × 40) : **épicerie** à auvent rayé (est), **école** avec estrade, tableau noir, bancs et clocheton à cloche (ouest), **phare** rayé de 19 blocs avec échelle et lanterne (sud), **cabane de pêcheur** avec filet qui sèche et barque échouée, **campement forestier** (tente verte, feu de camp, bûches). Le port lui-même (quai, bateaux) attend la forme définitive de la côte ; le sanctuaire du lac aussi.
+
+## Correctif grille de jeu (28 nov) et visualiseur de comparaison
+- `cells.txt` (utilisé par le jeu) divergeait de `regions.txt` (carte dessinée validée) : 331 cases de terre dessinée étaient de la mer en jeu (toute la rangée 124 formait un détroit, ligne verticale vers la colonne 155…), 165 cases de terre n'existaient qu'en jeu, 121 lettres différaient. `cells.txt` est maintenant identique à `regions.txt` ; aucun lieu ni destination de dirigeable ne se retrouve sur la mer.
+- `tools/export_world_view.py <dossier>` recrée le relief/biomes du jeu (bruits refaits hors du jeu, approximation non exacte au bit près) et exporte relief.jpg, biomes.png, drawn.png, ecarts.png, hauteurs/biomes et data.json pour le comparateur (rideau carte dessinée / relief / biomes, lieux, grille, tooltip).
+- Garder `cells.txt` et `regions.txt` synchronisés : toute modification de l'un se copie dans l'autre ; `ecarts.png` doit rester vide.
