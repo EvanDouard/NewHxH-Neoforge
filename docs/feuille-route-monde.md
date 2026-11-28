@@ -75,3 +75,5 @@ Propositions « libre/théorie » (non officielles) sur la carte 8 000 × 5 650,
 **Fait (9, 27 nov)** : échelle du monde ×20 (`HxHWorldMap.SCALE`), voir `docs/monde-hxh.md`. **Reste** : moyens de transport rapides (dirigeable existant ; véhicules terrestres/maritimes à imaginer), Yorknew 2000×2000, relief/côtes à valider en jeu, grille plus fine si besoin.
 
 **Fait (28 nov, hors carte)** : village de l'île de la Baleine étendu (épicerie, école, phare, cabane de pêcheur, campement forestier) ; GameTest et captures 99zzs/99zzt. Reste pour cette île : port (quai, bateaux) et sanctuaire du lac, quand la côte sera fixée.
+
+**Fait (28 nov)** : fiche de revue `docs/structures.md` (toutes les structures, état, comment remplacer, case de validation) ; palais de Gorteau Est minimal (`east_gorteau_palace`, destination, GameTest `eastGorteauPalaceStub`). Prochaine étape : Evan passe les structures en revue, et choisit celles à créer en stub.

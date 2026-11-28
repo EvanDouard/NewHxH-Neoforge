@@ -21,21 +21,21 @@ x, z = ancre en blocs du monde HxH (monde ×20). Taille = zone dégagée (largeu
 
 | # | Fichier / lieu | Ancre (x, z) | Région | Taille | État | Contenu actuel | Validation |
 |---|---|---|---|---|---|---|---|
-| 1 | `whale_island_village` — Village de l'île de la Baleine | 87 000, 82 680 | île | 71 × 23 × 40 | Premier jet | 3 maisons (Mito…), puits, Navigateur, épicerie, école + cloche, phare 19 blocs, cabane de pêcheur, barque, campement forestier | [ ] |
-| 2 | `kukuroo_domaine_zoldyck` — Domaine Zoldyck | 31 200, 16 200 | Padokea (mt Kukuroo) | 93 × 15 × 161 | Premier jet, le plus abouti | rempart + tours, grande porte, porte visiteurs, maison de Zebro, enclos de Mike, manoir 3 étages, majordomes (détails : `kukuroo.md`) | [ ] |
-| 3 | `padokea_town` — Ville autour de la Tour Céleste | 52 200, 28 000 | Padokea | 91 × 26 × 96 | Premier jet | rues, bâtiments, 4 PNJ | [ ] |
-| 4 | `heavens_arena` — Place d'arrivée de la Tour | 55 500, 28 900 | Padokea | 17 × 7 × 17 | Minimal | dalle + borne ; pose ta tour (`tour.nbt`, §2) | [ ] |
-| 5 | `yorknew_city` — Yorknew | 13 000, 77 680 | Saherta/Yorknew | 94 × 47 × 86 | Premier jet | tours, maison de ventes, entrepôt de la Brigade, décors (257 remplissages, 535 blocs) | [ ] |
-| 6 | `mafia_hq` — QG de la mafia | 13 600, 75 800 | Yorknew | 71 × 41 × 86 | Premier jet | bâtiment, 5 PNJ | [ ] |
-| 7 | `meteor_city` — Meteor City | 32 900, 76 000 | Meteor City | 111 × 57 × 111 | Premier jet | montagnes de déchets, bidonvilles, 3 PNJ | [ ] |
-| 8 | `hunter_exam_hotel` — Hôtel de l'Association | 17 400, 32 720 | Minbo/Mimbo | 77 × 41 × 87 | Premier jet | hôtel, 3 PNJ | [ ] |
-| 9 | `kakin_palace` — Palais royal de Kakin | 119 000, 48 200 | Kakin | 101 × 35 × 101 | Premier jet | palais, 5 PNJ | [ ] |
-| 10 | `black_whale_port` — Port de la Baleine Noire | 107 700, 42 600 | Kakin | 83 × 31 × 63 | Premier jet | quais, navire, 2 PNJ | [ ] |
-| 11 | `kite_forest` — Forêt de Kite | 128 000, 44 800 | île | 41 × 13 × 41 | Premier jet | clairière, cabane, 1 PNJ | [ ] |
-| 12 | `greed_island` — Greed Island (lieu d'arrivée) | 66 900, 81 500 | Greed Island | 51 × 26 × 71 | Premier jet | arrivée, 27 remplissages | [ ] |
-| 13 | `masadora` — Ville de Masadora | 68 800, 81 500 | Greed Island | 71 × 35 × 81 | Premier jet | ville, 2 PNJ (marchand de cartes, habitant) | [ ] |
+| 1 | `whale_island_village` — Village de l'île de la Baleine | 87 000, 82 680 | île | 71 × 23 × 40 | Premier jet | 3 maisons dont celle de Mito, puits, Navigateur, épicerie, école + cloche, phare 19 blocs, cabane de pêcheur, barque, campement forestier | [ ] |
+| 2 | `kukuroo_domaine_zoldyck` — Domaine Zoldyck | 31 200, 16 200 | Padokea / Mimbo (mt Kukuroo) | 93 × 15 × 161 | Premier jet, le plus abouti | rempart + tours, grande porte, porte visiteurs, maison de Zebro, enclos de Mike, manoir 3 étages, majordomes (détails : `kukuroo.md`) | [ ] |
+| 3 | `padokea_town` — Ville autour de la Tour Céleste | 52 200, 28 000 | Padokea (terre libre) | 91 × 26 × 96 | Premier jet | rues, bâtiments ; PNJ : chef de gare, infirmière, policier, habitant | [ ] |
+| 4 | `heavens_arena` — Place d'arrivée de la Tour | 55 500, 28 900 | Padokea (terre libre) | 17 × 7 × 17 | Minimal | place d'arrivée (borne + dalle) ; la tour est `tour.nbt` (§2) | [ ] |
+| 5 | `yorknew_city` — Yorknew | 13 000, 77 680 | Saherta/Yorknew | 94 × 47 × 86 | Premier jet | tours, maison de ventes, entrepôt de la Brigade, décors ; PNJ : commissaire-priseur, 2 passants | [ ] |
+| 6 | `mafia_hq` — QG de la mafia | 13 600, 75 800 | Yorknew | 71 × 41 × 86 | Premier jet | bâtiment, PNJ : parrain, 4 gardes | [ ] |
+| 7 | `meteor_city` — Meteor City | 32 900, 76 000 | Meteor City | 111 × 57 × 111 | Premier jet | montagnes de déchets, bidonvilles ; PNJ : ferrailleur, 2 habitants | [ ] |
+| 8 | `hunter_exam_hotel` — Hôtel de l'Association | 17 400, 32 720 | terre libre | 77 × 41 × 87 | Premier jet | hôtel, PNJ : Netero, Beans, réceptionniste | [ ] |
+| 9 | `kakin_palace` — Palais royal de Kakin | 119 000, 48 200 | Kakin | 101 × 35 × 101 | Premier jet | palais, PNJ : chambellan, 4 gardes royaux | [ ] |
+| 10 | `black_whale_port` — Port de la Baleine Noire | 107 700, 42 600 | bord de mer (près de Kakin) | 83 × 31 × 63 | Premier jet | quais, navire, PNJ : capitaine, docker | [ ] |
+| 11 | `kite_forest` — Forêt de Kite | 128 000, 44 800 | terre libre (bord de Kakin) | 41 × 13 × 41 | Premier jet | clairière, cabane, guide de la forêt | [ ] |
+| 12 | `greed_island` — Greed Island (lieu d'arrivée) | 66 900, 81 500 | Greed Island | 51 × 26 × 71 | Premier jet | arrivée, guide de Greed Island | [ ] |
+| 13 | `masadora` — Ville de Masadora | 68 800, 81 500 | Greed Island | 71 × 35 × 81 | Premier jet | ville, PNJ : marchand de cartes, habitant | [ ] |
 | 14 | `ngl_village` — Village NGL | 39 800, 104 640 | NGL | 81 × 21 × 81 | Premier jet | cabanes, halle, champ de blé, tour de guet, Ancien et fermier | [ ] |
-| 15 | `chimera_ant_queen_arm` — Palais souterrain de la Reine | 15 440, 91 140 | ? | 57 × 31 × 57 | Complet (export d'Evan) | 1 849 blocs, 1 entité | [ ] |
+| 15 | `chimera_ant_queen_arm` — Palais souterrain de la Reine | 15 440, 91 140 | terre libre | 57 × 31 × 57 | Complet (export) | 1 849 blocs, survivant de l'atterrissage | [ ] |
 | 16 | `east_gorteau_palace` — Palais de Gorteau Est | 52 140, 100 140 | East Gorteau | 41 × 25 × 41 | **Minimal (28 nov)** | plateforme, bloc de pierre 25×25×11 avec porte, 4 tours, chemin, borne du dirigeable ; destination « Palais de Gorteau Est » | [ ] |
 
 ## 2. Tour Céleste (structures NBT, `data/hxh/structure/heavens_arena/`)
