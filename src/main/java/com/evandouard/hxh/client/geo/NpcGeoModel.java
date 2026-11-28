@@ -71,7 +71,13 @@ public class NpcGeoModel extends GeoModel<NpcEntity> {
     public void setCustomAnimations(NpcEntity npc, long instanceId, AnimationState<NpcEntity> state) {
         GeoBone head = getAnimationProcessor().getBone("head");
         EntityModelData data = state.getData(DataTickets.ENTITY_MODEL_DATA);
-        if (head != null && data != null) {
+        if (data == null) return;
+        // coup en cours (poses à la Epic Fight) : il oriente aussi la tête
+        if (com.evandouard.hxh.client.CombatAnimClient.applyToBones(getAnimationProcessor(), npc, state.getPartialTick(),
+                data.headPitch(), data.netHeadYaw())) return;
+        // méditation / prière : la tête suit l'animation (inclinaison), pas le regard
+        if (com.evandouard.hxh.mob.HeldPoses.of(npc) != null) return;
+        if (head != null) {
             head.setRotX(data.headPitch() * Mth.DEG_TO_RAD);
             head.setRotY(data.netHeadYaw() * Mth.DEG_TO_RAD);
         }

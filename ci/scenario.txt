@@ -159,7 +159,7 @@ look -90 0
 wait 20
 clearchat
 cmd hunter anim @e[tag=anim_ci] punch_main
-wait 2
+wait 3
 shot 13a_anim_poing_droit_pnj
 wait 15
 cmd hunter anim @e[tag=anim_ci] punch_off
@@ -167,16 +167,67 @@ wait 2
 shot 13b_anim_poing_gauche_pnj
 wait 15
 cmd hunter anim @e[tag=anim_ci] charge
-wait 14
+wait 16
 shot 13c_anim_frappe_armee_pnj
 cmd hunter anim @e[tag=anim_ci] charged_punch
 wait 3
 shot 13d_anim_frappe_chargee_pnj
-wait 15
+wait 20
 cmd hunter anim @e[tag=anim_ci] kick
-wait 4
-shot 13e0_anim_coup_de_pied_pnj
+wait 3
+shot 13e0_anim_coup_de_pied_arme_pnj
+wait 2
+shot 13e1_anim_coup_de_pied_pnj
 wait 15
+# même série, de trois quarts face (le PNJ regarde vers la caméra)
+cmd execute as @e[tag=anim_ci] at @s run tp @s ~ ~ ~ 130 0
+wait 5
+cmd hunter anim @e[tag=anim_ci] punch_main
+wait 3
+shot 13f_anim_poing_droit_pnj_face
+wait 15
+cmd hunter anim @e[tag=anim_ci] charge
+wait 16
+shot 13g_anim_frappe_armee_pnj_face
+cmd hunter anim @e[tag=anim_ci] charged_punch
+wait 3
+shot 13h_anim_frappe_chargee_pnj_face
+wait 20
+cmd hunter anim @e[tag=anim_ci] kick
+wait 5
+shot 13i_anim_coup_de_pied_pnj_face
+wait 15
+cmd kill @e[tag=anim_ci]
+# personnage GeckoLib (coudes et genoux) : Gon
+cmd summon hxh:gon ~3 ~ ~ {NoAI:1b,Rotation:[0f,0f],Tags:["anim_ci"]}
+wait 10
+cmd hunter anim @e[tag=anim_ci] punch_main
+wait 3
+shot 13j_anim_poing_gon_profil
+wait 15
+cmd hunter anim @e[tag=anim_ci] charge
+wait 16
+shot 13k_anim_frappe_armee_gon_profil
+cmd hunter anim @e[tag=anim_ci] charged_punch
+wait 3
+shot 13l_anim_frappe_chargee_gon_profil
+wait 20
+cmd hunter anim @e[tag=anim_ci] kick
+wait 3
+shot 13m_anim_coup_de_pied_arme_gon_profil
+wait 2
+shot 13n_anim_coup_de_pied_gon_profil
+wait 15
+cmd execute as @e[tag=anim_ci] at @s run tp @s ~ ~ ~ 130 0
+wait 5
+cmd hunter anim @e[tag=anim_ci] punch_main
+wait 3
+shot 13o_anim_poing_gon_face
+wait 15
+cmd hunter anim @e[tag=anim_ci] charged_punch
+wait 3
+shot 13p_anim_frappe_chargee_gon_face
+wait 20
 cmd kill @e[tag=anim_ci]
 camera first
 look 0 -35

@@ -6,15 +6,15 @@ package com.evandouard.hxh.combat;
  */
 public enum CombatAnim {
     /** Coup de poing de la main principale (bras droit pour un droitier). */
-    PUNCH_MAIN(7),
+    PUNCH_MAIN(10),
     /** Coup de poing de l'autre main : les coups de base alternent droite / gauche. */
-    PUNCH_OFF(7),
+    PUNCH_OFF(9),
     /** Armement de la frappe chargée : le bras recule et reste armé tant que la touche est maintenue. */
     CHARGE(200),
     /** Frappe chargée relâchée : gros coup de poing de la main principale. */
-    CHARGED_PUNCH(12),
+    CHARGED_PUNCH(16),
     /** Coup de pied (appui court sur la touche Frappe). */
-    KICK(9),
+    KICK(12),
     /** Arrête l'animation en cours (frappe ratée). */
     STOP(0);
 
