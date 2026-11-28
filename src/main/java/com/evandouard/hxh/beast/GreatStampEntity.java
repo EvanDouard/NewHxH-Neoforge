@@ -1,5 +1,9 @@
 package com.evandouard.hxh.beast;
 
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import com.evandouard.hxh.registry.ModEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -17,10 +21,10 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Great Stamp (cochon géant de la forêt de Biska, épreuve de Buhara) : il charge et projette comme un hoglin, mais
  * son museau est blindé : les coups portés de face ne font que {@link #FRONT_FACTOR} des dégâts. Il faut le frapper
- * sur le côté, de dos, ou sur le crâne (d'en haut). Ne se transforme jamais en zoglin. Modèle provisoire (hoglin
- * agrandi) en attendant le modèle Blockbench ; stats à revoir à l'équilibrage final.
+ * sur le côté, de dos, ou sur le crâne (d'en haut). Ne se transforme jamais en zoglin. Modèle GeckoLib
+ * `beast_great_stamp` (plaque osseuse sur le museau) ; stats à revoir à l'équilibrage final.
  */
-public class GreatStampEntity extends Hoglin {
+public class GreatStampEntity extends Hoglin implements GeoEntity {
     /** Part des dégâts qui passe le museau blindé. */
     public static final float FRONT_FACTOR = 0.3f;
 
@@ -66,5 +70,18 @@ public class GreatStampEntity extends Hoglin {
     @Override
     public boolean removeWhenFarAway(double distance) {
         return false;
+    }
+
+    // --- modèle GeckoLib (tools/models/beast_*.py) ---
+    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        BeastAnimations.register(this, controllers);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return geoCache;
     }
 }

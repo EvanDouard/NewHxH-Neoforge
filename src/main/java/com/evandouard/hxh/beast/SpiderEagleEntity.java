@@ -1,5 +1,9 @@
 package com.evandouard.hxh.beast;
 
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import com.evandouard.hxh.registry.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -23,9 +27,9 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Aigle-araignée : grand oiseau des falaises (Mont Split). Il vole en planant, ne s'apprivoise pas et pond de temps
- * en temps un œuf, le même que celui de l'épreuve de l'Examen. Modèle provisoire : perroquet gris agrandi.
+ * en temps un œuf, le même que celui de l'épreuve de l'Examen. Modèle GeckoLib `beast_spider_eagle`.
  */
-public class SpiderEagleEntity extends Parrot {
+public class SpiderEagleEntity extends Parrot implements GeoEntity {
     /** Délai entre deux pontes (ticks) : 10 à 20 minutes. */
     public static final int EGG_MIN = 12000, EGG_SPREAD = 12000;
     private int eggTime;
@@ -104,5 +108,18 @@ public class SpiderEagleEntity extends Parrot {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("EggLayTime")) eggTime = tag.getInt("EggLayTime");
+    }
+
+    // --- modèle GeckoLib (tools/models/beast_*.py) ---
+    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        BeastAnimations.register(this, controllers);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return geoCache;
     }
 }

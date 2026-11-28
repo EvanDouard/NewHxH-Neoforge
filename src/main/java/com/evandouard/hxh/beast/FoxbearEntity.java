@@ -1,5 +1,9 @@
 package com.evandouard.hxh.beast;
 
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import com.evandouard.hxh.registry.ModEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
@@ -15,10 +19,10 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Renard-ours (Foxbear) de l'île de la Baleine : un gros ours des forêts. Même comportement que l'ours polaire
  * (neutre, il riposte, la mère défend ses petits), en plus résistant et plus fort. Il donne de la viande de
- * renard-ours, ingrédient des recettes du Hunter gourmet. Stats à revoir à l'équilibrage final. Modèle provisoire
- * (ours polaire agrandi) en attendant le modèle Blockbench.
+ * renard-ours, ingrédient des recettes du Hunter gourmet. Stats à revoir à l'équilibrage final. Modèle GeckoLib
+ * `beast_foxbear`.
  */
-public class FoxbearEntity extends PolarBear {
+public class FoxbearEntity extends PolarBear implements GeoEntity {
     public FoxbearEntity(EntityType<? extends PolarBear> type, Level level) {
         super(type, level);
     }
@@ -43,5 +47,18 @@ public class FoxbearEntity extends PolarBear {
                                    net.minecraft.world.entity.MobSpawnType reason, net.minecraft.core.BlockPos pos,
                                    net.minecraft.util.RandomSource random) {
         return Animal.checkAnimalSpawnRules(type, level, reason, pos, random);
+    }
+
+    // --- modèle GeckoLib (tools/models/beast_*.py) ---
+    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        BeastAnimations.register(this, controllers);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return geoCache;
     }
 }

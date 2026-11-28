@@ -1,5 +1,9 @@
 package com.evandouard.hxh.beast;
 
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.ItemTags;
@@ -17,9 +21,9 @@ import net.minecraft.world.level.Level;
 /**
  * Mike, le chien géant du domaine Zoldyck : il garde la montagne et attaque tout intrus. Il reste près de son poste.
  * On l'apaise en lui donnant de la viande : après trois offrandes, il considère le joueur comme un ami et ne l'attaque plus
- * (comme Gon et Killua). Modèle provisoire : loup agrandi ×3.
+ * (comme Gon et Killua). Modèle GeckoLib `beast_mike`.
  */
-public class MikeEntity extends Wolf {
+public class MikeEntity extends Wolf implements GeoEntity {
     public static final String FRIEND_TAG = "hxh_mike_friend";
     private static final String FED_TAG = "hxh_mike_fed";
     public static final int OFFERINGS_FOR_FRIENDSHIP = 3;
@@ -76,5 +80,18 @@ public class MikeEntity extends Wolf {
             sp.displayClientMessage(Component.translatable("message.hxh.mike.calmer", fed, OFFERINGS_FOR_FRIENDSHIP), true);
         }
         return InteractionResult.CONSUME;
+    }
+
+    // --- modèle GeckoLib (tools/models/beast_*.py) ---
+    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        BeastAnimations.register(this, controllers);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return geoCache;
     }
 }

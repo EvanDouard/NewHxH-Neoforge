@@ -1,5 +1,9 @@
 package com.evandouard.hxh.beast;
 
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -18,9 +22,9 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Kiriko : bête magique de la forêt avant Zaban, capable de prendre l'apparence d'un humain. Dans l'épreuve, le faux
  * mari démasqué se transforme en Kiriko, salue le candidat puis s'envole ({@link #leaveIn}). Paisible, ne
- * s'apprivoise pas. Modèle provisoire (perroquet vert agrandi ×3) en attendant le modèle Blockbench.
+ * s'apprivoise pas. Modèle GeckoLib `beast_kiriko`.
  */
-public class KirikoEntity extends Parrot {
+public class KirikoEntity extends Parrot implements GeoEntity {
     /** Ticks avant de s'envoler pour de bon (-1 : reste). */
     private int leaving = -1;
 
@@ -84,5 +88,18 @@ public class KirikoEntity extends Parrot {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("Leaving")) leaving = tag.getInt("Leaving");
+    }
+
+    // --- modèle GeckoLib (tools/models/beast_*.py) ---
+    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        BeastAnimations.register(this, controllers);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return geoCache;
     }
 }

@@ -139,4 +139,33 @@ public final class WildlifeTests {
         villager.discard();
         helper.succeed();
     }
+
+    /** Chaque bête du bestiaire a son modèle GeckoLib (géo, animations idle/walk/attack, texture) et l'utilise. */
+    @GameTest(template = "empty")
+    public static void beastsHaveGeckoLibModels(GameTestHelper helper) {
+        List<EntityType<? extends LivingEntity>> beasts = List.of(
+                com.evandouard.hxh.registry.ModEntities.FOXBEAR.get(), com.evandouard.hxh.registry.ModEntities.MIKE.get(),
+                com.evandouard.hxh.registry.ModEntities.GREAT_STAMP.get(), com.evandouard.hxh.registry.ModEntities.SPIDER_EAGLE.get(),
+                com.evandouard.hxh.registry.ModEntities.MAN_FACED_APE.get(), com.evandouard.hxh.registry.ModEntities.CHIMERA_ANT.get(),
+                com.evandouard.hxh.registry.ModEntities.KIRIKO.get());
+        int i = 0;
+        for (EntityType<? extends LivingEntity> type : beasts) {
+            String id = "beast_" + net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(type).getPath();
+            for (String path : List.of("geo/entity/npc/" + id + ".geo.json", "textures/entity/npc_geo/" + id + ".png"))
+                helper.assertTrue(HxHMod.class.getResource("/assets/hxh/" + path) != null, "Ressource manquante : " + path);
+            try (var in = HxHMod.class.getResourceAsStream("/assets/hxh/animations/entity/npc/" + id + ".animation.json")) {
+                helper.assertTrue(in != null, "Animations manquantes : " + id);
+                String json = new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+                for (String anim : List.of("\"idle\"", "\"walk\"", "\"attack\""))
+                    helper.assertTrue(json.contains(anim), id + " : animation " + anim + " absente");
+            } catch (java.io.IOException e) {
+                helper.fail("Lecture des animations de " + id + " : " + e);
+            }
+            LivingEntity beast = helper.spawn(type, new BlockPos(1 + 3 * (i % 3), 2, 1 + 3 * (i / 3)));
+            helper.assertTrue(beast instanceof software.bernie.geckolib.animatable.GeoEntity, id + " est animé par GeckoLib");
+            beast.discard();
+            i++;
+        }
+        helper.succeed();
+    }
 }

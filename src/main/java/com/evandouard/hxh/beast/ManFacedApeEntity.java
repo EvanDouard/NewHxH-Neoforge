@@ -1,5 +1,9 @@
 package com.evandouard.hxh.beast;
 
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -19,9 +23,9 @@ import net.minecraft.world.level.ServerLevelAccessor;
 /**
  * Singe à visage humain (marais de Numele) : il imite la voix des gens pour attirer ses proies dans le marais, comme
  * le faux Satotz de l'Examen. De temps en temps, un joueur proche entend « l'examinateur » l'appeler dans le chat.
- * Ne brûle pas au soleil. Modèle provisoire (corps humanoïde, texture de momie) en attendant le modèle Blockbench.
+ * Ne brûle pas au soleil. Modèle GeckoLib `beast_man_faced_ape`.
  */
-public class ManFacedApeEntity extends Zombie {
+public class ManFacedApeEntity extends Zombie implements GeoEntity {
     /** Portée et délai moyen (ticks) de ses appels trompeurs. */
     public static final double LURE_RANGE = 24;
     public static final int LURE_EVERY = 600;
@@ -74,5 +78,18 @@ public class ManFacedApeEntity extends Zombie {
         if (near == null || near.isCreative() || near.isSpectator()) return;
         near.sendSystemMessage(Component.translatable("dialog.hxh.format",
                 Component.translatable("entity.hxh.man_faced_ape.voice").withStyle(ChatFormatting.YELLOW), lureLine(random)));
+    }
+
+    // --- modèle GeckoLib (tools/models/beast_*.py) ---
+    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        BeastAnimations.register(this, controllers);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return geoCache;
     }
 }

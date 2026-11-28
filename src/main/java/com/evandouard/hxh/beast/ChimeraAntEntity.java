@@ -1,5 +1,9 @@
 package com.evandouard.hxh.beast;
 
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
@@ -25,9 +29,9 @@ import net.minecraft.world.level.ServerLevelAccessor;
 /**
  * Fourmi-Chimère soldat : chasse de jour comme de nuit (contrairement à l'araignée), grimpe aux murs, solide.
  * Une partie d'entre elles maîtrise le Nen (mob d'exemple naturel {@code fourmi_chimere_soldat}, avec prime).
- * Modèle provisoire (araignée agrandie) en attendant le modèle Blockbench ; stats à l'équilibrage final.
+ * Modèle GeckoLib `beast_chimera_ant` ; stats à l'équilibrage final.
  */
-public class ChimeraAntEntity extends Spider {
+public class ChimeraAntEntity extends Spider implements GeoEntity {
     public ChimeraAntEntity(EntityType<? extends Spider> type, Level level) {
         super(type, level);
     }
@@ -68,5 +72,18 @@ public class ChimeraAntEntity extends Spider {
      */
     public boolean huntsInDaylight() {
         return targetSelector.getAvailableGoals().stream().anyMatch(w -> w.getGoal().getClass() == NearestAttackableTargetGoal.class);
+    }
+
+    // --- modèle GeckoLib (tools/models/beast_*.py) ---
+    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        BeastAnimations.register(this, controllers);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return geoCache;
     }
 }

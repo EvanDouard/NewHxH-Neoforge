@@ -67,12 +67,12 @@ public final class NenClient {
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.ARENA_FIGHTER.get(), ArenaFighterRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.EXAM_CANDIDATE.get(), ExamCandidateRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NEN_PROJECTILE.get(), NenProjectileRenderer::new);
-                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.FOXBEAR.get(), FoxbearRenderer::new);
-                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.MIKE.get(), net.minecraft.client.renderer.entity.WolfRenderer::new);
-                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.SPIDER_EAGLE.get(), SpiderEagleRenderer::new);
-                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.MAN_FACED_APE.get(), ManFacedApeRenderer::new);
-                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.CHIMERA_ANT.get(), ChimeraAntRenderer::new);
-                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.KIRIKO.get(), KirikoRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.FOXBEAR.get(), com.evandouard.hxh.client.geo.BeastGeoRenderer.<com.evandouard.hxh.beast.FoxbearEntity>of(1.3f));
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.MIKE.get(), com.evandouard.hxh.client.geo.BeastGeoRenderer.<com.evandouard.hxh.beast.MikeEntity>of(0.5f, 1f / 3f));
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.SPIDER_EAGLE.get(), com.evandouard.hxh.client.geo.BeastGeoRenderer.<com.evandouard.hxh.beast.SpiderEagleEntity>of(0.6f));
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.MAN_FACED_APE.get(), com.evandouard.hxh.client.geo.BeastGeoRenderer.<com.evandouard.hxh.beast.ManFacedApeEntity>of(0.5f));
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.CHIMERA_ANT.get(), com.evandouard.hxh.client.geo.BeastGeoRenderer.<com.evandouard.hxh.beast.ChimeraAntEntity>of(1.0f));
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.KIRIKO.get(), com.evandouard.hxh.client.geo.BeastGeoRenderer.<com.evandouard.hxh.beast.KirikoEntity>of(0.7f));
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.GON.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.KILLUA.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NETERO.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
@@ -125,7 +125,7 @@ public final class NenClient {
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.KURAPIKA_SANS_TUNIQUE.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.GON_ULTIME.get(), com.evandouard.hxh.client.geo.CharacterGeoRenderer::new);
                     e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.NEN_SUMMON.get(), com.evandouard.hxh.client.geo.SummonGeoRenderer::new);
-                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.GREAT_STAMP.get(), GreatStampRenderer::new);
+                    e.registerEntityRenderer(com.evandouard.hxh.registry.ModEntities.GREAT_STAMP.get(), com.evandouard.hxh.client.geo.BeastGeoRenderer.<com.evandouard.hxh.beast.GreatStampEntity>of(1.3f));
                     e.registerBlockEntityRenderer(com.evandouard.hxh.registry.ModBlockEntities.MARKER.get(),
                             com.evandouard.hxh.marker.MarkerLabelRenderer::new);
                 });
