@@ -2026,5 +2026,6 @@
   "advancement.hxh.region_begerosse.desc": "Discover the Begerossé region.",
   "advancement.hxh.region_padokea.title": "Region: Padokea",
   "advancement.hxh.region_padokea.desc": "Discover the Padokea region.",
-  "airship.hxh.dark_point": "Dark Continent coast: not accessible yet"
+  "airship.hxh.dark_point": "Dark Continent coast: not accessible yet",
+  "airship.hxh.dest.east_gorteau_palace": "East Gorteau Palace"
 }

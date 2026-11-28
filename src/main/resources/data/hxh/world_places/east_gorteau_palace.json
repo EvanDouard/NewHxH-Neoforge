@@ -1,0 +1,180 @@
+{
+ "x": 52140,
+ "z": 100140,
+ "clear": [
+  0,
+  0,
+  0,
+  40,
+  24,
+  40
+ ],
+ "foundation": [
+  0,
+  0,
+  40,
+  40,
+  "minecraft:stone_bricks"
+ ],
+ "fills": [
+  {
+   "box": [
+    0,
+    -1,
+    0,
+    40,
+    -1,
+    40
+   ],
+   "block": "minecraft:stone_bricks"
+  },
+  {
+   "box": [
+    8,
+    0,
+    8,
+    32,
+    10,
+    32
+   ],
+   "block": "minecraft:stone_bricks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    8,
+    11,
+    8,
+    32,
+    11,
+    32
+   ],
+   "block": "minecraft:stone_bricks"
+  },
+  {
+   "box": [
+    5,
+    0,
+    5,
+    9,
+    16,
+    9
+   ],
+   "block": "minecraft:stone_bricks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    5,
+    17,
+    5,
+    9,
+    17,
+    9
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    5,
+    0,
+    31,
+    9,
+    16,
+    35
+   ],
+   "block": "minecraft:stone_bricks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    5,
+    17,
+    31,
+    9,
+    17,
+    35
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    31,
+    0,
+    5,
+    35,
+    16,
+    9
+   ],
+   "block": "minecraft:stone_bricks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    31,
+    17,
+    5,
+    35,
+    17,
+    9
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    31,
+    0,
+    31,
+    35,
+    16,
+    35
+   ],
+   "block": "minecraft:stone_bricks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    31,
+    17,
+    31,
+    35,
+    17,
+    35
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    19,
+    0,
+    8,
+    21,
+    3,
+    8
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    19,
+    -1,
+    0,
+    21,
+    -1,
+    7
+   ],
+   "block": "minecraft:dirt_path"
+  }
+ ],
+ "blocks": [
+  {
+   "pos": [
+    23,
+    0,
+    3
+   ],
+   "state": "hxh:airship_terminal[facing=west]"
+  }
+ ],
+ "entities": []
+}

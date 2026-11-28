@@ -377,4 +377,22 @@ public final class WorldPlacesTests {
             helper.succeed();
         });
     }
+
+    /** Palais de Gorteau Est : structure minimale, remplaçable en copiant un fichier exporté sur {@code world_places/east_gorteau_palace.json}. */
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void eastGorteauPalaceStub(GameTestHelper helper) {
+        BlockPos origin0 = helper.absolutePos(new BlockPos(2, 1, 2));
+        withForcedChunks(helper, origin0, 45, () -> {
+            var place = WorldPlaces.get("hxh:east_gorteau_palace");
+            helper.assertTrue(place != null, "Le palais de Gorteau Est est chargé");
+            BlockPos origin = helper.absolutePos(new BlockPos(2, 1, 2));
+            var level = helper.getLevel();
+            int ground = WorldPlaces.build(level, place, origin.getX(), origin.getZ());
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 8, ground + 5, origin.getZ() + 20)).is(Blocks.STONE_BRICKS), "Mur du palais");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 20, ground + 1, origin.getZ() + 8)).isAir(), "Porte du palais ouverte");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 5, ground + 12, origin.getZ() + 5)).is(Blocks.STONE_BRICKS), "Tour d'angle");
+            helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 23, ground, origin.getZ() + 3)).is(com.evandouard.hxh.registry.ModBlocks.AIRSHIP_TERMINAL.get()), "Borne du dirigeable");
+            helper.succeed();
+        });
+    }
 }
