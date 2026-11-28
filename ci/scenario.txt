@@ -177,7 +177,9 @@ wait 20
 cmd hunter anim @e[tag=anim_ci] kick
 wait 3
 shot 13e0_anim_coup_de_pied_arme_pnj
-wait 2
+wait 15
+cmd hunter anim @e[tag=anim_ci] kick
+wait 5
 shot 13e1_anim_coup_de_pied_pnj
 wait 15
 # même série, de trois quarts face (le PNJ regarde vers la caméra)
@@ -202,7 +204,8 @@ wait 15
 cmd kill @e[tag=anim_ci]
 # personnage GeckoLib (coudes et genoux) : Gon
 cmd summon hxh:gon ~4.5 ~ ~ {NoAI:1b,Rotation:[0f,0f],Tags:["anim_ci"]}
-look -90 18
+cmd data merge entity @e[tag=anim_ci,limit=1] {Rotation:[0f,0f]}
+look -90 10
 wait 10
 clearchat
 cmd hunter anim @e[tag=anim_ci] punch_main
@@ -219,7 +222,9 @@ wait 20
 cmd hunter anim @e[tag=anim_ci] kick
 wait 3
 shot 13m_anim_coup_de_pied_arme_gon_profil
-wait 2
+wait 15
+cmd hunter anim @e[tag=anim_ci] kick
+wait 5
 shot 13n_anim_coup_de_pied_gon_profil
 wait 15
 cmd execute as @e[tag=anim_ci] at @s run tp @s ~ ~ ~ 110 0

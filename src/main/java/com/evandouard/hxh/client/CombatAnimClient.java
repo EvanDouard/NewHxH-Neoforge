@@ -267,6 +267,8 @@ public final class CombatAnimClient {
      * Applique le coup en cours aux os d'un personnage GeckoLib (appelé depuis {@code setCustomAnimations}, après
      * les contrôleurs) : torsion et inclinaison du torse, bras et coudes, jambes et genoux, descente et avancée du
      * corps. Les bras et la tête étant enfants du torse, un bras qui vise et la tête compensent sa torsion.
+     * Repère : GeckoLib a l'axe Y vers le haut, le modèle de Minecraft vers le bas ; les rotations X et Z changent
+     * donc de signe (Y reste le même) — vérifié en jeu (le poing partait en arrière sans cette conversion).
      *
      * @return vrai si un coup est en cours (la tête a alors déjà été orientée)
      */
@@ -291,11 +293,12 @@ public final class CombatAnimClient {
         float twist = pose.twist;
         if (torso != null) {
             torso.setRotY(Mth.lerp(w, torso.getRotY(), twist));
-            torso.setRotX(Mth.lerp(w, torso.getRotX(), pose.lean));
-            torso.setRotZ(Mth.lerp(w, torso.getRotZ(), pose.roll));
+            torso.setRotX(Mth.lerp(w, torso.getRotX(), -pose.lean));
+            torso.setRotZ(Mth.lerp(w, torso.getRotZ(), -pose.roll));
         }
         if (head != null) {
-            head.setRotX(pitch + pose.nod * w - pose.lean * w);
+            // même convention de regard que NpcGeoModel ; l'inclinaison ajoutée suit le repère GeckoLib
+            head.setRotX(pitch - pose.nod * w + pose.lean * w);
             head.setRotY(look - twist * w);
         }
         if (body != null) {
@@ -317,10 +320,10 @@ public final class CombatAnimClient {
         // un coude plié abaisse le bras : la main reste à la même hauteur que le bras tendu du modèle simple
         float x = r[0] + aim * pitch + 0.5f * Math.abs(elbow);
         float rest = arm.getInitialSnapshot().getRotZ();
-        arm.setRotX(Mth.lerp(w, arm.getRotX(), x));
+        arm.setRotX(Mth.lerp(w, arm.getRotX(), -x));
         arm.setRotY(Mth.lerp(w, arm.getRotY(), r[1] + aim * lookRel));
-        arm.setRotZ(Mth.lerp(w, arm.getRotZ(), rest + r[2]));
-        if (fore != null) fore.setRotX(Mth.lerp(w, fore.getRotX(), elbow));
+        arm.setRotZ(Mth.lerp(w, arm.getRotZ(), rest - r[2]));
+        if (fore != null) fore.setRotX(Mth.lerp(w, fore.getRotX(), -elbow));
     }
 
     private static void geoLeg(software.bernie.geckolib.animation.AnimationProcessor<?> bones, String side, float[] r,
@@ -330,10 +333,10 @@ public final class CombatAnimClient {
         if (leg == null) return;
         float rest = leg.getInitialSnapshot().getRotZ();
         // un genou plié fait avancer la cuisse d'autant pour garder le pied sous le corps
-        leg.setRotX(Mth.lerp(w, leg.getRotX(), r[0] - 0.5f * knee));
+        leg.setRotX(Mth.lerp(w, leg.getRotX(), -(r[0] - 0.5f * knee)));
         leg.setRotY(Mth.lerp(w, leg.getRotY(), r[1]));
-        leg.setRotZ(Mth.lerp(w, leg.getRotZ(), rest + r[2]));
-        if (shin != null) shin.setRotX(Mth.lerp(w, shin.getRotX(), knee));
+        leg.setRotZ(Mth.lerp(w, leg.getRotZ(), rest - r[2]));
+        if (shin != null) shin.setRotX(Mth.lerp(w, shin.getRotX(), -knee));
     }
 
     // ---------- Descente et avancée du corps au rendu ----------
