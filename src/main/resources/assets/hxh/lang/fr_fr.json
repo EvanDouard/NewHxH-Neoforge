@@ -2027,5 +2027,16 @@
   "advancement.hxh.region_padokea.title": "Région : Padokea",
   "advancement.hxh.region_padokea.desc": "Découvrir la région de Padokea.",
   "airship.hxh.dark_point": "Côte du Continent Noir : pas encore accessible",
-  "airship.hxh.dest.east_gorteau_palace": "Palais de Gorteau Est"
+  "airship.hxh.dest.east_gorteau_palace": "Palais de Gorteau Est",
+  "airship.hxh.dev_tp.off": "Dev : TP libre (désactivé)",
+  "airship.hxh.dev_tp.on": "Dev : TP libre (ACTIVÉ)",
+  "airship.hxh.dev_tp.target": "TP vers x=%s z=%s",
+  "message.hxh.airship.dev_denied": "Réservé aux opérateurs.",
+  "message.hxh.airship.dev_out": "Ce point est hors du monde.",
+  "message.hxh.airship.dev_arrived": "TP dev : x=%s z=%s",
+  "item.hxh.mike_spawn_egg": "Œuf d'apparition : Mike (chien des Zoldyck)",
+  "item.hxh.npc_spawn_egg": "Œuf d'apparition : PNJ (identifiant dans les données)",
+  "item.hxh.arena_fighter_spawn_egg": "Œuf d'apparition : Combattant d'arène",
+  "item.hxh.exam_candidate_spawn_egg": "Œuf d'apparition : Candidat à l'examen",
+  "item.hxh.npc_spawn_egg_named": "Œuf d'apparition : %s"
 }

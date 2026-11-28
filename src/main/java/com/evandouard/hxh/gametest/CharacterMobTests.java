@@ -552,4 +552,25 @@ public final class CharacterMobTests {
             helper.assertTrue(Math.abs(c.getBbHeight() / c.getScale() - 1.85f) < 0.01f, "Taille");
         }));
     }
+
+    /** Clic molette (créatif) : tout mob du mod, y compris Mike et les PNJ (Gotoh…), donne un œuf ; celui d'un PNJ garde son identifiant. */
+    @GameTest(template = "empty")
+    public static void middleClickPickGivesAnEgg(net.minecraft.gametest.framework.GameTestHelper helper) {
+        var level = helper.getLevel();
+        for (var holder : ModEntities.ENTITIES.getEntries()) {
+            String id = holder.getId().getPath();
+            if (id.equals("nen_projectile") || id.equals("nen_summon")) continue;
+            var e = holder.get().create(level);
+            helper.assertTrue(e != null, "Entité créable : " + id);
+            helper.assertTrue(!e.getPickResult().isEmpty(), "Le clic molette donne quelque chose sur : " + id);
+        }
+        var npc = ModEntities.NPC.get().create(level);
+        npc.setNpcId("gotoh");
+        var stack = npc.getPickResult();
+        helper.assertTrue(stack.is(com.evandouard.hxh.registry.ModItems.NPC_SPAWN_EGG.get()), "Œuf de PNJ");
+        var data = stack.get(net.minecraft.core.component.DataComponents.ENTITY_DATA);
+        helper.assertTrue(data != null && "gotoh".equals(data.copyTag().getString("npc")), "L'œuf garde l'identifiant du PNJ");
+        helper.assertTrue(ModEntities.MIKE.get().create(level).getPickResult().is(com.evandouard.hxh.registry.ModItems.MIKE_SPAWN_EGG.get()), "Œuf de Mike");
+        helper.succeed();
+    }
 }

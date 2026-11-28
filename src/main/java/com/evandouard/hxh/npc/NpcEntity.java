@@ -84,6 +84,21 @@ public class NpcEntity extends PathfinderMob implements software.bernie.geckolib
         entityData.set(EXPRESSION, expression == null ? "" : expression);
     }
 
+    /**
+     * Clic molette (créatif) : un œuf de PNJ déjà réglé sur cet identifiant (Gotoh, Zebro…). Sans cela, les PNJ n'ont aucun résultat de « pick »
+     * car ils partagent un seul type d'entité sans œuf.
+     */
+    @Override
+    public net.minecraft.world.item.ItemStack getPickResult() {
+        var stack = new net.minecraft.world.item.ItemStack(com.evandouard.hxh.registry.ModItems.NPC_SPAWN_EGG.get());
+        CompoundTag tag = new CompoundTag();
+        tag.putString("npc", npcId());
+        stack.set(net.minecraft.core.component.DataComponents.ENTITY_DATA, net.minecraft.world.item.component.CustomData.of(tag));
+        stack.set(net.minecraft.core.component.DataComponents.ITEM_NAME,
+                net.minecraft.network.chat.Component.translatable("item.hxh.npc_spawn_egg_named", com.evandouard.hxh.quest.QuestRegistry.npcName(npcId())));
+        return stack;
+    }
+
     public String npcId() {
         return entityData.get(NPC_ID);
     }

@@ -30,6 +30,18 @@ public final class ModItems {
             ITEMS.register("chimera_ant_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.CHIMERA_ANT, 0x2E3A2A, 0x9E2B25, new Item.Properties()));
 
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> MIKE_SPAWN_EGG =
+            ITEMS.register("mike_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.MIKE, 0x3A3A3A, 0xC9A878, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> NPC_SPAWN_EGG =
+            ITEMS.register("npc_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.NPC, 0x4A6FA5, 0xF0E0C0, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> ARENA_FIGHTER_SPAWN_EGG =
+            ITEMS.register("arena_fighter_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.ARENA_FIGHTER, 0x8C2F2F, 0xE0E0E0, new Item.Properties()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> EXAM_CANDIDATE_SPAWN_EGG =
+            ITEMS.register("exam_candidate_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
+                    ModEntities.EXAM_CANDIDATE, 0x5A5A5A, 0xE8D8A0, new Item.Properties()));
     public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> GON_SPAWN_EGG =
             ITEMS.register("gon_spawn_egg", () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(
                     ModEntities.GON, 0x3EA64C, 0x141414, new Item.Properties()));

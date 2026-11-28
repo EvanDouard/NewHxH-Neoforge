@@ -2027,5 +2027,16 @@
   "advancement.hxh.region_padokea.title": "Region: Padokea",
   "advancement.hxh.region_padokea.desc": "Discover the Padokea region.",
   "airship.hxh.dark_point": "Dark Continent coast: not accessible yet",
-  "airship.hxh.dest.east_gorteau_palace": "East Gorteau Palace"
+  "airship.hxh.dest.east_gorteau_palace": "East Gorteau Palace",
+  "airship.hxh.dev_tp.off": "Dev: free TP (off)",
+  "airship.hxh.dev_tp.on": "Dev: free TP (ON)",
+  "airship.hxh.dev_tp.target": "TP to x=%s z=%s",
+  "message.hxh.airship.dev_denied": "Operators only.",
+  "message.hxh.airship.dev_out": "That point is outside the world.",
+  "message.hxh.airship.dev_arrived": "Dev TP: x=%s z=%s",
+  "item.hxh.mike_spawn_egg": "Mike (Zoldyck dog) Spawn Egg",
+  "item.hxh.npc_spawn_egg": "NPC (id in data) Spawn Egg",
+  "item.hxh.arena_fighter_spawn_egg": "Arena Fighter Spawn Egg",
+  "item.hxh.exam_candidate_spawn_egg": "Exam Candidate Spawn Egg",
+  "item.hxh.npc_spawn_egg_named": "Spawn Egg: %s"
 }

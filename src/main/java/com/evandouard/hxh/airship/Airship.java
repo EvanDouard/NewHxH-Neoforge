@@ -108,6 +108,22 @@ public final class Airship {
                 net.minecraft.network.chat.Component.translatable(dest.nameKey())), true);
     }
 
+    /**
+     * Bouton dev : téléporte le joueur à (x, z) dans le monde HxH (ou le monde courant s'il n'existe pas), gratuitement, au sol ou à la surface de l'eau.
+     * @return faux si le point est hors du monde (aucune téléportation)
+     */
+    public static boolean devTeleport(ServerPlayer player, int x, int z) {
+        if (x < 0 || z < 0 || x >= com.evandouard.hxh.world.HxHWorldMap.get().widthBlocks() || z >= com.evandouard.hxh.world.HxHWorldMap.get().heightBlocks()) return false;
+        ServerLevel level = player.server.getLevel(WORLD);
+        if (level == null) level = player.serverLevel();
+        level.getChunk(x >> 4, z >> 4);
+        BlockPos landing = safeLanding(level, x, z);
+        player.teleportTo(level, landing.getX() + 0.5, landing.getY(), landing.getZ() + 0.5, player.getYRot(), 0f);
+        player.resetFallDistance();
+        player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.hxh.airship.dev_arrived", x, z), true);
+        return true;
+    }
+
     private static boolean free(ServerLevel level, BlockPos p) {
         var st = level.getBlockState(p);
         return st.getCollisionShape(level, p).isEmpty() && st.getFluidState().isEmpty();

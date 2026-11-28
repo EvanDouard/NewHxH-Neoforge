@@ -84,4 +84,20 @@ public final class AirshipTests {
         helper.assertTrue(player.level().getBlockState(player.blockPosition().below()).isSolid(), "Le joueur arrive sur une plateforme solide");
         helper.succeed();
     }
+
+    /** Bouton dev de la carte : téléportation gratuite n'importe où dans le monde, refusée hors des bornes. */
+    @GameTest(template = "empty")
+    public static void devTeleportIsFreeAndBounded(GameTestHelper helper) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        QuestData d = QuestManager.data(player);
+        d.addJenny(-d.jenny());
+        helper.assertTrue(Airship.devTeleport(player, 30000, 20000), "TP accepté dans le monde");
+        helper.assertTrue(Math.abs(player.getX() - 30000.5) < 1 && Math.abs(player.getZ() - 20000.5) < 1, "Arrivée au point demandé : " + player.position());
+        helper.assertTrue(d.jenny() == 0, "Aucun Jenny prélevé");
+        double x = player.getX();
+        helper.assertTrue(!Airship.devTeleport(player, -5, 100), "Hors du monde (x<0) refusé");
+        helper.assertTrue(!Airship.devTeleport(player, 100, 10_000_000), "Hors du monde (z trop grand) refusé");
+        helper.assertTrue(player.getX() == x, "Pas de déplacement après un refus");
+        helper.succeed();
+    }
 }

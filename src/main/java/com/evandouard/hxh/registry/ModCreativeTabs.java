@@ -18,6 +18,10 @@ public final class ModCreativeTabs {
                     .displayItems((params, output) -> {
                         output.accept(ModItems.HUNTER_CARD.get());
                         output.accept(ModItems.GON_SPAWN_EGG.get());
+                        output.accept(ModItems.MIKE_SPAWN_EGG.get());
+                        output.accept(ModItems.NPC_SPAWN_EGG.get());
+                        output.accept(ModItems.ARENA_FIGHTER_SPAWN_EGG.get());
+                        output.accept(ModItems.EXAM_CANDIDATE_SPAWN_EGG.get());
                         output.accept(ModItems.GON_ULTIME_SPAWN_EGG.get());
                         output.accept(ModItems.KILLUA_SPAWN_EGG.get());
                         output.accept(ModItems.KURAPIKA_SPAWN_EGG.get());

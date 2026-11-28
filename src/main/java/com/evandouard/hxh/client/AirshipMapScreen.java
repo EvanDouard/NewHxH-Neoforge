@@ -2,6 +2,7 @@ package com.evandouard.hxh.client;
 
 import com.evandouard.hxh.HxHMod;
 import com.evandouard.hxh.network.AirshipTravelPayload;
+import com.evandouard.hxh.network.DevTeleportPayload;
 import com.evandouard.hxh.network.OpenAirshipPayload;
 import com.evandouard.hxh.world.HxHWorldMap;
 import net.minecraft.client.Minecraft;
@@ -41,6 +42,9 @@ public class AirshipMapScreen extends Screen {
     private int mapX, mapY, mapW, mapH, canvasX, canvasY, canvasW, canvasH;
     /** Position simulée du curseur (scénario de CI), sinon -1. */
     private int fakeX = -1, fakeY = -1;
+    /** Bouton dev (opérateurs) : quand il est actif, un clic n'importe où sur la carte téléporte gratuitement à ce point. */
+    private boolean devTp;
+    private net.minecraft.client.gui.components.Button devButton;
 
     public AirshipMapScreen(OpenAirshipPayload data) {
         super(Component.translatable("airship.hxh.title"));
@@ -117,6 +121,24 @@ public class AirshipMapScreen extends Screen {
         mapH = canvasH * worldTexH / texH;
         mapX = canvasX + canvasW * offX / texW;
         mapY = canvasY + canvasH * offY / texH;
+        devButton = null;
+        var me = Minecraft.getInstance().player;
+        if (me != null && me.hasPermissions(2)) {
+            devButton = addRenderableWidget(net.minecraft.client.gui.components.Button.builder(devLabel(), b -> {
+                devTp = !devTp;
+                b.setMessage(devLabel());
+            }).bounds(canvasX, 4, 170, 16).build());
+        }
+    }
+
+    private Component devLabel() {
+        return Component.translatable(devTp ? "airship.hxh.dev_tp.on" : "airship.hxh.dev_tp.off");
+    }
+
+    /** Point du monde (blocs) sous un point de l'écran ; null hors de la carte du monde connu. */
+    private int[] blockAt(double mx, double my) {
+        if (mx < mapX || my < mapY || mx >= mapX + mapW || my >= mapY + mapH) return null;
+        return new int[]{(int) ((mx - mapX) * WORLD_W / mapW), (int) ((my - mapY) * WORLD_H / mapH)};
     }
 
     private int px(OpenAirshipPayload.Dest d) {
@@ -281,11 +303,25 @@ public class AirshipMapScreen extends Screen {
                     net.minecraft.network.chat.Style.EMPTY.withColor(regionColor(region)).withBold(true))),
                     java.util.Optional.empty(), mouseX, mouseY);
         }
+        if (devTp) {
+            int[] b = blockAt(mouseX, mouseY);
+            if (b != null) g.renderTooltip(font, java.util.List.of(Component.translatable("airship.hxh.dev_tp.target", b[0], b[1]).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE)),
+                    java.util.Optional.empty(), mouseX, mouseY + 22);
+        }
         super.render(g, mouseX, mouseY, partial);
     }
 
     @Override
     public boolean mouseClicked(double mx, double my, int button) {
+        if (devButton != null && devButton.isMouseOver(mx, my)) return super.mouseClicked(mx, my, button);
+        if (devTp && button == 0) {
+            int[] b = blockAt(fakeX >= 0 ? fakeX : mx, fakeX >= 0 ? fakeY : my);
+            if (b != null) {
+                PacketDistributor.sendToServer(new DevTeleportPayload(b[0], b[1]));
+                Minecraft.getInstance().setScreen(null);
+                return true;
+            }
+        }
         OpenAirshipPayload.Dest d = button == 0 ? pinAt(fakeX >= 0 ? fakeX : mx, fakeX >= 0 ? fakeY : my) : null;
         if (d != null && data.jenny() >= d.price()) {
             Component name = Component.translatable("airship.hxh.dest." + d.id().substring(d.id().indexOf(':') + 1));
