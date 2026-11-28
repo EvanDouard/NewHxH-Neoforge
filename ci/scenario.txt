@@ -3017,6 +3017,18 @@ cmd summon hxh:kiriko ~5 ~ ~8 {NoAI:1b,PersistenceRequired:1b}
 wait 10
 clearchat
 shot 96_singe_fourmi_chimere_et_kiriko
+cmd kill @e[type=hxh:man_faced_ape]
+cmd kill @e[type=hxh:chimera_ant]
+cmd kill @e[type=hxh:kiriko]
+# --- Mike (anime 2011) : face puis profil ---
+cmd summon hxh:mike ~ ~ ~14 {NoAI:1b,PersistenceRequired:1b,Rotation:[180f,0f],Tags:["ci_mike"]}
+wait 10
+clearchat
+shot 96m_mike_face
+cmd tp @e[tag=ci_mike] ~ ~ ~14 90 0
+wait 10
+shot 96n_mike_profil
+cmd kill @e[tag=ci_mike]
 cmd setblock ~-1 ~ ~ hxh:hunter_computer[facing=east]
 wait 5
 useblock -1 0 0
