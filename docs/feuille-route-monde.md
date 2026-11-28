@@ -73,3 +73,5 @@ Propositions « libre/théorie » (non officielles) sur la carte 8 000 × 5 650,
 - Pour l'instant : points de la carte en petits carrés grisés, non téléportables ; événement qui rend `darkContinentKnown` vrai à décider.
 
 **Fait (9, 27 nov)** : échelle du monde ×20 (`HxHWorldMap.SCALE`), voir `docs/monde-hxh.md`. **Reste** : moyens de transport rapides (dirigeable existant ; véhicules terrestres/maritimes à imaginer), Yorknew 2000×2000, relief/côtes à valider en jeu, grille plus fine si besoin.
+
+**Fait (28 nov, hors carte)** : village de l'île de la Baleine étendu (épicerie, école, phare, cabane de pêcheur, campement forestier) ; GameTest et captures 99zzs/99zzt. Reste pour cette île : port (quai, bateaux) et sanctuaire du lac, quand la côte sera fixée.

@@ -27,6 +27,10 @@ public final class WorldPlacesTests {
         helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 1, ground, origin.getZ() + 1)).is(Blocks.RED_BED), "Un lit dans la maison de Mito");
         helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 4, ground + 1, origin.getZ() + 3)).isAir(), "L'intérieur est dégagé");
         helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 11, ground, origin.getZ() + 11)).is(Blocks.WATER), "Le puits contient de l'eau");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 11, ground + 16, origin.getZ() + 23)).is(Blocks.SEA_LANTERN), "Le phare a sa lanterne");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() - 22, ground + 8, origin.getZ() + 4)).is(Blocks.BELL), "L'école a sa cloche");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() + 30, ground, origin.getZ() + 5)).is(Blocks.BARREL), "L'épicerie a son comptoir");
+        helper.assertTrue(level.getBlockState(new BlockPos(origin.getX() - 22, ground, origin.getZ() + 30)).is(Blocks.CAMPFIRE), "Le campement forestier a son feu");
         // Le guide de l'Examen (Navigateur) vit ici, dans le monde HxH
         helper.runAfterDelay(20, () -> {
             var box = new net.minecraft.world.phys.AABB(origin.getX(), ground - 3, origin.getZ(), origin.getX() + 12, ground + 6, origin.getZ() + 14);

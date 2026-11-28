@@ -2,18 +2,18 @@
  "x": 87000,
  "z": 82680,
  "clear": [
-  -14,
+  -30,
   0,
   -3,
-  24,
-  9,
-  14
+  40,
+  22,
+  36
  ],
  "foundation": [
-  -12,
+  -30,
   -3,
-  24,
-  13,
+  40,
+  36,
   "minecraft:cobblestone"
  ],
  "fills": [
@@ -350,6 +350,679 @@
     12
    ],
    "block": "minecraft:oak_slab"
+  },
+  {
+   "box": [
+    26,
+    -1,
+    0,
+    34,
+    -1,
+    6
+   ],
+   "block": "minecraft:oak_planks"
+  },
+  {
+   "box": [
+    26,
+    0,
+    0,
+    34,
+    3,
+    6
+   ],
+   "block": "minecraft:white_terracotta",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    26,
+    0,
+    0,
+    26,
+    3,
+    0
+   ],
+   "block": "minecraft:stripped_oak_log"
+  },
+  {
+   "box": [
+    26,
+    0,
+    6,
+    26,
+    3,
+    6
+   ],
+   "block": "minecraft:stripped_oak_log"
+  },
+  {
+   "box": [
+    34,
+    0,
+    0,
+    34,
+    3,
+    0
+   ],
+   "block": "minecraft:stripped_oak_log"
+  },
+  {
+   "box": [
+    34,
+    0,
+    6,
+    34,
+    3,
+    6
+   ],
+   "block": "minecraft:stripped_oak_log"
+  },
+  {
+   "box": [
+    25,
+    4,
+    -1,
+    35,
+    4,
+    7
+   ],
+   "block": "minecraft:oak_slab"
+  },
+  {
+   "box": [
+    26,
+    4,
+    0,
+    34,
+    4,
+    6
+   ],
+   "block": "minecraft:oak_planks"
+  },
+  {
+   "box": [
+    27,
+    0,
+    5,
+    33,
+    0,
+    5
+   ],
+   "block": "minecraft:barrel"
+  },
+  {
+   "box": [
+    -28,
+    -1,
+    0,
+    -16,
+    -1,
+    9
+   ],
+   "block": "minecraft:oak_planks"
+  },
+  {
+   "box": [
+    -28,
+    0,
+    0,
+    -16,
+    4,
+    9
+   ],
+   "block": "minecraft:spruce_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    -28,
+    0,
+    0,
+    -28,
+    4,
+    0
+   ],
+   "block": "minecraft:stripped_spruce_log"
+  },
+  {
+   "box": [
+    -28,
+    0,
+    9,
+    -28,
+    4,
+    9
+   ],
+   "block": "minecraft:stripped_spruce_log"
+  },
+  {
+   "box": [
+    -16,
+    0,
+    0,
+    -16,
+    4,
+    0
+   ],
+   "block": "minecraft:stripped_spruce_log"
+  },
+  {
+   "box": [
+    -16,
+    0,
+    9,
+    -16,
+    4,
+    9
+   ],
+   "block": "minecraft:stripped_spruce_log"
+  },
+  {
+   "box": [
+    -29,
+    5,
+    -1,
+    -15,
+    5,
+    10
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    -28,
+    5,
+    0,
+    -16,
+    5,
+    9
+   ],
+   "block": "minecraft:spruce_planks"
+  },
+  {
+   "box": [
+    -27,
+    0,
+    8,
+    -17,
+    0,
+    8
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    -26,
+    1,
+    8,
+    -18,
+    2,
+    8
+   ],
+   "block": "minecraft:black_concrete"
+  },
+  {
+   "box": [
+    -23,
+    6,
+    3,
+    -21,
+    8,
+    5
+   ],
+   "block": "minecraft:spruce_planks",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    -24,
+    9,
+    2,
+    -20,
+    9,
+    6
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    8,
+    -1,
+    20,
+    14,
+    -1,
+    26
+   ],
+   "block": "minecraft:stone_bricks"
+  },
+  {
+   "box": [
+    8,
+    0,
+    20,
+    14,
+    1,
+    26
+   ],
+   "block": "minecraft:white_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    8,
+    2,
+    20,
+    14,
+    3,
+    26
+   ],
+   "block": "minecraft:red_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    8,
+    4,
+    20,
+    14,
+    5,
+    26
+   ],
+   "block": "minecraft:white_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    8,
+    6,
+    20,
+    14,
+    7,
+    26
+   ],
+   "block": "minecraft:red_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    8,
+    8,
+    20,
+    14,
+    9,
+    26
+   ],
+   "block": "minecraft:white_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    8,
+    10,
+    20,
+    14,
+    11,
+    26
+   ],
+   "block": "minecraft:red_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    8,
+    12,
+    20,
+    14,
+    13,
+    26
+   ],
+   "block": "minecraft:white_concrete",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    7,
+    14,
+    19,
+    15,
+    14,
+    27
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    8,
+    15,
+    20,
+    14,
+    15,
+    26
+   ],
+   "block": "minecraft:iron_bars",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    10,
+    15,
+    22,
+    12,
+    18,
+    24
+   ],
+   "block": "minecraft:glass",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    9,
+    19,
+    21,
+    13,
+    19,
+    25
+   ],
+   "block": "minecraft:stone_brick_slab"
+  },
+  {
+   "box": [
+    -8,
+    -1,
+    20,
+    -2,
+    -1,
+    25
+   ],
+   "block": "minecraft:spruce_planks"
+  },
+  {
+   "box": [
+    -8,
+    0,
+    20,
+    -2,
+    3,
+    25
+   ],
+   "block": "minecraft:stripped_spruce_log",
+   "mode": "walls"
+  },
+  {
+   "box": [
+    -9,
+    4,
+    19,
+    -1,
+    4,
+    26
+   ],
+   "block": "minecraft:spruce_slab"
+  },
+  {
+   "box": [
+    -8,
+    4,
+    20,
+    -2,
+    4,
+    25
+   ],
+   "block": "minecraft:spruce_planks"
+  },
+  {
+   "box": [
+    -8,
+    0,
+    28,
+    -2,
+    0,
+    28
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    -8,
+    1,
+    28,
+    -2,
+    1,
+    28
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    -7,
+    1,
+    28,
+    -3,
+    1,
+    28
+   ],
+   "block": "minecraft:cobweb"
+  },
+  {
+   "box": [
+    -8,
+    2,
+    28,
+    -2,
+    2,
+    28
+   ],
+   "block": "minecraft:oak_fence"
+  },
+  {
+   "box": [
+    -6,
+    0,
+    31,
+    -3,
+    0,
+    31
+   ],
+   "block": "minecraft:oak_planks"
+  },
+  {
+   "box": [
+    -7,
+    0,
+    31,
+    -7,
+    0,
+    31
+   ],
+   "block": "minecraft:oak_slab"
+  },
+  {
+   "box": [
+    -2,
+    0,
+    31,
+    -2,
+    0,
+    31
+   ],
+   "block": "minecraft:oak_slab"
+  },
+  {
+   "box": [
+    -6,
+    0,
+    30,
+    -3,
+    0,
+    30
+   ],
+   "block": "minecraft:oak_slab"
+  },
+  {
+   "box": [
+    -6,
+    0,
+    32,
+    -3,
+    0,
+    32
+   ],
+   "block": "minecraft:oak_slab"
+  },
+  {
+   "box": [
+    -26,
+    0,
+    22,
+    -26,
+    0,
+    27
+   ],
+   "block": "minecraft:green_wool"
+  },
+  {
+   "box": [
+    -18,
+    0,
+    22,
+    -18,
+    0,
+    27
+   ],
+   "block": "minecraft:green_wool"
+  },
+  {
+   "box": [
+    -25,
+    1,
+    22,
+    -25,
+    1,
+    27
+   ],
+   "block": "minecraft:green_wool"
+  },
+  {
+   "box": [
+    -19,
+    1,
+    22,
+    -19,
+    1,
+    27
+   ],
+   "block": "minecraft:green_wool"
+  },
+  {
+   "box": [
+    -24,
+    2,
+    22,
+    -24,
+    2,
+    27
+   ],
+   "block": "minecraft:green_wool"
+  },
+  {
+   "box": [
+    -20,
+    2,
+    22,
+    -20,
+    2,
+    27
+   ],
+   "block": "minecraft:green_wool"
+  },
+  {
+   "box": [
+    -23,
+    3,
+    22,
+    -23,
+    3,
+    27
+   ],
+   "block": "minecraft:green_wool"
+  },
+  {
+   "box": [
+    -21,
+    3,
+    22,
+    -21,
+    3,
+    27
+   ],
+   "block": "minecraft:green_wool"
+  },
+  {
+   "box": [
+    -22,
+    4,
+    22,
+    -22,
+    4,
+    27
+   ],
+   "block": "minecraft:green_wool"
+  },
+  {
+   "box": [
+    -22,
+    4,
+    22,
+    -22,
+    4,
+    27
+   ],
+   "block": "minecraft:green_wool"
+  },
+  {
+   "box": [
+    -24,
+    0,
+    29,
+    -24,
+    0,
+    31
+   ],
+   "block": "minecraft:oak_log[axis=z]"
+  },
+  {
+   "box": [
+    -20,
+    0,
+    29,
+    -20,
+    0,
+    31
+   ],
+   "block": "minecraft:oak_log[axis=z]"
+  },
+  {
+   "box": [
+    9,
+    14,
+    21,
+    9,
+    14,
+    21
+   ],
+   "block": "minecraft:air"
+  },
+  {
+   "box": [
+    9,
+    0,
+    21,
+    9,
+    14,
+    21
+   ],
+   "block": "minecraft:ladder[facing=south]"
   }
  ],
  "blocks": [
@@ -816,6 +1489,534 @@
     9
    ],
    "state": "minecraft:lantern"
+  },
+  {
+   "pos": [
+    25,
+    3,
+    -1
+   ],
+   "state": "minecraft:white_wool"
+  },
+  {
+   "pos": [
+    26,
+    3,
+    -1
+   ],
+   "state": "minecraft:red_wool"
+  },
+  {
+   "pos": [
+    27,
+    3,
+    -1
+   ],
+   "state": "minecraft:white_wool"
+  },
+  {
+   "pos": [
+    28,
+    3,
+    -1
+   ],
+   "state": "minecraft:red_wool"
+  },
+  {
+   "pos": [
+    29,
+    3,
+    -1
+   ],
+   "state": "minecraft:white_wool"
+  },
+  {
+   "pos": [
+    30,
+    3,
+    -1
+   ],
+   "state": "minecraft:red_wool"
+  },
+  {
+   "pos": [
+    31,
+    3,
+    -1
+   ],
+   "state": "minecraft:white_wool"
+  },
+  {
+   "pos": [
+    32,
+    3,
+    -1
+   ],
+   "state": "minecraft:red_wool"
+  },
+  {
+   "pos": [
+    33,
+    3,
+    -1
+   ],
+   "state": "minecraft:white_wool"
+  },
+  {
+   "pos": [
+    34,
+    3,
+    -1
+   ],
+   "state": "minecraft:red_wool"
+  },
+  {
+   "pos": [
+    35,
+    3,
+    -1
+   ],
+   "state": "minecraft:white_wool"
+  },
+  {
+   "pos": [
+    30,
+    0,
+    0
+   ],
+   "state": "minecraft:oak_door[facing=north,half=lower]"
+  },
+  {
+   "pos": [
+    30,
+    1,
+    0
+   ],
+   "state": "minecraft:oak_door[facing=north,half=upper]"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    0
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    28,
+    1,
+    6
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    32,
+    1,
+    0
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    32,
+    1,
+    6
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    27,
+    0,
+    3
+   ],
+   "state": "minecraft:composter"
+  },
+  {
+   "pos": [
+    29,
+    0,
+    3
+   ],
+   "state": "minecraft:composter"
+  },
+  {
+   "pos": [
+    31,
+    0,
+    3
+   ],
+   "state": "minecraft:composter"
+  },
+  {
+   "pos": [
+    33,
+    0,
+    3
+   ],
+   "state": "minecraft:composter"
+  },
+  {
+   "pos": [
+    33,
+    0,
+    1
+   ],
+   "state": "minecraft:chest[facing=west]"
+  },
+  {
+   "pos": [
+    28,
+    2,
+    5
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    32,
+    2,
+    5
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    -22,
+    0,
+    0
+   ],
+   "state": "minecraft:spruce_door[facing=north,half=lower]"
+  },
+  {
+   "pos": [
+    -22,
+    1,
+    0
+   ],
+   "state": "minecraft:spruce_door[facing=north,half=upper]"
+  },
+  {
+   "pos": [
+    -26,
+    2,
+    0
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    -26,
+    2,
+    9
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    -24,
+    2,
+    0
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    -24,
+    2,
+    9
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    -20,
+    2,
+    0
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    -20,
+    2,
+    9
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    -18,
+    2,
+    0
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    -18,
+    2,
+    9
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    -26,
+    0,
+    2
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    -24,
+    0,
+    2
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    -20,
+    0,
+    2
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    -18,
+    0,
+    2
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    -26,
+    0,
+    4
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    -24,
+    0,
+    4
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    -20,
+    0,
+    4
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    -18,
+    0,
+    4
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    -26,
+    0,
+    6
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    -24,
+    0,
+    6
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    -20,
+    0,
+    6
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    -18,
+    0,
+    6
+   ],
+   "state": "minecraft:spruce_stairs[facing=south]"
+  },
+  {
+   "pos": [
+    -22,
+    8,
+    4
+   ],
+   "state": "minecraft:bell[facing=north,attachment=ceiling]"
+  },
+  {
+   "pos": [
+    -26,
+    3,
+    1
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    -18,
+    3,
+    1
+   ],
+   "state": "minecraft:lantern[hanging=false]"
+  },
+  {
+   "pos": [
+    11,
+    15,
+    23
+   ],
+   "state": "minecraft:sea_lantern"
+  },
+  {
+   "pos": [
+    11,
+    16,
+    23
+   ],
+   "state": "minecraft:sea_lantern"
+  },
+  {
+   "pos": [
+    11,
+    17,
+    23
+   ],
+   "state": "minecraft:sea_lantern"
+  },
+  {
+   "pos": [
+    11,
+    0,
+    20
+   ],
+   "state": "minecraft:iron_door[facing=north,half=lower]"
+  },
+  {
+   "pos": [
+    11,
+    1,
+    20
+   ],
+   "state": "minecraft:iron_door[facing=north,half=upper]"
+  },
+  {
+   "pos": [
+    -5,
+    0,
+    20
+   ],
+   "state": "minecraft:spruce_door[facing=north,half=lower]"
+  },
+  {
+   "pos": [
+    -5,
+    1,
+    20
+   ],
+   "state": "minecraft:spruce_door[facing=north,half=upper]"
+  },
+  {
+   "pos": [
+    -7,
+    1,
+    20
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    -3,
+    1,
+    20
+   ],
+   "state": "minecraft:glass_pane"
+  },
+  {
+   "pos": [
+    -5,
+    0,
+    24
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    -3,
+    0,
+    24
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    -22,
+    0,
+    24
+   ],
+   "state": "minecraft:red_bed[facing=south,part=foot]"
+  },
+  {
+   "pos": [
+    -22,
+    0,
+    25
+   ],
+   "state": "minecraft:red_bed[facing=south,part=head]"
+  },
+  {
+   "pos": [
+    -22,
+    0,
+    30
+   ],
+   "state": "minecraft:campfire[lit=true]"
+  },
+  {
+   "pos": [
+    -17,
+    0,
+    29
+   ],
+   "state": "minecraft:barrel[facing=up]"
+  },
+  {
+   "pos": [
+    -27,
+    0,
+    29
+   ],
+   "state": "minecraft:crafting_table"
+  },
+  {
+   "pos": [
+    -22,
+    0,
+    33
+   ],
+   "state": "minecraft:lantern[hanging=false]"
   }
  ],
  "entities": [

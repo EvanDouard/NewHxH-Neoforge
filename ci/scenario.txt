@@ -3176,6 +3176,14 @@ cmd tp @s 86760 80 82440 -45 25
 cmd effect give @s minecraft:slow_falling 10 0 true
 wait 60
 shot 99y_monde_hxh_village_baleine
+cmd tp @s 87011 88 82650 0 22
+cmd effect give @s minecraft:slow_falling 10 0 true
+wait 60
+shot 99zzs_baleine_phare_et_maisons
+cmd tp @s 87045 88 82700 90 20
+cmd effect give @s minecraft:slow_falling 10 0 true
+wait 60
+shot 99zzt_baleine_ecole_et_cabane
 cmd hunter jenny set 20000
 cmd hunter airship kukuroo_mountain
 wait 400

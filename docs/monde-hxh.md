@@ -145,7 +145,7 @@ Lieux faits : village de l'île de la Baleine, domaine Zoldyck de la montagne Ku
 Le Navigateur (guide qui lance l'Examen Hunter) attend dans le village de l'île de la Baleine, dans le monde HxH (là où le joueur apparaît par défaut). Un ancien Navigateur resté dans le monde normal est retiré au démarrage. Depuis le monde normal, la quête indique « va dans le monde HxH » (sans coordonnées) ; la commande `/hunter world hxh|normal` fait le passage et mémorise la position quittée.
 
 ## Billets de dirigeable et minimap
-Le prix d'un billet = 50 + 1 Jenny pour 4 blocs entre le point de départ (position du joueur dans le monde HxH, île de la Baleine sinon) et la destination + 1/10 du « prix » du fichier de la destination (prestige du lieu), arrondi à 10. La minimap (client uniquement, fichier `config/hxh-client.toml`) montre la carte du monde centrée sur le joueur dans le monde HxH.
+Le prix d'un billet = 50 + 1 Jenny pour 80 blocs (distance ×20 depuis le passage à l'échelle du monde) entre le point de départ (position du joueur dans le monde HxH, île de la Baleine sinon) et la destination + 1/10 du « prix » du fichier de la destination (prestige du lieu), arrondi à 10. La minimap (client uniquement, fichier `config/hxh-client.toml`) montre la carte du monde centrée sur le joueur dans le monde HxH.
 
 ## Biomes par lieu (fait le 27 nov : liste dans `data/hxh/dimension/world.json`, champ `places`)
 Vanilla seulement (pas de biome sur mesure pour l'instant) ; un biome par lieu connu, posé en disque autour du lieu par `HxHBiomeSource` (rayon à régler), le reste de la région gardant son biome d'ambiance.
@@ -179,3 +179,6 @@ Décision d'Evan : les distances doivent imposer un moyen de transport (dirigeab
 - Prix du billet : 1 Jenny pour 80 blocs (au lieu de 4), donc mêmes prix qu'avant pour les mêmes trajets ; carte et minimap suivent `HxHWorldMap.CELL`.
 - À faire ensuite : moyens de locomotion rapides (voir feuille de route), Yorknew 2000×2000, vérifier en jeu le relief et les côtes (captures 99zzq/r + lieux), résolution de la grille (affiner `cells.txt` si les côtes font trop « blocs »).
 - **Îles ramenées à leur taille (27 nov, après le ×20)** : les agrandissements faits à la main pour la grille à 32 blocs ne sont plus utiles. Greed Island : 15 cases (5×3, ~3 200 × 1 900 blocs) au lieu de 35 ; île de la Baleine : 5 cases en croix (~1 900 blocs) ; île du Port de la Baleine Noire : 6 cases (2×3). `cells.txt`, `regions.txt` et les deux textures de carte (patchées) mis à jour ; la carte « Continent Noir » sera régénérée proprement au prochain passage de `tools/gen_world_map.py`.
+
+## Village de l'île de la Baleine — extensions (28 nov)
+Ajoutés autour des trois maisons d'origine (`world_places/whale_island_village.json`, zone dégagée 70 × 40) : **épicerie** à auvent rayé (est), **école** avec estrade, tableau noir, bancs et clocheton à cloche (ouest), **phare** rayé de 19 blocs avec échelle et lanterne (sud), **cabane de pêcheur** avec filet qui sèche et barque échouée, **campement forestier** (tente verte, feu de camp, bûches). Le port lui-même (quai, bateaux) attend la forme définitive de la côte ; le sanctuaire du lac aussi.

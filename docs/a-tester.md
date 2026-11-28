@@ -399,3 +399,7 @@ archéologue, Hunter gourmet (boutique), commissaire-priseur (enchères).
 ## Échelle ×20 (27 nov)
 - **CI** : taille de la carte, destinations sur la terre, prix du billet (distances ×20), captures des lieux aux nouvelles coordonnées.
 - [ ] En jeu : relief et côtes lisibles à cette échelle, lieux bien posés sur la terre (pas dans l'eau), prix des billets cohérents, carte et minimap justes, temps de chargement de chunks loin de l'origine. Anciens mondes : les lieux déjà posés restent à leurs anciennes coordonnées (nouveau monde conseillé).
+
+## Village de l'île de la Baleine, extensions (28 nov)
+- **CI** : `whaleIslandVillageIsBuilt` vérifie lanterne du phare, cloche de l'école, comptoir de l'épicerie, feu du campement ; captures 99zzs/99zzt.
+- [ ] En jeu : bâtiments lisibles, rien ne flotte ni ne s'enfonce selon le terrain, échelle du phare utilisable, zone d'apparition du Navigateur toujours dégagée.
