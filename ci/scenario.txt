@@ -292,15 +292,7 @@ key key.hxh.profile
 wait 15
 shot 15a_carnet_boutons
 click Méditer
-closescreen
-camera front
-wait 40
-shot 15m_meditation_pose_face
-camera back
-wait 6
-shot 15n_meditation_pose_dos
-camera first
-wait 108
+wait 160
 expect Après une longue méditation
 shot 15_eveil_par_meditation
 
@@ -1938,6 +1930,20 @@ shot 67af_poses_priere_meditation_profil
 cmd execute as @e[tag=geo_med] at @s run tp @s ~ ~ ~ 140 0
 wait 32
 shot 67ag_poses_priere_inclinaison_trois_quarts
+cmd tp @e[tag=geo_ci] ~ ~-40 ~
+# --- Méditation du joueur (Nen déjà éveillé : elle ne s'arrête pas toute seule) ---
+cmd hunter nen meditate
+camera front
+wait 30
+clearchat
+shot 15m_meditation_pose_face
+camera back
+wait 40
+shot 15n_meditation_pose_dos
+cmd hunter nen meditate
+wait 20
+shot 15o_meditation_relevee_en_douceur
+camera first
 cmd tp @e[tag=geo_ci] ~ ~-40 ~
 look 0 4
 cmd summon hxh:npc ~4.3 ~ ~4.7 {npc:"chrollo",NoAI:1b,Silent:1b,Rotation:[180f,0f],Tags:["geo_ci"]}
